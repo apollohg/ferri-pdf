@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-visufx",
+  "sections": [
+    {
+      "id": "q11.0",
+      "title": "11 Visual effects",
+      "level": 1,
+      "text_sha256": "e146746f5443e87fffe6b57a50e83d49177f45c6415758ef5fbd74fe46b144d6",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visufx.q11-0"
+        ]
+      }
+    },
+    {
+      "id": "overflow-clipping",
+      "title": "11.1 Overflow and clipping",
+      "level": 2,
+      "text_sha256": "48a2da5a81600dfce4108439c5c6de69a9370c6538d7eee80968dc662e27cab1",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visufx.overflow-clipping"
+        ]
+      }
+    },
+    {
+      "id": "overflow",
+      "title": "11.1.1 Overflow: the 'overflow' property",
+      "level": 3,
+      "text_sha256": "d6c67bb7f69471daf26b27a35813edc189e3cbcd46f0fa307c66239355320663",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visufx.overflow",
+          "css21-visufx.overflow-clause-8561c4967f86",
+          "css21-visufx.overflow-clause-cca2516ebb1d",
+          "css21-visufx.overflow-clause-26573c45d869",
+          "css21-visufx.overflow-clause-51f80d6b411a",
+          "css21-visufx.overflow-clause-00ff22f576b9",
+          "css21-visufx.overflow-clause-d7bb61b5c55f",
+          "css21-visufx.overflow-clause-10c82295cf23",
+          "css21-visufx.overflow-clause-3834bdd7e8bd",
+          "css21-visufx.overflow-clause-a305e7bc0bac",
+          "css21-visufx.overflow-clause-62e346cbb8a0"
+        ]
+      }
+    },
+    {
+      "id": "clipping",
+      "title": "11.1.2 Clipping: the 'clip' property",
+      "level": 3,
+      "text_sha256": "209fd8363fb6b6b2c46a4cf6b54edab5eabc82f8eff8e7a4cb6f697b403fbe71",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visufx.clipping",
+          "css21-visufx.clipping-clause-905c37e8b2dc",
+          "css21-visufx.clipping-clause-cca2516ebb1d",
+          "css21-visufx.clipping-clause-ea6f4c2d4232",
+          "css21-visufx.clipping-clause-e51f9da51610",
+          "css21-visufx.clipping-clause-75b2c71ae8c7",
+          "css21-visufx.clipping-clause-44119dac367a"
+        ]
+      }
+    },
+    {
+      "id": "visibility",
+      "title": "11.2 Visibility: the 'visibility' property",
+      "level": 2,
+      "text_sha256": "bfa2b8d82620cea63b145544842d78ff21e972f1d4ac43915bb1ed1a5c3f3a37",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visufx.visibility",
+          "css21-visufx.visibility-clause-a98320c2910c",
+          "css21-visufx.visibility-clause-cca2516ebb1d",
+          "css21-visufx.visibility-clause-75bc4e621348"
+        ]
+      }
+    }
+  ]
+}

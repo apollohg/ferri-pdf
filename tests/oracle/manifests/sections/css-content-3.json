@@ -1,0 +1,737 @@
+{
+  "schema_version": 1,
+  "source_id": "css-content-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Generated Content Module Level 3",
+      "level": 1,
+      "text_sha256": "ea4729ed108bfb6d068c16c28366591ca0da52ebe1eb06cb788f08158d1efbe4",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "ab31bc9b06fe1214d846b95a02af1a984fcf619554a858ba5348ed9bea3c45b3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "887b4183938d956361c3292ffb1336ebb29f40268bc1eb36fa8bc059a3d032cc",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "b049b26f06bc0e39fa8bd19d536b3ef5de30315de75278a59d110c3856f2cb63",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "Introduction",
+      "level": 2,
+      "text_sha256": "634f57173e7235056150648b24ea3e54e85f4049099c94b6cf244ae3a2cf832f",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.values"
+        ]
+      }
+    },
+    {
+      "id": "content-property",
+      "title": "1. Inserting and Replacing Content: the content property",
+      "level": 2,
+      "text_sha256": "acaa951da47b64d5c9b05347ecd17f942be610a93ce29cb84736b4f6bcd110df",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.content-property",
+          "css-content-3.content-property-clause-cca2516ebb1d",
+          "css-content-3.content-property-clause-37ee7a55b49e",
+          "css-content-3.content-property-clause-1f9ec3d7bb2f",
+          "css-content-3.content-property-clause-52a747376c2e",
+          "css-content-3.content-property-clause-4b8cefc02e15",
+          "css-content-3.content-property-clause-af343a5f17b1",
+          "css-content-3.content-property-clause-24824ec67e98",
+          "css-content-3.content-property-clause-8b49869bcdec",
+          "css-content-3.content-property-clause-f4c69fad9d00",
+          "css-content-3.content-property-clause-82bfbf624433",
+          "css-content-3.content-property-clause-85ddc9c53640",
+          "css-content-3.content-property-clause-6539f65c035c",
+          "css-content-3.content-property-clause-9686413ccb1d",
+          "css-content-3.content-property-clause-4f9629100642",
+          "css-content-3.content-property-clause-7d4991c5486d"
+        ]
+      }
+    },
+    {
+      "id": "accessibility",
+      "title": "1.1. Accessibility of Generated Content",
+      "level": 3,
+      "text_sha256": "a5bfbd17aa026cce54211625e361a61f7a8d13ac631e189744a2bf0b8ee7d933",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.accessibility",
+          "css-content-3.accessibility-clause-25125aa3b08e"
+        ]
+      }
+    },
+    {
+      "id": "alt",
+      "title": "1.2. Alternative Text for Accessibility",
+      "level": 3,
+      "text_sha256": "331f69d852e013d10297342b45efd89090e970e3352b996abd6951e42fbe2070",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.alt",
+          "css-content-3.alt-clause-b0cda517100d"
+        ]
+      }
+    },
+    {
+      "id": "content-values",
+      "title": "2. Generated Content Values: the <content-list> type",
+      "level": 2,
+      "text_sha256": "3af1bed3f34dffd7451371e3083040749ae370d68214a14fd985803e93ac617b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.content-values"
+        ]
+      }
+    },
+    {
+      "id": "strings",
+      "title": "2.1. Basic Strings: <string> and <attr()> values",
+      "level": 3,
+      "text_sha256": "1eb28dc88ee62539d0e6c880c6c07526926a8f0948432604e847c2c2e9833dda",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.strings"
+        ]
+      }
+    },
+    {
+      "id": "content-uri",
+      "title": "2.2. 2D Images: <image> values",
+      "level": 3,
+      "text_sha256": "1fbc304dfc9aca4945f63686d945069828489f3c8e179a2b1ba4552e609a3864",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.content-uri",
+          "css-content-3.content-uri-clause-98f004290024",
+          "css-content-3.content-uri-clause-53961f0b5f52",
+          "css-content-3.content-uri-clause-549ee313b049"
+        ]
+      }
+    },
+    {
+      "id": "element-content",
+      "title": "2.3. Elemental Content: the contents keyword",
+      "level": 3,
+      "text_sha256": "085ff914cdf5caaa44dfc244ca0a6972c33af9bb05aa8b25c78fbe8543866e56",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.element-content",
+          "css-content-3.element-content-clause-938ab5095af7",
+          "css-content-3.element-content-clause-bdb7fbfcfa1a",
+          "css-content-3.element-content-clause-2fbc13aefff5",
+          "css-content-3.element-content-clause-6a3bfc8a6e59"
+        ]
+      }
+    },
+    {
+      "id": "quotes",
+      "title": "2.4. Quotation Marks",
+      "level": 3,
+      "text_sha256": "212f029a827122ae8df2e8efd588cad4446f8714f90613b15c3088b8fe63ebb5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.quotes"
+        ]
+      }
+    },
+    {
+      "id": "quotes-property",
+      "title": "2.4.1. Quotation Mark System: the quotes property",
+      "level": 4,
+      "text_sha256": "974c0b0150e65dc800eb855d0141a43acf375718a6a85a3b05b38be21d05b59c",
+      "clause_count": 71,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.quotes-property",
+          "css-content-3.quotes-property-clause-cca2516ebb1d",
+          "css-content-3.quotes-property-clause-4b8cefc02e15",
+          "css-content-3.quotes-property-clause-790981e77c6e",
+          "css-content-3.quotes-property-clause-48bbd2f28fd4"
+        ]
+      }
+    },
+    {
+      "id": "quote-values",
+      "title": "2.4.2. Inserting Quotation Marks: the *-quote keywords",
+      "level": 4,
+      "text_sha256": "fde144c2cba90e62566d5064d5d965f9edf67e3532f3316f30de130d1c24f403",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.quote-values",
+          "css-content-3.quote-values-clause-5b2af87875d2",
+          "css-content-3.quote-values-clause-9dcc53d474b8"
+        ]
+      }
+    },
+    {
+      "id": "leaders",
+      "title": "2.5. Leaders",
+      "level": 3,
+      "text_sha256": "2392a15278cfb37f1cf5a70360cce4ccc9bcf4c140cff4c9ad18cf3a9d98216a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.leaders"
+        ]
+      }
+    },
+    {
+      "id": "leader-function",
+      "title": "2.5.1. The leader() function",
+      "level": 4,
+      "text_sha256": "7cf0b53e3cec12ee02194034488a1fd83c4be14e43bf5aef28bb99fa539e36a2",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.leader-function"
+        ]
+      }
+    },
+    {
+      "id": "leader-rules",
+      "title": "2.5.2. Rendering leaders",
+      "level": 4,
+      "text_sha256": "0f779054e30838271dd1da864585316117e4549cefaf92d8e392954f640c8f7e",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.leader-rules",
+          "css-content-3.leader-rules-clause-2b3b5ae51668",
+          "css-content-3.leader-rules-clause-92b6764c212a",
+          "css-content-3.leader-rules-clause-5ee30b5648b5",
+          "css-content-3.leader-rules-clause-ae9d95b1fc3e"
+        ]
+      }
+    },
+    {
+      "id": "leader-alignment",
+      "title": "2.5.3. Procedure for rendering leaders",
+      "level": 4,
+      "text_sha256": "6a21a5552a08a7269aa77b96b3de7108871afd1bc8076fd6a4955b7a7ae5177c",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.leader-alignment"
+        ]
+      }
+    },
+    {
+      "id": "cross-references",
+      "title": "2.6. Cross References",
+      "level": 3,
+      "text_sha256": "109e730d2b03c01f16cf93ab56e4ac47195348d3a20c91f5db7650ad4ddfdce1",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.cross-references"
+        ]
+      }
+    },
+    {
+      "id": "target-counter",
+      "title": "2.6.1. The target-counter() function",
+      "level": 4,
+      "text_sha256": "6cac39aa942478d1f71fb811b7cfa1ece84d50a30176229ff691acef05a16eff",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.target-counter",
+          "css-content-3.target-counter-clause-9e32c7fbef83",
+          "css-content-3.target-counter-clause-0174f6cfdfe3",
+          "css-content-3.target-counter-clause-3838bb5e44b5",
+          "benchmark-output.bench-books-small.resolved-contents",
+          "benchmark-output.bench-books-medium.resolved-contents",
+          "benchmark-output.bench-books-large.resolved-contents"
+        ]
+      }
+    },
+    {
+      "id": "target-counters",
+      "title": "2.6.2. The target-counters() function",
+      "level": 4,
+      "text_sha256": "e46b264a263a18e80216fc3bad201d41a19459d327c69b9f01b32bea368d1ed9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.target-counters"
+        ]
+      }
+    },
+    {
+      "id": "target-text",
+      "title": "2.6.3. The target-text() function",
+      "level": 4,
+      "text_sha256": "0a5dae040f977a11929b3113396e725b08e76167a39b2676e9a36e6a6edb6635",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.target-text"
+        ]
+      }
+    },
+    {
+      "id": "named-strings",
+      "title": "2.7. Named Strings",
+      "level": 3,
+      "text_sha256": "2d33c228469559fd083d40db11686676a04de0663d62ff4fdb241a67e8d5bdbb",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.named-strings"
+        ]
+      }
+    },
+    {
+      "id": "string-set",
+      "title": "2.7.1. Naming Strings: the string-set property",
+      "level": 4,
+      "text_sha256": "bdbca133acef089f5f2339e9f571380f187efeed17d0243364bf6a7d24add423",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.string-set",
+          "css-content-3.string-set-clause-cca2516ebb1d",
+          "css-content-3.string-set-clause-4b8cefc02e15",
+          "css-content-3.string-set-clause-5da841eeb982",
+          "css-content-3.string-set-clause-cfc15b5c6001",
+          "css-content-3.string-set-clause-cd769c444c9b"
+        ]
+      }
+    },
+    {
+      "id": "string-function",
+      "title": "2.7.2. Inserting Named Strings: the string() function",
+      "level": 4,
+      "text_sha256": "863f58bbb5b8076fb13ef8dc56fb0292bb19182bddf4fb3d090de67ac4555ce5",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.string-function",
+          "css-content-3.string-function-clause-6a3be73a34a2"
+        ]
+      }
+    },
+    {
+      "id": "content-function",
+      "title": "2.7.3. The content() function",
+      "level": 4,
+      "text_sha256": "da5c90708e884a9614d778f26259989fe4e68b63c392fc4e7b4402602dbdc1bc",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.content-function"
+        ]
+      }
+    },
+    {
+      "id": "counters",
+      "title": "2.8. Automatic Counters and Numbering",
+      "level": 3,
+      "text_sha256": "3259a7c54ef62fd5107b099711d73a888b526a11488240a7f3de1715b3a48772",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.counters",
+          "css-content-3.counters-clause-1bd2b61580b7"
+        ]
+      }
+    },
+    {
+      "id": "bookmark-generation",
+      "title": "3. Bookmarks",
+      "level": 2,
+      "text_sha256": "46c27319f8761d355c098e039be5f5f88e1fe22bf18f63d79fd7755b42e5e924",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.bookmark-generation",
+          "css-content-3.bookmark-generation-clause-c7e714fb340b",
+          "css-content-3.bookmark-generation-clause-0f33b7ed22d6"
+        ]
+      }
+    },
+    {
+      "id": "bookmark-level",
+      "title": "3.1. Setting a Bookmark: the bookmark-level property",
+      "level": 3,
+      "text_sha256": "fe910bdd39e52299adec3d09cbf51e01a5580974380c3f5e0f2c02ebf2b4849d",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.bookmark-level",
+          "css-content-3.bookmark-level-clause-68154d8f1684",
+          "css-content-3.bookmark-level-clause-cca2516ebb1d",
+          "css-content-3.bookmark-level-clause-473a90cc152b",
+          "css-content-3.bookmark-level-clause-dded592bf957",
+          "css-content-3.bookmark-level-clause-ef3ba9206aff",
+          "css-content-3.bookmark-level-clause-a678185a7853"
+        ]
+      }
+    },
+    {
+      "id": "bookmark-label",
+      "title": "3.2. Labelling a Bookmark: the bookmark-label property",
+      "level": 3,
+      "text_sha256": "9ab6303ae76d1ecc99b7e5016d44fb129daf680d0724e304eba63b9122043b24",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.bookmark-label",
+          "css-content-3.bookmark-label-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "bookmark-state",
+      "title": "3.3. Initial Bookmark Toggle State: the bookmark-state property",
+      "level": 3,
+      "text_sha256": "1226bf41585bd4e6bd5a0dc87e48b3a307e0126a6bce1acc45383fac4c721dfb",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.bookmark-state",
+          "css-content-3.bookmark-state-clause-37ae3d917eea",
+          "css-content-3.bookmark-state-clause-cca2516ebb1d",
+          "css-content-3.bookmark-state-clause-e835c4b08b75",
+          "css-content-3.bookmark-state-clause-eea9e0e0d2f7"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "4. Changes",
+      "level": 2,
+      "text_sha256": "c05ba014afd1762688ca87ed40d4bdfd50a57125c83124ce79227c3a265752bb",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "Acknowledgements",
+      "level": 2,
+      "text_sha256": "5729df8d2ad312e1c3a928f352144b43d12fac2ed1696c39ad0bb67bc8652a36",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.security"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.w3c-conventions",
+          "css-content-3.w3c-conventions-clause-5c98c879f070",
+          "css-content-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.w3c-conformance-classes",
+          "css-content-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-content-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.w3c-partial",
+          "css-content-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.w3c-testing",
+          "css-content-3.w3c-testing-clause-1e0fff369221",
+          "css-content-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "1230d6d6d3fb4e56d2982907701bf3208dcefde7a44d1f14608d52433f291d91",
+      "clause_count": 61,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "56fc953a3eae647b96ee09e89cfa4881fec4120dafe755a30859f4b5b784fb1c",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "786855465cd64672e804562be0f6e0f3b9b695624d1796379d2ecf50766a3fc0",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "9628678a732e36c4c9c4b1ace1ee5875b966c9e05870f164b72def01acce0315",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "1a454fca2c360aa04b6b3e805bb6e0f38b5772e727b4ae5d1a16e9efa2cb8661",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.property-index",
+          "css-content-3.property-index-clause-4b59fe755d34"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "cf91953e856c0a8ea8755edd83d4786ecc713b8810e0d61070555732e7f68a55",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-content-3.issues-index"
+        ]
+      }
+    }
+  ]
+}

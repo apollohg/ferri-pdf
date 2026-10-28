@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "source_id": "xml-stylesheet",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Associating Style Sheets with XML documents 1.0 (Second Edition)",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.title"
+        ]
+      }
+    },
+    {
+      "id": "w3c-doctype",
+      "title": "W3C Recommendation 28 October 2010",
+      "level": 2,
+      "text_sha256": "028e4eacf670469b88753c849ac681e71f5c9bbcd845f82372ad16bce57bfb50",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.w3c-doctype"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "b133d363ce4a145875c7b4110d4fdd31621653793a9b66f3be3140cac1358cbe",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of This Document",
+      "level": 2,
+      "text_sha256": "70427412aeae45b455134c0b98177a66c816d88c21cd99976a1a8307d00743df",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "f98a7d8f75dcf78ec08d2c279299efe9c4e05368a284e2c4ae3e06c619c6f665",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.contents"
+        ]
+      }
+    },
+    {
+      "id": "appendices",
+      "title": "Appendices",
+      "level": 3,
+      "text_sha256": "8891e31e33dfd5165ae723fe334d3ce78bdefb93d6f9ebfdfd1c547dbdc33406",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.appendices"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "b61f851211866a837595e41dfdf0d52860939db9b8265933421c891e44eb1e11",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.introduction"
+        ]
+      }
+    },
+    {
+      "id": "conformance-requirements",
+      "title": "2 Conformance requirements",
+      "level": 2,
+      "text_sha256": "b08221d5b5960ae4683026cefdaff34d1303304f20215fec9bf5f5244a6dd567",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.conformance-requirements",
+          "xml-stylesheet.conformance-requirements-clause-eddee0053742",
+          "xml-stylesheet.conformance-requirements-clause-218053bbda66",
+          "xml-stylesheet.conformance-requirements-clause-50001c08caa9",
+          "xml-stylesheet.conformance-requirements-clause-34b9ea22c153",
+          "xml-stylesheet.conformance-requirements-clause-e616ab73cb9d",
+          "xml-stylesheet.conformance-requirements-clause-eea4588a122f",
+          "xml-stylesheet.conformance-requirements-clause-b6c7a37a0607"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-attributes",
+      "title": "3 Pseudo-attributes",
+      "level": 2,
+      "text_sha256": "c92acc349499e76cdafe2770321de53fc23f39138fde19e97a74ae981099d230",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.pseudo-attributes"
+        ]
+      }
+    },
+    {
+      "id": "d0e323",
+      "title": "Productions for strings with pseudo-attributes",
+      "level": 5,
+      "text_sha256": "c2a36cac45ef577861d02dc78ab30d60a7d49b18e7d834927f974bcb66c306b1",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.d0e323"
+        ]
+      }
+    },
+    {
+      "id": "the-xml-stylesheet-processing-instruction",
+      "title": "4 The xml-stylesheet processing instruction",
+      "level": 2,
+      "text_sha256": "3eacdf59652e8800873f41810cdddf858b938910f9ed3a62d6375b1c3264cc8b",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.the-xml-stylesheet-processing-instruction",
+          "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-382a9dc5dcf7",
+          "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-fea7790c220c",
+          "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-2bbb88830a5e",
+          "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-16499b63f14c",
+          "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-a41f7a50c831"
+        ]
+      }
+    },
+    {
+      "id": "d0e611",
+      "title": "Production for xml-stylesheet processing instruction",
+      "level": 5,
+      "text_sha256": "5f922b9218d57ef7c0532d283b37723b48d9ee103f2d3790543583a43726907d",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.d0e611",
+          "xml-stylesheet.d0e611-clause-102443d35393",
+          "xml-stylesheet.d0e611-clause-b4b697774eff",
+          "xml-stylesheet.d0e611-clause-ee765409b3db",
+          "xml-stylesheet.d0e611-clause-3dd064888f96",
+          "xml-stylesheet.d0e611-clause-f0b4249faf0c",
+          "xml-stylesheet.d0e611-clause-ab0129c9626b",
+          "xml-stylesheet.d0e611-clause-c12325fc227a",
+          "xml-stylesheet.d0e611-clause-942d46e22413",
+          "xml-stylesheet.d0e611-clause-469478808d59",
+          "xml-stylesheet.d0e611-clause-db1e3b850d19"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "A References",
+      "level": 2,
+      "text_sha256": "9228880c904a74d223b9c7eb3c04621458e3296c0fa76665f08310b45ca4a7b4",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.references"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "B Changes since the first edition",
+      "level": 2,
+      "text_sha256": "05ce6898dd0753e731c349627dc378ee0ce00d517d846a7bf9d865216605b5a3",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml-stylesheet.changes"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,2789 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "benchmark-output.bench-invoices-small.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-small",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-invoices-small.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-small",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-invoices-small.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-small",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-invoices-medium.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-medium",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-invoices-medium.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-medium",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-invoices-medium.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-medium",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-invoices-large.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-large",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-invoices-large.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-large",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-invoices-large.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-large",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-small.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-small",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-small.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-small",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-small.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-small",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-small.section-page-count",
+      "family": "benchmark-output",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-between"
+      ],
+      "behaviour": "Each section fits one page and forces a break before the next.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-small",
+          "assertion_id": "section-page-count"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-medium.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-medium",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-medium.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-medium",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-medium.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-medium",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-medium.section-page-count",
+      "family": "benchmark-output",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-between"
+      ],
+      "behaviour": "Each section fits one page and forces a break before the next.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-medium",
+          "assertion_id": "section-page-count"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-large.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-large",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-large.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-large",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-large.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-large",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-large.section-page-count",
+      "family": "benchmark-output",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-between"
+      ],
+      "behaviour": "Each section fits one page and forces a break before the next.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-large",
+          "assertion_id": "section-page-count"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-small.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-small",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-small.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-small",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-small.running-page-number",
+      "family": "benchmark-output",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "running-headers-and-footers"
+      ],
+      "behaviour": "Every page has the declared generated page-number footer.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-small",
+          "assertion_id": "running-page-number"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-small.resolved-contents",
+      "family": "benchmark-output",
+      "source_id": "css-content-3",
+      "sections": [
+        "target-counter"
+      ],
+      "behaviour": "The contents target counters resolve forced chapter starts to pages 2 through N+1; no literal expected page numbers occur in the HTML.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-small",
+          "assertion_id": "resolved-contents"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-small.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-small",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-medium.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-medium",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-medium.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-medium",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-medium.running-page-number",
+      "family": "benchmark-output",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "running-headers-and-footers"
+      ],
+      "behaviour": "Every page has the declared generated page-number footer.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-medium",
+          "assertion_id": "running-page-number"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-medium.resolved-contents",
+      "family": "benchmark-output",
+      "source_id": "css-content-3",
+      "sections": [
+        "target-counter"
+      ],
+      "behaviour": "The contents target counters resolve forced chapter starts to pages 2 through N+1; no literal expected page numbers occur in the HTML.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-medium",
+          "assertion_id": "resolved-contents"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-medium.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-medium",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-large.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-large",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-large.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-large",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-large.running-page-number",
+      "family": "benchmark-output",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "running-headers-and-footers"
+      ],
+      "behaviour": "Every page has the declared generated page-number footer.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-large",
+          "assertion_id": "running-page-number"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-large.resolved-contents",
+      "family": "benchmark-output",
+      "source_id": "css-content-3",
+      "sections": [
+        "target-counter"
+      ],
+      "behaviour": "The contents target counters resolve forced chapter starts to pages 2 through N+1; no literal expected page numbers occur in the HTML.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-large",
+          "assertion_id": "resolved-contents"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-large.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-large",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-small.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-small",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-small.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-small",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-small.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-small",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-medium.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-medium",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-medium.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-medium",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-medium.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-medium",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-large.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-large",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-large.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-large",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-large.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-large",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-small.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-small",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-small.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-small",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-small.repeated-table-header",
+      "family": "benchmark-output",
+      "source_id": "css-tables-3",
+      "sections": [
+        "repeated-headers"
+      ],
+      "behaviour": "The header must appear on every page occupied by the long table.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-small",
+          "assertion_id": "repeated-table-header"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-small.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-small",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-medium.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-medium",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-medium.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-medium",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-medium.repeated-table-header",
+      "family": "benchmark-output",
+      "source_id": "css-tables-3",
+      "sections": [
+        "repeated-headers"
+      ],
+      "behaviour": "The header must appear on every page occupied by the long table.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-medium",
+          "assertion_id": "repeated-table-header"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-medium.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-medium",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-large.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-large",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-large.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-large",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-large.repeated-table-header",
+      "family": "benchmark-output",
+      "source_id": "css-tables-3",
+      "sections": [
+        "repeated-headers"
+      ],
+      "behaviour": "The header must appear on every page occupied by the long table.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-large",
+          "assertion_id": "repeated-table-header"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-large.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-large",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-small.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-small",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-small.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-small",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-small.visible-image-region",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-img-element"
+      ],
+      "behaviour": "First raster tile has deterministic dark content in the declared first-image rectangle.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-small",
+          "assertion_id": "visible-image-region"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-small.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-small",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-medium.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-medium",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-medium.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-medium",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-medium.visible-image-region",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-img-element"
+      ],
+      "behaviour": "First raster tile has deterministic dark content in the declared first-image rectangle.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-medium",
+          "assertion_id": "visible-image-region"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-medium.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-medium",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-large.page-box",
+      "family": "benchmark-output",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit workload page size.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-large",
+          "assertion_id": "page-box"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-large.font-faces",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Only the supplied explicit regular and bold fonts may supply workload text; PDF faces must be embedded.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-large",
+          "assertion_id": "font-faces"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-large.visible-image-region",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-img-element"
+      ],
+      "behaviour": "First raster tile has deterministic dark content in the declared first-image rectangle.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-large",
+          "assertion_id": "visible-image-region"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-large.complete-document-text",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "All independently generated row, passage, image or language identifiers and totals must survive in the PDF; omitted middle content is a failure.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-large",
+          "assertion_id": "complete-document-text"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-invoices-small.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-small",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-invoices-medium.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-medium",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-invoices-large.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-invoices-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-invoices-large",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-small.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-small",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-medium.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-medium",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-reports-large.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-reports-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-reports-large",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-small.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-small",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-medium.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-medium",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-books-large.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-books-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-books-large",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-small.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-small",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-small.primary-greek-face",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-matching-algorithm"
+      ],
+      "behaviour": "Greek glyphs must use the explicitly supplied STIX primary face; merely embedding an unused font cannot pass.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-small",
+          "assertion_id": "primary-greek-face"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-small.fallback-hebrew-arabic-face",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-matching-algorithm"
+      ],
+      "behaviour": "STIX lacks the selected Hebrew and Arabic characters; their actual glyphs must come from the explicitly supplied DejaVu fallback face.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-small",
+          "assertion_id": "fallback-hebrew-arabic-face"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-medium.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-medium",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-medium.primary-greek-face",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-matching-algorithm"
+      ],
+      "behaviour": "Greek glyphs must use the explicitly supplied STIX primary face; merely embedding an unused font cannot pass.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-medium",
+          "assertion_id": "primary-greek-face"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-medium.fallback-hebrew-arabic-face",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-matching-algorithm"
+      ],
+      "behaviour": "STIX lacks the selected Hebrew and Arabic characters; their actual glyphs must come from the explicitly supplied DejaVu fallback face.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-medium",
+          "assertion_id": "fallback-hebrew-arabic-face"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-large.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-large",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-large.primary-greek-face",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-matching-algorithm"
+      ],
+      "behaviour": "Greek glyphs must use the explicitly supplied STIX primary face; merely embedding an unused font cannot pass.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-large",
+          "assertion_id": "primary-greek-face"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-multilingual-large.fallback-hebrew-arabic-face",
+      "family": "benchmark-output",
+      "source_id": "css-fonts-3",
+      "sections": [
+        "font-matching-algorithm"
+      ],
+      "behaviour": "STIX lacks the selected Hebrew and Arabic characters; their actual glyphs must come from the explicitly supplied DejaVu fallback face.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-multilingual-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-multilingual-large",
+          "assertion_id": "fallback-hebrew-arabic-face"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-small.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-small",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-medium.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-medium",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-tables-large.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-tables-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-tables-large",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-small.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-small",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-small.all-image-placements",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-img-element"
+      ],
+      "behaviour": "Each unique and reused source raster must be painted at its explicit size, in order. Every SVG must retain vector output and paint the source-derived circle, triangle and background sample colours; flattening adds a forbidden raster placement.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-small"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-small",
+          "assertion_id": "all-image-placements"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-medium.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-medium",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-medium.all-image-placements",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-img-element"
+      ],
+      "behaviour": "Each unique and reused source raster must be painted at its explicit size, in order. Every SVG must retain vector output and paint the source-derived circle, triangle and background sample colours; flattening adds a forbidden raster placement.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-medium"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-medium",
+          "assertion_id": "all-image-placements"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-large.complete-body-content",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-p-element"
+      ],
+      "behaviour": "Every body word and numeric cell value authored in the fixed input must occur at least as often in the PDF. Generated headers, footers and repeated table headings may add words; they cannot replace missing body content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-large",
+          "assertion_id": "complete-body-content"
+        }
+      ]
+    },
+    {
+      "id": "benchmark-output.bench-images-large.all-image-placements",
+      "family": "benchmark-output",
+      "source_id": "html",
+      "sections": [
+        "the-img-element"
+      ],
+      "behaviour": "Each unique and reused source raster must be painted at its explicit size, in order. Every SVG must retain vector output and paint the source-derived circle, triangle and background sample colours; flattening adds a forbidden raster placement.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static print output workload contract."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "bench-images-large"
+      ],
+      "priority": "benchmark-comparability",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "bench-images-large",
+          "assertion_id": "all-image-placements"
+        }
+      ]
+    }
+  ]
+}

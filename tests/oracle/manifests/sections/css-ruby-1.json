@@ -1,0 +1,895 @@
+{
+  "schema_version": 1,
+  "source_id": "css-ruby-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Ruby Annotation Layout Module Level 1",
+      "level": 1,
+      "text_sha256": "8431ddbce6d9ed6cda18051b7899a3490e5a152e9b74129bf3e73d79d111305d",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "0ce4c656d10b9b341e7d80955bd2d9eed75a3737655af8cbfc738c96d61687ef",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "a1d87c52ac7a02bf90c5a76bd674e7cf9de8f8c5ee93b8b8e5d177f70ffdd307",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "f8522a7088a0092bc75fb92d45cd153363258edd510c0789ba1958e23e9b459b",
+      "clause_count": 60,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "ruby-def",
+      "title": "1.1. What is ruby?",
+      "level": 3,
+      "text_sha256": "82e2224ee37a1da36481c01620df1e8102079d421d44c34dc49a60e6c52cf5b5",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.ruby-def"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.2. Module interactions",
+      "level": 3,
+      "text_sha256": "8deb886b4e9851b28fad664bea17cc07232359b74c9b3ad51eae5a0609576ce4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.placement",
+          "css-ruby-1.placement-clause-1453762527ef"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.3. Value Definitions",
+      "level": 3,
+      "text_sha256": "6acb6e79978cad3cb3c439873cfefebabf39918973766e88cd4be4dddbcb786c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.values"
+        ]
+      }
+    },
+    {
+      "id": "diagram-conventions",
+      "title": "1.4. Diagram conventions",
+      "level": 3,
+      "text_sha256": "45655a8d6562fe6b2431a472b42865d3eaf6d2039c4ec23fc20ccb301c7359ba",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.diagram-conventions"
+        ]
+      }
+    },
+    {
+      "id": "ruby-model",
+      "title": "2. Ruby Box Model",
+      "level": 2,
+      "text_sha256": "97cd19b2837cb819535132b7d4c9aba81e2d63a26fb24fb574f9d421195665a4",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.ruby-model"
+        ]
+      }
+    },
+    {
+      "id": "ruby-display",
+      "title": "2.1. Ruby-specific display Values",
+      "level": 3,
+      "text_sha256": "31210f21c05708c161f74b8349ff1a3a780c6123ca07f42655e3c5623ae9d62c",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.ruby-display",
+          "css-ruby-1.ruby-display-clause-a8cff2046a5f",
+          "css-ruby-1.ruby-display-clause-3b11b892066d",
+          "css-ruby-1.ruby-display-clause-89cd3f4c3e9a",
+          "css-ruby-1.ruby-display-clause-57900c283145"
+        ]
+      }
+    },
+    {
+      "id": "formatting-context",
+      "title": "2.1.1. The Ruby Formatting Context",
+      "level": 4,
+      "text_sha256": "85340e93c0b7c1215b4b54aa4ab5df8c035953383b32bbffc4575ca49be3e511",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.formatting-context"
+        ]
+      }
+    },
+    {
+      "id": "block-ruby",
+      "title": "2.1.2. Non-Inline Ruby",
+      "level": 4,
+      "text_sha256": "dd95345da06f455816329a08425f699c6c7e15c7dbffae68489da572d4a71719",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.block-ruby",
+          "css-ruby-1.block-ruby-clause-42f28b1bef41"
+        ]
+      }
+    },
+    {
+      "id": "box-fixup",
+      "title": "2.2. Anonymous Ruby Box Generation",
+      "level": 3,
+      "text_sha256": "6cc069927e99a28a3fa335ac2bb96ed896169df6d0b3e5e72233433e8caf3149",
+      "clause_count": 54,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.box-fixup",
+          "css-ruby-1.box-fixup-clause-50fc549e2cf4",
+          "css-ruby-1.box-fixup-clause-4627db14eed5",
+          "css-ruby-1.box-fixup-clause-254b1f34eda9"
+        ]
+      }
+    },
+    {
+      "id": "ruby-pairing",
+      "title": "2.3. Annotation Pairing",
+      "level": 3,
+      "text_sha256": "91927b7a818a3c4a6f9a6189437fa98a02d8bc811b6ca40fa7e892f1a7f1e54d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.ruby-pairing"
+        ]
+      }
+    },
+    {
+      "id": "segment-pairing",
+      "title": "2.3.1. Segment Pairing and Annotation Levels",
+      "level": 4,
+      "text_sha256": "e044c0aaeddc6a57fbaa6546c1a9ef89225ab1141b75b0c5d6a04f5f2178ed2f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.segment-pairing"
+        ]
+      }
+    },
+    {
+      "id": "base-annotation-pairing",
+      "title": "2.3.2. Unit Pairing and Spanning Annotations",
+      "level": 4,
+      "text_sha256": "42f92f7b90570046c56ccbd7c84ad0910de1eca05b1dba71b9a9f8c54922a683",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.base-annotation-pairing",
+          "css-ruby-1.base-annotation-pairing-clause-131ce9b90a3b"
+        ]
+      }
+    },
+    {
+      "id": "hiding",
+      "title": "2.4. Hiding Annotations: visibility: collapse and auto-hidden ruby",
+      "level": 3,
+      "text_sha256": "2d93c405691f2a9ef309a5ab3e9d62164e4599d3c803f7f22be0e746fba13ad2",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.hiding",
+          "css-ruby-1.hiding-clause-3842301c8147",
+          "css-ruby-1.hiding-clause-e41bc6e3b90b"
+        ]
+      }
+    },
+    {
+      "id": "white-space",
+      "title": "2.5. White Space Collapsing",
+      "level": 3,
+      "text_sha256": "1dbf61744d39cb7157884cc37889f19b7b46b275908d8c666a6e3f5d6f4e2269",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.white-space"
+        ]
+      }
+    },
+    {
+      "id": "ruby-layout",
+      "title": "3. Ruby Layout",
+      "level": 2,
+      "text_sha256": "57182b12fec7ec5b13aeb0ee7d725ebc65417f50098bca636b97004e3702a707",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.ruby-layout"
+        ]
+      }
+    },
+    {
+      "id": "interlinear-layout",
+      "title": "3.1. Interlinear Ruby Layout",
+      "level": 3,
+      "text_sha256": "21f1ee9d9158bcb4352ce2067d7b98a74c696608e35402ca27502d3df2a33887",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.interlinear-layout"
+        ]
+      }
+    },
+    {
+      "id": "interlinear-inline",
+      "title": "3.1.1. Inline-axis Interlinear Layout",
+      "level": 4,
+      "text_sha256": "a224957586b02c7590dba21b1ea0a6ec757f1b8dc827a1767c8e69fa020aa4d1",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.interlinear-inline"
+        ]
+      }
+    },
+    {
+      "id": "interlinear-block",
+      "title": "3.1.2. Block-axis Interlinear Layout",
+      "level": 4,
+      "text_sha256": "ed2c1a278cf159f16da82c78308dac6e4a14d9df14b6730eb3407b2478ca43b5",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.interlinear-block",
+          "css-ruby-1.interlinear-block-clause-cb3765df02c6"
+        ]
+      }
+    },
+    {
+      "id": "inter-character-layout",
+      "title": "3.2. Inter-character Ruby Layout",
+      "level": 3,
+      "text_sha256": "07227af9e36179c969e1b6b36667d942b31695ba3952774a8a107bf170e8a751",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.inter-character-layout"
+        ]
+      }
+    },
+    {
+      "id": "box-style",
+      "title": "3.3. Styling Ruby Boxes",
+      "level": 3,
+      "text_sha256": "9a014eb56bd5bc70558c4af9f63462083b82a140aa1790b3888a78e9fa5508ba",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.box-style",
+          "css-ruby-1.box-style-clause-95454da0dda0",
+          "css-ruby-1.box-style-clause-fe3baeb0cbd8",
+          "css-ruby-1.box-style-clause-9c6a79c83186"
+        ]
+      }
+    },
+    {
+      "id": "line-breaks",
+      "title": "3.4. Breaking Across Lines",
+      "level": 3,
+      "text_sha256": "044c44c9b74bbdc9ac409e21ff67afd8e1ffbee580c667b314bdd59b95e2a46f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.line-breaks",
+          "css-ruby-1.line-breaks-clause-6c4f323c229d"
+        ]
+      }
+    },
+    {
+      "id": "break-between",
+      "title": "3.4.1. Breaking Between Bases",
+      "level": 4,
+      "text_sha256": "1dbe3d4a78235a9aecf8761189bdce51ea90fcbf873e2de4c371d710b05cf08c",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.break-between",
+          "css-ruby-1.break-between-clause-8079d170e98d"
+        ]
+      }
+    },
+    {
+      "id": "break-within",
+      "title": "3.4.2. Breaking Within Bases",
+      "level": 4,
+      "text_sha256": "8c83647eb5234eb3eb51cce502916c659b125ce9af11003ca0d21ba72f417467",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.break-within"
+        ]
+      }
+    },
+    {
+      "id": "bidi",
+      "title": "3.5. Bidi Reordering",
+      "level": 3,
+      "text_sha256": "e9f3236f2f46d18e491a9e3beb773ddae7e7ebcfef71e7e10727acb5ce1e7415",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.bidi",
+          "css-ruby-1.bidi-clause-f825be37dd58",
+          "css-ruby-1.bidi-clause-5fa4afc82712",
+          "css-ruby-1.bidi-clause-069c95b742df",
+          "css-ruby-1.bidi-clause-4814e258faf1",
+          "css-ruby-1.bidi-clause-d50529a6eef3",
+          "css-ruby-1.bidi-clause-0711cbb89b2e",
+          "css-ruby-1.bidi-clause-cd7057a110dc"
+        ]
+      }
+    },
+    {
+      "id": "line-height",
+      "title": "3.6. Line Spacing",
+      "level": 3,
+      "text_sha256": "095e5b3dbc280ddf518e2ea1bb4f8fc413186100ba917300483de5be7a4eaddb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.line-height",
+          "css-ruby-1.line-height-clause-558a2b47c842",
+          "css-ruby-1.line-height-clause-85bfa73495b7",
+          "css-ruby-1.line-height-clause-b39788cb64a4"
+        ]
+      }
+    },
+    {
+      "id": "ruby-props",
+      "title": "4. Ruby Formatting Properties",
+      "level": 2,
+      "text_sha256": "95f7c2c1eb124140c101ff527eb6be5761409cae798c07e1d99f8462d1bbbf6a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.ruby-props"
+        ]
+      }
+    },
+    {
+      "id": "rubypos",
+      "title": "4.1. Ruby Positioning: the ruby-position property",
+      "level": 3,
+      "text_sha256": "b04805d6ce4c796f7d6c8e2b55b1f3992059718922146a95da371db21eed7577",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.rubypos",
+          "css-ruby-1.rubypos-clause-cca2516ebb1d",
+          "css-ruby-1.rubypos-clause-f6b400fc197a",
+          "css-ruby-1.rubypos-clause-662250c4747c",
+          "css-ruby-1.rubypos-clause-4999d648f7da",
+          "css-ruby-1.rubypos-clause-055bdcfdc88d",
+          "css-ruby-1.rubypos-clause-6ade7d623076"
+        ]
+      }
+    },
+    {
+      "id": "collapsed-ruby",
+      "title": "4.2. Sharing Annotation Space: the ruby-merge property",
+      "level": 3,
+      "text_sha256": "381a76ad505bd1837253092383740b02189bcff6603e03055e10c4bcbae93b6a",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.collapsed-ruby",
+          "css-ruby-1.collapsed-ruby-clause-cca2516ebb1d",
+          "css-ruby-1.collapsed-ruby-clause-50f0e3914023",
+          "css-ruby-1.collapsed-ruby-clause-c81880bedf2d",
+          "css-ruby-1.collapsed-ruby-clause-3c9b4907d805"
+        ]
+      }
+    },
+    {
+      "id": "ruby-align-property",
+      "title": "4.3. Ruby Text Distribution: the ruby-align property",
+      "level": 3,
+      "text_sha256": "d90124a7978d3b0bc45a2306c0484e65288f8278120a8c094413be5bcb346333",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.ruby-align-property",
+          "css-ruby-1.ruby-align-property-clause-cca2516ebb1d",
+          "css-ruby-1.ruby-align-property-clause-eeba118f6eac",
+          "css-ruby-1.ruby-align-property-clause-83f7c991ebf4",
+          "css-ruby-1.ruby-align-property-clause-b4b97d401dc9",
+          "css-ruby-1.ruby-align-property-clause-e527c40e478b",
+          "css-ruby-1.ruby-align-property-clause-439460f08248",
+          "css-ruby-1.ruby-align-property-clause-f6b82d9387fc"
+        ]
+      }
+    },
+    {
+      "id": "ruby-text-decoration",
+      "title": "4.4. Ruby Text Decoration",
+      "level": 3,
+      "text_sha256": "bc970071c9a74e3917d96f2ea0032ef83f2177be5a988282522d94978c7cf08c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.ruby-text-decoration"
+        ]
+      }
+    },
+    {
+      "id": "edge-effects",
+      "title": "5. Edge Effects",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.edge-effects"
+        ]
+      }
+    },
+    {
+      "id": "ruby-overhang",
+      "title": "5.1. Overhanging Ruby: the ruby-overhang property",
+      "level": 3,
+      "text_sha256": "a3a9bf379458946e5e3a07587bf647af11ead23429f12e5a75a3faa5bb3f14b5",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.ruby-overhang",
+          "css-ruby-1.ruby-overhang-clause-cca2516ebb1d",
+          "css-ruby-1.ruby-overhang-clause-50736318f048",
+          "css-ruby-1.ruby-overhang-clause-b87e60702aa3",
+          "css-ruby-1.ruby-overhang-clause-cac60b5c2d3d"
+        ]
+      }
+    },
+    {
+      "id": "line-edge",
+      "title": "5.2. Line-edge Alignment",
+      "level": 3,
+      "text_sha256": "9e00458b451cfb66c5c683a7a68d3b114f16a0ef66526ab127999fed3f313e44",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.line-edge"
+        ]
+      }
+    },
+    {
+      "id": "default-stylesheet",
+      "title": "Appendix A: Sample Style Sheets",
+      "level": 2,
+      "text_sha256": "6cb1bbe60fe9af4625421383aa028a9e848bd3fbf54c44fd35672ae7347b4614",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.default-stylesheet"
+        ]
+      }
+    },
+    {
+      "id": "default-ua-ruby",
+      "title": "A.1 Default UA Style Sheet",
+      "level": 3,
+      "text_sha256": "a5220232cb6640f6a36b4d90156f4e6ade6ec71875d1f6e34c846d82fec7e655",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.default-ua-ruby"
+        ]
+      }
+    },
+    {
+      "id": "default-inline",
+      "title": "A.2 Inlining Ruby Annotations",
+      "level": 3,
+      "text_sha256": "5e29d1eceabe9f0709ce71a3a8f109d80c0357e3cd6d37d504ad194e98ed5a14",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.default-inline"
+        ]
+      }
+    },
+    {
+      "id": "default-parens",
+      "title": "A.3 Generating Parentheses",
+      "level": 3,
+      "text_sha256": "3279731773662ad7b64a1a63bfa605be7807304377a500ad7b7897b6adf5ce5a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.default-parens"
+        ]
+      }
+    },
+    {
+      "id": "glossary",
+      "title": "6. Glossary",
+      "level": 2,
+      "text_sha256": "d1c1dc5c2763db7dc234e232acf8b4589a230eb8d85d6102ee6e438c9d94b2c9",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.glossary"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "6e170517a8ec4e85583989c5d646bd02c88a10afb9cc0bf9bbfd4d3027ae3269",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e251ce7e8e99ca49cf86f446d7380b6d347a5f60e4322e370c8066d790088a97",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20211202",
+      "title": "Changes since the 2 December 2021 WD",
+      "level": 3,
+      "text_sha256": "f3082bbfe344f758f09a1eda63cd4a61f96ae9a2823645eb5526ea9d62679b42",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.changes-20211202"
+        ]
+      }
+    },
+    {
+      "id": "changes-20200429",
+      "title": "Changes since the 29 April 2020 WD",
+      "level": 3,
+      "text_sha256": "1f6c40ced8c75d3b684a817389da317f3d0beb0d932bb610857711a4dd0127c5",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.changes-20200429"
+        ]
+      }
+    },
+    {
+      "id": "changes-20140805",
+      "title": "Changes since the 5 August 2014 WD",
+      "level": 3,
+      "text_sha256": "8424960538f52866a85fe4cc5e5ef0a52770e40d1ccb0f464dec8f6e59a3563b",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.changes-20140805"
+        ]
+      }
+    },
+    {
+      "id": "changes-20130919",
+      "title": "Changes since the 19 September 2013 WD",
+      "level": 3,
+      "text_sha256": "f02461ae659dbf1a1195db10f81bcfd8c917cc3685ca06e45f7381b563ceaf1f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.changes-20130919"
+        ]
+      }
+    },
+    {
+      "id": "changes-20110630",
+      "title": "Changes since the 30 June 2011 WD",
+      "level": 3,
+      "text_sha256": "8bda9c4b5c1c1f30c12b33d9c649618a79c373388f434322f6987170d8d618aa",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.changes-20110630"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.w3c-conventions",
+          "css-ruby-1.w3c-conventions-clause-5c98c879f070",
+          "css-ruby-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.w3c-conformance-classes",
+          "css-ruby-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-ruby-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.w3c-partial",
+          "css-ruby-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.w3c-testing",
+          "css-ruby-1.w3c-testing-clause-1e0fff369221",
+          "css-ruby-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "acca96b6b0a628191aa7e06ae1b744aba0464d279694ffea8b820d4e1071d822",
+      "clause_count": 186,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "fbf47d96b2562aa531b8ccd8dba1b7b24b51ec249cb7492981a6caab20bd561e",
+      "clause_count": 96,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "c43eeea12798253b0d79a1804887062e0c1f52af24f48843f75852d219f4b040",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "bc1e8cd0a941b9f89ecbe370a95a4202a2a26087b0676341ae6aa10212fcce11",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "40737f8d77db4d86769cb0470c3c3c5cd576956f03dcee4a9beec95dbb2e61a7",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.property-index",
+          "css-ruby-1.property-index-clause-4b59fe755d34"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "cd8dd804327c2c8d35817b3a667482f697a1b9087d0e70893795b6daa5516277",
+      "clause_count": 239,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ruby-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

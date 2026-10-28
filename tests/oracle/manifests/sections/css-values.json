@@ -1,0 +1,1641 @@
+{
+  "schema_version": 1,
+  "source_id": "css-values",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Values and Units Module Level 4",
+      "level": 1,
+      "text_sha256": "0e02271b04a40a78c1457e043db7aa97df201d2e903c2e15893fa20e16d7ca5f",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "9c91b1cf9a7c37caf80a0448f10bdae20b3ebda4bd1c113a2c2f35138fc80975",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "2313bd76cb3055252f493148fe95ffced80975e4135832a909de92368e40f410",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "92de156a650cf943a495b69c1453206af582215704f8da5a3cd83abdab5e2d39",
+      "clause_count": 106,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "c6b7a9dec601cdaaedf1e9ec19d6ccf7ce4440ac245e26fe96bdf3502b527413",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "d3511ac0cb95fd9e1cb10740730fa51eb0d9fcec3ada402f3c8dfd6a14aa003d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.placement"
+        ]
+      }
+    },
+    {
+      "id": "value-defs",
+      "title": "2. Value Definition Syntax",
+      "level": 2,
+      "text_sha256": "a01ac0f6221112e4ae67db023001961ffb734222f4bbc7d7666d319b0b27f3f5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.value-defs"
+        ]
+      }
+    },
+    {
+      "id": "component-types",
+      "title": "2.1. Component Value Types",
+      "level": 3,
+      "text_sha256": "6e67d8657d6b67d3582fbfd2161f65eb10b497adb35ce7e34b1a8ad768506b9e",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.component-types",
+          "css-values.component-types-clause-cad3fef543f6",
+          "css-values.component-types-clause-8a8f4433aaca",
+          "css-values.component-types-clause-b2b4ba8cb535",
+          "css-values.component-types-clause-baf639db89e2",
+          "css-values.component-types-clause-953df6274828",
+          "css-values.component-types-clause-b6cba52dd64c",
+          "css-values.component-types-clause-8e05424eaee4"
+        ]
+      }
+    },
+    {
+      "id": "component-combinators",
+      "title": "2.2. Component Value Combinators",
+      "level": 3,
+      "text_sha256": "95cf0bf78c11b9939a6ae44d0ba9d059b1569672914cf007fad87cb9c5cd4e9c",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.component-combinators",
+          "css-values.component-combinators-clause-5f041e62d346",
+          "css-values.component-combinators-clause-fe86adcdc33d",
+          "css-values.component-combinators-clause-78e1a461fe59",
+          "css-values.component-combinators-clause-64803acc6929"
+        ]
+      }
+    },
+    {
+      "id": "component-multipliers",
+      "title": "2.3. Component Value Multipliers",
+      "level": 3,
+      "text_sha256": "f4d85cb3e2c154fb66a4f80609a902b16d1d9370b143422a3bdab30f44e2e259",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.component-multipliers",
+          "css-values.component-multipliers-clause-43c5f976a7af",
+          "css-values.component-multipliers-clause-147ec674eaa7",
+          "css-values.component-multipliers-clause-11912fc0e956"
+        ]
+      }
+    },
+    {
+      "id": "combinator-multiplier-patterns",
+      "title": "2.4. Combinator and Multiplier Patterns",
+      "level": 3,
+      "text_sha256": "4a13e7a2dd706c62e05bb2ae89d2b6b871e760ac367f3cb7f91ca46707e56b60",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combinator-multiplier-patterns",
+          "css-values.combinator-multiplier-patterns-clause-60fcdf2cca4d"
+        ]
+      }
+    },
+    {
+      "id": "component-whitespace",
+      "title": "2.5. Component Values and White Space",
+      "level": 3,
+      "text_sha256": "40e01e715cdd0c09474e11f1c561d31168198a0bb5a99556c571ebb1ee4017bd",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.component-whitespace",
+          "css-values.component-whitespace-clause-647f16c90979"
+        ]
+      }
+    },
+    {
+      "id": "component-functions",
+      "title": "2.6. Functional Notation Definitions",
+      "level": 3,
+      "text_sha256": "5734bee496d8d76447e5c6d351bbe622263bf850bec1c524ec77deaf04862df9",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.component-functions"
+        ]
+      }
+    },
+    {
+      "id": "value-examples",
+      "title": "2.7. Property Value Examples",
+      "level": 3,
+      "text_sha256": "1b97dd0c10c2ba23242c5d604c6c562ba40be7dcb242e7e29a5a5bc73fa22f49",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.value-examples"
+        ]
+      }
+    },
+    {
+      "id": "production-blocks",
+      "title": "2.8. Non-Terminal Definitions and Grammar Production Blocks",
+      "level": 3,
+      "text_sha256": "816bcb984ea3964a7abc4f013f3c17380ef48da74a2117ad1357f57e16aa22ad",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.production-blocks"
+        ]
+      }
+    },
+    {
+      "id": "combining-values",
+      "title": "3. Combining Values: Interpolation, Addition, and Accumulation",
+      "level": 2,
+      "text_sha256": "553bff608670fe6c2bf314170b46271380725cd97ab1f4af70d01b94977fa027",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combining-values",
+          "css-values.combining-values-clause-a58ffe7a3cd7",
+          "css-values.combining-values-clause-6cc23b96fbf3",
+          "css-values.combining-values-clause-4afcdf2b8aea",
+          "css-values.combining-values-clause-eb0c00a1bf63",
+          "css-values.combining-values-clause-11dccf586381"
+        ]
+      }
+    },
+    {
+      "id": "combining-range",
+      "title": "3.1. Range Checking",
+      "level": 3,
+      "text_sha256": "0524ab136ef0cd4c64474c5d9392a08dfbd468c1bc23a0db8f5d1a83ebadb702",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combining-range",
+          "css-values.combining-range-clause-f2c510bbbd58"
+        ]
+      }
+    },
+    {
+      "id": "textual-values",
+      "title": "4. Textual Data Types",
+      "level": 2,
+      "text_sha256": "73d24d87eddfe04640d4c0c89e37b8aa6b20a9d767f0a3890a74df0cae1b8974",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.textual-values",
+          "css-values.textual-values-clause-df42dc356cd9",
+          "css-values.textual-values-clause-c73e3dd232b0"
+        ]
+      }
+    },
+    {
+      "id": "keywords",
+      "title": "4.1. Pre-defined Keywords",
+      "level": 3,
+      "text_sha256": "d2b534a66701d70b92e83430b24b59e9175ef003fd2697c587dfe59387ef67b3",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.keywords"
+        ]
+      }
+    },
+    {
+      "id": "common-keywords",
+      "title": "4.1.1. CSS-wide keywords: initial, inherit and unset",
+      "level": 4,
+      "text_sha256": "2b31af907daa3ba5d25b8c3799cc6ae1fa48baee0633535433284956139eb8c4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.common-keywords"
+        ]
+      }
+    },
+    {
+      "id": "custom-idents",
+      "title": "4.2. Unprefixed Author-defined Identifiers: the <custom-ident> type",
+      "level": 3,
+      "text_sha256": "64d3bb89449d257cda341f2db1ab690ac9e6ac306d2adc368706d6856bed67f8",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.custom-idents",
+          "css-values.custom-idents-clause-646e5795d4d1",
+          "css-values.custom-idents-clause-f80112237c18"
+        ]
+      }
+    },
+    {
+      "id": "dashed-idents",
+      "title": "4.3. Prefixed Author-defined Identifiers: the <dashed-ident> type",
+      "level": 3,
+      "text_sha256": "7a456dd88403fca86471efe3d9d563b9033d8185a096c498fc007115b75de02a",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.dashed-idents",
+          "css-values.dashed-idents-clause-364e459c8dc8",
+          "css-values.dashed-idents-clause-2c81ecedfe27",
+          "css-values.dashed-idents-clause-39df17dc37b9"
+        ]
+      }
+    },
+    {
+      "id": "strings",
+      "title": "4.4. Quoted Strings: the <string> type",
+      "level": 3,
+      "text_sha256": "22e3b1c66bdab6a42e94bf4239c477722fa795605f2655e3c932b1e9a59421c3",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.strings"
+        ]
+      }
+    },
+    {
+      "id": "urls",
+      "title": "4.5. Resource Locators: the <url> type",
+      "level": 3,
+      "text_sha256": "6535c1765fff1e419c8363e5a3a7cf8fe8231dec8416c7d655769540000662be",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.urls",
+          "css-values.urls-clause-7ea25b03a46a"
+        ]
+      }
+    },
+    {
+      "id": "relative-urls",
+      "title": "4.5.1. Relative URLs",
+      "level": 4,
+      "text_sha256": "022e32c064bfeec6a7313844090186eb8ff08d3623b044b0a8a7e914beac94d7",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.relative-urls",
+          "css-values.relative-urls-clause-b206726bdf77",
+          "css-values.relative-urls-clause-fd304dcf9c6b"
+        ]
+      }
+    },
+    {
+      "id": "local-urls",
+      "title": "4.5.1.1. Fragment URLs",
+      "level": 5,
+      "text_sha256": "4741eb8f4fe549af6088dc43ccb28b7ba5dcb7ac28803ca579c7d2c36bbfa2c2",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.local-urls",
+          "css-values.local-urls-clause-51669ad39dc0",
+          "css-values.local-urls-clause-80d981dcaa34",
+          "css-values.local-urls-clause-db2705fd9fc0",
+          "css-values.local-urls-clause-21b357134f75",
+          "css-values.local-urls-clause-dd60fb68e9c5",
+          "css-values.local-urls-clause-ad56f02176d1"
+        ]
+      }
+    },
+    {
+      "id": "url-empty",
+      "title": "4.5.2. Empty URLs",
+      "level": 4,
+      "text_sha256": "0388d7b8846cbbf76775508eab4d674471a84a4c2c55a4f5e03f918fb7f32b0d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.url-empty",
+          "css-values.url-empty-clause-9a62fce8daa5",
+          "css-values.url-empty-clause-c2bce795ea43",
+          "css-values.url-empty-clause-a8391cdc5878"
+        ]
+      }
+    },
+    {
+      "id": "url-modifiers",
+      "title": "4.5.3. URL Modifiers",
+      "level": 4,
+      "text_sha256": "52dc931e2959cb2ada599cd05c7e963ed2e04706d3f70233ba89c33d3878cbcb",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.url-modifiers"
+        ]
+      }
+    },
+    {
+      "id": "url-processing",
+      "title": "4.5.4. URL Processing Model",
+      "level": 4,
+      "text_sha256": "5fcdf32c1dba857e77463ed0929cc6f80a7c3b5f1f75f222e3549663e0ea9e5c",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.url-processing",
+          "css-values.url-processing-clause-62b6bfb0a886",
+          "css-values.url-processing-clause-b8284c2acc38"
+        ]
+      }
+    },
+    {
+      "id": "numeric-types",
+      "title": "5. Numeric Data Types",
+      "level": 2,
+      "text_sha256": "45f936ddca759bc977fef318a545cc546c84bad8569a1b48814097eaf69ad383",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.numeric-types",
+          "css-values.numeric-types-clause-339b8b4a2667",
+          "css-values.numeric-types-clause-1dffe42f8893",
+          "css-values.numeric-types-clause-fa4d2d18f808"
+        ]
+      }
+    },
+    {
+      "id": "numeric-ranges",
+      "title": "5.1. Range Restrictions and Range Definition Notation",
+      "level": 3,
+      "text_sha256": "44ee805eb21713f079f9cf2120b7446df443521e5ae79b96ec4a7741492d9264",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.numeric-ranges",
+          "css-values.numeric-ranges-clause-c84a6c6959aa",
+          "css-values.numeric-ranges-clause-d62514f25f63",
+          "css-values.numeric-ranges-clause-1e4e5c269704",
+          "css-values.numeric-ranges-clause-75523c20453e"
+        ]
+      }
+    },
+    {
+      "id": "integers",
+      "title": "5.2. Integers: the <integer> type",
+      "level": 3,
+      "text_sha256": "f1d684858adf2db7f7b1e4bc12ae678ac36dd11281d9fd9dc5f73d3e5d122703",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.integers"
+        ]
+      }
+    },
+    {
+      "id": "combine-integers",
+      "title": "5.2.1. Computation and Combination of <integer>",
+      "level": 4,
+      "text_sha256": "b0a258c84e81ce04b129457c9a51fdf681607ad24121444fa7f2fd8d7d8681b1",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combine-integers",
+          "css-values.combine-integers-clause-3457b4455284"
+        ]
+      }
+    },
+    {
+      "id": "numbers",
+      "title": "5.3. Real Numbers: the <number> type",
+      "level": 3,
+      "text_sha256": "02df9799f868e73dfbaac37ec5afac40d302923a3b81601fa5f9f2e2614784fb",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.numbers"
+        ]
+      }
+    },
+    {
+      "id": "combine-numbers",
+      "title": "5.3.1. Computation and Combination of <number>",
+      "level": 4,
+      "text_sha256": "c21169678ffc58a86ee32b632165441e3f7550e6b567949ae5a73f7b124f02ef",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combine-numbers",
+          "css-values.combine-numbers-clause-7dd66eb4f658"
+        ]
+      }
+    },
+    {
+      "id": "dimensions",
+      "title": "5.4. Numbers with Units: dimension values",
+      "level": 3,
+      "text_sha256": "b0aca6cc10235854d47be715c920f9e57254a51409b5ebe8c335cc95bd10bce1",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.dimensions"
+        ]
+      }
+    },
+    {
+      "id": "compat",
+      "title": "5.4.1. Compatible Units",
+      "level": 4,
+      "text_sha256": "a8ae8bf59d25e9ce03f427d193d0c2ae8c8da9289eada19e1c1e53a0a5c56252",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.compat",
+          "css-values.compat-clause-f864ec1526a5",
+          "css-values.compat-clause-3710de457f64"
+        ]
+      }
+    },
+    {
+      "id": "combine-dimensions",
+      "title": "5.4.2. Combination of Dimensions",
+      "level": 4,
+      "text_sha256": "9d16c63414999b4daa485247b239ad099770e879bae318245f12e88ec6041275",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combine-dimensions"
+        ]
+      }
+    },
+    {
+      "id": "percentages",
+      "title": "5.5. Percentages: the <percentage> type",
+      "level": 3,
+      "text_sha256": "d6c9d7fa4ac376fbdf5ad49d8d1af4dae5b0d4acb9b30cc39c66bcffdafdad3c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.percentages"
+        ]
+      }
+    },
+    {
+      "id": "combine-percentages",
+      "title": "5.5.1. Computation and Combination of <percentage>",
+      "level": 4,
+      "text_sha256": "9b6ade19e0ae09cfdd5799577b7f12d3e162e2aeaef021673d584d1761de58ad",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combine-percentages",
+          "css-values.combine-percentages-clause-df2b161b2957"
+        ]
+      }
+    },
+    {
+      "id": "mixed-percentages",
+      "title": "5.6. Mixing Percentages and Dimensions",
+      "level": 3,
+      "text_sha256": "779805e09197fd85049bb7488a959179703bbba4b0f1c41baacdd57d7c7071f8",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.mixed-percentages",
+          "css-values.mixed-percentages-clause-3122c745b36a",
+          "css-values.mixed-percentages-clause-fb12814e876f",
+          "css-values.mixed-percentages-clause-6d0ea9ffe3f1",
+          "css-values.mixed-percentages-clause-873663aeb13c",
+          "css-values.mixed-percentages-clause-7aa60e0877b5",
+          "css-values.mixed-percentages-clause-7f5beac67fcb"
+        ]
+      }
+    },
+    {
+      "id": "combine-mixed",
+      "title": "5.6.1. Computation and Combination of Percentage and Dimension Mixes",
+      "level": 4,
+      "text_sha256": "91b8a4c0504bc0e35a1a135ec8fd0c23f002e9b0c8344ca209191c4b0e329002",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combine-mixed",
+          "css-values.combine-mixed-clause-4b9002301747",
+          "css-values.combine-mixed-clause-d575a1012941",
+          "css-values.combine-mixed-clause-0e72a3a5aaf8",
+          "css-values.combine-mixed-clause-b09554c6e7b1"
+        ]
+      }
+    },
+    {
+      "id": "ratios",
+      "title": "5.7. Ratios: the <ratio> type",
+      "level": 3,
+      "text_sha256": "3dc367936420f8e2abf1c1a70b32192ce02dfdd9acfa060c2bf06cd5e1f651de",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.ratios",
+          "css-values.ratios-clause-eba5a2dc5e90"
+        ]
+      }
+    },
+    {
+      "id": "combine-ratio",
+      "title": "5.7.1. Combination of <ratio>",
+      "level": 4,
+      "text_sha256": "63a97a9108a4409bf59a997a4203d5dc02114234fa013ad31fabb9056b9f1837",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combine-ratio"
+        ]
+      }
+    },
+    {
+      "id": "lengths",
+      "title": "6. Distance Units: the <length> type",
+      "level": 2,
+      "text_sha256": "7165ce3ca7a3d037eab842832a3b0f416916ac81740b765c1ab1e278bced4610",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.lengths",
+          "css-values.lengths-clause-98f6e5696fd2",
+          "css-values.lengths-clause-8057c0bf4c0a",
+          "css-values.lengths-clause-19496aa010ce",
+          "css-values.lengths-clause-ee5f01bc9121",
+          "css-values.lengths-clause-57fa6e41bef2",
+          "css-values.lengths-clause-4dad42865fe3"
+        ]
+      }
+    },
+    {
+      "id": "relative-lengths",
+      "title": "6.1. Relative Lengths",
+      "level": 3,
+      "text_sha256": "6d32471e4c40f89c811ff46710ff8e5c2094d4bcc10dcafaee959afba0c7e7b9",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.relative-lengths",
+          "css-values.relative-lengths-clause-1a748627bfed",
+          "css-values.relative-lengths-clause-28fce40a6937"
+        ]
+      }
+    },
+    {
+      "id": "font-relative-lengths",
+      "title": "6.1.1. Font-relative Lengths: the em, rem, ex, rex, cap, rcap, ch, rch, ic, ric, lh, rlh units",
+      "level": 4,
+      "text_sha256": "4d4816e4fc3a9ab555a82a350e182000be2b003237b752f4d1ac53eb3076ca62",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.font-relative-lengths",
+          "css-values.font-relative-lengths-clause-7204c3d8f327",
+          "css-values.font-relative-lengths-clause-bd5d279a6944",
+          "css-values.font-relative-lengths-clause-fa918a5f3490",
+          "css-values.font-relative-lengths-clause-dc42b119196e",
+          "css-values.font-relative-lengths-clause-addf93868733",
+          "css-values.font-relative-lengths-clause-99475b815e1e",
+          "css-values.font-relative-lengths-clause-89308920c982",
+          "css-values.font-relative-lengths-clause-4fe596ecfc74",
+          "css-values.font-relative-lengths-clause-3a97d544c1ad",
+          "css-values.font-relative-lengths-clause-44fc290bf318",
+          "css-values.font-relative-lengths-clause-ae86520429c9",
+          "css-values.font-relative-lengths-clause-9a3ac42b7815",
+          "css-values.font-relative-lengths-clause-c74d0af5f390",
+          "css-values.font-relative-lengths-clause-094dfc44b3ea",
+          "css-values.font-relative-lengths-clause-ea7fe16b6784",
+          "css-values.font-relative-lengths-clause-96bf9cd6832b",
+          "css-values.font-relative-lengths-clause-0d5ee1198c96"
+        ]
+      }
+    },
+    {
+      "id": "viewport-relative-lengths",
+      "title": "6.1.2. Viewport-percentage Lengths: the *vw, *vh, *vi, *vb, *vmin, *vmax units",
+      "level": 4,
+      "text_sha256": "5bc5da90b9e3c8369704c5d72239645a2b19352235f368468ccca0edd24a64e0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.viewport-relative-lengths"
+        ]
+      }
+    },
+    {
+      "id": "viewport-variants",
+      "title": "6.1.2.1. The Large, Small, and Dynamic Viewport Sizes",
+      "level": 5,
+      "text_sha256": "72843b0440335a0f167f45fd72c8b7a14c9e74395417f09f2d7ffbb80a5589ba",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.viewport-variants",
+          "css-values.viewport-variants-clause-4b340493b14b",
+          "css-values.viewport-variants-clause-20c3eae8a7ce",
+          "css-values.viewport-variants-clause-46a266f45952",
+          "css-values.viewport-variants-clause-3e5d8648452c",
+          "css-values.viewport-variants-clause-b4c32c490d7d"
+        ]
+      }
+    },
+    {
+      "id": "viewport-relative-units",
+      "title": "6.1.2.2. The Various Viewport-relative Units",
+      "level": 5,
+      "text_sha256": "d64525ed1f3f1b5456f4f7dd291dce47c01369145144c53824f2662c71a9af38",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.viewport-relative-units",
+          "css-values.viewport-relative-units-clause-20e02f0b946a",
+          "css-values.viewport-relative-units-clause-ec5c5ff64f53",
+          "css-values.viewport-relative-units-clause-5582a4c92016"
+        ]
+      }
+    },
+    {
+      "id": "absolute-lengths",
+      "title": "6.2. Absolute Lengths: the cm, mm, Q, in, pt, pc, px units",
+      "level": 3,
+      "text_sha256": "d7017b7375c9efb7bc76f254a167fb1d675cecb8ebc39a2f86d9507f962cdace",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.absolute-lengths",
+          "css-values.absolute-lengths-clause-5b21788df4f1",
+          "css-values.absolute-lengths-clause-94f189e244c5"
+        ]
+      }
+    },
+    {
+      "id": "other-units",
+      "title": "7. Other Quantities",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.other-units"
+        ]
+      }
+    },
+    {
+      "id": "angles",
+      "title": "7.1. Angle Units: the <angle> type and deg, grad, rad, turn units",
+      "level": 3,
+      "text_sha256": "9aa70c6a1250b6c83ab1ffe48ff0e92518601036cf992ee59da20d87ab70b3d4",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.angles"
+        ]
+      }
+    },
+    {
+      "id": "time",
+      "title": "7.2. Duration Units: the <time> type and s, ms units",
+      "level": 3,
+      "text_sha256": "0545ad7a5e0c5c6b16c5f90d2dd87372edf7d9cc4df3ce972d93ea2df6163d3a",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.time",
+          "css-values.time-clause-ef1b4ce16cd5",
+          "css-values.time-clause-468fa3130753"
+        ]
+      }
+    },
+    {
+      "id": "frequency",
+      "title": "7.3. Frequency Units: the <frequency> type and Hz, kHz units",
+      "level": 3,
+      "text_sha256": "313db19b4c929d771181673b618c9d88b19c9cd40c3e01e4d878520fa517d4a5",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.frequency"
+        ]
+      }
+    },
+    {
+      "id": "resolution",
+      "title": "7.4. Resolution Units: the <resolution> type and dpi, dpcm, dppx units",
+      "level": 3,
+      "text_sha256": "762a5b03d9830abf128757bba14d75feceeae4419e7a83b4e3e015b17b70c4a3",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.resolution"
+        ]
+      }
+    },
+    {
+      "id": "defined-elsewhere",
+      "title": "8. Data Types Defined Elsewhere",
+      "level": 2,
+      "text_sha256": "0454474fe01ab36ab8b5b450b24a9960e63346d44ecca102f0548c39adb9b6d1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "colors",
+      "title": "8.1. Colors: the <color> type",
+      "level": 3,
+      "text_sha256": "8d21b75aac0602b83a1527df2c571d7faeb2f45a394d07fc2decec9359033672",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.colors",
+          "css-values.colors-clause-8d21b75aac06"
+        ]
+      }
+    },
+    {
+      "id": "combine-colors",
+      "title": "8.1.1. Combination of <color>",
+      "level": 4,
+      "text_sha256": "857ec839882c1a0b570b394ff1c3451f69c4f9f46ecfba52ae70baf90d4e1084",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combine-colors"
+        ]
+      }
+    },
+    {
+      "id": "images",
+      "title": "8.2. Images: the <image> type",
+      "level": 3,
+      "text_sha256": "333af1231b2e47805486922db1580ab7bed67bf032048904b0011a69cab0ece2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.images",
+          "css-values.images-clause-333af1231b2e"
+        ]
+      }
+    },
+    {
+      "id": "combine-images",
+      "title": "8.2.1. Combination of <image>",
+      "level": 4,
+      "text_sha256": "98a5f39266de44e27850b0a8b84796a6bd213dacdd4663524c4b6cce45a49e2f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combine-images"
+        ]
+      }
+    },
+    {
+      "id": "position",
+      "title": "8.3. 2D Positioning: the <position> type",
+      "level": 3,
+      "text_sha256": "6a93cf774f898cc8b973989cdd73bb99beda67894fc1d5e5d573926892621f49",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.position",
+          "css-values.position-clause-7a309e93b207"
+        ]
+      }
+    },
+    {
+      "id": "position-parsing",
+      "title": "8.3.1. Parsing <position>",
+      "level": 4,
+      "text_sha256": "c7e9fa7c1038438275bb9943d261c11e56f29a662f4ed7b0a2d2e9ce262d2dcf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.position-parsing"
+        ]
+      }
+    },
+    {
+      "id": "position-serialization",
+      "title": "8.3.2. Serializing <position>",
+      "level": 4,
+      "text_sha256": "f8fe50b2133b040520a0a277bfe318ebb46fd4054e8d01524046cb46fe445b92",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.position-serialization",
+          "css-values.position-serialization-clause-c0e7d3e88845",
+          "css-values.position-serialization-clause-3dde7a2ee68b"
+        ]
+      }
+    },
+    {
+      "id": "combine-positions",
+      "title": "8.3.3. Combination of <position>",
+      "level": 4,
+      "text_sha256": "efa1193700891d86a1c13e85ff7aec98c6cad10fc469d983965c5f585db97a74",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combine-positions"
+        ]
+      }
+    },
+    {
+      "id": "functional-notations",
+      "title": "9. Functional Notations",
+      "level": 2,
+      "text_sha256": "13e1bb404f5fdd38e79856fc668a71688cfb93a74d5d3d9100605c8b11a18c7f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.functional-notations"
+        ]
+      }
+    },
+    {
+      "id": "math",
+      "title": "10. Mathematical Expressions",
+      "level": 2,
+      "text_sha256": "9a20729b718d3cf9cc82a0a006bb31db9a1d3195209c6a1c810d5cc9956b29b8",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.math"
+        ]
+      }
+    },
+    {
+      "id": "calc-func",
+      "title": "10.1. Basic Arithmetic: calc()",
+      "level": 3,
+      "text_sha256": "86605140c3d9a0f5f0d28b46dd209ad1ca09e438dedeac4e8faaf40a6392f01e",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-func"
+        ]
+      }
+    },
+    {
+      "id": "comp-func",
+      "title": "10.2. Comparison Functions: min(), max(), and clamp()",
+      "level": 3,
+      "text_sha256": "425561f1e3b0549ccfc3e88b081ce40e9aecd97f12c4e7b5a8dbb7f44486aac9",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.comp-func",
+          "css-values.comp-func-clause-37f87001b257"
+        ]
+      }
+    },
+    {
+      "id": "round-func",
+      "title": "10.3. Stepped Value Functions: round(), mod(), and rem()",
+      "level": 3,
+      "text_sha256": "0dd9cd67f95f18d5458353c53736279f42800b062b5a5bdb49211610c763a263",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.round-func",
+          "css-values.round-func-clause-ef0a0373f588",
+          "css-values.round-func-clause-4e8fdc44cddf",
+          "css-values.round-func-clause-7e4c461b073c",
+          "css-values.round-func-clause-6f2ac61abc98",
+          "css-values.round-func-clause-675d84309995",
+          "css-values.round-func-clause-0aa65c8c176e"
+        ]
+      }
+    },
+    {
+      "id": "round-infinities",
+      "title": "10.3.1. Argument Ranges",
+      "level": 4,
+      "text_sha256": "f529d4441ffcc39674dca77f1b5fd6eab73226a46cdb65009203b5ea0fd48152",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.round-infinities"
+        ]
+      }
+    },
+    {
+      "id": "trig-funcs",
+      "title": "10.4. Trigonometric Functions: sin(), cos(), tan(), asin(), acos(), atan(), and atan2()",
+      "level": 3,
+      "text_sha256": "0ef333bdb7ec1676d5f790fc219a242c5938ab0dfb7053ff5c924351683938d5",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.trig-funcs",
+          "css-values.trig-funcs-clause-3360d5d9c850",
+          "css-values.trig-funcs-clause-9d4ab4b8e514",
+          "css-values.trig-funcs-clause-9f346d3f6744"
+        ]
+      }
+    },
+    {
+      "id": "trig-infinities",
+      "title": "10.4.1. Argument Ranges",
+      "level": 4,
+      "text_sha256": "3e9f0ba4601687225ed15a4eb5397dce52e41cb3c4d94d9e6bab5e2ba2195ebf",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.trig-infinities",
+          "css-values.trig-infinities-clause-ff6a3584aeba"
+        ]
+      }
+    },
+    {
+      "id": "exponent-funcs",
+      "title": "10.5. Exponential Functions: pow(), sqrt(), hypot(), log(), exp()",
+      "level": 3,
+      "text_sha256": "973461838457c1a7131b86707cb199c8a9c4f95a4467acc09f9ef3dbd47f9371",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.exponent-funcs",
+          "css-values.exponent-funcs-clause-629e098d833b",
+          "css-values.exponent-funcs-clause-e0f6b89ac286",
+          "css-values.exponent-funcs-clause-fe97c276acda",
+          "css-values.exponent-funcs-clause-9dd970e6b699",
+          "css-values.exponent-funcs-clause-91749c5c18b9",
+          "css-values.exponent-funcs-clause-221bf5c29240",
+          "css-values.exponent-funcs-clause-3b7772895e3e",
+          "css-values.exponent-funcs-clause-0963f028805e",
+          "css-values.exponent-funcs-clause-5bab381056d9"
+        ]
+      }
+    },
+    {
+      "id": "exponent-infinities",
+      "title": "10.5.1. Argument Ranges",
+      "level": 4,
+      "text_sha256": "39a37bb687e5017eff944192f45d34391d302e74b16f52362e1ff7e2f8b73dd9",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.exponent-infinities",
+          "css-values.exponent-infinities-clause-4b55ca15844b"
+        ]
+      }
+    },
+    {
+      "id": "sign-funcs",
+      "title": "10.6. Sign-Related Functions: abs(), sign()",
+      "level": 3,
+      "text_sha256": "9882a0942a28d80b0a87b18bdd58d12bc27dbb478d01b17be3253bfefea158da",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.sign-funcs",
+          "css-values.sign-funcs-clause-fdb29442d579"
+        ]
+      }
+    },
+    {
+      "id": "calc-keywords",
+      "title": "10.7. Numeric Keywords",
+      "level": 3,
+      "text_sha256": "1b666b01a0e06e26814e32ebf6e6435e7d194dcfdf7d719a988ffac7589d5ce1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-keywords"
+        ]
+      }
+    },
+    {
+      "id": "calc-constants",
+      "title": "10.7.1. Numeric Constants: e, pi",
+      "level": 4,
+      "text_sha256": "73a84508d7686a5a338470a29754493524305bef3d10c7bee143bfb4f880f837",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-constants",
+          "css-values.calc-constants-clause-86d382122421",
+          "css-values.calc-constants-clause-412497eb3b3e",
+          "css-values.calc-constants-clause-de3f22cf2a44",
+          "css-values.calc-constants-clause-0eb9c2ebff6b"
+        ]
+      }
+    },
+    {
+      "id": "calc-error-constants",
+      "title": "10.7.2. Degenerate Numeric Constants: infinity, -infinity, NaN",
+      "level": 4,
+      "text_sha256": "3a2aa93064c57e42e8b2e0fd1e52da09f37ba585a07dfdf054e70635216ab730",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-error-constants",
+          "css-values.calc-error-constants-clause-efb55cf859af",
+          "css-values.calc-error-constants-clause-f66d37fe8648",
+          "css-values.calc-error-constants-clause-ede43eea7a34"
+        ]
+      }
+    },
+    {
+      "id": "calc-variables",
+      "title": "10.7.3. Numeric Variables",
+      "level": 4,
+      "text_sha256": "ff22346abab311abc74c66572d2f3cdb425e4d4ff5a512fd114db430fccfa938",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-variables",
+          "css-values.calc-variables-clause-e10f7ab83083",
+          "css-values.calc-variables-clause-26d32682d5f7"
+        ]
+      }
+    },
+    {
+      "id": "calc-syntax",
+      "title": "10.8. Syntax",
+      "level": 3,
+      "text_sha256": "2d31ef8644dad4703c3f2776fc7559f4518d5f33beb56b4b1b0b3eaf4e7f7b5f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-syntax",
+          "css-values.calc-syntax-clause-5c00ea50b4fb",
+          "css-values.calc-syntax-clause-0dc448463792"
+        ]
+      }
+    },
+    {
+      "id": "calc-type-checking",
+      "title": "10.9. Type Checking",
+      "level": 3,
+      "text_sha256": "d735c8e31a6df98747546872ff106de70f2788b9df6e7480ef2e0725644d0f7c",
+      "clause_count": 88,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-type-checking",
+          "css-values.calc-type-checking-clause-45affec09e2a",
+          "css-values.calc-type-checking-clause-48338941b5f6",
+          "css-values.calc-type-checking-clause-9df31a13cffe",
+          "css-values.calc-type-checking-clause-80b4771a8767",
+          "css-values.calc-type-checking-clause-1b42fdac3ab0",
+          "css-values.calc-type-checking-clause-004da6f2381b",
+          "css-values.calc-type-checking-clause-368461f4c214"
+        ]
+      }
+    },
+    {
+      "id": "calc-ieee",
+      "title": "10.9.1. Infinities, NaN, and Signed Zero",
+      "level": 4,
+      "text_sha256": "ec2479ceb7fc4adda2ab63f843f156e1129ebde8157f5be13c9118b313013345",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-ieee",
+          "css-values.calc-ieee-clause-7ecc685c7d26"
+        ]
+      }
+    },
+    {
+      "id": "calc-internal",
+      "title": "10.10. Internal Representation",
+      "level": 3,
+      "text_sha256": "0b87644a572b1b506d2f57c5381999d63e2243644b6e3b103c6afa80f201516b",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-internal",
+          "css-values.calc-internal-clause-7d550b749bdc"
+        ]
+      }
+    },
+    {
+      "id": "calc-simplification",
+      "title": "10.10.1. Simplification",
+      "level": 4,
+      "text_sha256": "b3c333123304ce66c424e5887700cec0c7c5814975478298a2a4ffba4ceec4a9",
+      "clause_count": 70,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-simplification",
+          "css-values.calc-simplification-clause-a273f0f4b3ee",
+          "css-values.calc-simplification-clause-2f7b4a9bc1cf",
+          "css-values.calc-simplification-clause-419475e221b0",
+          "css-values.calc-simplification-clause-e5ee62502c04",
+          "css-values.calc-simplification-clause-16d25b1b2715"
+        ]
+      }
+    },
+    {
+      "id": "calc-computed-value",
+      "title": "10.11. Computed Value",
+      "level": 3,
+      "text_sha256": "e6d6d07c9f763762492c8d56f8a32c27c3c37c1c7dae46e2cb94bc653dc6ce1e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-computed-value",
+          "css-values.calc-computed-value-clause-6ae0ef05ccaa",
+          "css-values.calc-computed-value-clause-6db896f37617",
+          "css-values.calc-computed-value-clause-c8c8ae8f3454"
+        ]
+      }
+    },
+    {
+      "id": "calc-range",
+      "title": "10.12. Range Checking",
+      "level": 3,
+      "text_sha256": "83b8b7fa7ee59b764d9d35193917955eaf243afdeb7736cfec3818b752af6975",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-range",
+          "css-values.calc-range-clause-422da7ab13e1",
+          "css-values.calc-range-clause-53d09260666a",
+          "css-values.calc-range-clause-015e4a8e60bb",
+          "css-values.calc-range-clause-5eb5f59dae80"
+        ]
+      }
+    },
+    {
+      "id": "calc-serialize",
+      "title": "10.13. Serialization",
+      "level": 3,
+      "text_sha256": "888e9df0803cd0bc19e16b2ddba3de4446c505a06a0be27165eef865dbac6c54",
+      "clause_count": 74,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.calc-serialize",
+          "css-values.calc-serialize-clause-df77436074dc",
+          "css-values.calc-serialize-clause-697c48b47756"
+        ]
+      }
+    },
+    {
+      "id": "combine-math",
+      "title": "10.14. Combination of Math Functions",
+      "level": 3,
+      "text_sha256": "f73f51eca9427eb8db0d71dc01929fde12ff165491f2f52899bea05c1d0442c1",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.combine-math"
+        ]
+      }
+    },
+    {
+      "id": "linked-properties",
+      "title": "Appendix A: Coordinating List-Valued Properties",
+      "level": 2,
+      "text_sha256": "90ad9dded091aebe7abd9f6e98b60e09c451836359afae0026a553a8c5271759",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.linked-properties",
+          "css-values.linked-properties-clause-510f2b04d6ae"
+        ]
+      }
+    },
+    {
+      "id": "iana",
+      "title": "Appendix B: IANA Considerations",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.iana"
+        ]
+      }
+    },
+    {
+      "id": "about-invalid",
+      "title": "Registration for the about:invalid URL scheme",
+      "level": 3,
+      "text_sha256": "7d229bfe5cf0a34d58392add955fd5af21dfc6b5cf7fc9976a75eea214b8eeb4",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.about-invalid",
+          "css-values.about-invalid-clause-9f872ff7f9ef",
+          "css-values.about-invalid-clause-f1234d75178d",
+          "css-values.about-invalid-clause-6a7f9d68695a"
+        ]
+      }
+    },
+    {
+      "id": "deprecated-quirky-length",
+      "title": "Appendix C: Quirky Lengths",
+      "level": 2,
+      "text_sha256": "18fe7d329d62d0b03a96bf175d090b5ed63c0020dfc0e725810e54097e2eb630",
+      "clause_count": 71,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.deprecated-quirky-length",
+          "css-values.deprecated-quirky-length-clause-05f9819a712d",
+          "css-values.deprecated-quirky-length-clause-9dab564b29ae"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "0874204a3a8074d6ff8704a92b42c60c07694e80e7cf9fbe582cd1caaa680874",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-recent",
+      "title": "Recent Changes",
+      "level": 3,
+      "text_sha256": "1f0cfc8eaee49a081dfebe9418a1569b8f60a5237f57e924bc85bd6d09984db7",
+      "clause_count": 80,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.changes-recent"
+        ]
+      }
+    },
+    {
+      "id": "additions-L3",
+      "title": "Additions Since Level 3",
+      "level": 3,
+      "text_sha256": "1107cb1e078ae7b29bbe68757f69a0d824adeaea1b73c54c7284dd1af8ed9bc5",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.additions-l3",
+          "css-values.additions-l3-clause-f52b23b617a5",
+          "css-values.additions-l3-clause-489ba8f5f21d"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "f302110edb711bf4e8d7896dacbf8d07d09a04aa18fd8f032e0ee75d886328ca",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.security"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "761bbf1a9365956e64415afe98224f83bfe1aeb6ca01470326b615553706ef70",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.privacy"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.w3c-conventions",
+          "css-values.w3c-conventions-clause-5c98c879f070",
+          "css-values.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.w3c-conformance-classes",
+          "css-values.w3c-conformance-classes-clause-ff408372426c",
+          "css-values.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.w3c-partial",
+          "css-values.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.w3c-testing",
+          "css-values.w3c-testing-clause-1e0fff369221",
+          "css-values.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "9e0fc01d9f0d1a9187b159a51f99c0e952138953f53dbaddff125027b782a0d8",
+      "clause_count": 236,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "3d8ccb1c2be4aab4048b6104b70be7a98cdcf0e431a1be04dd2df1e81bb2910d",
+      "clause_count": 225,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "18be181dec4ea69215d4b959544be3a7cab6255b8032f9800ecbdbc223a63e9a",
+      "clause_count": 84,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "468b34d15599646e7e0a5b691e691bec90a4d89aebe62416f102a9c32239bee3",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.informative"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "adea7f58706937befe5f0d447043fe20c7ed1675a4a6818779fe5da3d48ff06e",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values.issues-index"
+        ]
+      }
+    }
+  ]
+}

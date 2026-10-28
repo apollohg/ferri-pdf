@@ -1,0 +1,560 @@
+{
+  "schema_version": 1,
+  "source_id": "css-shadow-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Shadow Module Level 1",
+      "level": 1,
+      "text_sha256": "c309c049064cb90784c1a4cedd3d28422ae823e4e563e33ec05d932ab6bfe85c",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "810730851d869673a95e2dc2f40ea36ec45a7ab145d2058dbb18e0e2c5579eec",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "c5b4083bc186105037ca43339d85acc20747b62d00ee816d70ca5dda7cc863ea",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "0c8617e5449d156e8dffbf7e13a27b2a3840785ba09bd12ff48a9ac25b01a505",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "212f78c9d78ba0728365c543e0019d0fd4af83ec8f4d6f414350bba1890ce58b",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "default-element-styles",
+      "title": "2. Default Styles for Custom Elements",
+      "level": 2,
+      "text_sha256": "8b4d220ee3db3330473bf2779d56c2541a7ec2f77f0deaad15597bcf5c3c3d5d",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.default-element-styles"
+        ]
+      }
+    },
+    {
+      "id": "shadow-dom",
+      "title": "3. Shadow Encapsulation",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.shadow-dom"
+        ]
+      }
+    },
+    {
+      "id": "shadow-gloss",
+      "title": "3.1. Informative Explanation of Shadow DOM",
+      "level": 3,
+      "text_sha256": "823ef3712c3f8d47cb85fb6df6e96e290fb59c09c504bf78a3b337e46eb4fd3f",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.shadow-gloss"
+        ]
+      }
+    },
+    {
+      "id": "selectors",
+      "title": "3.2. Shadow DOM and Selectors",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.selectors"
+        ]
+      }
+    },
+    {
+      "id": "selectors-data-model",
+      "title": "3.2.1. Matching Selectors Against Shadow Trees",
+      "level": 4,
+      "text_sha256": "610e70d2a3f7c343b3d61d466fc196d19707c6ac2b4ae411c556467054516ae1",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.selectors-data-model",
+          "css-shadow-1.foundation-shadow-selectors-cascade"
+        ]
+      }
+    },
+    {
+      "id": "host-element-in-tree",
+      "title": "3.2.2. Selecting Shadow Hosts from within a Shadow Tree",
+      "level": 4,
+      "text_sha256": "f3012bbee151befc1b6488a83ce5635df7ca85842f2279f8176e0fd9021e0150",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.host-element-in-tree",
+          "css-shadow-1.foundation-shadow-selectors-cascade"
+        ]
+      }
+    },
+    {
+      "id": "host-selector",
+      "title": "3.2.3. Selecting Into the Light: the :host, :host(), and :host-context() pseudo-classes",
+      "level": 4,
+      "text_sha256": "47980197785c0d86c2e887a4b81606c71f57e6d6d8cc1ab5f975fa0fd669f8c6",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.host-selector",
+          "css-shadow-1.foundation-shadow-selectors-cascade"
+        ]
+      }
+    },
+    {
+      "id": "slotted-pseudo",
+      "title": "3.2.4. Selecting Slot-Assigned Content: the ::slotted() pseudo-element",
+      "level": 4,
+      "text_sha256": "3577364412283cacbcf5b7f91a984f317b15a8ef36c7ccadb56c99a09136b186",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.slotted-pseudo",
+          "css-shadow-1.foundation-shadow-selectors-cascade"
+        ]
+      }
+    },
+    {
+      "id": "the-has-slotted-pseudo",
+      "title": "3.2.5. Matching on the Presence of Slot-Assigned Nodes: the :has-slotted pseudo-class",
+      "level": 4,
+      "text_sha256": "bc8fb13ab56be1903f23a078cd28480e8534ab34c294ef418f21b1b40b05d84a",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.the-has-slotted-pseudo",
+          "css-shadow-1.foundation-shadow-selectors-cascade"
+        ]
+      }
+    },
+    {
+      "id": "shadow-cascading",
+      "title": "4. Shadow Trees and the Cascade",
+      "level": 2,
+      "text_sha256": "daba8f6d51e548b53b1dca136cf976bb958e1bdc12aab2fe5eb6f58f68050884",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.shadow-cascading",
+          "css-shadow-1.foundation-shadow-selectors-cascade"
+        ]
+      }
+    },
+    {
+      "id": "flattening",
+      "title": "4.1. Flattening the DOM into an Element Tree",
+      "level": 3,
+      "text_sha256": "9b565304ad0743a3ccabd7461f673711e2d314e9396b5f64a54e1f6e160c5c66",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.flattening"
+        ]
+      }
+    },
+    {
+      "id": "slots-in-shadow-tree",
+      "title": "4.1.1. Slots and Slotted Elements in a Shadow Tree",
+      "level": 4,
+      "text_sha256": "046a9c3b19d5565c8ec77098a72489b49921f4e662e67001a92a66a62d4cde2a",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.slots-in-shadow-tree"
+        ]
+      }
+    },
+    {
+      "id": "shadow-names",
+      "title": "4.2. Name-Defining Constructs and Inheritance",
+      "level": 3,
+      "text_sha256": "c9edb8188f7df0d37a20d20f1f65620ca00770b56ad698e2bbe6768299a34d5b",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.shadow-names",
+          "css-shadow-1.foundation-shadow-parts-names"
+        ]
+      }
+    },
+    {
+      "id": "shadow-names-serialization",
+      "title": "4.2.1. Serialized Tree-Scoped References",
+      "level": 4,
+      "text_sha256": "eef17d76c4bb10358ef9e5eb83f7acb79817aeed0932fc253ce92ecc92d6a59f",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.shadow-names-serialization",
+          "css-shadow-1.foundation-shadow-parts-names"
+        ]
+      }
+    },
+    {
+      "id": "exposing",
+      "title": "5. Exposing a Shadow Element",
+      "level": 2,
+      "text_sha256": "bce6df68fe3433226db1824c69cd783af4bb8c657dc7adeacccab59067f8ea28",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.exposing"
+        ]
+      }
+    },
+    {
+      "id": "motivation",
+      "title": "5.1. Motivation",
+      "level": 3,
+      "text_sha256": "9c05d314095f29597c11496f72af9b75c56d14280e562a3ae9dfa396ecdc29e1",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.motivation"
+        ]
+      }
+    },
+    {
+      "id": "part-attr",
+      "title": "5.2. Naming a Shadow Element: the part attribute",
+      "level": 3,
+      "text_sha256": "9dfd7d63ce9070fb7bc800f70b628ca38654b32a679dad1ec21dfdc9d0d777cf",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.part-attr",
+          "css-shadow-1.foundation-shadow-parts-names"
+        ]
+      }
+    },
+    {
+      "id": "exportparts-attr",
+      "title": "5.3. Forwarding a Shadow Element: the exportparts attribute",
+      "level": 3,
+      "text_sha256": "f43489f11a8675a280085c0fc52f56771d240e3e518967c16ae411c104bcd7a4",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.exportparts-attr",
+          "css-shadow-1.foundation-shadow-parts-names"
+        ]
+      }
+    },
+    {
+      "id": "part",
+      "title": "5.4. Selecting a Shadow Element: the ::part() pseudo-element",
+      "level": 3,
+      "text_sha256": "7d04cb16d71e9f064ab83d35458881cbdf85d86cbc5be99f801c7face94174c8",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.part",
+          "css-shadow-1.foundation-shadow-parts-names"
+        ]
+      }
+    },
+    {
+      "id": "idl",
+      "title": "5.5. Extensions to the Element Interface",
+      "level": 3,
+      "text_sha256": "fd06d53299cbbbcdca7a62cb05cbc581a2984d9648431ac6fd9540bad4004647",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.idl"
+        ]
+      }
+    },
+    {
+      "id": "parsing",
+      "title": "5.6. Microsyntaxes for parsing",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.parsing",
+          "css-shadow-1.foundation-shadow-parts-names"
+        ]
+      }
+    },
+    {
+      "id": "parsing-mapping",
+      "title": "5.6.1. Rules for parsing part mappings",
+      "level": 4,
+      "text_sha256": "2ba96f187c82a2f63b8ce05303bee4aec61a522156aa092983254a57ec1d300b",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.parsing-mapping",
+          "css-shadow-1.foundation-shadow-parts-names"
+        ]
+      }
+    },
+    {
+      "id": "parsing-mapping-list",
+      "title": "5.6.2. Rules for parsing a list of part mappings",
+      "level": 4,
+      "text_sha256": "d4e439cec971f9ad94e1cab83e3a042e1ffecaf435f55d642388215f60ee0823",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.parsing-mapping-list",
+          "css-shadow-1.foundation-shadow-parts-names"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "6. Changes",
+      "level": 2,
+      "text_sha256": "cf1fa9732add78038aad6bed8a23d16bf735e5b71f252703b141b9f605d582ca",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "7. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "1946158b66d9778eec754863340ecf3aee8ef019a1ac52846fbdf4368f00641a",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "8. Security Considerations",
+      "level": 2,
+      "text_sha256": "884563364dd6eee0f91595a212b25854f76559646a58ed071e2b7f80ac97677e",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.security"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.w3c-conventions"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.w3c-conformance-classes"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.w3c-partial"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.w3c-testing"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "9105064a91153a90206c9da257fecc544a2f6051b879aa2d003dfef8f2febe9d",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "22bc1207379d5a3d3e0436969c26366fdc6dffeedb756b606fd742afd914507a",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "3ece3b252b5711887dc3849e94a03ff4899404b8e4456e5181ffdb34524416d5",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "0584f0994187ab92341967f507785a020e6b5b1dc23e23f29d26fec663814f4f",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "69d95cfae0249d8c1fa9b70e596ff5bb6b11b3c10b588103584f9bc5e0c09529",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "500d09947e9f578120490c9c1b1a2ed48e50352fa8416fb7d10bcf8c75b6e67a",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

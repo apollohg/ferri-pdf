@@ -1,0 +1,740 @@
+{
+  "schema_version": 1,
+  "source_id": "infra",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Infra (Commit 459b7829230ad256a690dabd315db974469af8e7)",
+      "level": 1,
+      "text_sha256": "c01c162a5a75d38ec15fce9eea0e5c4fb12ebfc8aaaff4b7a66b0fe19abaa930",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "c6300163992c36e0fc9030b1fdd409207f1dddf08b1771883a50a5a21daf66b2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.abstract"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "ca67a8c3b94c73ad845c81bd42bf136803825e1cb7d63e59fe3666c80591d783",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.contents"
+        ]
+      }
+    },
+    {
+      "id": "goals",
+      "title": "Goals",
+      "level": 2,
+      "text_sha256": "8fdb6fbedf73abaa905f92ad04aeed829a5a0a5741147c77b67bb4814eeb565b",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.goals"
+        ]
+      }
+    },
+    {
+      "id": "usage",
+      "title": "1. Usage",
+      "level": 2,
+      "text_sha256": "ce06c7d7821b6156266b5374e13545b86b506527e4c22454637081227e256423",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.usage"
+        ]
+      }
+    },
+    {
+      "id": "conventions",
+      "title": "2. Conventions",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.conventions"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "2.1. Conformance",
+      "level": 3,
+      "text_sha256": "f328a73fb82445dec190d36fe3fb8d448c957f4f11675d91877372324353bd4c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.conformance",
+          "infra.conformance-clause-ae0bd5b3b0ed",
+          "infra.conformance-clause-27ee0fd3396a"
+        ]
+      }
+    },
+    {
+      "id": "other-specs",
+      "title": "2.2. Compliance with other specifications",
+      "level": 3,
+      "text_sha256": "6754e580590a2579ea21c98205e7d332da10f4701c3babc5a7f0e3b7efe4ef16",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.other-specs",
+          "infra.other-specs-clause-54c681b78a85"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "2.3. Terminology",
+      "level": 3,
+      "text_sha256": "d4f985c9c19c02e443d6b4fc074bdf34e798fca92dc6d9b04ab1d1af1bccde61",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.terminology"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "2.4. Privacy concerns",
+      "level": 3,
+      "text_sha256": "29ea6c8e7d7dbe249ab245670607021ab9acb1d55acdfa571e9b30165eeb4c15",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.privacy",
+          "infra.privacy-clause-b58807efc1c1",
+          "infra.privacy-clause-4b94da2f41ac",
+          "infra.privacy-clause-1b833db00702"
+        ]
+      }
+    },
+    {
+      "id": "algorithms",
+      "title": "3. Algorithms",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.algorithms"
+        ]
+      }
+    },
+    {
+      "id": "algorithm-conformance",
+      "title": "3.1. Conformance",
+      "level": 3,
+      "text_sha256": "f6e6eef041be52026cf2db5ee6d5a22d5c930616b6be2298b279a163c837f956",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.algorithm-conformance",
+          "infra.algorithm-conformance-clause-a7bcae2252d8",
+          "infra.algorithm-conformance-clause-32fcb8e969de",
+          "infra.algorithm-conformance-clause-c1dde4321320",
+          "infra.algorithm-conformance-clause-2a7430d553b7",
+          "infra.algorithm-conformance-clause-a686df09d6fc",
+          "infra.algorithm-conformance-clause-f441b90391a3",
+          "infra.algorithm-conformance-clause-c1d88a4b688b",
+          "infra.algorithm-conformance-clause-84c5ba124921"
+        ]
+      }
+    },
+    {
+      "id": "algorithm-limits",
+      "title": "3.2. Avoid limits on algorithm inputs",
+      "level": 3,
+      "text_sha256": "4750dc1a78d9811957bb990e3671d694def9976efd8395b8148c02faf56dac37",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.algorithm-limits",
+          "infra.algorithm-limits-clause-a06f2b22dbc1"
+        ]
+      }
+    },
+    {
+      "id": "algorithm-declaration",
+      "title": "3.3. Declaration",
+      "level": 3,
+      "text_sha256": "371e0768a35c303b1c442eed1b666b89b00d8392758fd31fe4763e4932102e69",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.algorithm-declaration",
+          "infra.algorithm-declaration-clause-698f87d64129",
+          "infra.algorithm-declaration-clause-a61b3ac4dbc3",
+          "infra.algorithm-declaration-clause-0a8e0312f41c",
+          "infra.algorithm-declaration-clause-507b7c99c53d",
+          "infra.algorithm-declaration-clause-f52b4b7ae29e",
+          "infra.algorithm-declaration-clause-0061168c23dc",
+          "infra.algorithm-declaration-clause-1888336f6c4a",
+          "infra.algorithm-declaration-clause-64940ef45a90",
+          "infra.algorithm-declaration-clause-38b9458fab5d"
+        ]
+      }
+    },
+    {
+      "id": "algorithm-params",
+      "title": "3.4. Parameters",
+      "level": 3,
+      "text_sha256": "f60f6fbfed56ea8d7e6d4b66a97d2c14471ccb429fe3a0cf27e065aa8c78c280",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.algorithm-params",
+          "infra.algorithm-params-clause-07e3642195aa",
+          "infra.algorithm-params-clause-5efb2f87a4ba",
+          "infra.algorithm-params-clause-e5361e64d738",
+          "infra.algorithm-params-clause-5dd1f1a613b0",
+          "infra.algorithm-params-clause-4aad2493b31d",
+          "infra.algorithm-params-clause-63ddc3f8620b"
+        ]
+      }
+    },
+    {
+      "id": "variables",
+      "title": "3.5. Variables",
+      "level": 3,
+      "text_sha256": "4355a7b8f126d6a3f595f87283c7dd4a7e9b351cced96d15dd6b774b4810594b",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.variables",
+          "infra.variables-clause-1debf5cb74a8"
+        ]
+      }
+    },
+    {
+      "id": "algorithm-control-flow",
+      "title": "3.6. Control flow",
+      "level": 3,
+      "text_sha256": "0622646afd40e4b367202847755fd050c4d24674fdd07f981a308b4e3c019173",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.algorithm-control-flow",
+          "infra.algorithm-control-flow-clause-0622646afd40"
+        ]
+      }
+    },
+    {
+      "id": "algorithm-conditional-abort",
+      "title": "3.7. Conditional abort",
+      "level": 3,
+      "text_sha256": "45700d458d64476e7bfa10642f6ade55fb1502f1ed033bbfaea6467da20e453f",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.algorithm-conditional-abort",
+          "infra.algorithm-conditional-abort-clause-f9b9b99215d7",
+          "infra.algorithm-conditional-abort-clause-321efaaa15c9",
+          "infra.algorithm-conditional-abort-clause-c73c7b58a38f"
+        ]
+      }
+    },
+    {
+      "id": "algorithm-conditional-statements",
+      "title": "3.8. Conditional statements",
+      "level": 3,
+      "text_sha256": "62d31b13f44a33567342d81d120193a36da2d75e7992325b56ccec9ec0d901d2",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.algorithm-conditional-statements",
+          "infra.algorithm-conditional-statements-clause-61a9efb2db2e"
+        ]
+      }
+    },
+    {
+      "id": "algorithm-iteration",
+      "title": "3.9. Iteration",
+      "level": 3,
+      "text_sha256": "38787ebfe6128741b1d90de73ca0ac5bb62447f8d391ba887d8a9355825f6c71",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.algorithm-iteration"
+        ]
+      }
+    },
+    {
+      "id": "assertions",
+      "title": "3.10. Assertions",
+      "level": 3,
+      "text_sha256": "0dd007f29d98db92b8dcde0a200bff95128f5820086af6d940bdcad20eb2a913",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.assertions",
+          "infra.assertions-clause-3adaa2776614"
+        ]
+      }
+    },
+    {
+      "id": "identity-and-equality",
+      "title": "3.11. Identity and equality",
+      "level": 3,
+      "text_sha256": "1de73891f8d6c7957b03934d7d60b342ab3cbc3fa1304a28e6f91ed787c3ae86",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.identity-and-equality",
+          "infra.identity-and-equality-clause-6a3babba6819"
+        ]
+      }
+    },
+    {
+      "id": "primitive-data-types",
+      "title": "4. Primitive data types",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.primitive-data-types"
+        ]
+      }
+    },
+    {
+      "id": "nulls",
+      "title": "4.1. Nulls",
+      "level": 3,
+      "text_sha256": "565d4823cdee66f15adc977e86cf11a1ebae169faa1ddcb3bfa646cbfb0a1292",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.nulls"
+        ]
+      }
+    },
+    {
+      "id": "booleans",
+      "title": "4.2. Booleans",
+      "level": 3,
+      "text_sha256": "20d515b0b67d92aff172eb9231b31466148d20bbd5f846759e05b3bd7410b60f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.booleans"
+        ]
+      }
+    },
+    {
+      "id": "numbers",
+      "title": "4.3. Numbers",
+      "level": 3,
+      "text_sha256": "aa48685e41ee027ed227903b8207e287cd910a20028fa5e21b3d70a5a28ef280",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.numbers"
+        ]
+      }
+    },
+    {
+      "id": "bytes",
+      "title": "4.4. Bytes",
+      "level": 3,
+      "text_sha256": "3aa27171c5bd378db401aade30f5e5fbf7d03f7d439336eb999fcc7d3d5d8113",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.bytes"
+        ]
+      }
+    },
+    {
+      "id": "byte-sequences",
+      "title": "4.5. Byte sequences",
+      "level": 3,
+      "text_sha256": "65cfd648455b09afdb284fdf5c3abbf294cf396b59699c23fa5f422b539ccb7f",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.byte-sequences",
+          "infra.byte-sequences-clause-97d18d44386d",
+          "infra.byte-sequences-clause-b2d26b37bdde"
+        ]
+      }
+    },
+    {
+      "id": "code-points",
+      "title": "4.6. Code points",
+      "level": 3,
+      "text_sha256": "3104ca2e9db37b72cf142ffa6c3a0d325217e21eac48e1992833bb7fc905edcb",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.code-points"
+        ]
+      }
+    },
+    {
+      "id": "strings",
+      "title": "4.7. Strings",
+      "level": 3,
+      "text_sha256": "e3ace675056c6245cb427e211020e4d3464940e6c4818ceb0ea3f56485c6555a",
+      "clause_count": 202,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.strings",
+          "infra.strings-clause-89935ac97feb",
+          "infra.strings-clause-0e12c8b374d0",
+          "infra.strings-clause-950dcf34af3c",
+          "infra.strings-clause-e61d2b6a08f8",
+          "infra.strings-clause-a4aa921e426b",
+          "infra.strings-clause-20476debd2a8"
+        ]
+      }
+    },
+    {
+      "id": "time",
+      "title": "4.8. Time",
+      "level": 3,
+      "text_sha256": "9ae535b805740baa6a165617d38731aa8d492ea49816cb7ed79afb28a568e527",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.time"
+        ]
+      }
+    },
+    {
+      "id": "singleton",
+      "title": "4.9. Singletons",
+      "level": 3,
+      "text_sha256": "e0b27d3fa3153ba9365cc6a3992ad2d765f5ed35257838d030261d928623b47b",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.singleton",
+          "infra.singleton-clause-bbe072461ef5",
+          "infra.singleton-clause-723e15bc8d7d",
+          "infra.singleton-clause-6567e0bc6bfa",
+          "infra.singleton-clause-c28174eef002",
+          "infra.singleton-clause-3b361eacb07b",
+          "infra.singleton-clause-03cf2f06e797",
+          "infra.singleton-clause-29155b7685c0"
+        ]
+      }
+    },
+    {
+      "id": "data-structures",
+      "title": "5. Data structures",
+      "level": 2,
+      "text_sha256": "e89ba4f9000c20f08ff345c73a7a3f6295940def9a3686f571c8a13870669e63",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.data-structures"
+        ]
+      }
+    },
+    {
+      "id": "lists",
+      "title": "5.1. Lists",
+      "level": 3,
+      "text_sha256": "1dd797954a56df138dc84ecf35501a7bff57f8323bbfa89db1ef19023d76e414",
+      "clause_count": 81,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.lists",
+          "infra.lists-clause-1b1f2f9264d5",
+          "infra.lists-clause-016d16514007",
+          "infra.lists-clause-c22b84f66413",
+          "infra.lists-clause-426e57f6868d",
+          "infra.lists-clause-285a28475ae1"
+        ]
+      }
+    },
+    {
+      "id": "stacks",
+      "title": "5.1.1. Stacks",
+      "level": 4,
+      "text_sha256": "8db408fd76436aa484e124ddbdac342549412a5b24920fb4e83d16c09022e511",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.stacks",
+          "infra.stacks-clause-7226ee7c88f5"
+        ]
+      }
+    },
+    {
+      "id": "queues",
+      "title": "5.1.2. Queues",
+      "level": 4,
+      "text_sha256": "70528bf2de1d2ae34de4aa67d71a405730de5b99f1e1b8b8c30987dc94510394",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.queues",
+          "infra.queues-clause-ceb187e1133a"
+        ]
+      }
+    },
+    {
+      "id": "sets",
+      "title": "5.1.3. Sets",
+      "level": 4,
+      "text_sha256": "bc0508bc60792ba726759f0f581ae0310145452dc6cc7730651ecf0c9e39e6d3",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.sets",
+          "infra.sets-clause-ad96bbbc1511"
+        ]
+      }
+    },
+    {
+      "id": "maps",
+      "title": "5.2. Maps",
+      "level": 3,
+      "text_sha256": "96192354738298d25cc3b541868d47ba1d7a9dd9061170210e7a6ea32000b52e",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.maps",
+          "infra.maps-clause-004277634bda",
+          "infra.maps-clause-19cdb53e967e"
+        ]
+      }
+    },
+    {
+      "id": "structs",
+      "title": "5.3. Structs",
+      "level": 3,
+      "text_sha256": "bfeb46fa378cdd4aa4522cf486bfb1d5f43c266eacdaf27d06356c8a4b8d107b",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.structs",
+          "infra.structs-clause-ae6cd3b640ae"
+        ]
+      }
+    },
+    {
+      "id": "tuples",
+      "title": "5.3.1. Tuples",
+      "level": 4,
+      "text_sha256": "5c1eb55c84187dddc48ddc1933c111ccf817f772be2b264748751b24e65ea16f",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.tuples",
+          "infra.tuples-clause-bffa5cc98046"
+        ]
+      }
+    },
+    {
+      "id": "json",
+      "title": "6. JSON",
+      "level": 2,
+      "text_sha256": "972d466b47532c5e8788aadbe13aa9c7b68e91afb9a0a6d82d22dffc4a405afb",
+      "clause_count": 114,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.json",
+          "infra.json-clause-140db13a1115"
+        ]
+      }
+    },
+    {
+      "id": "forgiving-base64",
+      "title": "7. Forgiving base64",
+      "level": 2,
+      "text_sha256": "5b525118f021d6521cfd8b91d51c0276c0c9426de9ba926ad3e8329eb0cda8b7",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.forgiving-base64",
+          "infra.forgiving-base64-clause-941d2b38ad56"
+        ]
+      }
+    },
+    {
+      "id": "namespaces",
+      "title": "8. Namespaces",
+      "level": 2,
+      "text_sha256": "f434627712d53fef1b4121decbdc2cd65266657b5ded593543c927cf2a76654f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.namespaces"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "0b61901fa307c716b11f71b6d2a6a50acb78f850a2777f864906523e16c19554",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "ipr",
+      "title": "Intellectual property rights",
+      "level": 2,
+      "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.ipr"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "537163f9c18646919404c71cdfc504e1eab9762b039c6359a427e0d476bea9e6",
+      "clause_count": 251,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "f2e0137f4fea5f333476fd3e8eaf35bd0fc1fe6e738f50e7ff4005e38be3fb3b",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "249e3cae03b1baa288cc570cb858ba22a23ba8fada9e63aac774f0c920a8c316",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.import-81d6eacb7a2f",
+          "infra.import-8fbd089b67ea",
+          "infra.import-cedb4ecd1736",
+          "infra.import-ba6472c48dd3",
+          "infra.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "f26db5b51469c755081cfbce98b1929d8462a1eb4728241b4a3a10156a11bcd2",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "infra.informative"
+        ]
+      }
+    }
+  ]
+}

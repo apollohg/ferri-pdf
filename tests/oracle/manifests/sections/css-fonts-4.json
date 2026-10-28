@@ -1,0 +1,2427 @@
+{
+  "schema_version": 1,
+  "source_id": "css-fonts-4",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Fonts Module Level 4",
+      "level": 1,
+      "text_sha256": "3cb810aaa5d8c5a26e2dacb9c918e884b0cf3b69de77f1790c428168df2dc266",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "28d191875e5056616bc878642c438335d51462a74a7d6307cc67ef4ff1b25728",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "9361fc726fc81902fbf161b5db8dfbc81736efdc2a2177f063519dc4315b2e27",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "d06f2980091316a5d9c3970306d7bdfc092ced5acbf4bc64270098cf841c9801",
+      "clause_count": 149,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "317be670906be7b0b60dbf12046ac687707af4acdc0cd4d834fb170a1f6b6201",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.introduction"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.values"
+        ]
+      }
+    },
+    {
+      "id": "font-relative",
+      "title": "1.2. Interaction With Font-Relative Units",
+      "level": 3,
+      "text_sha256": "e7e657e0d3796eaa2576979cb7a4a5bc29b1ff8a909f46226ba6f5e45f239c62",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-relative"
+        ]
+      }
+    },
+    {
+      "id": "basic-font-props",
+      "title": "2. Basic Font Properties",
+      "level": 2,
+      "text_sha256": "90e4d8114095931938ae36960d912164b7c0002e22a390b12a8398cd92c1d3a9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.basic-font-props"
+        ]
+      }
+    },
+    {
+      "id": "font-family-prop",
+      "title": "2.1. Font family: the font-family property",
+      "level": 3,
+      "text_sha256": "232ef8b6be6dd1b279443a5e0ada142fd5d25a36739395c9048a9ade0972e3bd",
+      "clause_count": 107,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-family-prop",
+          "css-fonts-4.font-family-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-family-prop-clause-19ffd5434e55",
+          "css-fonts-4.font-family-prop-clause-9d07e69ba860",
+          "css-fonts-4.font-family-prop-clause-209d8bdb77c8",
+          "css-fonts-4.foundation-font-family-syntax"
+        ]
+      }
+    },
+    {
+      "id": "font-family-name-syntax",
+      "title": "2.1.1. Syntax of <font-family-name>",
+      "level": 4,
+      "text_sha256": "3c56e899a756fe7269e0b36f3caab9e12b2d73c057e0e5ae2ecd145365af5e67",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-family-name-syntax",
+          "css-fonts-4.font-family-name-syntax-clause-b8f41126f2af",
+          "css-fonts-4.font-family-name-syntax-clause-6623fdd5fd1c",
+          "css-fonts-4.font-family-name-syntax-clause-4572be08051e",
+          "css-fonts-4.font-family-name-syntax-clause-dfecf679f715",
+          "css-fonts-4.font-family-name-syntax-clause-ebd76ad0f692",
+          "css-fonts-4.font-family-name-syntax-clause-3844ab4cf723",
+          "css-fonts-4.foundation-font-family-syntax"
+        ]
+      }
+    },
+    {
+      "id": "generic-family-name-syntax",
+      "title": "2.1.2. Syntax of <generic-font-family>",
+      "level": 4,
+      "text_sha256": "6107db01e6c24ce1c5367e20cfc2ca3396a06e37e4d8aae1b0bcb73ed9c40033",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.generic-family-name-syntax",
+          "css-fonts-4.foundation-font-family-syntax"
+        ]
+      }
+    },
+    {
+      "id": "system",
+      "title": "2.1.3. Syntax of <system-font-family-name>",
+      "level": 4,
+      "text_sha256": "4e1d70fd557e0b36c2a843751df83f98d3f118ef5da55db5d93fd8e059a233cf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.system",
+          "css-fonts-4.foundation-font-family-syntax"
+        ]
+      }
+    },
+    {
+      "id": "font-families",
+      "title": "2.1.4. Relationship Between Faces and Families",
+      "level": 4,
+      "text_sha256": "961261577352c6262fca5786aeb744d9f5ab11dc1eb726d5a21850cc1924f008",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-families",
+          "css-fonts-4.foundation-font-family-syntax"
+        ]
+      }
+    },
+    {
+      "id": "generic-font-families",
+      "title": "2.1.5. Generic font families",
+      "level": 4,
+      "text_sha256": "661f44c1c7d71e396e8d7cafab39ada3c2e3c6ebc9cb69d2a10a07b6b9850d11",
+      "clause_count": 69,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.generic-font-families",
+          "css-fonts-4.generic-font-families-clause-98a85b24a680",
+          "css-fonts-4.generic-font-families-clause-3620495f3d0b",
+          "css-fonts-4.generic-font-families-clause-8badbfbbfab7",
+          "css-fonts-4.generic-font-families-clause-a52f26b3e9a1",
+          "css-fonts-4.generic-font-families-clause-e0406b103b38",
+          "css-fonts-4.generic-font-families-clause-fed317b70a9d",
+          "css-fonts-4.generic-font-families-clause-2d6f60296149",
+          "css-fonts-4.generic-font-families-clause-bd86ce90a1b5",
+          "css-fonts-4.generic-font-families-clause-789789583665",
+          "css-fonts-4.generic-font-families-clause-99ac2cf6476c",
+          "css-fonts-4.generic-font-families-clause-587b4cd7bf48",
+          "css-fonts-4.generic-font-families-clause-7d0a709fccbe",
+          "css-fonts-4.generic-font-families-clause-0e4450d7ad51",
+          "css-fonts-4.generic-font-families-clause-b3dcc4590094",
+          "css-fonts-4.generic-font-families-clause-208c35a13a58",
+          "css-fonts-4.generic-font-families-clause-8178adbd8813",
+          "css-fonts-4.generic-font-families-clause-0eed2b358de0",
+          "css-fonts-4.generic-font-families-clause-4c34be2d2ab2",
+          "css-fonts-4.foundation-font-family-syntax"
+        ]
+      }
+    },
+    {
+      "id": "font-weight-prop",
+      "title": "2.2. Font weight: the font-weight property",
+      "level": 3,
+      "text_sha256": "7c5663738dee7868020beddb1a4daa8504d078d614e0e01b8d421a0fc3e9d024",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-weight-prop",
+          "css-fonts-4.font-weight-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-weight-prop-clause-4546049c6691",
+          "css-fonts-4.font-weight-prop-clause-5405c9c16bd6",
+          "css-fonts-4.font-weight-prop-clause-dd13ed0582c8",
+          "css-fonts-4.font-weight-prop-clause-201714131800",
+          "css-fonts-4.font-weight-prop-clause-1966618471a4",
+          "css-fonts-4.font-weight-prop-clause-38dbd1bc2243",
+          "css-fonts-4.foundation-font-face-matching"
+        ]
+      }
+    },
+    {
+      "id": "relative-weights",
+      "title": "2.2.1. Relative Weights",
+      "level": 4,
+      "text_sha256": "01f53f889f56af7885de1ea9bdaadc63d54415e9ca01cecc28743babb882e7da",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.relative-weights",
+          "css-fonts-4.relative-weights-clause-8191d8afa656",
+          "css-fonts-4.foundation-font-face-matching"
+        ]
+      }
+    },
+    {
+      "id": "missing-weights",
+      "title": "2.2.2. Missing weights",
+      "level": 4,
+      "text_sha256": "e7728d71a23e29fb2243946069505dec17efffdb02ba6783aff2e871f8b8c2ff",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.missing-weights",
+          "css-fonts-4.missing-weights-clause-74bd0eef1bcc",
+          "css-fonts-4.missing-weights-clause-4b1992ee3ef8",
+          "css-fonts-4.missing-weights-clause-ec4c7f74836b",
+          "css-fonts-4.foundation-font-face-matching"
+        ]
+      }
+    },
+    {
+      "id": "font-width-prop",
+      "title": "2.3. Font width: the font-width property",
+      "level": 3,
+      "text_sha256": "a5fa3d0383606d6a53d1cc275d5f6e2a1949274c6751074ec765335498121efa",
+      "clause_count": 66,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-width-prop",
+          "css-fonts-4.font-width-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-width-prop-clause-b23900af9ae7",
+          "css-fonts-4.font-width-prop-clause-98c332f86744",
+          "css-fonts-4.font-width-prop-clause-a7caf5078aa9",
+          "css-fonts-4.font-width-prop-clause-7eea95819ef9",
+          "css-fonts-4.font-width-prop-clause-d5a7fbc4e805",
+          "css-fonts-4.font-width-prop-clause-3d8b00bde521",
+          "css-fonts-4.foundation-font-face-matching"
+        ]
+      }
+    },
+    {
+      "id": "font-stretch-prop",
+      "title": "2.3.1. Font width: the font-stretch legacy name alias",
+      "level": 4,
+      "text_sha256": "5b51e400e563fdefc00cf89037c750286728ed3bebc5a2565668385c55a44a00",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-stretch-prop",
+          "css-fonts-4.font-stretch-prop-clause-b23900af9ae7",
+          "css-fonts-4.font-stretch-prop-clause-98c332f86744",
+          "css-fonts-4.font-stretch-prop-clause-826f477f2a39",
+          "css-fonts-4.foundation-font-face-matching"
+        ]
+      }
+    },
+    {
+      "id": "font-style-prop",
+      "title": "2.4. Font style: the font-style property",
+      "level": 3,
+      "text_sha256": "2c3dfca4c9d9c1b83878a30064a72328864c11d675cb36adffa17c468aed39e9",
+      "clause_count": 60,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-style-prop",
+          "css-fonts-4.font-style-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-style-prop-clause-0ab18fd72bcd",
+          "css-fonts-4.font-style-prop-clause-2c52c8f0bd94",
+          "css-fonts-4.font-style-prop-clause-26476c38efb9",
+          "css-fonts-4.font-style-prop-clause-27c3b47bddf0",
+          "css-fonts-4.font-style-prop-clause-6f3630b16ee8",
+          "css-fonts-4.font-style-prop-clause-3cf7bc3fc9f5",
+          "css-fonts-4.font-style-prop-clause-cc9393b0923e",
+          "css-fonts-4.font-style-prop-clause-54b9a4d3d15b",
+          "css-fonts-4.font-style-prop-clause-1ebb6d8c82f0",
+          "css-fonts-4.foundation-font-face-matching"
+        ]
+      }
+    },
+    {
+      "id": "font-size-prop",
+      "title": "2.5. Font size: the font-size property",
+      "level": 3,
+      "text_sha256": "249ebb7b448fdddf44b93ca87bda6bbdfb226834e795aad54922b18f070a3c37",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-size-prop",
+          "css-fonts-4.font-size-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-size-prop-clause-ee13b7cf8b05",
+          "css-fonts-4.font-size-prop-clause-28842f75f382",
+          "css-fonts-4.font-size-prop-clause-ea4618a8ae1b",
+          "css-fonts-4.font-size-prop-clause-4ff3e39e8e0d",
+          "css-fonts-4.font-size-prop-clause-010647aff1e8",
+          "css-fonts-4.font-size-prop-clause-33f14f95caed",
+          "css-fonts-4.font-size-prop-clause-1734726b8eff",
+          "css-fonts-4.font-size-prop-clause-7bf92c67464a",
+          "css-fonts-4.font-size-prop-clause-cf77bbea3eb0",
+          "css-fonts-4.font-size-prop-clause-5075291a8076",
+          "css-fonts-4.font-size-prop-clause-6a13cea37b31",
+          "css-fonts-4.font-size-prop-clause-9ccc05127a70",
+          "css-fonts-4.font-size-prop-clause-09e217c06412",
+          "css-fonts-4.foundation-font-size-metrics"
+        ]
+      }
+    },
+    {
+      "id": "absolute-size-mapping",
+      "title": "2.5.1. Absolute Size Keyword Mapping Table",
+      "level": 4,
+      "text_sha256": "a7736fcc42c02c31e811865b5a3aa22fbcec127b484aaff1533fe1f7d6441d8b",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.absolute-size-mapping",
+          "css-fonts-4.absolute-size-mapping-clause-1b86263adb07",
+          "css-fonts-4.absolute-size-mapping-clause-e8316161ade6",
+          "css-fonts-4.foundation-font-size-metrics"
+        ]
+      }
+    },
+    {
+      "id": "font-size-adjust-prop",
+      "title": "2.6. Relative sizing: the font-size-adjust property",
+      "level": 3,
+      "text_sha256": "dbbe759800451453e772b800ab19fc4f64105436836cbd75853a5ee6422850c4",
+      "clause_count": 66,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-size-adjust-prop",
+          "css-fonts-4.font-size-adjust-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-size-adjust-prop-clause-a4d558339209",
+          "css-fonts-4.font-size-adjust-prop-clause-ce8e832260d7",
+          "css-fonts-4.font-size-adjust-prop-clause-fa274dcf6ce8",
+          "css-fonts-4.font-size-adjust-prop-clause-01aebefcb53d",
+          "css-fonts-4.font-size-adjust-prop-clause-afbd1c1e1698",
+          "css-fonts-4.font-size-adjust-prop-clause-aa06fab12f5d",
+          "css-fonts-4.font-size-adjust-prop-clause-b5590faad761",
+          "css-fonts-4.font-size-adjust-prop-clause-c22549bf84c1",
+          "css-fonts-4.foundation-font-size-metrics"
+        ]
+      }
+    },
+    {
+      "id": "font-prop",
+      "title": "2.7. Shorthand font property: the font property",
+      "level": 3,
+      "text_sha256": "7a0d6c15b8711c8a1e47d7b677437c8c9d52514226f76452b8edc961dc591bb7",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-prop",
+          "css-fonts-4.font-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-prop-clause-5c019b759bc3",
+          "css-fonts-4.font-prop-clause-011b0ba1d6e4",
+          "css-fonts-4.font-prop-clause-0d94b8847057",
+          "css-fonts-4.font-prop-clause-fa1bd9344c92",
+          "css-fonts-4.font-prop-clause-fe4c46f89873",
+          "css-fonts-4.font-prop-clause-cf5c1aa21656",
+          "css-fonts-4.font-prop-clause-b046f6debbb9",
+          "css-fonts-4.font-prop-clause-bd5451cd7b83",
+          "css-fonts-4.font-prop-clause-43cb1b9977f7",
+          "css-fonts-4.font-prop-clause-aec0bef2a1ea",
+          "css-fonts-4.foundation-font-shorthand"
+        ]
+      }
+    },
+    {
+      "id": "font-synthesis-intro",
+      "title": "2.8. Controlling synthetic faces",
+      "level": 3,
+      "text_sha256": "3c5239e90f33b1f077f5636c0430796ad3383b99cba5d014ccb83b42ed491bc4",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-synthesis-intro"
+        ]
+      }
+    },
+    {
+      "id": "font-synthesis-weight",
+      "title": "2.8.1. Controlling synthesized bold: The font-synthesis-weight property",
+      "level": 4,
+      "text_sha256": "311a655aed71e2db79228d0efc50b2e834018805c36252806b0cbfca0e5135c5",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-synthesis-weight",
+          "css-fonts-4.font-synthesis-weight-clause-cca2516ebb1d",
+          "css-fonts-4.font-synthesis-weight-clause-a67d8f727a80",
+          "css-fonts-4.font-synthesis-weight-clause-89524e21aaaa"
+        ]
+      }
+    },
+    {
+      "id": "font-synthesis-style",
+      "title": "2.8.2. Controlling synthesized oblique: The font-synthesis-style property",
+      "level": 4,
+      "text_sha256": "9d0fc2bdc121c4de7e9c16c98aa9f3a2f83ad79029d9af4d107f09d2e893d15d",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-synthesis-style",
+          "css-fonts-4.font-synthesis-style-clause-cca2516ebb1d",
+          "css-fonts-4.font-synthesis-style-clause-9d5d47ec9303",
+          "css-fonts-4.font-synthesis-style-clause-d2bc2c9b23c7",
+          "css-fonts-4.font-synthesis-style-clause-7798d3e743d6"
+        ]
+      }
+    },
+    {
+      "id": "font-synthesis-small-caps",
+      "title": "2.8.3. Controlling synthesized small caps: The font-synthesis-small-caps property",
+      "level": 4,
+      "text_sha256": "9b085fac4f378f4bed72cc8d53bb202b92b988c11c6666fa219d2e9205f16df6",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-synthesis-small-caps",
+          "css-fonts-4.font-synthesis-small-caps-clause-cca2516ebb1d",
+          "css-fonts-4.font-synthesis-small-caps-clause-b381365f327d",
+          "css-fonts-4.font-synthesis-small-caps-clause-aa18f6ca800f",
+          "css-fonts-4.foundation-css2-small-caps"
+        ]
+      }
+    },
+    {
+      "id": "font-synthesis-position",
+      "title": "2.8.4. Controlling synthesized super- and subscripts: The font-synthesis-position property",
+      "level": 4,
+      "text_sha256": "4794c4fbab3969cfa7386af6b2298c523637c0983fc744ab0f2804807ba3a64e",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-synthesis-position",
+          "css-fonts-4.font-synthesis-position-clause-cca2516ebb1d",
+          "css-fonts-4.font-synthesis-position-clause-c2c99608f92e",
+          "css-fonts-4.font-synthesis-position-clause-52d5da1a0859",
+          "css-fonts-4.font-synthesis-position-clause-cc75ba17661f",
+          "css-fonts-4.font-synthesis-position-clause-83379d659b2e"
+        ]
+      }
+    },
+    {
+      "id": "font-synthesis",
+      "title": "2.8.5. Controlling synthetic faces: the font-synthesis shorthand",
+      "level": 4,
+      "text_sha256": "c773488e652b91c3d9c115f5b5be1e2977877fbc0f10811f2df5d8555dfc98b1",
+      "clause_count": 120,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-synthesis",
+          "css-fonts-4.font-synthesis-clause-cca2516ebb1d",
+          "css-fonts-4.font-synthesis-clause-c39f2d891ba6",
+          "css-fonts-4.font-synthesis-clause-930efa46adf9",
+          "css-fonts-4.font-synthesis-clause-c1cca56fc2ed"
+        ]
+      }
+    },
+    {
+      "id": "font-rendering-controls",
+      "title": "3. Font Rendering Controls",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-rendering-controls"
+        ]
+      }
+    },
+    {
+      "id": "font-rendering-controls-introduction",
+      "title": "3.1. Introduction to Font Rendering Controls",
+      "level": 3,
+      "text_sha256": "8f0f43896bf06b22c90cfc287a2bd19cd61a43f216cc5c07882ce0d89b9f3b75",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-rendering-controls-introduction",
+          "css-fonts-4.font-rendering-controls-introduction-clause-937d9cf44bbb",
+          "css-fonts-4.font-rendering-controls-introduction-clause-7f78fcc33cc8"
+        ]
+      }
+    },
+    {
+      "id": "font-display-timeline",
+      "title": "3.2. The Font Display Timeline",
+      "level": 3,
+      "text_sha256": "db6e5f2b34789f24ef9daac2ec4ed9e82c5e7f22a1b463c2f198b0fe2893cf70",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-display-timeline",
+          "css-fonts-4.font-display-timeline-clause-6a09004db22e",
+          "css-fonts-4.font-display-timeline-clause-e0c633e64fd3",
+          "css-fonts-4.font-display-timeline-clause-f08b07eedcc6",
+          "css-fonts-4.font-display-timeline-clause-5362dcc1a731",
+          "css-fonts-4.font-display-timeline-clause-631a32bf8332"
+        ]
+      }
+    },
+    {
+      "id": "font-resources",
+      "title": "4. Font Resources",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-resources"
+        ]
+      }
+    },
+    {
+      "id": "font-face-rule",
+      "title": "4.1. The @font-face rule",
+      "level": 3,
+      "text_sha256": "d362613891f68878e93dd346a4b62f61983696a252635251eb7f6db441b3e56d",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-face-rule",
+          "css-fonts-4.font-face-rule-clause-ba31c324abdd",
+          "css-fonts-4.font-face-rule-clause-1233a85ca9db",
+          "css-fonts-4.font-face-rule-clause-951a529392fd",
+          "css-fonts-4.font-face-rule-clause-7236d4ee2c9a"
+        ]
+      }
+    },
+    {
+      "id": "font-family-desc",
+      "title": "4.2. Font family: the font-family descriptor",
+      "level": 3,
+      "text_sha256": "f935d8edbb956e4b14aef825aacf562b8c88845bc66ceb07977ec1b2757e9064",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-family-desc",
+          "css-fonts-4.font-family-desc-clause-90b1b30a075a",
+          "css-fonts-4.font-family-desc-clause-020b84a2fa43"
+        ]
+      }
+    },
+    {
+      "id": "src-desc",
+      "title": "4.3. Font reference: the src descriptor",
+      "level": 3,
+      "text_sha256": "5e122dd3c7c3d927238e0e3c4a3db5304b1ba3d057673342d7064fae666dbd08",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.src-desc",
+          "css-fonts-4.src-desc-clause-d2022d2a2b9d",
+          "css-fonts-4.src-desc-clause-e3e154ae6071",
+          "css-fonts-4.foundation-font-resource-fallback"
+        ]
+      }
+    },
+    {
+      "id": "font-face-src-parsing",
+      "title": "4.3.1. Parsing the src descriptor",
+      "level": 4,
+      "text_sha256": "eb3e9834b5e4eafe8d6085e33c7afddc3c61432e9b86f495087c22198f601ac5",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-face-src-parsing",
+          "css-fonts-4.foundation-font-resource-fallback"
+        ]
+      }
+    },
+    {
+      "id": "font-face-src-loading",
+      "title": "4.3.2. Loading an individual item in the src descriptor",
+      "level": 4,
+      "text_sha256": "0e5f0116355aec467c21e8355b86014bb6804592efdc9f96a558338455027fe5",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-face-src-loading",
+          "css-fonts-4.font-face-src-loading-clause-224b726e3ab4",
+          "css-fonts-4.font-face-src-loading-clause-e567a8163e97",
+          "css-fonts-4.foundation-font-resource-fallback"
+        ]
+      }
+    },
+    {
+      "id": "font-face-src-formats",
+      "title": "4.3.3. Selecting items in the src",
+      "level": 4,
+      "text_sha256": "f0344077bc522685c9dc39b9f3d454c8593d242eb0d406b3505fcc604fc52752",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-face-src-formats",
+          "css-fonts-4.font-face-src-formats-clause-f118daeab513",
+          "css-fonts-4.foundation-font-resource-fallback"
+        ]
+      }
+    },
+    {
+      "id": "local-font-fallback",
+      "title": "4.3.3.1. Local font fallback",
+      "level": 5,
+      "text_sha256": "0dcb50970569d3384589b218736c796ba66fd8350c4da5125152756350fcf21e",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.local-font-fallback",
+          "css-fonts-4.local-font-fallback-clause-4d225f3db2ea",
+          "css-fonts-4.local-font-fallback-clause-e9fdd8eb00c1",
+          "css-fonts-4.local-font-fallback-clause-ebf01c6d5906",
+          "css-fonts-4.local-font-fallback-clause-dd1056f581b1",
+          "css-fonts-4.local-font-fallback-clause-075f01223c34"
+        ]
+      }
+    },
+    {
+      "id": "font-prop-desc",
+      "title": "4.4. Font property descriptors: the font-style, font-weight, and font-width descriptors",
+      "level": 3,
+      "text_sha256": "08dd21ddfa418897ac7273655940e4fd318a5a0e8b5786fed60556d172f07790",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-prop-desc",
+          "css-fonts-4.font-prop-desc-clause-1a67e7bb6deb",
+          "css-fonts-4.font-prop-desc-clause-6a3852130d15",
+          "css-fonts-4.font-prop-desc-clause-fbabd3c3982d",
+          "css-fonts-4.font-prop-desc-clause-a61af9895937",
+          "css-fonts-4.font-prop-desc-clause-ce9f7af93aef"
+        ]
+      }
+    },
+    {
+      "id": "font-stretch-desc",
+      "title": "4.4.1. Font width: the font-stretch legacy name alias",
+      "level": 4,
+      "text_sha256": "2ca2aa234d9ea811ac18113a66070ae28abfd059010c58a51c25fe111f4d4348",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-stretch-desc",
+          "css-fonts-4.font-stretch-desc-clause-b23900af9ae7",
+          "css-fonts-4.font-stretch-desc-clause-98c332f86744"
+        ]
+      }
+    },
+    {
+      "id": "unicode-range-desc",
+      "title": "4.5. Character range: the unicode-range descriptor",
+      "level": 3,
+      "text_sha256": "16b86b8aa9fff2a7a619d1e5eaff99e922a3b681cab694cc68171f1c9efa3f5a",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.unicode-range-desc",
+          "css-fonts-4.unicode-range-desc-clause-2ae14676b781",
+          "css-fonts-4.unicode-range-desc-clause-6c63f658c3cc",
+          "css-fonts-4.unicode-range-desc-clause-5fc5a9f197b2",
+          "css-fonts-4.unicode-range-desc-clause-471af099e029",
+          "css-fonts-4.unicode-range-desc-clause-8b5846543cf5",
+          "css-fonts-4.unicode-range-desc-clause-bceed38aff42"
+        ]
+      }
+    },
+    {
+      "id": "composite-fonts",
+      "title": "4.5.1. Using character ranges to define composite fonts",
+      "level": 4,
+      "text_sha256": "065b2537a6744f9ffce6c607ba4e24069761d692e98b0bf3024b7bfcaa097586",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.composite-fonts"
+        ]
+      }
+    },
+    {
+      "id": "font-rend-desc",
+      "title": "4.6. Font features and variations: the font-feature-settings and font-variation-settings descriptors",
+      "level": 3,
+      "text_sha256": "a6a6d989873005a98da86ece75c19ef1c92a3c7e3ee2243addb007705eac3f18",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-rend-desc",
+          "css-fonts-4.font-rend-desc-clause-360aab91ef62",
+          "css-fonts-4.font-rend-desc-clause-408c51653c8d",
+          "css-fonts-4.font-rend-desc-clause-2b4070841e12",
+          "css-fonts-4.font-rend-desc-clause-86fa50dce888"
+        ]
+      }
+    },
+    {
+      "id": "font-named-instance",
+      "title": "4.7. Using named instances from variable fonts: the font-named-instance descriptor",
+      "level": 3,
+      "text_sha256": "a73e67059cb43ba32935f6f9aafe4fc04f4cf5083e9347a87f1d0e6205709811",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-named-instance"
+        ]
+      }
+    },
+    {
+      "id": "font-requests",
+      "title": "4.8. Font request guidelines",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-requests"
+        ]
+      }
+    },
+    {
+      "id": "font-face-loading",
+      "title": "4.8.1. Font loading guidelines",
+      "level": 4,
+      "text_sha256": "3d43082035b724a3bef1d3b75341469ed9340d8b5bc88722c9e1b4b0b97c256f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-face-loading",
+          "css-fonts-4.font-face-loading-clause-49ed5ba751f3",
+          "css-fonts-4.font-face-loading-clause-97cc48d79e58"
+        ]
+      }
+    },
+    {
+      "id": "font-fetching-requirements",
+      "title": "4.8.2. Font fetching requirements",
+      "level": 4,
+      "text_sha256": "4398776ade0a187a2bfdfc259438b075206283a2c539636b8747d1151f67a0a0",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-fetching-requirements",
+          "css-fonts-4.font-fetching-requirements-clause-624b058363f6",
+          "css-fonts-4.foundation-font-resource-fallback"
+        ]
+      }
+    },
+    {
+      "id": "font-display-desc",
+      "title": "4.9. Controlling Font Display Per Font-Face: the font-display descriptor",
+      "level": 3,
+      "text_sha256": "e380040af2bbaf0cd9dc0383015a4dc17ab7eff27dc872c83587061b8de49e86",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-display-desc",
+          "css-fonts-4.font-display-desc-clause-6c43cbdb054a",
+          "css-fonts-4.font-display-desc-clause-14bcc8d0b185",
+          "css-fonts-4.font-display-desc-clause-f5660ee57feb",
+          "css-fonts-4.font-display-desc-clause-50d28f2e8c65",
+          "css-fonts-4.font-display-desc-clause-2c09cab22b6f",
+          "css-fonts-4.font-display-desc-clause-26244c9644c2",
+          "css-fonts-4.font-display-desc-clause-c5017d180111",
+          "css-fonts-4.font-display-desc-clause-231b0567b026",
+          "css-fonts-4.font-display-desc-clause-b6fdf255d4f5",
+          "css-fonts-4.font-display-desc-clause-65fda94a7847",
+          "css-fonts-4.font-display-desc-clause-6af4b116de1c"
+        ]
+      }
+    },
+    {
+      "id": "font-display-font-feature-values",
+      "title": "4.9.1. Controlling Font Display Per Font-Family via @font-feature-values",
+      "level": 4,
+      "text_sha256": "43c2904da42a800a4ee9ce24931f9acfcd0c8c45e67e946d790a744e767975d9",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-display-font-feature-values"
+        ]
+      }
+    },
+    {
+      "id": "font-language-override-desc",
+      "title": "4.10. Default font language overriding: the font-language-override descriptor",
+      "level": 3,
+      "text_sha256": "aeb2209d8e7c2b8759f6d1edb10269e2f34ac0c2d5e13ece456c30cde1dc4204",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-language-override-desc",
+          "css-fonts-4.font-language-override-desc-clause-4882d1d8fee4",
+          "css-fonts-4.font-language-override-desc-clause-c03ac5df2074"
+        ]
+      }
+    },
+    {
+      "id": "font-metrics-override-desc",
+      "title": "4.11. Default font metrics overriding: the ascent-override, descent-override and line-gap-override descriptors",
+      "level": 3,
+      "text_sha256": "d60284138493b193e900ad0ee9bf2dee8bbd9a8cfb7261cc5f6936af187f31f4",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-metrics-override-desc",
+          "css-fonts-4.font-metrics-override-desc-clause-8115bd75d85f",
+          "css-fonts-4.font-metrics-override-desc-clause-9d4c9ea3ef6b"
+        ]
+      }
+    },
+    {
+      "id": "font-matching-algorithm",
+      "title": "5. Font Matching Algorithm",
+      "level": 2,
+      "text_sha256": "e7fd76cf6d62c6f3c84ce0250bc73a52882d631035a9150269508a5a410f4ca2",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-matching-algorithm",
+          "css-fonts-4.font-matching-algorithm-clause-5cd7a2c54ecb",
+          "css-fonts-4.font-matching-algorithm-clause-922b889be476",
+          "css-fonts-4.font-matching-algorithm-clause-59619ccb5c51",
+          "css-fonts-4.font-matching-algorithm-clause-d9b5f4ea9ef1",
+          "css-fonts-4.font-matching-algorithm-clause-0a7d9142667d",
+          "css-fonts-4.foundation-font-face-matching"
+        ]
+      }
+    },
+    {
+      "id": "localized-name-matching",
+      "title": "5.1. Localized name matching",
+      "level": 3,
+      "text_sha256": "0bfcf8551f982006b029ed6b26f72ddaababdcbbafc083409c55a0a418a7df3f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.localized-name-matching",
+          "css-fonts-4.localized-name-matching-clause-bd3204e29862",
+          "css-fonts-4.localized-name-matching-clause-1fd1fe253285",
+          "css-fonts-4.localized-name-matching-clause-cc5aceeb8f9d",
+          "css-fonts-4.localized-name-matching-clause-0df34930185f",
+          "css-fonts-4.foundation-font-face-matching"
+        ]
+      }
+    },
+    {
+      "id": "font-style-matching",
+      "title": "5.2. Matching font styles",
+      "level": 3,
+      "text_sha256": "d912b753c61d8f283d94e5cddb4363480739785898df8e4e815bdd0ab15ecb24",
+      "clause_count": 130,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-style-matching",
+          "css-fonts-4.font-style-matching-clause-e9b6b8b9b673",
+          "css-fonts-4.font-style-matching-clause-39cf0eacca0a",
+          "css-fonts-4.font-style-matching-clause-134bcd021a08",
+          "css-fonts-4.font-style-matching-clause-ab180d8fe2ca",
+          "css-fonts-4.font-style-matching-clause-e0a5f1c58220",
+          "css-fonts-4.font-style-matching-clause-0655f091a545",
+          "css-fonts-4.font-style-matching-clause-1bc9ba34d7aa",
+          "css-fonts-4.font-style-matching-clause-31b716b7f5e7",
+          "css-fonts-4.font-style-matching-clause-462585bdf8c3",
+          "css-fonts-4.font-style-matching-clause-8c1df74a98f4",
+          "css-fonts-4.font-style-matching-clause-44806a4347a5",
+          "css-fonts-4.font-style-matching-clause-fe69248c1394",
+          "css-fonts-4.font-style-matching-clause-31281dbb8c5c",
+          "css-fonts-4.font-style-matching-clause-96fba1875eb6",
+          "css-fonts-4.font-style-matching-clause-bf3d76d011a5",
+          "css-fonts-4.font-style-matching-clause-1e83401384f3",
+          "css-fonts-4.font-style-matching-clause-0c8064dba712",
+          "css-fonts-4.font-style-matching-clause-a6854416acd9",
+          "css-fonts-4.font-style-matching-clause-e54b5a6d0b28",
+          "css-fonts-4.font-style-matching-clause-ce5a20272811",
+          "css-fonts-4.font-style-matching-clause-5d3f671f6f78",
+          "css-fonts-4.font-style-matching-clause-6778c6c585f2",
+          "css-fonts-4.font-style-matching-clause-c5baa44ed2cd",
+          "css-fonts-4.font-style-matching-clause-d6c86618d8ca",
+          "css-fonts-4.font-style-matching-clause-46c675cc5bcd",
+          "css-fonts-4.font-style-matching-clause-cd6738bcd52b",
+          "css-fonts-4.font-style-matching-clause-293c473ac5f8",
+          "css-fonts-4.font-style-matching-clause-1756d134ac90",
+          "css-fonts-4.font-style-matching-clause-4351e911178c",
+          "css-fonts-4.font-style-matching-clause-853a3ecf473b",
+          "css-fonts-4.foundation-font-face-matching"
+        ]
+      }
+    },
+    {
+      "id": "cluster-matching",
+      "title": "5.3. Cluster matching",
+      "level": 3,
+      "text_sha256": "a3a736f97cc4b46fb74dff95be500df5a52dbf81d4396463d53e5acb41907495",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.cluster-matching",
+          "css-fonts-4.cluster-matching-clause-af952abb5df9",
+          "css-fonts-4.cluster-matching-clause-55b2b216b5b7",
+          "css-fonts-4.foundation-font-resource-fallback"
+        ]
+      }
+    },
+    {
+      "id": "char-handling-issues",
+      "title": "5.4. Character handling issues",
+      "level": 3,
+      "text_sha256": "ea5625fbb81de814c47f8f8039328206b9c00f3196f3070cfcd575a50f7f58bb",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.char-handling-issues",
+          "css-fonts-4.char-handling-issues-clause-f319034ef8fd",
+          "css-fonts-4.char-handling-issues-clause-7bab18f4c277",
+          "css-fonts-4.char-handling-issues-clause-f1519561137e",
+          "css-fonts-4.foundation-font-resource-fallback"
+        ]
+      }
+    },
+    {
+      "id": "font-rend-props",
+      "title": "6. Font Feature Properties",
+      "level": 2,
+      "text_sha256": "65accf41a41bda5eea83d221716985768692d0b40e7d26432db59dc131389ede",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-rend-props"
+        ]
+      }
+    },
+    {
+      "id": "glyph-selection-positioning",
+      "title": "6.1. Glyph selection and positioning",
+      "level": 3,
+      "text_sha256": "351d04b6e6dfcd0a61598af8662315395619ad3ecbd1fb767fff5a5a631f722d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.glyph-selection-positioning"
+        ]
+      }
+    },
+    {
+      "id": "language-specific-support",
+      "title": "6.2. Language-specific display",
+      "level": 3,
+      "text_sha256": "446619495f60654394626f634e77cb645002d0aca1322714407c1e58e56c97b1",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.language-specific-support",
+          "css-fonts-4.language-specific-support-clause-92a448402278"
+        ]
+      }
+    },
+    {
+      "id": "font-kerning-prop",
+      "title": "6.3. Kerning: the font-kerning property",
+      "level": 3,
+      "text_sha256": "b17299915180c8a10dc92ddc831b5252d24b6cac0e70e3391d0467e0104e554a",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-kerning-prop",
+          "css-fonts-4.font-kerning-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-kerning-prop-clause-8fe50980f36d",
+          "css-fonts-4.font-kerning-prop-clause-825af44701c1",
+          "css-fonts-4.font-kerning-prop-clause-58dcf8587842",
+          "css-fonts-4.font-kerning-prop-clause-08da5fb3d446",
+          "css-fonts-4.font-kerning-prop-clause-a20f43b3369b",
+          "css-fonts-4.font-kerning-prop-clause-2a07053bcce3",
+          "css-fonts-4.font-kerning-prop-clause-5e92500ce320"
+        ]
+      }
+    },
+    {
+      "id": "font-variant-ligatures-prop",
+      "title": "6.4. Ligatures: the font-variant-ligatures property",
+      "level": 3,
+      "text_sha256": "53bd79574469eaf0f264222e54340bf24f251077229bcd5dba05cb3697f976a1",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-variant-ligatures-prop",
+          "css-fonts-4.font-variant-ligatures-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-variant-ligatures-prop-clause-119fc34aad34",
+          "css-fonts-4.font-variant-ligatures-prop-clause-c2c44b720a57",
+          "css-fonts-4.font-variant-ligatures-prop-clause-0f30cd7b29d5",
+          "css-fonts-4.font-variant-ligatures-prop-clause-42b1dff6e4dc",
+          "css-fonts-4.font-variant-ligatures-prop-clause-a8c0c90c86af"
+        ]
+      }
+    },
+    {
+      "id": "font-variant-position-prop",
+      "title": "6.5. Subscript and superscript forms: the font-variant-position property",
+      "level": 3,
+      "text_sha256": "b79e01baf7b5115c6de496dae8116ed58ed4424fec34adffa72053b75dce335b",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-variant-position-prop",
+          "css-fonts-4.font-variant-position-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-variant-position-prop-clause-cca347101f96",
+          "css-fonts-4.font-variant-position-prop-clause-472c24742b2f",
+          "css-fonts-4.font-variant-position-prop-clause-2a7e22b613a9",
+          "css-fonts-4.font-variant-position-prop-clause-77543905d330",
+          "css-fonts-4.font-variant-position-prop-clause-28a55cc12217",
+          "css-fonts-4.font-variant-position-prop-clause-b9aafbeedb03",
+          "css-fonts-4.font-variant-position-prop-clause-3dd55574a1d8",
+          "css-fonts-4.font-variant-position-prop-clause-1846c6c66d80",
+          "css-fonts-4.font-variant-position-prop-clause-11b845e5c8c2"
+        ]
+      }
+    },
+    {
+      "id": "font-variant-caps-prop",
+      "title": "6.6. Capitalization: the font-variant-caps property",
+      "level": 3,
+      "text_sha256": "753c25fc61afb138496e78c1b9ccef24795d59a40847a535804d0581e6ec882a",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-variant-caps-prop",
+          "css-fonts-4.font-variant-caps-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-variant-caps-prop-clause-b4a7d315bfa8",
+          "css-fonts-4.font-variant-caps-prop-clause-183b46690656",
+          "css-fonts-4.font-variant-caps-prop-clause-88a97ebc7d05",
+          "css-fonts-4.font-variant-caps-prop-clause-e9d5e8ffe469",
+          "css-fonts-4.font-variant-caps-prop-clause-fed9577d75b9",
+          "css-fonts-4.font-variant-caps-prop-clause-37e336b3b2c4",
+          "css-fonts-4.font-variant-caps-prop-clause-7a42ab7275c4",
+          "css-fonts-4.font-variant-caps-prop-clause-039319e95b4b",
+          "css-fonts-4.font-variant-caps-prop-clause-9394177c52a9",
+          "css-fonts-4.foundation-css2-small-caps"
+        ]
+      }
+    },
+    {
+      "id": "font-variant-numeric-prop",
+      "title": "6.7. Numerical formatting: the font-variant-numeric property",
+      "level": 3,
+      "text_sha256": "9f02ddad2c96ce4a668471ffd5a323f1ae6298b95acf29db47ab9fbb8f7e8f0c",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-variant-numeric-prop",
+          "css-fonts-4.font-variant-numeric-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-variant-numeric-prop-clause-f80405c7a42e",
+          "css-fonts-4.font-variant-numeric-prop-clause-54ce8c6d064c",
+          "css-fonts-4.font-variant-numeric-prop-clause-3587041773a3"
+        ]
+      }
+    },
+    {
+      "id": "font-variant-alternates-prop",
+      "title": "6.8. Alternates and swashes: the font-variant-alternates property",
+      "level": 3,
+      "text_sha256": "d4de86dcfb662319e7fd8884f94fe8b802bce17c60516188332ea2479274864a",
+      "clause_count": 67,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-variant-alternates-prop",
+          "css-fonts-4.font-variant-alternates-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-variant-alternates-prop-clause-85879d3cfca7",
+          "css-fonts-4.font-variant-alternates-prop-clause-f240b88720be",
+          "css-fonts-4.font-variant-alternates-prop-clause-40f043cc145f",
+          "css-fonts-4.font-variant-alternates-prop-clause-e97e4f5da83d",
+          "css-fonts-4.font-variant-alternates-prop-clause-452502e6c271"
+        ]
+      }
+    },
+    {
+      "id": "font-feature-values",
+      "title": "6.9. Defining font specific alternates: the @font-feature-values rule",
+      "level": 3,
+      "text_sha256": "7388588eb009d3a701826d549bbfc8c4a4eecb7b46864ea0f17d01b83c485e7b",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-feature-values",
+          "css-fonts-4.font-feature-values-clause-137e3f21fa6c"
+        ]
+      }
+    },
+    {
+      "id": "font-feature-values-syntax",
+      "title": "6.9.1. Basic syntax",
+      "level": 4,
+      "text_sha256": "97b2efbdb00c3370061e7f644ece9b3ea53da72b2120d590e3cfaf6c391d8292",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-feature-values-syntax",
+          "css-fonts-4.font-feature-values-syntax-clause-a836d247871d",
+          "css-fonts-4.font-feature-values-syntax-clause-4aa0224ba490",
+          "css-fonts-4.font-feature-values-syntax-clause-c176ec12ccde",
+          "css-fonts-4.font-feature-values-syntax-clause-82b7b3bd484e",
+          "css-fonts-4.font-feature-values-syntax-clause-a1cc68155988",
+          "css-fonts-4.font-feature-values-syntax-clause-471e06614653",
+          "css-fonts-4.font-feature-values-syntax-clause-2b638dff85bf",
+          "css-fonts-4.font-feature-values-syntax-clause-0017cabd9af3"
+        ]
+      }
+    },
+    {
+      "id": "multi-value-features",
+      "title": "6.9.2. Multi-valued feature value definitions",
+      "level": 4,
+      "text_sha256": "bc93fd1d21644e7a2cab0b33d17c593082c0ff3aac54173168bc0a674b1a0a55",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.multi-value-features",
+          "css-fonts-4.multi-value-features-clause-5e39a19b80e4",
+          "css-fonts-4.multi-value-features-clause-badc3ba4ceba",
+          "css-fonts-4.multi-value-features-clause-3e36959e212a"
+        ]
+      }
+    },
+    {
+      "id": "font-variant-east-asian-prop",
+      "title": "6.10. East Asian text rendering: the font-variant-east-asian property",
+      "level": 3,
+      "text_sha256": "88b743f88afdb939ddd19eaaeacaf088caa0fb27c62a1aacc0e1627442487a59",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-variant-east-asian-prop",
+          "css-fonts-4.font-variant-east-asian-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-variant-east-asian-prop-clause-4e69968757ac",
+          "css-fonts-4.font-variant-east-asian-prop-clause-41bcec356508",
+          "css-fonts-4.font-variant-east-asian-prop-clause-d30cff0931e7"
+        ]
+      }
+    },
+    {
+      "id": "font-variant-prop",
+      "title": "6.11. Overall shorthand for font rendering: the font-variant property",
+      "level": 3,
+      "text_sha256": "488b0ff520c06e8573b0644ee128620f910eef74094d7f3bb56f0c0ad8a34f41",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-variant-prop",
+          "css-fonts-4.font-variant-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-variant-prop-clause-755b648b042b",
+          "css-fonts-4.font-variant-prop-clause-1846435edaa1",
+          "css-fonts-4.font-variant-prop-clause-0b3216a113fe",
+          "css-fonts-4.foundation-font-shorthand"
+        ]
+      }
+    },
+    {
+      "id": "font-feature-settings-prop",
+      "title": "6.12. Low-level font feature settings control: the font-feature-settings property",
+      "level": 3,
+      "text_sha256": "6f485c7f8067fc4d6e146bb0bf89efcde1d94c773ba4d237925a2e29507a2278",
+      "clause_count": 129,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-feature-settings-prop",
+          "css-fonts-4.font-feature-settings-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-feature-settings-prop-clause-d0661a70d387",
+          "css-fonts-4.font-feature-settings-prop-clause-d05e4ba59782",
+          "css-fonts-4.font-feature-settings-prop-clause-f78112b8cc05",
+          "css-fonts-4.font-feature-settings-prop-clause-4e52863c32d9",
+          "css-fonts-4.font-feature-settings-prop-clause-09212dca9c00",
+          "css-fonts-4.font-feature-settings-prop-clause-5c6c8d567c0e",
+          "css-fonts-4.font-feature-settings-prop-clause-60929237d8c1",
+          "css-fonts-4.font-feature-settings-prop-clause-2940002c2c75",
+          "css-fonts-4.font-feature-settings-prop-clause-c9a1e9daf380",
+          "css-fonts-4.font-feature-settings-prop-clause-86461d14053a",
+          "css-fonts-4.font-feature-settings-prop-clause-c3a2c93e5f52",
+          "css-fonts-4.font-feature-settings-prop-clause-b4d8eedfa2f9",
+          "css-fonts-4.font-feature-settings-prop-clause-9eb35cad37cf",
+          "css-fonts-4.font-feature-settings-prop-clause-35aed9182ef8"
+        ]
+      }
+    },
+    {
+      "id": "font-language-override-prop",
+      "title": "6.13. Font language override: the font-language-override property",
+      "level": 3,
+      "text_sha256": "2d39482b3803abda1b32e0ca7f34fa11a8c743ffcb99a87f8b18d66b57b4bd94",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-language-override-prop",
+          "css-fonts-4.font-language-override-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-language-override-prop-clause-b2dbdf240ee6",
+          "css-fonts-4.font-language-override-prop-clause-284730ccdf3f",
+          "css-fonts-4.font-language-override-prop-clause-840b44dca353",
+          "css-fonts-4.font-language-override-prop-clause-1da7d7ecd87f",
+          "css-fonts-4.font-language-override-prop-clause-24fbdbc3c950"
+        ]
+      }
+    },
+    {
+      "id": "font-feature-variation-resolution",
+      "title": "7. Font Feature and Variation Resolution",
+      "level": 2,
+      "text_sha256": "e02950dedf61894e67ab59f5f4849616063eea8259d8e97ca41ac00beaa7409d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-feature-variation-resolution",
+          "css-fonts-4.foundation-css2-small-caps"
+        ]
+      }
+    },
+    {
+      "id": "default-features",
+      "title": "7.1. Default features",
+      "level": 3,
+      "text_sha256": "1703d195080957dd9a0ac525e9495f19bdb47d0b36b668d297f462092ef513fb",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.default-features",
+          "css-fonts-4.default-features-clause-573aae895cbb",
+          "css-fonts-4.default-features-clause-83e704037e8b"
+        ]
+      }
+    },
+    {
+      "id": "feature-variation-precedence",
+      "title": "7.2. Feature and variation precedence",
+      "level": 3,
+      "text_sha256": "4b386d6831a39f425fc61a9a9eab8b690abf9cef370dff352b06e60285010148",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.feature-variation-precedence",
+          "css-fonts-4.feature-variation-precedence-clause-b6c06ea84e35",
+          "css-fonts-4.feature-variation-precedence-clause-91f775a1031f",
+          "css-fonts-4.feature-variation-precedence-clause-85927c792415",
+          "css-fonts-4.feature-variation-precedence-clause-313281c9e320",
+          "css-fonts-4.feature-variation-precedence-clause-71412bb9054e",
+          "css-fonts-4.feature-variation-precedence-clause-988dc83fabf5"
+        ]
+      }
+    },
+    {
+      "id": "feature-precedence-examples",
+      "title": "7.3. Feature precedence examples",
+      "level": 3,
+      "text_sha256": "7d24bb4f6945ee7d26db453fcb2602544711718ee156038e5a2611dfc6bfaa87",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.feature-precedence-examples"
+        ]
+      }
+    },
+    {
+      "id": "font-variation-props",
+      "title": "8. Font Variation Properties",
+      "level": 2,
+      "text_sha256": "e1ffc2b541e81ff44ac5a9c8c61e85b3825bb46faddd43b1bd26176b409b3041",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-variation-props"
+        ]
+      }
+    },
+    {
+      "id": "font-optical-sizing-def",
+      "title": "8.1. Optical sizing control: the font-optical-sizing property",
+      "level": 3,
+      "text_sha256": "11305f70907aaea4d5e8a3c4357cbc77d11c9233b698a48d8046c8fb6cc01825",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-optical-sizing-def",
+          "css-fonts-4.font-optical-sizing-def-clause-cca2516ebb1d",
+          "css-fonts-4.font-optical-sizing-def-clause-4c2775e5e1d5",
+          "css-fonts-4.font-optical-sizing-def-clause-f09c16762d61",
+          "css-fonts-4.font-optical-sizing-def-clause-055bb04c5b6e",
+          "css-fonts-4.font-optical-sizing-def-clause-cbd13dfb29ef",
+          "css-fonts-4.font-optical-sizing-def-clause-30b384c157e3",
+          "css-fonts-4.font-optical-sizing-def-clause-55bb9f158a2b",
+          "css-fonts-4.font-optical-sizing-def-clause-6e3acc74a9d3",
+          "css-fonts-4.font-optical-sizing-def-clause-6339cb10bd69",
+          "css-fonts-4.font-optical-sizing-def-clause-452fa966003f",
+          "css-fonts-4.font-optical-sizing-def-clause-0825d87dcd5a"
+        ]
+      }
+    },
+    {
+      "id": "font-variation-settings-def",
+      "title": "8.2. Low-level font variation settings control: the font-variation-settings property",
+      "level": 3,
+      "text_sha256": "230eb97f60ae9ba8fe509bcc9aa753d5e9adf5fb2aee726afe113e6556dfea08",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-variation-settings-def",
+          "css-fonts-4.font-variation-settings-def-clause-cca2516ebb1d",
+          "css-fonts-4.font-variation-settings-def-clause-35f922ce6ae9",
+          "css-fonts-4.font-variation-settings-def-clause-d1f978612609",
+          "css-fonts-4.font-variation-settings-def-clause-def2f881ad00",
+          "css-fonts-4.font-variation-settings-def-clause-a64b56bc11eb",
+          "css-fonts-4.font-variation-settings-def-clause-b91f33d20c5b",
+          "css-fonts-4.font-variation-settings-def-clause-30fb8401cdc3",
+          "css-fonts-4.font-variation-settings-def-clause-d6d100e96c36",
+          "css-fonts-4.font-variation-settings-def-clause-c0600f0ad63b"
+        ]
+      }
+    },
+    {
+      "id": "color-font-support",
+      "title": "9. Color Font Support",
+      "level": 2,
+      "text_sha256": "00ab63241d050f4417b041d09159a1aef3eefc2f7c8513ccf95ee8dc355b76c2",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.color-font-support"
+        ]
+      }
+    },
+    {
+      "id": "font-palette-prop",
+      "title": "9.1. Controlling Color Font Palettes: The font-palette property",
+      "level": 3,
+      "text_sha256": "e975ad440eb94801a36eab2c236609f1badfa735c677a48b6aecaf9986f2f64f",
+      "clause_count": 116,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-palette-prop",
+          "css-fonts-4.font-palette-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-palette-prop-clause-3aadad124833",
+          "css-fonts-4.font-palette-prop-clause-373707ef873e",
+          "css-fonts-4.font-palette-prop-clause-bc5439479dab",
+          "css-fonts-4.font-palette-prop-clause-d522d012a8d7",
+          "css-fonts-4.font-palette-prop-clause-59b4da7509e8",
+          "css-fonts-4.font-palette-prop-clause-dca566d4bdf2",
+          "css-fonts-4.font-palette-prop-clause-8d1fefa1481b",
+          "css-fonts-4.font-palette-prop-clause-ebd5f21e39b6",
+          "css-fonts-4.font-palette-prop-clause-9e2bd2ba8113",
+          "css-fonts-4.font-palette-prop-clause-001760566cf3"
+        ]
+      }
+    },
+    {
+      "id": "font-palette-values",
+      "title": "9.2. User-defined font color palettes: The @font-palette-values rule",
+      "level": 3,
+      "text_sha256": "4afab9f6d05dfb3ef17e20e96fcfd78faafe23a0906580a389054a6597e398b0",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-palette-values",
+          "css-fonts-4.font-palette-values-clause-76d384223e69",
+          "css-fonts-4.font-palette-values-clause-76c1a7d7e4cb",
+          "css-fonts-4.font-palette-values-clause-41a6897082f2",
+          "css-fonts-4.font-palette-values-clause-8c75b9f4f2a6",
+          "css-fonts-4.font-palette-values-clause-7239cd8a0a5a",
+          "css-fonts-4.font-palette-values-clause-6750c02fdfa4",
+          "css-fonts-4.font-palette-values-clause-a009ece24794"
+        ]
+      }
+    },
+    {
+      "id": "font-family-2-desc",
+      "title": "9.2.1. Font family: the font-family descriptor",
+      "level": 4,
+      "text_sha256": "23a037f95cfb2073afcddfa0079c52dd97b10b3dd6756b8d3c7c696c6f6b54b0",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-family-2-desc",
+          "css-fonts-4.font-family-2-desc-clause-5d60648235cf",
+          "css-fonts-4.font-family-2-desc-clause-5deb64a31049"
+        ]
+      }
+    },
+    {
+      "id": "base-palette-desc",
+      "title": "9.2.2. Specifying the base palette: the base-palette descriptor",
+      "level": 4,
+      "text_sha256": "547ce8b0adc830ab3cf04846adff35b9ba0e887256bfb61711be6ed423d43209",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.base-palette-desc",
+          "css-fonts-4.base-palette-desc-clause-78f31fd322c6",
+          "css-fonts-4.base-palette-desc-clause-06ee0208a69e",
+          "css-fonts-4.base-palette-desc-clause-c440d8dcd9ab"
+        ]
+      }
+    },
+    {
+      "id": "override-color",
+      "title": "9.2.3. Overriding a colors from a palette: The override-colors descriptor",
+      "level": 4,
+      "text_sha256": "b07ae886e9c42baf66d790866abafb219631186e8552d24619ed15cbd9cbabea",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.override-color",
+          "css-fonts-4.override-color-clause-df370c48f133",
+          "css-fonts-4.override-color-clause-24544de78ac5",
+          "css-fonts-4.override-color-clause-364f78a4cdb2"
+        ]
+      }
+    },
+    {
+      "id": "font-variant-emoji-prop",
+      "title": "9.3. Selecting the text presentation style: The font-variant-emoji property",
+      "level": 3,
+      "text_sha256": "20355fcf061a5b791255e689fc126c0461eabad73c3e2424d65e05075e61f138",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-variant-emoji-prop",
+          "css-fonts-4.font-variant-emoji-prop-clause-cca2516ebb1d",
+          "css-fonts-4.font-variant-emoji-prop-clause-1014288863fd",
+          "css-fonts-4.font-variant-emoji-prop-clause-d2abc77cb482",
+          "css-fonts-4.font-variant-emoji-prop-clause-67d8ca63503e",
+          "css-fonts-4.font-variant-emoji-prop-clause-fa0b87556d9f",
+          "css-fonts-4.font-variant-emoji-prop-clause-738369848321",
+          "css-fonts-4.font-variant-emoji-prop-clause-297c7a6c9830",
+          "css-fonts-4.font-variant-emoji-prop-clause-a2dc0fafeb83"
+        ]
+      }
+    },
+    {
+      "id": "font-taxonomy",
+      "title": "10. Font Taxonomy",
+      "level": 2,
+      "text_sha256": "f7142e28eafd124a0cfa7b3a2a0fbb4b74146e4c38f9f5cda64dea8be33c5264",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-taxonomy"
+        ]
+      }
+    },
+    {
+      "id": "installed-fonts",
+      "title": "10.1. Installed Fonts",
+      "level": 3,
+      "text_sha256": "35fc77666ca8a28010ed0d4eaf6c8dd6581e51834203222f843d96181ef2fd3d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.installed-fonts",
+          "css-fonts-4.installed-fonts-clause-913076b36072"
+        ]
+      }
+    },
+    {
+      "id": "web-fonts",
+      "title": "10.2. Web Fonts",
+      "level": 3,
+      "text_sha256": "f7222e299370ed65cd6fc588129ed361a12c3d43d9a678de5fec022ec2afae1d",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.web-fonts",
+          "css-fonts-4.web-fonts-clause-b9ef461c3014",
+          "css-fonts-4.web-fonts-clause-0faf9e29b1e5",
+          "css-fonts-4.web-fonts-clause-913076b36072"
+        ]
+      }
+    },
+    {
+      "id": "preinstalled-and-user-installed-fonts",
+      "title": "10.3. Preinstalled Fonts and User-Installed Fonts",
+      "level": 3,
+      "text_sha256": "852a2def87544f51a9c7ecfa229f9a9d91948262e02d10a048abf47b2a1a2cc8",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.preinstalled-and-user-installed-fonts",
+          "css-fonts-4.preinstalled-and-user-installed-fonts-clause-ab210972199a",
+          "css-fonts-4.preinstalled-and-user-installed-fonts-clause-ff95fa52f102"
+        ]
+      }
+    },
+    {
+      "id": "system-font",
+      "title": "10.4. System Font",
+      "level": 3,
+      "text_sha256": "73304cd734f4ae80e9dc4313b6b34937411d64d5699d14e4b9c82a90683e6338",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.system-font"
+        ]
+      }
+    },
+    {
+      "id": "font-technologies-formats",
+      "title": "11. Font Technologies and Formats",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-technologies-formats"
+        ]
+      }
+    },
+    {
+      "id": "font-tech-definitions",
+      "title": "11.1. Font tech",
+      "level": 3,
+      "text_sha256": "d4fb6f3858c631d92ff15ad215c1af97c0f7121b5772bedf9b261c3263c97127",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-tech-definitions",
+          "css-fonts-4.font-tech-definitions-clause-e4257007bedd",
+          "css-fonts-4.font-tech-definitions-clause-632ba6cef4e8"
+        ]
+      }
+    },
+    {
+      "id": "font-format-definitions",
+      "title": "11.2. Font formats",
+      "level": 3,
+      "text_sha256": "f2a58e4149df9982400c83e55ec615437420001485ce65b29fcfbc62da071669",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-format-definitions",
+          "css-fonts-4.font-format-definitions-clause-a38948e81498",
+          "css-fonts-4.font-format-definitions-clause-b1efe9fc2a6a"
+        ]
+      }
+    },
+    {
+      "id": "object-model",
+      "title": "12. Object Model",
+      "level": 2,
+      "text_sha256": "21e98ef87826583c85397a9b365aa53092052bc451f6f894395d8503abae54b0",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.object-model"
+        ]
+      }
+    },
+    {
+      "id": "om-fontface",
+      "title": "12.1. The CSSFontFaceRule interface",
+      "level": 3,
+      "text_sha256": "8942db46c79f4ad581fbb30f056069df43c4ba00d48a442bf7276e4b7db8527f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.om-fontface"
+        ]
+      }
+    },
+    {
+      "id": "om-fontfeaturevalues",
+      "title": "12.2. The CSSFontFeatureValuesRule interface",
+      "level": 3,
+      "text_sha256": "e6f8463c9e3ef2013aaff11a50ae2a1998875c1139f606df5ece3a0ca0444742",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.om-fontfeaturevalues",
+          "css-fonts-4.om-fontfeaturevalues-clause-aad94742d32f",
+          "css-fonts-4.om-fontfeaturevalues-clause-a2f8b7f8344c"
+        ]
+      }
+    },
+    {
+      "id": "om-fontpalettevalues",
+      "title": "12.3. The CSSFontPaletteValuesRule interface",
+      "level": 3,
+      "text_sha256": "17eee2cc142cafde93dec5fa57bdc9ca97184b6164eea2de5089233e6cc5981e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.om-fontpalettevalues"
+        ]
+      }
+    },
+    {
+      "id": "serializing",
+      "title": "13. Serializing",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.serializing"
+        ]
+      }
+    },
+    {
+      "id": "serializing-properties",
+      "title": "13.1. Serializing font-related properties",
+      "level": 3,
+      "text_sha256": "2c52e6223599d65abc4dd90222eb32a3a9701cb27374012726abaf6086eb9b66",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.serializing-properties"
+        ]
+      }
+    },
+    {
+      "id": "serializing-at-rules",
+      "title": "13.2. Serializing font-related at-rules",
+      "level": 3,
+      "text_sha256": "7722d94ae879985dbcc4899e8de68d8fd073157440596ca5b7307ed7e7f1d702",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.serializing-at-rules"
+        ]
+      }
+    },
+    {
+      "id": "platform-props-to-css",
+      "title": "Appendix A: Mapping platform font properties to CSS properties",
+      "level": 2,
+      "text_sha256": "e95dcc9dfdbb96aa8f4ca03ba4170e5adc011a3f10ee1d5736b7949156c0a72d",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.platform-props-to-css",
+          "css-fonts-4.platform-props-to-css-clause-b9d4ad6e6236"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "14. Security Considerations",
+      "level": 2,
+      "text_sha256": "ce818bca9836a38e5ccceadbe07177c42abd633740c9149770c7603d02ddcd76",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.security"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "15. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "af427f19659664d165ea6749a39648da32595aac6b299dcb455373d9ccc2bdf7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.privacy"
+        ]
+      }
+    },
+    {
+      "id": "sp201",
+      "title": "15.1. What information might this feature expose to Web sites or other parties, and for what purposes is that exposure necessary?",
+      "level": 3,
+      "text_sha256": "fe23d81a37e5b033110f651386c546667c2e71fd246732aae4767639ab25c8f7",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp201",
+          "css-fonts-4.sp201-clause-de455eba083c",
+          "css-fonts-4.sp201-clause-3a746af01a52",
+          "css-fonts-4.sp201-clause-f3f40f2ef274"
+        ]
+      }
+    },
+    {
+      "id": "sp202",
+      "title": "15.2. Is this specification exposing the minimum amount of information necessary to power the feature?",
+      "level": 3,
+      "text_sha256": "0ab935e7068e3c8bd844a0352d89ae04c3651fa58259850020337f43d44bc5a5",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp202",
+          "css-fonts-4.sp202-clause-41b4fa380f24"
+        ]
+      }
+    },
+    {
+      "id": "sp203",
+      "title": "15.3. How does this specification deal with personal information or personally-identifiable information or information derived thereof?",
+      "level": 3,
+      "text_sha256": "2e2e3d3ed200dad9ef0c0012529e8ba2c2999247ed401dc9107da44db60b8194",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp203"
+        ]
+      }
+    },
+    {
+      "id": "sp204",
+      "title": "15.4. How does this specification deal with sensitive information?",
+      "level": 3,
+      "text_sha256": "61956cfd40bffac4434c9aaaca0bfc661351eb7c3d0fc545c4098422ebe0350b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp204",
+          "css-fonts-4.sp204-clause-61956cfd40bf"
+        ]
+      }
+    },
+    {
+      "id": "sp205",
+      "title": "15.5. Does this specification introduce new state for an origin that persists across browsing sessions?",
+      "level": 3,
+      "text_sha256": "a6315f7652f7b1c1a19111dec83aed2310f925d6d70c21951bcde0fb264d5ab0",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp205",
+          "css-fonts-4.sp205-clause-20497e37636f",
+          "css-fonts-4.sp205-clause-d3e36e00451f"
+        ]
+      }
+    },
+    {
+      "id": "sp206",
+      "title": "15.6. What information from the underlying platform, e.g. configuration data, is exposed by this specification to an origin?",
+      "level": 3,
+      "text_sha256": "45805cb535f304d92daaba3f6b536f47e2a36a5fd536d6e557f9ec695a3fdea5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp206"
+        ]
+      }
+    },
+    {
+      "id": "sp207",
+      "title": "15.7. Does this specification allow an origin access to sensors on a user’s device",
+      "level": 3,
+      "text_sha256": "38178a20b470cfd18299fb1593dd4ba706f1a83321dac051d01086efd8b7a96f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp207"
+        ]
+      }
+    },
+    {
+      "id": "sp208",
+      "title": "15.8. What data does this specification expose to an origin? Please also document what data is identical to data exposed by other features, in the same or different contexts.",
+      "level": 3,
+      "text_sha256": "15f53051bd1f482b25cc876a7b25985df5d5f74ebf8c0adcf23944a71efb0508",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp208"
+        ]
+      }
+    },
+    {
+      "id": "sp209",
+      "title": "15.9. Does this specification enable new script execution/loading mechanisms?",
+      "level": 3,
+      "text_sha256": "c0a6f2806c58c3b0a01212e760a1f49dab3ae8ae1fed2a5b0875d741e02f216a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp209",
+          "css-fonts-4.sp209-clause-abd0f67987a2"
+        ]
+      }
+    },
+    {
+      "id": "sp210",
+      "title": "15.10. Does this specification allow an origin to access other devices?",
+      "level": 3,
+      "text_sha256": "38178a20b470cfd18299fb1593dd4ba706f1a83321dac051d01086efd8b7a96f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp210"
+        ]
+      }
+    },
+    {
+      "id": "sp211",
+      "title": "15.11. Does this specification allow an origin some measure of control over a user agent’s native UI?",
+      "level": 3,
+      "text_sha256": "fa2c7ae7da290462bcd4803744940c8ead76667504030becd29a15ba861bbbd9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp211"
+        ]
+      }
+    },
+    {
+      "id": "sp212",
+      "title": "15.12. What temporary identifiers might this specification create or expose to the web?",
+      "level": 3,
+      "text_sha256": "903ea500e7ccf842c1312b6c2f964e3e98ff146456cecec717e9a0e122bf735f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp212"
+        ]
+      }
+    },
+    {
+      "id": "sp213",
+      "title": "15.13. How does this specification distinguish between behavior in first-party and third-party contexts?",
+      "level": 3,
+      "text_sha256": "8c1c7b2d360beec375e6b9c28b85fd5130b1c462d2458742b2a31f1e972754fd",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp213",
+          "css-fonts-4.sp213-clause-af93767b93d2"
+        ]
+      }
+    },
+    {
+      "id": "sp214",
+      "title": "15.14. How does this specification work in the context of a user agent’s Private Browsing or \"incognito\" mode?",
+      "level": 3,
+      "text_sha256": "a45eae33c44ec8845888c9c9a27cc4315b3ae144775361de1815cf89fff826f0",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp214"
+        ]
+      }
+    },
+    {
+      "id": "sp215",
+      "title": "15.15. Does this specification have a \"Security Considerations\" and \"Privacy Considerations\" section?",
+      "level": 3,
+      "text_sha256": "5f9a2b795615ba6a3d5455fd5624d773fbca5bcd16249c421fd37411dc9837da",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp215"
+        ]
+      }
+    },
+    {
+      "id": "sp216",
+      "title": "15.16. Does this specification allow downgrading default security characteristics?",
+      "level": 3,
+      "text_sha256": "38178a20b470cfd18299fb1593dd4ba706f1a83321dac051d01086efd8b7a96f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp216"
+        ]
+      }
+    },
+    {
+      "id": "sp217",
+      "title": "15.17. What should this questionnaire have asked?",
+      "level": 3,
+      "text_sha256": "a2b6f407ae2958e559c53ff3c1f985bfff9f1382277d3bf1d99e8b4cdce751cc",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.sp217",
+          "css-fonts-4.sp217-clause-1e1e2eaba281"
+        ]
+      }
+    },
+    {
+      "id": "a11y",
+      "title": "16. Accessibility Considerations",
+      "level": 2,
+      "text_sha256": "296ec21c0988a91676513b0b9529e7c258f5309092f37ea019217ef6030485db",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.a11y",
+          "css-fonts-4.a11y-clause-d272b868fb55",
+          "css-fonts-4.a11y-clause-069692c6a651"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "17. Acknowledgments",
+      "level": 2,
+      "text_sha256": "34b881b99d05b88d432f38c355783605c1aa8557aab22c84b96538d6aebdabd4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "18. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20240201",
+      "title": "18.1. Changes from the 1 February 2024 working draft",
+      "level": 3,
+      "text_sha256": "810bae5c4b90990fee0d49118191fbd32b94ebf55d8134b2d3b6ccc32ffa0b95",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.changes-20240201"
+        ]
+      }
+    },
+    {
+      "id": "changes-2021-12-21",
+      "title": "18.2. Changes from the 21 December 2021 Working Draft",
+      "level": 3,
+      "text_sha256": "ea3709f0bbed8296337a6f704f5812a2dceefeef6a937bf6f1887343dbcfd967",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.changes-2021-12-21"
+        ]
+      }
+    },
+    {
+      "id": "changes-2021-07-29",
+      "title": "18.3. Changes from the 29 July 2021 Working Draft",
+      "level": 3,
+      "text_sha256": "140d70dc3c1e02e034e2041ed8ae24700f5e7efea7753e29341e9b85c95404ef",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.changes-2021-07-29"
+        ]
+      }
+    },
+    {
+      "id": "changes-2020-11-17",
+      "title": "18.4. Changes from the 17 November 2020 Working Draft",
+      "level": 3,
+      "text_sha256": "623e649e4f11099f29194c2af3fe56063654739888b184ec7761b3ee7086f3c4",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.changes-2020-11-17"
+        ]
+      }
+    },
+    {
+      "id": "changes-2019-11-13",
+      "title": "18.5. Changes from the 13 November 2019 Working Draft",
+      "level": 3,
+      "text_sha256": "6a000963245cc6c208974fab36584d54377d608b2e4e66d88e679f837a854a6a",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.changes-2019-11-13"
+        ]
+      }
+    },
+    {
+      "id": "changes-2018-09-20",
+      "title": "18.6. Changes from the 20 September 2018 Working Draft",
+      "level": 3,
+      "text_sha256": "73a02a004a200f08b06982eb83e26b9fee5ef416fc2f8ed501b4feb94e5e7705",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.changes-2018-09-20"
+        ]
+      }
+    },
+    {
+      "id": "changes-2018-04-10",
+      "title": "18.7. Changes from the 10 April 2018 Working Draft",
+      "level": 3,
+      "text_sha256": "045cd526e6787a1bf3b764d62c56069195ad0df6ec20b438c1e35fa27b51adb7",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.changes-2018-04-10"
+        ]
+      }
+    },
+    {
+      "id": "changes-fonts-3",
+      "title": "18.8. Changes from the 20 September 2018 CSS Fonts 3 Recommendation",
+      "level": 3,
+      "text_sha256": "e150c0951b389e6cade83371b1106d6573f862cb271a0957e0cce4a0ad4b1de2",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.changes-fonts-3"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.w3c-conventions",
+          "css-fonts-4.w3c-conventions-clause-5c98c879f070",
+          "css-fonts-4.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.w3c-conformance-classes",
+          "css-fonts-4.w3c-conformance-classes-clause-ff408372426c",
+          "css-fonts-4.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.w3c-partial",
+          "css-fonts-4.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.w3c-testing",
+          "css-fonts-4.w3c-testing-clause-1e0fff369221",
+          "css-fonts-4.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "304df3c8b790160139ebf9caa50577e695e2b0f9bcee35f7fd6a10818232ab73",
+      "clause_count": 327,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "8bd2815f232dfe94dcd755a57fb5e48e7650292c8a4469f96f49a779eb459ec6",
+      "clause_count": 109,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "b801ebb736c30c7c3580ea4452d03ba2e46ee4fef05fb5f7ae3264713c40aea7",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.import-005be6c571ff",
+          "css-fonts-4.import-8e09209af420",
+          "css-fonts-4.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "12e4ea3049b18bfd7f34b76d3baf9a5e65c4f423fd8d32071c9ff21133ae1df7",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "627441c3e5712a7aba3ab6bee543c33ad032bc4b7fa12a035b5a0b5e23437b6f",
+      "clause_count": 246,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.property-index",
+          "css-fonts-4.property-index-clause-674d5fa645b0",
+          "css-fonts-4.property-index-clause-3aadad124833",
+          "css-fonts-4.property-index-clause-4b59fe755d34",
+          "css-fonts-4.property-index-clause-59b6cf0826a5"
+        ]
+      }
+    },
+    {
+      "id": "font-face-descriptor-table",
+      "title": "@font-face Descriptors",
+      "level": 3,
+      "text_sha256": "fd41cf8546219a6cf35fa0bdb7a8963c33a405f70f0e57d79ce4ac418f7d2e81",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-face-descriptor-table"
+        ]
+      }
+    },
+    {
+      "id": "font-feature-values-descriptor-table",
+      "title": "@font-feature-values Descriptors",
+      "level": 3,
+      "text_sha256": "92434c0c8217137307d6edde5b0d76e2a63cfe3a83915386854de2da1f83e308",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-feature-values-descriptor-table"
+        ]
+      }
+    },
+    {
+      "id": "font-palette-values-descriptor-table",
+      "title": "@font-palette-values Descriptors",
+      "level": 3,
+      "text_sha256": "8fa60d79c22167a93cb3ba2798c8479ea4d25a4d6934d337d50d8848442734a3",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.font-palette-values-descriptor-table"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "83ef28d4d8a6b1b7e6e448d9b3d026d813e58cd64ac109676785bdf2b31d2f23",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "2305f5d3f9b03fede9b8a8be9e7d1f16bb801f508d48b62cfe0085b16a2b49ff",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-4.issues-index"
+        ]
+      }
+    }
+  ]
+}

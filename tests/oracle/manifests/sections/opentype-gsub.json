@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-gsub",
+  "sections": [
+    {
+      "id": "gsub--glyph-substitution-table",
+      "title": "GSUB — Glyph Substitution Table",
+      "level": 1,
+      "text_sha256": "214e1897aecdbc0fa38663f3c48b975638d01ca841f95852449b42b2f24c1245",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.gsub-glyph-substitution-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "Overview",
+      "level": 2,
+      "text_sha256": "4105238c65301bea5f8f2985efcacd76b917cb010750b6c3b4ea3ec64a3be9fa",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.overview"
+        ]
+      }
+    },
+    {
+      "id": "gsub-table-and-opentype-font-variations",
+      "title": "GSUB table and OpenType Font Variations",
+      "level": 2,
+      "text_sha256": "f08f2f9f3a6f28359483ca9b910e190d7107429f8193f2532ed36a757e027f68",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.gsub-table-and-opentype-font-variations",
+          "opentype-gsub.gsub-table-and-opentype-font-variations-clause-0e1e63ff767b"
+        ]
+      }
+    },
+    {
+      "id": "gsub-table-organization",
+      "title": "GSUB table organization",
+      "level": 2,
+      "text_sha256": "f5b112f7bfa9d08e40be6ce54cefda6ac895a264ed632ee1ac8fae69483c1867",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.gsub-table-organization",
+          "opentype-gsub.gsub-table-organization-clause-4930c500dff6",
+          "opentype-gsub.gsub-table-organization-clause-e556dbf818e2",
+          "opentype-gsub.gsub-table-organization-clause-be33316089de",
+          "opentype-gsub.gsub-table-organization-clause-44e9b3db7476",
+          "opentype-gsub.gsub-table-organization-clause-47d6d3370b92"
+        ]
+      }
+    },
+    {
+      "id": "gsub-table-structures",
+      "title": "GSUB table structures",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.gsub-table-structures"
+        ]
+      }
+    },
+    {
+      "id": "gsub-header",
+      "title": "GSUB Header",
+      "level": 3,
+      "text_sha256": "4ac880a1fba7e9eb56a961f62843a3bc3dcd208d4a00238d41da30954ae42313",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.gsub-header"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-1-subtable-single-substitution",
+      "title": "Lookup type 1 subtable: single substitution",
+      "level": 3,
+      "text_sha256": "ba88704e5a1971d27df76bf0ff60840e4c6bceaa8bc595d35616f335f0a39de0",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.lookup-type-1-subtable-single-substitution",
+          "opentype-gsub.lookup-type-1-subtable-single-substitution-clause-bd29580fad20"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-2-subtable-multiple-substitution",
+      "title": "Lookup type 2 subtable: multiple substitution",
+      "level": 3,
+      "text_sha256": "1abf6c507bbcf5828fe636f0bf8906fa6cb4922d18177fd7f713e0d680b5265a",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.lookup-type-2-subtable-multiple-substitution",
+          "opentype-gsub.lookup-type-2-subtable-multiple-substitution-clause-87f08d14bd0e",
+          "opentype-gsub.lookup-type-2-subtable-multiple-substitution-clause-23e99f8fd9b2"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-3-subtable-alternate-substitution",
+      "title": "Lookup type 3 subtable: alternate substitution",
+      "level": 3,
+      "text_sha256": "92872c424755ec7e30846a47b1d3e8c6605b038fbd458a6ea24380d7ecabd412",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.lookup-type-3-subtable-alternate-substitution"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-4-subtable-ligature-substitution",
+      "title": "Lookup type 4 subtable: ligature substitution",
+      "level": 3,
+      "text_sha256": "4df6045ea9df833e34e97b87bf54032b3d5799490f71382680eb1cf37907495a",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.lookup-type-4-subtable-ligature-substitution"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-5-subtable-contextual-substitution",
+      "title": "Lookup type 5 subtable: contextual substitution",
+      "level": 3,
+      "text_sha256": "856f563a9bd6e5bccffa8e312c8a074444f7465c1aea18b3f0cb38b536d7c74a",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.lookup-type-5-subtable-contextual-substitution",
+          "opentype-gsub.lookup-type-5-subtable-contextual-substitution-clause-9b7b1994636e"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-6-subtable-chained-contexts-substitution",
+      "title": "Lookup type 6 subtable: chained contexts substitution",
+      "level": 3,
+      "text_sha256": "2f839b4d20dad9eeb8e6a727b7cd46b1a1aac26edebb365cf4c482deac75f7c3",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.lookup-type-6-subtable-chained-contexts-substitution"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-7-subtable-substitution-subtable-extension",
+      "title": "Lookup type 7 subtable: substitution subtable extension",
+      "level": 3,
+      "text_sha256": "a6d0665c5b8f73fab8dcaf9c858647838326051188a076cb665397a95f799d29",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.lookup-type-7-subtable-substitution-subtable-extension",
+          "opentype-gsub.lookup-type-7-subtable-substitution-subtable-extension-clause-b42f9ab717f1",
+          "opentype-gsub.lookup-type-7-subtable-substitution-subtable-extension-clause-207689d86a83"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-8-subtable-reverse-chained-contexts-single-substitution",
+      "title": "Lookup type 8 subtable: reverse chained contexts single substitution",
+      "level": 3,
+      "text_sha256": "6f43d485ac6559ea859d0e5cd6a9be5050db9d9f91adbc40e6e7bcdbae240555",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.lookup-type-8-subtable-reverse-chained-contexts-single-substitution",
+          "opentype-gsub.lookup-type-8-subtable-reverse-chained-contexts-single-substitution-clause-d684414e21bb",
+          "opentype-gsub.lookup-type-8-subtable-reverse-chained-contexts-single-substitution-clause-fca9e589992a"
+        ]
+      }
+    },
+    {
+      "id": "gsub-structure-examples",
+      "title": "GSUB structure examples",
+      "level": 2,
+      "text_sha256": "1237480ebe186aa017ffe093e3acecbde4ee5899c2f7762aa66799702af46701",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.gsub-structure-examples"
+        ]
+      }
+    },
+    {
+      "id": "example-1-gsub-header",
+      "title": "Example 1: GSUB Header",
+      "level": 3,
+      "text_sha256": "4d73e2618c6e0b81e79b44fc374472806a2ddb1e726c41145223546f043f4720",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.example-1-gsub-header"
+        ]
+      }
+    },
+    {
+      "id": "example-2-singlesubstformat1-subtable",
+      "title": "Example 2: SingleSubstFormat1 subtable",
+      "level": 3,
+      "text_sha256": "98a06e9960070f9be0030c804a98608e028d78ec3b248f27e5716ab4c4fe1bd9",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.example-2-singlesubstformat1-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-3-singlesubstformat2-subtable",
+      "title": "Example 3: SingleSubstFormat2 subtable",
+      "level": 3,
+      "text_sha256": "bc4b82221ce865375c153c664d340eca39768e7fcb33f3a2ec4b6c897ee10432",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.example-3-singlesubstformat2-subtable",
+          "opentype-gsub.example-3-singlesubstformat2-subtable-clause-379d7de7d065"
+        ]
+      }
+    },
+    {
+      "id": "example-4-multiplesubstformat1-subtable",
+      "title": "Example 4: MultipleSubstFormat1 subtable",
+      "level": 3,
+      "text_sha256": "fa789e9b7850dcf7cca4b4187f9c37a36d919884b35578febbac75696b043f0f",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.example-4-multiplesubstformat1-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-5-alternatesubstformat-1-subtable",
+      "title": "Example 5: AlternateSubstFormat 1 subtable",
+      "level": 3,
+      "text_sha256": "74c0b3d9648c68480f165e4f877e354d85c6da6d3371265aa4e202ddbaca13a8",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.example-5-alternatesubstformat-1-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-6-ligaturesubstformat1-subtable",
+      "title": "Example 6: LigatureSubstFormat1 subtable",
+      "level": 3,
+      "text_sha256": "233ca19b1d82d9a16dbd0f465f5384f58a44dfca003ce03b8053408aa864dc24",
+      "clause_count": 102,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.example-6-ligaturesubstformat1-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-7-contextual-substitution-format-1",
+      "title": "Example 7: Contextual substitution format 1",
+      "level": 3,
+      "text_sha256": "156887aae37ad376a3fca1203141cd59fca077ea8f2325f2c282f14ac2cb6af0",
+      "clause_count": 91,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.example-7-contextual-substitution-format-1",
+          "opentype-gsub.example-7-contextual-substitution-format-1-clause-6a6f27e4036b"
+        ]
+      }
+    },
+    {
+      "id": "example-8-contextual-substitution-format-2",
+      "title": "Example 8: Contextual substitution format 2",
+      "level": 3,
+      "text_sha256": "efd9502c4b700a56d62fcd2cea91b2bee6b22319464587e647ce73e86de72373",
+      "clause_count": 150,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.example-8-contextual-substitution-format-2"
+        ]
+      }
+    },
+    {
+      "id": "example-9-contextual-substitution-format-3",
+      "title": "Example 9: Contextual substitution format 3",
+      "level": 3,
+      "text_sha256": "921a73ea2fb390a09f0905e407650cda4ffb0eb75e8b162c227d8a8e2a625d61",
+      "clause_count": 162,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.example-9-contextual-substitution-format-3"
+        ]
+      }
+    },
+    {
+      "id": "example-10-reversechainsinglesubstformat1-subtable",
+      "title": "Example 10: ReverseChainSingleSubstFormat1 subtable",
+      "level": 3,
+      "text_sha256": "5f557271fddd15d3d2d54e9cd16b93432b7afe0f3515d52a1b806fa81861922f",
+      "clause_count": 213,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.example-10-reversechainsinglesubstformat1-subtable"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "3eb25b59e14381d11045c4430465c544fb0a9c44ecad8beae369fc9d1fea3786",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gsub.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

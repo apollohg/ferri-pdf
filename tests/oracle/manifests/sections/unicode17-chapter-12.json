@@ -1,0 +1,516 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-12",
+  "sections": [
+    {
+      "id": "G12281",
+      "title": "South and Central Asia-I",
+      "level": 1,
+      "text_sha256": "03d8eb0114645794595f1fbf1f364cd2542196cde4618dfe5dc3dea7cefdf7ff",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.g12281",
+          "unicode17-chapter-12.g12281-clause-99bb2774d73d"
+        ]
+      }
+    },
+    {
+      "id": "heading-4c576ff77634",
+      "title": "12.1 Devanagari",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-4c576ff77634"
+        ]
+      }
+    },
+    {
+      "id": "heading-2909a1ec11e3",
+      "title": "12.1.1 Devanagari: U+0900–U+097F",
+      "level": 3,
+      "text_sha256": "dfbc3e81517c6440afdb2c570e17bbe62544e23879d6e380ebd013cae675e739",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-2909a1ec11e3"
+        ]
+      }
+    },
+    {
+      "id": "heading-90898609b490",
+      "title": "12.1.2 Principles of the Devanagari Script",
+      "level": 3,
+      "text_sha256": "ec3ddb8bdf2109fa1840def6137fd3b42185384656558e9435f61efc2699d6e7",
+      "clause_count": 388,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-90898609b490",
+          "unicode17-chapter-12.heading-90898609b490-clause-f05a627d20d9",
+          "unicode17-chapter-12.heading-90898609b490-clause-6efac2d0574d",
+          "unicode17-chapter-12.heading-90898609b490-clause-0c2b11356743",
+          "unicode17-chapter-12.heading-90898609b490-clause-fee7a9543be7",
+          "unicode17-chapter-12.heading-90898609b490-clause-1275e786e833",
+          "unicode17-chapter-12.heading-90898609b490-clause-f13576e7a1a8",
+          "unicode17-chapter-12.heading-90898609b490-clause-36610b237fa4",
+          "unicode17-chapter-12.heading-90898609b490-clause-bbed466d0fc9",
+          "unicode17-chapter-12.heading-90898609b490-clause-383b50948e3f",
+          "unicode17-chapter-12.heading-90898609b490-clause-3e218c83521f",
+          "unicode17-chapter-12.heading-90898609b490-clause-bdac7da1aaf4",
+          "unicode17-chapter-12.heading-90898609b490-clause-f38b63c9e4f0"
+        ]
+      }
+    },
+    {
+      "id": "heading-be38df128b71",
+      "title": "12.1.3 Rendering Devanagari",
+      "level": 3,
+      "text_sha256": "ab418b855e4e84fe781ed6d6f20c4fdb1be4c433fd2045157733c9d2bfc85818",
+      "clause_count": 963,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-be38df128b71",
+          "unicode17-chapter-12.heading-be38df128b71-clause-f2d9fa4d7b0d",
+          "unicode17-chapter-12.heading-be38df128b71-clause-acfc8a74d314",
+          "unicode17-chapter-12.heading-be38df128b71-clause-779c0fbb4d1a",
+          "unicode17-chapter-12.heading-be38df128b71-clause-80699c77243f",
+          "unicode17-chapter-12.heading-be38df128b71-clause-ca502985f01e",
+          "unicode17-chapter-12.heading-be38df128b71-clause-f98874efd9a8"
+        ]
+      }
+    },
+    {
+      "id": "heading-51fd6cf13128",
+      "title": "12.1.4 Devanagari Digits, Punctuation, and Symbols",
+      "level": 3,
+      "text_sha256": "3390c08209c42537830a69c7e2c07d4991ba7f6dd94dff582feca3e448a89875",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-51fd6cf13128"
+        ]
+      }
+    },
+    {
+      "id": "heading-55363808a994",
+      "title": "12.1.5 Extensions in the Main Devanagari Block",
+      "level": 3,
+      "text_sha256": "ecd20bb475a897bd79754ab39673c09b8f56f1f2b72ffc9bb16452c44c0d6bad",
+      "clause_count": 67,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-55363808a994",
+          "unicode17-chapter-12.heading-55363808a994-clause-c844568e063f"
+        ]
+      }
+    },
+    {
+      "id": "heading-e44b4458b9f8",
+      "title": "12.1.6 Devanagari Extended: U+A8E0–U+A8FF",
+      "level": 3,
+      "text_sha256": "ce99e725f82aa92d0750c3fc9b4cd6ea774bc7a0b76a82d3ac174115f50c87e5",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-e44b4458b9f8",
+          "unicode17-chapter-12.heading-e44b4458b9f8-clause-0e8db24edfa5"
+        ]
+      }
+    },
+    {
+      "id": "heading-d2b75185565d",
+      "title": "12.1.7 Devanagari Extended-A: U+11B00–U+11B5F",
+      "level": 3,
+      "text_sha256": "073085d030c49746442f165f4975146e2127c04a367870c81ae43d97b8d93df9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-d2b75185565d"
+        ]
+      }
+    },
+    {
+      "id": "heading-24c6b08b5837",
+      "title": "12.1.8 Vedic Extensions: U+1CD0–U+1CFF",
+      "level": 3,
+      "text_sha256": "a8b817191fdcadd9f6b664bfb69cf4d856280fd83943d3017d72786407317697",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-24c6b08b5837"
+        ]
+      }
+    },
+    {
+      "id": "heading-56f35cc409ed",
+      "title": "12.2 Bengali (Bangla)",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-56f35cc409ed"
+        ]
+      }
+    },
+    {
+      "id": "heading-34e4c1638c25",
+      "title": "12.2.1 Bengali: U+0980–U+09FF",
+      "level": 3,
+      "text_sha256": "c9e5e4e32e3ca33d18a75c422f3196d90ee2f7ce5221ab32dced72cdf04b0c66",
+      "clause_count": 118,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-34e4c1638c25",
+          "unicode17-chapter-12.heading-34e4c1638c25-clause-9db3d1cc790a",
+          "unicode17-chapter-12.heading-34e4c1638c25-clause-f4a0345306ad",
+          "unicode17-chapter-12.heading-34e4c1638c25-clause-7747278b8d4e",
+          "unicode17-chapter-12.heading-34e4c1638c25-clause-5edd237d46e5"
+        ]
+      }
+    },
+    {
+      "id": "heading-12717468bd8b",
+      "title": "12.3 Gurmukhi",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-12717468bd8b"
+        ]
+      }
+    },
+    {
+      "id": "heading-d98fcdb3cb7b",
+      "title": "12.3.1 Gurmukhi: U+0A00–U+0A7F",
+      "level": 3,
+      "text_sha256": "03d8476e21094a90a6d39792a3eccb4d43adc6f16c1a6e1f9360de8f1eef621c",
+      "clause_count": 245,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-d98fcdb3cb7b",
+          "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-45184ee66318",
+          "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-b134dce2677f",
+          "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-7fcf0738744f",
+          "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-da19382b3ed6",
+          "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-d6aa6ac9a24c",
+          "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-4e75eb7fd4d5",
+          "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-feafdca1e1f7"
+        ]
+      }
+    },
+    {
+      "id": "heading-09da7abfd1bc",
+      "title": "12.4 Gujarati",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-09da7abfd1bc"
+        ]
+      }
+    },
+    {
+      "id": "heading-c919446600a4",
+      "title": "12.4.1 Gujarati: U+0A80–U+0AFF",
+      "level": 3,
+      "text_sha256": "fa4dc98ad81817b47c4ae767ab981bcdf4f13b05ee479f83ea03cbb60156356d",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-c919446600a4",
+          "unicode17-chapter-12.heading-c919446600a4-clause-19b4a0ac1ef8"
+        ]
+      }
+    },
+    {
+      "id": "heading-02138be4c936",
+      "title": "12.5 Oriya (Odia)",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-02138be4c936"
+        ]
+      }
+    },
+    {
+      "id": "heading-1fd2e16c654e",
+      "title": "12.5.1 Oriya: U+0B00–U+0B7F",
+      "level": 3,
+      "text_sha256": "bf6d3c5218afc78f485e4e7284da7c2d8002520c854822d80ec498d2d3b5b2f6",
+      "clause_count": 169,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-1fd2e16c654e",
+          "unicode17-chapter-12.heading-1fd2e16c654e-clause-0ff571de35a4"
+        ]
+      }
+    },
+    {
+      "id": "heading-70f0ff74cbf7",
+      "title": "12.6 Tamil",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-70f0ff74cbf7"
+        ]
+      }
+    },
+    {
+      "id": "heading-52dbad8ad0d2",
+      "title": "12.6.1 Tamil: U+0B80–U+0BFF",
+      "level": 3,
+      "text_sha256": "a78e0f553d4dacbd11ba5d97c17b998a3f6600a3343b4717a36a1f8186ecb2a5",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-52dbad8ad0d2",
+          "unicode17-chapter-12.heading-52dbad8ad0d2-clause-b8b8bae57503"
+        ]
+      }
+    },
+    {
+      "id": "heading-129cea5d323a",
+      "title": "12.6.2 Tamil Vowels",
+      "level": 3,
+      "text_sha256": "ec3a9561906ced09dba7bec6ee6c26cdd1bcff0469ea777102b99b7cca19ac78",
+      "clause_count": 87,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-129cea5d323a",
+          "unicode17-chapter-12.heading-129cea5d323a-clause-29944ebb04ff"
+        ]
+      }
+    },
+    {
+      "id": "heading-37202f5a92c2",
+      "title": "12.6.3 Tamil Ligatures",
+      "level": 3,
+      "text_sha256": "e342e8b4aba62b02c390ec3ab8ffe85997437ad1987038eb90d14fe1c6da6327",
+      "clause_count": 232,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-37202f5a92c2",
+          "unicode17-chapter-12.heading-37202f5a92c2-clause-0c4bb0ba1861"
+        ]
+      }
+    },
+    {
+      "id": "heading-baeb48b1c36c",
+      "title": "12.6.4 Tamil Supplement: U+11FC0–U+11FFF",
+      "level": 3,
+      "text_sha256": "3a394e27f0d13ffa6ddb7b9714416e9454b41df678cd94634a7faeae52a88a63",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-baeb48b1c36c"
+        ]
+      }
+    },
+    {
+      "id": "heading-24b3386cc026",
+      "title": "12.6.5 Tamil Named Character Sequences",
+      "level": 3,
+      "text_sha256": "9e5ce82413417e1683701706b879ab3b099b9909b3a2f3ac7f739fc3aed58e2d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-24b3386cc026"
+        ]
+      }
+    },
+    {
+      "id": "heading-a3e94592cfe9",
+      "title": "12.7 Telugu",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-a3e94592cfe9"
+        ]
+      }
+    },
+    {
+      "id": "heading-46c3539c3d71",
+      "title": "12.7.1 Telugu: U+0C00–U+0C7F",
+      "level": 3,
+      "text_sha256": "b49317f2ffc7271e09c11094c9764a33ab8893b58b7aa09ba438e4f806412402",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-46c3539c3d71",
+          "unicode17-chapter-12.heading-46c3539c3d71-clause-8d71c1927f35"
+        ]
+      }
+    },
+    {
+      "id": "heading-a7c7ce6d47cf",
+      "title": "12.8 Kannada",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-a7c7ce6d47cf"
+        ]
+      }
+    },
+    {
+      "id": "heading-3dab9c4c5941",
+      "title": "12.8.1 Kannada: U+0C80–U+0CFF",
+      "level": 3,
+      "text_sha256": "32eb41123011339eaa6e2c9726f67ce081849b6ddfde518a24d2959593983999",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-3dab9c4c5941"
+        ]
+      }
+    },
+    {
+      "id": "heading-99a9207cc135",
+      "title": "12.8.2 Principles of the Kannada Script",
+      "level": 3,
+      "text_sha256": "631d8ab90c3700141ceb51389521a01da5994ce579d176019ff0c891e97e9545",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-99a9207cc135",
+          "unicode17-chapter-12.heading-99a9207cc135-clause-be99640aa525",
+          "unicode17-chapter-12.heading-99a9207cc135-clause-60c7cd990dda",
+          "unicode17-chapter-12.heading-99a9207cc135-clause-981d04109f4f",
+          "unicode17-chapter-12.heading-99a9207cc135-clause-90ca2b24f781",
+          "unicode17-chapter-12.heading-99a9207cc135-clause-ee48aaf8005b"
+        ]
+      }
+    },
+    {
+      "id": "heading-21aa5cd1e9ee",
+      "title": "12.8.3 Rendering Kannada",
+      "level": 3,
+      "text_sha256": "9af8fc42e0a9796cc099a6ddd75c5a1c02c53d96c52f8bb859829b57a1286275",
+      "clause_count": 70,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-21aa5cd1e9ee",
+          "unicode17-chapter-12.heading-21aa5cd1e9ee-clause-1efa5399367a",
+          "unicode17-chapter-12.heading-21aa5cd1e9ee-clause-5a0016f6fb46",
+          "unicode17-chapter-12.heading-21aa5cd1e9ee-clause-a5b135fd3530"
+        ]
+      }
+    },
+    {
+      "id": "heading-2bb629a6489b",
+      "title": "12.9 Malayalam",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-2bb629a6489b"
+        ]
+      }
+    },
+    {
+      "id": "heading-1f0cd26e1c25",
+      "title": "12.9.1 Malayalam: U+0D00–U+0D7F",
+      "level": 3,
+      "text_sha256": "c08d9c71f50524183d56498f3ba8fa092d3f4db3913532e0f844bcab3f1fc83a",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-1f0cd26e1c25",
+          "unicode17-chapter-12.heading-1f0cd26e1c25-clause-7da9f81b9d16"
+        ]
+      }
+    },
+    {
+      "id": "heading-c4d148d2ca49",
+      "title": "12.9.2 Malayalam Orthographic Reform",
+      "level": 3,
+      "text_sha256": "c01144e4ac23909df9b2e989875c0e068ef2f84e0a0679d896430c1c0040dec2",
+      "clause_count": 92,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-c4d148d2ca49"
+        ]
+      }
+    },
+    {
+      "id": "heading-f313a5bbe1dc",
+      "title": "12.9.3 Rendering Malayalam",
+      "level": 3,
+      "text_sha256": "99c9ef4dfb427bbc7f6a576a92765061d8f795d3c03bb1d182f08894939d50a4",
+      "clause_count": 291,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-f313a5bbe1dc",
+          "unicode17-chapter-12.heading-f313a5bbe1dc-clause-6a99e1b91218",
+          "unicode17-chapter-12.heading-f313a5bbe1dc-clause-95e8f205e464",
+          "unicode17-chapter-12.heading-f313a5bbe1dc-clause-31c009757851",
+          "unicode17-chapter-12.heading-f313a5bbe1dc-clause-af45f014ac2b",
+          "unicode17-chapter-12.heading-f313a5bbe1dc-clause-fb48fc98dcd9",
+          "unicode17-chapter-12.heading-f313a5bbe1dc-clause-bffcd97be5eb",
+          "unicode17-chapter-12.heading-f313a5bbe1dc-clause-4acfbe50274e",
+          "unicode17-chapter-12.heading-f313a5bbe1dc-clause-0344742cfa66"
+        ]
+      }
+    },
+    {
+      "id": "heading-7eee20e0c99b",
+      "title": "12.9.4 Malayalam Numbers and Punctuation",
+      "level": 3,
+      "text_sha256": "56d3ca76721199634422f0aec9fecb50c6e79d84e087d99bf9c837a16ad8665b",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-12.heading-7eee20e0c99b"
+        ]
+      }
+    }
+  ]
+}

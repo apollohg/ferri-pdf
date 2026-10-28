@@ -1,0 +1,540 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-16",
+  "sections": [
+    {
+      "id": "G44608",
+      "title": "Southeast Asia-I",
+      "level": 1,
+      "text_sha256": "8bade6df53672c348331c55b0e3196c5bcccdec3a5d270616063b4ca0ff11a2e",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.g44608"
+        ]
+      }
+    },
+    {
+      "id": "heading-92484daf5f43",
+      "title": "16.1 Thai",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-92484daf5f43"
+        ]
+      }
+    },
+    {
+      "id": "heading-8b703482ea7b",
+      "title": "16.1.1 Thai: U+0E00–U+0E7F",
+      "level": 3,
+      "text_sha256": "371922105b4e33ba742ac805402ade4e34fd92a16f26b9480dcfdda7efecb344",
+      "clause_count": 102,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-8b703482ea7b",
+          "unicode17-chapter-16.heading-8b703482ea7b-clause-1bb346cf70c7",
+          "unicode17-chapter-16.heading-8b703482ea7b-clause-5b7a1bee372f",
+          "unicode17-chapter-16.heading-8b703482ea7b-clause-b2b6e75f6308",
+          "unicode17-chapter-16.heading-8b703482ea7b-clause-d39a42ee1c0c",
+          "unicode17-chapter-16.heading-8b703482ea7b-clause-08836647082f"
+        ]
+      }
+    },
+    {
+      "id": "heading-a3f82b1c0c71",
+      "title": "16.2 Lao",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-a3f82b1c0c71"
+        ]
+      }
+    },
+    {
+      "id": "heading-3dedcb8d057e",
+      "title": "16.2.1 Lao: U+0E80–U+0EFF",
+      "level": 3,
+      "text_sha256": "7f16288142b72444e098ce1e59c86beee3ef89932e13b9bb72a3014d62207b3d",
+      "clause_count": 107,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-3dedcb8d057e",
+          "unicode17-chapter-16.heading-3dedcb8d057e-clause-02728adb8042",
+          "unicode17-chapter-16.heading-3dedcb8d057e-clause-2425d8803524",
+          "unicode17-chapter-16.heading-3dedcb8d057e-clause-618c4c74dbfd",
+          "unicode17-chapter-16.heading-3dedcb8d057e-clause-b40943f0ef8d"
+        ]
+      }
+    },
+    {
+      "id": "heading-e93fb96223e5",
+      "title": "16.3 Myanmar",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-e93fb96223e5"
+        ]
+      }
+    },
+    {
+      "id": "heading-e4cce6a089da",
+      "title": "16.3.1 Myanmar: U+1000–U+109F",
+      "level": 3,
+      "text_sha256": "9f9921428fa0e5b61759ecb457fbb34bb56473bb487e66beda02ddad4b168ec8",
+      "clause_count": 142,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-e4cce6a089da",
+          "unicode17-chapter-16.heading-e4cce6a089da-clause-0a78554dddb1",
+          "unicode17-chapter-16.heading-e4cce6a089da-clause-243d61ef5b12",
+          "unicode17-chapter-16.heading-e4cce6a089da-clause-c06743b222cd",
+          "unicode17-chapter-16.heading-e4cce6a089da-clause-1ac246a6f72e",
+          "unicode17-chapter-16.heading-e4cce6a089da-clause-38709f7e7c03",
+          "unicode17-chapter-16.heading-e4cce6a089da-clause-57c0344c204a"
+        ]
+      }
+    },
+    {
+      "id": "heading-88eb0a3f097f",
+      "title": "16.3.2 Myanmar Extended-A: U+AA60–U+AA7F",
+      "level": 3,
+      "text_sha256": "4e0debdf96fe5521760af811a8068ec37c575054c410fb40733c6412d6161d0d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-88eb0a3f097f"
+        ]
+      }
+    },
+    {
+      "id": "heading-56105f3a8c98",
+      "title": "16.3.3 Khamti Shan",
+      "level": 3,
+      "text_sha256": "736f2e5e5d784c9daf6f5ea2627229622d92b2cd580f0563b7a5d3e9bcad37e1",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-56105f3a8c98",
+          "unicode17-chapter-16.heading-56105f3a8c98-clause-fbf1a717c6c6"
+        ]
+      }
+    },
+    {
+      "id": "heading-6dfc933a1692",
+      "title": "16.3.4 Aiton and Phake",
+      "level": 3,
+      "text_sha256": "012925875799cbbf5954060e638e2f775b3ff48082b4893b5afb52eb567b31b8",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-6dfc933a1692",
+          "unicode17-chapter-16.heading-6dfc933a1692-clause-94a61202c2ac"
+        ]
+      }
+    },
+    {
+      "id": "heading-72cfcbd36cdb",
+      "title": "16.3.5 Myanmar Extended-B: U+A9E0–U+A9FF",
+      "level": 3,
+      "text_sha256": "4c1f7778608c1c4f084e163acc3345f8aa6b792233067c766bb0d04e0cac2a42",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-72cfcbd36cdb"
+        ]
+      }
+    },
+    {
+      "id": "heading-ff8dabdf33d7",
+      "title": "16.3.6 Myanmar Extended-C: U+116D0–U+116FF",
+      "level": 3,
+      "text_sha256": "d456c2c1d5dcc723195f7215b56ecc07ca1234493ac6c0c4b0b0b5c1f61a2561",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-ff8dabdf33d7"
+        ]
+      }
+    },
+    {
+      "id": "heading-c327000f5eea",
+      "title": "16.4 Khmer",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-c327000f5eea"
+        ]
+      }
+    },
+    {
+      "id": "heading-25832694ba58",
+      "title": "16.4.1 Khmer: U+1780–U+17FF",
+      "level": 3,
+      "text_sha256": "76a25b7ffc6b9f23a6b423a09e8baccf1467945a04e242a53a1dcad2e400acd3",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-25832694ba58"
+        ]
+      }
+    },
+    {
+      "id": "heading-e7caf00f4e24",
+      "title": "16.4.2 Principles of the Khmer Script",
+      "level": 3,
+      "text_sha256": "98759c25425ff0eced76f463addfb4fbf7301f7aefd7d5fd932846108ca065ad",
+      "clause_count": 632,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-e7caf00f4e24",
+          "unicode17-chapter-16.heading-e7caf00f4e24-clause-e529042f9821",
+          "unicode17-chapter-16.heading-e7caf00f4e24-clause-61312f6aaed9",
+          "unicode17-chapter-16.heading-e7caf00f4e24-clause-918d7eccdfaa",
+          "unicode17-chapter-16.heading-e7caf00f4e24-clause-e9d1a34f6492",
+          "unicode17-chapter-16.heading-e7caf00f4e24-clause-02a396f21c05",
+          "unicode17-chapter-16.heading-e7caf00f4e24-clause-5aa23dd55ab1",
+          "unicode17-chapter-16.heading-e7caf00f4e24-clause-4ceb2b861778",
+          "unicode17-chapter-16.heading-e7caf00f4e24-clause-8e8df8881f4b",
+          "unicode17-chapter-16.heading-e7caf00f4e24-clause-bba7bde3166c",
+          "unicode17-chapter-16.heading-e7caf00f4e24-clause-a90941d5222e"
+        ]
+      }
+    },
+    {
+      "id": "heading-2e21de4d6200",
+      "title": "16.4.3 Khmer Symbols: U+19E0–U+19FF",
+      "level": 3,
+      "text_sha256": "8dd8809dc91e0ee0dcfd0541e5c5b06cb7279fe5a42a0d1b47d55d7fdd74fbbf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-2e21de4d6200"
+        ]
+      }
+    },
+    {
+      "id": "heading-7cd5d48635c4",
+      "title": "16.5 Tai Le",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-7cd5d48635c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-f5b63af32803",
+      "title": "16.5.1 Tai Le: U+1950–U+197F",
+      "level": 3,
+      "text_sha256": "57bada7e4d9d1d8a9c40a7aebeb222022ea786ea18ac149198d9bc02b8c2f9ef",
+      "clause_count": 76,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-f5b63af32803"
+        ]
+      }
+    },
+    {
+      "id": "heading-3dfb87c024f6",
+      "title": "16.6 New Tai Lue",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-3dfb87c024f6"
+        ]
+      }
+    },
+    {
+      "id": "heading-ab1b189d554c",
+      "title": "16.6.1 New Tai Lue: U+1980–U+19DF",
+      "level": 3,
+      "text_sha256": "39c947ff4df2732180e7780d8437bb6fae74c2d0b36658b096d818f41da8affe",
+      "clause_count": 91,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-ab1b189d554c",
+          "unicode17-chapter-16.heading-ab1b189d554c-clause-5260f75f54e7"
+        ]
+      }
+    },
+    {
+      "id": "heading-7b0b07f7f37e",
+      "title": "16.7 Tai Tham",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-7b0b07f7f37e"
+        ]
+      }
+    },
+    {
+      "id": "heading-cde1196fab42",
+      "title": "16.7.1 Tai Tham: U+1A20–U+1AAF",
+      "level": 3,
+      "text_sha256": "98b5c9bd7328396ccae191b9e00330f2109e2dfeb956ab625cdfa57b2d6ccfc6",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-cde1196fab42",
+          "unicode17-chapter-16.heading-cde1196fab42-clause-f5b76f639ef5",
+          "unicode17-chapter-16.heading-cde1196fab42-clause-d4aaaef2f972"
+        ]
+      }
+    },
+    {
+      "id": "heading-5b8f3c633959",
+      "title": "16.8 Tai Viet",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-5b8f3c633959"
+        ]
+      }
+    },
+    {
+      "id": "heading-f0c1ef64f26d",
+      "title": "16.8.1 Tai Viet: U+AA80–U+AADF",
+      "level": 3,
+      "text_sha256": "f5a444e97bb2a62ec376ae0661c4bb94bf25e53f075215bd86d5272c11f15eac",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-f0c1ef64f26d",
+          "unicode17-chapter-16.heading-f0c1ef64f26d-clause-706c75f02b77"
+        ]
+      }
+    },
+    {
+      "id": "heading-e9a511762710",
+      "title": "16.9 Kayah Li",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-e9a511762710"
+        ]
+      }
+    },
+    {
+      "id": "heading-6f5afb53ec93",
+      "title": "16.9.1 Kayah Li: U+A900–U+A92F",
+      "level": 3,
+      "text_sha256": "b948d920d8b739b9125f9bf6192ba1e91cfe4fd5b898986084db65b7f50a5f24",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-6f5afb53ec93"
+        ]
+      }
+    },
+    {
+      "id": "heading-f10f1107330a",
+      "title": "16.10 Cham",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-f10f1107330a"
+        ]
+      }
+    },
+    {
+      "id": "heading-93237f5dad90",
+      "title": "16.10.1 Cham: U+AA00–U+AA5F",
+      "level": 3,
+      "text_sha256": "ce259b7283d7af5c64202600fa28384bb5719afeeeb0157a688f21c9c266ed36",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-93237f5dad90"
+        ]
+      }
+    },
+    {
+      "id": "heading-08c257bb491a",
+      "title": "16.11 Pahawh Hmong",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-08c257bb491a"
+        ]
+      }
+    },
+    {
+      "id": "heading-86a13994faa0",
+      "title": "16.11.1 Pahawh Hmong: U+16B00–U+16B8F",
+      "level": 3,
+      "text_sha256": "e8daabe452b48cd9ebcf87de79cf54cc6ef2baf911538445ce5752499a3812a0",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-86a13994faa0",
+          "unicode17-chapter-16.heading-86a13994faa0-clause-018b297a651a"
+        ]
+      }
+    },
+    {
+      "id": "heading-7b27e19064a3",
+      "title": "16.12 Nyiakeng Puachue Hmong",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-7b27e19064a3"
+        ]
+      }
+    },
+    {
+      "id": "heading-0b3ef7f9def7",
+      "title": "16.12.1 Nyiakeng Puachue Hmong: U+1E100–U+1E14F",
+      "level": 3,
+      "text_sha256": "7733a12a47a7cad7716e0d7342f918e934254fa880e57135b080c741690d0beb",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-0b3ef7f9def7",
+          "unicode17-chapter-16.heading-0b3ef7f9def7-clause-277e47b54618",
+          "unicode17-chapter-16.heading-0b3ef7f9def7-clause-c43c67bd9da3"
+        ]
+      }
+    },
+    {
+      "id": "heading-fe7e1db39177",
+      "title": "16.13 Pau Cin Hau",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-fe7e1db39177"
+        ]
+      }
+    },
+    {
+      "id": "heading-d80832f6724f",
+      "title": "16.13.1 Pau Cin Hau: U+11AC0–U+11AFF",
+      "level": 3,
+      "text_sha256": "9a76a9aa5546b94cdbd7068c27440ad64bddc866626e0a9d42f6d51f17eb3d54",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-d80832f6724f",
+          "unicode17-chapter-16.heading-d80832f6724f-clause-28690c3d0f93"
+        ]
+      }
+    },
+    {
+      "id": "heading-fd443037a247",
+      "title": "16.14 Hanifi Rohingya",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-fd443037a247"
+        ]
+      }
+    },
+    {
+      "id": "heading-ec0953cb34b7",
+      "title": "16.14.1 Hanifi Rohingya: U+10D00–U+10D3F",
+      "level": 3,
+      "text_sha256": "4f6108fb114bd4c5bb76043e8893d96407f2d4e82ffd394b3009599605019e27",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-ec0953cb34b7"
+        ]
+      }
+    },
+    {
+      "id": "heading-fbfdf2228a9a",
+      "title": "16.15 Tai Yo",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-fbfdf2228a9a"
+        ]
+      }
+    },
+    {
+      "id": "heading-8345d53f9bb6",
+      "title": "16.15.1 Tai Yo: U+1E6C0–U+1E6FF",
+      "level": 3,
+      "text_sha256": "30365d2b9d0584215a57bf1d5350c8582b5505a66a31882adf18c9ff4774ab36",
+      "clause_count": 216,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-16.heading-8345d53f9bb6",
+          "unicode17-chapter-16.heading-8345d53f9bb6-clause-37cca1a0980f",
+          "unicode17-chapter-16.heading-8345d53f9bb6-clause-0614f6cb7620",
+          "unicode17-chapter-16.heading-8345d53f9bb6-clause-a7817a906477",
+          "unicode17-chapter-16.heading-8345d53f9bb6-clause-872d8f43459b",
+          "unicode17-chapter-16.heading-8345d53f9bb6-clause-a55bc71d62f2"
+        ]
+      }
+    }
+  ]
+}

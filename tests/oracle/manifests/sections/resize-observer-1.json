@@ -1,0 +1,519 @@
+{
+  "schema_version": 1,
+  "source_id": "resize-observer-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Resize Observer",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "resize-observer-1.title"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C First Public Working Draft, 11 February 2020",
+      "level": 2,
+      "text_sha256": "079dc3f157cd8f019b9169b58d82b960e79686730396a18520d7348aa341209a",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "a12d0b6ac454c21643d402165eca93da68a73e9c9cd9a03a57a5cb0097e7f7a1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "resize-observer-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "da87ad4b95449b4b29abf33fa39a139b1cae9aa1ea6632d2ce535e2c9dc1b80f",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "resize-observer-1.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "c61b55cbbcdd2b6cb71630a86f27c0fbf796984cb4a245a54ffaf0b637fd6e46",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "resize-observer-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "22fef611afba17ede74a5ec055c05d84dbb9ba9113658082ee69edfecb9a6e2c",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "api",
+      "title": "2. Resize Observer API",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "resize-observer-interface",
+      "title": "2.1. ResizeObserver interface",
+      "level": 3,
+      "text_sha256": "1747663e132528925332fc790e8aa749618c15d48edff1a647a498e5a194bcdb",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "resize-observer-callback",
+      "title": "2.2. ResizeObserverCallback",
+      "level": 3,
+      "text_sha256": "f6f9a581d8676174899d0dda780b62097b9cd9f13cff2f8ee1073a33a1861853",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "resize-observer-entry-interface",
+      "title": "2.3. ResizeObserverEntry",
+      "level": 3,
+      "text_sha256": "6e1f5898c12fa1f4f97d9d511d6b40f380301ea5c458d9bfbc38ce41041a5cc5",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "processing-model",
+      "title": "3. Processing Model",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "resize-observation-interface",
+      "title": "3.1. ResizeObservation example struct",
+      "level": 3,
+      "text_sha256": "c4cc7a8451f13719a9cade28689c680ff62312db6cd42917ea4fd5ef55b2213a",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "internal-slot-definitions",
+      "title": "3.2. Internal Slot Definitions",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "document-slots",
+      "title": "3.2.1. Document",
+      "level": 4,
+      "text_sha256": "ddce8ada4bf9ebf8fb674e3048e3b130d38819f376c2d6fdb58da1b6b0717e8c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "resize-observer-slots",
+      "title": "3.2.2. ResizeObserver",
+      "level": 4,
+      "text_sha256": "21bb51f7b60da803a2427a3e79954dbab0e93474935ba5182974c4786ba464d7",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "css-definitions",
+      "title": "3.3. CSS Definitions",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "content-rect-h",
+      "title": "3.3.1. content rect",
+      "level": 4,
+      "text_sha256": "ecf3d5a3c080c8ab69b24958722d5a7798c7855d207d48d187144361cede2f68",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "algorithms",
+      "title": "3.4. Algorithms",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "gather-active-observations-h",
+      "title": "3.4.1. Gather active observations at depth",
+      "level": 4,
+      "text_sha256": "117acc66d27b6cce960ba6c3c240b6e1e2629be56bcafab6270b39dd34c61772",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "has-active-observations-h",
+      "title": "3.4.2. Has active observations",
+      "level": 4,
+      "text_sha256": "5af8dc6c1f4a50c3c7cecfeccc181b8663fe59ccb6aa9c4550e5d5907c5e9774",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "has-skipped-observations-h",
+      "title": "3.4.3. Has skipped observations",
+      "level": 4,
+      "text_sha256": "f4b6f6b48c4aacef1e08399fcf70c12838e0c9e072ef6d4ac66526f7fb890545",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "create-and-populate-resizeobserverentry-h",
+      "title": "3.4.4. Create and populate a ResizeObserverEntry",
+      "level": 4,
+      "text_sha256": "4de66bb3bde6e543f4673b5e112aff37f8fbb7413c29cb45a7d81ed8fccfda61",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "broadcast-resize-notifications-h",
+      "title": "3.4.5. Broadcast active observations",
+      "level": 4,
+      "text_sha256": "74e876aaf28583e12cbd2e665258198d80dab6566e5071a93b6830602936d27b",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "deliver-resize-error",
+      "title": "3.4.6. Deliver Resize Loop Error",
+      "level": 4,
+      "text_sha256": "d835bad9febf11948b9933e4129717bc25d3cee9b97133a201eb326079131326",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "calculate-depth-for-node-h",
+      "title": "3.4.7. Calculate depth for node",
+      "level": 4,
+      "text_sha256": "3207925a1f683705b21cd9e5dedccd0beda8bb08b4ebec057f9e4b757c619046",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "calculate-box-size",
+      "title": "3.4.8. Calculate box size, given target and observed box",
+      "level": 4,
+      "text_sha256": "609ba32cd2c0d2e7d1d32fc51561009ea005a348e0245605f6b141f4b7852667",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "lifetime",
+      "title": "3.5. ResizeObserver Lifetime",
+      "level": 3,
+      "text_sha256": "6f6e345c2118f2b6da50ce2d03e458dbd5fea67b46ac44e45540d74f80d8a99f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "integrations",
+      "title": "3.6. External Spec Integrations",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "html-event-loop",
+      "title": "3.6.1. HTML Processing Model: Event Loop",
+      "level": 4,
+      "text_sha256": "104c20079d5b51cb835c67d027f528bbb2c622ad0c1cf74ecc15c43deea5e50c",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "document-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "conform-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "conform-responsible",
+      "title": "Requirements for Responsible Implementation of CSS",
+      "level": 3,
+      "text_sha256": "63e281f28ed2ebefafb560d6716cfc98d63caa0f55f4ae36a918cca31886f4b3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "conform-partial",
+      "title": "Partial Implementations",
+      "level": 4,
+      "text_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "conform-testing",
+      "title": "Implementations of CR-level Features",
+      "level": 4,
+      "text_sha256": "85a2aab62de157ff88eb104ecdbf2c4c32e685f5fa12638fd5357bdf89415d2c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "resize-observer-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "8b1edcb00f2e4c2157721f71cd5131dd68acba164e0ecbdf2783d8385fa77ead",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "resize-observer-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "8a37abd47225538573d88a5b0353ece4d826a8543dcfb921f6194f5faa095a25",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "resize-observer-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "resize-observer-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "ed6be57cea22f005b2619974dfd5e3acf191c43229efd143edb0e2ffdbf38f07",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "resize-observer-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "a13cd164e99931d52ee25d0404107b490f3e1319653bf8d7d88ab047ac869849",
+      "clause_count": 73,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    }
+  ]
+}

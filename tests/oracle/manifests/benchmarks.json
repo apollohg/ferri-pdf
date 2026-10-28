@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "static-documents-v2",
+  "classes": [
+    {
+      "id": "invoices",
+      "case_ids": [
+        "bench-invoices-small",
+        "bench-invoices-medium",
+        "bench-invoices-large"
+      ]
+    },
+    {
+      "id": "reports",
+      "case_ids": [
+        "bench-reports-small",
+        "bench-reports-medium",
+        "bench-reports-large"
+      ]
+    },
+    {
+      "id": "books",
+      "case_ids": [
+        "bench-books-small",
+        "bench-books-medium",
+        "bench-books-large"
+      ]
+    },
+    {
+      "id": "multilingual",
+      "case_ids": [
+        "bench-multilingual-small",
+        "bench-multilingual-medium",
+        "bench-multilingual-large"
+      ]
+    },
+    {
+      "id": "tables",
+      "case_ids": [
+        "bench-tables-small",
+        "bench-tables-medium",
+        "bench-tables-large"
+      ]
+    },
+    {
+      "id": "images",
+      "case_ids": [
+        "bench-images-small",
+        "bench-images-medium",
+        "bench-images-large"
+      ]
+    }
+  ],
+  "protocol": {
+    "warmup_runs": 3,
+    "timed_runs": 30,
+    "process_scope": "CLI end-to-end; filesystem warmed; new process each sample",
+    "rss_scope": "separate untimed child run"
+  },
+  "selection_basis": "Fixed representative classes and content counts before scored timing; all cases mandatory, including unsupported features."
+}

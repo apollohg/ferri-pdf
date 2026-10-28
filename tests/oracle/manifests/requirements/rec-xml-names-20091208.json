@@ -1,0 +1,1411 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "rec-xml-names-20091208.w3c-doctype",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "w3c-doctype"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Recommendation 8 December 2009.",
+      "locator": {
+        "section_id": "w3c-doctype",
+        "text_sha256": "a2d22fe5775ea7dfd6dadcaf3cf02ade834105e37f856f6ec24af0bc950bbe41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.appendices",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "appendices"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendices.",
+      "locator": {
+        "section_id": "appendices",
+        "text_sha256": "4c4bc9a6ff864d228f03aecdd0a9b5fdfe52c2009cc2acd46fadea4957b5ea81"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.sec-intro",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "sec-intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 1 Motivation and Summary.",
+      "locator": {
+        "section_id": "sec-intro",
+        "text_sha256": "2c9d306fa5e6ece421d1f38b14f5eb80f55009c70d53b71b8312bda239260f9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.sec-intro-clause-299ec6d21d62"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.sec-intro-clause-299ec6d21d62",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "sec-intro"
+      ],
+      "behaviour": "1 Motivation and Summary — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "sec-intro",
+        "clause_index": 2,
+        "clause_sha256": "299ec6d21d621138b65559fccddf05d051937cd786375ab8bd8cba4d03f47a29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.notation",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "notation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in A Note on Notation and Usage.",
+      "locator": {
+        "section_id": "notation",
+        "text_sha256": "7baf330a3f8074488b897acd408cc24ba1b3e80c850e8e090aac452a828ceec6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.notation-clause-821134a3d4f3",
+        "rec-xml-names-20091208.notation-clause-cf5530a73ad6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.notation-clause-821134a3d4f3",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "notation"
+      ],
+      "behaviour": "A Note on Notation and Usage — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "notation",
+        "clause_index": 0,
+        "clause_sha256": "821134a3d4f385931ce0b36dbed4bf8abd5187172407183d808c8841f728d8b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.notation-clause-cf5530a73ad6",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "notation"
+      ],
+      "behaviour": "A Note on Notation and Usage — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "notation",
+        "clause_index": 2,
+        "clause_sha256": "cf5530a73ad6fc98c15bf0cbf6171238c435552896cd3d2e9b8f4a8f25146419"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.sec-namespaces",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "sec-namespaces"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2 XML Namespaces.",
+      "locator": {
+        "section_id": "sec-namespaces",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.concepts",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "concepts"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Basic Concepts.",
+      "locator": {
+        "section_id": "concepts",
+        "text_sha256": "255b55ce6167739bd92ca7ab51b1906cc07583c79b96e4810b0ed41b1cf7a8e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.concepts-clause-e7dce78dc6ca"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.concepts-clause-e7dce78dc6ca",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "concepts"
+      ],
+      "behaviour": "Basic Concepts — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "concepts",
+        "clause_index": 2,
+        "clause_sha256": "e7dce78dc6ca318dd62b1940ad2a213db144fd2b8b3be104a9a047836bc28264"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.iri-use",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "iri-use"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Use of URIs as Namespace Names.",
+      "locator": {
+        "section_id": "iri-use",
+        "text_sha256": "20a3d88ef2197788da2cb7b320945d38960d1dfa1f9d290c3e20a82eff38809e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.nsnamecomparison",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "NSNameComparison"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Comparing URI References.",
+      "locator": {
+        "section_id": "NSNameComparison",
+        "text_sha256": "93cecae04f0c4f11505ef9af7f67b0d9cf8114adcfd74a21022524c7287cef25"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.nsnamecomparison-clause-97c2413f6d98"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.nsnamecomparison-clause-97c2413f6d98",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "NSNameComparison"
+      ],
+      "behaviour": "Comparing URI References — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "NSNameComparison",
+        "clause_index": 1,
+        "clause_sha256": "97c2413f6d98b7bf040042949bdb4c6b4e5c5335d459a06f1db7b809bb079d3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.ns-decl",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "ns-decl"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 3 Declaring Namespaces.",
+      "locator": {
+        "section_id": "ns-decl",
+        "text_sha256": "41ec103c620eb163cbbc2d45f82bd7ddf54d9e022fc194b838a1cda3ccf09ab8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.ns-decl-clause-41ec103c620e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.ns-decl-clause-41ec103c620e",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "ns-decl"
+      ],
+      "behaviour": "3 Declaring Namespaces — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "ns-decl",
+        "clause_index": 0,
+        "clause_sha256": "41ec103c620eb163cbbc2d45f82bd7ddf54d9e022fc194b838a1cda3ccf09ab8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.a785",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A785"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Attribute Names for Namespace Declaration.",
+      "locator": {
+        "section_id": "A785",
+        "text_sha256": "ae01b0eaf019c67807e90b9821033090d0cdf703f12d62becad8999797634b82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.a785-clause-42a0373309de",
+        "rec-xml-names-20091208.a785-clause-a8ae600760ac",
+        "rec-xml-names-20091208.a785-clause-eead1a266a67",
+        "rec-xml-names-20091208.a785-clause-47d395665979",
+        "rec-xml-names-20091208.a785-clause-3732c7b517bd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.a785-clause-42a0373309de",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A785"
+      ],
+      "behaviour": "Attribute Names for Namespace Declaration — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "A785",
+        "clause_index": 19,
+        "clause_sha256": "42a0373309de42349c5d5e6e08dff55cda56d40fdca82a90cb91abd58c22aa8d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.a785-clause-a8ae600760ac",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A785"
+      ],
+      "behaviour": "Attribute Names for Namespace Declaration — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "A785",
+        "clause_index": 25,
+        "clause_sha256": "a8ae600760acb9227e859f1abd8685d3df756b8aac0e47792babaf88d73d5597"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.a785-clause-eead1a266a67",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A785"
+      ],
+      "behaviour": "Attribute Names for Namespace Declaration — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "A785",
+        "clause_index": 26,
+        "clause_sha256": "eead1a266a6729584a34b14a8114228c42fb119c0aecb2a9a9c899756973f0f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.a785-clause-47d395665979",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A785"
+      ],
+      "behaviour": "Attribute Names for Namespace Declaration — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "A785",
+        "clause_index": 28,
+        "clause_sha256": "47d39566597966c87572848f13e17cd8401aecdd4475fdc5cb888dc81b5c7e6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.a785-clause-3732c7b517bd",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A785"
+      ],
+      "behaviour": "Attribute Names for Namespace Declaration — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "A785",
+        "clause_index": 30,
+        "clause_sha256": "3732c7b517bd3bb1c6d15728a2537504caef4a04a348828cf55a17cbd9d33413"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.ns-qualnames",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "ns-qualnames"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 4 Qualified Names.",
+      "locator": {
+        "section_id": "ns-qualnames",
+        "text_sha256": "6b4fb4754c6d6b374a2085229b9b894825b2c30c1b2e2b3d2a5d35971945744b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.ns-qualnames-clause-6b4fb4754c6d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.ns-qualnames-clause-6b4fb4754c6d",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "ns-qualnames"
+      ],
+      "behaviour": "4 Qualified Names — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "ns-qualnames",
+        "clause_index": 0,
+        "clause_sha256": "6b4fb4754c6d6b374a2085229b9b894825b2c30c1b2e2b3d2a5d35971945744b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.a1153",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A1153"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Qualified Name.",
+      "locator": {
+        "section_id": "A1153",
+        "text_sha256": "a1d960f1ea87bf38953ecb5788c229a2f2dbf5c420b71b01acff1a96c7ed820c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.a1153-clause-8d4c1b2f8395",
+        "rec-xml-names-20091208.a1153-clause-bc95d55de67e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.a1153-clause-8d4c1b2f8395",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A1153"
+      ],
+      "behaviour": "Qualified Name — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "A1153",
+        "clause_index": 21,
+        "clause_sha256": "8d4c1b2f839510e851269bdf5eef92d5ea0fe4440bed18ee5b544ed7e2157a3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.a1153-clause-bc95d55de67e",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A1153"
+      ],
+      "behaviour": "Qualified Name — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "A1153",
+        "clause_index": 22,
+        "clause_sha256": "bc95d55de67e4e5ccacc62702181c45f5117deba53ad570361b4fdf1e184a6ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.ns-using",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "ns-using"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 5 Using Qualified Names.",
+      "locator": {
+        "section_id": "ns-using",
+        "text_sha256": "122e8517d1a3c1953132d0e83eccf2edc8e99c366724ffc079e8cc751f9af5f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.a1329",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A1329"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Element Names.",
+      "locator": {
+        "section_id": "A1329",
+        "text_sha256": "6a81bc6ed1c8d5b164a78157592846a3be7f02291b276fc70fc8ea40f89a35f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.a1472",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A1472"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Attribute.",
+      "locator": {
+        "section_id": "A1472",
+        "text_sha256": "b2045258acb118d79db5084c8699697ad2948695a56aa85527f95c364aa42b2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.a1472-clause-ecf75f37ec21",
+        "rec-xml-names-20091208.a1472-clause-c395212faf4f",
+        "rec-xml-names-20091208.a1472-clause-a30831b05b54"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.a1472-clause-ecf75f37ec21",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A1472"
+      ],
+      "behaviour": "Attribute — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "A1472",
+        "clause_index": 11,
+        "clause_sha256": "ecf75f37ec21e6560fa01b85046c83961f0d29d0388ae8723c99418dafb315cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.a1472-clause-c395212faf4f",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A1472"
+      ],
+      "behaviour": "Attribute — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "A1472",
+        "clause_index": 13,
+        "clause_sha256": "c395212faf4f1cb0bf7fe961b79eb3a5c4d170b8025bbfc8cecdd708b5885b30"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.a1472-clause-a30831b05b54",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A1472"
+      ],
+      "behaviour": "Attribute — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "A1472",
+        "clause_index": 14,
+        "clause_sha256": "a30831b05b54a40d3f40bc001077546cb7dc5a76edacb49ff19dac084979172a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.a1686",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A1686"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Qualified Names in Declarations.",
+      "locator": {
+        "section_id": "A1686",
+        "text_sha256": "8d0757c727ef37500b2d6304f7cc3a556fba1b14283f1b6af690eddd228093ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.a1686-clause-2b78287b7ad5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.a1686-clause-2b78287b7ad5",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "A1686"
+      ],
+      "behaviour": "Qualified Names in Declarations — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "A1686",
+        "clause_index": 25,
+        "clause_sha256": "2b78287b7ad5b456b88caefe3d104c415e4cbedfdd9b0d0e7c76642d99cd3adc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.scoping-defaulting",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "scoping-defaulting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 6 Applying Namespaces to Elements and Attributes.",
+      "locator": {
+        "section_id": "scoping-defaulting",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.scoping",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "scoping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Namespace Scoping.",
+      "locator": {
+        "section_id": "scoping",
+        "text_sha256": "45212ecdfe8a65c3d8125783095abb3e5314f4e45a7b96d3bcd2636d59f6e121"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.defaulting",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "defaulting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Namespace Defaulting.",
+      "locator": {
+        "section_id": "defaulting",
+        "text_sha256": "e835c8c6abd431259aa62d09d53017b6daa5fbce28185941e7970cc099e741c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.uniqattrs",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "uniqAttrs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Uniqueness of Attributes.",
+      "locator": {
+        "section_id": "uniqAttrs",
+        "text_sha256": "aaab06938bdd8bcfd6431e23dfdcd24240ddb9c62bb1e92d95b2a047ae0f21c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.conformance",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 7 Conformance of Documents.",
+      "locator": {
+        "section_id": "Conformance",
+        "text_sha256": "66fe7c0c294eb07025f494259fe335fc9ff0ff52e6041bbdd6e48725a824d984"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.conformance-clause-3625f21097ad",
+        "rec-xml-names-20091208.conformance-clause-173d98af8dd2",
+        "rec-xml-names-20091208.conformance-clause-501b22fb9aa2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.conformance-clause-3625f21097ad",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "7 Conformance of Documents — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 0,
+        "clause_sha256": "3625f21097ad3376989d6447f230a7eb54a4f68d67025cb4d55d7a1a0c4f0dbc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.conformance-clause-173d98af8dd2",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "7 Conformance of Documents — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 1,
+        "clause_sha256": "173d98af8dd2cae25ba9e739a03d08a8e58a787a8ed531f4bec057008687a599"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.conformance-clause-501b22fb9aa2",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "7 Conformance of Documents — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 9,
+        "clause_sha256": "501b22fb9aa22ca4da44d74d2d03bf1470307905d7dee60a49ed121d5117d035"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.processorconformance",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "ProcessorConformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 8 Conformance of Processors.",
+      "locator": {
+        "section_id": "ProcessorConformance",
+        "text_sha256": "21c69613f219f1f26f0c504516e109a0af285da77127e49b56be4c97a9062f52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rec-xml-names-20091208.processorconformance-clause-da43acfd6b6d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.processorconformance-clause-da43acfd6b6d",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "ProcessorConformance"
+      ],
+      "behaviour": "8 Conformance of Processors — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "ProcessorConformance",
+        "clause_index": 0,
+        "clause_sha256": "da43acfd6b6d7e828c4323eb1ca713876c3caf423499da731be17460319985b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rec-xml-names-20091208.refs",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "refs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in A Normative References.",
+      "locator": {
+        "section_id": "refs",
+        "text_sha256": "68719dae3c739952b4b495c8eaee3db56e1c4a9dd19274af7a780cee7c5fe595"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.nrefs",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "nrefs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in B Other references (Non-Normative).",
+      "locator": {
+        "section_id": "nrefs",
+        "text_sha256": "565b0c3aafc7622a157d9764666a2b131b9c6cd28a8ae08fbf3396a59391e983"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.philosophy",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "Philosophy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in C The Internal Structure of XML Namespaces (Non-Normative).",
+      "locator": {
+        "section_id": "Philosophy",
+        "text_sha256": "ab6170db34c96084998f29d36776f64b0df6b1337bfbfb839beb094c51104590"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.sec-xml-and-sgml",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "sec-xml-and-sgml"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in E Acknowledgements (Non-Normative).",
+      "locator": {
+        "section_id": "sec-xml-and-sgml",
+        "text_sha256": "a0e69fcdd930e2504dfbb4316e25b73778e5962816c302b8d908b49db4680817"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.orphans",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "orphans"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in F Orphaned Productions (Non-Normative).",
+      "locator": {
+        "section_id": "orphans",
+        "text_sha256": "acf68f4f108c04df335853d58282c8b1a27ecdc02b358fe81b470837cf5532f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.title",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Namespaces in XML 1.0 (Third Edition).",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.abstract",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "068f83bc6caa0cd86b4900e4c9a65b9ff04d3be950d01fce50eaafb709101856"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.status",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this Document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "81163b0db9af8fa1efeaff670132e67ca26af4db22fd8ddc89b6520fd5513000"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.contents",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "2d9c2c05206130adbd92d3c31ea95a5e2379f1737a72ad865b04a0de66e822bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rec-xml-names-20091208.changes",
+      "family": "rec-xml-names-20091208",
+      "source_id": "rec-xml-names-20091208",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in D Changes since version 1.0 (Non-Normative).",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e7a012583d6dc68c5fe68003542c61ad90afaa64a7bae0eabccb0ab15a475911"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

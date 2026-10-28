@@ -1,0 +1,414 @@
+{
+  "schema_version": 1,
+  "source_id": "css-shadow-parts-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Shadow Parts Module Level 1",
+      "level": 1,
+      "text_sha256": "59ba4c139841fa5ac696c335fdb2f5a5179c95fc35caa198caf9b134bb38b724",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "910440082ed4fb20c3795ea4785bf1441b1f55d79e49fdeae5fa0baaa7f03120",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "c094f76d1bb7c09f93e908d56ab18a92beb78e9ea9d04ef25949d558b6a1250d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "f6eafff1ea9d85aec90e0d3bd89c32c66f4fd752d058be1b2e15bd5a26290e60",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "cf565ba4a221224101e97b2477f6f606b0b8e04d8a1177898eef0119a2df4501",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.intro",
+          "css-shadow-parts-1.intro-clause-f456e9a32175"
+        ]
+      }
+    },
+    {
+      "id": "motivation",
+      "title": "1.1. Motivation",
+      "level": 3,
+      "text_sha256": "9c05d314095f29597c11496f72af9b75c56d14280e562a3ae9dfa396ecdc29e1",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.motivation",
+          "css-shadow-parts-1.motivation-clause-013b1c9e977f",
+          "css-shadow-parts-1.motivation-clause-cfd3b50ef85c"
+        ]
+      }
+    },
+    {
+      "id": "exposing",
+      "title": "2. Exposing a Shadow Element:",
+      "level": 2,
+      "text_sha256": "bce6df68fe3433226db1824c69cd783af4bb8c657dc7adeacccab59067f8ea28",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.exposing",
+          "css-shadow-parts-1.exposing-clause-7f26ba6cfeaa"
+        ]
+      }
+    },
+    {
+      "id": "part-attr",
+      "title": "2.1. Naming a Shadow Element: the part attribute",
+      "level": 3,
+      "text_sha256": "83fdc4c61a768bf980518b53c93170ec65b9306d536df13b64e81ed52c86c268",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.part-attr",
+          "css-shadow-parts-1.part-attr-clause-872c16841887"
+        ]
+      }
+    },
+    {
+      "id": "exportparts-attr",
+      "title": "2.2. Forwarding a Shadow Element: the exportparts attribute",
+      "level": 3,
+      "text_sha256": "67559fd69d3636e599e0b3f211b6fee643d4905f4062f2109419f464b8e8bd1a",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.exportparts-attr",
+          "css-shadow-parts-1.exportparts-attr-clause-0e1489a42b2b",
+          "css-shadow-parts-1.exportparts-attr-clause-ffc1bb30acfe"
+        ]
+      }
+    },
+    {
+      "id": "part",
+      "title": "3. Selecting a Shadow Element: the ::part() pseudo-element",
+      "level": 2,
+      "text_sha256": "916b4d8b45f221c0f32f321d5f2a0f545dbc2249cd5e9106acadfab0d15906e3",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.part",
+          "css-shadow-parts-1.part-clause-3f700c68e51e"
+        ]
+      }
+    },
+    {
+      "id": "idl",
+      "title": "4. Extensions to the Element Interface",
+      "level": 2,
+      "text_sha256": "d523ba391f4631838cadf9a98baaa8a112dfe1d3f116731ba6be4da8172757b4",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.idl",
+          "css-shadow-parts-1.idl-clause-b034f8e06fb9"
+        ]
+      }
+    },
+    {
+      "id": "parsing",
+      "title": "5. Microsyntaxes for parsing",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.parsing"
+        ]
+      }
+    },
+    {
+      "id": "parsing-mapping",
+      "title": "5.1. Rules for parsing part mappings",
+      "level": 3,
+      "text_sha256": "2ba96f187c82a2f63b8ce05303bee4aec61a522156aa092983254a57ec1d300b",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.parsing-mapping",
+          "css-shadow-parts-1.parsing-mapping-clause-8dff29903c6b"
+        ]
+      }
+    },
+    {
+      "id": "parsing-mapping-list",
+      "title": "5.2. Rules for parsing a list of part mappings",
+      "level": 3,
+      "text_sha256": "d4e439cec971f9ad94e1cab83e3a042e1ffecaf435f55d642388215f60ee0823",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.parsing-mapping-list",
+          "css-shadow-parts-1.parsing-mapping-list-clause-ff3b03d6d02f"
+        ]
+      }
+    },
+    {
+      "id": "priv",
+      "title": "6. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "f0fdc4d86fda3fc6e7ed062e39eaf875cdea33a1095645ee1a01376f9b49fe07",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.priv"
+        ]
+      }
+    },
+    {
+      "id": "sec",
+      "title": "7. Security Considerations",
+      "level": 2,
+      "text_sha256": "8be4f3dba675a57acd9559dbfb6d3b63732a068ceecd9d3945ce269e14a23a21",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.sec"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "8. Changes",
+      "level": 2,
+      "text_sha256": "f89dcc1ddd47d0b9db164ff532661804cf795cf14f2df4de6110e26d0568dffc",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.w3c-conventions",
+          "css-shadow-parts-1.w3c-conventions-clause-5c98c879f070",
+          "css-shadow-parts-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.w3c-conformance-classes",
+          "css-shadow-parts-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-shadow-parts-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.w3c-partial",
+          "css-shadow-parts-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.w3c-testing",
+          "css-shadow-parts-1.w3c-testing-clause-1e0fff369221",
+          "css-shadow-parts-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "6a425d0025a554dfe4eaf2e16c87f70cc653f8cd05515b608a5c2ff2a6a4c4c8",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "4429c1d656be3e92955595c870dfff8fe36d2fcee9f3d31780dc1ff2843543e2",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "084d4bb17afd2f3c422afa875a21272ad1c1ac7822e6c7337e7a992cc1887b13",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "69d95cfae0249d8c1fa9b70e596ff5bb6b11b3c10b588103584f9bc5e0c09529",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "126dc217d995b761c1e9c8415ffcaef34fa521c3256bb35e9d5713eccfe363ff",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shadow-parts-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

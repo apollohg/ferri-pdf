@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-intro.q2-0",
+      "family": "css21-intro",
+      "source_id": "css21-intro",
+      "sections": [
+        "q2.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2 Introduction to CSS 2.1.",
+      "locator": {
+        "section_id": "q2.0",
+        "text_sha256": "8f5b4790283130ac4c729dcf658d084debbad739a91304f802d4315ad240afb0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-intro.processing-model",
+      "family": "css21-intro",
+      "source_id": "css21-intro",
+      "sections": [
+        "processing-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSS 2.1 processing model.",
+      "locator": {
+        "section_id": "processing-model",
+        "text_sha256": "9cb1981ea7084f5be6986c8ad16883af71946468f165eb26e318ab1af7c95e4e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-intro.processing-model-clause-d89e4515ce53",
+        "css21-intro.processing-model-clause-88e403bdc151",
+        "css21-intro.processing-model-clause-57b2576cdf18"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-intro.processing-model-clause-d89e4515ce53",
+      "family": "css21-intro",
+      "source_id": "css21-intro",
+      "sections": [
+        "processing-model"
+      ],
+      "behaviour": "The CSS 2.1 processing model — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-model",
+        "clause_index": 2,
+        "clause_sha256": "d89e4515ce5318c5e5b17fe18bb7cfcccb8f7643d305253648d5c29d6075960d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-intro.processing-model-clause-88e403bdc151",
+      "family": "css21-intro",
+      "source_id": "css21-intro",
+      "sections": [
+        "processing-model"
+      ],
+      "behaviour": "The CSS 2.1 processing model — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-model",
+        "clause_index": 6,
+        "clause_sha256": "88e403bdc15139554c0b73c1a2b909bc9ebbc03dbeb6d61239f71ce5d0fa0da5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-intro.processing-model-clause-57b2576cdf18",
+      "family": "css21-intro",
+      "source_id": "css21-intro",
+      "sections": [
+        "processing-model"
+      ],
+      "behaviour": "The CSS 2.1 processing model — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-model",
+        "clause_index": 7,
+        "clause_sha256": "57b2576cdf1800e5ffc9706763e9dcc91610f61f6d04f9c9c394902ec6da74f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-intro.the-canvas",
+      "family": "css21-intro",
+      "source_id": "css21-intro",
+      "sections": [
+        "the-canvas"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The canvas.",
+      "locator": {
+        "section_id": "the-canvas",
+        "text_sha256": "35b5d495a583cd79f6af3c42e9960956998ef488cc5063e8926a0a2716165429"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-intro.addressing",
+      "family": "css21-intro",
+      "source_id": "css21-intro",
+      "sections": [
+        "addressing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS 2.1 addressing model.",
+      "locator": {
+        "section_id": "addressing",
+        "text_sha256": "7023398ea660d104f9f8a10f77be5670dfb09f41a94b0bc5c848ef7062297382"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-intro.html-tutorial",
+      "family": "css21-intro",
+      "source_id": "css21-intro",
+      "sections": [
+        "html-tutorial"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 2.1 A brief CSS 2.1 tutorial for HTML.",
+      "locator": {
+        "section_id": "html-tutorial",
+        "text_sha256": "1b3ab62905fa75d56a04d5a8caa103af443b0f2cad809859f36d2a9873b7e3e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-intro.xml-tutorial",
+      "family": "css21-intro",
+      "source_id": "css21-intro",
+      "sections": [
+        "xml-tutorial"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 2.2 A brief CSS 2.1 tutorial for XML.",
+      "locator": {
+        "section_id": "xml-tutorial",
+        "text_sha256": "cc9b2c4aa7c7f9c3f5785e0b72dee51fa8bde39c0422f9cc2e892308c864fbd3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-intro.design-principles",
+      "family": "css21-intro",
+      "source_id": "css21-intro",
+      "sections": [
+        "design-principles"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 2.4 CSS design principles.",
+      "locator": {
+        "section_id": "design-principles",
+        "text_sha256": "feaf27a0eeceec95753375ff7544120cf4759f59b76e1a90f165330ef9a9fdd8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

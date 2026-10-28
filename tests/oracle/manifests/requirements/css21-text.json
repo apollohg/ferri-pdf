@@ -1,0 +1,1342 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-text.q16-0",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "q16.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 16 Text.",
+      "locator": {
+        "section_id": "q16.0",
+        "text_sha256": "62a8c5ca203d7650869fec6aa8142752be204c47dcf6a552bb176786b81f7567"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-text.indentation-prop",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "indentation-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Indentation: the 'text-indent' property.",
+      "locator": {
+        "section_id": "indentation-prop",
+        "text_sha256": "fe25f96861c8f609546a8e7319469cc4412120490db7b706275f83803b297a9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-text.indentation-prop-clause-865415d4b5ca",
+        "css21-text.indentation-prop-clause-cca2516ebb1d",
+        "css21-text.indentation-prop-clause-d0f0b6873b16",
+        "css21-text.indentation-prop-clause-ccc14ffd276a",
+        "css21-text.indentation-prop-clause-528213e93a94"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-text.indentation-prop-clause-865415d4b5ca",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "indentation-prop"
+      ],
+      "behaviour": "Indentation: the 'text-indent' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "indentation-prop",
+        "clause_index": 2,
+        "clause_sha256": "865415d4b5ca56068ccda4a0cbc701ef0ed14ab2100e70df747b44944555d355"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.indentation-prop-clause-cca2516ebb1d",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "indentation-prop"
+      ],
+      "behaviour": "Indentation: the 'text-indent' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "indentation-prop",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.indentation-prop-clause-d0f0b6873b16",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "indentation-prop"
+      ],
+      "behaviour": "Indentation: the 'text-indent' property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "indentation-prop",
+        "clause_index": 14,
+        "clause_sha256": "d0f0b6873b16f3e04f9684348bb8c2cc680042a0f97b2e6648a2fed9b45af163"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.indentation-prop-clause-ccc14ffd276a",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "indentation-prop"
+      ],
+      "behaviour": "Indentation: the 'text-indent' property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "indentation-prop",
+        "clause_index": 17,
+        "clause_sha256": "ccc14ffd276abe72be0c204945bdd2392c4d7b8332218c421cd446277b3f2965"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.indentation-prop-clause-528213e93a94",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "indentation-prop"
+      ],
+      "behaviour": "Indentation: the 'text-indent' property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "indentation-prop",
+        "clause_index": 27,
+        "clause_sha256": "528213e93a94890f7433c06ca7e0466a2dc5cdfd91bf66afc5eaf7417c168ac9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.alignment-prop",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "alignment-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alignment: the 'text-align' property.",
+      "locator": {
+        "section_id": "alignment-prop",
+        "text_sha256": "99914a766ccca7d18a74e832d5f74bdcd6661202c53cf02ef3197667dd69b7d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-text.alignment-prop-clause-74e065d7205d",
+        "css21-text.alignment-prop-clause-cca2516ebb1d",
+        "css21-text.alignment-prop-clause-7d73ca22580f",
+        "css21-text.alignment-prop-clause-72f24db797b2",
+        "css21-text.alignment-prop-clause-cfd4b00773d7",
+        "css21-text.alignment-prop-clause-6b2fb84758ce",
+        "css21-text.alignment-prop-clause-41cd3b79ec39"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-text.alignment-prop-clause-74e065d7205d",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "alignment-prop"
+      ],
+      "behaviour": "Alignment: the 'text-align' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "alignment-prop",
+        "clause_index": 2,
+        "clause_sha256": "74e065d7205d1190a47d3217149b1acd1e4a4ca4c9f18267a94533f49100633c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.alignment-prop-clause-cca2516ebb1d",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "alignment-prop"
+      ],
+      "behaviour": "Alignment: the 'text-align' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "alignment-prop",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.alignment-prop-clause-7d73ca22580f",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "alignment-prop"
+      ],
+      "behaviour": "Alignment: the 'text-align' property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "alignment-prop",
+        "clause_index": 15,
+        "clause_sha256": "7d73ca22580f52f2ed1e62e91f3bde5d87f1e1db4775f3764be1c609aab4b890"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.alignment-prop-clause-72f24db797b2",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "alignment-prop"
+      ],
+      "behaviour": "Alignment: the 'text-align' property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "alignment-prop",
+        "clause_index": 18,
+        "clause_sha256": "72f24db797b2395db4702cd8d1ccdeec1807cef0e0f6b014182cf6413efb7719"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.alignment-prop-clause-cfd4b00773d7",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "alignment-prop"
+      ],
+      "behaviour": "Alignment: the 'text-align' property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "alignment-prop",
+        "clause_index": 19,
+        "clause_sha256": "cfd4b00773d7c61e8106be00dcbab2ce9e18664177aea496322408f9c0725ccd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.alignment-prop-clause-6b2fb84758ce",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "alignment-prop"
+      ],
+      "behaviour": "Alignment: the 'text-align' property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "alignment-prop",
+        "clause_index": 24,
+        "clause_sha256": "6b2fb84758ceca5ce576633feb909614a6c46ef5b2bcc7868ef87626e1b59240"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.alignment-prop-clause-41cd3b79ec39",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "alignment-prop"
+      ],
+      "behaviour": "Alignment: the 'text-align' property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "alignment-prop",
+        "clause_index": 26,
+        "clause_sha256": "41cd3b79ec39f08fa8f5ac1cf8f26cca7b3a529c860c27ce0487b1989b47d790"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.decoration",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "decoration"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Decoration.",
+      "locator": {
+        "section_id": "decoration",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-text.lining-striking-props",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "lining-striking-props"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Underlining, overlining, striking, and blinking: the 'text-decoration' property.",
+      "locator": {
+        "section_id": "lining-striking-props",
+        "text_sha256": "2919b26345deaa3a50b5a41ed7c5b5b22fd7d7c17a6b0826f77d4e220b4a2a35"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-text.lining-striking-props-clause-df4b96f704a4",
+        "css21-text.lining-striking-props-clause-cca2516ebb1d",
+        "css21-text.lining-striking-props-clause-914dd664a98f",
+        "css21-text.lining-striking-props-clause-d2b6b8a7bc8d",
+        "css21-text.lining-striking-props-clause-4954daac97ec",
+        "css21-text.lining-striking-props-clause-7a92bea2cc6f",
+        "css21-text.lining-striking-props-clause-b714fd1e6eaf",
+        "css21-text.lining-striking-props-clause-74723221a6e3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-text.lining-striking-props-clause-df4b96f704a4",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "lining-striking-props"
+      ],
+      "behaviour": "Underlining, overlining, striking, and blinking: the 'text-decoration' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "lining-striking-props",
+        "clause_index": 2,
+        "clause_sha256": "df4b96f704a46f78a9a79fbce257da082d3cf8b87b8bb9212aba6e51b58afe50"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.lining-striking-props-clause-cca2516ebb1d",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "lining-striking-props"
+      ],
+      "behaviour": "Underlining, overlining, striking, and blinking: the 'text-decoration' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "lining-striking-props",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.lining-striking-props-clause-914dd664a98f",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "lining-striking-props"
+      ],
+      "behaviour": "Underlining, overlining, striking, and blinking: the 'text-decoration' property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "lining-striking-props",
+        "clause_index": 15,
+        "clause_sha256": "914dd664a98f59359c9ec90d386a9c5066e01d2ea0e4e7684a47ecda96ad3a6c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.lining-striking-props-clause-d2b6b8a7bc8d",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "lining-striking-props"
+      ],
+      "behaviour": "Underlining, overlining, striking, and blinking: the 'text-decoration' property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "lining-striking-props",
+        "clause_index": 18,
+        "clause_sha256": "d2b6b8a7bc8d06a5029e636d556fc15c23785b9890372c510b9696ac6aae0b35"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.lining-striking-props-clause-4954daac97ec",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "lining-striking-props"
+      ],
+      "behaviour": "Underlining, overlining, striking, and blinking: the 'text-decoration' property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "lining-striking-props",
+        "clause_index": 19,
+        "clause_sha256": "4954daac97ece23139eca2d09409adba1e793fd23725580b05b6f5cdd6c9ad78"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.lining-striking-props-clause-7a92bea2cc6f",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "lining-striking-props"
+      ],
+      "behaviour": "Underlining, overlining, striking, and blinking: the 'text-decoration' property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "lining-striking-props",
+        "clause_index": 21,
+        "clause_sha256": "7a92bea2cc6faeac86c0cfdc0353a41cfb995ce471bd34a8cacf92f912e2bd94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.lining-striking-props-clause-b714fd1e6eaf",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "lining-striking-props"
+      ],
+      "behaviour": "Underlining, overlining, striking, and blinking: the 'text-decoration' property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "lining-striking-props",
+        "clause_index": 32,
+        "clause_sha256": "b714fd1e6eafc9137533c3f47667b2049f3fed406fd9f2ce1bbbfa134b3ba075"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.lining-striking-props-clause-74723221a6e3",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "lining-striking-props"
+      ],
+      "behaviour": "Underlining, overlining, striking, and blinking: the 'text-decoration' property — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "lining-striking-props",
+        "clause_index": 43,
+        "clause_sha256": "74723221a6e3c6202dd9ac502c952beecabfaad05473e7450274a994d15849ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.spacing-props",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "spacing-props"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Letter and word spacing: the 'letter-spacing' and 'word-spacing' properties.",
+      "locator": {
+        "section_id": "spacing-props",
+        "text_sha256": "e3fffc11ea33e9adf9d7998bba5536208ce350bb88eb83af4371b2983dd4b885"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-text.spacing-props-clause-f6249b8c8edf",
+        "css21-text.spacing-props-clause-cca2516ebb1d",
+        "css21-text.spacing-props-clause-03115dded472",
+        "css21-text.spacing-props-clause-15339e106cf1",
+        "css21-text.spacing-props-clause-fb277e3fed3d",
+        "css21-text.spacing-props-clause-92496827a129"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-text.spacing-props-clause-f6249b8c8edf",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "spacing-props"
+      ],
+      "behaviour": "Letter and word spacing: the 'letter-spacing' and 'word-spacing' properties — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "spacing-props",
+        "clause_index": 2,
+        "clause_sha256": "f6249b8c8edf943ec615340cc03d65c4a4c5db5968359175ef6afda3b83461ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.spacing-props-clause-cca2516ebb1d",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "spacing-props"
+      ],
+      "behaviour": "Letter and word spacing: the 'letter-spacing' and 'word-spacing' properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "spacing-props",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.spacing-props-clause-03115dded472",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "spacing-props"
+      ],
+      "behaviour": "Letter and word spacing: the 'letter-spacing' and 'word-spacing' properties — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "spacing-props",
+        "clause_index": 15,
+        "clause_sha256": "03115dded4721a9ff21d9819074d7c09af9333732e06c782d966a59d7d4a1617"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.spacing-props-clause-15339e106cf1",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "spacing-props"
+      ],
+      "behaviour": "Letter and word spacing: the 'letter-spacing' and 'word-spacing' properties — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "spacing-props",
+        "clause_index": 26,
+        "clause_sha256": "15339e106cf18918d695681643ca35e0a4b2e26c182e46e34e8655fa379fc0d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.spacing-props-clause-fb277e3fed3d",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "spacing-props"
+      ],
+      "behaviour": "Letter and word spacing: the 'letter-spacing' and 'word-spacing' properties — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "spacing-props",
+        "clause_index": 28,
+        "clause_sha256": "fb277e3fed3db3a4a4f6fa36978629258ad5a625e7b17a1b35218822e5c7d73b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.spacing-props-clause-92496827a129",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "spacing-props"
+      ],
+      "behaviour": "Letter and word spacing: the 'letter-spacing' and 'word-spacing' properties — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "spacing-props",
+        "clause_index": 43,
+        "clause_sha256": "92496827a129fa1205be21d33fc29581295419e4c26b333ae4bcadc720905d23"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.caps-prop",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "caps-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Capitalization: the 'text-transform' property.",
+      "locator": {
+        "section_id": "caps-prop",
+        "text_sha256": "bab90f9b00001ce6ae3eb4bb5b8346ed64daefb3334e785e5299342ea439ffd2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-text.caps-prop-clause-c2e240a3a448",
+        "css21-text.caps-prop-clause-cca2516ebb1d",
+        "css21-text.caps-prop-clause-def787b08e50"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-text.caps-prop-clause-c2e240a3a448",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "caps-prop"
+      ],
+      "behaviour": "Capitalization: the 'text-transform' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "caps-prop",
+        "clause_index": 2,
+        "clause_sha256": "c2e240a3a448b89edf97ab677d4cb65296c6884ae4d9744cf5e16d40d1a4dd60"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.caps-prop-clause-cca2516ebb1d",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "caps-prop"
+      ],
+      "behaviour": "Capitalization: the 'text-transform' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "caps-prop",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.caps-prop-clause-def787b08e50",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "caps-prop"
+      ],
+      "behaviour": "Capitalization: the 'text-transform' property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "caps-prop",
+        "clause_index": 15,
+        "clause_sha256": "def787b08e50bfc0c290ced3bc5a59e83aa12ee1a7703c6a2f7d69eb6bd233a0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.white-space-prop",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "white-space-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in White space: the 'white-space' property.",
+      "locator": {
+        "section_id": "white-space-prop",
+        "text_sha256": "26f38b466d7be71cb5daf27ba8c3111af748068a319f6124058065852349fa50"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-text.white-space-prop-clause-6b814bda7f85",
+        "css21-text.white-space-prop-clause-cca2516ebb1d",
+        "css21-text.white-space-prop-clause-564f6cd40370",
+        "css21-text.white-space-prop-clause-99516c18ecd7",
+        "css21-text.white-space-prop-clause-63f10afef61e",
+        "css21-text.white-space-prop-clause-ebf1c061d763",
+        "css21-text.white-space-prop-clause-fa4982ad9fbe"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-text.white-space-prop-clause-6b814bda7f85",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "white-space-prop"
+      ],
+      "behaviour": "White space: the 'white-space' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "white-space-prop",
+        "clause_index": 2,
+        "clause_sha256": "6b814bda7f851d7446447866b97291a2e96301bb6c362ea0243ffb71e8bf4a47"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.white-space-prop-clause-cca2516ebb1d",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "white-space-prop"
+      ],
+      "behaviour": "White space: the 'white-space' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "white-space-prop",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.white-space-prop-clause-564f6cd40370",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "white-space-prop"
+      ],
+      "behaviour": "White space: the 'white-space' property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "white-space-prop",
+        "clause_index": 15,
+        "clause_sha256": "564f6cd403708e2ab636067a23c66631bf4a155e5d26f79d2c79faa295cf0dfc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.white-space-prop-clause-99516c18ecd7",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "white-space-prop"
+      ],
+      "behaviour": "White space: the 'white-space' property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "white-space-prop",
+        "clause_index": 26,
+        "clause_sha256": "99516c18ecd7fb4ff3cb2256cdc644b78cf3463d6aa37b9431a7347cec873607"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.white-space-prop-clause-63f10afef61e",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "white-space-prop"
+      ],
+      "behaviour": "White space: the 'white-space' property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "white-space-prop",
+        "clause_index": 27,
+        "clause_sha256": "63f10afef61ea05a5dd0f4dc4e65565747466ae5e110c0a7b1181fedea0e7dc1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.white-space-prop-clause-ebf1c061d763",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "white-space-prop"
+      ],
+      "behaviour": "White space: the 'white-space' property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "white-space-prop",
+        "clause_index": 29,
+        "clause_sha256": "ebf1c061d76306b2ec52d21ae978e6b5be1abcffdabb1896984d15b5aeb6e9fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.white-space-prop-clause-fa4982ad9fbe",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "white-space-prop"
+      ],
+      "behaviour": "White space: the 'white-space' property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "white-space-prop",
+        "clause_index": 33,
+        "clause_sha256": "fa4982ad9fbe9a287f156e8833f9fc71c0d2b769e084b96e6a83d7c01cd09c0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.white-space-model",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "white-space-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The 'white-space' processing model.",
+      "locator": {
+        "section_id": "white-space-model",
+        "text_sha256": "808785f3e89abd36fc28a8c0a77f5be246946e8725d2d17935464448cc5fb56b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-text.white-space-model-clause-4dd4251d7d7e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-text.white-space-model-clause-4dd4251d7d7e",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "white-space-model"
+      ],
+      "behaviour": "The 'white-space' processing model — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "white-space-model",
+        "clause_index": 0,
+        "clause_sha256": "4dd4251d7d7e981bddeed7ab0c1bb87476dede3d1172e719ba6e4ff20263cea6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.egbidiwscollapse",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "egbidiwscollapse"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example of bidirectionality with white space collapsing.",
+      "locator": {
+        "section_id": "egbidiwscollapse",
+        "text_sha256": "f6560e47c49088438de1cb7f20201236f313476c4f11c4d0e40c7adf09c47e83"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-text.egbidiwscollapse-clause-1c95b5c585b3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-text.egbidiwscollapse-clause-1c95b5c585b3",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "egbidiwscollapse"
+      ],
+      "behaviour": "Example of bidirectionality with white space collapsing — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "egbidiwscollapse",
+        "clause_index": 5,
+        "clause_sha256": "1c95b5c585b33b9077dae09539b2904c07fab01822a7443268c12e3b494473fa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-text.ctrlchars",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "ctrlchars"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Control and combining characters' details.",
+      "locator": {
+        "section_id": "ctrlchars",
+        "text_sha256": "08d09c3b6bcecf4cce6ff5f265ac1efe7f025bb67ac57c22d9fa1dee903a6d7b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-text.ctrlchars-clause-5c0b20e7fa28"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-text.ctrlchars-clause-5c0b20e7fa28",
+      "family": "css21-text",
+      "source_id": "css21-text",
+      "sections": [
+        "ctrlchars"
+      ],
+      "behaviour": "Control and combining characters' details — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "ctrlchars",
+        "clause_index": 1,
+        "clause_sha256": "5c0b20e7fa28f06d210bb61cce84275b46d2744fc9fdc675568bc02a21633502"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    }
+  ]
+}

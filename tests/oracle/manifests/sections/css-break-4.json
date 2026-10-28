@@ -1,0 +1,732 @@
+{
+  "schema_version": 1,
+  "source_id": "css-break-4",
+  "sections": [
+    {
+      "id": "heading-9d63a439fd70",
+      "title": "CSS Fragmentation Module Level 4",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.heading-9d63a439fd70"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C First Public Working Draft, 18 December 2018",
+      "level": 2,
+      "text_sha256": "3dd0523a169c79109b229ff026fde5308b66d1236151c625c7fce66f8f429929",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.subtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "703b5f329f753c93a1d95de1e0078ff0dbba8daeb7bfab952b4d1c3e85fdacc0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "910f302a4606a675d8b89e3d0893dce235d6959907dcf56918816f23bca170f5",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "25ab977a11323665f91c2b88abbd8ee8ede01c203b4e781adc3914ed14b0d0f2",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "0b51b37591eaef2dfe995a0606c1b85a63176c9e4d4345dc93e3d5c40d984dcb",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "55983a436b67902a70234e40b6946bdb4882834d6a56dfd01999e382f55764da",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.placement"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Values",
+      "level": 3,
+      "text_sha256": "ff8f9ebf6585b4db1fdff5ee6dd677c895c5385df9b09e4e5400bd95913b8ecb",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.values"
+        ]
+      }
+    },
+    {
+      "id": "fragmentation-model",
+      "title": "2. Fragmentation Model and Terminology",
+      "level": 2,
+      "text_sha256": "53cecd66e044a6ff35f758e2b05039ad496a84cbd27d6d6392abc9ccbe0a382a",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.fragmentation-model",
+          "css-break-4.fragmentation-model-clause-5ea43eb14bec",
+          "css-break-4.fragmentation-model-clause-54934753187d"
+        ]
+      }
+    },
+    {
+      "id": "parallel-flows",
+      "title": "2.1. Parallel Fragmentation Flows",
+      "level": 3,
+      "text_sha256": "c136bc9cd80421e56dc0af9dee4e12bea5ea8c3190cd4ed5ca1e0125afc91e29",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.parallel-flows",
+          "css-break-4.parallel-flows-clause-5a00ad86fc7d"
+        ]
+      }
+    },
+    {
+      "id": "nested-flows",
+      "title": "2.2. Nested Fragmentation Flows",
+      "level": 3,
+      "text_sha256": "88a5db0fc3e7429d853a5beb8a66fe53c7737c22e55f9d93fb655b11ea860a0a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.nested-flows"
+        ]
+      }
+    },
+    {
+      "id": "breaking-controls",
+      "title": "3. Controlling Breaks",
+      "level": 2,
+      "text_sha256": "6b8d13ba905e688285680886add55ae116f00ae8af53b65a84252f29f1107cc3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.breaking-controls",
+          "css-break-4.breaking-controls-clause-a63684466cde"
+        ]
+      }
+    },
+    {
+      "id": "break-between",
+      "title": "3.1. Breaks Between Boxes: the break-before and break-after properties",
+      "level": 3,
+      "text_sha256": "47b7bcb4d4c974f33388e3cea47e9a11deace0b3f89e140578b6d9e06cc1a6a1",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.break-between",
+          "css-break-4.break-between-clause-cca2516ebb1d",
+          "css-break-4.break-between-clause-348d88d01341",
+          "css-break-4.break-between-clause-7fbabad7568e",
+          "css-break-4.break-between-clause-5ee5d050b61e"
+        ]
+      }
+    },
+    {
+      "id": "generic-break-values",
+      "title": "Generic Break Values",
+      "level": 4,
+      "text_sha256": "5f458bfeb56758045fffadb65a34009d8ba87951f35db823e140776b26cc0bf7",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.generic-break-values"
+        ]
+      }
+    },
+    {
+      "id": "page-break-values",
+      "title": "Page Break Values",
+      "level": 4,
+      "text_sha256": "2787499c799aa38b2c9efc1823a9154eb59d795b8ab50d2915a0cbe30ee7cb53",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.page-break-values"
+        ]
+      }
+    },
+    {
+      "id": "column-break-values",
+      "title": "Column Break Values",
+      "level": 4,
+      "text_sha256": "6d4c9013620a3a1dd88e349f71b87d18b0c83a2492136916321fd715f1b818c8",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.column-break-values"
+        ]
+      }
+    },
+    {
+      "id": "region-break-values",
+      "title": "Region Break Values",
+      "level": 4,
+      "text_sha256": "5cb6f1e2f98069079ae850749b7aef5a2b1a60ce32cfb084c7cb4ec83b42e315",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.region-break-values"
+        ]
+      }
+    },
+    {
+      "id": "break-propagation",
+      "title": "3.1.1. Child→Parent Break Propagation",
+      "level": 4,
+      "text_sha256": "3407ab4e5e1515d56b613f66ef191ddc569a5bf5c6d9b353ab808a2ca691d43a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.break-propagation",
+          "css-break-4.break-propagation-clause-faa15d1d01e5"
+        ]
+      }
+    },
+    {
+      "id": "break-within",
+      "title": "3.2. Breaks Within Boxes: the break-inside property",
+      "level": 3,
+      "text_sha256": "05f63499e024edc053499e2e1e39d50127dbb27a6e0194fa7803d6db41cf2fc1",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.break-within",
+          "css-break-4.break-within-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "widows-orphans",
+      "title": "3.3. Breaks Between Lines: orphans, widows",
+      "level": 3,
+      "text_sha256": "6a91d91a2298d0293edeca07bed07865ca4253baf9e718e90cb2f5c2b6135fbb",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.widows-orphans",
+          "css-break-4.widows-orphans-clause-cca2516ebb1d",
+          "css-break-4.widows-orphans-clause-f06e4ffd6df2",
+          "css-break-4.widows-orphans-clause-ef66b0942091",
+          "css-break-4.widows-orphans-clause-6e87aa75d55c",
+          "css-break-4.widows-orphans-clause-f636fd6bda95"
+        ]
+      }
+    },
+    {
+      "id": "page-break-properties",
+      "title": "3.4. Page Break Aliases: the page-break-before, page-break-after, and page-break-inside properties",
+      "level": 3,
+      "text_sha256": "ada0534ea382edca50e3bd43721591b4caec815e21a936775ffa289a49533012",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.page-break-properties",
+          "css-break-4.page-break-properties-clause-6ae44322aaf7"
+        ]
+      }
+    },
+    {
+      "id": "breaking-rules",
+      "title": "4. Rules for Breaking",
+      "level": 2,
+      "text_sha256": "e1e8f3655b90e7e318ef38ec456956671feb8785f0b3a717cd7ece7a2a13e699",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.breaking-rules",
+          "css-break-4.breaking-rules-clause-eb132e9549f7"
+        ]
+      }
+    },
+    {
+      "id": "possible-breaks",
+      "title": "4.1. Possible Break Points",
+      "level": 3,
+      "text_sha256": "064d2a50363510769f92277f2879995438bfe5988fa058822041a85c187fe511",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.possible-breaks",
+          "css-break-4.possible-breaks-clause-9ff1399f79fd",
+          "css-break-4.possible-breaks-clause-092de683dea0"
+        ]
+      }
+    },
+    {
+      "id": "break-types",
+      "title": "4.2. Types of Breaks",
+      "level": 3,
+      "text_sha256": "f978cee81fd3faa4082a3d034966b2a9b551e2f773a93f244161a7563f42f7dd",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.break-types"
+        ]
+      }
+    },
+    {
+      "id": "forced-breaks",
+      "title": "4.3. Forced Breaks",
+      "level": 3,
+      "text_sha256": "f914ccb233def9ac6414a7d499544da2afd29cb7a5b2322df475e362d659188a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.forced-breaks",
+          "css-break-4.forced-breaks-clause-2a629f11b43d"
+        ]
+      }
+    },
+    {
+      "id": "unforced-breaks",
+      "title": "4.4. Unforced Breaks",
+      "level": 3,
+      "text_sha256": "e30e36108090ed8930c40fe1ae030d2aea827f9aeef112e2f6eea43b14642f5f",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.unforced-breaks",
+          "css-break-4.unforced-breaks-clause-5e0ad8132a0f",
+          "css-break-4.unforced-breaks-clause-3deef732c5cf",
+          "css-break-4.unforced-breaks-clause-41c72e63582b"
+        ]
+      }
+    },
+    {
+      "id": "best-breaks",
+      "title": "4.5. Optimizing Unforced Breaks",
+      "level": 3,
+      "text_sha256": "62003deabe2704e843190b33cae1c7dc3cba346a1fd1592c5623bb7ae2845a85",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.best-breaks",
+          "css-break-4.best-breaks-clause-658836a13e73",
+          "css-break-4.best-breaks-clause-8d5e8077bece",
+          "css-break-4.best-breaks-clause-8d27c0b90e83",
+          "css-break-4.best-breaks-clause-65f749a30899",
+          "css-break-4.best-breaks-clause-26b28a0a96a1",
+          "css-break-4.best-breaks-clause-c46efe66e09b",
+          "css-break-4.best-breaks-clause-ce4fc8a0982a"
+        ]
+      }
+    },
+    {
+      "id": "breaking-boxes",
+      "title": "5. Box Model for Breaking",
+      "level": 2,
+      "text_sha256": "aa9f76f237ba43b889f26e2a2d5a95d1ff6e6bc95762db956873b39d4645c8ef",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.breaking-boxes"
+        ]
+      }
+    },
+    {
+      "id": "varying-size-boxes",
+      "title": "5.1. Breaking into Varying-size Fragmentainers",
+      "level": 3,
+      "text_sha256": "e1422837d2b504d9591722239766b5532214096d828fa8ff75a1454dbc009ece",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.varying-size-boxes",
+          "css-break-4.varying-size-boxes-clause-874a7417e5f9",
+          "css-break-4.varying-size-boxes-clause-ba86821e89f4"
+        ]
+      }
+    },
+    {
+      "id": "break-margins",
+      "title": "5.2. Adjoining Margins at Breaks: the margin-break property",
+      "level": 3,
+      "text_sha256": "03fa52cc503cd169bc571fe71192fc5fac6fb0be347aeb304e160c26d597ba7e",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.break-margins",
+          "css-break-4.break-margins-clause-cca2516ebb1d",
+          "css-break-4.break-margins-clause-9b5459c95520",
+          "css-break-4.break-margins-clause-4ffb3097b53b"
+        ]
+      }
+    },
+    {
+      "id": "box-splitting",
+      "title": "5.3. Splitting Boxes",
+      "level": 3,
+      "text_sha256": "fffe974ab68100e3c17c791c5c6e7dd554ca4dc8207631e51a0c7e28bbbb0e24",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.box-splitting"
+        ]
+      }
+    },
+    {
+      "id": "break-decoration",
+      "title": "5.4. Fragmented Borders and Backgrounds: the box-decoration-break property",
+      "level": 3,
+      "text_sha256": "dc316d3a3aec292d88c7717252cd9d7711361dd1f0fe79145eb5865d64435a94",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.break-decoration",
+          "css-break-4.break-decoration-clause-cca2516ebb1d",
+          "css-break-4.break-decoration-clause-ca5389241396",
+          "css-break-4.break-decoration-clause-5cabee4ff3fb",
+          "css-break-4.break-decoration-clause-217471cb4cc0"
+        ]
+      }
+    },
+    {
+      "id": "joining-boxes",
+      "title": "5.4.1. Joining Boxes for slice",
+      "level": 4,
+      "text_sha256": "80f722daf9e718b89f864e6cf9556ef3e3030ca53735bc151f445db6d2e86933",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.joining-boxes"
+        ]
+      }
+    },
+    {
+      "id": "transforms",
+      "title": "5.5. Transforms, Positioning, and Pagination",
+      "level": 3,
+      "text_sha256": "8260bce249f77a09363369129b6abff1d673e04c84d55e1d0093f67bbb11d675",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.transforms",
+          "css-break-4.transforms-clause-ca7643c1c1db",
+          "css-break-4.transforms-clause-bdd7dee1edba",
+          "css-break-4.transforms-clause-318292b36b79"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-level-4",
+      "title": "Changes Since Level 3",
+      "level": 3,
+      "text_sha256": "4537eae6efe00ecb406401de53433779927c53e10095676bd8a65da58fb33ef3",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.changes-level-4"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "915ecdd5c3ba207b9881efaa1487240fac54b127cad42472ab05c793b34b979d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.conformance"
+        ]
+      }
+    },
+    {
+      "id": "document-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.document-conventions",
+          "css-break-4.document-conventions-clause-5c98c879f070",
+          "css-break-4.document-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "conform-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.conform-classes",
+          "css-break-4.conform-classes-clause-ff408372426c",
+          "css-break-4.conform-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "conform-responsible",
+      "title": "Requirements for Responsible Implementation of CSS",
+      "level": 3,
+      "text_sha256": "63e281f28ed2ebefafb560d6716cfc98d63caa0f55f4ae36a918cca31886f4b3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.conform-responsible"
+        ]
+      }
+    },
+    {
+      "id": "conform-partial",
+      "title": "Partial Implementations",
+      "level": 4,
+      "text_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.conform-partial",
+          "css-break-4.conform-partial-clause-db223ebb5aec"
+        ]
+      }
+    },
+    {
+      "id": "conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "conform-testing",
+      "title": "Implementations of CR-level Features",
+      "level": 4,
+      "text_sha256": "19da6a630f4622c83c6857c45f34c180f4a1c3f3acc63d1cbd9c295e91680224",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.conform-testing",
+          "css-break-4.conform-testing-clause-003938d8c19a",
+          "css-break-4.conform-testing-clause-c7ed0d126be3"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "ce6a6118703fd3758ac7d507b36cdc7ccad7afba8b7f949d88018fa068383f79",
+      "clause_count": 125,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "de9ee9812fb42d18e66a9164761e557a6f7d08c76f60b65911970bed2f05b39a",
+      "clause_count": 68,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "bdb71fa2532e851434b1c9f16bbad183d6ddce6385761153cc8675d1dcc34884",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "0e46912541ae625cb5972d4339adee1e5db7bf06c5d44460d2b66c51bca2d7d7",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "e4c58b089563da376c5960ff16f8842b2582fdc20b73aff3cec6cf0a830cd073",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.property-index",
+          "css-break-4.property-index-clause-4b59fe755d34"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "1af2ef941032521ac3edd10d2b31a5d9b70e718da3ce7575673b2a381f1a2118",
+      "clause_count": 119,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-break-4.issues-index"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1179 @@
+{
+  "schema_version": 1,
+  "source_id": "cssom-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Object Model (CSSOM)",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.title"
+        ]
+      }
+    },
+    {
+      "id": "profile-and-date",
+      "title": "W3C Working Draft, 26 August 2021",
+      "level": 2,
+      "text_sha256": "bb1b8d13390c24d6d758795f5408ee32a2d7ebc53d3a123753b816643ea446c2",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.profile-and-date"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "047a27503d8d83e555a321393c949667af901f49531d6e56ca2edb54a4b7b6d7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "3b1a0fbe464d5594dfe300a23fc7edad956fda66db7b06172699034eda829356",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "abe03980a9f8263232aa1b01f0f210d38c0b4c3d4d49e7130c077e6028b8c6a4",
+      "clause_count": 73,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "e22ab459838d5c44795127972f8483f6872661f5bf3f5c3f5d69cfd4cb5fb176",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.introduction",
+          "cssom-1.introduction-clause-00cdd9b55db8"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "2. Terminology",
+      "level": 2,
+      "text_sha256": "69034deb3e11710aba41a348be5438cfbd1a8c2b16ee81502b72a0c476ea998b",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.terminology",
+          "cssom-1.terminology-clause-85aea7e5631d",
+          "cssom-1.terminology-clause-97ced43aa0e0",
+          "cssom-1.terminology-clause-6402d6ecabe4"
+        ]
+      }
+    },
+    {
+      "id": "common-serializing-idioms",
+      "title": "2.1. Common Serializing Idioms",
+      "level": 3,
+      "text_sha256": "a46c2ca2e4611d5ddff2b32334d536b46a620a9d0aa5cd2e927a08231bd9844d",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.common-serializing-idioms"
+        ]
+      }
+    },
+    {
+      "id": "cssomstring-type",
+      "title": "3. CSSOMString",
+      "level": 2,
+      "text_sha256": "eee93111aba19e32e66815bbf38e0136b4b4069aa2232d833dade48e0cdecc99",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.cssomstring-type"
+        ]
+      }
+    },
+    {
+      "id": "media-queries",
+      "title": "4. Media Queries",
+      "level": 2,
+      "text_sha256": "25f0ee445499281fdc3be4da3f575696d11779e98aec5586dea4674e94cabde8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.media-queries"
+        ]
+      }
+    },
+    {
+      "id": "parsing-media-queries",
+      "title": "4.1. Parsing Media Queries",
+      "level": 3,
+      "text_sha256": "fd8a4e74ac39f8098a1027321094b09fde2fe14bb173645f3b04bf62cb97d460",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.parsing-media-queries",
+          "cssom-1.parsing-media-queries-clause-47e6db4dffea",
+          "cssom-1.parsing-media-queries-clause-7ebc6c40672f",
+          "cssom-1.parsing-media-queries-clause-887907a97c3f"
+        ]
+      }
+    },
+    {
+      "id": "serializing-media-queries",
+      "title": "4.2. Serializing Media Queries",
+      "level": 3,
+      "text_sha256": "cee1e018ff41b0738ce554cb01844a42b9cdc63e0e7c76fe41f236c0738e0d5b",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.serializing-media-queries"
+        ]
+      }
+    },
+    {
+      "id": "serializing-media-feature-values",
+      "title": "4.2.1. Serializing Media Feature Values",
+      "level": 4,
+      "text_sha256": "b85ad66e1107d5fc7225f0abb00cacba4b7c7893f997e27d70580bf21e2d4fe3",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.serializing-media-feature-values",
+          "cssom-1.serializing-media-feature-values-clause-40233cd14242"
+        ]
+      }
+    },
+    {
+      "id": "comparing-media-queries",
+      "title": "4.3. Comparing Media Queries",
+      "level": 3,
+      "text_sha256": "a126671a7ce6bf521b3044896b00c377444dbf537c0e0594be662247dbda6902",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.comparing-media-queries"
+        ]
+      }
+    },
+    {
+      "id": "the-medialist-interface",
+      "title": "4.4. The MediaList Interface",
+      "level": 3,
+      "text_sha256": "8d1027081bf3f799fdfe96aa0659835f91711988c4391d80fc60a5efb880b779",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-medialist-interface",
+          "cssom-1.the-medialist-interface-clause-0195d2cc2506",
+          "cssom-1.the-medialist-interface-clause-784d97e0e8f1",
+          "cssom-1.the-medialist-interface-clause-a6a26b331d32",
+          "cssom-1.the-medialist-interface-clause-f9a1b0a1b238",
+          "cssom-1.the-medialist-interface-clause-b22ce6003e5f",
+          "cssom-1.the-medialist-interface-clause-29c63724eb97"
+        ]
+      }
+    },
+    {
+      "id": "selectors",
+      "title": "5. Selectors",
+      "level": 2,
+      "text_sha256": "481593a90f8e7b7c0271d79f05db70d0a464c1038d5280628086bd9ec17de2fb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.selectors"
+        ]
+      }
+    },
+    {
+      "id": "parsing-selectors",
+      "title": "5.1. Parsing Selectors",
+      "level": 3,
+      "text_sha256": "b4c6ea69150e0385c479b6b8b7a35642932363dc4d4449e8ec8afe7a46708bf1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.parsing-selectors"
+        ]
+      }
+    },
+    {
+      "id": "serializing-selectors",
+      "title": "5.2. Serializing Selectors",
+      "level": 3,
+      "text_sha256": "4f1a49a059d551b1004ce3b6c8cbf796116f5dbab8fd9d445999c1af69590ec4",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.serializing-selectors"
+        ]
+      }
+    },
+    {
+      "id": "css-object-model",
+      "title": "6. CSS",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.css-object-model"
+        ]
+      }
+    },
+    {
+      "id": "css-style-sheets",
+      "title": "6.1. CSS Style Sheets",
+      "level": 3,
+      "text_sha256": "44e8502d45ce36ab69059818e5059522e2c56a3ab21b3f303a003bf6f0d970d0",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.css-style-sheets",
+          "cssom-1.css-style-sheets-clause-233b66e65d4d",
+          "cssom-1.css-style-sheets-clause-432aa4c10186",
+          "cssom-1.css-style-sheets-clause-8cd671f70de0",
+          "cssom-1.css-style-sheets-clause-066032a59583",
+          "cssom-1.css-style-sheets-clause-cb817a73f8e7"
+        ]
+      }
+    },
+    {
+      "id": "the-stylesheet-interface",
+      "title": "6.1.1. The StyleSheet Interface",
+      "level": 4,
+      "text_sha256": "c917364a0f0e3a448a102a0e2fe7c0156f8a4aca204da45c9680390caf760e7e",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-stylesheet-interface",
+          "cssom-1.the-stylesheet-interface-clause-e051ef422142",
+          "cssom-1.the-stylesheet-interface-clause-ddcb398b00a0",
+          "cssom-1.the-stylesheet-interface-clause-f70b4d6019b1",
+          "cssom-1.the-stylesheet-interface-clause-4da4075ace80",
+          "cssom-1.the-stylesheet-interface-clause-acc34661887d",
+          "cssom-1.the-stylesheet-interface-clause-e547217cb8b3",
+          "cssom-1.the-stylesheet-interface-clause-0e96f44eb580"
+        ]
+      }
+    },
+    {
+      "id": "the-cssstylesheet-interface",
+      "title": "6.1.2. The CSSStyleSheet Interface",
+      "level": 4,
+      "text_sha256": "e3a63ef5b57647ff5b6d91920dcf10a7dfe6f4011a41118c576ef7c21641d42e",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-cssstylesheet-interface",
+          "cssom-1.the-cssstylesheet-interface-clause-1558d8140483",
+          "cssom-1.the-cssstylesheet-interface-clause-307cdacc1a6d",
+          "cssom-1.the-cssstylesheet-interface-clause-c652213b1181",
+          "cssom-1.the-cssstylesheet-interface-clause-ed36a6184042",
+          "cssom-1.the-cssstylesheet-interface-clause-10e9f8b8d508",
+          "cssom-1.the-cssstylesheet-interface-clause-9ababaa85df9",
+          "cssom-1.the-cssstylesheet-interface-clause-0044b1c1650e"
+        ]
+      }
+    },
+    {
+      "id": "legacy-css-style-sheet-members",
+      "title": "6.1.2.1. Deprecated CSSStyleSheet members",
+      "level": 5,
+      "text_sha256": "ebd0e9cd93d36cb8f9fa2ef5c3588c25e68b7ab060fd83faaa3ba52f6e139ad6",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.legacy-css-style-sheet-members",
+          "cssom-1.legacy-css-style-sheet-members-clause-64d722cdb473",
+          "cssom-1.legacy-css-style-sheet-members-clause-91e11bdf63eb",
+          "cssom-1.legacy-css-style-sheet-members-clause-ab1af78aba11",
+          "cssom-1.legacy-css-style-sheet-members-clause-863e5084f61a",
+          "cssom-1.legacy-css-style-sheet-members-clause-93623e28770d"
+        ]
+      }
+    },
+    {
+      "id": "css-style-sheet-collections",
+      "title": "6.2. CSS Style Sheet Collections",
+      "level": 3,
+      "text_sha256": "a1e5e9fb972403355ec948761cb5b6dc74a3d2e7323ddb84a6b1661bee6d7c9f",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.css-style-sheet-collections"
+        ]
+      }
+    },
+    {
+      "id": "the-http-default-style-header",
+      "title": "6.2.1. The HTTP Default-Style Header",
+      "level": 4,
+      "text_sha256": "67ca77beacc70b9abea04a47b9b700c7e056dca023d6022df7af516c4556c63d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-http-default-style-header",
+          "cssom-1.the-http-default-style-header-clause-c9226dff5993"
+        ]
+      }
+    },
+    {
+      "id": "the-stylesheetlist-interface",
+      "title": "6.2.2. The StyleSheetList Interface",
+      "level": 4,
+      "text_sha256": "c3bc084170b33199666b3142acc0cbd90c802fcf6fdeeb107a47acea7609388f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-stylesheetlist-interface",
+          "cssom-1.the-stylesheetlist-interface-clause-38b41545cce5",
+          "cssom-1.the-stylesheetlist-interface-clause-5a029fb045e2"
+        ]
+      }
+    },
+    {
+      "id": "extensions-to-the-document-or-shadow-root-interface",
+      "title": "6.2.3. Extensions to the DocumentOrShadowRoot Interface Mixin",
+      "level": 4,
+      "text_sha256": "f929302cf261df31074734c228cddad3b2962eb4191e3c54dbba15cccc92484f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.extensions-to-the-document-or-shadow-root-interface",
+          "cssom-1.extensions-to-the-document-or-shadow-root-interface-clause-7aa57297304a",
+          "cssom-1.extensions-to-the-document-or-shadow-root-interface-clause-135a1d9ea697"
+        ]
+      }
+    },
+    {
+      "id": "style-sheet-association",
+      "title": "6.3. Style Sheet Association",
+      "level": 3,
+      "text_sha256": "c28a310c1db2756707cd275257ac724ab974f515c0a1a8457172e143cfeed9da",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.style-sheet-association"
+        ]
+      }
+    },
+    {
+      "id": "fetching-css-style-sheets",
+      "title": "6.3.1. Fetching CSS style sheets",
+      "level": 4,
+      "text_sha256": "a279879a1a54f328826dab1ea3bf7094b709bef12b27ea5aeb861c1b10d33590",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.fetching-css-style-sheets"
+        ]
+      }
+    },
+    {
+      "id": "the-linkstyle-interface",
+      "title": "6.3.2. The LinkStyle Interface",
+      "level": 4,
+      "text_sha256": "a681d2c69d00e1a85c02bae1b9ce66f46cb223446058319ee8708a6a858c243f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-linkstyle-interface",
+          "cssom-1.the-linkstyle-interface-clause-2f63ef2bffe9",
+          "cssom-1.the-linkstyle-interface-clause-a1f56f599784"
+        ]
+      }
+    },
+    {
+      "id": "requirements-on-specifications",
+      "title": "6.3.3. Requirements on specifications",
+      "level": 4,
+      "text_sha256": "649de95829b10238144f97ac212424be367ff8c902fb2d8343832baf7c73a0f0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.requirements-on-specifications",
+          "cssom-1.requirements-on-specifications-clause-649de95829b1"
+        ]
+      }
+    },
+    {
+      "id": "requirements-on-user-agents-implementing-the-xml-stylesheet-processing-instruction",
+      "title": "6.3.4. Requirements on user agents Implementing the xml-stylesheet processing instruction",
+      "level": 4,
+      "text_sha256": "7d5c2b2b6b10a0621397b54458729d3b11e9fe4ee2c2d8cdb0ac9fb5b4707b97",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.requirements-on-user-agents-implementing-the-xml-stylesheet-processing-instruction",
+          "cssom-1.requirements-on-user-agents-implementing-the-xml-stylesheet-processing-instruction-clause-334ffe3852b7",
+          "cssom-1.requirements-on-user-agents-implementing-the-xml-stylesheet-processing-instruction-clause-55e78ee544e8",
+          "cssom-1.requirements-on-user-agents-implementing-the-xml-stylesheet-processing-instruction-clause-c0b91246cfdd",
+          "cssom-1.requirements-on-user-agents-implementing-the-xml-stylesheet-processing-instruction-clause-56f4161eecb7",
+          "cssom-1.requirements-on-user-agents-implementing-the-xml-stylesheet-processing-instruction-clause-3aedec5bad81"
+        ]
+      }
+    },
+    {
+      "id": "requirements-on-user-agents-implementing-the-http-link-header",
+      "title": "6.3.5. Requirements on user agents Implementing the HTTP Link Header",
+      "level": 4,
+      "text_sha256": "f214fedd87a22f1071cb22aee2a002b7799cf9f808ea7d742b642dc86cd20a5a",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.requirements-on-user-agents-implementing-the-http-link-header",
+          "cssom-1.requirements-on-user-agents-implementing-the-http-link-header-clause-fd91e2b93036"
+        ]
+      }
+    },
+    {
+      "id": "css-rules",
+      "title": "6.4. CSS Rules",
+      "level": 3,
+      "text_sha256": "c6df3cc4e21372b99d502d99500a262515d861dc37808f080dcf2ffc7f1a04e9",
+      "clause_count": 105,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.css-rules",
+          "cssom-1.css-rules-clause-5d4f15a57387",
+          "cssom-1.css-rules-clause-b8127131fe3a",
+          "cssom-1.css-rules-clause-93be280ad27c",
+          "cssom-1.css-rules-clause-2d32333fb792"
+        ]
+      }
+    },
+    {
+      "id": "the-cssrulelist-interface",
+      "title": "6.4.1. The CSSRuleList Interface",
+      "level": 4,
+      "text_sha256": "8b600713cfc402495e5dd8b31bb5d7e8d4e33808fcd8ecc10ade20efbe86ce0f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-cssrulelist-interface",
+          "cssom-1.the-cssrulelist-interface-clause-0a47fc37fcc4",
+          "cssom-1.the-cssrulelist-interface-clause-a22c7e52d48e"
+        ]
+      }
+    },
+    {
+      "id": "the-cssrule-interface",
+      "title": "6.4.2. The CSSRule Interface",
+      "level": 4,
+      "text_sha256": "6c338c89dbbfeb4ac1b162012e2fac4f4716aa79f0dc2400bcdedb1f7f63ef06",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-cssrule-interface",
+          "cssom-1.the-cssrule-interface-clause-d9bee4f25409",
+          "cssom-1.the-cssrule-interface-clause-3d94c439fde7",
+          "cssom-1.the-cssrule-interface-clause-4da4075ace80",
+          "cssom-1.the-cssrule-interface-clause-f8d3895413ab"
+        ]
+      }
+    },
+    {
+      "id": "the-cssstylerule-interface",
+      "title": "6.4.3. The CSSStyleRule Interface",
+      "level": 4,
+      "text_sha256": "e490e6f43b141582bacdae6310ec04716be83a4201b046c5ffa4b48b3ca34197",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-cssstylerule-interface",
+          "cssom-1.the-cssstylerule-interface-clause-942ecb7425b7",
+          "cssom-1.the-cssstylerule-interface-clause-7fcaa85529eb",
+          "cssom-1.the-cssstylerule-interface-clause-0190688f4ea4",
+          "cssom-1.the-cssstylerule-interface-clause-3c7cd1bb3e32",
+          "cssom-1.the-cssstylerule-interface-clause-170502963439",
+          "cssom-1.the-cssstylerule-interface-clause-2523ef4433ef",
+          "cssom-1.the-cssstylerule-interface-clause-8b94e0176a5b",
+          "cssom-1.the-cssstylerule-interface-clause-ba5b23dca9b4"
+        ]
+      }
+    },
+    {
+      "id": "the-cssimportrule-interface",
+      "title": "6.4.4. The CSSImportRule Interface",
+      "level": 4,
+      "text_sha256": "11e01d4205976b5855475c7d765e842f07cc61dae061a3873b35726d6e3f4360",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-cssimportrule-interface",
+          "cssom-1.the-cssimportrule-interface-clause-00667da8325f",
+          "cssom-1.the-cssimportrule-interface-clause-51191d9966ff",
+          "cssom-1.the-cssimportrule-interface-clause-8430fc25488c"
+        ]
+      }
+    },
+    {
+      "id": "the-cssgroupingrule-interface",
+      "title": "6.4.5. The CSSGroupingRule Interface",
+      "level": 4,
+      "text_sha256": "60413018ee45af64118ddb724f18ceb41f9a166783cbe1d69f9fe059b23aaa3b",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-cssgroupingrule-interface",
+          "cssom-1.the-cssgroupingrule-interface-clause-e7c53d3ce03f",
+          "cssom-1.the-cssgroupingrule-interface-clause-ad2ad5a0c984",
+          "cssom-1.the-cssgroupingrule-interface-clause-30bdf76849e5"
+        ]
+      }
+    },
+    {
+      "id": "the-cssmediarule-interface",
+      "title": "6.4.6. The CSSMediaRule Interface",
+      "level": 4,
+      "text_sha256": "bb29e014e9a526d44493137b7c0a397191b61e64f97ba485614499141049b012",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-cssmediarule-interface"
+        ]
+      }
+    },
+    {
+      "id": "the-csspagerule-interface",
+      "title": "6.4.7. The CSSPageRule Interface",
+      "level": 4,
+      "text_sha256": "3cdeb052563248039cd44c720e2e973507305f343b23264ba892760c382f341a",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-csspagerule-interface",
+          "cssom-1.the-csspagerule-interface-clause-b3a4919f7795",
+          "cssom-1.the-csspagerule-interface-clause-59be1742713d",
+          "cssom-1.the-csspagerule-interface-clause-13d5ffb2234c",
+          "cssom-1.the-csspagerule-interface-clause-3c7cd1bb3e32",
+          "cssom-1.the-csspagerule-interface-clause-6d43e7277763",
+          "cssom-1.the-csspagerule-interface-clause-2523ef4433ef"
+        ]
+      }
+    },
+    {
+      "id": "the-cssmarginrule-interface",
+      "title": "6.4.8. The CSSMarginRule Interface",
+      "level": 4,
+      "text_sha256": "c8f1a3b75a6fffa1c5b4ac8941f6584b86aeaa1878a472de4c98c967aa49137a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-cssmarginrule-interface",
+          "cssom-1.the-cssmarginrule-interface-clause-37b27d716270",
+          "cssom-1.the-cssmarginrule-interface-clause-c5414c6a8fad",
+          "cssom-1.the-cssmarginrule-interface-clause-2523ef4433ef"
+        ]
+      }
+    },
+    {
+      "id": "the-cssnamespacerule-interface",
+      "title": "6.4.9. The CSSNamespaceRule Interface",
+      "level": 4,
+      "text_sha256": "b0396a0435549940b52586453a924d3908049312e9d2f3f105b3d10a90ad53a1",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-cssnamespacerule-interface",
+          "cssom-1.the-cssnamespacerule-interface-clause-194d6bb1c6ab",
+          "cssom-1.the-cssnamespacerule-interface-clause-c085f8cc9680"
+        ]
+      }
+    },
+    {
+      "id": "css-declarations",
+      "title": "6.5. CSS Declarations",
+      "level": 3,
+      "text_sha256": "c84d07b02af46136cb3e330aa1be32bd1387edba68a5695d616ea683814fcb60",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.css-declarations"
+        ]
+      }
+    },
+    {
+      "id": "css-declaration-blocks",
+      "title": "6.6. CSS Declaration Blocks",
+      "level": 3,
+      "text_sha256": "99c7d2a2f40cd1f9c4b9a83a650679b38f6562bcf4d5fd0cc1ff8a569fb4b9e7",
+      "clause_count": 76,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.css-declaration-blocks",
+          "cssom-1.css-declaration-blocks-clause-2523ef4433ef",
+          "cssom-1.css-declaration-blocks-clause-ad9433909b52",
+          "cssom-1.css-declaration-blocks-clause-49c6274655f1",
+          "cssom-1.css-declaration-blocks-clause-89ff0b504656",
+          "cssom-1.css-declaration-blocks-clause-727035c8801d",
+          "cssom-1.css-declaration-blocks-clause-a54a53ab0fab",
+          "cssom-1.css-declaration-blocks-clause-9164429c4071"
+        ]
+      }
+    },
+    {
+      "id": "the-cssstyledeclaration-interface",
+      "title": "6.6.1. The CSSStyleDeclaration Interface",
+      "level": 4,
+      "text_sha256": "19279f8c5e6a74dd3775672654717ec3e6f31f6ea7da6305fa0f616f53b14a53",
+      "clause_count": 123,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-cssstyledeclaration-interface",
+          "cssom-1.the-cssstyledeclaration-interface-clause-f102cd922749",
+          "cssom-1.the-cssstyledeclaration-interface-clause-e583b7e08548",
+          "cssom-1.the-cssstyledeclaration-interface-clause-fcab38b5dd1b",
+          "cssom-1.the-cssstyledeclaration-interface-clause-08672ca599ce",
+          "cssom-1.the-cssstyledeclaration-interface-clause-e35ca702fc89",
+          "cssom-1.the-cssstyledeclaration-interface-clause-3f058c430a3b",
+          "cssom-1.the-cssstyledeclaration-interface-clause-2195c19b8f12",
+          "cssom-1.the-cssstyledeclaration-interface-clause-f771376107a9",
+          "cssom-1.the-cssstyledeclaration-interface-clause-ccf2740b32db",
+          "cssom-1.the-cssstyledeclaration-interface-clause-18b6c9cc4ccd",
+          "cssom-1.the-cssstyledeclaration-interface-clause-731bbe846af6",
+          "cssom-1.the-cssstyledeclaration-interface-clause-e8feaf72d99e",
+          "cssom-1.the-cssstyledeclaration-interface-clause-46a558cbfbba",
+          "cssom-1.the-cssstyledeclaration-interface-clause-f177abdb2a05",
+          "cssom-1.the-cssstyledeclaration-interface-clause-24e238a2cd40",
+          "cssom-1.the-cssstyledeclaration-interface-clause-ff9141278fb5",
+          "cssom-1.the-cssstyledeclaration-interface-clause-13b604df4f04",
+          "cssom-1.the-cssstyledeclaration-interface-clause-3736d47ec7f9",
+          "cssom-1.the-cssstyledeclaration-interface-clause-3d94c439fde7",
+          "cssom-1.the-cssstyledeclaration-interface-clause-fc4f6173913b",
+          "cssom-1.the-cssstyledeclaration-interface-clause-dac6a3d0f229",
+          "cssom-1.the-cssstyledeclaration-interface-clause-bfd65afc87f8",
+          "cssom-1.the-cssstyledeclaration-interface-clause-7c5497e87e35",
+          "cssom-1.the-cssstyledeclaration-interface-clause-3fd5de0f40ff",
+          "cssom-1.the-cssstyledeclaration-interface-clause-e13b178b2d2d",
+          "cssom-1.the-cssstyledeclaration-interface-clause-808f4e822def",
+          "cssom-1.the-cssstyledeclaration-interface-clause-01665f7694b8",
+          "cssom-1.the-cssstyledeclaration-interface-clause-f0ba77ba5f60",
+          "cssom-1.the-cssstyledeclaration-interface-clause-299fe112bc78",
+          "cssom-1.the-cssstyledeclaration-interface-clause-3b04cbe24993"
+        ]
+      }
+    },
+    {
+      "id": "css-values",
+      "title": "6.7. CSS Values",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.css-values"
+        ]
+      }
+    },
+    {
+      "id": "parsing-css-values",
+      "title": "6.7.1. Parsing CSS Values",
+      "level": 4,
+      "text_sha256": "52e6dc323880c3bf6c5e8188a74bcd675c7c710301e183f4de2cde6c2008c1ab",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.parsing-css-values"
+        ]
+      }
+    },
+    {
+      "id": "serializing-css-values",
+      "title": "6.7.2. Serializing CSS Values",
+      "level": 4,
+      "text_sha256": "8eae9e09bc5b305620c878d3ed060a0eaa43a1b58e0de2ecb2ff3181c0425ff0",
+      "clause_count": 92,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.serializing-css-values",
+          "cssom-1.serializing-css-values-clause-8d693ffad4ff",
+          "cssom-1.serializing-css-values-clause-f7f92d6a12e5",
+          "cssom-1.serializing-css-values-clause-5ed9ee153378",
+          "cssom-1.serializing-css-values-clause-3a73713ba058",
+          "cssom-1.serializing-css-values-clause-c9b60a64a9df",
+          "cssom-1.serializing-css-values-clause-bd8dde6db1c1",
+          "cssom-1.serializing-css-values-clause-6ceca33c7f38",
+          "cssom-1.serializing-css-values-clause-373602e38092",
+          "cssom-1.serializing-css-values-clause-817f7ccb1001",
+          "cssom-1.serializing-css-values-clause-f81c7adb0185",
+          "cssom-1.serializing-css-values-clause-1784a5c11d53",
+          "cssom-1.serializing-css-values-clause-b01e3f4f991d"
+        ]
+      }
+    },
+    {
+      "id": "serializing-css-values-examples",
+      "title": "6.7.2.1. Examples",
+      "level": 5,
+      "text_sha256": "2b412d72007020aa4f11c88196b1db22bcdf15c601f4add1cb76fabff971649f",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.serializing-css-values-examples"
+        ]
+      }
+    },
+    {
+      "id": "dom-access-to-css-declaration-blocks",
+      "title": "7. DOM Access to CSS Declaration Blocks",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.dom-access-to-css-declaration-blocks"
+        ]
+      }
+    },
+    {
+      "id": "the-elementcssinlinestyle-mixin",
+      "title": "7.1. The ElementCSSInlineStyle Mixin",
+      "level": 3,
+      "text_sha256": "c4f33ae54238249b12d5caab05a866d9df9e03f5e20cfd78d84c9ebd3390c080",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-elementcssinlinestyle-mixin",
+          "cssom-1.the-elementcssinlinestyle-mixin-clause-6d60bce7a0dd"
+        ]
+      }
+    },
+    {
+      "id": "extensions-to-the-window-interface",
+      "title": "7.2. Extensions to the Window Interface",
+      "level": 3,
+      "text_sha256": "24c6e4c497873d11aea644de1e48eee90e8736f77cd08154716bec0a72f1095d",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.extensions-to-the-window-interface",
+          "cssom-1.extensions-to-the-window-interface-clause-b5961e63275c",
+          "cssom-1.extensions-to-the-window-interface-clause-c5b60831bdcf",
+          "cssom-1.extensions-to-the-window-interface-clause-2dc08a36b9e3",
+          "cssom-1.extensions-to-the-window-interface-clause-2523ef4433ef",
+          "cssom-1.extensions-to-the-window-interface-clause-1d1a58405bba",
+          "cssom-1.extensions-to-the-window-interface-clause-69a472683218",
+          "cssom-1.extensions-to-the-window-interface-clause-6e5b39c66cef"
+        ]
+      }
+    },
+    {
+      "id": "utility-apis",
+      "title": "8. Utility APIs",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.utility-apis"
+        ]
+      }
+    },
+    {
+      "id": "the-css.escape()-method",
+      "title": "8.1. The CSS.escape() Method",
+      "level": 3,
+      "text_sha256": "fe553f18dd6d2ba3fe2e955e279c82d9a873cd026cf3815d26e182150e200f41",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.the-css-escape-method",
+          "cssom-1.the-css-escape-method-clause-3458c0011299",
+          "cssom-1.the-css-escape-method-clause-65891a5836f1",
+          "cssom-1.the-css-escape-method-clause-8f2c6f6871df"
+        ]
+      }
+    },
+    {
+      "id": "resolved-values",
+      "title": "9. Resolved Values",
+      "level": 2,
+      "text_sha256": "a8ddc2477674daa706e5922a706c736281bdc0467c5bba4d4bf2eabd0439f4fc",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.resolved-values",
+          "cssom-1.resolved-values-clause-6991ccd80b8e",
+          "cssom-1.resolved-values-clause-1d7c2f761add",
+          "cssom-1.resolved-values-clause-186d5e3676cc",
+          "cssom-1.resolved-values-clause-4ce36180d254",
+          "cssom-1.resolved-values-clause-b192d2f21079"
+        ]
+      }
+    },
+    {
+      "id": "iana-considerations",
+      "title": "10. IANA Considerations",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.iana-considerations"
+        ]
+      }
+    },
+    {
+      "id": "default-style",
+      "title": "10.1. Default-Style",
+      "level": 3,
+      "text_sha256": "3dcb6fa7d04603433c4ef067874e3397aca8866d4ab71653254d161cd35d6865",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.default-style"
+        ]
+      }
+    },
+    {
+      "id": "change-history",
+      "title": "11. Change History",
+      "level": 2,
+      "text_sha256": "6b09a65a8360eb77de70d2ae1179dc9d739282fcb5a57d4ab8ef8ed9913b94c0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.change-history"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-17-march-2016",
+      "title": "11.1. Changes From 17 March 2016",
+      "level": 3,
+      "text_sha256": "e4349fc4030e8d77dd1e244022bff3f4e657fcecba40ca3c0e1e2537fff2e3a6",
+      "clause_count": 60,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.changes-from-17-march-2016"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-5-december-2013",
+      "title": "11.2. Changes From 5 December 2013",
+      "level": 3,
+      "text_sha256": "8d03da7671a30b394233bd1e7aa2ac1999165df78dcb9798433e2f404a706ec0",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.changes-from-5-december-2013"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-12-july-2011-to-5-december-2013",
+      "title": "11.3. Changes From 12 July 2011 To 5 December 2013",
+      "level": 3,
+      "text_sha256": "05e7f45ac49cbcc8e8ef9237d5f4e0845bce06503800aab3c61050e9cf880fa7",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.changes-from-12-july-2011-to-5-december-2013"
+        ]
+      }
+    },
+    {
+      "id": "security-and-privacy-considerations",
+      "title": "12. Security and Privacy Considerations",
+      "level": 2,
+      "text_sha256": "7e262e9b24d8340b23de68d864375a318c4ffbdc835acc6572a008bcd497eb67",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.security-and-privacy-considerations"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "13. Acknowledgments",
+      "level": 2,
+      "text_sha256": "444c96e1d6b8906bf0b909a0065767a67e23a236cb4f1b2ee37a0f6c80c88761",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.w3c-conventions",
+          "cssom-1.w3c-conventions-clause-5c98c879f070",
+          "cssom-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.w3c-conformance-classes",
+          "cssom-1.w3c-conformance-classes-clause-ff408372426c",
+          "cssom-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.w3c-partial",
+          "cssom-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.w3c-testing",
+          "cssom-1.w3c-testing-clause-1e0fff369221",
+          "cssom-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "b7e578eeeedf1e4ef17de114afd604f48238df39c30500d351e133dd261213f5",
+      "clause_count": 516,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "46f73d5d64e938cbaab7fde0f32199e32fc658b4d90afd0d13c34adbcd57969b",
+      "clause_count": 231,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "1162e0ef2dc440287a42e24a1b1b763e8e8f9aa4c9a6cf29b9cd407501cc484b",
+      "clause_count": 84,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.import-6b91f794ab2b"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "dab986557e8c7d015a2e389be591fdbb1b2cb18626a726964b96df744746437c",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "ccaf38613bda0be123686e4f05dc15f27f33d5e1cc60b4eb946d4bd86059f0f6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "3e82d68178e97b77939dcc68b3c8290f86127aa6a26fc159b562f149a5f04ab7",
+      "clause_count": 392,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

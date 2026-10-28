@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-4",
+  "sections": [
+    {
+      "id": "G138691",
+      "title": "Character Properties",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.g138691"
+        ]
+      }
+    },
+    {
+      "id": "heading-512fbddb7f0d",
+      "title": "Disclaimer",
+      "level": 1,
+      "text_sha256": "af697afe1009df7a904486d912e8df04e14aff79bb37553d0d46bbe33c588fe2",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-512fbddb7f0d",
+          "unicode17-chapter-4.heading-512fbddb7f0d-clause-7bd2e0ae2d71",
+          "unicode17-chapter-4.heading-512fbddb7f0d-clause-bbc97d9dcdad"
+        ]
+      }
+    },
+    {
+      "id": "heading-89e7ac8d9c88",
+      "title": "4.1 Unicode Character Database",
+      "level": 2,
+      "text_sha256": "970b7c7657ceab3829442bd1c556c4cd53ab17e9478f5c00f44354c816d7380e",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-89e7ac8d9c88",
+          "unicode17-chapter-4.heading-89e7ac8d9c88-clause-19a17c2e4649"
+        ]
+      }
+    },
+    {
+      "id": "heading-64dc999ae740",
+      "title": "4.2 Case",
+      "level": 2,
+      "text_sha256": "123778448a73153e02ca030c0496e6af7f9f2eb96096d1bc72a33e15b73a9774",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-64dc999ae740",
+          "unicode17-chapter-4.heading-64dc999ae740-clause-e9e0a9e25ada"
+        ]
+      }
+    },
+    {
+      "id": "heading-ab48fd30cd49",
+      "title": "4.2.1 Definitions of Case and Casing",
+      "level": 3,
+      "text_sha256": "daf39377882da58d6adc045b1ddf5c48711f99e5f98fd9749c516aa6283b9b5d",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-ab48fd30cd49",
+          "unicode17-chapter-4.heading-ab48fd30cd49-clause-8b34232248ec"
+        ]
+      }
+    },
+    {
+      "id": "heading-c80fae92a5d6",
+      "title": "4.2.2 Case Mapping",
+      "level": 3,
+      "text_sha256": "c91cd88e9d9cf43c0bec0eeff09f8c32c2a8905215579abb978392be76c36d3d",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-c80fae92a5d6",
+          "unicode17-chapter-4.heading-c80fae92a5d6-clause-27fca06d9ed4"
+        ]
+      }
+    },
+    {
+      "id": "heading-8b134694c4d6",
+      "title": "4.3 Combining Classes",
+      "level": 2,
+      "text_sha256": "57590a932e681e12d0dabb02c4a99686dac230bf1b5ca49460d554723ae32a9c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-8b134694c4d6",
+          "unicode17-chapter-4.heading-8b134694c4d6-clause-b033a8c5148c",
+          "unicode17-chapter-4.heading-8b134694c4d6-clause-53c79458d3df"
+        ]
+      }
+    },
+    {
+      "id": "heading-e49e715b43f5",
+      "title": "4.3.1 Reordrant, Split, and Subjoined Combining Marks",
+      "level": 3,
+      "text_sha256": "770c3e12ead71ccd071f55354965acf1531e211266e0f7c18bf1c65cfa25d953",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-e49e715b43f5",
+          "unicode17-chapter-4.heading-e49e715b43f5-clause-f3734c71a7ca",
+          "unicode17-chapter-4.heading-e49e715b43f5-clause-45d321bc4968",
+          "unicode17-chapter-4.heading-e49e715b43f5-clause-9ea2d1bd8611",
+          "unicode17-chapter-4.heading-e49e715b43f5-clause-ce6e9a9ec61b"
+        ]
+      }
+    },
+    {
+      "id": "heading-74d7591309d7",
+      "title": "4.4 Directionality",
+      "level": 2,
+      "text_sha256": "a86b3c3f67f54ee7a518ccb4b83792e6682fd853ed95c7e45fa5c764332cf1bb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-74d7591309d7",
+          "unicode17-chapter-4.heading-74d7591309d7-clause-a86b3c3f67f5"
+        ]
+      }
+    },
+    {
+      "id": "heading-bfa1a2fd86a8",
+      "title": "4.5 General Category",
+      "level": 2,
+      "text_sha256": "250ba818f4f565e22b612cd43244c9db97d15fbfba39a5e66129a682fb702698",
+      "clause_count": 134,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-bfa1a2fd86a8",
+          "unicode17-chapter-4.heading-bfa1a2fd86a8-clause-f3a9d851f815",
+          "unicode17-chapter-4.heading-bfa1a2fd86a8-clause-e604216a5abb"
+        ]
+      }
+    },
+    {
+      "id": "heading-d0410969cacb",
+      "title": "4.6 Numeric Value",
+      "level": 2,
+      "text_sha256": "19b8d83eb247e122c9ba4b73451a9d50dae8da8da145132a2b23abbfda96d649",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-d0410969cacb"
+        ]
+      }
+    },
+    {
+      "id": "heading-c7d6bdec7c6b",
+      "title": "4.6.1 Ideographic Numeric Values",
+      "level": 3,
+      "text_sha256": "50c11cfe3217d419e719272a0f08761598f6b0b5d69c1887609bd1e94e3dde2d",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-c7d6bdec7c6b"
+        ]
+      }
+    },
+    {
+      "id": "heading-d388f5e61a96",
+      "title": "4.7 Bidi Mirrored",
+      "level": 2,
+      "text_sha256": "d843a30b8cb2083bfc2eb02007b60d1a3c66813ad1c4c4dc5fbb8005d8c015be",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-d388f5e61a96",
+          "unicode17-chapter-4.heading-d388f5e61a96-clause-320806fe57a5",
+          "unicode17-chapter-4.heading-d388f5e61a96-clause-9b7fba301d46"
+        ]
+      }
+    },
+    {
+      "id": "heading-4695d2862e22",
+      "title": "4.8 Name",
+      "level": 2,
+      "text_sha256": "25107778f71175deff14279ccdb9d854cb66976fae867e13114a14f6c5851854",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-4695d2862e22",
+          "unicode17-chapter-4.heading-4695d2862e22-clause-7f038638fe23",
+          "unicode17-chapter-4.heading-4695d2862e22-clause-d0c2bfd2f1d1",
+          "unicode17-chapter-4.heading-4695d2862e22-clause-bb306c58cd51"
+        ]
+      }
+    },
+    {
+      "id": "heading-2a2e2e379ec6",
+      "title": "4.8.1 Unicode Name Property",
+      "level": 3,
+      "text_sha256": "9e7dce99045a4b55bab58e3164e81f6d7d597fa4d2299d67aa24fba83306e8f0",
+      "clause_count": 80,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-2a2e2e379ec6",
+          "unicode17-chapter-4.heading-2a2e2e379ec6-clause-54841967a412"
+        ]
+      }
+    },
+    {
+      "id": "heading-6cd7ff6051a9",
+      "title": "4.8.2 Code Point Labels",
+      "level": 3,
+      "text_sha256": "172aefb80065e7408e5a0eb5f3da24f2c773c9cc8683e934c36c4d60976fba34",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-6cd7ff6051a9"
+        ]
+      }
+    },
+    {
+      "id": "heading-f2df6cfb0905",
+      "title": "4.8.3 Use of Character Names in APIs and User Interfaces",
+      "level": 3,
+      "text_sha256": "8e94fdb0eb76a3130e8d74a69cf0c6cdc6db188a02b9d564afd9497484518be5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-f2df6cfb0905",
+          "unicode17-chapter-4.heading-f2df6cfb0905-clause-7c96ac6881ab"
+        ]
+      }
+    },
+    {
+      "id": "heading-cd5e55ec706e",
+      "title": "4.9 Unicode 1.0 Names",
+      "level": 2,
+      "text_sha256": "c09da691e8c89a5715a58a8c7fb220f00f55e87f74053986290b8eb6aadfcc08",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-cd5e55ec706e"
+        ]
+      }
+    },
+    {
+      "id": "heading-a443aabc6385",
+      "title": "4.10 Letters, Alphabetic, and Ideographic",
+      "level": 2,
+      "text_sha256": "cae43d801a54272643abaa2ada9e3a6fb005f4431c168ceaea50e8a387af2288",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-a443aabc6385",
+          "unicode17-chapter-4.heading-a443aabc6385-clause-0bc3031cb55c"
+        ]
+      }
+    },
+    {
+      "id": "heading-af1b0e8e4ec9",
+      "title": "4.11 Properties for Text Boundaries",
+      "level": 2,
+      "text_sha256": "d56dc73bc150747353959c71d22d274db8e29854f7b8e65f6d1268c571f6a4d6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-af1b0e8e4ec9",
+          "unicode17-chapter-4.heading-af1b0e8e4ec9-clause-f3f93a11cad4"
+        ]
+      }
+    },
+    {
+      "id": "heading-718784544bc4",
+      "title": "4.12 Characters with Unusual Properties",
+      "level": 2,
+      "text_sha256": "592eb5270e7a9a84882b1b327db6db1b3b7d8a1c405b26c18f7d34c3e352113d",
+      "clause_count": 126,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-718784544bc4"
+        ]
+      }
+    },
+    {
+      "id": "heading-b2c89df3b787",
+      "title": "4.13 Characters and Sequences That Should Not Be Emitted",
+      "level": 2,
+      "text_sha256": "93bee97b0e2cc652f857a860dcbad2179671312da4ebfb3c396b204f3ec49a7a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-4.heading-b2c89df3b787",
+          "unicode17-chapter-4.heading-b2c89df3b787-clause-544829c82bc1",
+          "unicode17-chapter-4.heading-b2c89df3b787-clause-cc83a81fd1f6",
+          "unicode17-chapter-4.heading-b2c89df3b787-clause-8c63d5acf395"
+        ]
+      }
+    }
+  ]
+}

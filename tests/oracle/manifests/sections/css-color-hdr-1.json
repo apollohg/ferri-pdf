@@ -1,0 +1,832 @@
+{
+  "schema_version": 1,
+  "source_id": "css-color-hdr-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Color HDR Module Level 1",
+      "level": 1,
+      "text_sha256": "2f75762caf89a2c803a1e15525ba87a427b097e98489e14611f7b9b939f66838",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "c525ad17a31a6a14bd798a66069b864d5bf7a2ec29c8c19ca6fb90fbf9e7c547",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "7f29cca15780287933c2874457cf76c5047d6fe457782a880c08414395d15e7d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "2751fe992a981aeaa52cfeacd2529edbe7eabb49a611f13d1180c4458b15f740",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "fef41b2f02081051d179be54d2bfd5c55e5b7168b23109114b36a06bbd462c9b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.values"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "2. HDR Terminology",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.terminology"
+        ]
+      }
+    },
+    {
+      "id": "defining-dynamic-range",
+      "title": "2.1. Defining Dynamic Range",
+      "level": 3,
+      "text_sha256": "f5f81c8d5075e06973b3fd891d39fa5cc9710620bd5c71de27c29b3954a12109",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.defining-dynamic-range",
+          "css-color-hdr-1.defining-dynamic-range-clause-e49d060662ed"
+        ]
+      }
+    },
+    {
+      "id": "introducing-headroom",
+      "title": "2.2. Introducing Headroom",
+      "level": 3,
+      "text_sha256": "fc1710a2a4b51106261e55ea6288e5f39e8d418984b16f5bd2ed8d8d7ef84888",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.introducing-headroom"
+        ]
+      }
+    },
+    {
+      "id": "controlling-dynamic-range",
+      "title": "3. Controlling Dynamic Range",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.controlling-dynamic-range"
+        ]
+      }
+    },
+    {
+      "id": "the-dynamic-range-limit-property",
+      "title": "3.1. The dynamic-range-limit property",
+      "level": 3,
+      "text_sha256": "7dfa90d03b6617a3fee09a77f3855aa1b06ce9ddc9abb60e5e2b9b11e9c2ced3",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.the-dynamic-range-limit-property",
+          "css-color-hdr-1.the-dynamic-range-limit-property-clause-cca2516ebb1d",
+          "css-color-hdr-1.the-dynamic-range-limit-property-clause-6526f8beacc1"
+        ]
+      }
+    },
+    {
+      "id": "dynamic-range-limit-mix",
+      "title": "3.2. Mixing Dynamic Range Limits: the dynamic-range-limit-mix() function",
+      "level": 3,
+      "text_sha256": "92227e15997fcefcf22c12c8b696a41b75d006cb6eb650b9eb6d8d9fbfce724b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.dynamic-range-limit-mix"
+        ]
+      }
+    },
+    {
+      "id": "computing-dynamic-range-limit",
+      "title": "3.3. Computed Value for dynamic-range-limit",
+      "level": 3,
+      "text_sha256": "887363cf7e72a9a1203d75c1ab9b28b723b4c980746d59eabc04a26c3248bb42",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.computing-dynamic-range-limit",
+          "css-color-hdr-1.computing-dynamic-range-limit-clause-8ae77d5bc54d",
+          "css-color-hdr-1.computing-dynamic-range-limit-clause-12e2460a46b8",
+          "css-color-hdr-1.computing-dynamic-range-limit-clause-6d82b8e2f42c",
+          "css-color-hdr-1.computing-dynamic-range-limit-clause-a0fdadaf486a",
+          "css-color-hdr-1.computing-dynamic-range-limit-clause-4a0cd9f38929"
+        ]
+      }
+    },
+    {
+      "id": "color-syntax",
+      "title": "4. The <color> syntax",
+      "level": 2,
+      "text_sha256": "06225ab897917ab5a2e1a87b78cca3a67edcf9c8f030e4519e3d7894b8595585",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.color-syntax"
+        ]
+      }
+    },
+    {
+      "id": "hdr-color-function",
+      "title": "5. HDR colors parameterized by headroom: the hdr-color() function",
+      "level": 2,
+      "text_sha256": "83e994ea913f8c002c854e88d4d2eb66a4a2d1359f065ba9957d801b3d7b6983",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.hdr-color-function",
+          "css-color-hdr-1.hdr-color-function-clause-5db2d53171b5"
+        ]
+      }
+    },
+    {
+      "id": "headroom-interpolation",
+      "title": "5.1. Interpolating colors based on headroom",
+      "level": 3,
+      "text_sha256": "e0588c3837bef8073c45ba9f255c7aa9433828152b05631b8b28807f4bb3262f",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.headroom-interpolation"
+        ]
+      }
+    },
+    {
+      "id": "DI-HDR",
+      "title": "6. Device-Independent HDR Colors",
+      "level": 2,
+      "text_sha256": "4961b6e3b47ecf2ecf4f57f37eee4e4abd0435a809c5d6808f1cfe63611e5dfa",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.di-hdr"
+        ]
+      }
+    },
+    {
+      "id": "ictcp-intro",
+      "title": "6.1. Introducing ICtCp",
+      "level": 3,
+      "text_sha256": "0f8fa8017ef6725e009a0561a6a25b3f18994193a8380abef8c5fac2a2e36616",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.ictcp-intro"
+        ]
+      }
+    },
+    {
+      "id": "jaz-intro",
+      "title": "6.2. Introducing Jzazbz and JzCzhz",
+      "level": 3,
+      "text_sha256": "7bb99131d5949ebabdf1a0b8ff7ee0378be9d80e6a9dcd61b8a598bc7a62a9f0",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.jaz-intro"
+        ]
+      }
+    },
+    {
+      "id": "ICtCp",
+      "title": "6.3. ICtCp",
+      "level": 3,
+      "text_sha256": "27243955cb5858cc412212a7bf7598e034fc7516eaa0682a8107f69a649d22b4",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.ictcp",
+          "css-color-hdr-1.ictcp-clause-60107779a17f",
+          "css-color-hdr-1.ictcp-clause-ac8097dbc707",
+          "css-color-hdr-1.ictcp-clause-3cae27ffe044"
+        ]
+      }
+    },
+    {
+      "id": "Jzazbz",
+      "title": "6.4. Jzazbz",
+      "level": 3,
+      "text_sha256": "9078befa2efcf7a02f1de69b80bc219ddf6b45c1a10406b61bc48ec5fefe9910",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.jzazbz",
+          "css-color-hdr-1.jzazbz-clause-86cb9d120049",
+          "css-color-hdr-1.jzazbz-clause-90dea06076b5",
+          "css-color-hdr-1.jzazbz-clause-7ad42ab536f7"
+        ]
+      }
+    },
+    {
+      "id": "JzCzhz",
+      "title": "6.5. JzCzhz",
+      "level": 3,
+      "text_sha256": "313f362ed1ec1fa5db147794c56e351ec090751a3a0407ec30dd0d8f71f5b7ff",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.jzczhz",
+          "css-color-hdr-1.jzczhz-clause-b93c6aaef288",
+          "css-color-hdr-1.jzczhz-clause-f85afc1ce602",
+          "css-color-hdr-1.jzczhz-clause-da486d36e027",
+          "css-color-hdr-1.jzczhz-clause-582f8c63c7b6"
+        ]
+      }
+    },
+    {
+      "id": "Jzazbz-to-JzCzHz",
+      "title": "6.5.1. Converting Jzazbz colors to JzCzhz colors",
+      "level": 4,
+      "text_sha256": "4794c846e839ad4e6f547de0012f8022944931c197ff2c8185d36731d852f0d5",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.jzazbz-to-jzczhz",
+          "css-color-hdr-1.jzazbz-to-jzczhz-clause-292c8e735567"
+        ]
+      }
+    },
+    {
+      "id": "JzCzHz-to-Jzazbz",
+      "title": "6.5.2. Converting JzCzhz colors to Jzazbz colors",
+      "level": 4,
+      "text_sha256": "e71c7c405325ef0076aa9656fdb8eb08fc6b00966d9799776a2fc02326b10a93",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.jzczhz-to-jzazbz",
+          "css-color-hdr-1.jzczhz-to-jzazbz-clause-2f92be70148e"
+        ]
+      }
+    },
+    {
+      "id": "color-function",
+      "title": "7. Specifying Predefined and Custom Color Spaces: the color() Function",
+      "level": 2,
+      "text_sha256": "5894698d0c79cfbf76813212105b67156fb2b5a98f1f82bdd3723c3bde92f391",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.color-function"
+        ]
+      }
+    },
+    {
+      "id": "predefined-HDR",
+      "title": "8. Predefined color spaces for HDR:",
+      "level": 2,
+      "text_sha256": "84549bf6674b92018b8987bc9dc6af1b3e179e5194dbd82afb779eed306bbf54",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.predefined-hdr"
+        ]
+      }
+    },
+    {
+      "id": "valdef-color-rec2100-pq",
+      "title": "8.1. rec2100-pq",
+      "level": 3,
+      "text_sha256": "6bccf8533219a5b5a76e50347ec8aeca03320fc73a92e1a43eafd0253f5e169b",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.valdef-color-rec2100-pq",
+          "css-color-hdr-1.valdef-color-rec2100-pq-clause-811474343d13",
+          "css-color-hdr-1.valdef-color-rec2100-pq-clause-b885a77c06d7"
+        ]
+      }
+    },
+    {
+      "id": "valdef-color-rec2100-hlg",
+      "title": "8.2. rec2100-hlg",
+      "level": 3,
+      "text_sha256": "f2c03dbfe826176fe9245c115314b68644d63ffcc4120d7fe5ea2e02370a874c",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.valdef-color-rec2100-hlg",
+          "css-color-hdr-1.valdef-color-rec2100-hlg-clause-faf7fb35b70b",
+          "css-color-hdr-1.valdef-color-rec2100-hlg-clause-cee7cf2ad46b"
+        ]
+      }
+    },
+    {
+      "id": "valdef-color-rec2100-linear",
+      "title": "8.3. rec2100-linear",
+      "level": 3,
+      "text_sha256": "d8b7f28f18cb262019a37f39ebd2ea8c2ea0b6b0ab052bcb93378bc872d8ecb4",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.valdef-color-rec2100-linear"
+        ]
+      }
+    },
+    {
+      "id": "Compositing-SDR-HDR",
+      "title": "9. Compositing SDR and HDR content",
+      "level": 2,
+      "text_sha256": "5f9fe0f7b36a21ce991f637251fc8225d648076753808e19479c6b245de64472",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.compositing-sdr-hdr",
+          "css-color-hdr-1.compositing-sdr-hdr-clause-378f40e0199c",
+          "css-color-hdr-1.compositing-sdr-hdr-clause-0798d60c2a04",
+          "css-color-hdr-1.compositing-sdr-hdr-clause-3987954879d6"
+        ]
+      }
+    },
+    {
+      "id": "serializing-color-values",
+      "title": "10. Serializing <color> Values",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.serializing-color-values"
+        ]
+      }
+    },
+    {
+      "id": "serializing-color-function-values",
+      "title": "10.1. Serializing values of the color() function",
+      "level": 3,
+      "text_sha256": "7b3a8879cced17f783f3a6bb378943555f5368b7abad3df62a50d36111decde0",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.serializing-color-function-values",
+          "css-color-hdr-1.serializing-color-function-values-clause-5afe57d691c1",
+          "css-color-hdr-1.serializing-color-function-values-clause-8623cc52672b",
+          "css-color-hdr-1.serializing-color-function-values-clause-affec012d7cc",
+          "css-color-hdr-1.serializing-color-function-values-clause-54bd96699dd7"
+        ]
+      }
+    },
+    {
+      "id": "color-conversion-code",
+      "title": "11. Sample code for Color Conversions",
+      "level": 2,
+      "text_sha256": "6453b1773ed4e953fae5e7aaa737adc18be742f1b6b7a6d75d0c5eff2b0505a1",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.color-conversion-code"
+        ]
+      }
+    },
+    {
+      "id": "rec2100-linear_code",
+      "title": "11.1. Sample code for rec2100-linear",
+      "level": 3,
+      "text_sha256": "00d74038b89f540b634a6dff0fd313e3fc0b4f85af30ea92c30c7be4551f64ec",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.rec2100-linear-code"
+        ]
+      }
+    },
+    {
+      "id": "rec2100-pq_code",
+      "title": "11.2. Sample code for rec2100-pq",
+      "level": 3,
+      "text_sha256": "b7e0f2cfcfcf8689ab3dec1df34a1992ed4ca636740d1ababd14016ac0fde4b6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.rec2100-pq-code"
+        ]
+      }
+    },
+    {
+      "id": "rec2100-hlg_code",
+      "title": "11.3. Sample code for rec2100-hlg",
+      "level": 3,
+      "text_sha256": "d994da8da211092d1b1c45a6de764479c6150ea64980216cec90b604bfd2fe4f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.rec2100-hlg-code"
+        ]
+      }
+    },
+    {
+      "id": "jzazbz_code",
+      "title": "11.4. Sample code for jzazbz",
+      "level": 3,
+      "text_sha256": "5cf9f4d52b368732947ff02573dd7e5879229d63c3eef5f4cefd098088c5e095",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.jzazbz-code"
+        ]
+      }
+    },
+    {
+      "id": "ictcp_code",
+      "title": "11.5. Sample code for ICtCp",
+      "level": 3,
+      "text_sha256": "95806f19e8c8898274e087b028a497079bbc7fa61f03fcc553543f8a043c06f8",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.ictcp-code"
+        ]
+      }
+    },
+    {
+      "id": "hdr-color-code",
+      "title": "11.6. Sample code for hdr-color()",
+      "level": 3,
+      "text_sha256": "de6ff8c1e41aa99fef075367fb53a556a5a04b8590c96743ab88e7dc49b19d46",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.hdr-color-code"
+        ]
+      }
+    },
+    {
+      "id": "deltaE",
+      "title": "12. Sample code for ΔEITP Color Differences",
+      "level": 2,
+      "text_sha256": "d1f0b7097dc5a24be2efc3b03b3f0af510b603df1983a5b2da15af52800e584d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.deltae"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "d78afb8711b97b00f86493fe2db82babbd0987dfe4a5a3c3873fca1a89987281",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "f1f2e3034a38d64516acb6e2c4c54ee0b79d5b264bd26133ea59cbec26069921",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.security"
+        ]
+      }
+    },
+    {
+      "id": "a11y",
+      "title": "Accessibility Considerations",
+      "level": 2,
+      "text_sha256": "fdc9b049bb5396442e38c8ee8d0e815c08a0ba728091059783e14efbf9698b04",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.a11y",
+          "css-color-hdr-1.a11y-clause-a1b7cb5ccafd"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20260303",
+      "title": "Changes since the 3 March 2026 Working Draft",
+      "level": 3,
+      "text_sha256": "d18906cfb44c22f5fc8e762ddcbe1deb05481ffa4f9bf4a1ba6009a003dd6c37",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.changes-20260303"
+        ]
+      }
+    },
+    {
+      "id": "changes-20241217",
+      "title": "Changes since the 17 December 2024 First Public Working Draft",
+      "level": 3,
+      "text_sha256": "2ea5e65fa820a881b3bf80e8302aeee7aabc4c05bec4777af622a339e6f6d408",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.changes-20241217"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.w3c-conventions",
+          "css-color-hdr-1.w3c-conventions-clause-5c98c879f070",
+          "css-color-hdr-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.w3c-conformance-classes",
+          "css-color-hdr-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-color-hdr-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.w3c-partial",
+          "css-color-hdr-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.w3c-testing",
+          "css-color-hdr-1.w3c-testing-clause-1e0fff369221",
+          "css-color-hdr-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "4174da166335e139db4a7991ed857f77c4baa127ee0a900ca49f6dc624c70f49",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "29af51f447191c2669cf5612b6c0af6a3b4b4fac0bd7656819140782ec34fd3b",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "cbdd452c99293546e802e9b58b880e4c07aa5b230254e16e07c49954156598b4",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.import-dfdd4bc68ddf",
+          "css-color-hdr-1.import-2a1b963e3362",
+          "css-color-hdr-1.import-24fb2d2da2b0",
+          "css-color-hdr-1.import-5b4cff06d693",
+          "css-color-hdr-1.import-01cab2fc7366",
+          "css-color-hdr-1.import-daf2ff2a6b59"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "b960f6b4efce4dd9b455c912a4351544b63761f71dd534e5d0dbecfc000ae527",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "b30fb8223ed0fb301aea0c68b91e3adbb4b7993db8621cb2378fc8db1b45e766",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.property-index",
+          "css-color-hdr-1.property-index-clause-6526f8beacc1"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "162e3847b8d5f22fdce6b65ea73aa000cd15e93a96aa3c222dc82418f39afe86",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-hdr-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

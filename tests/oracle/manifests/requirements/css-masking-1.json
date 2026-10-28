@@ -1,0 +1,4658 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-masking-1.profile-and-date",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "profile-and-date"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Candidate Recommendation Draft, 5 August 2021.",
+      "locator": {
+        "section_id": "profile-and-date",
+        "text_sha256": "865b8994472c4efbf382153dd2ae8d2ab965c0ddeb75cd2104ec6954b3a99c92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.placement",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "9b90e387aefb2351146d5ac5a164ef78591bec6e7c35cf295903b727159ee9cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.values",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Values.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "109cef448f9f42a4ac344ecb4c19d02f582c9c307183bb955876747baa3a22c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.values-clause-d33f83819d3c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.values-clause-d33f83819d3c",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "values",
+        "clause_index": 1,
+        "clause_sha256": "d33f83819d3c9e989c9ed291fb4a021304484c3e5e5648ac4d03ff23c1c54c58"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.terminology",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terminology",
+        "text_sha256": "55be4b44d037fc25fcd0bafc27d5b404e0bb7fa37a72d09ab57a3708ab9e6339"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.clipping-paths",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clipping-paths"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Clipping Paths.",
+      "locator": {
+        "section_id": "clipping-paths",
+        "text_sha256": "23f1f2427caef3a7102c5e9c9d0d659fdecc3556ab01ea9d5e6fe1720e0d0e58"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.clipping-paths-clause-b0d62aafc14f",
+        "css-masking-1.clipping-paths-clause-e620ca45ae3b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.clipping-paths-clause-b0d62aafc14f",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clipping-paths"
+      ],
+      "behaviour": "Clipping Paths — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "clipping-paths",
+        "clause_index": 3,
+        "clause_sha256": "b0d62aafc14f29e24fde6e10f4c73fc8159cc4fedb7599ce4deada5d811aed85"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clipping-paths-clause-e620ca45ae3b",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clipping-paths"
+      ],
+      "behaviour": "Clipping Paths — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "clipping-paths",
+        "clause_index": 8,
+        "clause_sha256": "e620ca45ae3b03a6e423a8c13678abe3ef56ba3c929f8309186f7474579c8bfa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-clip-path",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-clip-path"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Clipping Shape: the clip-path property.",
+      "locator": {
+        "section_id": "the-clip-path",
+        "text_sha256": "b595e890c6281b4ab2dc7ef825e116e465c1c7767c20c356d95801a21d310145"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-clip-path-clause-cca2516ebb1d",
+        "css-masking-1.the-clip-path-clause-674d5fa645b0",
+        "css-masking-1.the-clip-path-clause-e7ad9573c225",
+        "css-masking-1.the-clip-path-clause-d18f8fdb6ffd",
+        "css-masking-1.the-clip-path-clause-73bcbf199667"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-clip-path-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-clip-path"
+      ],
+      "behaviour": "Clipping Shape: the clip-path property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-clip-path",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-clip-path-clause-674d5fa645b0",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-clip-path"
+      ],
+      "behaviour": "Clipping Shape: the clip-path property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-clip-path",
+        "clause_index": 17,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-clip-path-clause-e7ad9573c225",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-clip-path"
+      ],
+      "behaviour": "Clipping Shape: the clip-path property — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-clip-path",
+        "clause_index": 47,
+        "clause_sha256": "e7ad9573c2255ce779f664a881f0bd5ed14d2efdadba32fcf8128f358e7c909e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-clip-path-clause-d18f8fdb6ffd",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-clip-path"
+      ],
+      "behaviour": "Clipping Shape: the clip-path property — normative clause 54, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-clip-path",
+        "clause_index": 53,
+        "clause_sha256": "d18f8fdb6ffd175bb7ebefa65570a3e743854d08540aa3e833393ff4de025b5c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-clip-path-clause-73bcbf199667",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-clip-path"
+      ],
+      "behaviour": "Clipping Shape: the clip-path property — normative clause 55, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-clip-path",
+        "clause_index": 54,
+        "clause_sha256": "73bcbf199667c48b3125aa65551a310a1f48a5bce77beb1bdd6ad7906e4fca55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.svg-clipping-paths",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "svg-clipping-paths"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in SVG Clipping Path Sources.",
+      "locator": {
+        "section_id": "svg-clipping-paths",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.clippathelement",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "ClipPathElement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The clipPath element.",
+      "locator": {
+        "section_id": "ClipPathElement",
+        "text_sha256": "92b1e1ef94ea746009597226b0f6481e2e0537219eb1a87e30a0f052d15ecc08"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.clippathelement-clause-78ed0dc30293",
+        "css-masking-1.clippathelement-clause-a94f7b35b658",
+        "css-masking-1.clippathelement-clause-4ea2c2e025be",
+        "css-masking-1.clippathelement-clause-d0bdf9ad899b",
+        "css-masking-1.clippathelement-clause-d67d666c725f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.clippathelement-clause-78ed0dc30293",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "ClipPathElement"
+      ],
+      "behaviour": "The clipPath element — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "ClipPathElement",
+        "clause_index": 34,
+        "clause_sha256": "78ed0dc30293c336c8e5e4cc1a92dfb79a74cc4449646e679cd744f699843d98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clippathelement-clause-a94f7b35b658",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "ClipPathElement"
+      ],
+      "behaviour": "The clipPath element — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "ClipPathElement",
+        "clause_index": 36,
+        "clause_sha256": "a94f7b35b658706806bc2aa1264ec31f37ab6b6b83789c6487000c765e564269"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clippathelement-clause-4ea2c2e025be",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "ClipPathElement"
+      ],
+      "behaviour": "The clipPath element — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "ClipPathElement",
+        "clause_index": 42,
+        "clause_sha256": "4ea2c2e025be792acc04edf5be7d113d1ff1856d5dbe5d3f0d8442f49a25d0be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clippathelement-clause-d0bdf9ad899b",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "ClipPathElement"
+      ],
+      "behaviour": "The clipPath element — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "ClipPathElement",
+        "clause_index": 48,
+        "clause_sha256": "d0bdf9ad899b1b1a1a19b391fe5f8843bea7d67b3c6c4c8f85234e2c25cb7be1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clippathelement-clause-d67d666c725f",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "ClipPathElement"
+      ],
+      "behaviour": "The clipPath element — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "ClipPathElement",
+        "clause_index": 49,
+        "clause_sha256": "d67d666c725fa76456060f89f47d7c64dbef5ae990322f3b10ecfc1f14b824f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-clip-rule",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-clip-rule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Winding Rules: the clip-rule property.",
+      "locator": {
+        "section_id": "the-clip-rule",
+        "text_sha256": "3d7fe2a175de54195ad64e10b50638112edd1ac7165f261897ef37f2aac54567"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-clip-rule-clause-cca2516ebb1d",
+        "css-masking-1.the-clip-rule-clause-37547a75f0dd",
+        "css-masking-1.the-clip-rule-clause-f5cf592e4407"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-clip-rule-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-clip-rule"
+      ],
+      "behaviour": "Winding Rules: the clip-rule property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-clip-rule",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-clip-rule-clause-37547a75f0dd",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-clip-rule"
+      ],
+      "behaviour": "Winding Rules: the clip-rule property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-clip-rule",
+        "clause_index": 19,
+        "clause_sha256": "37547a75f0dd966635a20535739e45067cd4d90251617c29efa7392fb1a0508b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-clip-rule-clause-f5cf592e4407",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-clip-rule"
+      ],
+      "behaviour": "Winding Rules: the clip-rule property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-clip-rule",
+        "clause_index": 36,
+        "clause_sha256": "f5cf592e4407386e4b58367fd24bcc705a5aa2cb0e409bd5f938bcc8b08cecf6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.positioned-masks",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "positioned-masks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Positioned Masks.",
+      "locator": {
+        "section_id": "positioned-masks",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-image",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-image"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mask Image Source: the mask-image property.",
+      "locator": {
+        "section_id": "the-mask-image",
+        "text_sha256": "b2933da6d34f6f9bd8b9ce378f5838c105468bab60ca5b79ca6da2375577623e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-image-clause-cca2516ebb1d",
+        "css-masking-1.the-mask-image-clause-eeff16f281dd",
+        "css-masking-1.the-mask-image-clause-e7ad9573c225",
+        "css-masking-1.the-mask-image-clause-832ed9d4276e",
+        "css-masking-1.the-mask-image-clause-ee640232092f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-image-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-image"
+      ],
+      "behaviour": "Mask Image Source: the mask-image property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-image",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-image-clause-eeff16f281dd",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-image"
+      ],
+      "behaviour": "Mask Image Source: the mask-image property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-image",
+        "clause_index": 13,
+        "clause_sha256": "eeff16f281dd22acb00c38b72b30768020f6f0d4e25ba8379a7784f1c80e574b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-image-clause-e7ad9573c225",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-image"
+      ],
+      "behaviour": "Mask Image Source: the mask-image property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-image",
+        "clause_index": 27,
+        "clause_sha256": "e7ad9573c2255ce779f664a881f0bd5ed14d2efdadba32fcf8128f358e7c909e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-image-clause-832ed9d4276e",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-image"
+      ],
+      "behaviour": "Mask Image Source: the mask-image property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-image",
+        "clause_index": 35,
+        "clause_sha256": "832ed9d4276e818fcfeba44f418de7109d6e780986c235efff67f0294f0d12ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-image-clause-ee640232092f",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-image"
+      ],
+      "behaviour": "Mask Image Source: the mask-image property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-image",
+        "clause_index": 36,
+        "clause_sha256": "ee640232092f7c5e65c2124c6786c7a424db40e7f6b4f44a0df980bb80041e5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-mode",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-mode"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mask Image Interpretation: the mask-mode property.",
+      "locator": {
+        "section_id": "the-mask-mode",
+        "text_sha256": "f4c5868659a7a6832173c1a26589b3b5aee71ccb67eea5cd1a7df657b4fee665"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-mode-clause-cca2516ebb1d",
+        "css-masking-1.the-mask-mode-clause-ef92f1c83a44",
+        "css-masking-1.the-mask-mode-clause-846d9eb3bcd0",
+        "css-masking-1.the-mask-mode-clause-a45bd8228a20",
+        "css-masking-1.the-mask-mode-clause-446c446dc764",
+        "css-masking-1.the-mask-mode-clause-095bedf5639d",
+        "css-masking-1.the-mask-mode-clause-7d18e4c50a59",
+        "css-masking-1.the-mask-mode-clause-276e49c3f534"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-mode-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-mode"
+      ],
+      "behaviour": "Mask Image Interpretation: the mask-mode property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-mode",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-mode-clause-ef92f1c83a44",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-mode"
+      ],
+      "behaviour": "Mask Image Interpretation: the mask-mode property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-mode",
+        "clause_index": 23,
+        "clause_sha256": "ef92f1c83a441fd1e1c00dfbfcc612570fc8fbfe5130ae89d5a429d10b02c54d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-mode-clause-846d9eb3bcd0",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-mode"
+      ],
+      "behaviour": "Mask Image Interpretation: the mask-mode property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-mode",
+        "clause_index": 26,
+        "clause_sha256": "846d9eb3bcd063f9297c3fb0d16dab921f982733b2ba5ac241cd406a7cd37d0f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-mode-clause-a45bd8228a20",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-mode"
+      ],
+      "behaviour": "Mask Image Interpretation: the mask-mode property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-mode",
+        "clause_index": 29,
+        "clause_sha256": "a45bd8228a20df375069d98a566d90acebfad76a9fb6b8f06c2e6bb2b1e543a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-mode-clause-446c446dc764",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-mode"
+      ],
+      "behaviour": "Mask Image Interpretation: the mask-mode property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-mode",
+        "clause_index": 30,
+        "clause_sha256": "446c446dc764083d25877827ff14994f2c8c182605941ba1d7544fbf1d8a86b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-mode-clause-095bedf5639d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-mode"
+      ],
+      "behaviour": "Mask Image Interpretation: the mask-mode property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-mode",
+        "clause_index": 31,
+        "clause_sha256": "095bedf5639da154d432ea731498ac5f2a1f8e22a47d28ca2f3413414308c6f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-mode-clause-7d18e4c50a59",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-mode"
+      ],
+      "behaviour": "Mask Image Interpretation: the mask-mode property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-mode",
+        "clause_index": 34,
+        "clause_sha256": "7d18e4c50a599f959ac56340ca782091ba3ccc0eff62c576c99c74c74e85a25a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-mode-clause-276e49c3f534",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-mode"
+      ],
+      "behaviour": "Mask Image Interpretation: the mask-mode property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-mode",
+        "clause_index": 35,
+        "clause_sha256": "276e49c3f534839284eb0e5de99c0ac6e55c7d6356814f42b5682c0a9fc7c1c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-repeat",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-repeat"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tiling Mask Images: the mask-repeat property.",
+      "locator": {
+        "section_id": "the-mask-repeat",
+        "text_sha256": "a407ab873059b17de463e590daca566a54748ad373f63e83534e5cdb483e29af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-repeat-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-repeat-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-repeat"
+      ],
+      "behaviour": "Tiling Mask Images: the mask-repeat property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-repeat",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-position",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Positioning Mask Images: the mask-position property.",
+      "locator": {
+        "section_id": "the-mask-position",
+        "text_sha256": "bd3d85e941e194b572f5bbef6988ee39537d60161e693bbcea3810667b741efa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-position-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-position-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-position"
+      ],
+      "behaviour": "Positioning Mask Images: the mask-position property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-position",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-clip",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-clip"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Masking Area: the mask-clip property.",
+      "locator": {
+        "section_id": "the-mask-clip",
+        "text_sha256": "42e53d3c1f8a473972d729add4aed53cd95ba66400d2c6d83cbbf857a617c8fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-clip-clause-cca2516ebb1d",
+        "css-masking-1.the-mask-clip-clause-a36818c94fc2",
+        "css-masking-1.the-mask-clip-clause-843fbf434727"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-clip-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-clip"
+      ],
+      "behaviour": "Masking Area: the mask-clip property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-clip",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-clip-clause-a36818c94fc2",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-clip"
+      ],
+      "behaviour": "Masking Area: the mask-clip property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-clip",
+        "clause_index": 19,
+        "clause_sha256": "a36818c94fc28be8741c73966436facec4ef3585a7d93f28695c6e32192222f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-clip-clause-843fbf434727",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-clip"
+      ],
+      "behaviour": "Masking Area: the mask-clip property — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-clip",
+        "clause_index": 51,
+        "clause_sha256": "843fbf434727c1571327d50c7b209f464d4bcc3ef0abf4386417f007d2929aca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-origin",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-origin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Positioning Area: the mask-origin property.",
+      "locator": {
+        "section_id": "the-mask-origin",
+        "text_sha256": "73db43bb9e831d7dbd21abd853004568ce960c186d4387fcacdd6df2e2af7f3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-origin-clause-cca2516ebb1d",
+        "css-masking-1.the-mask-origin-clause-252180680484",
+        "css-masking-1.the-mask-origin-clause-8bdc401c3d3e",
+        "css-masking-1.the-mask-origin-clause-953b9eb667a0",
+        "css-masking-1.the-mask-origin-clause-6bab2b96f27d",
+        "css-masking-1.the-mask-origin-clause-21db5ac19b79"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-origin-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-origin"
+      ],
+      "behaviour": "Positioning Area: the mask-origin property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-origin",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-origin-clause-252180680484",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-origin"
+      ],
+      "behaviour": "Positioning Area: the mask-origin property — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-origin",
+        "clause_index": 43,
+        "clause_sha256": "252180680484f242cdc3836646644c357b00ff3571b5859278f167b1c91be7fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-origin-clause-8bdc401c3d3e",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-origin"
+      ],
+      "behaviour": "Positioning Area: the mask-origin property — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-origin",
+        "clause_index": 44,
+        "clause_sha256": "8bdc401c3d3efbc256de96beb3045183714d11c0e57a9fbcb3af8f29b9f2bbb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-origin-clause-953b9eb667a0",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-origin"
+      ],
+      "behaviour": "Positioning Area: the mask-origin property — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-origin",
+        "clause_index": 45,
+        "clause_sha256": "953b9eb667a0af3ca7ff98dde497158e1e2ba93042d197f2ac4a85870c4d01a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-origin-clause-6bab2b96f27d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-origin"
+      ],
+      "behaviour": "Positioning Area: the mask-origin property — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-origin",
+        "clause_index": 47,
+        "clause_sha256": "6bab2b96f27df879c1bcf8791316a6920f9f6225e64b6eb96d3c822c4789b481"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-origin-clause-21db5ac19b79",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-origin"
+      ],
+      "behaviour": "Positioning Area: the mask-origin property — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-origin",
+        "clause_index": 48,
+        "clause_sha256": "21db5ac19b79e354f04f3642899ece77f5de2e1736caa3af8a56fea6ecad8c92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-size",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-size"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sizing Mask Images: the mask-size property.",
+      "locator": {
+        "section_id": "the-mask-size",
+        "text_sha256": "d95e92b528eecaefdc8d387d22a0f98b81dedd3ddd5128fee48071a0be71fb82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-size-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-size-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-size"
+      ],
+      "behaviour": "Sizing Mask Images: the mask-size property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-size",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-composite",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-composite"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Compositing mask layers: the mask-composite property.",
+      "locator": {
+        "section_id": "the-mask-composite",
+        "text_sha256": "87c702fe164f920a6fe47319198dccaeecb9413b0488d4744831eaaebdb0911e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-composite-clause-cca2516ebb1d",
+        "css-masking-1.the-mask-composite-clause-ed158e30568c",
+        "css-masking-1.the-mask-composite-clause-211c05faa059",
+        "css-masking-1.the-mask-composite-clause-126018153c71",
+        "css-masking-1.the-mask-composite-clause-37d9b61c3b27",
+        "css-masking-1.the-mask-composite-clause-e0a348367822"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-composite-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-composite"
+      ],
+      "behaviour": "Compositing mask layers: the mask-composite property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-composite",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-composite-clause-ed158e30568c",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-composite"
+      ],
+      "behaviour": "Compositing mask layers: the mask-composite property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-composite",
+        "clause_index": 33,
+        "clause_sha256": "ed158e30568cbaba6e81a7e3769021ee8049232df61b7af0b7a675a3c6eba959"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-composite-clause-211c05faa059",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-composite"
+      ],
+      "behaviour": "Compositing mask layers: the mask-composite property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-composite",
+        "clause_index": 34,
+        "clause_sha256": "211c05faa05921268efb54f0cdaaf2074ed893332f449a6f9169fd35ef922110"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-composite-clause-126018153c71",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-composite"
+      ],
+      "behaviour": "Compositing mask layers: the mask-composite property — normative clause 53, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-composite",
+        "clause_index": 52,
+        "clause_sha256": "126018153c71c810557dcfe0e1e3eb7c79ee4b37a534c52c05835fa929a0ebe5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-composite-clause-37d9b61c3b27",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-composite"
+      ],
+      "behaviour": "Compositing mask layers: the mask-composite property — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-composite",
+        "clause_index": 56,
+        "clause_sha256": "37d9b61c3b27110fd1f51943ffd59be9bda951bb9cb502e9bff0e669240457ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-composite-clause-e0a348367822",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-composite"
+      ],
+      "behaviour": "Compositing mask layers: the mask-composite property — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-composite",
+        "clause_index": 57,
+        "clause_sha256": "e0a348367822cbd5dbb814df0435f429dbf01319a4d00908e64045a22c95b5cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mask Shorthand: the mask property.",
+      "locator": {
+        "section_id": "the-mask",
+        "text_sha256": "3f1d09797244106479f00597bc617bfaf853801e69efe744d862c45917739ec4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-clause-cca2516ebb1d",
+        "css-masking-1.the-mask-clause-72e31dcdb3a5",
+        "css-masking-1.the-mask-clause-d871d07ab783",
+        "css-masking-1.the-mask-clause-f6ed1e07898c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask"
+      ],
+      "behaviour": "Mask Shorthand: the mask property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-clause-72e31dcdb3a5",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask"
+      ],
+      "behaviour": "Mask Shorthand: the mask property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask",
+        "clause_index": 23,
+        "clause_sha256": "72e31dcdb3a552e50aa7686be1f01d80f86f6f0f9e979bb6c0f088419691a97d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-clause-d871d07ab783",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask"
+      ],
+      "behaviour": "Mask Shorthand: the mask property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask",
+        "clause_index": 24,
+        "clause_sha256": "d871d07ab783be9cb3a00e4ca7778a9e08f67ff197738bf15dfdc527808e94f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-clause-f6ed1e07898c",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask"
+      ],
+      "behaviour": "Mask Shorthand: the mask property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask",
+        "clause_index": 25,
+        "clause_sha256": "f6ed1e07898c504c632d6fac31c53984e45002b53a497055f801cedab9f8df30"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-image-rendering-model",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-image-rendering-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Mask Image Rendering Model.",
+      "locator": {
+        "section_id": "the-mask-image-rendering-model",
+        "text_sha256": "c4d02c09fccc1b0bbf8f6a68e237b4107f0b24b0bb5c4e1917ba780f4c686c64"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.maskvalues",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "MaskValues"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mask processing.",
+      "locator": {
+        "section_id": "MaskValues",
+        "text_sha256": "9beb9faffea090ed485959afcca29b97a6db945f3d6062c8c9b61437163a93de"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.maskvalues-clause-ace8648bbaee",
+        "css-masking-1.maskvalues-clause-6617b70dbdb8",
+        "css-masking-1.maskvalues-clause-29c207be935c",
+        "css-masking-1.maskvalues-clause-7c421d179cf6",
+        "css-masking-1.maskvalues-clause-649845a2acd5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.maskvalues-clause-ace8648bbaee",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "MaskValues"
+      ],
+      "behaviour": "Mask processing — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "MaskValues",
+        "clause_index": 3,
+        "clause_sha256": "ace8648bbaee2f21e9f78b43d8ca6400f65c649ecec3b06ec216eb1e1f51f5c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.maskvalues-clause-6617b70dbdb8",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "MaskValues"
+      ],
+      "behaviour": "Mask processing — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "MaskValues",
+        "clause_index": 6,
+        "clause_sha256": "6617b70dbdb834ba8f0d6b7b6e0d58f693058745444efa4226dfb29a222ace6e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.maskvalues-clause-29c207be935c",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "MaskValues"
+      ],
+      "behaviour": "Mask processing — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "MaskValues",
+        "clause_index": 10,
+        "clause_sha256": "29c207be935cabab261ef9ec71865621d48fd91322e166ad6b642523b01dacd7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.maskvalues-clause-7c421d179cf6",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "MaskValues"
+      ],
+      "behaviour": "Mask processing — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "MaskValues",
+        "clause_index": 12,
+        "clause_sha256": "7c421d179cf6a3548379fe825835d97ffea5f79c5180857c3ee0d4610e9bb0f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.maskvalues-clause-649845a2acd5",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "MaskValues"
+      ],
+      "behaviour": "Mask processing — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "MaskValues",
+        "clause_index": 15,
+        "clause_sha256": "649845a2acd5e7cc71098673fe1c61151c605cb8c473bfd193f5aaa095f5dda6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.layering",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "layering"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layering Multiple Mask Images.",
+      "locator": {
+        "section_id": "layering",
+        "text_sha256": "c6dad92e9ae851e8cdc8bd9d47ef00c981c10e00c186416f47b40b04e797a064"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.layering-clause-88990728d873"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.layering-clause-88990728d873",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "layering"
+      ],
+      "behaviour": "Layering Multiple Mask Images — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "layering",
+        "clause_index": 2,
+        "clause_sha256": "88990728d873205807cd1f3becec395441ef4849c2e7f2e8ab1fab9b01dfe763"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.mask-borders",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "mask-borders"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Border-Box Mask.",
+      "locator": {
+        "section_id": "mask-borders",
+        "text_sha256": "9725913f4dab81a9245eda22c87e6b21bc87cff50a75902fb0e8e4762b30ca69"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-source",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-source"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mask Border Image Source: the mask-border-source property.",
+      "locator": {
+        "section_id": "the-mask-border-source",
+        "text_sha256": "07caea5ff508b4e6306b19a15e9df3f501a9c45cdddccccd5fb0eaca065a3a31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-border-source-clause-cca2516ebb1d",
+        "css-masking-1.the-mask-border-source-clause-3363dcdc6f50",
+        "css-masking-1.the-mask-border-source-clause-3933bdb2d84f",
+        "css-masking-1.the-mask-border-source-clause-e7ad9573c225",
+        "css-masking-1.the-mask-border-source-clause-f284d010d87d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-source-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-source"
+      ],
+      "behaviour": "Mask Border Image Source: the mask-border-source property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-source",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-source-clause-3363dcdc6f50",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-source"
+      ],
+      "behaviour": "Mask Border Image Source: the mask-border-source property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-source",
+        "clause_index": 13,
+        "clause_sha256": "3363dcdc6f507e7bb15f7b00918fa1a21fe8161cbcad653041818b1292defd5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-source-clause-3933bdb2d84f",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-source"
+      ],
+      "behaviour": "Mask Border Image Source: the mask-border-source property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-source",
+        "clause_index": 20,
+        "clause_sha256": "3933bdb2d84fc9717a993f1dc5bc88018ce49f6c986af0eaf0a47b6b3d4700dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-source-clause-e7ad9573c225",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-source"
+      ],
+      "behaviour": "Mask Border Image Source: the mask-border-source property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-source",
+        "clause_index": 22,
+        "clause_sha256": "e7ad9573c2255ce779f664a881f0bd5ed14d2efdadba32fcf8128f358e7c909e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-source-clause-f284d010d87d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-source"
+      ],
+      "behaviour": "Mask Border Image Source: the mask-border-source property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-source",
+        "clause_index": 25,
+        "clause_sha256": "f284d010d87d3ab931366540ed9ca9d600340b5bc410676fde46071518fd0b34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-mode",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-mode"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mask Border Image Interpretation: the mask-border-mode property.",
+      "locator": {
+        "section_id": "the-mask-border-mode",
+        "text_sha256": "a1a70992b7da87f4153db4029f516ea999d673ac17b60daab054a4cd54eebc59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-border-mode-clause-cca2516ebb1d",
+        "css-masking-1.the-mask-border-mode-clause-f0ebd3669ae8",
+        "css-masking-1.the-mask-border-mode-clause-e78abaab3d45",
+        "css-masking-1.the-mask-border-mode-clause-f64ace138922",
+        "css-masking-1.the-mask-border-mode-clause-ade62d738c83",
+        "css-masking-1.the-mask-border-mode-clause-520498f2e700"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-mode-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-mode"
+      ],
+      "behaviour": "Mask Border Image Interpretation: the mask-border-mode property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-mode",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-mode-clause-f0ebd3669ae8",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-mode"
+      ],
+      "behaviour": "Mask Border Image Interpretation: the mask-border-mode property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-mode",
+        "clause_index": 22,
+        "clause_sha256": "f0ebd3669ae83873b2ae67209149967d54b7e3ead1376a1f8fdda8ab0a4a2301"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-mode-clause-e78abaab3d45",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-mode"
+      ],
+      "behaviour": "Mask Border Image Interpretation: the mask-border-mode property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-mode",
+        "clause_index": 25,
+        "clause_sha256": "e78abaab3d45983d06576e943d1ccf3cbb86d2dc138ef68c131ab1da13806d86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-mode-clause-f64ace138922",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-mode"
+      ],
+      "behaviour": "Mask Border Image Interpretation: the mask-border-mode property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-mode",
+        "clause_index": 26,
+        "clause_sha256": "f64ace1389223b0fac7605f3a2d67ba8ba7126c653fc064cc1d90dab1553c23f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-mode-clause-ade62d738c83",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-mode"
+      ],
+      "behaviour": "Mask Border Image Interpretation: the mask-border-mode property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-mode",
+        "clause_index": 27,
+        "clause_sha256": "ade62d738c83a013acb0f97245a944d9ee2e8ca4342cb48386b70658c00c4061"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-mode-clause-520498f2e700",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-mode"
+      ],
+      "behaviour": "Mask Border Image Interpretation: the mask-border-mode property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-mode",
+        "clause_index": 28,
+        "clause_sha256": "520498f2e700181262c746aeaaf99bdd042337e6f3972deb37d314a14a164968"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-slice",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-slice"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mask Border Image Slicing: the mask-border-slice property.",
+      "locator": {
+        "section_id": "the-mask-border-slice",
+        "text_sha256": "8d8699706a18db2b2c2809746a37386fd94368ee8ee4cc2231789c7752f75c24"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-border-slice-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-slice-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-slice"
+      ],
+      "behaviour": "Mask Border Image Slicing: the mask-border-slice property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-slice",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-width",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Masking Areas: the mask-border-width property.",
+      "locator": {
+        "section_id": "the-mask-border-width",
+        "text_sha256": "2cda9863f75d093d6375dadc0a21ab3a436369eca5390b5e9a56a73cc9bfde75"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-border-width-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-width-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-width"
+      ],
+      "behaviour": "Masking Areas: the mask-border-width property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-width",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-outset",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-outset"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Edge Overhang: the mask-border-outset property.",
+      "locator": {
+        "section_id": "the-mask-border-outset",
+        "text_sha256": "353e6522000cac836a363699271c45c493abf694c39911808ca496a56fa80b6c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-border-outset-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-outset-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-outset"
+      ],
+      "behaviour": "Edge Overhang: the mask-border-outset property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-outset",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-repeat",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-repeat"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mask Border Image Tiling: the mask-border-repeat property.",
+      "locator": {
+        "section_id": "the-mask-border-repeat",
+        "text_sha256": "2e601a14a2610334c7d23c93138f823cd6d0ce88b249721bdd667ef917ba3f2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-border-repeat-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-repeat-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border-repeat"
+      ],
+      "behaviour": "Mask Border Image Tiling: the mask-border-repeat property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border-repeat",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-border",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mask Border Image Shorthand: the mask-border property.",
+      "locator": {
+        "section_id": "the-mask-border",
+        "text_sha256": "156e73ae22610c99ad0551f66919388e71f35d91d8138750fdf6f6d18cf6d6e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-border-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-border-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-border"
+      ],
+      "behaviour": "Mask Border Image Shorthand: the mask-border property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-border",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.masking-with-the-mask-border-image",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "masking-with-the-mask-border-image"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Masking with the mask border image.",
+      "locator": {
+        "section_id": "masking-with-the-mask-border-image",
+        "text_sha256": "26544121ae5c7fc64669cc1472184a3342beb41d84daffdbd49d6e09b5b72743"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.svg-masks",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "svg-masks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in SVG Mask Sources.",
+      "locator": {
+        "section_id": "svg-masks",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.maskelement",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "MaskElement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The mask element.",
+      "locator": {
+        "section_id": "MaskElement",
+        "text_sha256": "9f92500932d96d165bf621a69921633bd997e2f36f59ecce97c4c1c0eb03726a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.maskelement-clause-16e980285af7",
+        "css-masking-1.maskelement-clause-54c6abcfa5a1",
+        "css-masking-1.maskelement-clause-04a7d9343123",
+        "css-masking-1.maskelement-clause-8bdc2b406da4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.maskelement-clause-16e980285af7",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "MaskElement"
+      ],
+      "behaviour": "The mask element — normative clause 82, located by its exact source hash.",
+      "locator": {
+        "section_id": "MaskElement",
+        "clause_index": 81,
+        "clause_sha256": "16e980285af78684084e1cb4e8b5ff108da2a1e704c44f0d09f800c2e1c79b28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.maskelement-clause-54c6abcfa5a1",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "MaskElement"
+      ],
+      "behaviour": "The mask element — normative clause 83, located by its exact source hash.",
+      "locator": {
+        "section_id": "MaskElement",
+        "clause_index": 82,
+        "clause_sha256": "54c6abcfa5a1f6ceb810b4cb8407a83ef889e13cff9b3efe397bfb3dc837d7bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.maskelement-clause-04a7d9343123",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "MaskElement"
+      ],
+      "behaviour": "The mask element — normative clause 85, located by its exact source hash.",
+      "locator": {
+        "section_id": "MaskElement",
+        "clause_index": 84,
+        "clause_sha256": "04a7d93431232d314d7449b45ff892bfe85753c9d4ddf0ad6bc8ea43990e95a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.maskelement-clause-8bdc2b406da4",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "MaskElement"
+      ],
+      "behaviour": "The mask element — normative clause 86, located by its exact source hash.",
+      "locator": {
+        "section_id": "MaskElement",
+        "clause_index": 85,
+        "clause_sha256": "8bdc2b406da40aa88ec9702b9466b1f26bca351a5771b39594a787ed3abd9b74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-type",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-type"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mask Source Interpretation: the mask-type property.",
+      "locator": {
+        "section_id": "the-mask-type",
+        "text_sha256": "c1d8c602c54a4a58e947d4ec09772c1da20f06c913919e28a2e0c25502771e33"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.the-mask-type-clause-cca2516ebb1d",
+        "css-masking-1.the-mask-type-clause-ea65773daa02",
+        "css-masking-1.the-mask-type-clause-3ec24dc2ddd9",
+        "css-masking-1.the-mask-type-clause-6e3ce82da23e",
+        "css-masking-1.the-mask-type-clause-8ffde1140ef2",
+        "css-masking-1.the-mask-type-clause-3140b319ed2c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.the-mask-type-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-type"
+      ],
+      "behaviour": "Mask Source Interpretation: the mask-type property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-type",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-type-clause-ea65773daa02",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-type"
+      ],
+      "behaviour": "Mask Source Interpretation: the mask-type property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-type",
+        "clause_index": 22,
+        "clause_sha256": "ea65773daa02f1f8ed81ddda39f5b218e10625b7346af16c2868e31fe9bff12c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-type-clause-3ec24dc2ddd9",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-type"
+      ],
+      "behaviour": "Mask Source Interpretation: the mask-type property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-type",
+        "clause_index": 25,
+        "clause_sha256": "3ec24dc2ddd9af694f2fc2ea9363fa26e13cf854e0ff95fb018776f5d4453420"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-type-clause-6e3ce82da23e",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-type"
+      ],
+      "behaviour": "Mask Source Interpretation: the mask-type property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-type",
+        "clause_index": 28,
+        "clause_sha256": "6e3ce82da23eae4514b89cd3bae69b7b4a9e5ff30b637e3fb98110c9b07241b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-type-clause-8ffde1140ef2",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-type"
+      ],
+      "behaviour": "Mask Source Interpretation: the mask-type property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-type",
+        "clause_index": 31,
+        "clause_sha256": "8ffde1140ef2cfab14d838da8b7e598e0e3dd8648cc9280dcb830309e651ccd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.the-mask-type-clause-3140b319ed2c",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "the-mask-type"
+      ],
+      "behaviour": "Mask Source Interpretation: the mask-type property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-mask-type",
+        "clause_index": 32,
+        "clause_sha256": "3140b319ed2c2bfae15f46f1adffdd09edf8c50275dc63a963a354ea98959780"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.priv-sec",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy and Security Considerations.",
+      "locator": {
+        "section_id": "priv-sec",
+        "text_sha256": "e86bd07378296c78f83e4b44e1fd2ab333b32f131acc4dda43314145d4efeec6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.priv-sec-clause-995968d2022c",
+        "css-masking-1.priv-sec-clause-50ff090e5155"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.priv-sec-clause-995968d2022c",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Privacy and Security Considerations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "priv-sec",
+        "clause_index": 0,
+        "clause_sha256": "995968d2022c1eb718f15dc30a08f024ef18e18297ac10d8a63d59667a954557"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.priv-sec-clause-50ff090e5155",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Privacy and Security Considerations — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "priv-sec",
+        "clause_index": 3,
+        "clause_sha256": "50ff090e51559ad3cbb0d3d64125f69c5a850a964c22f074ed9e96cb8766fa11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clip-property",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clip-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix A: The deprecated clip property.",
+      "locator": {
+        "section_id": "clip-property",
+        "text_sha256": "6999c35e6e99ed3486792c5db41428fa3fdd044046e9b953af383a37796531dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.clip-property-clause-cca2516ebb1d",
+        "css-masking-1.clip-property-clause-674d5fa645b0",
+        "css-masking-1.clip-property-clause-6f0bf9c3c4c1",
+        "css-masking-1.clip-property-clause-7de25610426a",
+        "css-masking-1.clip-property-clause-f88473e638b8",
+        "css-masking-1.clip-property-clause-ef791d004aa9",
+        "css-masking-1.clip-property-clause-2468e138e196"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.clip-property-clause-cca2516ebb1d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clip-property"
+      ],
+      "behaviour": "Appendix A: The deprecated clip property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "clip-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clip-property-clause-674d5fa645b0",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clip-property"
+      ],
+      "behaviour": "Appendix A: The deprecated clip property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "clip-property",
+        "clause_index": 17,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clip-property-clause-6f0bf9c3c4c1",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clip-property"
+      ],
+      "behaviour": "Appendix A: The deprecated clip property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "clip-property",
+        "clause_index": 19,
+        "clause_sha256": "6f0bf9c3c4c163f19d6af223c4edb1460761c8561349310ac46fd0c4bf22bd6c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clip-property-clause-7de25610426a",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clip-property"
+      ],
+      "behaviour": "Appendix A: The deprecated clip property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "clip-property",
+        "clause_index": 25,
+        "clause_sha256": "7de25610426a0f66ffab1e2e39e9ed7f0bd7209f1e24673f7e5f6ce59d03bf5d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clip-property-clause-f88473e638b8",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clip-property"
+      ],
+      "behaviour": "Appendix A: The deprecated clip property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "clip-property",
+        "clause_index": 27,
+        "clause_sha256": "f88473e638b83e801ffc19035cee932ac3477d35ede17b4f5910e0c3a4535a65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clip-property-clause-ef791d004aa9",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clip-property"
+      ],
+      "behaviour": "Appendix A: The deprecated clip property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "clip-property",
+        "clause_index": 32,
+        "clause_sha256": "ef791d004aa971ead6a4fe85232d927031e95788703a8a5c142289bb6d87cb53"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.clip-property-clause-2468e138e196",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clip-property"
+      ],
+      "behaviour": "Appendix A: The deprecated clip property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "clip-property",
+        "clause_index": 33,
+        "clause_sha256": "2468e138e1960f04ff7a245c5b610bab19d07afde540cb0d79dbb5b085807e30"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.compute-stroke-bounding-box",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "compute-stroke-bounding-box"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix B: Compute stroke bounding box.",
+      "locator": {
+        "section_id": "compute-stroke-bounding-box",
+        "text_sha256": "662e7cb9cbfc0e97eb0d34211b7f251f7096fb45645f1d28e029074b9bcb2202"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.compute-stroke-bounding-box-clause-f724a83d1f11",
+        "css-masking-1.compute-stroke-bounding-box-clause-8c7a5a87e638",
+        "css-masking-1.compute-stroke-bounding-box-clause-e768dae99acc",
+        "css-masking-1.compute-stroke-bounding-box-clause-c71c4e3e1403"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.compute-stroke-bounding-box-clause-f724a83d1f11",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "compute-stroke-bounding-box"
+      ],
+      "behaviour": "Appendix B: Compute stroke bounding box — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "compute-stroke-bounding-box",
+        "clause_index": 0,
+        "clause_sha256": "f724a83d1f1199ee91a6908cfce64b5c1e03b1f6969436c3f900c8a03d3d0abc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.compute-stroke-bounding-box-clause-8c7a5a87e638",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "compute-stroke-bounding-box"
+      ],
+      "behaviour": "Appendix B: Compute stroke bounding box — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "compute-stroke-bounding-box",
+        "clause_index": 33,
+        "clause_sha256": "8c7a5a87e638ee2eccf92f7579bc8d6be5655de48f2da6e69e24b71fc079bd92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.compute-stroke-bounding-box-clause-e768dae99acc",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "compute-stroke-bounding-box"
+      ],
+      "behaviour": "Appendix B: Compute stroke bounding box — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "compute-stroke-bounding-box",
+        "clause_index": 35,
+        "clause_sha256": "e768dae99acc81c7899ebdfae4fdd969e4ad3323aa0beab8334d98ede78ce602"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.compute-stroke-bounding-box-clause-c71c4e3e1403",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "compute-stroke-bounding-box"
+      ],
+      "behaviour": "Appendix B: Compute stroke bounding box — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "compute-stroke-bounding-box",
+        "clause_index": 43,
+        "clause_sha256": "c71c4e3e14038fe607e6e35d463935a9654773bab4dce8ae41c3043066186f6f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.dominterfaces",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "DOMInterfaces"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix C: DOM interfaces.",
+      "locator": {
+        "section_id": "DOMInterfaces",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.interfacesvgclippathelement",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "InterfaceSVGClipPathElement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interface SVGClipPathElement.",
+      "locator": {
+        "section_id": "InterfaceSVGClipPathElement",
+        "text_sha256": "e549de431f0b133e5095eab4ffad6185ee5610ed45c21fce23ac91a2756e6623"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.interfacesvgmaskelement",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "InterfaceSVGMaskElement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interface SVGMaskElement.",
+      "locator": {
+        "section_id": "InterfaceSVGMaskElement",
+        "text_sha256": "ea8ef89a6b0d550a23fd1cddc48385e526ba84983521c76648683626b3eb9ed4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.w3c-conformance",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.w3c-conventions",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.w3c-conventions-clause-5c98c879f070",
+        "css-masking-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.w3c-conformance-classes",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-masking-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.w3c-partial",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.w3c-conform-future-proofing",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.w3c-testing",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.w3c-testing-clause-1e0fff369221",
+        "css-masking-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.w3c-cr-exit-criteria",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+        "css-masking-1.w3c-cr-exit-criteria-clause-ea752775913a",
+        "css-masking-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+        "css-masking-1.w3c-cr-exit-criteria-clause-b67129724911",
+        "css-masking-1.w3c-cr-exit-criteria-clause-833729d43f23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.w3c-cr-exit-criteria-clause-ea752775913a",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.w3c-cr-exit-criteria-clause-b67129724911",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.w3c-cr-exit-criteria-clause-833729d43f23",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 10,
+        "clause_sha256": "833729d43f239b3deb57bcaaf1c29d2f077e86aad8b396f8458fa182e4db8d99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.property-index",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "c8a8f059f44d98e1f23655011a73e9cee95038ca68d11b390c6388e0c637f83a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-masking-1.property-index-clause-674d5fa645b0",
+        "css-masking-1.property-index-clause-3363dcdc6f50",
+        "css-masking-1.property-index-clause-eeff16f281dd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.property-index-clause-674d5fa645b0",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 16,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.property-index-clause-3363dcdc6f50",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 109, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 108,
+        "clause_sha256": "3363dcdc6f507e7bb15f7b00918fa1a21fe8161cbcad653041818b1292defd5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.property-index-clause-eeff16f281dd",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 149, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 148,
+        "clause_sha256": "eeff16f281dd22acb00c38b72b30768020f6f0d4e25ba8379a7784f1c80e574b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-masking-1.idl-index",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "196c52f40fa5aba143eaee2026d61279f74168f1fd57119666bc6f9c6bdfa0c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.issues-index",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "cd35f0a1accd476141408ca20454185cf93e8479827b697a7358a354efcfd080"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.import-6b91f794ab2b",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://heycam.github.io/webidl/.",
+      "unresolved_reference": "https://heycam.github.io/webidl/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-masking-1.title",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Masking Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.abstract",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "9f09dec10f43ee0b3b755983513eb912f74b29f9e7a04414bcd66eafa91d24ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.status",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "6985431c285a1ab1b734e0f7883e44203c586ecea74700c6850613a4963ad750"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.contents",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "c6e8824259758f1128984555daef9b4b16d2a3b02b81a7c5bb74621173666332"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.intro",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "4a716e779397ab24d69c10c5e0114d3481b2c6a6c55992d32a694df5418cfbfc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.clipping",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "clipping"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Clipping.",
+      "locator": {
+        "section_id": "clipping",
+        "text_sha256": "99765d20f054c35618b1e851f5942c074be46cd3d844b7091c4cd53509543d88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.masking",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "masking"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.2. Masking.",
+      "locator": {
+        "section_id": "masking",
+        "text_sha256": "98be546c41b99b5a832cb8cfba987d73661b0ade5418c2099538dc3e5c1a249b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.changes",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since last publication.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "b36705716910e38ad23c6070158248c988a9ba138fe551cd0b00ea72905e93eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.acknowledgments",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "2ea23759d656550b64beb383e865c2a396ead17b970c76a270ae05814c11f844"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.index",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.index-defined-here",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "e1cbc597f1d2b92ba54947be10539695eb9788baca317a3bac6dd08044e313a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.index-defined-elsewhere",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "26e5c705dc31a76c7365f57c9c67a0f646ede965855e4def7a268c3f249d2079"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.references",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-masking-1.informative",
+      "family": "css-masking-1",
+      "source_id": "css-masking-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "f6655e0e81197c854a71117fcf0ec178a30c73a34b92cd1d73449c071fc75eec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

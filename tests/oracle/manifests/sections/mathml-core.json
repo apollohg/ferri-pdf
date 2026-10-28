@@ -1,0 +1,1527 @@
+{
+  "schema_version": 1,
+  "source_id": "mathml-core",
+  "sections": [
+    {
+      "id": "title",
+      "title": "MathML Core",
+      "level": 1,
+      "text_sha256": "d9c50c2595d9a0da3829e0bdd14188b128726bb4b67583a90daf2c8ab4da66c1",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "78b4b8368b458e3517f1777bc0752319aa07f3e5a7817a6178ac462d78feafe3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of This Document",
+      "level": 2,
+      "text_sha256": "284fc4021804a2b87da43bd81df30920a8ea5d8a0ac630d92473eb74bd2ff5a0",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.sotd"
+        ]
+      }
+    },
+    {
+      "id": "table-of-contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "5a9fad84a105f88dc8aea2baf3166986c2a267bbc80b5bbaa98806ec964aad30",
+      "clause_count": 101,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.table-of-contents"
+        ]
+      }
+    },
+    {
+      "id": "x1-introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "7ad3e98967b669a9fa6f06a5cb9dccb726fe48d7b6affdbca5f7e69152e8c158",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x1-introduction"
+        ]
+      }
+    },
+    {
+      "id": "x2-mathml-fundamentals",
+      "title": "2. MathML Fundamentals",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-mathml-fundamentals"
+        ]
+      }
+    },
+    {
+      "id": "x2-1-elements-and-attributes",
+      "title": "2.1 Elements and attributes",
+      "level": 3,
+      "text_sha256": "6f50a11f973f9270a426bd2a2de69968e3d65a6c95873c695b3b84ab6250f292",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-1-elements-and-attributes"
+        ]
+      }
+    },
+    {
+      "id": "x2-1-1-the-top-level-math-element",
+      "title": "2.1.1 The Top-Level <math> Element",
+      "level": 4,
+      "text_sha256": "a35ae52aab993c2c8f00cec7111fb74e7efd2de36798ba62eeff8d93a9b21a9b",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-1-1-the-top-level-math-element",
+          "mathml-core.x2-1-1-the-top-level-math-element-clause-763ff3bd5b7e",
+          "mathml-core.x2-1-1-the-top-level-math-element-clause-eb6f9000260a",
+          "mathml-core.x2-1-1-the-top-level-math-element-clause-c01834c90523",
+          "mathml-core.x2-1-1-the-top-level-math-element-clause-5fb2ecec2d6d",
+          "mathml-core.x2-1-1-the-top-level-math-element-clause-a6d4d7786000",
+          "mathml-core.x2-1-1-the-top-level-math-element-clause-561b6ceb45c5"
+        ]
+      }
+    },
+    {
+      "id": "x2-1-2-types-for-mathml-attribute-values",
+      "title": "2.1.2 Types for MathML Attribute Values",
+      "level": 4,
+      "text_sha256": "9444bbb0db5a19d32e80f78c0d22980d4e3a13af608252c793ae96458a6bdbf0",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-1-2-types-for-mathml-attribute-values"
+        ]
+      }
+    },
+    {
+      "id": "x2-1-3-global-attributes",
+      "title": "2.1.3 Global Attributes",
+      "level": 4,
+      "text_sha256": "25b56132d2e45acd5a785b43a1950292c9c717ef5c5fc6c70e980dc1a614c6aa",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-1-3-global-attributes"
+        ]
+      }
+    },
+    {
+      "id": "x2-1-4-attributes-common-to-html-and-mathml-elements",
+      "title": "2.1.4 Attributes common to HTML and MathML elements",
+      "level": 4,
+      "text_sha256": "4fb0e3efa65f28e043150e8bb1655963d48623c71f1b867a92894cfca31b70f5",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-1-4-attributes-common-to-html-and-mathml-elements",
+          "mathml-core.x2-1-4-attributes-common-to-html-and-mathml-elements-clause-5904838ca77e"
+        ]
+      }
+    },
+    {
+      "id": "x2-1-5-legacy-mathml-style-attributes",
+      "title": "2.1.5 Legacy MathML Style Attributes",
+      "level": 4,
+      "text_sha256": "7480bdacd94f0ff791cf9dccd43afcc66b1763565b30ba498c8c391b4211f52a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-1-5-legacy-mathml-style-attributes",
+          "mathml-core.x2-1-5-legacy-mathml-style-attributes-clause-93e4f02a2445",
+          "mathml-core.x2-1-5-legacy-mathml-style-attributes-clause-1f8f88410162"
+        ]
+      }
+    },
+    {
+      "id": "x2-1-6-the-displaystyle-and-scriptlevel-attributes",
+      "title": "2.1.6 The displaystyle and scriptlevel attributes",
+      "level": 4,
+      "text_sha256": "4bde76e5e5761e87772f1bc8ea42075a8d471feece932cb671acbe1a7ca187bc",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-1-6-the-displaystyle-and-scriptlevel-attributes",
+          "mathml-core.x2-1-6-the-displaystyle-and-scriptlevel-attributes-clause-958fa6c8b513",
+          "mathml-core.x2-1-6-the-displaystyle-and-scriptlevel-attributes-clause-0a2d33ffda77",
+          "mathml-core.x2-1-6-the-displaystyle-and-scriptlevel-attributes-clause-3137c1fb0095"
+        ]
+      }
+    },
+    {
+      "id": "x2-1-7-attributes-reserved-as-valid",
+      "title": "2.1.7 Attributes Reserved as Valid",
+      "level": 4,
+      "text_sha256": "325c5904c86fe01c9d708f290ed9b89fb22d6cd1d02101364303de31681e1b81",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-1-7-attributes-reserved-as-valid"
+        ]
+      }
+    },
+    {
+      "id": "x2-2-integration-in-the-web-platform",
+      "title": "2.2 Integration in the Web Platform",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-2-integration-in-the-web-platform"
+        ]
+      }
+    },
+    {
+      "id": "x2-2-1-html-and-svg",
+      "title": "2.2.1 HTML and SVG",
+      "level": 4,
+      "text_sha256": "5319f2c3d51ecf85b9c9a433eb5a63753355699966289c621ca8f19987a51215",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-2-1-html-and-svg",
+          "mathml-core.x2-2-1-html-and-svg-clause-0334bf82e732"
+        ]
+      }
+    },
+    {
+      "id": "x2-2-2-css-styling",
+      "title": "2.2.2 CSS styling",
+      "level": 4,
+      "text_sha256": "70ffb466cba85a33b373d23049d2531f3d9de3fedf5abcb1299756718e0ac0fc",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-2-2-css-styling",
+          "mathml-core.x2-2-2-css-styling-clause-f17768958df2",
+          "mathml-core.x2-2-2-css-styling-clause-3cb8389a6022",
+          "mathml-core.x2-2-2-css-styling-clause-abdf0ea49b64",
+          "mathml-core.x2-2-2-css-styling-clause-7c78186a086c",
+          "mathml-core.x2-2-2-css-styling-clause-b3373890a06b"
+        ]
+      }
+    },
+    {
+      "id": "x2-2-3-dom-and-javascript",
+      "title": "2.2.3 DOM and JavaScript",
+      "level": 4,
+      "text_sha256": "ac79528f1feadaec9370ee250635ca30011cd2412c1ea58116a00ffdbbeb08b9",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-2-3-dom-and-javascript",
+          "mathml-core.x2-2-3-dom-and-javascript-clause-4dee962ffb91",
+          "mathml-core.x2-2-3-dom-and-javascript-clause-1bab5a161a37"
+        ]
+      }
+    },
+    {
+      "id": "x2-2-4-text-layout",
+      "title": "2.2.4 Text layout",
+      "level": 4,
+      "text_sha256": "6926a41ce622b42ad872a07d80aaa01ea0ef70429a22bd6c76b2b85af3cfb4cc",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-2-4-text-layout",
+          "mathml-core.x2-2-4-text-layout-clause-6926a41ce622"
+        ]
+      }
+    },
+    {
+      "id": "x2-2-5-focus",
+      "title": "2.2.5 Focus",
+      "level": 4,
+      "text_sha256": "5e541544d922de01efa03102313e51392d7952825c687331a9708cd5dfe38fb2",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x2-2-5-focus"
+        ]
+      }
+    },
+    {
+      "id": "x3-presentation-markup",
+      "title": "3. Presentation Markup",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-presentation-markup"
+        ]
+      }
+    },
+    {
+      "id": "x3-1-visual-formatting-model",
+      "title": "3.1 Visual formatting model",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-1-visual-formatting-model"
+        ]
+      }
+    },
+    {
+      "id": "x3-1-1-box-model",
+      "title": "3.1.1 Box Model",
+      "level": 4,
+      "text_sha256": "749c0ffb2f6324a67a2556b16af54a09d8554a3c5288ed7cff39b820ae3fa50a",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-1-1-box-model",
+          "mathml-core.x3-1-1-box-model-clause-6ae6e3ab628a"
+        ]
+      }
+    },
+    {
+      "id": "x3-1-2-layout-algorithms",
+      "title": "3.1.2 Layout Algorithms",
+      "level": 4,
+      "text_sha256": "37844c8e3de58b24dae894470994c3aced74010beaa240bdd7d965c01a7a4d45",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-1-2-layout-algorithms",
+          "mathml-core.x3-1-2-layout-algorithms-clause-40b8c74bc3ce",
+          "mathml-core.x3-1-2-layout-algorithms-clause-f238921b3f8f",
+          "mathml-core.x3-1-2-layout-algorithms-clause-2db3e15feec3"
+        ]
+      }
+    },
+    {
+      "id": "x3-1-3-anonymous-mrow-boxes",
+      "title": "3.1.3 Anonymous <mrow> boxes",
+      "level": 4,
+      "text_sha256": "1278e11ae2d601a99d23204ed06442053feaaeb94782537157f2f40036454690",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-1-3-anonymous-mrow-boxes",
+          "mathml-core.x3-1-3-anonymous-mrow-boxes-clause-7672f3937ec8"
+        ]
+      }
+    },
+    {
+      "id": "x3-1-4-stacking-contexts",
+      "title": "3.1.4 Stacking contexts",
+      "level": 4,
+      "text_sha256": "bec1521aa27f736479ccb09239d77352993eb46ce20f1ba277f390665474374d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-1-4-stacking-contexts",
+          "mathml-core.x3-1-4-stacking-contexts-clause-bec1521aa27f"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-token-elements",
+      "title": "3.2 Token Elements",
+      "level": 3,
+      "text_sha256": "2b85ba70e5a633ace82efd4047a0a96a8e167858214e5dfb081db40d5e3dd923",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-token-elements"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-1-text-mtext",
+      "title": "3.2.1 Text <mtext>",
+      "level": 4,
+      "text_sha256": "212ce8f1613b1b7b0b18fda985f110e3b93d19ea89823aae8a83c28499a03322",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-1-text-mtext",
+          "mathml-core.x3-2-1-text-mtext-clause-a217f3a55bc3"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-1-1-layout-of-mtext",
+      "title": "3.2.1.1 Layout of <mtext>",
+      "level": 5,
+      "text_sha256": "268b068102484396021733279d0b4f06c6bd9a54b5854ef8ff4f9acd92c35180",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-1-1-layout-of-mtext",
+          "mathml-core.x3-2-1-1-layout-of-mtext-clause-e25b0817fab8"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-2-identifier-mi",
+      "title": "3.2.2 Identifier <mi>",
+      "level": 4,
+      "text_sha256": "21e2499a36dfb6f9ada8ae1e5b973a92489b6ff42c7f9d1f4eaaef8765085b93",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-2-identifier-mi",
+          "mathml-core.x3-2-2-identifier-mi-clause-5e11718f151f",
+          "mathml-core.x3-2-2-identifier-mi-clause-ec998abe3bf3",
+          "mathml-core.x3-2-2-identifier-mi-clause-381b91a9a0b9",
+          "mathml-core.x3-2-2-identifier-mi-clause-ec4c85724bc5"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-3-number-mn",
+      "title": "3.2.3 Number <mn>",
+      "level": 4,
+      "text_sha256": "655ea92928c95d8768695bd4ebd721bba5d32154fdd40a4f544684791bbc92b8",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-3-number-mn",
+          "mathml-core.x3-2-3-number-mn-clause-17e158de00d3",
+          "mathml-core.x3-2-3-number-mn-clause-fb2ca6f0f0a3"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-4-operator-fence-separator-or-accent-mo",
+      "title": "3.2.4 Operator, Fence, Separator or Accent <mo>",
+      "level": 4,
+      "text_sha256": "2e651b2010795a7cf50dd0ddaf930f8ada29a550ac801d47292062d59142c8d1",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-4-operator-fence-separator-or-accent-mo",
+          "mathml-core.x3-2-4-operator-fence-separator-or-accent-mo-clause-74c0a0efe369",
+          "mathml-core.x3-2-4-operator-fence-separator-or-accent-mo-clause-ac5a4917fc7e",
+          "mathml-core.x3-2-4-operator-fence-separator-or-accent-mo-clause-3e2cb63e27e8"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-4-1-embellished-operators",
+      "title": "3.2.4.1 Embellished operators",
+      "level": 5,
+      "text_sha256": "b379e274c005515a44669fe1aa019b55530d40fe5c6fd548e21389d2349b9244",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-4-1-embellished-operators"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-4-2-dictionary-based-attributes",
+      "title": "3.2.4.2 Dictionary-based attributes",
+      "level": 5,
+      "text_sha256": "687d8f9f64152f770f9572a307905b9963d49e743bcbe44e43438ee022136064",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-4-2-dictionary-based-attributes",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-f54766f3211e",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-c7d61146fe50",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-f3fcbabfc274",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-b3ea2a0d006d",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-55c8028e90f5",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-ce59882febf3",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-1839b1136dcd",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-a08970334046",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-f6f59f651b9a",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-49c358699670",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-620a2445a3ca",
+          "mathml-core.x3-2-4-2-dictionary-based-attributes-clause-93051fff9951"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-4-3-layout-of-operators",
+      "title": "3.2.4.3 Layout of operators",
+      "level": 5,
+      "text_sha256": "a83f272752bf92d054c3833f63473b415d1cb2b61ee52eb70071ead2674bdbaf",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-4-3-layout-of-operators",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-1bf60fe1ac08",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-d7ad72428396",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-5f91e597b665",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-11e96a040c16",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-078707cf8d95",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-5f0a09ca9b69",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-e7fa50f1ecd4",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-8e6371855c7e",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-69ba74a3e95d",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-c7ee7ac5be48",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-24ccc8188273",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-f21365cf4d47",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-29b2e644f90a",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-d1591a9e9b43",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-f3e3fed50cd2",
+          "mathml-core.x3-2-4-3-layout-of-operators-clause-49e8b33eb285"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-5-space-mspace",
+      "title": "3.2.5 Space <mspace>",
+      "level": 4,
+      "text_sha256": "ce7f66a1911a4cf53ae2c6d34427784ae4a228f36fa26d8e0f806cfabc480d05",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-5-space-mspace",
+          "mathml-core.x3-2-5-space-mspace-clause-97f37114ff9f",
+          "mathml-core.x3-2-5-space-mspace-clause-683785b0a4b0",
+          "mathml-core.x3-2-5-space-mspace-clause-d6f4cae0606a"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-5-1-definition-of-space-like-elements",
+      "title": "3.2.5.1 Definition of space-like elements",
+      "level": 5,
+      "text_sha256": "ce91ae8c7e49e93c8a6ebdef8ad98b0068f62de9bdc7a5e7e53e4a59394f6c6f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-5-1-definition-of-space-like-elements"
+        ]
+      }
+    },
+    {
+      "id": "x3-2-6-string-literal-ms",
+      "title": "3.2.6 String Literal <ms>",
+      "level": 4,
+      "text_sha256": "c3793b8f7126bdc4966064265466d6c075bc4ee9a5b835d0d66b9f3891679233",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-2-6-string-literal-ms",
+          "mathml-core.x3-2-6-string-literal-ms-clause-a759e4b009fc"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-general-layout-schemata",
+      "title": "3.3 General Layout Schemata",
+      "level": 3,
+      "text_sha256": "c5cf5ef252f70735b116a1f57ac59062035c9cb7fec303fd58210114a5c96143",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-general-layout-schemata"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-1-group-sub-expressions-mrow",
+      "title": "3.3.1 Group Sub-Expressions <mrow>",
+      "level": 4,
+      "text_sha256": "404d402209c363633cd14f273b3dbf2ae02af433ca07f25b1ff083c9fa09a5eb",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-1-group-sub-expressions-mrow"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-1-1-algorithm-for-stretching-operators-along-the-block-axis",
+      "title": "3.3.1.1 Algorithm for stretching operators along the block axis",
+      "level": 5,
+      "text_sha256": "c13da9d1cf262d354aed9724daca995c9bd561076ed6bef232f44654baaf3bda",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-1-1-algorithm-for-stretching-operators-along-the-block-axis",
+          "mathml-core.x3-3-1-1-algorithm-for-stretching-operators-along-the-block-axis-clause-4ee1695d705b"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-1-2-layout-of-mrow",
+      "title": "3.3.1.2 Layout of <mrow>",
+      "level": 5,
+      "text_sha256": "636e7fea418ff237d7c40909fbfdb880f3d4408a37e1370e7c14f28e742b641f",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-1-2-layout-of-mrow",
+          "mathml-core.x3-3-1-2-layout-of-mrow-clause-996666f0d914",
+          "mathml-core.x3-3-1-2-layout-of-mrow-clause-ddd20ed65b70",
+          "mathml-core.x3-3-1-2-layout-of-mrow-clause-2a67ca4f3d7f",
+          "mathml-core.x3-3-1-2-layout-of-mrow-clause-eb05ef9148e7"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-2-fractions-mfrac",
+      "title": "3.3.2 Fractions <mfrac>",
+      "level": 4,
+      "text_sha256": "5f9bf22bea8cd0f5ceaad8be632d1065fab0751b1347a69d9142c57da5f3a92a",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-2-fractions-mfrac",
+          "mathml-core.x3-3-2-fractions-mfrac-clause-77858cd95446",
+          "mathml-core.x3-3-2-fractions-mfrac-clause-af16bc274f87",
+          "mathml-core.x3-3-2-fractions-mfrac-clause-8180fb6864d3",
+          "mathml-core.x3-3-2-fractions-mfrac-clause-16582d84f571"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-2-1-fraction-with-nonzero-line-thickness",
+      "title": "3.3.2.1 Fraction with nonzero line thickness",
+      "level": 5,
+      "text_sha256": "414999d0f8ca6670fc813d1f3eafc696a8cabbb97931e8b0615b66ee94c113ec",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-2-1-fraction-with-nonzero-line-thickness",
+          "mathml-core.x3-3-2-1-fraction-with-nonzero-line-thickness-clause-c90cefb9b8a4"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-2-2-fraction-with-zero-line-thickness",
+      "title": "3.3.2.2 Fraction with zero line thickness",
+      "level": 5,
+      "text_sha256": "e3562a0deda08b52d8b358c3bf112ebc6ee7803bf1018554c197ec81e494e0d4",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-2-2-fraction-with-zero-line-thickness"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-3-radicals-msqrt-mroot",
+      "title": "3.3.3 Radicals <msqrt>, <mroot>",
+      "level": 4,
+      "text_sha256": "aeb62dc3a0686ca221a72fa505d540c88eb3205161b786fab621af30632cee6b",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-3-radicals-msqrt-mroot",
+          "mathml-core.x3-3-3-radicals-msqrt-mroot-clause-cdb7424c6675",
+          "mathml-core.x3-3-3-radicals-msqrt-mroot-clause-848091dd4e8a",
+          "mathml-core.x3-3-3-radicals-msqrt-mroot-clause-0243e984dbdd"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-3-1-radical-symbol",
+      "title": "3.3.3.1 Radical symbol",
+      "level": 5,
+      "text_sha256": "abace752883ddc48d22bd7a19db4fdeaa88cb9f469de2c997e5f2111dbc748bf",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-3-1-radical-symbol",
+          "mathml-core.x3-3-3-1-radical-symbol-clause-12e502390017",
+          "mathml-core.x3-3-3-1-radical-symbol-clause-8a07a3a4252f"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-3-2-square-root",
+      "title": "3.3.3.2 Square root",
+      "level": 5,
+      "text_sha256": "9a1ad73885b429bc655e0e31069327cea0d66c5837faaa1df37e5ecc2ddc98d3",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-3-2-square-root"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-3-3-root-with-index",
+      "title": "3.3.3.3 Root with index",
+      "level": 5,
+      "text_sha256": "3d7383b634dcc40483e4061952253d425bc5d0659b70f327f9637d94afd09bbe",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-3-3-root-with-index",
+          "mathml-core.x3-3-3-3-root-with-index-clause-8893d6bfd7c7"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-4-style-change-mstyle",
+      "title": "3.3.4 Style Change <mstyle>",
+      "level": 4,
+      "text_sha256": "88ef4bee3561ff99e148a1c9137ebc5e462eed3efd9693cf153306fa0d0a547f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-4-style-change-mstyle",
+          "mathml-core.x3-3-4-style-change-mstyle-clause-174b36181aef"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-5-error-message-merror",
+      "title": "3.3.5 Error Message <merror>",
+      "level": 4,
+      "text_sha256": "5ff5d1385bef631feccfaa6bff74c25cfc68b63972123794c5aef53b8e28ce20",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-5-error-message-merror",
+          "mathml-core.x3-3-5-error-message-merror-clause-0e01c91df2f9"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-6-adjust-space-around-content-mpadded",
+      "title": "3.3.6 Adjust Space Around Content <mpadded>",
+      "level": 4,
+      "text_sha256": "bf039b1e4f943226f872076e68665dcf3192c5457f125164e7d59121d32085b6",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-6-adjust-space-around-content-mpadded",
+          "mathml-core.x3-3-6-adjust-space-around-content-mpadded-clause-e9908c2b0217"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-6-1-inner-box-and-requested-parameters",
+      "title": "3.3.6.1 Inner box and requested parameters",
+      "level": 5,
+      "text_sha256": "d37be91c10856608be8a1664d175b56a6d29fe3592f4d1cf3de4b91da5d23cd6",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-6-1-inner-box-and-requested-parameters",
+          "mathml-core.x3-3-6-1-inner-box-and-requested-parameters-clause-15befae04c53",
+          "mathml-core.x3-3-6-1-inner-box-and-requested-parameters-clause-3f7a1725315e",
+          "mathml-core.x3-3-6-1-inner-box-and-requested-parameters-clause-e4d68c8d43b2",
+          "mathml-core.x3-3-6-1-inner-box-and-requested-parameters-clause-aadd692cf5ac"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-6-2-layout-of-mpadded",
+      "title": "3.3.6.2 Layout of <mpadded>",
+      "level": 5,
+      "text_sha256": "8fbe7c33fe472e478e4209f875c8ff98b1d4964d2544d1831695583901dfa310",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-6-2-layout-of-mpadded",
+          "mathml-core.x3-3-6-2-layout-of-mpadded-clause-4948cc21a780"
+        ]
+      }
+    },
+    {
+      "id": "x3-3-7-making-sub-expressions-invisible-mphantom",
+      "title": "3.3.7 Making Sub-Expressions Invisible <mphantom>",
+      "level": 4,
+      "text_sha256": "68051abae69b6e0ed6caae561c33adfa92fa6221e45a0d1629da4a3323a341ae",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-3-7-making-sub-expressions-invisible-mphantom",
+          "mathml-core.x3-3-7-making-sub-expressions-invisible-mphantom-clause-8e891c028d00"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-script-and-limit-schemata",
+      "title": "3.4 Script and Limit Schemata",
+      "level": 3,
+      "text_sha256": "06b04c3051bd0306611bc07b91e04db6373063d78b39c5f0d0e84e2015ff891f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-script-and-limit-schemata"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-1-subscripts-and-superscripts-msub-msup-msubsup",
+      "title": "3.4.1 Subscripts and Superscripts <msub>, <msup>, <msubsup>",
+      "level": 4,
+      "text_sha256": "5315627d5eda549ef3fa17813b4fc038e502e11afde35dd891ed6943eb98ff08",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-1-subscripts-and-superscripts-msub-msup-msubsup",
+          "mathml-core.x3-4-1-subscripts-and-superscripts-msub-msup-msubsup-clause-b4ba3d90ec36"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-1-1-children-of-msub-msup-msubsup",
+      "title": "3.4.1.1 Children of <msub>, <msup>, <msubsup>",
+      "level": 5,
+      "text_sha256": "c34cb4c2b2a6c40044d4938539d10f1cac0f8b6670d210462eb7e4c8e974de6f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-1-1-children-of-msub-msup-msubsup",
+          "mathml-core.x3-4-1-1-children-of-msub-msup-msubsup-clause-98f252acab86",
+          "mathml-core.x3-4-1-1-children-of-msub-msup-msubsup-clause-bf54ac94feb9",
+          "mathml-core.x3-4-1-1-children-of-msub-msup-msubsup-clause-1dcc999e514b"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-1-2-base-with-subscript",
+      "title": "3.4.1.2 Base with subscript",
+      "level": 5,
+      "text_sha256": "fd1223f9ec2d19ac72daf3c76ec8f3ccfd3c05a61dd6998d5446e4fd6581afaa",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-1-2-base-with-subscript"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-1-3-base-with-superscript",
+      "title": "3.4.1.3 Base with superscript",
+      "level": 5,
+      "text_sha256": "4b45db4437c16dc819ece6724c0a798387c19a58e4733fc3adb1c4b677c46523",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-1-3-base-with-superscript",
+          "mathml-core.x3-4-1-3-base-with-superscript-clause-32e736ee49c1"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-1-4-base-with-subscript-and-superscript",
+      "title": "3.4.1.4 Base with subscript and superscript",
+      "level": 5,
+      "text_sha256": "3399614be8fca60b855a8795b25b21a823ff94dfddb56e61e8379f65cbcdfd4a",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-1-4-base-with-subscript-and-superscript",
+          "mathml-core.x3-4-1-4-base-with-subscript-and-superscript-clause-57edbfd7060b",
+          "mathml-core.x3-4-1-4-base-with-subscript-and-superscript-clause-571a0594ae1c"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-2-underscripts-and-overscripts-munder-mover-munderover",
+      "title": "3.4.2 Underscripts and Overscripts <munder>, <mover>, <munderover>",
+      "level": 4,
+      "text_sha256": "56d744c47d9f02d8bb8cfb6fdd58a60633f469f2b177b021f83671476fb9f5f3",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-2-underscripts-and-overscripts-munder-mover-munderover",
+          "mathml-core.x3-4-2-underscripts-and-overscripts-munder-mover-munderover-clause-fc25cfabbe61",
+          "mathml-core.x3-4-2-underscripts-and-overscripts-munder-mover-munderover-clause-c21c9b2a7e97"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-2-1-children-of-munder-mover-munderover",
+      "title": "3.4.2.1 Children of <munder>, <mover>, <munderover>",
+      "level": 5,
+      "text_sha256": "b5ead9764571dc339e7a2295fdfb67368a595b35a791e6d087e7c47cf5d5985a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-2-1-children-of-munder-mover-munderover",
+          "mathml-core.x3-4-2-1-children-of-munder-mover-munderover-clause-73e2fda03685",
+          "mathml-core.x3-4-2-1-children-of-munder-mover-munderover-clause-51276bcd0998",
+          "mathml-core.x3-4-2-1-children-of-munder-mover-munderover-clause-77672e9030a8",
+          "mathml-core.x3-4-2-1-children-of-munder-mover-munderover-clause-ae19315164d5"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-2-2-algorithm-for-stretching-operators-along-the-inline-axis",
+      "title": "3.4.2.2 Algorithm for stretching operators along the inline axis",
+      "level": 5,
+      "text_sha256": "27b0c7e337d359a89887a53bc86740969241813a870c1daab1b51c98017ff9eb",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-2-2-algorithm-for-stretching-operators-along-the-inline-axis",
+          "mathml-core.x3-4-2-2-algorithm-for-stretching-operators-along-the-inline-axis-clause-72f5787e11ac"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-2-3-base-with-underscript",
+      "title": "3.4.2.3 Base with underscript",
+      "level": 5,
+      "text_sha256": "51ab341fe0f03d8127b59f161d923292e25b69fc0cb32bb06b7cb9757f4b7c19",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-2-3-base-with-underscript",
+          "mathml-core.x3-4-2-3-base-with-underscript-clause-21708caf1d52"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-2-4-base-with-overscript",
+      "title": "3.4.2.4 Base with overscript",
+      "level": 5,
+      "text_sha256": "cd0a344aeb4d6ccd28a20280152e89caa98271da2ba7c2ff873994fca4e666f0",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-2-4-base-with-overscript",
+          "mathml-core.x3-4-2-4-base-with-overscript-clause-21708caf1d52",
+          "mathml-core.x3-4-2-4-base-with-overscript-clause-d0e977b673c8"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-2-5-base-with-underscript-and-overscript",
+      "title": "3.4.2.5 Base with underscript and overscript",
+      "level": 5,
+      "text_sha256": "cb7909020b242298c5d6b0f5ae1ad869225081d891c53e9251568af63d8fa23b",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-2-5-base-with-underscript-and-overscript",
+          "mathml-core.x3-4-2-5-base-with-underscript-and-overscript-clause-4644fa932041",
+          "mathml-core.x3-4-2-5-base-with-underscript-and-overscript-clause-38cbbd6671f0"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-3-prescripts-and-tensor-indices-mmultiscripts",
+      "title": "3.4.3 Prescripts and Tensor Indices <mmultiscripts>",
+      "level": 4,
+      "text_sha256": "89b41864d7dd810148b03fb6a0b109f8469581374bb3941a837c8509c918b2f2",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-3-prescripts-and-tensor-indices-mmultiscripts",
+          "mathml-core.x3-4-3-prescripts-and-tensor-indices-mmultiscripts-clause-ecc63b841aa0",
+          "mathml-core.x3-4-3-prescripts-and-tensor-indices-mmultiscripts-clause-7b2f3b096bfa"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-3-1-base-with-prescripts-and-postscripts",
+      "title": "3.4.3.1 Base with prescripts and postscripts",
+      "level": 5,
+      "text_sha256": "f18373679fae42edd03cff7d9a6843013d5d2f1347514930988b7c00bc6bfe35",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-3-1-base-with-prescripts-and-postscripts",
+          "mathml-core.x3-4-3-1-base-with-prescripts-and-postscripts-clause-ede52ee1ea9d",
+          "mathml-core.x3-4-3-1-base-with-prescripts-and-postscripts-clause-fb2555f881b6",
+          "mathml-core.x3-4-3-1-base-with-prescripts-and-postscripts-clause-d8bc7289e3cf"
+        ]
+      }
+    },
+    {
+      "id": "x3-4-4-displaystyle-scriptlevel-and-math-shift-in-scripts",
+      "title": "3.4.4 Displaystyle, scriptlevel and math-shift in scripts",
+      "level": 4,
+      "text_sha256": "6f076dba732c83dd4710cd94008c4fe0fad5af0dc1b2c2b907addebcf47a6a9f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-4-4-displaystyle-scriptlevel-and-math-shift-in-scripts",
+          "mathml-core.x3-4-4-displaystyle-scriptlevel-and-math-shift-in-scripts-clause-336006b74475",
+          "mathml-core.x3-4-4-displaystyle-scriptlevel-and-math-shift-in-scripts-clause-83715e365af8"
+        ]
+      }
+    },
+    {
+      "id": "x3-5-tabular-math",
+      "title": "3.5 Tabular Math",
+      "level": 3,
+      "text_sha256": "4fd898a06443a114429374187bc000c50cf56dafec320a7c0bc1c8756f751700",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-5-tabular-math"
+        ]
+      }
+    },
+    {
+      "id": "x3-5-1-table-or-matrix-mtable",
+      "title": "3.5.1 Table or Matrix <mtable>",
+      "level": 4,
+      "text_sha256": "91e047e97cedaa67e6e9b9b233d30f3359a3fbdbcac4216296b9655da0255528",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-5-1-table-or-matrix-mtable",
+          "mathml-core.x3-5-1-table-or-matrix-mtable-clause-fff7995bb81d"
+        ]
+      }
+    },
+    {
+      "id": "x3-5-2-row-in-table-or-matrix-mtr",
+      "title": "3.5.2 Row in Table or Matrix <mtr>",
+      "level": 4,
+      "text_sha256": "cdba3fe198c080c9a3775c4aba8c3af3b956fa54794ae35b8740cde295876854",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-5-2-row-in-table-or-matrix-mtr",
+          "mathml-core.x3-5-2-row-in-table-or-matrix-mtr-clause-d81259f4cfec"
+        ]
+      }
+    },
+    {
+      "id": "x3-5-3-entry-in-table-or-matrix-mtd",
+      "title": "3.5.3 Entry in Table or Matrix <mtd>",
+      "level": 4,
+      "text_sha256": "4e877b20c8f444534fae6808d390f7dc7ffda94aa40fe1fa9e2df767651746d8",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-5-3-entry-in-table-or-matrix-mtd",
+          "mathml-core.x3-5-3-entry-in-table-or-matrix-mtd-clause-ac06c2fa6c76",
+          "mathml-core.x3-5-3-entry-in-table-or-matrix-mtd-clause-1c3ba99521eb",
+          "mathml-core.x3-5-3-entry-in-table-or-matrix-mtd-clause-9faa282b4b79"
+        ]
+      }
+    },
+    {
+      "id": "x3-6-enlivening-expressions",
+      "title": "3.6 Enlivening Expressions",
+      "level": 3,
+      "text_sha256": "71d2c93411a2772acc368641276b4884edf6ab1051f93de2856c948657fcbe6f",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-6-enlivening-expressions",
+          "mathml-core.x3-6-enlivening-expressions-clause-db75f3072aa2"
+        ]
+      }
+    },
+    {
+      "id": "x3-7-semantics-and-presentation",
+      "title": "3.7 Semantics and Presentation",
+      "level": 3,
+      "text_sha256": "db5afaf00aff29c271b99651e05c7a6888e40df1a4194a1ba2a0382f3c2460be",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x3-7-semantics-and-presentation",
+          "mathml-core.x3-7-semantics-and-presentation-clause-f0fd42ff4b44",
+          "mathml-core.x3-7-semantics-and-presentation-clause-29e1de017ca1"
+        ]
+      }
+    },
+    {
+      "id": "x4-css-extensions-for-math-layout",
+      "title": "4. CSS Extensions for Math Layout",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x4-css-extensions-for-math-layout"
+        ]
+      }
+    },
+    {
+      "id": "x4-1-the-display-block-math-and-display-inline-math-value",
+      "title": "4.1 The display: block math and display: inline math value",
+      "level": 3,
+      "text_sha256": "39275907c22162635e08928e392bf088e502844c7cd5258f6606df9ded2c1124",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x4-1-the-display-block-math-and-display-inline-math-value",
+          "mathml-core.x4-1-the-display-block-math-and-display-inline-math-value-clause-9f4ff5342004",
+          "mathml-core.x4-1-the-display-block-math-and-display-inline-math-value-clause-c3debf6e54c2"
+        ]
+      }
+    },
+    {
+      "id": "x4-2-the-math-auto-transform",
+      "title": "4.2 The math-auto transform",
+      "level": 3,
+      "text_sha256": "00c572e4d5e90765b3d4aa54dc2702b886e9a904bf37c93737e42909b5bd2366",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x4-2-the-math-auto-transform",
+          "mathml-core.x4-2-the-math-auto-transform-clause-0dc458450c83"
+        ]
+      }
+    },
+    {
+      "id": "x4-3-the-math-style-property",
+      "title": "4.3 The math-style property",
+      "level": 3,
+      "text_sha256": "2504ed32309bb012d0a8c5fca7758ef43b65211bcd75b8d460a031eb2f827d4d",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x4-3-the-math-style-property",
+          "mathml-core.x4-3-the-math-style-property-clause-cca2516ebb1d",
+          "mathml-core.x4-3-the-math-style-property-clause-4f411fff353e"
+        ]
+      }
+    },
+    {
+      "id": "x4-4-the-math-shift-property",
+      "title": "4.4 The math-shift property",
+      "level": 3,
+      "text_sha256": "0a53e6cb6b9991445e62b72c8812c0f641c7fe0c88b1893ed62dfcf6d50d8f5a",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x4-4-the-math-shift-property",
+          "mathml-core.x4-4-the-math-shift-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "x4-5-the-math-depth-property",
+      "title": "4.5 The math-depth property",
+      "level": 3,
+      "text_sha256": "f2fe8dc25b5b020ed0c91c6c47d1b51511b39430e4910a7fc1be2fe3e830c40f",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x4-5-the-math-depth-property",
+          "mathml-core.x4-5-the-math-depth-property-clause-7fbce6db3245",
+          "mathml-core.x4-5-the-math-depth-property-clause-cca2516ebb1d",
+          "mathml-core.x4-5-the-math-depth-property-clause-a6b5c2525230",
+          "mathml-core.x4-5-the-math-depth-property-clause-a23180bab250",
+          "mathml-core.x4-5-the-math-depth-property-clause-14f39a974f9c",
+          "mathml-core.x4-5-the-math-depth-property-clause-7eaa976e215d",
+          "mathml-core.x4-5-the-math-depth-property-clause-25c3d5b0286e",
+          "mathml-core.x4-5-the-math-depth-property-clause-6ce80ee705ce",
+          "mathml-core.x4-5-the-math-depth-property-clause-edebb08e8cc1"
+        ]
+      }
+    },
+    {
+      "id": "x5-opentype-math-table",
+      "title": "5. OpenType MATH table",
+      "level": 2,
+      "text_sha256": "f98da3cc9416619c032ed82fd4e4f1f5d0b69206836a9787c5a0126abc0b6bc5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x5-opentype-math-table",
+          "mathml-core.x5-opentype-math-table-clause-1a5b3364d584"
+        ]
+      }
+    },
+    {
+      "id": "x5-1-layout-constants-mathconstants",
+      "title": "5.1 Layout constants (MathConstants)",
+      "level": 3,
+      "text_sha256": "5c68753f5a225fd4f2f4ed3205c4bcf800e482609aa076dce9824e35134a3ddd",
+      "clause_count": 103,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x5-1-layout-constants-mathconstants"
+        ]
+      }
+    },
+    {
+      "id": "x5-2-glyph-information-mathglyphinfo",
+      "title": "5.2 Glyph information (MathGlyphInfo)",
+      "level": 3,
+      "text_sha256": "51a6b16fbc2b962578475c1937d062c773364161e093e97b58a9cd211b024afd",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x5-2-glyph-information-mathglyphinfo"
+        ]
+      }
+    },
+    {
+      "id": "x5-3-size-variants-for-operators-mathvariants",
+      "title": "5.3 Size variants for operators (MathVariants)",
+      "level": 3,
+      "text_sha256": "d007632abcf843b45743dc35a04d3fa3a7a546252c24f4fafbcc01277e2d729d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x5-3-size-variants-for-operators-mathvariants"
+        ]
+      }
+    },
+    {
+      "id": "x5-3-1-the-glyphassembly-table",
+      "title": "5.3.1 The GlyphAssembly table",
+      "level": 4,
+      "text_sha256": "2c960028237b76bc1f92a555a35314a6e9b2df79f7b5192dbf659da5b12c45f3",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x5-3-1-the-glyphassembly-table",
+          "mathml-core.x5-3-1-the-glyphassembly-table-clause-466188ddde26",
+          "mathml-core.x5-3-1-the-glyphassembly-table-clause-84dadeecdf82",
+          "mathml-core.x5-3-1-the-glyphassembly-table-clause-0d5e9e996fd4",
+          "mathml-core.x5-3-1-the-glyphassembly-table-clause-ecea2f55de0c"
+        ]
+      }
+    },
+    {
+      "id": "x5-3-2-algorithms-for-glyph-stretching",
+      "title": "5.3.2 Algorithms for glyph stretching",
+      "level": 4,
+      "text_sha256": "76c24eaf7221229e6c37b7b900379d958ef7b34f953b1f89574d3f7f34b0174c",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.x5-3-2-algorithms-for-glyph-stretching",
+          "mathml-core.x5-3-2-algorithms-for-glyph-stretching-clause-80f1824d90ef",
+          "mathml-core.x5-3-2-algorithms-for-glyph-stretching-clause-d3e58836b2fe"
+        ]
+      }
+    },
+    {
+      "id": "a-user-agent-stylesheet",
+      "title": "A. User Agent Stylesheet",
+      "level": 2,
+      "text_sha256": "37f69418d899b666eb8ff08020b44acc3afd25233c888186a4d14077e1a41483",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.a-user-agent-stylesheet",
+          "mathml-core.a-user-agent-stylesheet-clause-37f69418d899"
+        ]
+      }
+    },
+    {
+      "id": "b-operator-tables",
+      "title": "B. Operator Tables",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.b-operator-tables"
+        ]
+      }
+    },
+    {
+      "id": "b-1-operator-dictionary",
+      "title": "B.1 Operator Dictionary",
+      "level": 3,
+      "text_sha256": "5908ce7aaa1af95aa45377977d6804d38bf17c221cdbb502f54656268dd34168",
+      "clause_count": 154,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.b-1-operator-dictionary",
+          "mathml-core.b-1-operator-dictionary-clause-b25059c1d1b2",
+          "mathml-core.b-1-operator-dictionary-clause-0a3a59f70806"
+        ]
+      }
+    },
+    {
+      "id": "b-2-operator-dictionary-human-readable",
+      "title": "B.2 Operator Dictionary (human-readable)",
+      "level": 3,
+      "text_sha256": "206747ef205d9209e93d5027e3e4f9035742c1ff96da7b2f096046edf40ab927",
+      "clause_count": 7071,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.b-2-operator-dictionary-human-readable"
+        ]
+      }
+    },
+    {
+      "id": "b-3-combining-character-equivalences",
+      "title": "B.3 Combining Character Equivalences",
+      "level": 3,
+      "text_sha256": "8e463d992f89a7ce669f4623704eb8ff8c355c19fa791c3d4216f13b32b76430",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.b-3-combining-character-equivalences"
+        ]
+      }
+    },
+    {
+      "id": "combining",
+      "title": "Combining",
+      "level": 4,
+      "text_sha256": "516970ef0ea67807a03feaf4890ac24020bf039f51170c653b68b975845ce265",
+      "clause_count": 197,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.combining"
+        ]
+      }
+    },
+    {
+      "id": "non-combining",
+      "title": "Non Combining",
+      "level": 4,
+      "text_sha256": "94aee20eb8fdf6659ead008e9ab8928f1bec7521188562333a115a1dcba1428a",
+      "clause_count": 205,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.non-combining"
+        ]
+      }
+    },
+    {
+      "id": "b-4-unicode-based-glyph-assemblies",
+      "title": "B.4 Unicode-based Glyph Assemblies",
+      "level": 3,
+      "text_sha256": "23e272088f4948ee5fa83fdea1a5e0ec0c138d594c3aa1f2553ac35a81c921ca",
+      "clause_count": 265,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.b-4-unicode-based-glyph-assemblies"
+        ]
+      }
+    },
+    {
+      "id": "new-text-transform-mappings",
+      "title": "C. Mathematical Alphanumeric Symbols",
+      "level": 2,
+      "text_sha256": "6b1a3dad6bc657eeb17c6186be3e34d6977c650c86c0ddbcdcb689f88285a2d8",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.new-text-transform-mappings"
+        ]
+      }
+    },
+    {
+      "id": "c-1-italic-mappings",
+      "title": "C.1 italic mappings",
+      "level": 3,
+      "text_sha256": "370a9e4cbf878c5efbc4898f2e94b267d3b5e29d757855c62407ff3b2b0a88b5",
+      "clause_count": 339,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.c-1-italic-mappings"
+        ]
+      }
+    },
+    {
+      "id": "d-acknowledgments",
+      "title": "D. Acknowledgments",
+      "level": 2,
+      "text_sha256": "6b1276201c19b98c1b9c95cb0c98b5254cd058ee2b86e9fa630a4062d3a8ff41",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.d-acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "e-security-considerations",
+      "title": "E. Security Considerations",
+      "level": 2,
+      "text_sha256": "63c54ac3269445b16e2304a035cb479cdb29d408ccdace9e5e8852a1de779c3a",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.e-security-considerations"
+        ]
+      }
+    },
+    {
+      "id": "f-privacy-considerations",
+      "title": "F. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "1f698827bb7aa389ad030404c7d39151a86a2f8dccc4ffa98a9500ececbf6e41",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.f-privacy-considerations"
+        ]
+      }
+    },
+    {
+      "id": "g-conformance",
+      "title": "G. Conformance",
+      "level": 2,
+      "text_sha256": "3a8fa3b3359b197cffcd60cb7bf3c20e154ac641eb0952bba36db8606fd9b0ec",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.g-conformance",
+          "mathml-core.g-conformance-clause-5c98c879f070",
+          "mathml-core.g-conformance-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "h-references",
+      "title": "H. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.h-references"
+        ]
+      }
+    },
+    {
+      "id": "h-1-normative-references",
+      "title": "H.1 Normative references",
+      "level": 3,
+      "text_sha256": "7010c74a86f1e47b531b8d522b308f968637496f983f5e34eb0bb385de06df93",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.h-1-normative-references"
+        ]
+      }
+    },
+    {
+      "id": "h-2-informative-references",
+      "title": "H.2 Informative references",
+      "level": 3,
+      "text_sha256": "3988f22f1d9e6ab3bcbc924123e1e4ee8a7113f66debcd1c09955286e46fb371",
+      "clause_count": 834,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mathml-core.h-2-informative-references"
+        ]
+      }
+    }
+  ]
+}

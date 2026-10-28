@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "source_id": "css-style-attr",
+  "sections": [
+    {
+      "id": "heading-94c36acbfc92",
+      "title": "CSS Style Attributes",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.heading-94c36acbfc92"
+        ]
+      }
+    },
+    {
+      "id": "longstatus-date",
+      "title": "W3C Recommendation 07 November 2013",
+      "level": 2,
+      "text_sha256": "c108a82aed05c12b70b02ad1cd1a26d36b61df92cd925835345871940d3d2718",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.longstatus-date"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "0c89bf88bd368e638c141693f4d2f8aff7d02dbfc70c49ff1f83666cc9f3f63d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "5017b5a3091a401efa182df4af864ac996257c1c74e963c98b912288586b7312",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "54a2ae1704453c9a3e17f4591d80d188f6c35465c944e87652c9e0d19c98a7b9",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "5dfd0ffd59f30dea2e7e43377829db46d3f1c478b7937feba651266818f23659",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.intro"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "2. Conformance",
+      "level": 2,
+      "text_sha256": "1c06e36a69093043ddcbdcac86e885910c71a3ec81c341f6c4cce8b5942ceafd",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.conformance",
+          "css-style-attr.conformance-clause-9eaa9ae4d6b8",
+          "css-style-attr.conformance-clause-8da46cef76e4"
+        ]
+      }
+    },
+    {
+      "id": "syntax",
+      "title": "3. Syntax and Parsing",
+      "level": 2,
+      "text_sha256": "8b63a5f695e6ba34fe6e2a4e7a885a19d79f5c0b348dc958856984b0b89e9c0e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.syntax",
+          "css-style-attr.syntax-clause-a0132ef70183",
+          "css-style-attr.syntax-clause-88d577733517",
+          "css-style-attr.syntax-clause-0a86b4568afc"
+        ]
+      }
+    },
+    {
+      "id": "interpret",
+      "title": "4. Cascading and Interpretation",
+      "level": 2,
+      "text_sha256": "fb13a438497fdc23bb2a92f2ef82263e4a8bf29861a13873ffcc60053b247840",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.interpret",
+          "css-style-attr.interpret-clause-0399b8e63144",
+          "css-style-attr.interpret-clause-07411ad1e077",
+          "css-style-attr.interpret-clause-e84f2c920f02"
+        ]
+      }
+    },
+    {
+      "id": "ack",
+      "title": "5. Acknowledgments",
+      "level": 2,
+      "text_sha256": "8454fa91d00de8599c32f6f74c343589913da385b6680c05d9cbd78533cd806b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.ack"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "6. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.references"
+        ]
+      }
+    },
+    {
+      "id": "normative-references",
+      "title": "Normative references",
+      "level": 3,
+      "text_sha256": "e03d48ac81c7632c1157e093a7eacce8256e50cac7f36941ca89abaa536adf1d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.normative-references"
+        ]
+      }
+    },
+    {
+      "id": "informative-references",
+      "title": "Informative references",
+      "level": 3,
+      "text_sha256": "7531705eed2769a19cfbc2f1c426c59acc9f0afa81f28a7d673aecb5251b7032",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-style-attr.informative-references"
+        ]
+      }
+    }
+  ]
+}

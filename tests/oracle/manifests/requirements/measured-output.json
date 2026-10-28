@@ -1,0 +1,400 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-page-3.explicit-fixture-page-size",
+      "source_id": "css-page-3",
+      "sections": [
+        "page-size-prop"
+      ],
+      "behaviour": "Explicit 360pt by 480pt page size is retained in the PDF output.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static paginated output."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "latin",
+        "paint-overlap",
+        "vertical-align-keywords",
+        "overflow-axes",
+        "fixed-every-page"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "latin",
+          "assertion_id": "explicit-page-box"
+        },
+        {
+          "case_id": "paint-overlap",
+          "assertion_id": "explicit-page-box"
+        },
+        {
+          "case_id": "vertical-align-keywords",
+          "assertion_id": "explicit-page-box"
+        },
+        {
+          "case_id": "overflow-axes",
+          "assertion_id": "explicit-page-box"
+        },
+        {
+          "case_id": "fixed-every-page",
+          "assertion_id": "explicit-page-box"
+        }
+      ]
+    },
+    {
+      "id": "css-position-3.fixed-output-repetition",
+      "source_id": "css-position-3",
+      "sections": [
+        "position-property"
+      ],
+      "behaviour": "The fixed-every-page probe emits the fixed box text on each page.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static paginated output."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "fixed-every-page"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "fixed-every-page",
+          "assertion_id": "fixed-text-every-page"
+        }
+      ]
+    },
+    {
+      "id": "css-gcpm-3.running-string-mode-output",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "content-function-header",
+        "using-named-strings"
+      ],
+      "behaviour": "The synthetic three-page running-string fixture emits each first/start/last/first-except value and captured counter value exactly once on its specified pages, including hidden metadata and the carried page-2 entry.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Named strings in static paged output."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "running-string-modes"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "running-string-modes",
+          "assertion_id": "page-count"
+        },
+        {
+          "case_id": "running-string-modes",
+          "assertion_id": "captured-page-strings"
+        }
+      ]
+    },
+    {
+      "id": "css-content-3.target-reference-output",
+      "source_id": "css-content-3",
+      "sections": [
+        "target-counter",
+        "target-counters",
+        "target-text"
+      ],
+      "behaviour": "The synthetic target-reference fixture emits the specified forward/backward counter, nested counter, text and page values, including pseudo text and a later named-page margin.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Same-document references in static paged output."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "target-references"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "target-references",
+          "assertion_id": "page-count"
+        },
+        {
+          "case_id": "target-references",
+          "assertion_id": "resolved-target-text"
+        },
+        {
+          "case_id": "target-references",
+          "assertion_id": "target-first-letter"
+        }
+      ]
+    },
+    {
+      "id": "css-content-3.body-string-output",
+      "source_id": "css-content-3",
+      "sections": [
+        "string-function"
+      ],
+      "behaviour": "The synthetic three-page body-string fixture emits each first/start/last/first-except value on the page of its body pseudo-element use, including forward assignments and carried entry values.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Named strings in generated static body content."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "body-string-modes"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "body-string-modes",
+          "assertion_id": "page-count"
+        },
+        {
+          "case_id": "body-string-modes",
+          "assertion_id": "body-mode-values"
+        }
+      ]
+    },
+    {
+      "id": "css-content-3.leader-values-output",
+      "source_id": "css-content-3",
+      "sections": [
+        "leader-function",
+        "leader-rules",
+        "leader-alignment"
+      ],
+      "behaviour": "The synthetic leader-values fixture preserves its before/after text and repeats keyword/custom patterns, ignoring a newline in the pattern.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Generated leaders in static document content."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "leader-values"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "leader-values",
+          "assertion_id": "leader-text"
+        }
+      ]
+    },
+    {
+      "id": "css-content-3.leader-wrap-output",
+      "source_id": "css-content-3",
+      "sections": [
+        "leader-function",
+        "leader-rules",
+        "leader-alignment"
+      ],
+      "behaviour": "The synthetic leader-wrap fixture retains repeated leader text and the end-edge-aligned glyph grid after short and wrapped before content.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Generated leaders in static document content."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "leader-wrap"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "leader-wrap",
+          "assertion_id": "leader-text"
+        },
+        {
+          "case_id": "leader-wrap",
+          "assertion_id": "leader-phase"
+        }
+      ]
+    },
+    {
+      "id": "html.heading-margins-output",
+      "source_id": "html",
+      "sections": [
+        "sections-and-headings"
+      ],
+      "behaviour": "HTML heading margins are 0.67em of the authored heading font size. With zero body/paragraph margins, the 18pt and 12pt headings have 12.06pt and 8.04pt top/bottom margins. PDF origins follow these margins, authored line heights and locked DejaVu Sans hhea metrics (ascent 1901, descent -483, unitsPerEm 2048); page y is 300 minus the baseline.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static HTML default rendering."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "html-heading-margins"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "html-heading-margins",
+          "assertion_id": "heading-origins"
+        }
+      ]
+    },
+    {
+      "id": "html.link-colours-output",
+      "source_id": "html",
+      "sections": [
+        "phrasing-content-3"
+      ],
+      "behaviour": "The pinned HTML UA rule sets :link to #0000EE. An authored colour overrides the UA rule; an anchor without href is not a link and retains the inherited black initial colour.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static HTML default rendering."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "html-link-colours"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "html-link-colours",
+          "assertion_id": "unvisited-blue"
+        },
+        {
+          "case_id": "html-link-colours",
+          "assertion_id": "authored-red"
+        },
+        {
+          "case_id": "html-link-colours",
+          "assertion_id": "nonlink-black"
+        }
+      ]
+    },
+    {
+      "id": "css-tables-3.rowspan-kept-row-footer-output",
+      "source_id": "css-tables-3",
+      "sections": [
+        "breaking-rules"
+      ],
+      "behaviour": "The repeated footer precedes unused space after a kept row break. Each row is 14pt line height + 8pt padding + 0.5pt collapsed border = 22.5pt. The table starts at 10.25pt, and the footer follows one header and three body rows on pages 1 and 2, or two body rows on page 3. Its glyph baseline adds 4.25pt padding/border plus 7 + (1901-483)*10/(2*2048) from the locked font hhea metrics. PDF y is 140 minus that baseline. Only F is selected; spanning-cell alignment is not assumed by this assertion.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static paginated tables with repeated footers and spanning cells."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "rowspan-kept-row-footer"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "rowspan-kept-row-footer",
+          "assertion_id": "footer-origins"
+        }
+      ]
+    },
+    {
+      "id": "css-inline-3.explicit-fallback-line-height-output",
+      "source_id": "css-inline-3",
+      "sections": [
+        "inline-height"
+      ],
+      "behaviour": "CSS Inline 3 inline-height uses only the first available font for non-normal layout bounds. STIX hhea ascent 1055 and descent -455 at 1000 units/em yield a 10pt baseline offset for 10pt/14pt text. Three 14pt lines start at page y=10pt; PDF marker baselines are 80, 66 and 52pt. Fallback glyphs must not enlarge those lines, including in a child span. CSS Inline 3 inline-height includes all glyph metrics for normal layout bounds. U+214A is absent from DejaVu Sans and present in STIX. Its 10.55pt ascent and 4.55pt descent exceed the first font metrics; after the three fixed 14pt lines the baseline is 10+42+10.55pt from the page top, or PDF y=37.45pt.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Horizontal inline layout with explicit and normal line heights and font fallback."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "fallback-explicit-line-height"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "fallback-explicit-line-height",
+          "assertion_id": "fixed-baselines"
+        },
+        {
+          "case_id": "fallback-explicit-line-height",
+          "assertion_id": "normal-fallback"
+        }
+      ]
+    },
+    {
+      "id": "html.heading-level-margins-output",
+      "source_id": "html",
+      "sections": [
+        "sections-and-headings"
+      ],
+      "behaviour": "HTML heading levels 1 through 6 use block margins 0.67em, 0.83em, 1em, 1.33em, 1.67em and 2.33em. Authored 12pt font sizes make these 8.04, 9.96, 12, 15.96, 20.04 and 27.96pt. With zero body/paragraph margins, 16pt heading and 14pt paragraph line heights, origins follow those margins and locked DejaVu Sans hhea metrics (ascent 1901, descent -483, unitsPerEm 2048); PDF y is 600 minus the baseline.",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Static HTML default rendering."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "html-heading-level-margins"
+      ],
+      "priority": "foundations",
+      "review_state": "reviewed",
+      "verification": [
+        {
+          "case_id": "html-heading-level-margins",
+          "assertion_id": "heading-origins"
+        }
+      ]
+    }
+  ]
+}

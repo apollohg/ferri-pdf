@@ -1,0 +1,2738 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-color-hdr-1.terminology",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in HDR Terminology.",
+      "locator": {
+        "section_id": "terminology",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.defining-dynamic-range",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "defining-dynamic-range"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Defining Dynamic Range.",
+      "locator": {
+        "section_id": "defining-dynamic-range",
+        "text_sha256": "f5f81c8d5075e06973b3fd891d39fa5cc9710620bd5c71de27c29b3954a12109"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.defining-dynamic-range-clause-e49d060662ed"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.defining-dynamic-range-clause-e49d060662ed",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "defining-dynamic-range"
+      ],
+      "behaviour": "Defining Dynamic Range — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "defining-dynamic-range",
+        "clause_index": 12,
+        "clause_sha256": "e49d060662edaf9e95bd4d0e05f040933e6efdc652eaaed2947d29329c50891b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.introducing-headroom",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "introducing-headroom"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introducing Headroom.",
+      "locator": {
+        "section_id": "introducing-headroom",
+        "text_sha256": "fc1710a2a4b51106261e55ea6288e5f39e8d418984b16f5bd2ed8d8d7ef84888"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.controlling-dynamic-range",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "controlling-dynamic-range"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Controlling Dynamic Range.",
+      "locator": {
+        "section_id": "controlling-dynamic-range",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.the-dynamic-range-limit-property",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "the-dynamic-range-limit-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The dynamic-range-limit property.",
+      "locator": {
+        "section_id": "the-dynamic-range-limit-property",
+        "text_sha256": "7dfa90d03b6617a3fee09a77f3855aa1b06ce9ddc9abb60e5e2b9b11e9c2ced3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.the-dynamic-range-limit-property-clause-cca2516ebb1d",
+        "css-color-hdr-1.the-dynamic-range-limit-property-clause-6526f8beacc1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.the-dynamic-range-limit-property-clause-cca2516ebb1d",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "the-dynamic-range-limit-property"
+      ],
+      "behaviour": "The dynamic-range-limit property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-dynamic-range-limit-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.the-dynamic-range-limit-property-clause-6526f8beacc1",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "the-dynamic-range-limit-property"
+      ],
+      "behaviour": "The dynamic-range-limit property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-dynamic-range-limit-property",
+        "clause_index": 13,
+        "clause_sha256": "6526f8beacc1b77d138fa8c4062bb1adab26fceea86ab91a746ac4a4d9efb3c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.dynamic-range-limit-mix",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "dynamic-range-limit-mix"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mixing Dynamic Range Limits: the dynamic-range-limit-mix() function.",
+      "locator": {
+        "section_id": "dynamic-range-limit-mix",
+        "text_sha256": "92227e15997fcefcf22c12c8b696a41b75d006cb6eb650b9eb6d8d9fbfce724b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.computing-dynamic-range-limit",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "computing-dynamic-range-limit"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Computed Value for dynamic-range-limit.",
+      "locator": {
+        "section_id": "computing-dynamic-range-limit",
+        "text_sha256": "887363cf7e72a9a1203d75c1ab9b28b723b4c980746d59eabc04a26c3248bb42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.computing-dynamic-range-limit-clause-8ae77d5bc54d",
+        "css-color-hdr-1.computing-dynamic-range-limit-clause-12e2460a46b8",
+        "css-color-hdr-1.computing-dynamic-range-limit-clause-6d82b8e2f42c",
+        "css-color-hdr-1.computing-dynamic-range-limit-clause-a0fdadaf486a",
+        "css-color-hdr-1.computing-dynamic-range-limit-clause-4a0cd9f38929"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.computing-dynamic-range-limit-clause-8ae77d5bc54d",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "computing-dynamic-range-limit"
+      ],
+      "behaviour": "Computed Value for dynamic-range-limit — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "computing-dynamic-range-limit",
+        "clause_index": 0,
+        "clause_sha256": "8ae77d5bc54dc9c4c8dccf4459dff9a3b40b747c9dc7db2a948a81fcdb3aedc0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.computing-dynamic-range-limit-clause-12e2460a46b8",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "computing-dynamic-range-limit"
+      ],
+      "behaviour": "Computed Value for dynamic-range-limit — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "computing-dynamic-range-limit",
+        "clause_index": 1,
+        "clause_sha256": "12e2460a46b825a10252bc1ef0b288538c6adbdd1cd1fd893df54413beb77da1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.computing-dynamic-range-limit-clause-6d82b8e2f42c",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "computing-dynamic-range-limit"
+      ],
+      "behaviour": "Computed Value for dynamic-range-limit — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "computing-dynamic-range-limit",
+        "clause_index": 2,
+        "clause_sha256": "6d82b8e2f42cdd8f2bfc1572861017e1409a64fa6ec21c92502bc099403fae65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.computing-dynamic-range-limit-clause-a0fdadaf486a",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "computing-dynamic-range-limit"
+      ],
+      "behaviour": "Computed Value for dynamic-range-limit — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "computing-dynamic-range-limit",
+        "clause_index": 22,
+        "clause_sha256": "a0fdadaf486a7d2c5d6ce5ff7abeee733df7080b84222f97e78a498ad03dec7b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.computing-dynamic-range-limit-clause-4a0cd9f38929",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "computing-dynamic-range-limit"
+      ],
+      "behaviour": "Computed Value for dynamic-range-limit — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "computing-dynamic-range-limit",
+        "clause_index": 24,
+        "clause_sha256": "4a0cd9f389299876360979ed097ea37e7dfda7e375f6ae8204db164f3bd22566"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.color-syntax",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "color-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The <color> syntax.",
+      "locator": {
+        "section_id": "color-syntax",
+        "text_sha256": "06225ab897917ab5a2e1a87b78cca3a67edcf9c8f030e4519e3d7894b8595585"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.hdr-color-function",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "hdr-color-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in HDR colors parameterized by headroom: the hdr-color() function.",
+      "locator": {
+        "section_id": "hdr-color-function",
+        "text_sha256": "83e994ea913f8c002c854e88d4d2eb66a4a2d1359f065ba9957d801b3d7b6983"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.hdr-color-function-clause-5db2d53171b5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.hdr-color-function-clause-5db2d53171b5",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "hdr-color-function"
+      ],
+      "behaviour": "HDR colors parameterized by headroom: the hdr-color() function — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "hdr-color-function",
+        "clause_index": 1,
+        "clause_sha256": "5db2d53171b5cbbc83aaef2c7afeb23b79a4f7299748d8f888c0f7b4303ed7b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.headroom-interpolation",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "headroom-interpolation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interpolating colors based on headroom.",
+      "locator": {
+        "section_id": "headroom-interpolation",
+        "text_sha256": "e0588c3837bef8073c45ba9f255c7aa9433828152b05631b8b28807f4bb3262f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.di-hdr",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "DI-HDR"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Device-Independent HDR Colors.",
+      "locator": {
+        "section_id": "DI-HDR",
+        "text_sha256": "4961b6e3b47ecf2ecf4f57f37eee4e4abd0435a809c5d6808f1cfe63611e5dfa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.ictcp",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "ICtCp"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ICtCp.",
+      "locator": {
+        "section_id": "ICtCp",
+        "text_sha256": "27243955cb5858cc412212a7bf7598e034fc7516eaa0682a8107f69a649d22b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.ictcp-clause-60107779a17f",
+        "css-color-hdr-1.ictcp-clause-ac8097dbc707",
+        "css-color-hdr-1.ictcp-clause-3cae27ffe044"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.ictcp-clause-60107779a17f",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "ICtCp"
+      ],
+      "behaviour": "ICtCp — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "ICtCp",
+        "clause_index": 23,
+        "clause_sha256": "60107779a17fbd37e74bd6bbd6f6ae109ffab19b301725713afbea712097d6e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.ictcp-clause-ac8097dbc707",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "ICtCp"
+      ],
+      "behaviour": "ICtCp — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "ICtCp",
+        "clause_index": 25,
+        "clause_sha256": "ac8097dbc707d91984d746c0d8f3904c581c3ec57e00b42e68c13fdf9de3fd2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.ictcp-clause-3cae27ffe044",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "ICtCp"
+      ],
+      "behaviour": "ICtCp — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "ICtCp",
+        "clause_index": 29,
+        "clause_sha256": "3cae27ffe04403117c691f50c1af7936c62c415473a83e0999de8abc40185411"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.jzazbz",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "Jzazbz"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Jzazbz.",
+      "locator": {
+        "section_id": "Jzazbz",
+        "text_sha256": "9078befa2efcf7a02f1de69b80bc219ddf6b45c1a10406b61bc48ec5fefe9910"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.jzazbz-clause-86cb9d120049",
+        "css-color-hdr-1.jzazbz-clause-90dea06076b5",
+        "css-color-hdr-1.jzazbz-clause-7ad42ab536f7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.jzazbz-clause-86cb9d120049",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "Jzazbz"
+      ],
+      "behaviour": "Jzazbz — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "Jzazbz",
+        "clause_index": 21,
+        "clause_sha256": "86cb9d12004964df08d063b7121ed21f89e99f3eae745cd33dfa8d0121359e20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.jzazbz-clause-90dea06076b5",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "Jzazbz"
+      ],
+      "behaviour": "Jzazbz — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "Jzazbz",
+        "clause_index": 23,
+        "clause_sha256": "90dea06076b580d79e9c898abee9fb15ae2822cd5e279ab76b0332942ca97426"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.jzazbz-clause-7ad42ab536f7",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "Jzazbz"
+      ],
+      "behaviour": "Jzazbz — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "Jzazbz",
+        "clause_index": 27,
+        "clause_sha256": "7ad42ab536f71559a5293e7f349468fcf93784f1025f0579f494abaaa4067795"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.jzczhz",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "JzCzhz"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in JzCzhz.",
+      "locator": {
+        "section_id": "JzCzhz",
+        "text_sha256": "313f362ed1ec1fa5db147794c56e351ec090751a3a0407ec30dd0d8f71f5b7ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.jzczhz-clause-b93c6aaef288",
+        "css-color-hdr-1.jzczhz-clause-f85afc1ce602",
+        "css-color-hdr-1.jzczhz-clause-da486d36e027",
+        "css-color-hdr-1.jzczhz-clause-582f8c63c7b6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.jzczhz-clause-b93c6aaef288",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "JzCzhz"
+      ],
+      "behaviour": "JzCzhz — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "JzCzhz",
+        "clause_index": 23,
+        "clause_sha256": "b93c6aaef288f5c64b951f5e8c80fb59c8c8acad98736e791eaaa4feb91db979"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.jzczhz-clause-f85afc1ce602",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "JzCzhz"
+      ],
+      "behaviour": "JzCzhz — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "JzCzhz",
+        "clause_index": 25,
+        "clause_sha256": "f85afc1ce60236e575b40d6610c807639654068316595625a4d28bfd64d05a0c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.jzczhz-clause-da486d36e027",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "JzCzhz"
+      ],
+      "behaviour": "JzCzhz — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "JzCzhz",
+        "clause_index": 27,
+        "clause_sha256": "da486d36e0271817734efdcff327082e9d3b3e25cf82f72c1e782e3f9d569b9a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.jzczhz-clause-582f8c63c7b6",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "JzCzhz"
+      ],
+      "behaviour": "JzCzhz — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "JzCzhz",
+        "clause_index": 31,
+        "clause_sha256": "582f8c63c7b616f08e94fe4cc35ff8ef133bbb9588e2e31f48b6683420ab55fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.jzazbz-to-jzczhz",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "Jzazbz-to-JzCzHz"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Converting Jzazbz colors to JzCzhz colors.",
+      "locator": {
+        "section_id": "Jzazbz-to-JzCzHz",
+        "text_sha256": "4794c846e839ad4e6f547de0012f8022944931c197ff2c8185d36731d852f0d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.jzazbz-to-jzczhz-clause-292c8e735567"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.jzazbz-to-jzczhz-clause-292c8e735567",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "Jzazbz-to-JzCzHz"
+      ],
+      "behaviour": "Converting Jzazbz colors to JzCzhz colors — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Jzazbz-to-JzCzHz",
+        "clause_index": 4,
+        "clause_sha256": "292c8e735567ca46647afdc3a3f2c955f8c83a100699b849521122a1b99f3fdb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.jzczhz-to-jzazbz",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "JzCzHz-to-Jzazbz"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Converting JzCzhz colors to Jzazbz colors.",
+      "locator": {
+        "section_id": "JzCzHz-to-Jzazbz",
+        "text_sha256": "e71c7c405325ef0076aa9656fdb8eb08fc6b00966d9799776a2fc02326b10a93"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.jzczhz-to-jzazbz-clause-2f92be70148e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.jzczhz-to-jzazbz-clause-2f92be70148e",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "JzCzHz-to-Jzazbz"
+      ],
+      "behaviour": "Converting JzCzhz colors to Jzazbz colors — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "JzCzHz-to-Jzazbz",
+        "clause_index": 4,
+        "clause_sha256": "2f92be70148e902a63f3708493795c842d443d764ac33e04fef1d4dbea4ade7d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.color-function",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "color-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying Predefined and Custom Color Spaces: the color() Function.",
+      "locator": {
+        "section_id": "color-function",
+        "text_sha256": "5894698d0c79cfbf76813212105b67156fb2b5a98f1f82bdd3723c3bde92f391"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.predefined-hdr",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "predefined-HDR"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Predefined color spaces for HDR:.",
+      "locator": {
+        "section_id": "predefined-HDR",
+        "text_sha256": "84549bf6674b92018b8987bc9dc6af1b3e179e5194dbd82afb779eed306bbf54"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.valdef-color-rec2100-pq",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "valdef-color-rec2100-pq"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in rec2100-pq.",
+      "locator": {
+        "section_id": "valdef-color-rec2100-pq",
+        "text_sha256": "6bccf8533219a5b5a76e50347ec8aeca03320fc73a92e1a43eafd0253f5e169b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.valdef-color-rec2100-pq-clause-811474343d13",
+        "css-color-hdr-1.valdef-color-rec2100-pq-clause-b885a77c06d7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.valdef-color-rec2100-pq-clause-811474343d13",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "valdef-color-rec2100-pq"
+      ],
+      "behaviour": "rec2100-pq — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "valdef-color-rec2100-pq",
+        "clause_index": 30,
+        "clause_sha256": "811474343d13b21bfeac2449017dc4306466c3eb11f9daee9316827062222dc1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.valdef-color-rec2100-pq-clause-b885a77c06d7",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "valdef-color-rec2100-pq"
+      ],
+      "behaviour": "rec2100-pq — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "valdef-color-rec2100-pq",
+        "clause_index": 39,
+        "clause_sha256": "b885a77c06d73308dfec94256867e70603282d6d9f3b2a4d1bd747fce21beeca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.valdef-color-rec2100-hlg",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "valdef-color-rec2100-hlg"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in rec2100-hlg.",
+      "locator": {
+        "section_id": "valdef-color-rec2100-hlg",
+        "text_sha256": "f2c03dbfe826176fe9245c115314b68644d63ffcc4120d7fe5ea2e02370a874c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.valdef-color-rec2100-hlg-clause-faf7fb35b70b",
+        "css-color-hdr-1.valdef-color-rec2100-hlg-clause-cee7cf2ad46b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.valdef-color-rec2100-hlg-clause-faf7fb35b70b",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "valdef-color-rec2100-hlg"
+      ],
+      "behaviour": "rec2100-hlg — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "valdef-color-rec2100-hlg",
+        "clause_index": 29,
+        "clause_sha256": "faf7fb35b70baf6104349526cc658fee28f6b3e245b648bdf1e97aa0e49f2889"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.valdef-color-rec2100-hlg-clause-cee7cf2ad46b",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "valdef-color-rec2100-hlg"
+      ],
+      "behaviour": "rec2100-hlg — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "valdef-color-rec2100-hlg",
+        "clause_index": 39,
+        "clause_sha256": "cee7cf2ad46b9fc2b7a750bc586e247dfeb2c7e12dbd5f86185221d6a725b1c1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.valdef-color-rec2100-linear",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "valdef-color-rec2100-linear"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in rec2100-linear.",
+      "locator": {
+        "section_id": "valdef-color-rec2100-linear",
+        "text_sha256": "d8b7f28f18cb262019a37f39ebd2ea8c2ea0b6b0ab052bcb93378bc872d8ecb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.compositing-sdr-hdr",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "Compositing-SDR-HDR"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Compositing SDR and HDR content.",
+      "locator": {
+        "section_id": "Compositing-SDR-HDR",
+        "text_sha256": "5f9fe0f7b36a21ce991f637251fc8225d648076753808e19479c6b245de64472"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.compositing-sdr-hdr-clause-378f40e0199c",
+        "css-color-hdr-1.compositing-sdr-hdr-clause-0798d60c2a04",
+        "css-color-hdr-1.compositing-sdr-hdr-clause-3987954879d6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.compositing-sdr-hdr-clause-378f40e0199c",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "Compositing-SDR-HDR"
+      ],
+      "behaviour": "Compositing SDR and HDR content — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Compositing-SDR-HDR",
+        "clause_index": 0,
+        "clause_sha256": "378f40e0199c09d03ae89c124a68978a30b481666a6f5c2a71494360cf699c70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.compositing-sdr-hdr-clause-0798d60c2a04",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "Compositing-SDR-HDR"
+      ],
+      "behaviour": "Compositing SDR and HDR content — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Compositing-SDR-HDR",
+        "clause_index": 1,
+        "clause_sha256": "0798d60c2a04e70216f8db2351fae7717be242f9a8a12160332d264cc6475b49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.compositing-sdr-hdr-clause-3987954879d6",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "Compositing-SDR-HDR"
+      ],
+      "behaviour": "Compositing SDR and HDR content — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "Compositing-SDR-HDR",
+        "clause_index": 3,
+        "clause_sha256": "3987954879d63fc25cb3409acf875dfb596608b07a0914a9e8dcd73ba5f11453"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.serializing-color-values",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "serializing-color-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serializing <color> Values.",
+      "locator": {
+        "section_id": "serializing-color-values",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.serializing-color-function-values",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "serializing-color-function-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serializing values of the color() function.",
+      "locator": {
+        "section_id": "serializing-color-function-values",
+        "text_sha256": "7b3a8879cced17f783f3a6bb378943555f5368b7abad3df62a50d36111decde0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.serializing-color-function-values-clause-5afe57d691c1",
+        "css-color-hdr-1.serializing-color-function-values-clause-8623cc52672b",
+        "css-color-hdr-1.serializing-color-function-values-clause-affec012d7cc",
+        "css-color-hdr-1.serializing-color-function-values-clause-54bd96699dd7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.serializing-color-function-values-clause-5afe57d691c1",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "serializing-color-function-values"
+      ],
+      "behaviour": "Serializing values of the color() function — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "serializing-color-function-values",
+        "clause_index": 1,
+        "clause_sha256": "5afe57d691c16ad68069a08f330321a51aed0c6b827c90f4e1f35317948f805c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.serializing-color-function-values-clause-8623cc52672b",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "serializing-color-function-values"
+      ],
+      "behaviour": "Serializing values of the color() function — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "serializing-color-function-values",
+        "clause_index": 2,
+        "clause_sha256": "8623cc52672bea5c012baa94d30e94c3574191f5799ba1185c88e2559aa273de"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.serializing-color-function-values-clause-affec012d7cc",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "serializing-color-function-values"
+      ],
+      "behaviour": "Serializing values of the color() function — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "serializing-color-function-values",
+        "clause_index": 9,
+        "clause_sha256": "affec012d7cc638c4613f31a60e90e19b31cc773b77457eec861d0416ae4818f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.serializing-color-function-values-clause-54bd96699dd7",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "serializing-color-function-values"
+      ],
+      "behaviour": "Serializing values of the color() function — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "serializing-color-function-values",
+        "clause_index": 10,
+        "clause_sha256": "54bd96699dd780eb76ede31b99c5a98c7b62567f496fa1a4c581ccc40dd1e5fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.privacy",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "d78afb8711b97b00f86493fe2db82babbd0987dfe4a5a3c3873fca1a89987281"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.security",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "f1f2e3034a38d64516acb6e2c4c54ee0b79d5b264bd26133ea59cbec26069921"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.a11y",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "a11y"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Accessibility Considerations.",
+      "locator": {
+        "section_id": "a11y",
+        "text_sha256": "fdc9b049bb5396442e38c8ee8d0e815c08a0ba728091059783e14efbf9698b04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.a11y-clause-a1b7cb5ccafd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.a11y-clause-a1b7cb5ccafd",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "a11y"
+      ],
+      "behaviour": "Accessibility Considerations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "a11y",
+        "clause_index": 0,
+        "clause_sha256": "a1b7cb5ccafdcc85618410ffbb071563368e27c0ec4c56c9987e5e95a3df176a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-conformance",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-conventions",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.w3c-conventions-clause-5c98c879f070",
+        "css-color-hdr-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-conformance-classes",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-color-hdr-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-partial",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-conform-future-proofing",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-testing",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.w3c-testing-clause-1e0fff369221",
+        "css-color-hdr-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.property-index",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "b30fb8223ed0fb301aea0c68b91e3adbb4b7993db8621cb2378fc8db1b45e766"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-hdr-1.property-index-clause-6526f8beacc1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.property-index-clause-6526f8beacc1",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 17,
+        "clause_sha256": "6526f8beacc1b77d138fa8c4062bb1adab26fceea86ab91a746ac4a4d9efb3c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-hdr-1.issues-index",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "162e3847b8d5f22fdce6b65ea73aa000cd15e93a96aa3c222dc82418f39afe86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.import-dfdd4bc68ddf",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.itu.int/rec/R-REC-BT.2020/en.",
+      "unresolved_reference": "http://www.itu.int/rec/R-REC-BT.2020/en",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-color-hdr-1.import-2a1b963e3362",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.itu.int/rec/recommendation.asp?lang=en&parent=R-REC-BT.2100-3-202502-I.",
+      "unresolved_reference": "https://www.itu.int/rec/recommendation.asp?lang=en&parent=R-REC-BT.2100-3-202502-I",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-color-hdr-1.import-24fb2d2da2b0",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.itu.int/pub/R-REP-BT.2390-12-2025.",
+      "unresolved_reference": "https://www.itu.int/pub/R-REP-BT.2390-12-2025",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-color-hdr-1.import-5b4cff06d693",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.itu.int/pub/R-REP-BT.2408-9-2026.",
+      "unresolved_reference": "https://www.itu.int/pub/R-REP-BT.2408-9-2026",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-color-hdr-1.import-01cab2fc7366",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://opg.optica.org/oe/fulltext.cfm?uri=oe-25-13-15131&id=368272.",
+      "unresolved_reference": "https://opg.optica.org/oe/fulltext.cfm?uri=oe-25-13-15131&id=368272",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-color-hdr-1.import-daf2ff2a6b59",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://pub.smpte.org/latest/st2084/st2084-2014.pdf.",
+      "unresolved_reference": "https://pub.smpte.org/latest/st2084/st2084-2014.pdf",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-color-hdr-1.title",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Color HDR Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "2f75762caf89a2c803a1e15525ba87a427b097e98489e14611f7b9b939f66838"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.abstract",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "c525ad17a31a6a14bd798a66069b864d5bf7a2ec29c8c19ca6fb90fbf9e7c547"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.sotd",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "7f29cca15780287933c2874457cf76c5047d6fe457782a880c08414395d15e7d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.contents",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "2751fe992a981aeaa52cfeacd2529edbe7eabb49a611f13d1180c4458b15f740"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.intro",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "fef41b2f02081051d179be54d2bfd5c55e5b7168b23109114b36a06bbd462c9b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.values",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.ictcp-intro",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "ictcp-intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 6.1. Introducing ICtCp.",
+      "locator": {
+        "section_id": "ictcp-intro",
+        "text_sha256": "0f8fa8017ef6725e009a0561a6a25b3f18994193a8380abef8c5fac2a2e36616"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.jaz-intro",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "jaz-intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 6.2. Introducing Jzazbz and JzCzhz.",
+      "locator": {
+        "section_id": "jaz-intro",
+        "text_sha256": "7bb99131d5949ebabdf1a0b8ff7ee0378be9d80e6a9dcd61b8a598bc7a62a9f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.color-conversion-code",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "color-conversion-code"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11. Sample code for Color Conversions.",
+      "locator": {
+        "section_id": "color-conversion-code",
+        "text_sha256": "6453b1773ed4e953fae5e7aaa737adc18be742f1b6b7a6d75d0c5eff2b0505a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.rec2100-linear-code",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "rec2100-linear_code"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11.1. Sample code for rec2100-linear.",
+      "locator": {
+        "section_id": "rec2100-linear_code",
+        "text_sha256": "00d74038b89f540b634a6dff0fd313e3fc0b4f85af30ea92c30c7be4551f64ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.rec2100-pq-code",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "rec2100-pq_code"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11.2. Sample code for rec2100-pq.",
+      "locator": {
+        "section_id": "rec2100-pq_code",
+        "text_sha256": "b7e0f2cfcfcf8689ab3dec1df34a1992ed4ca636740d1ababd14016ac0fde4b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.rec2100-hlg-code",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "rec2100-hlg_code"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11.3. Sample code for rec2100-hlg.",
+      "locator": {
+        "section_id": "rec2100-hlg_code",
+        "text_sha256": "d994da8da211092d1b1c45a6de764479c6150ea64980216cec90b604bfd2fe4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.jzazbz-code",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "jzazbz_code"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11.4. Sample code for jzazbz.",
+      "locator": {
+        "section_id": "jzazbz_code",
+        "text_sha256": "5cf9f4d52b368732947ff02573dd7e5879229d63c3eef5f4cefd098088c5e095"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.ictcp-code",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "ictcp_code"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11.5. Sample code for ICtCp.",
+      "locator": {
+        "section_id": "ictcp_code",
+        "text_sha256": "95806f19e8c8898274e087b028a497079bbc7fa61f03fcc553543f8a043c06f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.hdr-color-code",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "hdr-color-code"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11.6. Sample code for hdr-color().",
+      "locator": {
+        "section_id": "hdr-color-code",
+        "text_sha256": "de6ff8c1e41aa99fef075367fb53a556a5a04b8590c96743ab88e7dc49b19d46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.deltae",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "deltaE"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 12. Sample code for ΔEITP Color Differences.",
+      "locator": {
+        "section_id": "deltaE",
+        "text_sha256": "d1f0b7097dc5a24be2efc3b03b3f0af510b603df1983a5b2da15af52800e584d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.changes",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.changes-20260303",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "changes-20260303"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 3 March 2026 Working Draft.",
+      "locator": {
+        "section_id": "changes-20260303",
+        "text_sha256": "d18906cfb44c22f5fc8e762ddcbe1deb05481ffa4f9bf4a1ba6009a003dd6c37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.changes-20241217",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "changes-20241217"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 17 December 2024 First Public Working Draft.",
+      "locator": {
+        "section_id": "changes-20241217",
+        "text_sha256": "2ea5e65fa820a881b3bf80e8302aeee7aabc4c05bec4777af622a339e6f6d408"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.index",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.index-defined-here",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "4174da166335e139db4a7991ed857f77c4baa127ee0a900ca49f6dc624c70f49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.index-defined-elsewhere",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "29af51f447191c2669cf5612b6c0af6a3b4b4fac0bd7656819140782ec34fd3b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.references",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-hdr-1.informative",
+      "family": "css-color-hdr-1",
+      "source_id": "css-color-hdr-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "b960f6b4efce4dd9b455c912a4351544b63761f71dd534e5d0dbecfc000ae527"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

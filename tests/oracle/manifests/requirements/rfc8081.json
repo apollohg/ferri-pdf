@@ -1,0 +1,595 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "rfc8081.heading-725f80f95580",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "heading-725f80f95580"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The \"font\" Top-Level Media Type.",
+      "locator": {
+        "section_id": "heading-725f80f95580",
+        "text_sha256": "f355f6c9e7eea44fbfdc14e72908260111fb333744b4769e98abc21e448d7896"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-1",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "section-1",
+        "text_sha256": "d078fb5374e6fbe5aac3b21fbffe11253430576c7b9f4cbf1536d9b2a7dc15a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-2",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Background and Justification.",
+      "locator": {
+        "section_id": "section-2",
+        "text_sha256": "2c6560da1f3bcd3e61ee86726a48a50d1f200f725b4bb72d3066a7491b226232"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-3",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "section-3",
+        "text_sha256": "5e9dce4e57d0ea4ffd04e28fb2d3d6ba1753617a90a43572f6bb1586d143fe02"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc8081.section-3-clause-6aafa998341e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-3-clause-6aafa998341e",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-3"
+      ],
+      "behaviour": "Security Considerations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-3",
+        "clause_index": 0,
+        "clause_sha256": "6aafa998341e1ae3e72a9d378dd58602d629990abf760ad2a3a586ce2727d0a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc8081.section-4",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IANA Considerations.",
+      "locator": {
+        "section_id": "section-4",
+        "text_sha256": "651faa51ca1d896ecbdfa660caa9416585bf1125e2c427ef4e424a85200e89b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-4-1",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Definition and Encoding.",
+      "locator": {
+        "section_id": "section-4.1",
+        "text_sha256": "0a05effd2d5c87b160721566f95dac29db1f49772ea0e08e6288f0c9a8a52c39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-4-2",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fragment Identifiers for Font Collections.",
+      "locator": {
+        "section_id": "section-4.2",
+        "text_sha256": "6ecf18c82cab5694d26799f2351c7a24e6c34cb6aa12f87f2d61072844a8f922"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-4-3",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Registration Procedure.",
+      "locator": {
+        "section_id": "section-4.3",
+        "text_sha256": "38057c6968caa06d2d711c67e962d6c5b24121113cc6473a5dd2378f139696b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-4-4",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Subtype Registrations.",
+      "locator": {
+        "section_id": "section-4.4",
+        "text_sha256": "7b401e1f34afddd69b456b2065c8079fbf574d8fa5c5e65f724b885964167c1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-4-4-1",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.4.1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Generic SFNT Font Type.",
+      "locator": {
+        "section_id": "section-4.4.1",
+        "text_sha256": "0bec40f658c15b530890708d5af7c225737eb3cbea3aa9171838f9e4a9ccb609"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc8081.section-4-4-1-clause-b42c57e44835"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-4-4-1-clause-b42c57e44835",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.4.1"
+      ],
+      "behaviour": "Generic SFNT Font Type — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-4.4.1",
+        "clause_index": 1,
+        "clause_sha256": "b42c57e44835b7c6a28ed99ead45200dbb6e14b2f32993bb71ad874689f90058"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc8081.section-4-4-2",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.4.2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in TTF Font Type.",
+      "locator": {
+        "section_id": "section-4.4.2",
+        "text_sha256": "eae12c3da5edbea1f423d6c4a3308624df185ba78fcc856c620957f5e0e74073"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc8081.section-4-4-2-clause-233a5e2aed70"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-4-4-2-clause-233a5e2aed70",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.4.2"
+      ],
+      "behaviour": "TTF Font Type — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-4.4.2",
+        "clause_index": 0,
+        "clause_sha256": "233a5e2aed70e9be96c4d0bef8cd3a5b45f2bb01da9d073a2dda9c6e5feff6dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc8081.section-4-4-3",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.4.3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in OpenType Layout (OTF) Font Type.",
+      "locator": {
+        "section_id": "section-4.4.3",
+        "text_sha256": "fe11393cf87751628927bc46cc956ba3d354ba25add26217e4968dbb7fef7235"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc8081.section-4-4-3-clause-7b6eda55ef43"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-4-4-3-clause-7b6eda55ef43",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.4.3"
+      ],
+      "behaviour": "OpenType Layout (OTF) Font Type — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-4.4.3",
+        "clause_index": 0,
+        "clause_sha256": "7b6eda55ef43417898a112fb80df991b049901b5f3d1ff1b6133f12c4feb931e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc8081.section-4-4-4",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.4.4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Collection Font Type.",
+      "locator": {
+        "section_id": "section-4.4.4",
+        "text_sha256": "6cf2d480e3cafe36c7574080f427172bd96b3e49d867313384ccf12e1ef9308e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc8081.section-4-4-4-clause-4d8ff79027be"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-4-4-4-clause-4d8ff79027be",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.4.4"
+      ],
+      "behaviour": "Collection Font Type — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-4.4.4",
+        "clause_index": 0,
+        "clause_sha256": "4d8ff79027be5d7c79d4a48277019f7b6821be2f3478fc05cc3e63b160078a51"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc8081.section-4-4-5",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.4.5"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in WOFF 1.0.",
+      "locator": {
+        "section_id": "section-4.4.5",
+        "text_sha256": "bdc8cca8eb7817ffe2196211292ba702369e154f2a945c4b0db1046ed2393a7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-4-4-6",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-4.4.6"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in WOFF 2.0.",
+      "locator": {
+        "section_id": "section-4.4.6",
+        "text_sha256": "92c4823ce08071951ebbb181a63dd64cdd7d656ce4745d33e52c5bacf7f3c372"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-5",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-5"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5. References.",
+      "locator": {
+        "section_id": "section-5",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-5-1",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-5.1"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.1. Normative References.",
+      "locator": {
+        "section_id": "section-5.1",
+        "text_sha256": "95e723fda515658a17a4d24b75252d83c45d6613d7d132ff102011ec35d60ebf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc8081.section-5-2",
+      "family": "rfc8081",
+      "source_id": "rfc8081",
+      "sections": [
+        "section-5.2"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.2. Informative References.",
+      "locator": {
+        "section_id": "section-5.2",
+        "text_sha256": "0f9d51d6e4ea9e8cafd5d7018d643a37e5ce0ef658060c384b52b477b0ec0149"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

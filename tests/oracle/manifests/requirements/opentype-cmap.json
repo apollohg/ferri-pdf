@@ -1,0 +1,1693 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-cmap.cmap-character-to-glyph-index-mapping-table",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "cmap--character-to-glyph-index-mapping-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in cmap — Character to Glyph Index Mapping Table.",
+      "locator": {
+        "section_id": "cmap--character-to-glyph-index-mapping-table",
+        "text_sha256": "214e1897aecdbc0fa38663f3c48b975638d01ca841f95852449b42b2f24c1245"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.table-overview",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "table-overview"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Table overview.",
+      "locator": {
+        "section_id": "table-overview",
+        "text_sha256": "0ddcb8a506ce13a0251e8ad8f427a994b4348b59525f734188f2926653f26b13"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.table-overview-clause-c83d779ce93f",
+        "opentype-cmap.table-overview-clause-b7d4ffdb9b10"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.table-overview-clause-c83d779ce93f",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "table-overview"
+      ],
+      "behaviour": "Table overview — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-overview",
+        "clause_index": 1,
+        "clause_sha256": "c83d779ce93f35e8f8ff0e9aeab2d5c3e7bca1edf51b4db47b5217d833e33bcd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.table-overview-clause-b7d4ffdb9b10",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "table-overview"
+      ],
+      "behaviour": "Table overview — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-overview",
+        "clause_index": 4,
+        "clause_sha256": "b7d4ffdb9b10bb8e795deec4154d994008f16b0464b2ffd5e4b6ee63bb647628"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.cmap-header",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "cmap-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'cmap' Header.",
+      "locator": {
+        "section_id": "cmap-header",
+        "text_sha256": "7f6097c500b3f3b686c8ffc83536c1de2763ef389c1bcda5f275a69a5f150ae1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.encoding-records-and-encodings",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "encoding-records-and-encodings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Encoding records and encodings.",
+      "locator": {
+        "section_id": "encoding-records-and-encodings",
+        "text_sha256": "28765c3eab5303c1a82ed867e2e9e935cf9ccd63cce922b5d772af2995e60c40"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.encoding-records-and-encodings-clause-a0a0895a0628",
+        "opentype-cmap.encoding-records-and-encodings-clause-80f95d685162",
+        "opentype-cmap.encoding-records-and-encodings-clause-521981eab1d1",
+        "opentype-cmap.encoding-records-and-encodings-clause-8900b13075dd",
+        "opentype-cmap.encoding-records-and-encodings-clause-2181b456f02c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.encoding-records-and-encodings-clause-a0a0895a0628",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "encoding-records-and-encodings"
+      ],
+      "behaviour": "Encoding records and encodings — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "encoding-records-and-encodings",
+        "clause_index": 15,
+        "clause_sha256": "a0a0895a06283c9c7869285c127a0c5723b4a1caa278fbb006ab9e2c7e9073b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.encoding-records-and-encodings-clause-80f95d685162",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "encoding-records-and-encodings"
+      ],
+      "behaviour": "Encoding records and encodings — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "encoding-records-and-encodings",
+        "clause_index": 16,
+        "clause_sha256": "80f95d68516231b231c97a42b2da8b1026c0b5a92d6de8d740070eb1aa60cbcc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.encoding-records-and-encodings-clause-521981eab1d1",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "encoding-records-and-encodings"
+      ],
+      "behaviour": "Encoding records and encodings — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "encoding-records-and-encodings",
+        "clause_index": 17,
+        "clause_sha256": "521981eab1d1ea91ea550d81f9e35fa7bb21baf94ba79aeb1c3d0a87b707e8a0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.encoding-records-and-encodings-clause-8900b13075dd",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "encoding-records-and-encodings"
+      ],
+      "behaviour": "Encoding records and encodings — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "encoding-records-and-encodings",
+        "clause_index": 18,
+        "clause_sha256": "8900b13075ddba2e50f10601e0b78d834c1ab9d98db430428969c1943124e347"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.encoding-records-and-encodings-clause-2181b456f02c",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "encoding-records-and-encodings"
+      ],
+      "behaviour": "Encoding records and encodings — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "encoding-records-and-encodings",
+        "clause_index": 19,
+        "clause_sha256": "2181b456f02caa5f9b59a511e979f78f59b811ee943b5b5b3770ea7f2a8b91dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.platform-ids",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "platform-ids"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Platform IDs.",
+      "locator": {
+        "section_id": "platform-ids",
+        "text_sha256": "b3e5592f863c785d07c9b8e8a9ab3c45b833afc6050e6f33b1559db1acc5886d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.platform-ids-clause-cb977ac5957a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.platform-ids-clause-cb977ac5957a",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "platform-ids"
+      ],
+      "behaviour": "Platform IDs — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "platform-ids",
+        "clause_index": 19,
+        "clause_sha256": "cb977ac5957af369377346a49b97fc452b4eb0ba326f7e7cff430292032938aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.unicode-platform-platform-id-0",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "unicode-platform-platform-id--0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unicode platform (platform ID = 0).",
+      "locator": {
+        "section_id": "unicode-platform-platform-id--0",
+        "text_sha256": "929f6f23a3daeb90d5cb2154faa51fb619eed65899878ea4ebe4ba5615af7964"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.unicode-platform-platform-id-0-clause-fa2a4f3b4f25",
+        "opentype-cmap.unicode-platform-platform-id-0-clause-d796d7352af2",
+        "opentype-cmap.unicode-platform-platform-id-0-clause-21cb4a5f01a6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.unicode-platform-platform-id-0-clause-fa2a4f3b4f25",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "unicode-platform-platform-id--0"
+      ],
+      "behaviour": "Unicode platform (platform ID = 0) — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-platform-platform-id--0",
+        "clause_index": 18,
+        "clause_sha256": "fa2a4f3b4f2590c17a05644572ca409a82eb4f61aec294940363362900c8d157"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.unicode-platform-platform-id-0-clause-d796d7352af2",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "unicode-platform-platform-id--0"
+      ],
+      "behaviour": "Unicode platform (platform ID = 0) — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-platform-platform-id--0",
+        "clause_index": 19,
+        "clause_sha256": "d796d7352af232d716c6731e826cc8eb83cee88432f771ed666af7bcc09ac400"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.unicode-platform-platform-id-0-clause-21cb4a5f01a6",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "unicode-platform-platform-id--0"
+      ],
+      "behaviour": "Unicode platform (platform ID = 0) — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-platform-platform-id--0",
+        "clause_index": 20,
+        "clause_sha256": "21cb4a5f01a6190fdac88e2e37bb6c5c9b2ebd3630e9e9168f257d13575185ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.macintosh-platform-platform-id-1",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "macintosh-platform-platform-id--1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Macintosh platform (platform ID = 1).",
+      "locator": {
+        "section_id": "macintosh-platform-platform-id--1",
+        "text_sha256": "94373511474c971627392b1ebab8477a7c155ccd9167d4878ab8ae902119b712"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.macintosh-platform-platform-id-1-clause-94373511474c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.macintosh-platform-platform-id-1-clause-94373511474c",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "macintosh-platform-platform-id--1"
+      ],
+      "behaviour": "Macintosh platform (platform ID = 1) — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "macintosh-platform-platform-id--1",
+        "clause_index": 0,
+        "clause_sha256": "94373511474c971627392b1ebab8477a7c155ccd9167d4878ab8ae902119b712"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.iso-platform-platform-id-2",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "iso-platform-platform-id--2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ISO platform (platform ID = 2).",
+      "locator": {
+        "section_id": "iso-platform-platform-id--2",
+        "text_sha256": "af9bc62b554fce37ebe886027f5145baaced73f4d9ed72b9ebe0762dd9f78db2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.windows-platform-platform-id-3",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "windows-platform-platform-id--3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Windows platform (platform ID = 3).",
+      "locator": {
+        "section_id": "windows-platform-platform-id--3",
+        "text_sha256": "5c49771ec8b407a2e31bad4b4a049f1e0591a22c48257fd10d2cda3a74cf7298"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.windows-platform-platform-id-3-clause-db78a2a90e47",
+        "opentype-cmap.windows-platform-platform-id-3-clause-4999a397d04a",
+        "opentype-cmap.windows-platform-platform-id-3-clause-4b4eaaba38f0",
+        "opentype-cmap.windows-platform-platform-id-3-clause-e82724c7ed5f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.windows-platform-platform-id-3-clause-db78a2a90e47",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "windows-platform-platform-id--3"
+      ],
+      "behaviour": "Windows platform (platform ID = 3) — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "windows-platform-platform-id--3",
+        "clause_index": 0,
+        "clause_sha256": "db78a2a90e47f70930910d78c8eeefa07c7e9b539a0306cba68ae3adb6dbad9b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.windows-platform-platform-id-3-clause-4999a397d04a",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "windows-platform-platform-id--3"
+      ],
+      "behaviour": "Windows platform (platform ID = 3) — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "windows-platform-platform-id--3",
+        "clause_index": 38,
+        "clause_sha256": "4999a397d04a6afc49eca03c9961770167d5ca6f14efc2af3bbb41c2e45ccada"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.windows-platform-platform-id-3-clause-4b4eaaba38f0",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "windows-platform-platform-id--3"
+      ],
+      "behaviour": "Windows platform (platform ID = 3) — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "windows-platform-platform-id--3",
+        "clause_index": 39,
+        "clause_sha256": "4b4eaaba38f000d63222c405c8e2858c2b455e220072ee588406834e9ab272b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.windows-platform-platform-id-3-clause-e82724c7ed5f",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "windows-platform-platform-id--3"
+      ],
+      "behaviour": "Windows platform (platform ID = 3) — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "windows-platform-platform-id--3",
+        "clause_index": 40,
+        "clause_sha256": "e82724c7ed5f35b25a509c506a66cde0fad6c74b370a498efed6b12c53a82eef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.custom-platform-platform-id-4-and-otf-windows-nt-compatibility-mapping",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "custom-platform-platform-id--4-and-otf-windows-nt-compatibility-mapping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Custom platform (platform ID = 4) and OTF Windows NT compatibility mapping.",
+      "locator": {
+        "section_id": "custom-platform-platform-id--4-and-otf-windows-nt-compatibility-mapping",
+        "text_sha256": "c69483403a7ddfd6acb00706d98bf67a9611094b62adf8c35ab9b0be6b8d46e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.custom-platform-platform-id-4-and-otf-windows-nt-compatibility-mapping-clause-6f3e02633bff",
+        "opentype-cmap.custom-platform-platform-id-4-and-otf-windows-nt-compatibility-mapping-clause-6ca44d397ef2",
+        "opentype-cmap.custom-platform-platform-id-4-and-otf-windows-nt-compatibility-mapping-clause-7dd60ce24c04"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.custom-platform-platform-id-4-and-otf-windows-nt-compatibility-mapping-clause-6f3e02633bff",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "custom-platform-platform-id--4-and-otf-windows-nt-compatibility-mapping"
+      ],
+      "behaviour": "Custom platform (platform ID = 4) and OTF Windows NT compatibility mapping — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "custom-platform-platform-id--4-and-otf-windows-nt-compatibility-mapping",
+        "clause_index": 0,
+        "clause_sha256": "6f3e02633bff91b0979387e5b870215ae47415d5334f078c34990e8354587f3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.custom-platform-platform-id-4-and-otf-windows-nt-compatibility-mapping-clause-6ca44d397ef2",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "custom-platform-platform-id--4-and-otf-windows-nt-compatibility-mapping"
+      ],
+      "behaviour": "Custom platform (platform ID = 4) and OTF Windows NT compatibility mapping — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "custom-platform-platform-id--4-and-otf-windows-nt-compatibility-mapping",
+        "clause_index": 5,
+        "clause_sha256": "6ca44d397ef2ebfb217894acea5e74798b15d5fb893621fd56de619a9fdc8392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.custom-platform-platform-id-4-and-otf-windows-nt-compatibility-mapping-clause-7dd60ce24c04",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "custom-platform-platform-id--4-and-otf-windows-nt-compatibility-mapping"
+      ],
+      "behaviour": "Custom platform (platform ID = 4) and OTF Windows NT compatibility mapping — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "custom-platform-platform-id--4-and-otf-windows-nt-compatibility-mapping",
+        "clause_index": 6,
+        "clause_sha256": "7dd60ce24c042a4b71b28b7dd427f9ca8fed63cbce6d5a28028eb91b55a4812c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.cmap-subtable-formats",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "cmap-subtable-formats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'cmap' subtable formats.",
+      "locator": {
+        "section_id": "cmap-subtable-formats",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.use-of-the-language-field-in-cmap-subtables",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "use-of-the-language-field-in-cmap-subtables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Use of the language field in 'cmap' subtables.",
+      "locator": {
+        "section_id": "use-of-the-language-field-in-cmap-subtables",
+        "text_sha256": "f848016c5dd4b209b54c875d1c98805b145a21519f77c515c343b86f7339a2bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.use-of-the-language-field-in-cmap-subtables-clause-f848016c5dd4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.use-of-the-language-field-in-cmap-subtables-clause-f848016c5dd4",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "use-of-the-language-field-in-cmap-subtables"
+      ],
+      "behaviour": "Use of the language field in 'cmap' subtables — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "use-of-the-language-field-in-cmap-subtables",
+        "clause_index": 0,
+        "clause_sha256": "f848016c5dd4b209b54c875d1c98805b145a21519f77c515c343b86f7339a2bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-0-byte-encoding-table",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-0-byte-encoding-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Format 0: Byte encoding table.",
+      "locator": {
+        "section_id": "format-0-byte-encoding-table",
+        "text_sha256": "13df3ad1433bcc2322f176550b16eb181576031913aa69cb786a88648c6ab401"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.format-0-byte-encoding-table-clause-e85d1e64ec3f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.format-0-byte-encoding-table-clause-e85d1e64ec3f",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-0-byte-encoding-table"
+      ],
+      "behaviour": "Format 0: Byte encoding table — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-0-byte-encoding-table",
+        "clause_index": 0,
+        "clause_sha256": "e85d1e64ec3ff127bdd278ecd6ee313dbb977fe7819c939394a663b1e05b677e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-2-high-byte-mapping-through-table",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-2-high-byte-mapping-through-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Format 2: High byte mapping through table.",
+      "locator": {
+        "section_id": "format-2-high-byte-mapping-through-table",
+        "text_sha256": "414d268bf2a1f4fdbb720144ab9e9b9376d13ca19f4920f17363b53401829a13"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.format-2-high-byte-mapping-through-table-clause-c60bebb9705d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.format-2-high-byte-mapping-through-table-clause-c60bebb9705d",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-2-high-byte-mapping-through-table"
+      ],
+      "behaviour": "Format 2: High byte mapping through table — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-2-high-byte-mapping-through-table",
+        "clause_index": 42,
+        "clause_sha256": "c60bebb9705def2773b3c8ef97160e9dea70ce4a29bbb3db02bf0b69db292aab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-4-segment-mapping-to-delta-values",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-4-segment-mapping-to-delta-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Format 4: Segment mapping to delta values.",
+      "locator": {
+        "section_id": "format-4-segment-mapping-to-delta-values",
+        "text_sha256": "48aec18a5300ffaa3cf142421edfa4c4bf74e491a738ab99a2ac8934e88772fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-57035492d86c",
+        "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-1ec1936ae024",
+        "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-e0853f5b1ab7",
+        "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-ed2de1cc5f5d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-57035492d86c",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-4-segment-mapping-to-delta-values"
+      ],
+      "behaviour": "Format 4: Segment mapping to delta values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-4-segment-mapping-to-delta-values",
+        "clause_index": 1,
+        "clause_sha256": "57035492d86c965d8c301d77a2ae45aa11709e6f935ef3d22ac79af725e202ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-1ec1936ae024",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-4-segment-mapping-to-delta-values"
+      ],
+      "behaviour": "Format 4: Segment mapping to delta values — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-4-segment-mapping-to-delta-values",
+        "clause_index": 2,
+        "clause_sha256": "1ec1936ae02438ca03d40d918ee3a8ba1be42103743d7567785779541a7908e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-e0853f5b1ab7",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-4-segment-mapping-to-delta-values"
+      ],
+      "behaviour": "Format 4: Segment mapping to delta values — normative clause 60, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-4-segment-mapping-to-delta-values",
+        "clause_index": 59,
+        "clause_sha256": "e0853f5b1ab77b7b7ef91fe13268a0d6dbc2b0b3cc0c0c07ea502837930c522c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-ed2de1cc5f5d",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-4-segment-mapping-to-delta-values"
+      ],
+      "behaviour": "Format 4: Segment mapping to delta values — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-4-segment-mapping-to-delta-values",
+        "clause_index": 60,
+        "clause_sha256": "ed2de1cc5f5df36d9134f25c46f83fcad2cdade3cda749f1cac44130bf4da822"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-6-trimmed-table-mapping",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-6-trimmed-table-mapping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Format 6: Trimmed table mapping.",
+      "locator": {
+        "section_id": "format-6-trimmed-table-mapping",
+        "text_sha256": "d5275e8699219101c7aae5c5c4a5660e1b585d1d9e4ceadc515d05dd424a6a31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.format-8-mixed-16-bit-and-32-bit-coverage",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-8-mixed-16-bit-and-32-bit-coverage"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Format 8: mixed 16-bit and 32-bit coverage.",
+      "locator": {
+        "section_id": "format-8-mixed-16-bit-and-32-bit-coverage",
+        "text_sha256": "7f00ca64e23aea64584fae1074923e9d95dafe85fe99b1a974422bb914b5a506"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.format-8-mixed-16-bit-and-32-bit-coverage-clause-4a522eb7ec67",
+        "opentype-cmap.format-8-mixed-16-bit-and-32-bit-coverage-clause-c1e1719307fd",
+        "opentype-cmap.format-8-mixed-16-bit-and-32-bit-coverage-clause-1cf8b7cc6325"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.format-8-mixed-16-bit-and-32-bit-coverage-clause-4a522eb7ec67",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-8-mixed-16-bit-and-32-bit-coverage"
+      ],
+      "behaviour": "Format 8: mixed 16-bit and 32-bit coverage — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-8-mixed-16-bit-and-32-bit-coverage",
+        "clause_index": 1,
+        "clause_sha256": "4a522eb7ec67087f825704726bf70f688978bdce84a1875555776996f2b82073"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-8-mixed-16-bit-and-32-bit-coverage-clause-c1e1719307fd",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-8-mixed-16-bit-and-32-bit-coverage"
+      ],
+      "behaviour": "Format 8: mixed 16-bit and 32-bit coverage — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-8-mixed-16-bit-and-32-bit-coverage",
+        "clause_index": 41,
+        "clause_sha256": "c1e1719307fd26c88eedf89d01db45241dda4c67eb24e67e4de30e6651883f3f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-8-mixed-16-bit-and-32-bit-coverage-clause-1cf8b7cc6325",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-8-mixed-16-bit-and-32-bit-coverage"
+      ],
+      "behaviour": "Format 8: mixed 16-bit and 32-bit coverage — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-8-mixed-16-bit-and-32-bit-coverage",
+        "clause_index": 43,
+        "clause_sha256": "1cf8b7cc63258e8fb0ff766dd7f8e9258980c8ef3233c49c4556bb3c09881459"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-10-trimmed-array",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-10-trimmed-array"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Format 10: Trimmed array.",
+      "locator": {
+        "section_id": "format-10-trimmed-array",
+        "text_sha256": "b699cf6ff4ce4464fe4582aaade71e01ce003a1b81029a5b57368df3fee6be68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.format-12-segmented-coverage",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-12-segmented-coverage"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Format 12: Segmented coverage.",
+      "locator": {
+        "section_id": "format-12-segmented-coverage",
+        "text_sha256": "7bd9360935b06ac08a7be8b5f33753b2e4bc53a46be95f4394de94dfddde3047"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.format-12-segmented-coverage-clause-2ededb14e593",
+        "opentype-cmap.format-12-segmented-coverage-clause-0af076adf7f8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.format-12-segmented-coverage-clause-2ededb14e593",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-12-segmented-coverage"
+      ],
+      "behaviour": "Format 12: Segmented coverage — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-12-segmented-coverage",
+        "clause_index": 1,
+        "clause_sha256": "2ededb14e5935f6bb6282ca237ab7d4f34569b496ab370f6700eacfb11f9f9df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-12-segmented-coverage-clause-0af076adf7f8",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-12-segmented-coverage"
+      ],
+      "behaviour": "Format 12: Segmented coverage — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-12-segmented-coverage",
+        "clause_index": 39,
+        "clause_sha256": "0af076adf7f85d6d4e0368e437cdf89ec8a28d2f7b67ff1e2ef403323d8e913e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.format-13-many-to-one-range-mappings",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-13-many-to-one-range-mappings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Format 13: Many-to-one range mappings.",
+      "locator": {
+        "section_id": "format-13-many-to-one-range-mappings",
+        "text_sha256": "596205354ff2ef1dbcdda368d9fceeb524920f5dd756d64edb5165b6da2ac045"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.format-14-unicode-variation-sequences",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-14-unicode-variation-sequences"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Format 14: Unicode variation sequences.",
+      "locator": {
+        "section_id": "format-14-unicode-variation-sequences",
+        "text_sha256": "64c14689148c64bd22f0fb0905902eea0709008273a5e032a7db87a4e61dc16e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.format-14-unicode-variation-sequences-clause-8201bf91c602"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.format-14-unicode-variation-sequences-clause-8201bf91c602",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "format-14-unicode-variation-sequences"
+      ],
+      "behaviour": "Format 14: Unicode variation sequences — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "format-14-unicode-variation-sequences",
+        "clause_index": 1,
+        "clause_sha256": "8201bf91c60239c38da442d4b5c7aca151550981dbb7f738b1a225de9b7764b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.default-uvs-table",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "default-uvs-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default UVS table.",
+      "locator": {
+        "section_id": "default-uvs-table",
+        "text_sha256": "3c14eabf24fccb1ad7109df981a9b95b40cdf25bf91806981dc0926fa8840e83"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.default-uvs-table-clause-ad9ecfce4232",
+        "opentype-cmap.default-uvs-table-clause-b40f705fa52e",
+        "opentype-cmap.default-uvs-table-clause-325ffad3009e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.default-uvs-table-clause-ad9ecfce4232",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "default-uvs-table"
+      ],
+      "behaviour": "Default UVS table — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "default-uvs-table",
+        "clause_index": 23,
+        "clause_sha256": "ad9ecfce42325fc1c8bd8a05bbfec5df08970fe81b55f6c9c5a700909ffcbf2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.default-uvs-table-clause-b40f705fa52e",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "default-uvs-table"
+      ],
+      "behaviour": "Default UVS table — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "default-uvs-table",
+        "clause_index": 24,
+        "clause_sha256": "b40f705fa52e756082983800d200ee7016497d7bc437c459e79fc4a001aa55e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.default-uvs-table-clause-325ffad3009e",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "default-uvs-table"
+      ],
+      "behaviour": "Default UVS table — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "default-uvs-table",
+        "clause_index": 25,
+        "clause_sha256": "325ffad3009e3e2a49fbc24460e3674f9cee6ed17e130274a8a78e5dfabb851d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.non-default-uvs-table",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "non-default-uvs-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-Default UVS table.",
+      "locator": {
+        "section_id": "non-default-uvs-table",
+        "text_sha256": "e582df774bd49f822444d8f4013090ba3ac54eafa8c29d3210c4cd8b84c7d688"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cmap.non-default-uvs-table-clause-9b97436f2eeb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.non-default-uvs-table-clause-9b97436f2eeb",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "non-default-uvs-table"
+      ],
+      "behaviour": "Non-Default UVS table — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "non-default-uvs-table",
+        "clause_index": 23,
+        "clause_sha256": "9b97436f2eeb140332de04923a316ece3636e68d209780c4589577b4bf673956"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cmap.example",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "example"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example.",
+      "locator": {
+        "section_id": "example",
+        "text_sha256": "5096a7344789006b0b5ee27f3bc6560a7b8b5970a9de39d0c9ddb41352cef3c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.ms-in-this-article",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.ms-feedback",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.ms-additional-resources-mobile-heading",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "3eb25b59e14381d11045c4430465c544fb0a9c44ecad8beae369fc9d1fea3786"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cmap.side-doc-outline",
+      "family": "opentype-cmap",
+      "source_id": "opentype-cmap",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

@@ -1,0 +1,533 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode-tr24-tr24-32",
+  "sections": [
+    {
+      "id": "heading-a86fdab44c11",
+      "title": "Unicode® Standard Annex #24",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.heading-a86fdab44c11"
+        ]
+      }
+    },
+    {
+      "id": "heading-db83bf207681",
+      "title": "Unicode Script Property",
+      "level": 1,
+      "text_sha256": "42a227ee3b2365d66bcd3f01f9581fe712df07cb3f514045e9867a382fed3db6",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.heading-db83bf207681"
+        ]
+      }
+    },
+    {
+      "id": "heading-562e5643bfd0",
+      "title": "Summary",
+      "level": 4,
+      "text_sha256": "5a83d019c4b131fac0855ca8a330415c8dcddf0f71597d4daaf201e04a0a794a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.heading-562e5643bfd0"
+        ]
+      }
+    },
+    {
+      "id": "heading-b67e4e63a5c4",
+      "title": "Status",
+      "level": 4,
+      "text_sha256": "969770954d10eb10c58c417e62f0aeb8ceca31b93e33871538ad4b7096754f2f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.heading-b67e4e63a5c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-35d8550f521f",
+      "title": "Contents",
+      "level": 4,
+      "text_sha256": "59268ce623b049f04be62063923940129def84865e569cd235d528b65a1a46b1",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.heading-35d8550f521f"
+        ]
+      }
+    },
+    {
+      "id": "Introduction",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "fad8b9d195fc765ddcaacd6b5f1c8e76fc6d4784acb7198bfb29449df347720f",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.introduction"
+        ]
+      }
+    },
+    {
+      "id": "Classification",
+      "title": "1.1 Examples of Script Classification",
+      "level": 3,
+      "text_sha256": "5b41d2ada485d72a7d741fba9656366933f92d37293f6d05169f2de660a31abe",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.classification",
+          "unicode-tr24-tr24-32.classification-clause-5e80a4a18e16"
+        ]
+      }
+    },
+    {
+      "id": "Script_Identity",
+      "title": "1.2 Script Identity and Unicode",
+      "level": 3,
+      "text_sha256": "3575a148aca326c565ce6a6507ab0174aa321c84d3a340c327e14e9b5af68b43",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script-identity"
+        ]
+      }
+    },
+    {
+      "id": "Scripts_and_Blocks",
+      "title": "1.3 Scripts and Blocks",
+      "level": 3,
+      "text_sha256": "810df28bf1fa9b23d38412f2a73a2b5a0dc3367df98b5bb3c4739416be5d8ab0",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.scripts-and-blocks"
+        ]
+      }
+    },
+    {
+      "id": "Script_Class_Proc",
+      "title": "1.4 Script Classification in Text Processing",
+      "level": 3,
+      "text_sha256": "9e3c35fd923b2e4530cf73c9af62c7428ae5061e4a2674eaebe6e18d13a86b8d",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script-class-proc",
+          "unicode-tr24-tr24-32.script-class-proc-clause-1dd58bbcd1ee"
+        ]
+      }
+    },
+    {
+      "id": "Classification_by_Script",
+      "title": "1.5 Classification of Text by Script Property",
+      "level": 3,
+      "text_sha256": "2e2ac73dacc6600ac55d940783c70929022794d1ad19a67025e44a0940e6fbc6",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.classification-by-script",
+          "unicode-tr24-tr24-32.classification-by-script-clause-84651ef8b6a7"
+        ]
+      }
+    },
+    {
+      "id": "Out_of_Scope",
+      "title": "1.6 Usage Not Reflected in the Script Property",
+      "level": 3,
+      "text_sha256": "e8e81b965e77277b9cfd6fb3c64942054e717d4dfa68fce169cf096610332c1d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.out-of-scope",
+          "unicode-tr24-tr24-32.out-of-scope-clause-e8e81b965e77"
+        ]
+      }
+    },
+    {
+      "id": "Script",
+      "title": "2 The Script Property",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script"
+        ]
+      }
+    },
+    {
+      "id": "Script_Values",
+      "title": "2.1 Script Property Values",
+      "level": 3,
+      "text_sha256": "880d2b7d1955c882b1da6abe5e5862afaf1fab011757545a1d838df1616c0818",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script-values",
+          "unicode-tr24-tr24-32.script-values-clause-4020ec32c708"
+        ]
+      }
+    },
+    {
+      "id": "Relation_To_ISO15924",
+      "title": "2.2 Relation to ISO 15924 Codes",
+      "level": 3,
+      "text_sha256": "4fb6825311e04dffa0f62e3aad505a19c7ba2a1ef98534262bb1db3f31fb436a",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.relation-to-iso15924"
+        ]
+      }
+    },
+    {
+      "id": "Assignment_Script_Values",
+      "title": "2.3 Initial Assignment of Script Property Values",
+      "level": 3,
+      "text_sha256": "5dc83fd340fe5395f20c42076802a8e96350ad49a18702eb238c9b1ade9029cf",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.assignment-script-values"
+        ]
+      }
+    },
+    {
+      "id": "Script_Designators",
+      "title": "2.4 Script Designators in Character and Block Names",
+      "level": 3,
+      "text_sha256": "e6a8c5a3a2da7484494d08bd8843c019f95e0d78c22f2b2b496b9b8cabe35525",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script-designators"
+        ]
+      }
+    },
+    {
+      "id": "Script_Value_Aliases",
+      "title": "2.5 Script Property Value Aliases",
+      "level": 3,
+      "text_sha256": "9a35a56b62970892ae14785869b742e99ba992eb7609598cbf1157c01150b00e",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script-value-aliases",
+          "unicode-tr24-tr24-32.script-value-aliases-clause-227cba7eb891",
+          "unicode-tr24-tr24-32.script-value-aliases-clause-7a22ace52446"
+        ]
+      }
+    },
+    {
+      "id": "Script_Names",
+      "title": "2.6 Script Names",
+      "level": 3,
+      "text_sha256": "d0cbdaf932ec1b85334257a8a125eb8b55affb0f46a05237ce0b493ace5b57cd",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script-names",
+          "unicode-tr24-tr24-32.script-names-clause-390c260245a2"
+        ]
+      }
+    },
+    {
+      "id": "Script_Anomalies",
+      "title": "2.7 Script Anomalies",
+      "level": 3,
+      "text_sha256": "2f540665f5781a97337d8cc47c579c8de814117cbd061d7245b18a8b3cbe48a9",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script-anomalies",
+          "unicode-tr24-tr24-32.script-anomalies-clause-94035c9889e8"
+        ]
+      }
+    },
+    {
+      "id": "Script_Extensions",
+      "title": "3 The Script_Extensions Property",
+      "level": 2,
+      "text_sha256": "b6585eba2cc3acac096120bba71d0f227afcf376f1a3bce614397263c3b6c569",
+      "clause_count": 94,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script-extensions",
+          "unicode-tr24-tr24-32.script-extensions-clause-d1fa876373e3"
+        ]
+      }
+    },
+    {
+      "id": "Script_Extensions_Def",
+      "title": "3.1 Script_Extensions Property Values",
+      "level": 3,
+      "text_sha256": "60ae066f017469400abb3979f742391244415bf13490843ffd4a26b3de317a1c",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script-extensions-def",
+          "unicode-tr24-tr24-32.script-extensions-def-clause-d2af517aa425",
+          "unicode-tr24-tr24-32.script-extensions-def-clause-4737ad50c600"
+        ]
+      }
+    },
+    {
+      "id": "Assignment_ScriptX_Values",
+      "title": "3.2 Initial Assignment of Script_Extensions Property Values",
+      "level": 3,
+      "text_sha256": "989c2e3ab691d628a5e6cc861714662a7302ad1cf2d661efad31408b221219d2",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.assignment-scriptx-values",
+          "unicode-tr24-tr24-32.assignment-scriptx-values-clause-5d4d1f8029bb"
+        ]
+      }
+    },
+    {
+      "id": "Data_File",
+      "title": "4 Data Files",
+      "level": 2,
+      "text_sha256": "21edf0a44ff03d8d3fa0f857e6836a7c97e252688840bc8d890f2e4556741912",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.data-file"
+        ]
+      }
+    },
+    {
+      "id": "Data_File_SC",
+      "title": "4.1 Scripts.txt",
+      "level": 3,
+      "text_sha256": "cf66b7e47ce706e1fd16ac8a84f133f639279b0b998eef26930ba6494d2d51a1",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.data-file-sc"
+        ]
+      }
+    },
+    {
+      "id": "Data_File_SCX",
+      "title": "4.2 ScriptExtensions.txt",
+      "level": 3,
+      "text_sha256": "fc146608e0bee7be17f84983f9289fab8fdce24200bdc8f4a8d71f6f53f678e3",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.data-file-scx"
+        ]
+      }
+    },
+    {
+      "id": "Data_File_PVA",
+      "title": "4.3 PropertyValueAliases.txt",
+      "level": 3,
+      "text_sha256": "1a08abf1f7a8b4c1405312450862137393513981f454569f6427758830db2076",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.data-file-pva"
+        ]
+      }
+    },
+    {
+      "id": "Implementation",
+      "title": "5 Implementation Notes",
+      "level": 2,
+      "text_sha256": "445d86b71ee6565a36012904afd3fd113fc924658d9f48b74455a22e5c04b769",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.implementation"
+        ]
+      }
+    },
+    {
+      "id": "Common",
+      "title": "5.1 Handling Characters with the Common Script Property",
+      "level": 3,
+      "text_sha256": "a9120a2a54f9c045521d8a26355e921ef53e22bd6ecc36d77612441aa1bc195c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.common",
+          "unicode-tr24-tr24-32.common-clause-1939dba0321a",
+          "unicode-tr24-tr24-32.common-clause-2794beb2fed0"
+        ]
+      }
+    },
+    {
+      "id": "Nonspacing_Marks",
+      "title": "5.2 Handling Combining Marks",
+      "level": 3,
+      "text_sha256": "35db96c4c3ce2a2b1043b46265f84cd11be664ede1aeff8cce58b705f01dc672",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.nonspacing-marks",
+          "unicode-tr24-tr24-32.nonspacing-marks-clause-962d5be8043a",
+          "unicode-tr24-tr24-32.nonspacing-marks-clause-fc03e1fec1ee"
+        ]
+      }
+    },
+    {
+      "id": "Multiple_Script_Values",
+      "title": "5.3 Multiple Script Values",
+      "level": 3,
+      "text_sha256": "96362a7b2b150a15f40947eff77fcf42c76c2e56ce1b0e70ecf4b775472f7f4d",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.multiple-script-values",
+          "unicode-tr24-tr24-32.multiple-script-values-clause-c51bf4a53058",
+          "unicode-tr24-tr24-32.multiple-script-values-clause-536a8ea2ec65"
+        ]
+      }
+    },
+    {
+      "id": "Script_Names_in_RegEx",
+      "title": "5.4 Using Script Property Values in Regular Expressions",
+      "level": 3,
+      "text_sha256": "c428fd5b37b26fbf551f6277dce3cffa9aab6fca5720836b1eca6b15cbad3036",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script-names-in-regex",
+          "unicode-tr24-tr24-32.script-names-in-regex-clause-49e1f4a07624"
+        ]
+      }
+    },
+    {
+      "id": "Script_Names_in_Rendering",
+      "title": "5.5 Use of the Script Property in Rendering Systems",
+      "level": 3,
+      "text_sha256": "32fafead5c86a2e5371c86832f5e1f4650ca00f0c5f53f74cfa90084d4000ff0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.script-names-in-rendering"
+        ]
+      }
+    },
+    {
+      "id": "Limitations",
+      "title": "5.6 Limitations",
+      "level": 3,
+      "text_sha256": "94524b3d246846acae49e8e11de496637c3de95bc998727a02c75ae951e984e5",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.limitations"
+        ]
+      }
+    },
+    {
+      "id": "Spoofing",
+      "title": "5.7 Spoofing",
+      "level": 3,
+      "text_sha256": "42d0a232f7afc67b2ecf0a481d3df0e259075f2bd604fdf6f596da124d513731",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.spoofing"
+        ]
+      }
+    },
+    {
+      "id": "Acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "f67c527d73cb2b16efa44aae9f5dbcb0e3350b69085d4138c21d99d14e3e844b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "References",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "8e262b530dd9dea23efac0eca37ae00f8a40d4b1be2872783d65ad768734b47a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.references"
+        ]
+      }
+    },
+    {
+      "id": "Modifications",
+      "title": "Modifications",
+      "level": 2,
+      "text_sha256": "f6326afc675c755471417f565a3f13f7d5960ee6bab65574dab2fe55b61937c8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.modifications"
+        ]
+      }
+    },
+    {
+      "id": "heading-cc981a7f546a",
+      "title": "Revision 32 [KW]",
+      "level": 3,
+      "text_sha256": "6f6a09bc574c49512a107cf46ab781bb2b06d5a4b433e580d756f4e63a364994",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr24-tr24-32.heading-cc981a7f546a"
+        ]
+      }
+    }
+  ]
+}

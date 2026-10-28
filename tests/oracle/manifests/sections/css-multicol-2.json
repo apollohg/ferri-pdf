@@ -1,0 +1,697 @@
+{
+  "schema_version": 1,
+  "source_id": "css-multicol-2",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Multi-column Layout Module Level 2",
+      "level": 1,
+      "text_sha256": "55308a6e4c7bf571d624e73a0b042b29bbe8fc28bf998a89ce1a8d4ca78cc3ed",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "7fb3e041089e7ddc52e723dc5e4dd3026d9fb279334085be11eb8f58d65cd1c7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "c0147c1d2acd3fada1c180656f75b2b0dc3a4d23f80cb7e8615f413ba1bd4e6f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "aadd6a3d7efe4ee07812d9e54600e8b7a126fd5096276061d1436fe28431729a",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "fc2968a7edb835ce547311a1d37a53524aafcc41d7eac7056797bf3086c9f4db",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.introduction",
+          "css-multicol-2.introduction-clause-b76495a264c5"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "5f8506dcb420c6d6df7be65e3ff0126c9f92cd23f8505cebe02804b8578eccd4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.values"
+        ]
+      }
+    },
+    {
+      "id": "interaction",
+      "title": "2. Module Interactions",
+      "level": 2,
+      "text_sha256": "8ac7035a4881f4d429e6ba732d83101eb32e1567141ed19addc3a0d8fa650055",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.interaction"
+        ]
+      }
+    },
+    {
+      "id": "the-multi-column-model",
+      "title": "3. The multi-column model",
+      "level": 2,
+      "text_sha256": "1d587d903b875cc9a958c72bda3b09f9fa6b84974327e14f951e127b88c69bcc",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.the-multi-column-model"
+        ]
+      }
+    },
+    {
+      "id": "the-number-and-width-of-columns",
+      "title": "4. The number and width of columns",
+      "level": 2,
+      "text_sha256": "16665c11ce7f429bcd6b006585eb3b36dbfad25c98856c006c0a2bfa6e39df6d",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.the-number-and-width-of-columns"
+        ]
+      }
+    },
+    {
+      "id": "cw",
+      "title": "4.1. The Inline Size of Columns: the column-width property",
+      "level": 3,
+      "text_sha256": "7b80c35c3fc9de8f90bac01dc2455e1a379384aa5961c7bc849b6e1efc06a92d",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.cw",
+          "css-multicol-2.cw-clause-cca2516ebb1d",
+          "css-multicol-2.cw-clause-ac2ebf6563c4",
+          "css-multicol-2.cw-clause-e52f0d05ae95",
+          "css-multicol-2.cw-clause-b08996b0cc07"
+        ]
+      }
+    },
+    {
+      "id": "cc",
+      "title": "4.2. The Number of Columns: the column-count property",
+      "level": 3,
+      "text_sha256": "0016efdc567e584493218d3b32d75ec6f6d9d5937e5cde3c02ea87093d5f0828",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.cc",
+          "css-multicol-2.cc-clause-cca2516ebb1d",
+          "css-multicol-2.cc-clause-111b61926321",
+          "css-multicol-2.cc-clause-f017236bbc3e"
+        ]
+      }
+    },
+    {
+      "id": "columns",
+      "title": "4.3. The column-width and column-count Shorthand: The columns Property",
+      "level": 3,
+      "text_sha256": "7d80ce144359a6b345dc946947cd3baced4fc57e80c068d645c74fd6478adb07",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.columns",
+          "css-multicol-2.columns-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-algorithm",
+      "title": "4.4. The Pseudo-algorithm",
+      "level": 3,
+      "text_sha256": "f036831e72bbebe7ce8f19bf62b5d34c9bb6eca5cd4ef74a1bca10f577934607",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.pseudo-algorithm",
+          "css-multicol-2.pseudo-algorithm-clause-95c3a7642946",
+          "css-multicol-2.pseudo-algorithm-clause-76fcd48cb00b",
+          "css-multicol-2.pseudo-algorithm-clause-c20d12f258a4",
+          "css-multicol-2.pseudo-algorithm-clause-9a7cec5660dd"
+        ]
+      }
+    },
+    {
+      "id": "stacking-context",
+      "title": "4.5. Stacking Context",
+      "level": 3,
+      "text_sha256": "2025bd2f61d6a77da0e4e47b322886a058e1a1788248712bc604aaaf38ba42be",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.stacking-context"
+        ]
+      }
+    },
+    {
+      "id": "column-pseudo",
+      "title": "4.6. Styling Columns: the ::column pseudo-element",
+      "level": 3,
+      "text_sha256": "a63bad1010a6910affb37e0d0699b83027f82a9760b22af2aab9b95a6aba7ce6",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.column-pseudo",
+          "css-multicol-2.column-pseudo-clause-f2223f89fd40"
+        ]
+      }
+    },
+    {
+      "id": "column-gaps-and-rules",
+      "title": "5. Column Gaps and Rules",
+      "level": 2,
+      "text_sha256": "3863fb0975640d514099bfc015ec891e1d4d03fa2487268b13c361e3c4a6c211",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.column-gaps-and-rules"
+        ]
+      }
+    },
+    {
+      "id": "cg",
+      "title": "5.1. Gutters Between Columns: the column-gap property",
+      "level": 3,
+      "text_sha256": "ff813831c05b8581793264d10e94bd26a2b53f6a2e6c385a68bdbaf5ff7f524f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.cg"
+        ]
+      }
+    },
+    {
+      "id": "crc",
+      "title": "5.2. The Color of Column Rules: the column-rule-color property",
+      "level": 3,
+      "text_sha256": "c8cc0727ab8e95528eb33ab43595949cca7dcd97609dc840513b8d4562bf5388",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.crc",
+          "css-multicol-2.crc-clause-cca2516ebb1d",
+          "css-multicol-2.crc-clause-dee972826276",
+          "css-multicol-2.crc-clause-42018e687eb0"
+        ]
+      }
+    },
+    {
+      "id": "crs",
+      "title": "5.3. The Style Of Column Rules: the column-rule-style property",
+      "level": 3,
+      "text_sha256": "bc68522f4dd4a2c194b73bf0d09afa7251edffc7e29e1bd96c3d4d725b2586e6",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.crs",
+          "css-multicol-2.crs-clause-cca2516ebb1d",
+          "css-multicol-2.crs-clause-25dd069c79a3",
+          "css-multicol-2.crs-clause-0081c13c7658"
+        ]
+      }
+    },
+    {
+      "id": "crw",
+      "title": "5.4. The Width Of Column Rules: the column-rule-width property",
+      "level": 3,
+      "text_sha256": "4671e0d9cc1f288e12c75eafbd988f6a3757ce2cc82f2fc473d63c9483cf6117",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.crw",
+          "css-multicol-2.crw-clause-cca2516ebb1d",
+          "css-multicol-2.crw-clause-f8d113a05f42"
+        ]
+      }
+    },
+    {
+      "id": "cr",
+      "title": "5.5. Column Rule Shorthand: the column-rule property",
+      "level": 3,
+      "text_sha256": "753e9dbf142dce945caa43e60f64f088612c86511f56d61df4d5ff0560957f8b",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.cr",
+          "css-multicol-2.cr-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "column-breaks",
+      "title": "6. Column Breaks",
+      "level": 2,
+      "text_sha256": "815a2d40d4833e559c0644b8c7e15852e1854a5e0d1568f365092e8656732195",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.column-breaks",
+          "css-multicol-2.column-breaks-clause-b46b200eec35"
+        ]
+      }
+    },
+    {
+      "id": "break-before-break-after-break-inside",
+      "title": "6.1. Controlling Fragmentation: the break-before, break-after, break-inside properties",
+      "level": 3,
+      "text_sha256": "0ed7efc61def1088cb62301f28437155c3645638a8514e0616727697a2152e1b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.break-before-break-after-break-inside"
+        ]
+      }
+    },
+    {
+      "id": "spanning-columns",
+      "title": "7. Spanning columns",
+      "level": 2,
+      "text_sha256": "cb2d62e7dd4c4994c4fd78dd132ab98ada9d0d639de07e50858a7a9a5659da14",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.spanning-columns"
+        ]
+      }
+    },
+    {
+      "id": "column-span",
+      "title": "7.1. column-span",
+      "level": 3,
+      "text_sha256": "6e5a4756aec6edee5ebe2a06d9768b3e0e173ef5cd7a5f52a2315e8245d5a01b",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.column-span",
+          "css-multicol-2.column-span-clause-cca2516ebb1d",
+          "css-multicol-2.column-span-clause-d61315c33025",
+          "css-multicol-2.column-span-clause-b7498bddce7c",
+          "css-multicol-2.column-span-clause-0cb419c69f10",
+          "css-multicol-2.column-span-clause-24fc0d04e422"
+        ]
+      }
+    },
+    {
+      "id": "filling-columns",
+      "title": "8. Filling Columns",
+      "level": 2,
+      "text_sha256": "7345b7c55081f38304b080860fefaab5eebea71dac9361f938ef20fb4dbd74e9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.filling-columns",
+          "css-multicol-2.filling-columns-clause-7345b7c55081"
+        ]
+      }
+    },
+    {
+      "id": "cf",
+      "title": "8.1. Column Balancing: the column-fill property",
+      "level": 3,
+      "text_sha256": "d2fa73dac2bc6ff44b4133533f71851dfb4df385ff79417fbd4d83b879b6c2f3",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.cf",
+          "css-multicol-2.cf-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "overflow",
+      "title": "9. Overflow",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.overflow"
+        ]
+      }
+    },
+    {
+      "id": "overflow-inside-multicol-elements",
+      "title": "9.1. Overflow Inside Multicol Containers",
+      "level": 3,
+      "text_sha256": "ae37e4bbdd4eab4c3d99d7397c95eeaffeb540773d61e000b2e61c6d29eec1f0",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.overflow-inside-multicol-elements"
+        ]
+      }
+    },
+    {
+      "id": "pagination-and-overflow-outside-multicol",
+      "title": "9.2. Pagination and Overflow Outside Multicol Containers",
+      "level": 3,
+      "text_sha256": "95d588dce1395c2a951002ec0ab9be627f7f94bbbfbd91d69934bf965e083c98",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.pagination-and-overflow-outside-multicol"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Appendix B. Changes",
+      "level": 2,
+      "text_sha256": "9a2def4ee299e63f63fcc9dc6132e0c04cecb9b09c90fd45d2abca30a78f068b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-multicol1",
+      "title": "Changes from the Candidate Recommendation (CR) of CSS-MULTICOL-1 of 16 May 2024",
+      "level": 3,
+      "text_sha256": "53e13071100f2b6909ac1c2d9b00d469d9276590fe1f86a42ed2ac860f2c1f3d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.changes-from-multicol1"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "2ec265a2887bcefe99a995a8de576b6ae624ad1a7535e0f825f49c57754c2b9a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "87513ee80a67b377d3b558178d65b6fbc2f1ec8ec64dd651d8966a0e92b1b84c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.security"
+        ]
+      }
+    },
+    {
+      "id": "a11y",
+      "title": "Accessibility Considerations",
+      "level": 2,
+      "text_sha256": "c9d73d3a4ffae2d07523e87a4ea04ab50b2bc55b17599f6323fb3ac0e3639f2d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.a11y"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "68b022b177eeb25bb71499c0b7a020a442c9c5726896b136cea289c538a7c263",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.w3c-conventions",
+          "css-multicol-2.w3c-conventions-clause-5c98c879f070",
+          "css-multicol-2.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.w3c-conformance-classes",
+          "css-multicol-2.w3c-conformance-classes-clause-ff408372426c",
+          "css-multicol-2.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.w3c-partial",
+          "css-multicol-2.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.w3c-testing",
+          "css-multicol-2.w3c-testing-clause-1e0fff369221",
+          "css-multicol-2.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "94b18b4c0f2f6ab0580ef3fd9b78f9c4b0064b5092034e5cc5ac2cc2fb7a2e15",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "3e9de66429b2efb4e56710164162843bcf1a825f44526f00b34865def161008b",
+      "clause_count": 78,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "9cb46931ffeaec21513f0b82d3524db93356d93f745a6704589dfb1259dab59d",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.import-1d023a74bc12"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "bb87013e3b9b14a84dd9eb681c9abeda791c267423640e5903e3cd2e4604f13d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "f769f33b0680e1765db4ffc34eaef44bea655b7f694c08fa685831463838eb61",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.property-index",
+          "css-multicol-2.property-index-clause-674d5fa645b0",
+          "css-multicol-2.property-index-clause-4b59fe755d34",
+          "css-multicol-2.property-index-clause-dee972826276"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "446459fed984ce66657ae2e2621f86d9b9d6ad4bac5e0b6b23aae0b8d3b0bf72",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-multicol-2.issues-index"
+        ]
+      }
+    }
+  ]
+}

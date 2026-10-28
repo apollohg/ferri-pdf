@@ -1,0 +1,1974 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "referrer-policy.heading-a3fb45518d2e",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "heading-a3fb45518d2e"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Referrer Policy.",
+      "locator": {
+        "section_id": "heading-a3fb45518d2e",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.subtitle",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "subtitle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Candidate Recommendation, 26 January 2017.",
+      "locator": {
+        "section_id": "subtitle",
+        "text_sha256": "daf52a6b35d8eecfe03ec514408bcf52bbd7bf5528e9eb52c7a17b78e075d2d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.terms",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "terms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Key Concepts and Terminology.",
+      "locator": {
+        "section_id": "terms",
+        "text_sha256": "c09a969f3f12497727b7cb343ddf25daf78509c74a94362584a6270c87e6663a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.terms-clause-195a3d8cdd79",
+        "referrer-policy.terms-clause-0673b231cd69"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.terms-clause-195a3d8cdd79",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "terms"
+      ],
+      "behaviour": "Key Concepts and Terminology — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "terms",
+        "clause_index": 1,
+        "clause_sha256": "195a3d8cdd79aeac4400720bade7104fe21e8573cb73e2efe1f57b8a4be7261c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.terms-clause-0673b231cd69",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "terms"
+      ],
+      "behaviour": "Key Concepts and Terminology — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "terms",
+        "clause_index": 2,
+        "clause_sha256": "0673b231cd69a40663ba3f71a16d6e396668022bb2b4702b87a4a307c19f8d8b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.referrer-policies",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policies"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Referrer Policies.",
+      "locator": {
+        "section_id": "referrer-policies",
+        "text_sha256": "1d49cf683de755080c86d53de182ded182bef8e22cddc74c79cbe54120607566"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.referrer-policies-clause-cd984236bf26"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policies-clause-cd984236bf26",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policies"
+      ],
+      "behaviour": "Referrer Policies — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "referrer-policies",
+        "clause_index": 2,
+        "clause_sha256": "cd984236bf264200d553ea41c810e8b5f385084c942768a60fe985ba7ebd48ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-no-referrer",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-no-referrer"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in \"no-referrer\".",
+      "locator": {
+        "section_id": "referrer-policy-no-referrer",
+        "text_sha256": "96d59cbb41f833d7ef83940055a2a69284424467d33caf806aa9f4bc39a86e1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-no-referrer-when-downgrade",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-no-referrer-when-downgrade"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in \"no-referrer-when-downgrade\".",
+      "locator": {
+        "section_id": "referrer-policy-no-referrer-when-downgrade",
+        "text_sha256": "c0cf9e919d9803f8078f9960c8a1b944daaf72a815fa547fe77726b298518b34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-same-origin",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-same-origin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in \"same-origin\".",
+      "locator": {
+        "section_id": "referrer-policy-same-origin",
+        "text_sha256": "eee75f31c08ceed8866e2f8991f3750723b2c7aefddc3947878e343185d44099"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-origin",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-origin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in \"origin\".",
+      "locator": {
+        "section_id": "referrer-policy-origin",
+        "text_sha256": "214359c0f7cc85809442af4b68eec3aac17835e20a49631b3daf48621228c24c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-strict-origin",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-strict-origin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in \"strict-origin\".",
+      "locator": {
+        "section_id": "referrer-policy-strict-origin",
+        "text_sha256": "55bf522996496dc685f532c9ab656e75638f5cdbdcad391983249bc94cae7ee0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-origin-when-cross-origin",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-origin-when-cross-origin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in \"origin-when-cross-origin\".",
+      "locator": {
+        "section_id": "referrer-policy-origin-when-cross-origin",
+        "text_sha256": "b581c12fda035c5331b13081c8717e3843f723508182b24ed813f495be2ab69d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-strict-origin-when-cross-origin",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-strict-origin-when-cross-origin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in \"strict-origin-when-cross-origin\".",
+      "locator": {
+        "section_id": "referrer-policy-strict-origin-when-cross-origin",
+        "text_sha256": "80b40fc37c145d62bb1d3d158740c69b9e0dfa5c287e57e0c44ca1c7bb8f8a0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-unsafe-url",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-unsafe-url"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in \"unsafe-url\".",
+      "locator": {
+        "section_id": "referrer-policy-unsafe-url",
+        "text_sha256": "4b0abcaf86b69d78d90accd09917bb9c5f64fea970cfee48aef6bf1e5ca78000"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-empty-string",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-empty-string"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The empty string.",
+      "locator": {
+        "section_id": "referrer-policy-empty-string",
+        "text_sha256": "7cafac17990e6ef70f44d6a67612ff7217fcba4e00966775c4f0affed18c3b4e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.referrer-policy-empty-string-clause-994666170725"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-empty-string-clause-994666170725",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-empty-string"
+      ],
+      "behaviour": "The empty string — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "referrer-policy-empty-string",
+        "clause_index": 0,
+        "clause_sha256": "994666170725acf2a26cac9935e9b4d84edf60ff2bffd3a341961a52f99ecd49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-delivery",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-delivery"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Referrer Policy Delivery.",
+      "locator": {
+        "section_id": "referrer-policy-delivery",
+        "text_sha256": "7bd94bd62ba603f1233d6da91fe6551add95b5b6967d3f6221bf3cd9d603c0bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-header",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Delivery via Referrer-Policy header.",
+      "locator": {
+        "section_id": "referrer-policy-header",
+        "text_sha256": "4b5e66f9bb562bbd2a8138b3d7057fe2208d8655a51da0b6bdb3baf4a42cea09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.referrer-policy-header-clause-42f694264a12"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-header-clause-42f694264a12",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-header"
+      ],
+      "behaviour": "Delivery via Referrer-Policy header — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "referrer-policy-header",
+        "clause_index": 0,
+        "clause_sha256": "42f694264a1274b834626aa1554d06eba001ca67ffa25aa6604b5d3c627fc9bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.integration-with-css",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "integration-with-css"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Integration with CSS.",
+      "locator": {
+        "section_id": "integration-with-css",
+        "text_sha256": "93aadb8f4e85cbfc5dcc2441da7a27d4e28a64cd57e8ea8959e44967ebe0a651"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.integration-with-css-clause-145aa350d627"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.integration-with-css-clause-145aa350d627",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "integration-with-css"
+      ],
+      "behaviour": "Integration with CSS — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "integration-with-css",
+        "clause_index": 0,
+        "clause_sha256": "145aa350d6270f099ef80cebe43b0d6bb50388ad417f106932db3811a4a37552"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.algorithms",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "algorithms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Algorithms.",
+      "locator": {
+        "section_id": "algorithms",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.parse-referrer-policy-from-header",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "parse-referrer-policy-from-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Parse a referrer policy from a Referrer-Policy header.",
+      "locator": {
+        "section_id": "parse-referrer-policy-from-header",
+        "text_sha256": "fa7a4a35d3212011d8dd88289d49909d9f6915fbdb1ce19745d064f936e72208"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.parse-referrer-policy-from-header-clause-82b9a4758a9f",
+        "referrer-policy.parse-referrer-policy-from-header-clause-907368730bcd",
+        "referrer-policy.parse-referrer-policy-from-header-clause-f9a0ce5faa35"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.parse-referrer-policy-from-header-clause-82b9a4758a9f",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "parse-referrer-policy-from-header"
+      ],
+      "behaviour": "Parse a referrer policy from a Referrer-Policy header — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "parse-referrer-policy-from-header",
+        "clause_index": 0,
+        "clause_sha256": "82b9a4758a9f4be268b2cc6839dd023b0879ac67fbfb59d46f831bbadd379f64"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.parse-referrer-policy-from-header-clause-907368730bcd",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "parse-referrer-policy-from-header"
+      ],
+      "behaviour": "Parse a referrer policy from a Referrer-Policy header — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "parse-referrer-policy-from-header",
+        "clause_index": 3,
+        "clause_sha256": "907368730bcdb586905e1c17b0421c21202716d295892421943de93c97aec632"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.parse-referrer-policy-from-header-clause-f9a0ce5faa35",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "parse-referrer-policy-from-header"
+      ],
+      "behaviour": "Parse a referrer policy from a Referrer-Policy header — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "parse-referrer-policy-from-header",
+        "clause_index": 4,
+        "clause_sha256": "f9a0ce5faa35b0559015a9c8a83fe26eeb084ced5572fc751ecbca372d948cd6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.set-requests-referrer-policy-on-redirect",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "set-requests-referrer-policy-on-redirect"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Set request’s referrer policy on redirect.",
+      "locator": {
+        "section_id": "set-requests-referrer-policy-on-redirect",
+        "text_sha256": "256f95183bea33215ab4b39455bbcb4bef2ce479dc21cd1b2b97821c67714eaa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.set-requests-referrer-policy-on-redirect-clause-f0b86a68b454"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.set-requests-referrer-policy-on-redirect-clause-f0b86a68b454",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "set-requests-referrer-policy-on-redirect"
+      ],
+      "behaviour": "Set request’s referrer policy on redirect — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "set-requests-referrer-policy-on-redirect",
+        "clause_index": 0,
+        "clause_sha256": "f0b86a68b454cc38c4e12f021b57739264a6b1108b975780cdabfb021d7bc925"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.determine-requests-referrer",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "determine-requests-referrer"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Determine request’s Referrer.",
+      "locator": {
+        "section_id": "determine-requests-referrer",
+        "text_sha256": "47a4a782a8fa29f57f5c45d8429de4852b43b29c17de0e326920940b6c439441"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.determine-requests-referrer-clause-35c0e9685eb5",
+        "referrer-policy.determine-requests-referrer-clause-38a30ae74dba",
+        "referrer-policy.determine-requests-referrer-clause-d74d1740144e",
+        "referrer-policy.determine-requests-referrer-clause-9b4bbb5c1593",
+        "referrer-policy.determine-requests-referrer-clause-b9b85ae2c83a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.determine-requests-referrer-clause-35c0e9685eb5",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "determine-requests-referrer"
+      ],
+      "behaviour": "Determine request’s Referrer — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "determine-requests-referrer",
+        "clause_index": 0,
+        "clause_sha256": "35c0e9685eb57f2617deb1457d5d1b147ffff1a9cb9a9d1efded4b07cc167e2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.determine-requests-referrer-clause-38a30ae74dba",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "determine-requests-referrer"
+      ],
+      "behaviour": "Determine request’s Referrer — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "determine-requests-referrer",
+        "clause_index": 13,
+        "clause_sha256": "38a30ae74dbab8c8061c83369de61ff66115f064a6f220fe94ce60e4068aecfd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.determine-requests-referrer-clause-d74d1740144e",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "determine-requests-referrer"
+      ],
+      "behaviour": "Determine request’s Referrer — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "determine-requests-referrer",
+        "clause_index": 16,
+        "clause_sha256": "d74d1740144e9652f17893a973909ba00467186208ee96edc77f4891cfddb5af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.determine-requests-referrer-clause-9b4bbb5c1593",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "determine-requests-referrer"
+      ],
+      "behaviour": "Determine request’s Referrer — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "determine-requests-referrer",
+        "clause_index": 48,
+        "clause_sha256": "9b4bbb5c1593574e5a1bb9dc20c683f6d95c978848ee583af8052d704cebec04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.determine-requests-referrer-clause-b9b85ae2c83a",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "determine-requests-referrer"
+      ],
+      "behaviour": "Determine request’s Referrer — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "determine-requests-referrer",
+        "clause_index": 49,
+        "clause_sha256": "b9b85ae2c83ad4d70c69fdfee4ff3a351e0e68e8397e8418f59186ecc8a97c6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.strip-url",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "strip-url"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Strip url for use as a referrer.",
+      "locator": {
+        "section_id": "strip-url",
+        "text_sha256": "8ad16a079bf9c9ac05de761284013a2456bba644c521ded97bf8b14964cb3101"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.strip-url-clause-66c6c574a658"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.strip-url-clause-66c6c574a658",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "strip-url"
+      ],
+      "behaviour": "Strip url for use as a referrer — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "strip-url",
+        "clause_index": 0,
+        "clause_sha256": "66c6c574a658bfb57f1cf7c6536b18ab96a24867b9c4983b8411789f3cbeb2b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.privacy",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.user-controls",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "user-controls"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in User Controls.",
+      "locator": {
+        "section_id": "user-controls",
+        "text_sha256": "2ee4e7e14a01d56ce1fa7942daa97ba42ed26b2c91fd27f2734910b8ab9b108a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.user-controls-clause-2ee4e7e14a01"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.user-controls-clause-2ee4e7e14a01",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "user-controls"
+      ],
+      "behaviour": "User Controls — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "user-controls",
+        "clause_index": 0,
+        "clause_sha256": "2ee4e7e14a01d56ce1fa7942daa97ba42ed26b2c91fd27f2734910b8ab9b108a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.security",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.information-leakage",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "information-leakage"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Information Leakage.",
+      "locator": {
+        "section_id": "information-leakage",
+        "text_sha256": "aa11378f4df5a8c49cebfad8d5c6cf2ab01f4f96be392a2af5c5f9447faee015"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.information-leakage-clause-8098dd3a9790"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.information-leakage-clause-8098dd3a9790",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "information-leakage"
+      ],
+      "behaviour": "Information Leakage — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "information-leakage",
+        "clause_index": 2,
+        "clause_sha256": "8098dd3a9790bd4d541317a9be4c6d600d9692e563d876e387606a5479f18a89"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.downgrade",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "downgrade"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Downgrade to less strict policies.",
+      "locator": {
+        "section_id": "downgrade",
+        "text_sha256": "e8167f01c8f1c1ef4fb163370b4176c3ba267c59a607800851ff4651d61c3e85"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.authoring",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "authoring"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Authoring Considerations.",
+      "locator": {
+        "section_id": "authoring",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.unknown-policy-values",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "unknown-policy-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unknown Policy Values.",
+      "locator": {
+        "section_id": "unknown-policy-values",
+        "text_sha256": "040ee32104ae7caf9d8f396b6d1e9342b12974effdfd6a4e435c9fea014ac646"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.unknown-policy-values-clause-09f9066288a3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.unknown-policy-values-clause-09f9066288a3",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "unknown-policy-values"
+      ],
+      "behaviour": "Unknown Policy Values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "unknown-policy-values",
+        "clause_index": 0,
+        "clause_sha256": "09f9066288a3906d9b02d61b4a4336fc18e105e91fa4e4558649b700543eb537"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.conformance",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.conventions",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "conventions",
+        "text_sha256": "b6aef6cc118a4a4250f91ecc82d39e2a71cfdebc660e159d497e0f10a30856dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.conventions-clause-5c98c879f070"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.conventions-clause-5c98c879f070",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.conformant-algorithms",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "conformant-algorithms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformant Algorithms.",
+      "locator": {
+        "section_id": "conformant-algorithms",
+        "text_sha256": "f24e40f5fbbd0310d5d8d0242ab49d323a1b682478da32bfd63da90430728692"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "referrer-policy.conformant-algorithms-clause-11385c139bea"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.conformant-algorithms-clause-11385c139bea",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "conformant-algorithms"
+      ],
+      "behaviour": "Conformant Algorithms — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformant-algorithms",
+        "clause_index": 0,
+        "clause_sha256": "11385c139bea184324b29cb82400d643e71ba8ddf608c12ad9b24347424aca2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "referrer-policy.idl-index",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "1f850eb8c2a9d0612d6987f172c074be1324ddc1d5a2ff0ba1f434ee2d25c4e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.issues-index",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "f435377b4b8dfbb2e06a08da535499c882fce4f17882c42c3c8ea76e7efc6ab7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.import-c06a391298dc",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.ietf.org/rfc/rfc6454.txt.",
+      "unresolved_reference": "http://www.ietf.org/rfc/rfc6454.txt",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "referrer-policy.import-15b9573adfe9",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.ietf.org/rfc/rfc7231.txt.",
+      "unresolved_reference": "http://www.ietf.org/rfc/rfc7231.txt",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "referrer-policy.import-769b7c811308",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.w3.org/TR/secure-contexts/.",
+      "unresolved_reference": "https://www.w3.org/TR/secure-contexts/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "referrer-policy.import-340e035ceacc",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.w3.org/TR/wsc-ui/.",
+      "unresolved_reference": "https://www.w3.org/TR/wsc-ui/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "referrer-policy.abstract",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "8b62240b6febddb79d351ea17f9ab8872cb2e3911c4f7f5cb476a1dd9f425847"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.status",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "85c954af3dca70114f2aad8a8d84cc4e6d97ef32c3548f332919802cc9aa902c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.contents",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "57380699eafcd3784729913ef5d21b809dbd36131d3eb66f69f8ced192a5e62f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.intro",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "ecdb4947a1f82380a968110bf7470f95ff78fde870bbac4062f1cb2a9d7c8a22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.intro-privacy",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "intro-privacy"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Privacy.",
+      "locator": {
+        "section_id": "intro-privacy",
+        "text_sha256": "5cf7fe64084353098e7f6c55d58edaed1bf34e015ff954e18696a9aca6516d86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.intro-security",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "intro-security"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.2. Security.",
+      "locator": {
+        "section_id": "intro-security",
+        "text_sha256": "c770653b4b7fbddb5377b33e2a11d7a92094bf23ca96ab5a94f084bfb7b56e94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.intro-trackback",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "intro-trackback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.3. Trackback.",
+      "locator": {
+        "section_id": "intro-trackback",
+        "text_sha256": "6dd0ccaada6827e4c4d25e495d556c7b3da0e01e5f07604a62414d8403d9df31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-usage",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-usage"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 4.1.1. Usage.",
+      "locator": {
+        "section_id": "referrer-usage",
+        "text_sha256": "1cfa317e3a55c1919a7e2bdd384f298f44cf4d32570ee425f764bea45e6486c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-delivery-meta",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-delivery-meta"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 4.2. Delivery via meta.",
+      "locator": {
+        "section_id": "referrer-policy-delivery-meta",
+        "text_sha256": "814fadfe20d5c0e592bbeef4ed065690c0346be327ce5b92adcefc91e0f47d52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-delivery-referrer-attribute",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-delivery-referrer-attribute"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 4.3. Delivery via a referrerpolicy content attribute.",
+      "locator": {
+        "section_id": "referrer-policy-delivery-referrer-attribute",
+        "text_sha256": "72078456c6259242df2fd1b6b282cbadd10072f9122bb75b3ab2ffc299e3c1e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.referrer-policy-delivery-nested",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "referrer-policy-delivery-nested"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 4.4. Nested browsing contexts.",
+      "locator": {
+        "section_id": "referrer-policy-delivery-nested",
+        "text_sha256": "e1ba5605126fdef1dc66256433c31a6a6536de2699063d8d2dcfd54b5a2afcc5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.integration-with-fetch",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "integration-with-fetch"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5. Integration with Fetch.",
+      "locator": {
+        "section_id": "integration-with-fetch",
+        "text_sha256": "cba75cf24f4eac07655f77edb983d7ae805ea6f9560c23e3be79b49e993d0e0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.integration-with-html",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "integration-with-html"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 6. Integration with HTML.",
+      "locator": {
+        "section_id": "integration-with-html",
+        "text_sha256": "a2c64cf96b2aba3e8fa92344a7f8e323b1f4fc0de1a41dccf4824cb2cba7a8fa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.acknowledgements",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 12. Acknowledgements.",
+      "locator": {
+        "section_id": "acknowledgements",
+        "text_sha256": "a31644952368101e9398e9d31b66696f677771971c60f37b0a8971b01f59df3f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.index",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.index-defined-here",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "2b6af4b79f07f7e92d0b2437c69541f5c569e9a8779f4e735eef3cf586118b19"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.index-defined-elsewhere",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "21cdd883674072a2040726e9ae21a5dac801c2a0bf3cae0cf17dfaeffd3a10b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.references",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "referrer-policy.informative",
+      "family": "referrer-policy",
+      "source_id": "referrer-policy",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "15ad39940e44e3d5d216fc3cc507a3e2dec33156a0a754e9515d66e55f86e502"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

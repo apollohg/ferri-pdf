@@ -1,0 +1,465 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode-tr29-tr29-41",
+  "sections": [
+    {
+      "id": "heading-a72eb40d2903",
+      "title": "Unicode® Standard Annex #29",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.heading-a72eb40d2903"
+        ]
+      }
+    },
+    {
+      "id": "heading-1c5e77c4bb90",
+      "title": "Unicode Text Segmentation",
+      "level": 1,
+      "text_sha256": "c77ba085273641c3d99a97b56ad4f2762906a70cbd7d926270e2cf1c3d34d8d0",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.heading-1c5e77c4bb90"
+        ]
+      }
+    },
+    {
+      "id": "heading-562e5643bfd0",
+      "title": "Summary",
+      "level": 4,
+      "text_sha256": "3336b051267477f6d9e094a7ea8f31d4c713b4992de65029c88bb06fc871faf7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.heading-562e5643bfd0"
+        ]
+      }
+    },
+    {
+      "id": "heading-b67e4e63a5c4",
+      "title": "Status",
+      "level": 4,
+      "text_sha256": "969770954d10eb10c58c417e62f0aeb8ceca31b93e33871538ad4b7096754f2f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.heading-b67e4e63a5c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-35d8550f521f",
+      "title": "Contents",
+      "level": 4,
+      "text_sha256": "4491a4cce91e6e883809f1b7c892c39b2ecba3f2f22fa21c298ef798cf7b3a90",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.heading-35d8550f521f"
+        ]
+      }
+    },
+    {
+      "id": "Introduction",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "9a02e4e1fef889a24ce9146ff7284bc07c7679431eb3b585d99692122344dba4",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.introduction",
+          "unicode-tr29-tr29-41.introduction-clause-f025b637dbbb"
+        ]
+      }
+    },
+    {
+      "id": "Notation",
+      "title": "1.1 Notation",
+      "level": 3,
+      "text_sha256": "ec40362d20ca57ec4c5b78548de0d8f96d30cda6915269c8e326d5042373b0a7",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.notation"
+        ]
+      }
+    },
+    {
+      "id": "Rule_Constraints",
+      "title": "1.2 Rule Constraints",
+      "level": 3,
+      "text_sha256": "4c062ad2e9bb48fc0e73c54a291f5e056469bd26bd7fa62750e5e58e139891d5",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.rule-constraints",
+          "unicode-tr29-tr29-41.rule-constraints-clause-f032c5da5666",
+          "unicode-tr29-tr29-41.rule-constraints-clause-9ceae32ed533"
+        ]
+      }
+    },
+    {
+      "id": "Conformance",
+      "title": "2 Conformance",
+      "level": 2,
+      "text_sha256": "abcc4243365e4dbb4af66d4c6a4911b7a8e082b86df264694105d1e9d4a5e636",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.conformance",
+          "unicode-tr29-tr29-41.conformance-clause-69598bf66b11"
+        ]
+      }
+    },
+    {
+      "id": "Grapheme_Cluster_Boundaries",
+      "title": "3 Grapheme Cluster Boundaries",
+      "level": 2,
+      "text_sha256": "c0d12bf47464ad9877dcc9371c25ecf850a48c7113c86f94502b7e1e8d8ffae8",
+      "clause_count": 117,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.grapheme-cluster-boundaries",
+          "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-d7e2bb5feba2",
+          "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-6262d7846cd8",
+          "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-294d1f6577c7",
+          "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-461f94c90a6b",
+          "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-ee3de90f79b2",
+          "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-8f71168a9ffe",
+          "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-10251512e56d"
+        ]
+      }
+    },
+    {
+      "id": "Default_Grapheme_Cluster_Table",
+      "title": "3.1 Default Grapheme Cluster Boundary Specification",
+      "level": 3,
+      "text_sha256": "9ba2618f2bc9d578bba498556e101e52929a2dfdcadf2f7f4e671ac9ad07b159",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.default-grapheme-cluster-table",
+          "unicode-tr29-tr29-41.default-grapheme-cluster-table-clause-d0399fccea0d"
+        ]
+      }
+    },
+    {
+      "id": "Grapheme_Cluster_Boundary_Rules",
+      "title": "3.1.1 Grapheme Cluster Boundary Rules",
+      "level": 4,
+      "text_sha256": "7af01a9cf927c96ea9657937927fcfd1ad6fde1e0534b72647ddc5d6ebfe2d94",
+      "clause_count": 75,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.grapheme-cluster-boundary-rules",
+          "unicode-tr29-tr29-41.grapheme-cluster-boundary-rules-clause-24b005b3a79d",
+          "unicode-tr29-tr29-41.grapheme-cluster-boundary-rules-clause-2cb0cd368511"
+        ]
+      }
+    },
+    {
+      "id": "Word_Boundaries",
+      "title": "4 Word Boundaries",
+      "level": 2,
+      "text_sha256": "1deb10a39cd070392206cf3c3e94cbb20f2a3d3ed7e089469b4c944836ce85c0",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.word-boundaries",
+          "unicode-tr29-tr29-41.word-boundaries-clause-ff106763f362"
+        ]
+      }
+    },
+    {
+      "id": "Default_Word_Boundaries",
+      "title": "4.1 Default Word Boundary Specification",
+      "level": 3,
+      "text_sha256": "68e3d763eebc806f69744c0f0344aff7a0f724fc8b03b9efa075fe8e8f5649af",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.default-word-boundaries",
+          "unicode-tr29-tr29-41.default-word-boundaries-clause-19e6ea4b67ba"
+        ]
+      }
+    },
+    {
+      "id": "Word_Boundary_Rules",
+      "title": "4.1.1 Word Boundary Rules",
+      "level": 4,
+      "text_sha256": "2374b89d0c6d0c4b85d863b4afe8388f6f024a16a4d2e690d49d97616d56ba5e",
+      "clause_count": 160,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.word-boundary-rules",
+          "unicode-tr29-tr29-41.word-boundary-rules-clause-965609183625",
+          "unicode-tr29-tr29-41.word-boundary-rules-clause-ba059a1caa82",
+          "unicode-tr29-tr29-41.word-boundary-rules-clause-83df3e482bec",
+          "unicode-tr29-tr29-41.word-boundary-rules-clause-8a9ecc545c1c",
+          "unicode-tr29-tr29-41.word-boundary-rules-clause-61894c028602"
+        ]
+      }
+    },
+    {
+      "id": "Name_Validation",
+      "title": "4.2 Name Validation",
+      "level": 3,
+      "text_sha256": "44d8c700807d28088e533f5b391b179f89e6d50e97384693f9dcd2575639eb41",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.name-validation",
+          "unicode-tr29-tr29-41.name-validation-clause-be2b27f69b86",
+          "unicode-tr29-tr29-41.name-validation-clause-4b6f0f231dbf"
+        ]
+      }
+    },
+    {
+      "id": "Sentence_Boundaries",
+      "title": "5 Sentence Boundaries",
+      "level": 2,
+      "text_sha256": "08804b86fa34fc4019dad03e68ef9e0d22ceccd4d2437344430075fbfbcb72e3",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.sentence-boundaries"
+        ]
+      }
+    },
+    {
+      "id": "Default_Sentence_Boundaries",
+      "title": "5.1 Default Sentence Boundary Specification",
+      "level": 3,
+      "text_sha256": "55d9105da92995cd078cf4c6e928d1fdd765daccc973e2ebc9989fddd8d67871",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.default-sentence-boundaries",
+          "unicode-tr29-tr29-41.default-sentence-boundaries-clause-927334525a75"
+        ]
+      }
+    },
+    {
+      "id": "Sentence_Boundary_Rules",
+      "title": "5.1.1 Sentence Boundary Rules",
+      "level": 4,
+      "text_sha256": "d84b4d806e82b5e05dad97909f02a152d6203d336106e540276cc391c21ef1b1",
+      "clause_count": 89,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.sentence-boundary-rules",
+          "unicode-tr29-tr29-41.sentence-boundary-rules-clause-659c949e4f59"
+        ]
+      }
+    },
+    {
+      "id": "Implementation_Notes",
+      "title": "6 Implementation Notes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.implementation-notes"
+        ]
+      }
+    },
+    {
+      "id": "Normalization",
+      "title": "6.1 Normalization",
+      "level": 3,
+      "text_sha256": "8e3be46448a132543062f0b997362cc1ba5e07e74b40204c7772ee7b19b28b1d",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.normalization",
+          "unicode-tr29-tr29-41.normalization-clause-e09b70985ee7"
+        ]
+      }
+    },
+    {
+      "id": "Grapheme_Cluster_and_Format_Rules",
+      "title": "6.2 Replacing Ignore Rules",
+      "level": 3,
+      "text_sha256": "242859f31e20776af6e0d240f31472bb2fca7dc3e20d155f6ae2d60525569c98",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.grapheme-cluster-and-format-rules",
+          "unicode-tr29-tr29-41.grapheme-cluster-and-format-rules-clause-891f03908047",
+          "unicode-tr29-tr29-41.grapheme-cluster-and-format-rules-clause-d7278e636aee"
+        ]
+      }
+    },
+    {
+      "id": "State_Machines",
+      "title": "6.3 State Machines",
+      "level": 3,
+      "text_sha256": "4db85a1f393793930c65de88160a0b8ae60a74e7fd1d8664c2bad6767c321d10",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.state-machines",
+          "unicode-tr29-tr29-41.state-machines-clause-886140119105"
+        ]
+      }
+    },
+    {
+      "id": "Random_Access",
+      "title": "6.4 Random Access",
+      "level": 3,
+      "text_sha256": "e4004fe9abb78b486747b38ee7b62d5feda5bd84f35be26fb3bbf3b17ac5717e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.random-access",
+          "unicode-tr29-tr29-41.random-access-clause-62118b468d14"
+        ]
+      }
+    },
+    {
+      "id": "Tailoring",
+      "title": "6.5 Tailoring",
+      "level": 3,
+      "text_sha256": "3e93eb18e378eadb739e981fc6774c24136dc8bf65210b9cd37d0db7a400fccc",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.tailoring"
+        ]
+      }
+    },
+    {
+      "id": "Testing",
+      "title": "7 Testing",
+      "level": 2,
+      "text_sha256": "bda38b638ed938d97d3a72d1de751401611bb782e037fe92a8709e5463051945",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.testing"
+        ]
+      }
+    },
+    {
+      "id": "Hangul_Syllable_Boundary_Determination",
+      "title": "8 Hangul Syllable Boundary Determination",
+      "level": 2,
+      "text_sha256": "e9ced17e0fd644e76036c54f34aa10b73040b5b9622eb4ecfa7422785cafbccd",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.hangul-syllable-boundary-determination"
+        ]
+      }
+    },
+    {
+      "id": "Standard_Korean_Syllables",
+      "title": "8.1 Standard Korean Syllables",
+      "level": 3,
+      "text_sha256": "82b3cd01d3b280f8307327bc87946c328162ce6e0e63f0943273bfd41ed33bd8",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.standard-korean-syllables"
+        ]
+      }
+    },
+    {
+      "id": "Transforming_Into_SKS",
+      "title": "8.2 Transforming into Standard Korean Syllables",
+      "level": 3,
+      "text_sha256": "b5d461ec071b1773aa356b6d6659cf37e0d4eac5fe8a27e8fd4fa1b5956cbebf",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.transforming-into-sks"
+        ]
+      }
+    },
+    {
+      "id": "Acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "5f804a5c6fc834b3595560ae424ffb030e55164746f26bf929eeff8773c5b21c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "References",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "8e262b530dd9dea23efac0eca37ae00f8a40d4b1be2872783d65ad768734b47a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.references"
+        ]
+      }
+    },
+    {
+      "id": "Modifications",
+      "title": "Modifications",
+      "level": 2,
+      "text_sha256": "59e3df51f7ce304c784883667c2d217742b34321fb1f2df960fe04f0090a7b10",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.modifications"
+        ]
+      }
+    },
+    {
+      "id": "heading-58da3e4d2808",
+      "title": "Revision 41",
+      "level": 3,
+      "text_sha256": "0a6970b3322fef1fc5919ac3c4a3a16eef460d20925754574b1e119494ffafbb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr29-tr29-41.heading-58da3e4d2808"
+        ]
+      }
+    }
+  ]
+}

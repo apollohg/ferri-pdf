@@ -1,0 +1,451 @@
+{
+  "schema_version": 1,
+  "source_id": "css-easing-2",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Easing Functions Level 2",
+      "level": 1,
+      "text_sha256": "4cdad013b68d3291816a4fb4ef316ec36bd24365274312dd6ee4f4205ae1e76a",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "14f75d740f7a566eb4053b014c2919c51eb233b25eef782e52171c848ad80946",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "1b7e116017421a9d0d910e81b2e8b79109a5ac3061590c2ceba14784065ad048",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "45eae2235e473b366329eadfa8d4ed7b9c3c2546c2443cf7b18024fab4a826ec",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "740da8d882cc747fd140ceee4d354f78438b48c64808d7c3d21fcceaa12aabae",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "ac04037ef0b34e5935d13124f73bcf0db03bb1dc1c5ac2d9ebe637e07db7ec13",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "easing-functions",
+      "title": "2. Easing functions",
+      "level": 2,
+      "text_sha256": "0360bb7110cf59488fa1ecfd2282e3d272e6ce1b840fadca3700b7c503e5cfb4",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "the-linear-easing-function",
+      "title": "2.1. The linear easing function: linear()",
+      "level": 3,
+      "text_sha256": "17a2882719c5c5fc878e8898adcd88144a8dd26fe24c66d61d16b8d189473ce3",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "linear-easing-function-syntax",
+      "title": "2.1.1. Syntax",
+      "level": 4,
+      "text_sha256": "1e1f33f1110a943b6f57b210769e7a23603a8bd1d2946c702530403b8b8c77fc",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "linear-easing-function-parsing",
+      "title": "2.1.2. Parsing",
+      "level": 4,
+      "text_sha256": "825b008367a208f787e81d9ae7e623c1e582c53ac21b9c8c91a1718ad90cf6de",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "linear-easing-function-serializing",
+      "title": "2.1.3. Serializing",
+      "level": 4,
+      "text_sha256": "c173ab88568cc8ec44c2d1ed20bb2dd8b9b3b6b6f804dcbf0c494298794a20be",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "linear-easing-function-output",
+      "title": "2.1.4. Output of a linear easing function",
+      "level": 4,
+      "text_sha256": "ce7e0b3e9982a4cf66ca42ae6232157fadbe8acff99ed3ceae95d81d09af11d0",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "linear-easing-function-examples",
+      "title": "2.1.5. Examples",
+      "level": 4,
+      "text_sha256": "dabd0dd8ef8fbb51d95dd1659f1ecacb36487ec2c5051b4fb0d9981a1a4f31fb",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "the-linear-easing-keyword",
+      "title": "2.2. The linear easing keyword: linear",
+      "level": 3,
+      "text_sha256": "256d50b27bb95d36e2e4295222ca5ed8724a9a8bb2e024cb62d57bb50f35ed1c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "cubic-bezier-easing-functions",
+      "title": "2.3. Cubic Bézier easing functions: ease, ease-in, ease-out, ease-in-out, cubic-bezier()",
+      "level": 3,
+      "text_sha256": "40b544618111a943ef463601b12596e557a52f1cfe87caa9e606c9a3fa2b6ff4",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "cubic-bezier-algo",
+      "title": "2.3.1. Output of a cubic bézier easing function",
+      "level": 4,
+      "text_sha256": "5d5eedd2c91184b0874ca80796c759c6834db221bc669d2827f277333f880b53",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "step-easing-functions",
+      "title": "2.4. Step easing functions: step-start, step-end, steps()",
+      "level": 3,
+      "text_sha256": "199edcd00240b039c68946b62a4ae58d81f4f32176b1cee5809c18e72e292ac0",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "step-easing-algo",
+      "title": "2.4.1. Output of a step easing function",
+      "level": 4,
+      "text_sha256": "1c1a42a310f2efd0cdbe3e8aa708d86a9d86326d667d16e01936949d00c5e61a",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "serialization",
+      "title": "2.5. Serialization",
+      "level": 3,
+      "text_sha256": "2d8da74e84b18dacba693403ef576f7701fadcaf13ff2fb6ed07276f80c1e707",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "d8b6c6cd2918bc0b1f704d21a1ab33ccae4b9fbc5b2fc9d361571bf6b6a0a8a2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "7bcc0ce2bda2dabbf5f3cc6cbcee1b7320d3109e2a052bfb2aaaa842fd48c0a9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "changes",
+      "title": "3. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-L1",
+      "title": "3.1. Additions Since Level 1",
+      "level": 3,
+      "text_sha256": "ae87f4eba89cf0d32cd806ac0e167b7c7485c53b12f372d974299df062dbf6bd",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.changes-l1"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "4. Acknowledgements",
+      "level": 2,
+      "text_sha256": "47a3b796cd09e653055ea0298d6644f844f4316127ce135fec173bcfa5f4d12e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "1c1a64981026f1f6f03b788e729899d01fc00531425bbf7a3e063ccbd1d66c3a",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "9998a05fe581c98f549b19a7592661687bcb4602aaef9b8e0c583b24b44d1cef",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "6bfb5cfaa334bf9962775998581bc4e34cfed9a9e438222ab7a04f1f941558cf",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "533a133b060e751e4bd48d249ec85a8da64d178f23f708143d08ce0b95b4b167",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-easing-2.informative"
+        ]
+      }
+    }
+  ]
+}

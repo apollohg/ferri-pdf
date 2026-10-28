@@ -1,0 +1,3358 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-logical-1.intro",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "54303aaadca80c6483358a8c302fe974df85d5c1220bd439a46eee019ce5db92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.intro-clause-0ce9b70be61b",
+        "css-logical-1.intro-clause-1c386091ae67",
+        "css-logical-1.intro-clause-234235471620",
+        "css-logical-1.intro-clause-10929a98d772"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.intro-clause-0ce9b70be61b",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Introduction — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "intro",
+        "clause_index": 5,
+        "clause_sha256": "0ce9b70be61b131750e9d1cc0f107da68499573768f6c3dc4b183f2e7749dc9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.intro-clause-1c386091ae67",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Introduction — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "intro",
+        "clause_index": 6,
+        "clause_sha256": "1c386091ae67196344f3b1998a0a78dc29a1a7fbfd0b981886f1c47f570a4193"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.intro-clause-234235471620",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Introduction — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "intro",
+        "clause_index": 8,
+        "clause_sha256": "2342354716209831ca1fa67571c03502e3c9ccab0d1cd441426385e68b7ec5d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.intro-clause-10929a98d772",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Introduction — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "intro",
+        "clause_index": 15,
+        "clause_sha256": "10929a98d7725b8208a50c80190c7316bf30be1282d205bb91b53aa5226d5676"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.values",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.directional-keywords",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "directional-keywords"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Values: block-start, block-end, inline-start, inline-end.",
+      "locator": {
+        "section_id": "directional-keywords",
+        "text_sha256": "9a1a9c36d15ddd460e83625431195793206778d506a60dbdc8f5d42b84f2c85c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.directional-keywords-clause-e6c03908d775"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.directional-keywords-clause-e6c03908d775",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "directional-keywords"
+      ],
+      "behaviour": "Flow-Relative Values: block-start, block-end, inline-start, inline-end — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "directional-keywords",
+        "clause_index": 3,
+        "clause_sha256": "e6c03908d775f0b1c26f98428a9b4d8af8be8c4b593325916647ff7cf8fbfbc8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.caption-side",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "caption-side"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Logical Values for the caption-side Property.",
+      "locator": {
+        "section_id": "caption-side",
+        "text_sha256": "00e40e3b55a258de0a1298d9d828f1a7b7b41463bd8cbf66627b072a5ef88b04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.caption-side-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.caption-side-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "caption-side"
+      ],
+      "behaviour": "Logical Values for the caption-side Property — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "caption-side",
+        "clause_index": 4,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.float-clear",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "float-clear"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Values for the float and clear Properties.",
+      "locator": {
+        "section_id": "float-clear",
+        "text_sha256": "df1c11efc993c1568a7800da46575c29d409da4424d6028d57a16762df07c11f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.float-clear-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.float-clear-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "float-clear"
+      ],
+      "behaviour": "Flow-Relative Values for the float and clear Properties — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-clear",
+        "clause_index": 4,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.text-align",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "text-align"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Values for the text-align Property.",
+      "locator": {
+        "section_id": "text-align",
+        "text_sha256": "8c62360360ada0fb2cc1705661aef7ed4bdedf6883eeaa54d7a52c1a2abd49cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.text-align-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.text-align-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "text-align"
+      ],
+      "behaviour": "Flow-Relative Values for the text-align Property — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-align",
+        "clause_index": 4,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.page",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "page"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Page Classifications.",
+      "locator": {
+        "section_id": "page",
+        "text_sha256": "646c5353330672e95f41b2c66f6e3a76c400ab2e1a6d17c5a4ef0cc61dbbb0ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.page-clause-2ee96a039f85",
+        "css-logical-1.page-clause-6121174e1dac"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.page-clause-2ee96a039f85",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "page"
+      ],
+      "behaviour": "Flow-Relative Page Classifications — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "page",
+        "clause_index": 5,
+        "clause_sha256": "2ee96a039f85e8763f19c1d5b4c2b57d5552af0827dfb5d6bc6aabdab86ae082"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.page-clause-6121174e1dac",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "page"
+      ],
+      "behaviour": "Flow-Relative Page Classifications — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "page",
+        "clause_index": 7,
+        "clause_sha256": "6121174e1dac2db33a6274516e1e556be8f9994b0f1d8d803f616980524c49ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.box",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "box"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Box Model Properties.",
+      "locator": {
+        "section_id": "box",
+        "text_sha256": "635a9dd4431e16dfbc346e99e37ffbd5785c50ef1e5a6a003ee50f38a6f884e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.box-clause-8226ad509e96",
+        "css-logical-1.box-clause-18e8daffeb2e",
+        "css-logical-1.box-clause-132edf94c70a",
+        "css-logical-1.box-clause-80ec1a9f1f57",
+        "css-logical-1.box-clause-b85c7a445fe5",
+        "css-logical-1.box-clause-810213060ac5",
+        "css-logical-1.box-clause-ceef2027e172"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.box-clause-8226ad509e96",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "box"
+      ],
+      "behaviour": "Flow-Relative Box Model Properties — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "box",
+        "clause_index": 1,
+        "clause_sha256": "8226ad509e96842db8caaa6ea280ef974800a96313c46cbae50dd2ec93e573ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.box-clause-18e8daffeb2e",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "box"
+      ],
+      "behaviour": "Flow-Relative Box Model Properties — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "box",
+        "clause_index": 3,
+        "clause_sha256": "18e8daffeb2edecc931ae93b4ba321539332fa302e706bf03f91f4c23259602b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.box-clause-132edf94c70a",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "box"
+      ],
+      "behaviour": "Flow-Relative Box Model Properties — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "box",
+        "clause_index": 4,
+        "clause_sha256": "132edf94c70a1bd8f8cead0ded07b094b6187aaf281913fa1a0094fb421438f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.box-clause-80ec1a9f1f57",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "box"
+      ],
+      "behaviour": "Flow-Relative Box Model Properties — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "box",
+        "clause_index": 6,
+        "clause_sha256": "80ec1a9f1f571a1f1b449b7740acdd754bdbc74c1975dd697999b55b84c5d8fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.box-clause-b85c7a445fe5",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "box"
+      ],
+      "behaviour": "Flow-Relative Box Model Properties — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "box",
+        "clause_index": 7,
+        "clause_sha256": "b85c7a445fe5e5eaf340c4c8362278df30a58ba9f0d73a97e5a7d3333edb0a17"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.box-clause-810213060ac5",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "box"
+      ],
+      "behaviour": "Flow-Relative Box Model Properties — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "box",
+        "clause_index": 9,
+        "clause_sha256": "810213060ac5961181c5d88541cfd51fe8efc705d1b4eb78b68a8d24096ae483"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.box-clause-ceef2027e172",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "box"
+      ],
+      "behaviour": "Flow-Relative Box Model Properties — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "box",
+        "clause_index": 10,
+        "clause_sha256": "ceef2027e17240470198cd44c63334f56b431453071ba3992762421fb44e7815"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "text_sha256": "2d68bce746f4a22c24a3ef5c121186dcc66574e6e90447ab47457525ca6a6e27"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.dimension-properties-clause-cca2516ebb1d",
+        "css-logical-1.dimension-properties-clause-4b59fe755d34",
+        "css-logical-1.dimension-properties-clause-4a6a03acb7a6",
+        "css-logical-1.dimension-properties-clause-b768450679b1",
+        "css-logical-1.dimension-properties-clause-55628f5a6ca5",
+        "css-logical-1.dimension-properties-clause-7fc53e31c0d5",
+        "css-logical-1.dimension-properties-clause-697ac4c2695e",
+        "css-logical-1.dimension-properties-clause-1d678f5d2814",
+        "css-logical-1.dimension-properties-clause-8e5676e2f3be",
+        "css-logical-1.dimension-properties-clause-0417ce8b7398",
+        "css-logical-1.dimension-properties-clause-16c112f16221",
+        "css-logical-1.dimension-properties-clause-524677fbf470",
+        "css-logical-1.dimension-properties-clause-371bb42a09ad",
+        "css-logical-1.dimension-properties-clause-fc198eed86ae",
+        "css-logical-1.dimension-properties-clause-cb5cb530c7d4",
+        "css-logical-1.dimension-properties-clause-d6837aebb19f",
+        "css-logical-1.dimension-properties-clause-df0e507ad84f",
+        "css-logical-1.foundation-logical-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-4b59fe755d34",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 17,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-4a6a03acb7a6",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 25,
+        "clause_sha256": "4a6a03acb7a6f917b7867d020728b451997332e79f8e4f8eeb635b5a7700435c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-b768450679b1",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 26,
+        "clause_sha256": "b768450679b15d3b3c15c611686163842fc054c910dd4a3c364b576bfa0ade6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-55628f5a6ca5",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 28,
+        "clause_sha256": "55628f5a6ca50a8a70002061ec7a79cb86d87147d4b5e46be355094f4369b857"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-7fc53e31c0d5",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 29,
+        "clause_sha256": "7fc53e31c0d54e832e48fde506324b58a3fbdb1c104a5b5ddd8bc4e225589473"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-697ac4c2695e",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 32,
+        "clause_sha256": "697ac4c2695e7b2e2cc3b3d963a984e6506eb0ab465b99e87b4bc3ba5ae85075"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-1d678f5d2814",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 53, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 52,
+        "clause_sha256": "1d678f5d28145e1610c511ac5c3bfa14a5dd6ed5bf99f28c6f5689d87181f2b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-8e5676e2f3be",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 54, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 53,
+        "clause_sha256": "8e5676e2f3be649c488c7b8f8cc1b9109119b2c0533892f7bc176bf8089dbd9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-0417ce8b7398",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 56, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 55,
+        "clause_sha256": "0417ce8b7398be9595379ee2876701c89f75305a484eef544880af15696bdee3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-16c112f16221",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 56,
+        "clause_sha256": "16c112f1622105f6a9093cf5776bb06c0efdb5759f81c792add4925ffbea39d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-524677fbf470",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 60, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 59,
+        "clause_sha256": "524677fbf470bdb02343ffec920d1550cb6c5fa1355560a7f9fede2d75f6d028"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-371bb42a09ad",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 80, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 79,
+        "clause_sha256": "371bb42a09ad53e08ef309c408b972d5bce0ce6bb89c3fac0d59e3709f3d847a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-fc198eed86ae",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 81, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 80,
+        "clause_sha256": "fc198eed86ae1153e9d0d536717f7c08a2349c6bedea3c44bce6a859df7e1d36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-cb5cb530c7d4",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 83, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 82,
+        "clause_sha256": "cb5cb530c7d403aeb66c9375dff44d91de09c767e51150106ae098442c7bc7d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-d6837aebb19f",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 84, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 83,
+        "clause_sha256": "d6837aebb19f1c903503f48a09ee647d2e8809bdb906838c05ed6adc5b16ef14"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.dimension-properties-clause-df0e507ad84f",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties"
+      ],
+      "behaviour": "Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties — normative clause 87, located by its exact source hash.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "clause_index": 86,
+        "clause_sha256": "df0e507ad84f6b0d539235a1f31d115a394357db2e2f74e1107307497d9ecfe7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.margin-properties",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Margins: the margin-block-start, margin-block-end, margin-inline-start, margin-inline-end properties and margin-block and margin-inline shorthands.",
+      "locator": {
+        "section_id": "margin-properties",
+        "text_sha256": "64c85c1c270af1aedac4558b66023d681fc03f4b28707071fbb1110c8b1c4796"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.margin-properties-clause-cca2516ebb1d",
+        "css-logical-1.margin-properties-clause-4b59fe755d34",
+        "css-logical-1.margin-properties-clause-95ddcc55fee3",
+        "css-logical-1.margin-properties-clause-21e72453b89f",
+        "css-logical-1.margin-properties-clause-0e6e3f71b635",
+        "css-logical-1.foundation-logical-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.margin-properties-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Flow-Relative Margins: the margin-block-start, margin-block-end, margin-inline-start, margin-inline-end properties and margin-block and margin-inline shorthands — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-properties",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.margin-properties-clause-4b59fe755d34",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Flow-Relative Margins: the margin-block-start, margin-block-end, margin-inline-start, margin-inline-end properties and margin-block and margin-inline shorthands — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-properties",
+        "clause_index": 17,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.margin-properties-clause-95ddcc55fee3",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Flow-Relative Margins: the margin-block-start, margin-block-end, margin-inline-start, margin-inline-end properties and margin-block and margin-inline shorthands — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-properties",
+        "clause_index": 20,
+        "clause_sha256": "95ddcc55fee371f81491430ee1832346cfd6c90d723b1fe58b8c30088ad0da97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.margin-properties-clause-21e72453b89f",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Flow-Relative Margins: the margin-block-start, margin-block-end, margin-inline-start, margin-inline-end properties and margin-block and margin-inline shorthands — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-properties",
+        "clause_index": 21,
+        "clause_sha256": "21e72453b89f5b1ab6eb6373bc6a6332b5420093b3008569cdaf4a8c7fa52a5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.margin-properties-clause-0e6e3f71b635",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Flow-Relative Margins: the margin-block-start, margin-block-end, margin-inline-start, margin-inline-end properties and margin-block and margin-inline shorthands — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-properties",
+        "clause_index": 25,
+        "clause_sha256": "0e6e3f71b6354c8ff829efc705a896818bdff013cbf05518ddeb8e4a0c25d884"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.position-properties",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "position-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Offsets: the inset-block-start, inset-block-end, inset-inline-start, inset-inline-end properties and inset-block, inset-inline, and inset shorthands.",
+      "locator": {
+        "section_id": "position-properties",
+        "text_sha256": "6a260849535f5d241cfaae9ea917c392f68eb5386874fe189aa28178cc80fb6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.position-properties-clause-cca2516ebb1d",
+        "css-logical-1.position-properties-clause-4b59fe755d34",
+        "css-logical-1.position-properties-clause-87cd38dd2a18",
+        "css-logical-1.position-properties-clause-98ee530d408e",
+        "css-logical-1.position-properties-clause-f7101d78708e",
+        "css-logical-1.position-properties-clause-3056e08cd44e",
+        "css-logical-1.position-properties-clause-d2a6320ccdeb",
+        "css-logical-1.position-properties-clause-825663722ccc",
+        "css-logical-1.foundation-logical-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.position-properties-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "position-properties"
+      ],
+      "behaviour": "Flow-Relative Offsets: the inset-block-start, inset-block-end, inset-inline-start, inset-inline-end properties and inset-block, inset-inline, and inset shorthands — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-properties",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.position-properties-clause-4b59fe755d34",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "position-properties"
+      ],
+      "behaviour": "Flow-Relative Offsets: the inset-block-start, inset-block-end, inset-inline-start, inset-inline-end properties and inset-block, inset-inline, and inset shorthands — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-properties",
+        "clause_index": 18,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.position-properties-clause-87cd38dd2a18",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "position-properties"
+      ],
+      "behaviour": "Flow-Relative Offsets: the inset-block-start, inset-block-end, inset-inline-start, inset-inline-end properties and inset-block, inset-inline, and inset shorthands — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-properties",
+        "clause_index": 21,
+        "clause_sha256": "87cd38dd2a18398c60f3d5430ddfb002518e94d4694e979a37bb04961cfdaa5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.position-properties-clause-98ee530d408e",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "position-properties"
+      ],
+      "behaviour": "Flow-Relative Offsets: the inset-block-start, inset-block-end, inset-inline-start, inset-inline-end properties and inset-block, inset-inline, and inset shorthands — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-properties",
+        "clause_index": 22,
+        "clause_sha256": "98ee530d408ecec0dbada69d38f33a926d82996a25124cb9de770c6676281dbc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.position-properties-clause-f7101d78708e",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "position-properties"
+      ],
+      "behaviour": "Flow-Relative Offsets: the inset-block-start, inset-block-end, inset-inline-start, inset-inline-end properties and inset-block, inset-inline, and inset shorthands — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-properties",
+        "clause_index": 26,
+        "clause_sha256": "f7101d78708e4ec8c5442a82aa2c1cf37bc292e218b37476bb6ed1e4d4278052"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.position-properties-clause-3056e08cd44e",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "position-properties"
+      ],
+      "behaviour": "Flow-Relative Offsets: the inset-block-start, inset-block-end, inset-inline-start, inset-inline-end properties and inset-block, inset-inline, and inset shorthands — normative clause 64, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-properties",
+        "clause_index": 63,
+        "clause_sha256": "3056e08cd44e68682223cf076d469095e63c1322e418665a9b85c95cf828bc56"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.position-properties-clause-d2a6320ccdeb",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "position-properties"
+      ],
+      "behaviour": "Flow-Relative Offsets: the inset-block-start, inset-block-end, inset-inline-start, inset-inline-end properties and inset-block, inset-inline, and inset shorthands — normative clause 65, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-properties",
+        "clause_index": 64,
+        "clause_sha256": "d2a6320ccdebe35298edf27112bff0ce4f83f0fd0f8d7f5f35a17f694aced722"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.position-properties-clause-825663722ccc",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "position-properties"
+      ],
+      "behaviour": "Flow-Relative Offsets: the inset-block-start, inset-block-end, inset-inline-start, inset-inline-end properties and inset-block, inset-inline, and inset shorthands — normative clause 69, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-properties",
+        "clause_index": 68,
+        "clause_sha256": "825663722ccc70709f16676a809a73a89e1260924cf31a7fac165ee9d47bbcb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.padding-properties",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Padding: the padding-block-start, padding-block-end, padding-inline-start, padding-inline-end properties and padding-block and padding-inline shorthands.",
+      "locator": {
+        "section_id": "padding-properties",
+        "text_sha256": "6cfa6a0b412bf6e6a418437162da8c439be25d7121e0825056982caa3254b4fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.padding-properties-clause-cca2516ebb1d",
+        "css-logical-1.padding-properties-clause-4b59fe755d34",
+        "css-logical-1.padding-properties-clause-727514e17f0b",
+        "css-logical-1.padding-properties-clause-5e5eb3b350e6",
+        "css-logical-1.padding-properties-clause-089b2c862e3e",
+        "css-logical-1.foundation-logical-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.padding-properties-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Flow-Relative Padding: the padding-block-start, padding-block-end, padding-inline-start, padding-inline-end properties and padding-block and padding-inline shorthands — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-properties",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.padding-properties-clause-4b59fe755d34",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Flow-Relative Padding: the padding-block-start, padding-block-end, padding-inline-start, padding-inline-end properties and padding-block and padding-inline shorthands — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-properties",
+        "clause_index": 17,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.padding-properties-clause-727514e17f0b",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Flow-Relative Padding: the padding-block-start, padding-block-end, padding-inline-start, padding-inline-end properties and padding-block and padding-inline shorthands — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-properties",
+        "clause_index": 20,
+        "clause_sha256": "727514e17f0b2cbc6a6d7a444dccdfdf8bcd0f62afeebee922d7f86b53d03b32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.padding-properties-clause-5e5eb3b350e6",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Flow-Relative Padding: the padding-block-start, padding-block-end, padding-inline-start, padding-inline-end properties and padding-block and padding-inline shorthands — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-properties",
+        "clause_index": 21,
+        "clause_sha256": "5e5eb3b350e69603bf0cef43a45fe4a589e5dbd811d666f8e57bbdc5d9d78913"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.padding-properties-clause-089b2c862e3e",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Flow-Relative Padding: the padding-block-start, padding-block-end, padding-inline-start, padding-inline-end properties and padding-block and padding-inline shorthands — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-properties",
+        "clause_index": 25,
+        "clause_sha256": "089b2c862e3e344681aba58fdc700b41087166d694c234ebe030e59b540cf5cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-properties",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Borders.",
+      "locator": {
+        "section_id": "border-properties",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.foundation-logical-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.border-width",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Border Widths: the border-block-start-width, border-block-end-width, border-inline-start-width, border-inline-end-width properties and border-block-width and border-inline-width shorthands.",
+      "locator": {
+        "section_id": "border-width",
+        "text_sha256": "b5601ac249593bbc5adb60872caa34d420d76758fa3a78a317f36f3ed9dcb8b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.border-width-clause-cca2516ebb1d",
+        "css-logical-1.border-width-clause-4b59fe755d34",
+        "css-logical-1.border-width-clause-21a6390444b4",
+        "css-logical-1.border-width-clause-0f896f09b616",
+        "css-logical-1.border-width-clause-22569fc69ce1",
+        "css-logical-1.border-width-clause-742c62f3a816",
+        "css-logical-1.border-width-clause-a0508a381624"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.border-width-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Flow-Relative Border Widths: the border-block-start-width, border-block-end-width, border-inline-start-width, border-inline-end-width properties and border-block-width and border-inline-width shorthands — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-width-clause-4b59fe755d34",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Flow-Relative Border Widths: the border-block-start-width, border-block-end-width, border-inline-start-width, border-inline-end-width properties and border-block-width and border-inline-width shorthands — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width",
+        "clause_index": 17,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-width-clause-21a6390444b4",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Flow-Relative Border Widths: the border-block-start-width, border-block-end-width, border-inline-start-width, border-inline-end-width properties and border-block-width and border-inline-width shorthands — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width",
+        "clause_index": 39,
+        "clause_sha256": "21a6390444b4777f7b720f78fd7dd2f35662f822f0265a3f7fe87c91c84a87d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-width-clause-0f896f09b616",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Flow-Relative Border Widths: the border-block-start-width, border-block-end-width, border-inline-start-width, border-inline-end-width properties and border-block-width and border-inline-width shorthands — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width",
+        "clause_index": 40,
+        "clause_sha256": "0f896f09b6162df6a013e377c82778e9fd5c2d31a936a4a45bdb7498d48c7879"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-width-clause-22569fc69ce1",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Flow-Relative Border Widths: the border-block-start-width, border-block-end-width, border-inline-start-width, border-inline-end-width properties and border-block-width and border-inline-width shorthands — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width",
+        "clause_index": 42,
+        "clause_sha256": "22569fc69ce15669c082224d4d6060d293ddb91e1e5bf159daee9c5e4028d2eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-width-clause-742c62f3a816",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Flow-Relative Border Widths: the border-block-start-width, border-block-end-width, border-inline-start-width, border-inline-end-width properties and border-block-width and border-inline-width shorthands — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width",
+        "clause_index": 43,
+        "clause_sha256": "742c62f3a8161e675596e8aa8f3b7dd571365bcea67278d54721d7e43d64e56a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-width-clause-a0508a381624",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Flow-Relative Border Widths: the border-block-start-width, border-block-end-width, border-inline-start-width, border-inline-end-width properties and border-block-width and border-inline-width shorthands — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width",
+        "clause_index": 46,
+        "clause_sha256": "a0508a381624aba2f2be78a6dcd6b2857a4dc541c54999cb8b109b821d2ded5d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-style",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Border Styles: the border-block-start-style, border-block-end-style, border-inline-start-style, border-inline-end-style properties and border-block-style and border-inline-style shorthands.",
+      "locator": {
+        "section_id": "border-style",
+        "text_sha256": "eabc957cd569ecb075b4388558df83e37c72c62350f40b614fa3054d30f2ed48"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.border-style-clause-cca2516ebb1d",
+        "css-logical-1.border-style-clause-e2d4ed7488e9",
+        "css-logical-1.border-style-clause-210b6b3b96b1",
+        "css-logical-1.border-style-clause-f3ffda7c6446",
+        "css-logical-1.border-style-clause-15077bf70546",
+        "css-logical-1.border-style-clause-1aaf49e3d44f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.border-style-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Flow-Relative Border Styles: the border-block-start-style, border-block-end-style, border-inline-start-style, border-inline-end-style properties and border-block-style and border-inline-style shorthands — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-style-clause-e2d4ed7488e9",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Flow-Relative Border Styles: the border-block-start-style, border-block-end-style, border-inline-start-style, border-inline-end-style properties and border-block-style and border-inline-style shorthands — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 20,
+        "clause_sha256": "e2d4ed7488e93a407af8c4d2e0e7f894b2bb9d2bccb69424c4a8a97986f595b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-style-clause-210b6b3b96b1",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Flow-Relative Border Styles: the border-block-start-style, border-block-end-style, border-inline-start-style, border-inline-end-style properties and border-block-style and border-inline-style shorthands — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 21,
+        "clause_sha256": "210b6b3b96b1626c0f5f0fa647d418975a3178dcbf1054cbd70d14101f5b7992"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-style-clause-f3ffda7c6446",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Flow-Relative Border Styles: the border-block-start-style, border-block-end-style, border-inline-start-style, border-inline-end-style properties and border-block-style and border-inline-style shorthands — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 23,
+        "clause_sha256": "f3ffda7c6446668fb9a18f3b2901ea5640c9a8ca7180b058806e204c1b0ec2ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-style-clause-15077bf70546",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Flow-Relative Border Styles: the border-block-start-style, border-block-end-style, border-inline-start-style, border-inline-end-style properties and border-block-style and border-inline-style shorthands — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 24,
+        "clause_sha256": "15077bf70546b2c8a53c7a1271f6ef7cf001a163168a367148fde231f1068148"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-style-clause-1aaf49e3d44f",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Flow-Relative Border Styles: the border-block-start-style, border-block-end-style, border-inline-start-style, border-inline-end-style properties and border-block-style and border-inline-style shorthands — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 27,
+        "clause_sha256": "1aaf49e3d44fcb8209499d9d7a0ba1550d5744730f38d5539a994aed52ecc411"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-color",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Border Colors: the border-block-start-color, border-block-end-color, border-inline-start-color, border-inline-end-color properties and border-block-color and border-inline-color shorthands.",
+      "locator": {
+        "section_id": "border-color",
+        "text_sha256": "fa010edf04c58fd4bde7ac0548715a93fbe297f878aef8b2cefad18afc6961a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.border-color-clause-cca2516ebb1d",
+        "css-logical-1.border-color-clause-4b59fe755d34",
+        "css-logical-1.border-color-clause-79027eea1799",
+        "css-logical-1.border-color-clause-6284277aeec2",
+        "css-logical-1.border-color-clause-da5fea8f5408",
+        "css-logical-1.border-color-clause-b689bff0e827",
+        "css-logical-1.border-color-clause-7a9e3ec97553"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.border-color-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Flow-Relative Border Colors: the border-block-start-color, border-block-end-color, border-inline-start-color, border-inline-end-color properties and border-block-color and border-inline-color shorthands — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-color-clause-4b59fe755d34",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Flow-Relative Border Colors: the border-block-start-color, border-block-end-color, border-inline-start-color, border-inline-end-color properties and border-block-color and border-inline-color shorthands — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color",
+        "clause_index": 17,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-color-clause-79027eea1799",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Flow-Relative Border Colors: the border-block-start-color, border-block-end-color, border-inline-start-color, border-inline-end-color properties and border-block-color and border-inline-color shorthands — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color",
+        "clause_index": 20,
+        "clause_sha256": "79027eea1799d1e46ab77540d4ccfde20b6feb3a22e06334cb43252f989ef53d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-color-clause-6284277aeec2",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Flow-Relative Border Colors: the border-block-start-color, border-block-end-color, border-inline-start-color, border-inline-end-color properties and border-block-color and border-inline-color shorthands — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color",
+        "clause_index": 21,
+        "clause_sha256": "6284277aeec245c41786e49d1db9584c626d58dc8aa4e7b1e9609813fd05391b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-color-clause-da5fea8f5408",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Flow-Relative Border Colors: the border-block-start-color, border-block-end-color, border-inline-start-color, border-inline-end-color properties and border-block-color and border-inline-color shorthands — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color",
+        "clause_index": 23,
+        "clause_sha256": "da5fea8f5408ba59b8809d0b978b73d122fdd2c4cf835436ec4c107c21420f7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-color-clause-b689bff0e827",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Flow-Relative Border Colors: the border-block-start-color, border-block-end-color, border-inline-start-color, border-inline-end-color properties and border-block-color and border-inline-color shorthands — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color",
+        "clause_index": 24,
+        "clause_sha256": "b689bff0e82756619941df2911798994ed8268053ef823bc03c8f692cc3fff58"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-color-clause-7a9e3ec97553",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Flow-Relative Border Colors: the border-block-start-color, border-block-end-color, border-inline-start-color, border-inline-end-color properties and border-block-color and border-inline-color shorthands — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color",
+        "clause_index": 27,
+        "clause_sha256": "7a9e3ec975530374e0ee9dd4021f0a5c3d6479d44bc921c7a02a8154397b87cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-shorthands",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-shorthands"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Border Shorthands: the border-block-start, border-block-end, border-inline-start, border-inline-end properties and border-block and border-inline shorthands.",
+      "locator": {
+        "section_id": "border-shorthands",
+        "text_sha256": "bf6673ab8ffffe18f4808a19db32adff015c930fb9dbc54ce02261ba6eb96f5f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.border-shorthands-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.border-shorthands-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-shorthands"
+      ],
+      "behaviour": "Flow-Relative Border Shorthands: the border-block-start, border-block-end, border-inline-start, border-inline-end properties and border-block and border-inline shorthands — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-shorthands",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-radius-properties",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-radius-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Corner Rounding: the border-start-start-radius, border-start-end-radius, border-end-start-radius, border-end-end-radius properties.",
+      "locator": {
+        "section_id": "border-radius-properties",
+        "text_sha256": "79748d659f0d3958d3166d71e59d11cd647d0f4472cf91e21ad6175886a402a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.border-radius-properties-clause-cca2516ebb1d",
+        "css-logical-1.border-radius-properties-clause-4b59fe755d34"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.border-radius-properties-clause-cca2516ebb1d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-radius-properties"
+      ],
+      "behaviour": "Flow-Relative Corner Rounding: the border-start-start-radius, border-start-end-radius, border-end-start-radius, border-end-end-radius properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-radius-properties",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.border-radius-properties-clause-4b59fe755d34",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "border-radius-properties"
+      ],
+      "behaviour": "Flow-Relative Corner Rounding: the border-start-start-radius, border-start-end-radius, border-end-start-radius, border-end-end-radius properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-radius-properties",
+        "clause_index": 17,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.logical-shorthand-keyword",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "logical-shorthand-keyword"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Four-Directional Shorthand Properties: the margin, padding, border-width, border-style, and border-color shorthands.",
+      "locator": {
+        "section_id": "logical-shorthand-keyword",
+        "text_sha256": "2274ed5a1ddda8597ca83df164c2d0b6a706f793ded41b83a53ee1614b2b43dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.logical-shorthand-keyword-clause-b4b33055da70"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.logical-shorthand-keyword-clause-b4b33055da70",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "logical-shorthand-keyword"
+      ],
+      "behaviour": "Four-Directional Shorthand Properties: the margin, padding, border-width, border-style, and border-color shorthands — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "logical-shorthand-keyword",
+        "clause_index": 1,
+        "clause_sha256": "b4b33055da70516a4598f30aab410e8880b23afbc2a0cf3f122fa9a793b614eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.privacy",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.security",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "85ef902ab88d989d0bf73b2dd3023e69e8fde6a5a9c638e13caaa33a72f095e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.w3c-conformance",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.w3c-conventions",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.w3c-conventions-clause-5c98c879f070",
+        "css-logical-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.w3c-conformance-classes",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-logical-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.w3c-partial",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.w3c-conform-future-proofing",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.w3c-testing",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.w3c-testing-clause-1e0fff369221",
+        "css-logical-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.property-index",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "26d5116f12900466ed33288553e890fd2e226738364a17f6fdc95e6ad1e156c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.property-index-clause-4b59fe755d34"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.property-index-clause-4b59fe755d34",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 16,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.issues-index",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "55545ae832d2952643f3802e2f88bd662ec6b44efd42f09d87ea897fc666d62e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-logical-1.issues-index-clause-10929a98d772"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.issues-index-clause-10929a98d772",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 2,
+        "clause_sha256": "10929a98d7725b8208a50c80190c7316bf30be1282d205bb91b53aa5226d5676"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-logical-1.title",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Logical Properties and Values Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "0d22bdaf31a6fe22509f29c0fff86684c7484a213ba431edaa894d762e4912bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.abstract",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "2e21035419d5b2c7261adc3af6120af1eb1ad9b4229abbc1fa5b2ada8a379b80"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.sotd",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "1938bbaaa5877db0d6ca4af974b2a9dc833112736517d0650efcbb7d4a7e6311"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.contents",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "26082e21eff07731bd30c57af18feeebfc11bbeb7c834e3aef47dfaa3c93255a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.acknowledgements",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5. Acknowledgements.",
+      "locator": {
+        "section_id": "acknowledgements",
+        "text_sha256": "91061ac4fd621661de4e7b849412d5258c69f10a00ff7ae74c3bf3967539c15c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.changes",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 6. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "26c203d4352cb409a6ec34540a98947d77228b816b23fd92a897b2e29796969f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.index",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.index-defined-here",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "4bdf8f2b302e380b31b62e779d82112ab7911f538d4c1e70f4dede96833fa12a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.index-defined-elsewhere",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "00b245686f6278589f062236a0022f9cfda0afb691c225f20d5ec13d13d11f9c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.references",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.normative",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "1bc5239d363479745c8bb33baf057fd09c306924bb6f9e913a7d055b5858e560"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-logical-1.foundation-logical-sizing",
+      "family": "css-logical-1",
+      "source_id": "css-logical-1",
+      "sections": [
+        "dimension-properties",
+        "margin-properties",
+        "padding-properties",
+        "border-properties",
+        "position-properties"
+      ],
+      "behaviour": "Map logical sizing/edges in supported writing modes through shared style/layout representations.",
+      "locator": {
+        "section_id": "dimension-properties",
+        "text_sha256": "2d68bce746f4a22c24a3ef5c121186dcc66574e6e90447ab47457525ca6a6e27"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    }
+  ]
+}

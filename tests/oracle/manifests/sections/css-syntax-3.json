@@ -1,0 +1,1330 @@
+{
+  "schema_version": 1,
+  "source_id": "css-syntax-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Syntax Module Level 3",
+      "level": 1,
+      "text_sha256": "74dbb0d804a504482de3a3cc4bc2bc28d26d01f434f5b760112fb6cd7a643aec",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "03780f6a087f1dd602403854b6344f1168c162cf843418319738a201d4f91e7c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "2116378ed287f4426a34de2491a1cf91b27a5d9b75feb008a0578d0a4c66b0cb",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "70cfe06f017804a5ecdcc5a50ff637fb68bc583c4e0d3ee8ae56027797cc8dd9",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "aa9514f3bec871fcff399f8b5a23148663b3e9e00028b5d92b3dfeca814b4ecf",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module interactions",
+      "level": 3,
+      "text_sha256": "ac2858f08eb4b0033b27bd4bfd17ce91861980aa8799cc97be8f333ee183f02e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.placement"
+        ]
+      }
+    },
+    {
+      "id": "syntax-description",
+      "title": "2. Description of CSS’s Syntax",
+      "level": 2,
+      "text_sha256": "eba870773292aa74d9248e59e28e688179eba74fa3d5ff4bebec5872ee2dce1a",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.syntax-description"
+        ]
+      }
+    },
+    {
+      "id": "escaping",
+      "title": "2.1. Escaping",
+      "level": 3,
+      "text_sha256": "3be484071d9d15c4211b9289f8ac735a6b9456eb5517083ae559ea323e193e80",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.escaping"
+        ]
+      }
+    },
+    {
+      "id": "error-handling",
+      "title": "2.2. Error Handling",
+      "level": 3,
+      "text_sha256": "468f6113a64c1c955693c621dbde7ee71a347af2db990901831b228b7748f2f7",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.error-handling",
+          "css-syntax-3.foundation-css-rule-recovery"
+        ]
+      }
+    },
+    {
+      "id": "tokenizing-and-parsing",
+      "title": "3. Tokenizing and Parsing CSS",
+      "level": 2,
+      "text_sha256": "62279a21605ab9474e89aafa8adebae56b63b43cc9ff094761ca7c92533bb578",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.tokenizing-and-parsing",
+          "css-syntax-3.tokenizing-and-parsing-clause-8aa375d9f215",
+          "css-syntax-3.tokenizing-and-parsing-clause-639653544df6",
+          "css-syntax-3.tokenizing-and-parsing-clause-390a5ce1ab32"
+        ]
+      }
+    },
+    {
+      "id": "parsing-overview",
+      "title": "3.1. Overview of the Parsing Model",
+      "level": 3,
+      "text_sha256": "0e64a1b41dde5b45fd3c49f4992989ab8dceca3d2859dfc641aad0ee3667097f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parsing-overview"
+        ]
+      }
+    },
+    {
+      "id": "input-byte-stream",
+      "title": "3.2. The input byte stream",
+      "level": 3,
+      "text_sha256": "7b25f31f8bb2e4a6b200ac4e63ed4d09f41640920767426fd5f3e85eb913e99c",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.input-byte-stream",
+          "css-syntax-3.input-byte-stream-clause-3742bddc65f9",
+          "css-syntax-3.input-byte-stream-clause-c88fca3a0a3f",
+          "css-syntax-3.input-byte-stream-clause-53ea426129fb",
+          "css-syntax-3.input-byte-stream-clause-acb76122830f",
+          "css-syntax-3.input-byte-stream-clause-1c2e3c6aa376",
+          "css-syntax-3.foundation-css-byte-decoding"
+        ]
+      }
+    },
+    {
+      "id": "input-preprocessing",
+      "title": "3.3. Preprocessing the input stream",
+      "level": 3,
+      "text_sha256": "da42aac701b49736c2c595566dea9b8149d3c4378438c9739bf16ebf119793a9",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.input-preprocessing",
+          "css-syntax-3.foundation-css-byte-decoding"
+        ]
+      }
+    },
+    {
+      "id": "tokenization",
+      "title": "4. Tokenization",
+      "level": 2,
+      "text_sha256": "02b50f9ba846b648e75123ef01ff66ac66ef1723d31716ced1c1827247be807f",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.tokenization",
+          "css-syntax-3.tokenization-clause-53fab64817e7"
+        ]
+      }
+    },
+    {
+      "id": "token-diagrams",
+      "title": "4.1. Token Railroad Diagrams",
+      "level": 3,
+      "text_sha256": "915faf5899dd2f11059d8bf3059a0d9cad3b99f0eedeb1147fc5bb1e68a2adb5",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.token-diagrams"
+        ]
+      }
+    },
+    {
+      "id": "tokenizer-definitions",
+      "title": "4.2. Definitions",
+      "level": 3,
+      "text_sha256": "3981ffe07117a8d86203f5744b7681bc8e7dfa1c69adf56f1c5a0b506b3861e2",
+      "clause_count": 74,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.tokenizer-definitions",
+          "css-syntax-3.tokenizer-definitions-clause-e165ccd1b6fe",
+          "css-syntax-3.tokenizer-definitions-clause-2941ef351cdd"
+        ]
+      }
+    },
+    {
+      "id": "tokenizer-algorithms",
+      "title": "4.3. Tokenizer Algorithms",
+      "level": 3,
+      "text_sha256": "f829a93a016912d3b3adc7232deff516024ffde995384214c005fdb004609c81",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.tokenizer-algorithms",
+          "css-syntax-3.foundation-css-token-recovery"
+        ]
+      }
+    },
+    {
+      "id": "consume-token",
+      "title": "4.3.1. Consume a token",
+      "level": 4,
+      "text_sha256": "155381f2481e15340565ab486c19de3ae3a17f6e499b6ddf3b915a7e2c999b2c",
+      "clause_count": 69,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-token"
+        ]
+      }
+    },
+    {
+      "id": "consume-comment",
+      "title": "4.3.2. Consume comments",
+      "level": 4,
+      "text_sha256": "1a0388b174e1eb0142fa97744176cbff99cd7ba192c8c1d6e8df74edbfaf4d6f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-comment"
+        ]
+      }
+    },
+    {
+      "id": "consume-numeric-token",
+      "title": "4.3.3. Consume a numeric token",
+      "level": 4,
+      "text_sha256": "aa1876cc7d546a9211b3cecefb5536b41e7d98deb4aed3ccec9f1fdb8a01c588",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-numeric-token"
+        ]
+      }
+    },
+    {
+      "id": "consume-ident-like-token",
+      "title": "4.3.4. Consume an ident-like token",
+      "level": 4,
+      "text_sha256": "f02168e964bfb03e5ada448cf7a41c4f70372acc2df3901b9a4c481c375744a3",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-ident-like-token"
+        ]
+      }
+    },
+    {
+      "id": "consume-string-token",
+      "title": "4.3.5. Consume a string token",
+      "level": 4,
+      "text_sha256": "2fef5c8d53980e6e35215ef83eab582d2f5bf02fc5e1ccc75fbbe3ecc332a362",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-string-token",
+          "css-syntax-3.consume-string-token-clause-b9255b9f80a7",
+          "css-syntax-3.foundation-css-token-recovery"
+        ]
+      }
+    },
+    {
+      "id": "consume-url-token",
+      "title": "4.3.6. Consume a url token",
+      "level": 4,
+      "text_sha256": "e4dc09aadc20ea9bd34fd27b0591e45591ba25137aa73bdd53d4941667928791",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-url-token",
+          "css-syntax-3.consume-url-token-clause-e2f17fb566ce",
+          "css-syntax-3.foundation-css-token-recovery"
+        ]
+      }
+    },
+    {
+      "id": "consume-escaped-code-point",
+      "title": "4.3.7. Consume an escaped code point",
+      "level": 4,
+      "text_sha256": "e6669100fb3941be30f59f94294bf233102102a086630946bdc8aa8a9ae861a7",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-escaped-code-point"
+        ]
+      }
+    },
+    {
+      "id": "starts-with-a-valid-escape",
+      "title": "4.3.8. Check if two code points are a valid escape",
+      "level": 4,
+      "text_sha256": "b446698611ee8c79779fa0138bbae712e55b1beebd49a40ae474dcbd7b2e0032",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.starts-with-a-valid-escape",
+          "css-syntax-3.starts-with-a-valid-escape-clause-3ff12e246cc6",
+          "css-syntax-3.starts-with-a-valid-escape-clause-b7a9a39da975"
+        ]
+      }
+    },
+    {
+      "id": "would-start-an-identifier",
+      "title": "4.3.9. Check if three code points would start an ident sequence",
+      "level": 4,
+      "text_sha256": "d94467307d0cc7808873bdee74a097a0dcc04b98394dbbe38ebd97b3446bce89",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.would-start-an-identifier",
+          "css-syntax-3.would-start-an-identifier-clause-81fa5d442aba",
+          "css-syntax-3.would-start-an-identifier-clause-afb4292aacfa"
+        ]
+      }
+    },
+    {
+      "id": "starts-with-a-number",
+      "title": "4.3.10. Check if three code points would start a number",
+      "level": 4,
+      "text_sha256": "5d2eaf4b225de3ae95f34028a61ead550a6bda370464741eaa142728239e1950",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.starts-with-a-number",
+          "css-syntax-3.starts-with-a-number-clause-a74119904cdf",
+          "css-syntax-3.starts-with-a-number-clause-afb4292aacfa"
+        ]
+      }
+    },
+    {
+      "id": "starts-a-unicode-range",
+      "title": "4.3.11. Check if three code points would start a unicode-range",
+      "level": 4,
+      "text_sha256": "3f6b20c77004b95713e066a68e740cb82b5b00deed7ce479631b9dd0253c5a8d",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.starts-a-unicode-range",
+          "css-syntax-3.starts-a-unicode-range-clause-5301fbc4ccb7",
+          "css-syntax-3.starts-a-unicode-range-clause-afb4292aacfa"
+        ]
+      }
+    },
+    {
+      "id": "consume-name",
+      "title": "4.3.12. Consume an ident sequence",
+      "level": 4,
+      "text_sha256": "e8a222fc4869e91606a731716c333d40cedda8ddfd474e5a61b23eb21e25781d",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-name",
+          "css-syntax-3.consume-name-clause-b0d7cd3c426d"
+        ]
+      }
+    },
+    {
+      "id": "consume-number",
+      "title": "4.3.13. Consume a number",
+      "level": 4,
+      "text_sha256": "ea7a37731cb06e30ae865f0e74663ac9792a2a1fd3bf675f39803736f0ea09a6",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-number",
+          "css-syntax-3.consume-number-clause-f9240ee9dc04",
+          "css-syntax-3.consume-number-clause-886b771805b7"
+        ]
+      }
+    },
+    {
+      "id": "consume-unicode-range-token",
+      "title": "4.3.14. Consume a unicode-range token",
+      "level": 4,
+      "text_sha256": "9c6cffc4772d26d673659030d672c8f1fdc8d192765600ffb0d35d14acbe719a",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-unicode-range-token",
+          "css-syntax-3.consume-unicode-range-token-clause-ff91fb156665",
+          "css-syntax-3.consume-unicode-range-token-clause-b495a86bd762"
+        ]
+      }
+    },
+    {
+      "id": "consume-remnants-of-bad-url",
+      "title": "4.3.15. Consume the remnants of a bad url",
+      "level": 4,
+      "text_sha256": "62c4eec69e9ab38aa078334033f021215496ebb9f4ad66f18596dbf24763b770",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-remnants-of-bad-url",
+          "css-syntax-3.foundation-css-token-recovery"
+        ]
+      }
+    },
+    {
+      "id": "parsing",
+      "title": "5. Parsing",
+      "level": 2,
+      "text_sha256": "7b08c2fbb8a6e9543c1dcda0f513aaa0904645890569e856f99b368cee1a2836",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parsing",
+          "css-syntax-3.parsing-clause-7b08c2fbb8a6"
+        ]
+      }
+    },
+    {
+      "id": "parser-diagrams",
+      "title": "5.1. Parser Railroad Diagrams",
+      "level": 3,
+      "text_sha256": "beca7f21fef2d046d06c3143bd4a261440dc4acd4c552fd3672e9eb307c7f440",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parser-diagrams"
+        ]
+      }
+    },
+    {
+      "id": "css-tree",
+      "title": "5.2. CSS Parsing Results",
+      "level": 3,
+      "text_sha256": "85469fbde65600af1d90d272621f0d959d900710090367ebd4866f586be605ec",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.css-tree",
+          "css-syntax-3.css-tree-clause-d7ea29854c1a",
+          "css-syntax-3.css-tree-clause-6ff33cbf3a0f"
+        ]
+      }
+    },
+    {
+      "id": "parser-definitions",
+      "title": "5.3. Token Streams",
+      "level": 3,
+      "text_sha256": "93b636253c97f6b784b5bbe92cbe004067988a2526f34549dd6190bc625bf03a",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parser-definitions",
+          "css-syntax-3.parser-definitions-clause-1cfe908e2847",
+          "css-syntax-3.parser-definitions-clause-66312e98e4f4"
+        ]
+      }
+    },
+    {
+      "id": "parser-entry-points",
+      "title": "5.4. Parser Entry Points",
+      "level": 3,
+      "text_sha256": "8a04214bf8965739c52c483e5bad494d78fca34715901d496d9143dc5e78f6c5",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parser-entry-points",
+          "css-syntax-3.parser-entry-points-clause-6e3efb77165a"
+        ]
+      }
+    },
+    {
+      "id": "parse-grammar",
+      "title": "5.4.1. Parse something according to a CSS grammar",
+      "level": 4,
+      "text_sha256": "2506670480eb159738db9660d8337adb811ffbb9f4b494750de93d5f094d7f29",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parse-grammar",
+          "css-syntax-3.parse-grammar-clause-da4facce4c49",
+          "css-syntax-3.parse-grammar-clause-3e32e8a4103f",
+          "css-syntax-3.parse-grammar-clause-ff981be28deb"
+        ]
+      }
+    },
+    {
+      "id": "parse-comma-list",
+      "title": "5.4.2. Parse a comma-separated list according to a CSS grammar",
+      "level": 4,
+      "text_sha256": "9557bea031cc689163524c14b5a47f1d61e0fcc099171551dd493011e3b9dec4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parse-comma-list",
+          "css-syntax-3.parse-comma-list-clause-c4cf3a465fa3"
+        ]
+      }
+    },
+    {
+      "id": "parse-stylesheet",
+      "title": "5.4.3. Parse a stylesheet",
+      "level": 4,
+      "text_sha256": "cde0ba2eb6add1c9ae7c07e02f4f2ff48d60ef99dc7f29b1784db9fd17060f9b",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parse-stylesheet",
+          "css-syntax-3.foundation-css-rule-recovery"
+        ]
+      }
+    },
+    {
+      "id": "parse-stylesheet-contents",
+      "title": "5.4.4. Parse a stylesheet’s contents",
+      "level": 4,
+      "text_sha256": "ef11926e9ff0ed5333a49271137e01eb477ec78902087f165a26f26b61c7623a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parse-stylesheet-contents"
+        ]
+      }
+    },
+    {
+      "id": "parse-block-contents",
+      "title": "5.4.5. Parse a block’s contents",
+      "level": 4,
+      "text_sha256": "5e7e574effca662506d7f6bd7cbdce8ac760f3590fa7d3f9243c5d42250a66da",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parse-block-contents"
+        ]
+      }
+    },
+    {
+      "id": "parse-rule",
+      "title": "5.4.6. Parse a rule",
+      "level": 4,
+      "text_sha256": "6bf90ca9812abe9294c9351c38636a32661e4178c1734f29816efcde602c701e",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parse-rule",
+          "css-syntax-3.parse-rule-clause-b1f865df6b02",
+          "css-syntax-3.parse-rule-clause-601290c2e9b5"
+        ]
+      }
+    },
+    {
+      "id": "parse-declaration",
+      "title": "5.4.7. Parse a declaration",
+      "level": 4,
+      "text_sha256": "906fb3ddbc7043bb374f29eb80ba404727c9bf285b98e547391dea3613031651",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parse-declaration"
+        ]
+      }
+    },
+    {
+      "id": "parse-component-value",
+      "title": "5.4.8. Parse a component value",
+      "level": 4,
+      "text_sha256": "9429414da90f78d80278437cab03462693a6a2037d4d9e2e2774fa41f148ee55",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parse-component-value"
+        ]
+      }
+    },
+    {
+      "id": "parse-list-of-component-values",
+      "title": "5.4.9. Parse a list of component values",
+      "level": 4,
+      "text_sha256": "d3587c81427c6d06ddb1d6e2abd58195bcd6a9b4677e29a2636ac026dd5c7d59",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parse-list-of-component-values"
+        ]
+      }
+    },
+    {
+      "id": "parse-comma-separated-list-of-component-values",
+      "title": "5.4.10. Parse a comma-separated list of component values",
+      "level": 4,
+      "text_sha256": "43d6a7251c9d5c06ec204253c8005bc7fee0c934897e796e4ec13e3709167712",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parse-comma-separated-list-of-component-values"
+        ]
+      }
+    },
+    {
+      "id": "parser-algorithms",
+      "title": "5.5. Parser Algorithms",
+      "level": 3,
+      "text_sha256": "3bf70b123c1470e51d1165f7a29d2faff0710f515af01b559edc328f10a9afdc",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.parser-algorithms",
+          "css-syntax-3.parser-algorithms-clause-673e49f9d2c5",
+          "css-syntax-3.parser-algorithms-clause-aec60b6f5b3f"
+        ]
+      }
+    },
+    {
+      "id": "consume-stylesheet-contents",
+      "title": "5.5.1. Consume a stylesheet’s contents",
+      "level": 4,
+      "text_sha256": "432bdcce49df09bc6958c0353763621b0643f0b5abc82bd72100408c6be51009",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-stylesheet-contents"
+        ]
+      }
+    },
+    {
+      "id": "consume-at-rule",
+      "title": "5.5.2. Consume an at-rule",
+      "level": 4,
+      "text_sha256": "b255e66d0ebbc704bc119c98d89da6c0b7f3fc3ac336d2c5f0481e77efc469f8",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-at-rule",
+          "css-syntax-3.foundation-css-rule-recovery"
+        ]
+      }
+    },
+    {
+      "id": "consume-qualified-rule",
+      "title": "5.5.3. Consume a qualified rule",
+      "level": 4,
+      "text_sha256": "7e5a397554338b2c7daccd5f43cda71e327e625a8bfb4d9dfeff07b5b13702f7",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-qualified-rule",
+          "css-syntax-3.consume-qualified-rule-clause-2b094d652431",
+          "css-syntax-3.consume-qualified-rule-clause-7af7cf418d97",
+          "css-syntax-3.consume-qualified-rule-clause-27c75e58804b",
+          "css-syntax-3.consume-qualified-rule-clause-d8610408e21f",
+          "css-syntax-3.consume-qualified-rule-clause-06d87f3edc3a",
+          "css-syntax-3.consume-qualified-rule-clause-3b47f26a24c2",
+          "css-syntax-3.consume-qualified-rule-clause-7a76179209cd",
+          "css-syntax-3.foundation-css-rule-recovery"
+        ]
+      }
+    },
+    {
+      "id": "consume-block",
+      "title": "5.5.4. Consume a block",
+      "level": 4,
+      "text_sha256": "f744f88636ce703a7819b5513d5bfa25273d1426b6707620facabd23d01b98a9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-block"
+        ]
+      }
+    },
+    {
+      "id": "consume-block-contents",
+      "title": "5.5.5. Consume a block’s contents",
+      "level": 4,
+      "text_sha256": "f6ad93ff15790b797822f22c89e34d3de5d2e75d1ab1e61267407a7e3894f65b",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-block-contents",
+          "css-syntax-3.consume-block-contents-clause-a2cb5f08d53c",
+          "css-syntax-3.consume-block-contents-clause-95d85619ab08",
+          "css-syntax-3.consume-block-contents-clause-f67088e7076a",
+          "css-syntax-3.consume-block-contents-clause-4c5b6831fca7",
+          "css-syntax-3.consume-block-contents-clause-4fb3a786f950",
+          "css-syntax-3.consume-block-contents-clause-4ba8e9127c4f",
+          "css-syntax-3.consume-block-contents-clause-99872c68551f",
+          "css-syntax-3.consume-block-contents-clause-6eb2881c63c6",
+          "css-syntax-3.consume-block-contents-clause-4cd6d085f422",
+          "css-syntax-3.foundation-css-rule-recovery"
+        ]
+      }
+    },
+    {
+      "id": "consume-declaration",
+      "title": "5.5.6. Consume a declaration",
+      "level": 4,
+      "text_sha256": "425a788cd16e020d564e26d76922f76456a09a54d537d8ed5c27f09c2bbb201c",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-declaration",
+          "css-syntax-3.foundation-css-rule-recovery"
+        ]
+      }
+    },
+    {
+      "id": "consume-list-of-components",
+      "title": "5.5.7. Consume a list of component values",
+      "level": 4,
+      "text_sha256": "7402e3224254e1f884b94b8f7f7db97ab037a65c53dddd2d3f5af8b1d9d5cca1",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-list-of-components"
+        ]
+      }
+    },
+    {
+      "id": "consume-component-value",
+      "title": "5.5.8. Consume a component value",
+      "level": 4,
+      "text_sha256": "940d714169a4e49291d9e8f72458c13fef9b9954a42d1633b60de97d30c179f9",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-component-value"
+        ]
+      }
+    },
+    {
+      "id": "consume-simple-block",
+      "title": "5.5.9. Consume a simple block",
+      "level": 4,
+      "text_sha256": "ebc56287222dba9a62a76343657730ccf4b8ce69c73ab78ed02d5d284ba767ab",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-simple-block"
+        ]
+      }
+    },
+    {
+      "id": "consume-function",
+      "title": "5.5.10. Consume a function",
+      "level": 4,
+      "text_sha256": "b382e117414543fdaf18fba5618cc045dcf6c9e4846d8f6f18e57921fc2104a7",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-function"
+        ]
+      }
+    },
+    {
+      "id": "consume-unicode-range-value",
+      "title": "5.5.11. Consume a unicode-range value",
+      "level": 4,
+      "text_sha256": "379a0b6a8a07aa7256a320c69790a4224868bc5a4ed10e08c04bb861e169c3cb",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.consume-unicode-range-value",
+          "css-syntax-3.consume-unicode-range-value-clause-257834de08d2"
+        ]
+      }
+    },
+    {
+      "id": "anb-microsyntax",
+      "title": "6. The An+B microsyntax",
+      "level": 2,
+      "text_sha256": "ee3eb545cfffda42783c621e2ec07f1b772975ee0e1f5d3bee6a5c25ba808f08",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.anb-microsyntax"
+        ]
+      }
+    },
+    {
+      "id": "anb-syntax",
+      "title": "6.1. Informal Syntax Description",
+      "level": 3,
+      "text_sha256": "f3ff44fa43119a444bcd4ecab52edc105c5419937c63eff5ad50e2382008a371",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.anb-syntax"
+        ]
+      }
+    },
+    {
+      "id": "the-anb-type",
+      "title": "6.2. The <a-n-plus-b> type",
+      "level": 3,
+      "text_sha256": "d0955d9ccb15ad9265c8ba0d10ec7a2fb80bcbe7d0ff4883da3b07a201361790",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.the-anb-type",
+          "css-syntax-3.the-anb-type-clause-1a5fb7facad2"
+        ]
+      }
+    },
+    {
+      "id": "rule-defs",
+      "title": "7. Defining Grammars for Rules and Other Values",
+      "level": 2,
+      "text_sha256": "726a1db62f402a54333423c10a1409a07ea52a95faacf6225705b7cdc9d1b385",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.rule-defs"
+        ]
+      }
+    },
+    {
+      "id": "block-contents",
+      "title": "7.1. Defining Block Contents: the <block-contents>, <declaration-list>, <qualified-rule-list>, <declaration-rule-list>, and <rule-list> productions",
+      "level": 3,
+      "text_sha256": "36268cb25418bdd37ce40c76494dfe0e8575b9439ca51c01b19a2f5e33b9ab4a",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.block-contents",
+          "css-syntax-3.block-contents-clause-d33d49ec494f",
+          "css-syntax-3.block-contents-clause-03d00f258cde",
+          "css-syntax-3.block-contents-clause-6084e31ad60d",
+          "css-syntax-3.block-contents-clause-b4153088ad62",
+          "css-syntax-3.block-contents-clause-aac141785f72",
+          "css-syntax-3.block-contents-clause-269f02400619",
+          "css-syntax-3.block-contents-clause-d4f644c76ed9",
+          "css-syntax-3.block-contents-clause-ce1e0057b8a1",
+          "css-syntax-3.block-contents-clause-ec3061a85430"
+        ]
+      }
+    },
+    {
+      "id": "any-value",
+      "title": "7.2. Defining Arbitrary Contents: the <declaration-value> and <any-value> productions",
+      "level": 3,
+      "text_sha256": "ddc6b46083b7a51afa7886ca76490a1fdfa0747f6028967595d53765e2078996",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.any-value"
+        ]
+      }
+    },
+    {
+      "id": "css-stylesheets",
+      "title": "8. CSS stylesheets",
+      "level": 2,
+      "text_sha256": "fa4c55046738da92003a6dfd1eac8146aadfb14a69ec2d7a9c71ff5a1fcc899c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.css-stylesheets",
+          "css-syntax-3.css-stylesheets-clause-eff79c6ff463"
+        ]
+      }
+    },
+    {
+      "id": "style-rules",
+      "title": "8.1. Style rules",
+      "level": 3,
+      "text_sha256": "44e851ef4321b41b6c234ca37cd7a0132cfe7c5d151114681ebb3445e067cbfc",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.style-rules",
+          "css-syntax-3.style-rules-clause-f56187bdcea6",
+          "css-syntax-3.style-rules-clause-c08f980d9afb",
+          "css-syntax-3.style-rules-clause-3bb12d27abc5"
+        ]
+      }
+    },
+    {
+      "id": "at-rules",
+      "title": "8.2. At-rules",
+      "level": 3,
+      "text_sha256": "e501b1deb216d1d92ec7f16fed61fd9cd6d3e52fae2c2376d52cea527211c3c0",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.at-rules"
+        ]
+      }
+    },
+    {
+      "id": "charset-rule",
+      "title": "8.3. The @charset Rule",
+      "level": 3,
+      "text_sha256": "adc90e6474a2f4a59002a51a53538c869b9ddf38924b61f7d6f71fe5296343ec",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.charset-rule",
+          "css-syntax-3.charset-rule-clause-1ed42646f82b",
+          "css-syntax-3.charset-rule-clause-89596609a9ed"
+        ]
+      }
+    },
+    {
+      "id": "serialization",
+      "title": "9. Serialization",
+      "level": 2,
+      "text_sha256": "0b7e0967fe2c8924ba97e34330f177852cca3af39f59acb3f79989910b6a3f49",
+      "clause_count": 113,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.serialization",
+          "css-syntax-3.serialization-clause-a49dab0f014c",
+          "css-syntax-3.serialization-clause-1711e5cc79fa",
+          "css-syntax-3.serialization-clause-569c52ef19ba",
+          "css-syntax-3.serialization-clause-0c978fa246c3",
+          "css-syntax-3.serialization-clause-1662a46fe634"
+        ]
+      }
+    },
+    {
+      "id": "serializing-anb",
+      "title": "9.1. Serializing <a-n-plus-b>",
+      "level": 3,
+      "text_sha256": "2c48e3168e3d32cba503a6a1700fafe5e60be31d1f8328fb4ad8939213286821",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.serializing-anb"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "10. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "546cdfa34e298dfe0b4ec2ddd3f91a12f3cc44ca31ee4ac61f3e041811323fc1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "11. Security Considerations",
+      "level": 2,
+      "text_sha256": "31beede73d0ed50d6f65f3583521431554be5a4db943e46da3a45194b71534e0",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.security"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "12. Changes",
+      "level": 2,
+      "text_sha256": "97d320f2eee844df69c85c9249cc9fea216900af7cc7b720ff4fb5839131637f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-CR-20211224",
+      "title": "12.1. Changes from the 24 December 2021 Candidate Recommendation Draft",
+      "level": 3,
+      "text_sha256": "8a47c1251174a14265bd56ddd79c98be8503e0e406533a2f6ebe02f28c374802",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.changes-cr-20211224"
+        ]
+      }
+    },
+    {
+      "id": "changes-CR-20190716",
+      "title": "12.2. Changes from the 16 August 2019 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "c46a3b970f5d4ac11668d7e0da310aaa1b1f67cb44f23213ac747ae37a5bbe27",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.changes-cr-20190716"
+        ]
+      }
+    },
+    {
+      "id": "changes-CR-20140220",
+      "title": "12.3. Changes from the 20 February 2014 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "eb80b280f59058f46ad21491e3cdc610296daa7cb5509ace77bcfcb10f70beaa",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.changes-cr-20140220"
+        ]
+      }
+    },
+    {
+      "id": "changes-WD-20131105",
+      "title": "12.4. Changes from the 5 November 2013 Last Call Working Draft",
+      "level": 3,
+      "text_sha256": "dff298635908ce22b35d07a875c9d2005e62480d0e264b142bf346f4b4f52512",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.changes-wd-20131105"
+        ]
+      }
+    },
+    {
+      "id": "changes-WD-20130919",
+      "title": "12.5. Changes from the 19 September 2013 Working Draft",
+      "level": 3,
+      "text_sha256": "cfc5a68750ecc24cdd742123d64d7599c1cf5fd2eaa4500d3e871d6af3cb56f3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.changes-wd-20130919"
+        ]
+      }
+    },
+    {
+      "id": "changes-css21",
+      "title": "12.6. Changes from CSS 2.1 and Selectors Level 3",
+      "level": 3,
+      "text_sha256": "a576d4ffd680213cb8f713a470109f66b9e8c1c0c69545cd8c69d872a24acaf1",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.changes-css21"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "cb60041e5f2201b29a9bb8c840906bba2f3ec766e0941f4b8496efd9c05d29df",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.w3c-conventions",
+          "css-syntax-3.w3c-conventions-clause-5c98c879f070",
+          "css-syntax-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.w3c-conformance-classes",
+          "css-syntax-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-syntax-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.w3c-partial",
+          "css-syntax-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.w3c-testing",
+          "css-syntax-3.w3c-testing-clause-1e0fff369221",
+          "css-syntax-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.w3c-cr-exit-criteria",
+          "css-syntax-3.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-syntax-3.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-syntax-3.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-syntax-3.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-syntax-3.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "7155b004efd488ef2a359ed9f650e167c6ed234fbe1d0ce7a00592eb531a625b",
+      "clause_count": 161,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "4906824fa32758178bf2ddf56a661ac6b4829faccc1b006cdcfa1e6e7603c3ff",
+      "clause_count": 91,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "50ee7f718e85269e531e4af1683c24eba6464b9c0401549b1c2aa4d1f069a95a",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "724c2ec90dd2eda7a11a803cd17971cf580389af82cae18e502da9a02502828d",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-syntax-3.informative"
+        ]
+      }
+    }
+  ]
+}

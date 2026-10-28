@@ -1,0 +1,474 @@
+{
+  "schema_version": 1,
+  "source_id": "quirks",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Quirks Mode (Commit 5a06deb58ae2644d62c3c2026bbef86e6137b779)",
+      "level": 1,
+      "text_sha256": "a07af0985f20cac41834aa758fc30f0dd2f30f3396001016d5b0fdbb776ccd00",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "ef3826ac3e4a40859d8744cfd702c7d3ed352c0c5826e08d9883deb091570f85",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.abstract"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "1ba12d1bd10978d66186c3e45031f923dba438a941981c54969582426355253f",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.introduction"
+        ]
+      }
+    },
+    {
+      "id": "history",
+      "title": "1.1. History",
+      "level": 3,
+      "text_sha256": "b92e2d71dc3c45210401a4593016e48e4e2d248850f922e181a07ff018292bfa",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.history"
+        ]
+      }
+    },
+    {
+      "id": "goals",
+      "title": "1.2. Goals",
+      "level": 3,
+      "text_sha256": "680431d5b54ce134ccfcdc218858991cb3efcb04750486a4c61001e6017471de",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.goals"
+        ]
+      }
+    },
+    {
+      "id": "common-infrastructure",
+      "title": "2. Common infrastructure",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.common-infrastructure"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "2.1. Conformance",
+      "level": 3,
+      "text_sha256": "f1b7c6acffd1ddd7a6af45195a739d1aaaaef48da25c228538b04b9f20f57c58",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.conformance",
+          "quirks.conformance-clause-c11630d0deae"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "2.2. Terminology",
+      "level": 3,
+      "text_sha256": "3fbc6c14c66ba7327dc70b2ee90804057f9c8c74603830bed93ecda5751a6982",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.terminology"
+        ]
+      }
+    },
+    {
+      "id": "css",
+      "title": "3. CSS",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.css"
+        ]
+      }
+    },
+    {
+      "id": "the-hashless-hex-color-quirk",
+      "title": "3.1. The hashless hex color quirk",
+      "level": 3,
+      "text_sha256": "798de6d31b157864ae0a65c019c543d95dbebb98362939ef2593511ec6cc1cac",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-hashless-hex-color-quirk"
+        ]
+      }
+    },
+    {
+      "id": "the-unitless-length-quirk",
+      "title": "3.2. The unitless length quirk",
+      "level": 3,
+      "text_sha256": "82b832d645d899aebb4462dc6fe5573c1c3eef85d1f805f576a97c8c4f758abb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-unitless-length-quirk"
+        ]
+      }
+    },
+    {
+      "id": "the-line-height-calculation-quirk",
+      "title": "3.3. The line height calculation quirk",
+      "level": 3,
+      "text_sha256": "71ada0aca0f205281e298f787415a5fd2551c93483d5a2e9090956974fb6ad48",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-line-height-calculation-quirk",
+          "quirks.the-line-height-calculation-quirk-clause-7f8685b43ee7"
+        ]
+      }
+    },
+    {
+      "id": "the-blocks-ignore-line-height-quirk",
+      "title": "3.4. The blocks ignore line-height quirk",
+      "level": 3,
+      "text_sha256": "3c16a16e882f867b56a5357ab652f8c06b32d11910bbec01751b2698dec01ffa",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-blocks-ignore-line-height-quirk",
+          "quirks.the-blocks-ignore-line-height-quirk-clause-df2c3573f4b8"
+        ]
+      }
+    },
+    {
+      "id": "the-percentage-height-calculation-quirk",
+      "title": "3.5. The percentage height calculation quirk",
+      "level": 3,
+      "text_sha256": "7467eb461125180f1e905b2b9dc2c5678a4cb7e4e1b20c36095637500f98dd00",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-percentage-height-calculation-quirk",
+          "quirks.the-percentage-height-calculation-quirk-clause-4a7f3806e1db",
+          "quirks.the-percentage-height-calculation-quirk-clause-8465b3aff8cb",
+          "quirks.the-percentage-height-calculation-quirk-clause-a13010565bd6",
+          "quirks.the-percentage-height-calculation-quirk-clause-2badd16ed956"
+        ]
+      }
+    },
+    {
+      "id": "the-html-element-fills-the-viewport-quirk",
+      "title": "3.6. The html element fills the viewport quirk",
+      "level": 3,
+      "text_sha256": "dc64e70ff699c3b3dd4fb37cf04b6eb84f7941df2113c2758887954897d67214",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-html-element-fills-the-viewport-quirk",
+          "quirks.the-html-element-fills-the-viewport-quirk-clause-7b1c423f3ff8",
+          "quirks.the-html-element-fills-the-viewport-quirk-clause-9aec33961ebb"
+        ]
+      }
+    },
+    {
+      "id": "the-body-element-fills-the-html-element-quirk",
+      "title": "3.7. The body element fills the html element quirk",
+      "level": 3,
+      "text_sha256": "e8e7994380ddc22e23f1665c71ef9e56f346901482c4c5d1433f4f82b7f4f4eb",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-body-element-fills-the-html-element-quirk",
+          "quirks.the-body-element-fills-the-html-element-quirk-clause-05feff1aaa4e",
+          "quirks.the-body-element-fills-the-html-element-quirk-clause-89c24166adc0",
+          "quirks.the-body-element-fills-the-html-element-quirk-clause-72b4711e272a",
+          "quirks.the-body-element-fills-the-html-element-quirk-clause-351a10fa2f7a",
+          "quirks.the-body-element-fills-the-html-element-quirk-clause-169ed051d854"
+        ]
+      }
+    },
+    {
+      "id": "the-table-cell-width-calculation-quirk",
+      "title": "3.8. The table cell width calculation quirk",
+      "level": 3,
+      "text_sha256": "6699624b7b6b08fb752e06879bf70bddf669ca5173096a9f73c36f1bdd62a4fb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-table-cell-width-calculation-quirk",
+          "quirks.the-table-cell-width-calculation-quirk-clause-6699624b7b6b"
+        ]
+      }
+    },
+    {
+      "id": "the-table-cell-nowrap-minimum-width-calculation-quirk",
+      "title": "3.9. The table cell nowrap minimum width calculation quirk",
+      "level": 3,
+      "text_sha256": "228fe52af9a7ba3f3b8ad7a7362f455c63f89ae86c1fc19f45bf3a52345e76fa",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-table-cell-nowrap-minimum-width-calculation-quirk",
+          "quirks.the-table-cell-nowrap-minimum-width-calculation-quirk-clause-7ea37ee13d06",
+          "quirks.the-table-cell-nowrap-minimum-width-calculation-quirk-clause-c6fbb2fb76d3"
+        ]
+      }
+    },
+    {
+      "id": "the-collapsing-table-quirk",
+      "title": "3.10. The collapsing table quirk",
+      "level": 3,
+      "text_sha256": "4ce872679e0360e8142468225197ed4bdfa3bbb31b901e0629c880adc43b7bcd",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-collapsing-table-quirk",
+          "quirks.the-collapsing-table-quirk-clause-30c820fc843d",
+          "quirks.the-collapsing-table-quirk-clause-f4d13747bb8c"
+        ]
+      }
+    },
+    {
+      "id": "the-text-decoration-doesnt-propagate-into-tables-quirk",
+      "title": "3.11. The text decoration doesn’t propagate into tables quirk",
+      "level": 3,
+      "text_sha256": "368662d9ec33c4a85be5d7ef7fca34bcb22726ba1d86e1e5e01459da5041890a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-text-decoration-doesnt-propagate-into-tables-quirk",
+          "quirks.the-text-decoration-doesnt-propagate-into-tables-quirk-clause-368662d9ec33"
+        ]
+      }
+    },
+    {
+      "id": "the-tables-inherit-color-from-body-quirk",
+      "title": "3.12. The tables inherit color from body quirk",
+      "level": 3,
+      "text_sha256": "5580f172b3f78a3df24c406482103c2b33368fabe707654b7db4a8fdd14d2a5e",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-tables-inherit-color-from-body-quirk",
+          "quirks.the-tables-inherit-color-from-body-quirk-clause-fde99d1f5a89",
+          "quirks.the-tables-inherit-color-from-body-quirk-clause-632a2357b96b",
+          "quirks.the-tables-inherit-color-from-body-quirk-clause-77b4de84bb42",
+          "quirks.the-tables-inherit-color-from-body-quirk-clause-84611ddbbf1e"
+        ]
+      }
+    },
+    {
+      "id": "the-table-cell-height-box-sizing-quirk",
+      "title": "3.13. The table cell height box sizing quirk",
+      "level": 3,
+      "text_sha256": "2baa9e19d2671e8a758ca9bbc7d14cbe30843b9b4bc2ef020e2e18ca60414aa0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-table-cell-height-box-sizing-quirk",
+          "quirks.the-table-cell-height-box-sizing-quirk-clause-2baa9e19d267"
+        ]
+      }
+    },
+    {
+      "id": "selectors",
+      "title": "4. Selectors",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.selectors"
+        ]
+      }
+    },
+    {
+      "id": "the-active-and-hover-quirk",
+      "title": "4.1. The :active and :hover quirk",
+      "level": 3,
+      "text_sha256": "ddd20b8e050b2daf26b38e863c9712413f545119747ec6b61c428d21a1497250",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.the-active-and-hover-quirk",
+          "quirks.the-active-and-hover-quirk-clause-c934078b7ef7"
+        ]
+      }
+    },
+    {
+      "id": "security-privacy",
+      "title": "Security and Privacy Considerations",
+      "level": 2,
+      "text_sha256": "6b5105d0b6d7ef5ab41e8cdb87918f4d114389d242dc35c1e5cc70cda575f995",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.security-privacy"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "4ebc820721c0bf16cf40472614f4e2e385cb4e6e4bcae3620dc4779a1a7a7e9d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "ipr",
+      "title": "Intellectual property rights",
+      "level": 2,
+      "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.ipr"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "87179387aea360c65f9f2d922a23e95276f4319faeed672e371fea093ce846cb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "4136eac3b4e31fc1a7203d40bb98529278a34949111d92d2120df30906a2bc18",
+      "clause_count": 104,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "7df81eaac207ea52709d2e08b337de755474b17a493ce3ba875934c19fc6d32c",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.import-ce7e05d15189"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "de70ecd6e874ffa57a52861581573eb13a0790b799995141e8b10f8bea53fcfa",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "quirks.informative"
+        ]
+      }
+    }
+  ]
+}

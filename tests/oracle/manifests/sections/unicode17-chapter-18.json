@@ -1,0 +1,746 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-18",
+  "sections": [
+    {
+      "id": "G12159",
+      "title": "East Asia",
+      "level": 1,
+      "text_sha256": "7381165c911aea944fd21e7e1655b8827bafd27838b64e72c30af47c2ef31f5b",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.g12159",
+          "unicode17-chapter-18.g12159-clause-7ad95c5f3a81"
+        ]
+      }
+    },
+    {
+      "id": "heading-07f5056e6f7e",
+      "title": "18.1 Han",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-07f5056e6f7e"
+        ]
+      }
+    },
+    {
+      "id": "heading-0694b19ee661",
+      "title": "18.1.1 CJK Unified Ideographs",
+      "level": 3,
+      "text_sha256": "90a0bedb7b5d5d754fbf90387d1e896ed095e88b6fd6cb62dca6eb545d5d4b42",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-0694b19ee661",
+          "unicode17-chapter-18.heading-0694b19ee661-clause-58f9169250c8"
+        ]
+      }
+    },
+    {
+      "id": "heading-5eed6aef480c",
+      "title": "18.1.2 Blocks Containing Han Ideographs",
+      "level": 3,
+      "text_sha256": "8722d5a0d5852a76feb8bfc3f82714164f1216d495a0ddd677234813728bb432",
+      "clause_count": 140,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-5eed6aef480c",
+          "unicode17-chapter-18.heading-5eed6aef480c-clause-5b31e219ce92",
+          "unicode17-chapter-18.heading-5eed6aef480c-clause-4754d53e7041"
+        ]
+      }
+    },
+    {
+      "id": "heading-401050937e57",
+      "title": "18.1.3 General Characteristics of Han Ideographs",
+      "level": 3,
+      "text_sha256": "073730fd8e01c6fa3c7d4c4ed9141a357a79ef2624d7069cb6ba8d83f23e0b4e",
+      "clause_count": 60,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-401050937e57",
+          "unicode17-chapter-18.heading-401050937e57-clause-8dc7a5480acb",
+          "unicode17-chapter-18.heading-401050937e57-clause-81bdf39e629d"
+        ]
+      }
+    },
+    {
+      "id": "heading-19903ae6094b",
+      "title": "18.1.4 Principles of Han Unification",
+      "level": 3,
+      "text_sha256": "87bd4effba54d6319e37197ee64b99dd902bfa9a54e39aa5b0d3befec36a4e79",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-19903ae6094b",
+          "unicode17-chapter-18.heading-19903ae6094b-clause-dcdf644ce651"
+        ]
+      }
+    },
+    {
+      "id": "heading-601e35a6ea86",
+      "title": "18.1.5 Unification Rules",
+      "level": 3,
+      "text_sha256": "a2e147c35e72c892be3c9a13c4edb9962426f6d52c47c6f9b98abe5b8d16aeaa",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-601e35a6ea86",
+          "unicode17-chapter-18.heading-601e35a6ea86-clause-d103b14eae93"
+        ]
+      }
+    },
+    {
+      "id": "heading-1ab19f2b5cca",
+      "title": "18.1.6 Abstract Shape",
+      "level": 3,
+      "text_sha256": "bace3506e8c708dcd195834d94a1d90c20cfb81906c62b14a3f0628f0a9dfc9e",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-1ab19f2b5cca"
+        ]
+      }
+    },
+    {
+      "id": "heading-a1c7d594f02d",
+      "title": "18.1.7 Han Ideograph Arrangement",
+      "level": 3,
+      "text_sha256": "a95ce9c3548362e7530a5fbb78418bd595ab115378e0fc7884465fba97d79d53",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-a1c7d594f02d",
+          "unicode17-chapter-18.heading-a1c7d594f02d-clause-7eccc3ea6d73"
+        ]
+      }
+    },
+    {
+      "id": "heading-9e2c294ba403",
+      "title": "18.1.8 Radical-Stroke Indices",
+      "level": 3,
+      "text_sha256": "e724c27c85ac67e081c6bd4d378dda473834f8333cfa7e40cfba7e76a734a877",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-9e2c294ba403"
+        ]
+      }
+    },
+    {
+      "id": "heading-5cd3cbd64aef",
+      "title": "18.1.9 Mappings for Han Ideographs",
+      "level": 3,
+      "text_sha256": "9decc41d78720c90bcec858c8edcd4978b66b57414103a9656b6d6a7c975deca",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-5cd3cbd64aef"
+        ]
+      }
+    },
+    {
+      "id": "heading-2d0dfab96379",
+      "title": "18.1.10 CJK Compatibility Ideographs: U+F900–U+FAFF",
+      "level": 3,
+      "text_sha256": "e0fd5e9bb89856818f5a5fe2a2890a2d00d0d09559c62aabf4cff410176fb217",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-2d0dfab96379",
+          "unicode17-chapter-18.heading-2d0dfab96379-clause-5b43e7ae4bcb",
+          "unicode17-chapter-18.heading-2d0dfab96379-clause-accf9ad31090",
+          "unicode17-chapter-18.heading-2d0dfab96379-clause-640d7c76ace6",
+          "unicode17-chapter-18.heading-2d0dfab96379-clause-631615fb271d"
+        ]
+      }
+    },
+    {
+      "id": "heading-303f96b1e1ba",
+      "title": "18.1.11 CJK Compatibility Supplement: U+2F800–U+2FA1D",
+      "level": 3,
+      "text_sha256": "81cc32a841c818f15f4fa573aa1e4aac77cb4f346518b6fb5934bbd09b1f1aec",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-303f96b1e1ba",
+          "unicode17-chapter-18.heading-303f96b1e1ba-clause-d6bb733168f9"
+        ]
+      }
+    },
+    {
+      "id": "heading-ffe45c9a84cc",
+      "title": "18.1.12 Kanbun: U+3190–U+319F",
+      "level": 3,
+      "text_sha256": "a41af6d3da4af15edd6959b2fcde9fbbe2a067039ebd9354115dd8338dbf8092",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-ffe45c9a84cc"
+        ]
+      }
+    },
+    {
+      "id": "heading-69697358a21f",
+      "title": "18.1.13 Symbols Derived from Han Ideographs",
+      "level": 3,
+      "text_sha256": "7f8febf8378fbf9ad90be23bb4e5d34dff21cdb0408f433811c5af17c6f05c86",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-69697358a21f"
+        ]
+      }
+    },
+    {
+      "id": "heading-160a487c371b",
+      "title": "18.1.14 Kangxi Radicals and CJK Radicals Supplement: U+2F00–U+2FD5, U+2E80–U+2EF3",
+      "level": 3,
+      "text_sha256": "3e2246c7c0946c5fe778896760e3146c8fb128c89ae7aad7bcc90dfd0b648289",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-160a487c371b",
+          "unicode17-chapter-18.heading-160a487c371b-clause-1fceb482228f",
+          "unicode17-chapter-18.heading-160a487c371b-clause-a7f99ed0868b"
+        ]
+      }
+    },
+    {
+      "id": "heading-0e30678f860b",
+      "title": "18.1.15 CJK Additions from HKSCS and GB 18030",
+      "level": 3,
+      "text_sha256": "088c5889bf4837dc396d76a8a59cbaaec155c4e4c305b14facffac89bd6bbeab",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-0e30678f860b"
+        ]
+      }
+    },
+    {
+      "id": "heading-d07c1ccb7655",
+      "title": "18.1.16 CJK Strokes: U+31C0–U+31EF",
+      "level": 3,
+      "text_sha256": "1f93c3a7cc9b3ed713a53d8031d34b91a838f5d606fe2a05ee26df9db1b22ce7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-d07c1ccb7655"
+        ]
+      }
+    },
+    {
+      "id": "heading-40d1bc294501",
+      "title": "18.1.17 Ideographic Symbols and Punctuation: U+16FE0–U+16FFF",
+      "level": 3,
+      "text_sha256": "b39f490b733c622063026b5c0ad1a6987f66b41bed85438adf9e071f5bc25f37",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-40d1bc294501"
+        ]
+      }
+    },
+    {
+      "id": "heading-3201a7d07dfb",
+      "title": "18.2 Ideographic Description Characters",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-3201a7d07dfb"
+        ]
+      }
+    },
+    {
+      "id": "heading-336e3e854888",
+      "title": "18.2.1 Ideographic Description Characters: U+2FF0–U+2FFF",
+      "level": 3,
+      "text_sha256": "9bfd3e1c5d0b9ed35d49c16c8cbd57b5aea1ae543a332fd29e5d321321bd5a36",
+      "clause_count": 130,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-336e3e854888",
+          "unicode17-chapter-18.heading-336e3e854888-clause-d14cb3feef76",
+          "unicode17-chapter-18.heading-336e3e854888-clause-2eeb3c983e39",
+          "unicode17-chapter-18.heading-336e3e854888-clause-f11dcee9373a",
+          "unicode17-chapter-18.heading-336e3e854888-clause-d3e02d7c3dbf",
+          "unicode17-chapter-18.heading-336e3e854888-clause-9d83dde9f342",
+          "unicode17-chapter-18.heading-336e3e854888-clause-0fea89c07ec3",
+          "unicode17-chapter-18.heading-336e3e854888-clause-b010666b1f45"
+        ]
+      }
+    },
+    {
+      "id": "heading-2a2c4219e5df",
+      "title": "18.3 Bopomofo",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-2a2c4219e5df"
+        ]
+      }
+    },
+    {
+      "id": "heading-70ff52ee790a",
+      "title": "18.3.1 Bopomofo: U+3100–U+312F, U+31A0–U+31BF",
+      "level": 3,
+      "text_sha256": "d762909f945c37e085dc5e57d9b90ccfc4a74e54f59c338b9022280adf6d76cc",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-70ff52ee790a"
+        ]
+      }
+    },
+    {
+      "id": "heading-253c8517d96d",
+      "title": "18.4 Hiragana and Katakana",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-253c8517d96d"
+        ]
+      }
+    },
+    {
+      "id": "heading-f34529c97c19",
+      "title": "18.4.1 Hiragana: U+3040–U+309F",
+      "level": 3,
+      "text_sha256": "0fcb76c2a420105e1cde4add8ad8eb09ca686733b77e0b1c36a470e94f288db2",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-f34529c97c19",
+          "unicode17-chapter-18.heading-f34529c97c19-clause-06a75ecf68b2"
+        ]
+      }
+    },
+    {
+      "id": "heading-4050f4467371",
+      "title": "18.4.2 Katakana: U+30A0–U+30FF",
+      "level": 3,
+      "text_sha256": "1fb4c7510500b05d3ae1a88466138810ff4f564eb4524a25c2a2c195e8410e0f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-4050f4467371"
+        ]
+      }
+    },
+    {
+      "id": "heading-f0ecd502f7ef",
+      "title": "18.4.3 Katakana Phonetic Extensions: U+31F0–U+31FF",
+      "level": 3,
+      "text_sha256": "f5223ce69acc2b127343dbced02cfbfe19e19bc154afe20af6f22df6d7abebfc",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-f0ecd502f7ef"
+        ]
+      }
+    },
+    {
+      "id": "heading-1deea201125d",
+      "title": "18.4.4 Small Kana Extension: U+1B130-U+1B16F",
+      "level": 3,
+      "text_sha256": "549531a7c67391648cc8812a302534b3dbfabfba82de228228d1e8ca09be404e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-1deea201125d"
+        ]
+      }
+    },
+    {
+      "id": "heading-e621e871b20d",
+      "title": "18.4.5 Kana Supplement: U+1B000–U+1B0FF",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-e621e871b20d"
+        ]
+      }
+    },
+    {
+      "id": "heading-347946c18404",
+      "title": "Kana Extended-A: U+1B100–U+1B12F",
+      "level": 3,
+      "text_sha256": "4fd40a5ca68ddf70faddcb69b556487ec1c97e4ced65e27b202ffa687964d353",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-347946c18404",
+          "unicode17-chapter-18.heading-347946c18404-clause-a264ddec648a"
+        ]
+      }
+    },
+    {
+      "id": "heading-e8a0eb5db173",
+      "title": "18.4.6 Kana Extended-B: U+1AFF0-U+1AFFF",
+      "level": 3,
+      "text_sha256": "90b40ffc31d0c4cf91c7e144d53210a0d71b423e4f664c2da4f6634557918c5f",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-e8a0eb5db173",
+          "unicode17-chapter-18.heading-e8a0eb5db173-clause-b4f8199104a0"
+        ]
+      }
+    },
+    {
+      "id": "heading-93c80d12f7c3",
+      "title": "18.5 Halfwidth and Fullwidth Forms",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-93c80d12f7c3"
+        ]
+      }
+    },
+    {
+      "id": "heading-b9d8094bc32a",
+      "title": "18.5.1 Halfwidth and Fullwidth Forms: U+FF00–U+FFEF",
+      "level": 3,
+      "text_sha256": "21dfa93986d7ee0cc41832ad616d4f236c4b5ac4942452baa2c301cda41248bd",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-b9d8094bc32a",
+          "unicode17-chapter-18.heading-b9d8094bc32a-clause-7254cf2cf5ca"
+        ]
+      }
+    },
+    {
+      "id": "heading-22eef974384c",
+      "title": "18.6 Hangul",
+      "level": 2,
+      "text_sha256": "fa6457011862df61e78157021fd8569a84ee44f340ddeebdb0eee479f6495378",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-22eef974384c"
+        ]
+      }
+    },
+    {
+      "id": "heading-2cc53ea5c620",
+      "title": "18.6.1 Hangul Jamo: U+1100–U+11FF",
+      "level": 3,
+      "text_sha256": "2a795d231d5f5ba6256835145b4390f8f9591229f75ad5f377e901a6e439247f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-2cc53ea5c620"
+        ]
+      }
+    },
+    {
+      "id": "heading-f8e54e5ee2b1",
+      "title": "18.6.2 Hangul Jamo Extended-A: U+A960–U+A97F",
+      "level": 3,
+      "text_sha256": "4f96e4bffd25e8409b14d51a3e591ee5be266ba3d55c1ced6cea2153495ffb36",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-f8e54e5ee2b1"
+        ]
+      }
+    },
+    {
+      "id": "heading-723610f04e28",
+      "title": "18.6.3 Hangul Jamo Extended-B: U+D7B0–U+D7FF",
+      "level": 3,
+      "text_sha256": "7001e6e0e4de6375f9f770aaf43a6246185c90106649d4c93f3788e603667bdf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-723610f04e28"
+        ]
+      }
+    },
+    {
+      "id": "heading-318259106ab1",
+      "title": "18.6.4 Hangul Compatibility Jamo: U+3130–U+318F",
+      "level": 3,
+      "text_sha256": "333b75be760431f2b2745516fe83c871e2e164cb6056f64a8fd9cff0906a26d7",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-318259106ab1"
+        ]
+      }
+    },
+    {
+      "id": "heading-115eca862d3f",
+      "title": "18.6.5 Hangul Syllables: U+AC00–U+D7AF",
+      "level": 3,
+      "text_sha256": "b7020114d2565af66fcbd72ae80bf6ddb071500e6d0de63b79f6578130a7c3bf",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-115eca862d3f",
+          "unicode17-chapter-18.heading-115eca862d3f-clause-1fa4096b4f99",
+          "unicode17-chapter-18.heading-115eca862d3f-clause-a6e52aad1ff2",
+          "unicode17-chapter-18.heading-115eca862d3f-clause-9c7abb682067",
+          "unicode17-chapter-18.heading-115eca862d3f-clause-eda09483868e"
+        ]
+      }
+    },
+    {
+      "id": "heading-f1dd988e5585",
+      "title": "18.7 Yi",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-f1dd988e5585"
+        ]
+      }
+    },
+    {
+      "id": "heading-1c59d23975bf",
+      "title": "18.7.1 Yi: U+A000–U+A4CF",
+      "level": 3,
+      "text_sha256": "ba0abeab05be685e77e87c78fa22ccae712b56d6e129df03d081b4ef0c582628",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-1c59d23975bf"
+        ]
+      }
+    },
+    {
+      "id": "heading-72970e876d50",
+      "title": "18.8 Nüshu",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-72970e876d50"
+        ]
+      }
+    },
+    {
+      "id": "heading-4483356900ca",
+      "title": "18.8.1 Nüshu: U+1B170–U+1B2FF",
+      "level": 3,
+      "text_sha256": "4cd9dc59004cd4316748ddcbb053b84122d1e3d651f53479860a76e25867c45b",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-4483356900ca"
+        ]
+      }
+    },
+    {
+      "id": "heading-7bba83cecd42",
+      "title": "18.9 Lisu",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-7bba83cecd42"
+        ]
+      }
+    },
+    {
+      "id": "heading-615f4a7f5f64",
+      "title": "18.9.1 Lisu: U+A4D0–U+A4FF",
+      "level": 3,
+      "text_sha256": "e320080b55af7783b8db9c7234026c0c170f84d20d4e548a5ffea246d788be07",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-615f4a7f5f64",
+          "unicode17-chapter-18.heading-615f4a7f5f64-clause-98946c237bd8"
+        ]
+      }
+    },
+    {
+      "id": "heading-65aa898f3225",
+      "title": "18.10 Miao",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-65aa898f3225"
+        ]
+      }
+    },
+    {
+      "id": "heading-9c3037daf18f",
+      "title": "18.10.1 Miao: U+16F00–U+16F9F",
+      "level": 3,
+      "text_sha256": "7b0eb00f9c4693df6d7063edb563c782270e56c8bd35c5b56a295b0328680eaa",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-9c3037daf18f",
+          "unicode17-chapter-18.heading-9c3037daf18f-clause-5fae85d97940"
+        ]
+      }
+    },
+    {
+      "id": "heading-5035e7154ab9",
+      "title": "18.11 Tangut",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-5035e7154ab9"
+        ]
+      }
+    },
+    {
+      "id": "heading-08b5cf2d6955",
+      "title": "18.11.1 Tangut: U+17000–U+187FF",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-08b5cf2d6955"
+        ]
+      }
+    },
+    {
+      "id": "heading-726a80cf26c5",
+      "title": "Tangut Supplement: U+18D00–U+18D7F",
+      "level": 3,
+      "text_sha256": "9ee0e5661ff2aac4201ab9304ac43c0c5146207c346cf5217efba5a2afa4fd2f",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-726a80cf26c5",
+          "unicode17-chapter-18.heading-726a80cf26c5-clause-d04ff196f95c"
+        ]
+      }
+    },
+    {
+      "id": "heading-4513126b832d",
+      "title": "18.11.2 Tangut Components: U+18800–U+18AFF",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-4513126b832d"
+        ]
+      }
+    },
+    {
+      "id": "heading-a17d813a6e7e",
+      "title": "Tangut Components Supplement: U+18D80–U+18DFF",
+      "level": 3,
+      "text_sha256": "a7ec4f658531f9a0b7a59f4e74bdbb885748ec011c9d934758db1a3c711a4b8f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-a17d813a6e7e",
+          "unicode17-chapter-18.heading-a17d813a6e7e-clause-f1e38004b202"
+        ]
+      }
+    },
+    {
+      "id": "heading-4bef83b30e98",
+      "title": "18.12 Khitan Small Script",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-4bef83b30e98"
+        ]
+      }
+    },
+    {
+      "id": "heading-1258afd16aea",
+      "title": "18.12.1 Khitan Small Script: U+18B00–U+18CFF",
+      "level": 3,
+      "text_sha256": "412e3bd03509b82fdc696e8f4dba258e434addcc9c4e5bfdf8279069e1841c95",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-18.heading-1258afd16aea",
+          "unicode17-chapter-18.heading-1258afd16aea-clause-c4b6b9fcfc67",
+          "unicode17-chapter-18.heading-1258afd16aea-clause-617d2da5137e",
+          "unicode17-chapter-18.heading-1258afd16aea-clause-dc53c1aa171a"
+        ]
+      }
+    }
+  ]
+}

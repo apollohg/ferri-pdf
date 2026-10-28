@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-sample.q22-0",
+      "family": "css21-sample",
+      "source_id": "css21-sample",
+      "sections": [
+        "q22.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix D. Default style sheet for HTML 4.",
+      "locator": {
+        "section_id": "q22.0",
+        "text_sha256": "5b3f23f4ee57ef59e64f782dc1d2e6676734503392343af3bf7ee0d8d54af632"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-sample.q22-0-clause-4c09753e1ffd",
+        "css21-sample.q22-0-clause-c953fb401995"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-sample.q22-0-clause-4c09753e1ffd",
+      "family": "css21-sample",
+      "source_id": "css21-sample",
+      "sections": [
+        "q22.0"
+      ],
+      "behaviour": "Appendix D. Default style sheet for HTML 4 — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "q22.0",
+        "clause_index": 5,
+        "clause_sha256": "4c09753e1ffda0261f0c0850e66e54eab2f8c67c05227851fa41047b830cf9f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-sample.q22-0-clause-c953fb401995",
+      "family": "css21-sample",
+      "source_id": "css21-sample",
+      "sections": [
+        "q22.0"
+      ],
+      "behaviour": "Appendix D. Default style sheet for HTML 4 — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "q22.0",
+        "clause_index": 6,
+        "clause_sha256": "c953fb401995693a9a33a2eaa0cf5c0dab1e4b72054eb4479f87a75f3b709b43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    }
+  ]
+}

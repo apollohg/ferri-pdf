@@ -1,0 +1,1308 @@
+{
+  "schema_version": 1,
+  "source_id": "fetch",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Fetch (Commit 59afe349913d56898c947576216f1c2579308be7)",
+      "level": 1,
+      "text_sha256": "169063bc451eb8f99c330f83cbcd160d4173b23c7a44ce173afc27e73c419bc9",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "b087142a01c73d042804dbf641c5d0eb1aeca5568c0e6dce3149019be9485e24",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.abstract"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "cc84395d5bf4e5a2ed99e94d435c5d7c06379066020c29b6509721c85995f2d2",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.contents"
+        ]
+      }
+    },
+    {
+      "id": "goals",
+      "title": "Goals",
+      "level": 2,
+      "text_sha256": "5fd8e8926328b6272ecb109c8b227cb11bd4b5da5bffe462bee47429705043c8",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.goals"
+        ]
+      }
+    },
+    {
+      "id": "preface",
+      "title": "1. Preface",
+      "level": 2,
+      "text_sha256": "e0c5ebe75e78be847117297d39e23ff58f812a46cf21bf5559aa03afbae450e4",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.preface"
+        ]
+      }
+    },
+    {
+      "id": "infrastructure",
+      "title": "2. Infrastructure",
+      "level": 2,
+      "text_sha256": "679a9b73e7bad2b6ba429b9d93be2f78c7f8b13cfa9df6717dcc632e10cbbf01",
+      "clause_count": 113,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.infrastructure",
+          "fetch.infrastructure-clause-9e3cac0afcb1",
+          "fetch.infrastructure-clause-dde41e9742a0",
+          "fetch.infrastructure-clause-0f97ca9546f5",
+          "fetch.infrastructure-clause-60f249b20844",
+          "fetch.infrastructure-clause-facf354f9e71",
+          "fetch.infrastructure-clause-892f978fceba",
+          "fetch.infrastructure-clause-f997cce66be8",
+          "fetch.infrastructure-clause-8bad27d317b1",
+          "fetch.infrastructure-clause-6774a01b11d3"
+        ]
+      }
+    },
+    {
+      "id": "url",
+      "title": "2.1. URL",
+      "level": 3,
+      "text_sha256": "f581a65c3338ec5e4c81d87196568c2f21912a8955f8f7c462fead7749dff476",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.url"
+        ]
+      }
+    },
+    {
+      "id": "http",
+      "title": "2.2. HTTP",
+      "level": 3,
+      "text_sha256": "708514a950391118331d436b1d414a3bb4dcf38893d0c90113ad379482c5ea18",
+      "clause_count": 61,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http"
+        ]
+      }
+    },
+    {
+      "id": "methods",
+      "title": "2.2.1. Methods",
+      "level": 4,
+      "text_sha256": "05748f89f0a044d98d88a92c1bf08049d4127ab38159c686775c7a37fbee6247",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.methods"
+        ]
+      }
+    },
+    {
+      "id": "terminology-headers",
+      "title": "2.2.2. Headers",
+      "level": 4,
+      "text_sha256": "a6fb0ea4d5d0fbff014aa3e22eaf3ce65945210ff406e2b68a5f880c3b2b1c74",
+      "clause_count": 387,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.terminology-headers",
+          "fetch.terminology-headers-clause-cf36d59eaa17",
+          "fetch.terminology-headers-clause-764b5cc502e9",
+          "fetch.terminology-headers-clause-29824e1ebf90",
+          "fetch.terminology-headers-clause-f53f25d2b4b7",
+          "fetch.terminology-headers-clause-1864e3efe600",
+          "fetch.terminology-headers-clause-61f5c8535f66",
+          "fetch.terminology-headers-clause-2d51e252bd54",
+          "fetch.terminology-headers-clause-77f2003a85a7"
+        ]
+      }
+    },
+    {
+      "id": "statuses",
+      "title": "2.2.3. Statuses",
+      "level": 4,
+      "text_sha256": "7ef30df454399ae5f1234416a6c2d00d36e13f9c565340e227b831a6369af4f1",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.statuses"
+        ]
+      }
+    },
+    {
+      "id": "bodies",
+      "title": "2.2.4. Bodies",
+      "level": 4,
+      "text_sha256": "bda71962bd332e189700100bae53f2910a15df7f7296dfb39aa849714287b125",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.bodies",
+          "fetch.bodies-clause-f0393204de85",
+          "fetch.bodies-clause-9a7d7d3f9afb",
+          "fetch.bodies-clause-88dcfd9c544d",
+          "fetch.bodies-clause-b94f6d0e3dfd"
+        ]
+      }
+    },
+    {
+      "id": "requests",
+      "title": "2.2.5. Requests",
+      "level": 4,
+      "text_sha256": "461ab94416229a7e0886e0ba02ce46ea173429394ba6935049fbfb945205fb66",
+      "clause_count": 305,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.requests",
+          "fetch.requests-clause-eb69f118d188",
+          "fetch.requests-clause-05a25f40b1be",
+          "fetch.requests-clause-b1cb8e832565",
+          "fetch.requests-clause-8d84d516d44c",
+          "fetch.requests-clause-6a9e2bacb228",
+          "fetch.requests-clause-63b4f367249f",
+          "fetch.requests-clause-8c558aa0acec",
+          "fetch.requests-clause-99f25098ff34",
+          "fetch.requests-clause-4ee1c228b840",
+          "fetch.requests-clause-b5ddb40e5cfe",
+          "fetch.requests-clause-82b3bfbaafd0",
+          "fetch.requests-clause-1fe13960d44e",
+          "fetch.requests-clause-89ec181536bd",
+          "fetch.requests-clause-aa137dfe7c2a"
+        ]
+      }
+    },
+    {
+      "id": "responses",
+      "title": "2.2.6. Responses",
+      "level": 4,
+      "text_sha256": "45896f8ee61aa2de648c74a08d0aca1b656e92d17012bc893fc18fab9aa26c96",
+      "clause_count": 74,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.responses",
+          "fetch.responses-clause-0464c23531a9",
+          "fetch.responses-clause-976faa93dc4c",
+          "fetch.responses-clause-0884d1028e55"
+        ]
+      }
+    },
+    {
+      "id": "miscellaneous",
+      "title": "2.2.7. Miscellaneous",
+      "level": 4,
+      "text_sha256": "d79a82fead3fedbdd30f8923d21a79b362b8fef0457442643e6580f5b07785f6",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.miscellaneous"
+        ]
+      }
+    },
+    {
+      "id": "authentication-entries",
+      "title": "2.3. Authentication entries",
+      "level": 3,
+      "text_sha256": "0f3b87e12cc7b91543d7c297eb095796e433f3c18422a59d956411053c58e7f1",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.authentication-entries",
+          "fetch.authentication-entries-clause-dc79e2a641ad"
+        ]
+      }
+    },
+    {
+      "id": "fetch-groups",
+      "title": "2.4. Fetch groups",
+      "level": 3,
+      "text_sha256": "581accee4a56e0be05044a8817b8b4c48a6108faf47342535f29cd55198f7564",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.fetch-groups",
+          "fetch.fetch-groups-clause-3f40c14d28ae"
+        ]
+      }
+    },
+    {
+      "id": "resolving-domains",
+      "title": "2.5. Resolving domains",
+      "level": 3,
+      "text_sha256": "69ba7d9266cd37b7c0d0022f899c9fe412b817ebdb498e848f76f32eefd5b143",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.resolving-domains",
+          "fetch.resolving-domains-clause-f59c81d1686e",
+          "fetch.resolving-domains-clause-8d2a3c8103ab",
+          "fetch.resolving-domains-clause-852c8196ef33"
+        ]
+      }
+    },
+    {
+      "id": "connections",
+      "title": "2.6. Connections",
+      "level": 3,
+      "text_sha256": "392839a10166d7a9b0c2e72c323e8371a941be8b09aabca537ab84280ff56865",
+      "clause_count": 99,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.connections",
+          "fetch.connections-clause-47dd4287b012",
+          "fetch.connections-clause-bcb86e4c3ac5",
+          "fetch.connections-clause-2075f30f84a4",
+          "fetch.connections-clause-10a011cff218",
+          "fetch.connections-clause-27eab9e6d5ca",
+          "fetch.connections-clause-ae638fdced88",
+          "fetch.connections-clause-297f58b3a3d8",
+          "fetch.connections-clause-4b6aac933d7f",
+          "fetch.connections-clause-df12467c006e",
+          "fetch.connections-clause-1b05c19b1c07",
+          "fetch.connections-clause-a64cd1a5e706",
+          "fetch.connections-clause-6d50fa468afb",
+          "fetch.connections-clause-0ca74b4ba632",
+          "fetch.connections-clause-b885004525be",
+          "fetch.connections-clause-441d4f71eda8"
+        ]
+      }
+    },
+    {
+      "id": "network-partition-keys",
+      "title": "2.7. Network partition keys",
+      "level": 3,
+      "text_sha256": "fd4f5e315c09c09f7f31839fc86853f7fedf723e1ec24e049bf51a4d993b0ca7",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.network-partition-keys"
+        ]
+      }
+    },
+    {
+      "id": "http-cache-partitions",
+      "title": "2.8. HTTP cache partitions",
+      "level": 3,
+      "text_sha256": "0ef3abfd0c04da52e75c81f75286ca40271389c45177f6edef5ac163439e6857",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http-cache-partitions"
+        ]
+      }
+    },
+    {
+      "id": "port-blocking",
+      "title": "2.9. Port blocking",
+      "level": 3,
+      "text_sha256": "60d32bb91c31a88a09815da8c60fa9764cba366483aea9ea062eabc5abeda96f",
+      "clause_count": 177,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.port-blocking",
+          "fetch.port-blocking-clause-100d8a1dfc89"
+        ]
+      }
+    },
+    {
+      "id": "should-response-to-request-be-blocked-due-to-mime-type?",
+      "title": "2.10. Should response to request be blocked due to its MIME type?",
+      "level": 3,
+      "text_sha256": "499bc7a458d26c0fe7793e55b3964286a163dc53de5a551944e66edc2a667e94",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.should-response-to-request-be-blocked-due-to-mime-type"
+        ]
+      }
+    },
+    {
+      "id": "http-extensions",
+      "title": "3. HTTP extensions",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http-extensions"
+        ]
+      }
+    },
+    {
+      "id": "cookies",
+      "title": "3.1. Cookies",
+      "level": 3,
+      "text_sha256": "2f88233e6a4d09ee4e6a7febe2a874c3dc1edad1caba838715f158082ef88a79",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.cookies"
+        ]
+      }
+    },
+    {
+      "id": "cookie-header",
+      "title": "3.1.1. `Cookie` header",
+      "level": 4,
+      "text_sha256": "a6523ae52c6173d79bb74a2868ccffe25474f113cddf152ac32bff19a1aac5e6",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.cookie-header",
+          "fetch.cookie-header-clause-6fc2234da723"
+        ]
+      }
+    },
+    {
+      "id": "set-cookie-header",
+      "title": "3.1.2. `Set-Cookie` header",
+      "level": 4,
+      "text_sha256": "3b29e1803fe2edf596e90051e0f3406623c637b2a4586254cab25af056853ef4",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.set-cookie-header",
+          "fetch.set-cookie-header-clause-6fc2234da723"
+        ]
+      }
+    },
+    {
+      "id": "cookie-infrastructure",
+      "title": "3.1.3. Cookie infrastructure",
+      "level": 4,
+      "text_sha256": "f2f974a34af7cd55c628212eeeede0afe4788d8aa83a969bbf3a33fbcda65290",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.cookie-infrastructure"
+        ]
+      }
+    },
+    {
+      "id": "origin-header",
+      "title": "3.2. `Origin` header",
+      "level": 3,
+      "text_sha256": "dc26fa593bb00fb405e3be9a6c2b9e3f38ff9b83f0f844a3f409d2d10b7c73eb",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.origin-header"
+        ]
+      }
+    },
+    {
+      "id": "http-cors-protocol",
+      "title": "3.3. CORS protocol",
+      "level": 3,
+      "text_sha256": "6396899a5afa98685bc89d8b33d6d6ada9423e58b478cdd846b10ffe8eaa7001",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http-cors-protocol",
+          "fetch.http-cors-protocol-clause-c6de3f70957a"
+        ]
+      }
+    },
+    {
+      "id": "general",
+      "title": "3.3.1. General",
+      "level": 4,
+      "text_sha256": "b639bc92ff198d763b41e23af9c7d7c737199c81f998fb156a74147698c756dc",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.general"
+        ]
+      }
+    },
+    {
+      "id": "http-requests",
+      "title": "3.3.2. HTTP requests",
+      "level": 4,
+      "text_sha256": "ee9fa182ef35890ce3df9ca18c9ca9a9ad5ca358bec648a91149bb583732fe7f",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http-requests"
+        ]
+      }
+    },
+    {
+      "id": "http-responses",
+      "title": "3.3.3. HTTP responses",
+      "level": 4,
+      "text_sha256": "fd1d67d9306ebe16e486c24272b826b383074b4f9d19f24abb8ac24fc3340b8d",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http-responses"
+        ]
+      }
+    },
+    {
+      "id": "http-new-header-syntax",
+      "title": "3.3.4. HTTP new-header syntax",
+      "level": 4,
+      "text_sha256": "2c3b5b358ec071b3879e4cff06ed3baec173a8f4b98bcd44d549083c1e880f21",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http-new-header-syntax"
+        ]
+      }
+    },
+    {
+      "id": "cors-protocol-and-credentials",
+      "title": "3.3.5. CORS protocol and credentials",
+      "level": 4,
+      "text_sha256": "e9ff60d2176ed3641a4e065aec6dff10519c54db4e2f4880bb1d7bf12a7cf463",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.cors-protocol-and-credentials",
+          "fetch.cors-protocol-and-credentials-clause-2eff75b0ae8c",
+          "fetch.cors-protocol-and-credentials-clause-f04ba00212ba",
+          "fetch.cors-protocol-and-credentials-clause-94246cf4971c",
+          "fetch.cors-protocol-and-credentials-clause-a039846dc53f"
+        ]
+      }
+    },
+    {
+      "id": "cors-protocol-examples",
+      "title": "3.3.6. Examples",
+      "level": 4,
+      "text_sha256": "3f84a771de66923c7f4299ddf85b1d00b669de8c0e0d3eee10428ee82329f381",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.cors-protocol-examples",
+          "fetch.cors-protocol-examples-clause-9a7bf547cddc",
+          "fetch.cors-protocol-examples-clause-489c4f22039e",
+          "fetch.cors-protocol-examples-clause-07d71f7f85e9",
+          "fetch.cors-protocol-examples-clause-61fabdbb80db",
+          "fetch.cors-protocol-examples-clause-4e29ce841633",
+          "fetch.cors-protocol-examples-clause-1e86aad50008",
+          "fetch.cors-protocol-examples-clause-7c1f0904856f",
+          "fetch.cors-protocol-examples-clause-1763e3ce8fcd",
+          "fetch.cors-protocol-examples-clause-ccff34838d39",
+          "fetch.cors-protocol-examples-clause-13285a551385",
+          "fetch.cors-protocol-examples-clause-99abd8a09273",
+          "fetch.cors-protocol-examples-clause-b6ef666f80a6",
+          "fetch.cors-protocol-examples-clause-d481090e6542"
+        ]
+      }
+    },
+    {
+      "id": "cors-protocol-exceptions",
+      "title": "3.3.7. CORS protocol exceptions",
+      "level": 4,
+      "text_sha256": "909068eec8841091851f85713f9d09daa3019d43aed221b1b4ba3a13085ba709",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.cors-protocol-exceptions",
+          "fetch.cors-protocol-exceptions-clause-7af211fff1ae",
+          "fetch.cors-protocol-exceptions-clause-fd3b3c54950a"
+        ]
+      }
+    },
+    {
+      "id": "content-length-header",
+      "title": "3.4. `Content-Length` header",
+      "level": 3,
+      "text_sha256": "8ac3483aec3f902a427f186bf0d6ef759fe420885065dfb7b7e1852a738d6dc5",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.content-length-header"
+        ]
+      }
+    },
+    {
+      "id": "content-type-header",
+      "title": "3.5. `Content-Type` header",
+      "level": 3,
+      "text_sha256": "a747e17d0ba76152ceba7de842f807a99d61d62b9f339eca27e519f0e8d5da4b",
+      "clause_count": 69,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.content-type-header",
+          "fetch.content-type-header-clause-39b507bc2d33",
+          "fetch.content-type-header-clause-d83259a60844",
+          "fetch.content-type-header-clause-8d52107effa7"
+        ]
+      }
+    },
+    {
+      "id": "x-content-type-options-header",
+      "title": "3.6. `X-Content-Type-Options` header",
+      "level": 3,
+      "text_sha256": "352624c41d1f52ab2eeabaf95b0c141b3621318b54b6e77f717011a4aa22a9e5",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.x-content-type-options-header",
+          "fetch.x-content-type-options-header-clause-7548249a2524"
+        ]
+      }
+    },
+    {
+      "id": "should-response-to-request-be-blocked-due-to-nosniff?",
+      "title": "3.6.1. Should response to request be blocked due to nosniff?",
+      "level": 4,
+      "text_sha256": "05f9a19b9d04f4a99ae28355f530aa40ea2953d74cad0cdd62d97ab2ca510137",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.should-response-to-request-be-blocked-due-to-nosniff"
+        ]
+      }
+    },
+    {
+      "id": "cross-origin-resource-policy-header",
+      "title": "3.7. `Cross-Origin-Resource-Policy` header",
+      "level": 3,
+      "text_sha256": "4aa6adaeea8267509b2f4081e7469d5e5d1fffcf8383a6df77c1feeb37aabc0a",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.cross-origin-resource-policy-header",
+          "fetch.cross-origin-resource-policy-header-clause-216e698c41e2"
+        ]
+      }
+    },
+    {
+      "id": "sec-purpose-header",
+      "title": "3.8. `Sec-Purpose` header",
+      "level": 3,
+      "text_sha256": "a28ab1d97e83929bb4e01557da29ea06968f46db250e7b4e68e5c8d27f662f5a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.sec-purpose-header",
+          "fetch.sec-purpose-header-clause-79f5592faf3f"
+        ]
+      }
+    },
+    {
+      "id": "fetching",
+      "title": "4. Fetching",
+      "level": 2,
+      "text_sha256": "507d63de3c9505065d2dbb5870846d9eec33633925ca12eef0ccf0aadbfcf657",
+      "clause_count": 120,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.fetching",
+          "fetch.fetching-clause-130e5c7a241c",
+          "fetch.fetching-clause-161eb16e3871",
+          "fetch.fetching-clause-7425a9607efd",
+          "fetch.fetching-clause-201371f1e096",
+          "fetch.fetching-clause-244289e36746",
+          "fetch.fetching-clause-e45f7d6d8dc7",
+          "fetch.fetching-clause-81049c0a5cf3",
+          "fetch.fetching-clause-91961ea0a616"
+        ]
+      }
+    },
+    {
+      "id": "main-fetch",
+      "title": "4.1. Main fetch",
+      "level": 3,
+      "text_sha256": "42434fad5b22f8fe07e9db39762fe1910903c14ceff211dc02f34dd0eb1cc17c",
+      "clause_count": 225,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.main-fetch",
+          "fetch.main-fetch-clause-a8d309fd2be7",
+          "fetch.main-fetch-clause-76be21957a83",
+          "fetch.main-fetch-clause-b0ef9c0dc7cc",
+          "fetch.main-fetch-clause-70e66f8209aa",
+          "fetch.main-fetch-clause-33d035325976",
+          "fetch.main-fetch-clause-c33cff1b5e78",
+          "fetch.main-fetch-clause-7008a75493fe",
+          "fetch.main-fetch-clause-9624406160b5",
+          "fetch.main-fetch-clause-01ed1534f1b7",
+          "fetch.main-fetch-clause-bd15ffeb9ca7",
+          "fetch.main-fetch-clause-86f77238e3b3",
+          "fetch.main-fetch-clause-18d967e719f2",
+          "fetch.main-fetch-clause-c73fc7e0b393"
+        ]
+      }
+    },
+    {
+      "id": "override-fetch",
+      "title": "4.2. Override fetch",
+      "level": 3,
+      "text_sha256": "25fd92603f7fe9d553cb74e33a8e97b03d98fa6c5f431deb7f56fc81e886c26c",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.override-fetch",
+          "fetch.override-fetch-clause-7747387913af",
+          "fetch.override-fetch-clause-c6bb7cead89f",
+          "fetch.override-fetch-clause-e4c973cc6d42"
+        ]
+      }
+    },
+    {
+      "id": "scheme-fetch",
+      "title": "4.3. Scheme fetch",
+      "level": 3,
+      "text_sha256": "2d46301df04d739cbdf8a6277524faf3898ad574bbc2910a467aa0523471661f",
+      "clause_count": 136,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.scheme-fetch",
+          "fetch.scheme-fetch-clause-c91a391b0c94",
+          "fetch.scheme-fetch-clause-72debeba7e2d",
+          "fetch.scheme-fetch-clause-f6e4637ee8e1"
+        ]
+      }
+    },
+    {
+      "id": "http-fetch",
+      "title": "4.4. HTTP fetch",
+      "level": 3,
+      "text_sha256": "ab25b56a3a2809b71d0d83b7543e3f6ed75ace58233f0a652166e9df98a605ab",
+      "clause_count": 108,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http-fetch"
+        ]
+      }
+    },
+    {
+      "id": "http-redirect-fetch",
+      "title": "4.5. HTTP-redirect fetch",
+      "level": 3,
+      "text_sha256": "a83945968745ba032712c77d84060676f09d2376279e07abed64b990b7f2a119",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http-redirect-fetch"
+        ]
+      }
+    },
+    {
+      "id": "http-network-or-cache-fetch",
+      "title": "4.6. HTTP-network-or-cache fetch",
+      "level": 3,
+      "text_sha256": "c04c157fa77052044cb1ae3d5ec4240ea7c9a92de07a8cd4761d537d3662c8a6",
+      "clause_count": 248,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http-network-or-cache-fetch",
+          "fetch.http-network-or-cache-fetch-clause-edcd4c70146c",
+          "fetch.http-network-or-cache-fetch-clause-aad82355b6b8",
+          "fetch.http-network-or-cache-fetch-clause-363be4bf08c0"
+        ]
+      }
+    },
+    {
+      "id": "http-network-fetch",
+      "title": "4.7. HTTP-network fetch",
+      "level": 3,
+      "text_sha256": "1040cced956893ac463ac6bac3d034732a722e3d1ea59957bb2ee9c874b6f7af",
+      "clause_count": 196,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http-network-fetch",
+          "fetch.http-network-fetch-clause-c1146a150ab3",
+          "fetch.http-network-fetch-clause-d0276c2922d7",
+          "fetch.http-network-fetch-clause-853482232d42",
+          "fetch.http-network-fetch-clause-173abf8bcbf2",
+          "fetch.http-network-fetch-clause-45f492af80cf",
+          "fetch.http-network-fetch-clause-ce20c00e7e4e",
+          "fetch.http-network-fetch-clause-12b39df5b660",
+          "fetch.http-network-fetch-clause-482fffcb0bf9",
+          "fetch.http-network-fetch-clause-7db4a7e5f863"
+        ]
+      }
+    },
+    {
+      "id": "cors-preflight-fetch",
+      "title": "4.8. CORS-preflight fetch",
+      "level": 3,
+      "text_sha256": "818b3cc048823ac33de50b645adc4c15804335d957991deeae6bfc9a2fb06856",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.cors-preflight-fetch",
+          "fetch.cors-preflight-fetch-clause-42556bb0a812",
+          "fetch.cors-preflight-fetch-clause-898423a11430"
+        ]
+      }
+    },
+    {
+      "id": "cors-preflight-cache",
+      "title": "4.9. CORS-preflight cache",
+      "level": 3,
+      "text_sha256": "ffdd860a47d88a171fc569256d0d6a9316b9fe569589bedd57df6d545b1d90f6",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.cors-preflight-cache",
+          "fetch.cors-preflight-cache-clause-2caefc61954d"
+        ]
+      }
+    },
+    {
+      "id": "cors-check",
+      "title": "4.10. CORS check",
+      "level": 3,
+      "text_sha256": "b0031c67c74db0946792de0568369dc14647d39afa9feae009283bd3f2ad71ee",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.cors-check"
+        ]
+      }
+    },
+    {
+      "id": "tao-check",
+      "title": "4.11. TAO check",
+      "level": 3,
+      "text_sha256": "73ba1a29a0937a70896bd35640b48b70fbca5bd056e3e6c60d89772f245a5726",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.tao-check"
+        ]
+      }
+    },
+    {
+      "id": "deferred-fetch",
+      "title": "4.12. Deferred fetching",
+      "level": 3,
+      "text_sha256": "6b2883cfc2fbd61ac501adc95ec49db6e8e58f74f8ada05df04850c4b5a531b1",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.deferred-fetch",
+          "fetch.deferred-fetch-clause-67e8fec076f6",
+          "fetch.deferred-fetch-clause-cf30a4d6f945",
+          "fetch.deferred-fetch-clause-792f1da32e9e",
+          "fetch.deferred-fetch-clause-54463b4a95d0"
+        ]
+      }
+    },
+    {
+      "id": "deferred-fetch-quota",
+      "title": "4.12.1. Deferred fetching quota",
+      "level": 4,
+      "text_sha256": "7d7be9ce9fc626626c3de6c517208a09f1025275a99ec9934e5f1d8066adec9c",
+      "clause_count": 123,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.deferred-fetch-quota"
+        ]
+      }
+    },
+    {
+      "id": "fetch-api",
+      "title": "5. Fetch API",
+      "level": 2,
+      "text_sha256": "77d43c18dcd8674e4d4d5065f2221fed401e791cb59a886383c345ff46b619e9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.fetch-api"
+        ]
+      }
+    },
+    {
+      "id": "headers-class",
+      "title": "5.1. Headers class",
+      "level": 3,
+      "text_sha256": "ea858151023c2aa4d2db3eab43441cb11ac86fd370ec4e6b4209d9a7b51bad76",
+      "clause_count": 119,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.headers-class"
+        ]
+      }
+    },
+    {
+      "id": "bodyinit-unions",
+      "title": "5.2. BodyInit unions",
+      "level": 3,
+      "text_sha256": "d04fca2d4ea83575b63b9fa128c39b7f14a73c04441a957ee99f75f9c08b4379",
+      "clause_count": 71,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.bodyinit-unions",
+          "fetch.bodyinit-unions-clause-fa2907e7f055",
+          "fetch.bodyinit-unions-clause-7c367833c471",
+          "fetch.bodyinit-unions-clause-ced33ebe44c7",
+          "fetch.bodyinit-unions-clause-8e8846b04261"
+        ]
+      }
+    },
+    {
+      "id": "body-mixin",
+      "title": "5.3. Body mixin",
+      "level": 3,
+      "text_sha256": "d5d0e9d897a2361f4638081ed50141c1b3f072fc41d84202925de835bc5b579b",
+      "clause_count": 114,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.body-mixin",
+          "fetch.body-mixin-clause-44143fb9585d",
+          "fetch.body-mixin-clause-461baab998d7",
+          "fetch.body-mixin-clause-edbf915d9488",
+          "fetch.body-mixin-clause-4a7f2e063491",
+          "fetch.body-mixin-clause-5013953d24c4",
+          "fetch.body-mixin-clause-bc1f3dc15216",
+          "fetch.body-mixin-clause-e68d99b012ca",
+          "fetch.body-mixin-clause-3e3798f6dbe0"
+        ]
+      }
+    },
+    {
+      "id": "request-class",
+      "title": "5.4. Request class",
+      "level": 3,
+      "text_sha256": "cab1a230f5822b7621c5dc0dad597262cc086e9e6565f268391ab2c1947cb22c",
+      "clause_count": 344,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.request-class"
+        ]
+      }
+    },
+    {
+      "id": "response-class",
+      "title": "5.5. Response class",
+      "level": 3,
+      "text_sha256": "62e4aff2250da84e8f96c6b608cedf3a683c06c467f6bd61063b7b48948633bc",
+      "clause_count": 124,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.response-class"
+        ]
+      }
+    },
+    {
+      "id": "fetch-method",
+      "title": "5.6. Fetch methods",
+      "level": 3,
+      "text_sha256": "23137bb322428f836c9173736480e8499a019250d100d3dbf53eecacaba46d5a",
+      "clause_count": 114,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.fetch-method",
+          "fetch.fetch-method-clause-329190db57a5",
+          "fetch.fetch-method-clause-8c2ca53dcd9f",
+          "fetch.fetch-method-clause-bb259cf47b9c",
+          "fetch.fetch-method-clause-cac525ca98df"
+        ]
+      }
+    },
+    {
+      "id": "garbage-collection",
+      "title": "5.7. Garbage collection",
+      "level": 3,
+      "text_sha256": "4243ccc8f6dad0da4b46d3b8b9f92c65b5544b15d7b9e002aa8acbea85361156",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.garbage-collection"
+        ]
+      }
+    },
+    {
+      "id": "data-urls",
+      "title": "6. data: URLs",
+      "level": 2,
+      "text_sha256": "da96ef2059652e468956cb84dec724e0e145c14e2e9abb32ea4809b2f63c5882",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.data-urls"
+        ]
+      }
+    },
+    {
+      "id": "background-reading",
+      "title": "Background reading",
+      "level": 2,
+      "text_sha256": "807d804ae7e84e141fd3b3f80a03bdb946602f8019d7688ecdb07669bc217f6c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.background-reading"
+        ]
+      }
+    },
+    {
+      "id": "http-header-layer-division",
+      "title": "HTTP header layer division",
+      "level": 3,
+      "text_sha256": "0603f23646e48208ccc6c8f4504cb36d6d370d50e3608026e0e983880f85eed7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.http-header-layer-division"
+        ]
+      }
+    },
+    {
+      "id": "atomic-http-redirect-handling",
+      "title": "Atomic HTTP redirect handling",
+      "level": 3,
+      "text_sha256": "e6ffa16c313ad3c21e8b6fba4636fcbbaef9e28d53d2e909f3856132ef2e7ad4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.atomic-http-redirect-handling",
+          "fetch.atomic-http-redirect-handling-clause-f36816864009"
+        ]
+      }
+    },
+    {
+      "id": "basic-safe-cors-protocol-setup",
+      "title": "Basic safe CORS protocol setup",
+      "level": 3,
+      "text_sha256": "7001716877cfc8d7aa67c334f948f21d5ea125b8292524962919c0afa02ff80b",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.basic-safe-cors-protocol-setup"
+        ]
+      }
+    },
+    {
+      "id": "cors-protocol-and-http-caches",
+      "title": "CORS protocol and HTTP caches",
+      "level": 3,
+      "text_sha256": "56a1b5d88d20ce6d3740cd6692ac862d2f786c2a606014f585290954d0c2ab20",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.cors-protocol-and-http-caches"
+        ]
+      }
+    },
+    {
+      "id": "websocket-protocol",
+      "title": "WebSockets",
+      "level": 3,
+      "text_sha256": "70c4d41104f00d99fee0cb589b849dce7469d5426ff5dcd3c738f5b975298505",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.websocket-protocol"
+        ]
+      }
+    },
+    {
+      "id": "fetch-elsewhere",
+      "title": "Using fetch in other standards",
+      "level": 2,
+      "text_sha256": "6cbdece6cadbfa894b79e777fb9d20dd06aba3e4a1969c726436def40f6d2632",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.fetch-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "fetch-elsewhere-request",
+      "title": "Setting up a request",
+      "level": 3,
+      "text_sha256": "100ea755b8c282d3be66797cc34105be38ad5c4d1bb9cc6c124ee108a5cddd2d",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.fetch-elsewhere-request",
+          "fetch.fetch-elsewhere-request-clause-39fcd697a00d",
+          "fetch.fetch-elsewhere-request-clause-b21c2f53b158"
+        ]
+      }
+    },
+    {
+      "id": "fetch-elsewhere-fetch",
+      "title": "Invoking fetch and processing responses",
+      "level": 3,
+      "text_sha256": "7f615884ebfd01a6f8f5401972b9657ba9564b12dd250ecfb6f8a656bcd0caaa",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.fetch-elsewhere-fetch",
+          "fetch.fetch-elsewhere-fetch-clause-724a74762947",
+          "fetch.fetch-elsewhere-fetch-clause-be0cb824ba44",
+          "fetch.fetch-elsewhere-fetch-clause-b322361f765a",
+          "fetch.fetch-elsewhere-fetch-clause-22f813fcd380",
+          "fetch.fetch-elsewhere-fetch-clause-7f2d1cce634c",
+          "fetch.fetch-elsewhere-fetch-clause-87b113028eee",
+          "fetch.fetch-elsewhere-fetch-clause-39314aacf52a",
+          "fetch.fetch-elsewhere-fetch-clause-b1e613e74eeb",
+          "fetch.fetch-elsewhere-fetch-clause-5e2617bc8527"
+        ]
+      }
+    },
+    {
+      "id": "fetch-elsewhere-ongoing",
+      "title": "Manipulating an ongoing fetch",
+      "level": 3,
+      "text_sha256": "97e19664fba1faa80b782bc184d09df3c22131e1d313c57680fba12e5b00671a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.fetch-elsewhere-ongoing"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "05e95983aa0b721233e060519bb309db11091f636bc8e5f01d1cf4035ae6c58f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "ipr",
+      "title": "Intellectual property rights",
+      "level": 2,
+      "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.ipr"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "d1f3c22cdb7248e06e8b209d49612edbaf43376dade3596605fb587039735fa0",
+      "clause_count": 600,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "f17a0a2f85760e257e0e38f34cbd1a6f3ab6cb8b7482f5830107a9555fbdb556",
+      "clause_count": 396,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "be38003d10969ea33ad440757af738b55c0ed774913648d43d229092ea9689a6",
+      "clause_count": 92,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.import-9bf716eecd5d",
+          "fetch.import-dabe816436ae",
+          "fetch.import-bdbd06ea6a83",
+          "fetch.import-aaf473583c70",
+          "fetch.import-81d6eacb7a2f",
+          "fetch.import-d8e68f83c8bc",
+          "fetch.import-ee77cba07bb3",
+          "fetch.import-8fbd089b67ea",
+          "fetch.import-9b730ad9a710",
+          "fetch.import-e1fa04c54b11",
+          "fetch.import-619f8fc7ff50",
+          "fetch.import-35bed4fdcbfb",
+          "fetch.import-5e892408d531",
+          "fetch.import-346333909348",
+          "fetch.import-f37b19a45f02",
+          "fetch.import-20fba1221703",
+          "fetch.import-8b7ccf9dda99",
+          "fetch.import-e3841976151c",
+          "fetch.import-259b0cfd8d91",
+          "fetch.import-bdf4e2d4399d",
+          "fetch.import-2b6543f5e8c4",
+          "fetch.import-e771ab2b523e",
+          "fetch.import-15ec84918f92",
+          "fetch.import-d5d7b6dad27f",
+          "fetch.import-df018da340e5",
+          "fetch.import-6e81d496e6aa",
+          "fetch.import-45f93e62012a",
+          "fetch.import-1db098735f1b",
+          "fetch.import-6458b8c66990",
+          "fetch.import-f022883b51e6",
+          "fetch.import-6d17d6bfee11",
+          "fetch.import-a1fffa0efa50",
+          "fetch.import-8cac7d115c27",
+          "fetch.import-7865c8555a54",
+          "fetch.import-4599c3876953",
+          "fetch.import-e21c9f5ea5d2",
+          "fetch.import-aca73fcf9b79"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "6fea29d1dbe08470491c14aaf23409633d3804d6489785c0272551104aeb156c",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.informative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "6d50531a585bd05051151913ef44bdf3172d3b6ea2e4648df50d1fba42f87b74",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fetch.idl-index"
+        ]
+      }
+    }
+  ]
+}

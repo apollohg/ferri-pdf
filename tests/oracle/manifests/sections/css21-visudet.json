@@ -1,0 +1,466 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-visudet",
+  "sections": [
+    {
+      "id": "q10.0",
+      "title": "10 Visual formatting model details",
+      "level": 1,
+      "text_sha256": "c1dc50157a73375619824193870d783745ab38b31bbcd03b7e9cb4cf3222d3be",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.q10-0"
+        ]
+      }
+    },
+    {
+      "id": "containing-block-details",
+      "title": "10.1 Definition of \"containing block\"",
+      "level": 2,
+      "text_sha256": "1ab3153825481b1f64d3d3c13919eb579d46f7b4bad62119616fa458937076af",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.containing-block-details"
+        ]
+      }
+    },
+    {
+      "id": "the-width-property",
+      "title": "10.2 Content width: the 'width' property",
+      "level": 2,
+      "text_sha256": "3dd026badf09affba3d45d2c15b712087bfc94f36706c7b696062cbb7037f67e",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.the-width-property",
+          "css21-visudet.the-width-property-clause-4d0ddff73888",
+          "css21-visudet.the-width-property-clause-cca2516ebb1d",
+          "css21-visudet.the-width-property-clause-82baf0b293da"
+        ]
+      }
+    },
+    {
+      "id": "Computing_widths_and_margins",
+      "title": "10.3 Calculating widths and margins",
+      "level": 2,
+      "text_sha256": "2e1a44017f624be0164c952d8b5c795a8cc6a791083bcde5f8e1d14d2d6421bc",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.computing-widths-and-margins",
+          "css21-visudet.computing-widths-and-margins-clause-276b06fa148e"
+        ]
+      }
+    },
+    {
+      "id": "inline-width",
+      "title": "10.3.1 Inline, non-replaced elements",
+      "level": 3,
+      "text_sha256": "a0c27b5223df712ccfcf7777d87029924edc7c986fbcd1cb5d5469c42fd3d980",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.inline-width",
+          "css21-visudet.inline-width-clause-a0c27b5223df"
+        ]
+      }
+    },
+    {
+      "id": "inline-replaced-width",
+      "title": "10.3.2 Inline, replaced elements",
+      "level": 3,
+      "text_sha256": "fc6a009632c92bce1fb06c3fcc791d4559d0cecedc84e4ab5be30c5e939a2f6b",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.inline-replaced-width",
+          "css21-visudet.inline-replaced-width-clause-a42d54fc7606",
+          "css21-visudet.inline-replaced-width-clause-bf183d30b267",
+          "css21-visudet.inline-replaced-width-clause-4c8c01aab0c9",
+          "css21-visudet.inline-replaced-width-clause-d203e14e28e1",
+          "css21-visudet.inline-replaced-width-clause-01ab0d8a3e77",
+          "css21-visudet.inline-replaced-width-clause-42d71e6594ef"
+        ]
+      }
+    },
+    {
+      "id": "blockwidth",
+      "title": "10.3.3 Block-level, non-replaced elements in normal flow",
+      "level": 3,
+      "text_sha256": "3ce30ceef173b9b81eaf4bded0ef17b66cbe7d48082d7e5b1d00054d03268a63",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.blockwidth",
+          "css21-visudet.blockwidth-clause-8a718da563c2",
+          "css21-visudet.blockwidth-clause-208f7d9248ae"
+        ]
+      }
+    },
+    {
+      "id": "block-replaced-width",
+      "title": "10.3.4 Block-level, replaced elements in normal flow",
+      "level": 3,
+      "text_sha256": "60fd24f566d6685d7e17fa1975acf6b85567a1525f2ec28b70316cc1dbef45e0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.block-replaced-width"
+        ]
+      }
+    },
+    {
+      "id": "float-width",
+      "title": "10.3.5 Floating, non-replaced elements",
+      "level": 3,
+      "text_sha256": "a3d32fc126a38e35e42230a5a778791a0ea4ef0754ec84ef930dd2fc8ac23a74",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.float-width",
+          "css21-visudet.float-width-clause-a4b3c7982ca5",
+          "css21-visudet.float-width-clause-da6a23daaad7",
+          "css21-visudet.float-width-clause-76b28ef020eb"
+        ]
+      }
+    },
+    {
+      "id": "float-replaced-width",
+      "title": "10.3.6 Floating, replaced elements",
+      "level": 3,
+      "text_sha256": "edff6f0cb2b54f9d9442dbe06a50bbf54a6d439d65550d5d999567f271ffe399",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.float-replaced-width",
+          "css21-visudet.float-replaced-width-clause-edff6f0cb2b5"
+        ]
+      }
+    },
+    {
+      "id": "abs-non-replaced-width",
+      "title": "10.3.7 Absolutely positioned, non-replaced elements",
+      "level": 3,
+      "text_sha256": "dd7343e6eef7ce86aea2069eead76723c7ce53e7afa7d60d4e9e0dbcd2cc3cb1",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.abs-non-replaced-width",
+          "css21-visudet.abs-non-replaced-width-clause-a39aeeca4999",
+          "css21-visudet.abs-non-replaced-width-clause-1653f815f2ac",
+          "css21-visudet.abs-non-replaced-width-clause-12b9485142a8"
+        ]
+      }
+    },
+    {
+      "id": "abs-replaced-width",
+      "title": "10.3.8 Absolutely positioned, replaced elements",
+      "level": 3,
+      "text_sha256": "a4657b2591acab744d32db406cc9032563cdfa28936c35e5bbbe88e1649ebabc",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.abs-replaced-width",
+          "css21-visudet.abs-replaced-width-clause-4190a4af0742"
+        ]
+      }
+    },
+    {
+      "id": "inlineblock-width",
+      "title": "10.3.9 'Inline-block', non-replaced elements in normal flow",
+      "level": 3,
+      "text_sha256": "b83a858736e016012072cea523d7b94033690b5d0435bf0af351c9f66fdd89b1",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.inlineblock-width",
+          "css21-visudet.inlineblock-width-clause-a42d54fc7606"
+        ]
+      }
+    },
+    {
+      "id": "inlineblock-replaced-width",
+      "title": "10.3.10 'Inline-block', replaced elements in normal flow",
+      "level": 3,
+      "text_sha256": "1e09dc8a65203f04ca1aab513231548d4c770b92cf8e26b20000769fc0c36f0c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.inlineblock-replaced-width"
+        ]
+      }
+    },
+    {
+      "id": "min-max-widths",
+      "title": "10.4 Minimum and maximum widths: 'min-width' and 'max-width'",
+      "level": 2,
+      "text_sha256": "aff00e56f7cc075ae8323bc9c45e8ad0ef09c55cab809acb5de43a2d0ea74b4f",
+      "clause_count": 86,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.min-max-widths",
+          "css21-visudet.min-max-widths-clause-865415d4b5ca",
+          "css21-visudet.min-max-widths-clause-cca2516ebb1d",
+          "css21-visudet.min-max-widths-clause-acfa51e42122",
+          "css21-visudet.min-max-widths-clause-0c131ddddaca",
+          "css21-visudet.min-max-widths-clause-3b966cc44ce2",
+          "css21-visudet.min-max-widths-clause-f2068ce3e3e9",
+          "css21-visudet.min-max-widths-clause-8cfdaf833a9b",
+          "css21-visudet.min-max-widths-clause-3f77e1d1eacd",
+          "css21-visudet.min-max-widths-clause-aa6111d4b27a",
+          "css21-visudet.min-max-widths-clause-e87fb74b7a6c",
+          "css21-visudet.min-max-widths-clause-8af0d2a3a6de",
+          "css21-visudet.min-max-widths-clause-951610855e1a"
+        ]
+      },
+      "controlling_definitions": [
+        {
+          "behaviour": "min-width initial value",
+          "controlling": {
+            "source_id": "css-sizing-3",
+            "section_id": "min-size-properties"
+          },
+          "value": "auto",
+          "basis": {
+            "source_id": "css-sizing-3",
+            "section_id": "min-size-properties",
+            "sha256": "ca0f1db3d5ad0c9799bf9dc04b9c30b4d9adf8d4d6f222787e4759ed81a6bbad"
+          },
+          "reason": "The selected minimum-size definition explicitly identifies its auto initial value as replacing the CSS2 zero initial value. Other CSS2 algorithms in this section retain their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "the-height-property",
+      "title": "10.5 Content height: the 'height' property",
+      "level": 2,
+      "text_sha256": "cfdcdffbc19859682831a2ca182e8aa398db7ccfb32641f693955113bcc01b7d",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.the-height-property",
+          "css21-visudet.the-height-property-clause-4d0ddff73888",
+          "css21-visudet.the-height-property-clause-cca2516ebb1d",
+          "css21-visudet.the-height-property-clause-c8f0fea5740c"
+        ]
+      }
+    },
+    {
+      "id": "Computing_heights_and_margins",
+      "title": "10.6 Calculating heights and margins",
+      "level": 2,
+      "text_sha256": "795551f1462006d25abea48d5c71532740fdc1457100b2de095242f932a635b5",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.computing-heights-and-margins",
+          "css21-visudet.computing-heights-and-margins-clause-796e96fec509"
+        ]
+      }
+    },
+    {
+      "id": "inline-non-replaced",
+      "title": "10.6.1 Inline, non-replaced elements",
+      "level": 3,
+      "text_sha256": "fe3d4339e5f391267225f58c7b0b86bbd6cd06957f6cb981005681cf2bc55911",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.inline-non-replaced",
+          "css21-visudet.inline-non-replaced-clause-40cec6f2fbca"
+        ]
+      }
+    },
+    {
+      "id": "inline-replaced-height",
+      "title": "10.6.2 Inline replaced elements, block-level replaced elements in normal flow, 'inline-block' replaced elements in normal flow and floating replaced elements",
+      "level": 3,
+      "text_sha256": "01c2ca4afb12f0ab2c70ad09fa029d068daa95df5f96d9807ee59dec06d3b042",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.inline-replaced-height",
+          "css21-visudet.inline-replaced-height-clause-033636c79b0e",
+          "css21-visudet.inline-replaced-height-clause-220069a175fe",
+          "css21-visudet.inline-replaced-height-clause-dc0081145e68",
+          "css21-visudet.inline-replaced-height-clause-cb5907dd2981"
+        ]
+      }
+    },
+    {
+      "id": "normal-block",
+      "title": "10.6.3 Block-level non-replaced elements in normal flow when 'overflow' computes to 'visible'",
+      "level": 3,
+      "text_sha256": "5b7d99cb5e472558b1fe82d95822574b83b4506a2e395155bffcc8f702fa9b1c",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.normal-block",
+          "css21-visudet.normal-block-clause-bed0c206e80b"
+        ]
+      }
+    },
+    {
+      "id": "abs-non-replaced-height",
+      "title": "10.6.4 Absolutely positioned, non-replaced elements",
+      "level": 3,
+      "text_sha256": "6b579af5f8ce42a49fb15e88249375f2e626b50cac23f72e504c626c5fcad853",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.abs-non-replaced-height",
+          "css21-visudet.abs-non-replaced-height-clause-1f5272bb211b",
+          "css21-visudet.abs-non-replaced-height-clause-2230b21209d5"
+        ]
+      }
+    },
+    {
+      "id": "abs-replaced-height",
+      "title": "10.6.5 Absolutely positioned, replaced elements",
+      "level": 3,
+      "text_sha256": "e42a94cf25265bc3978b6fda7a8b8c2dd008a051b295aaa06bebe220f18383ce",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.abs-replaced-height",
+          "css21-visudet.abs-replaced-height-clause-21c8a802a32c"
+        ]
+      }
+    },
+    {
+      "id": "block-root-margin",
+      "title": "10.6.6 Complicated cases",
+      "level": 3,
+      "text_sha256": "04c9f12b50191c34432326f1b104b4104c5154895efd8f8389bf6ecc31767cc3",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.block-root-margin"
+        ]
+      }
+    },
+    {
+      "id": "root-height",
+      "title": "10.6.7 'Auto' heights for block formatting context roots",
+      "level": 3,
+      "text_sha256": "0f6090a0394aa7c544f842450d1df81f9f7b961015cc4744b18accf38f1d67ba",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.root-height",
+          "css21-visudet.root-height-clause-5204fe39c177",
+          "css21-visudet.root-height-clause-aecc8e6ddb66"
+        ]
+      }
+    },
+    {
+      "id": "min-max-heights",
+      "title": "10.7 Minimum and maximum heights: 'min-height' and 'max-height'",
+      "level": 2,
+      "text_sha256": "70b350ac1eab3a08443eaee2590e65b5fb44533fb7929df6b757dac33081635f",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.min-max-heights",
+          "css21-visudet.min-max-heights-clause-865415d4b5ca",
+          "css21-visudet.min-max-heights-clause-cca2516ebb1d",
+          "css21-visudet.min-max-heights-clause-cd0b0cc83c9d",
+          "css21-visudet.min-max-heights-clause-0c131ddddaca",
+          "css21-visudet.min-max-heights-clause-6b7bd8885be8",
+          "css21-visudet.min-max-heights-clause-b8d13a434b1c",
+          "css21-visudet.min-max-heights-clause-627a3bf645a2",
+          "css21-visudet.min-max-heights-clause-a846c47dd97d",
+          "css21-visudet.min-max-heights-clause-cfa06451030e",
+          "css21-visudet.min-max-heights-clause-a3127e8bf271",
+          "css21-visudet.min-max-heights-clause-2f25f01c2e03",
+          "css21-visudet.min-max-heights-clause-453c2a237b91"
+        ]
+      },
+      "controlling_definitions": [
+        {
+          "behaviour": "min-height initial value",
+          "controlling": {
+            "source_id": "css-sizing-3",
+            "section_id": "min-size-properties"
+          },
+          "value": "auto",
+          "basis": {
+            "source_id": "css-sizing-3",
+            "section_id": "min-size-properties",
+            "sha256": "ca0f1db3d5ad0c9799bf9dc04b9c30b4d9adf8d4d6f222787e4759ed81a6bbad"
+          },
+          "reason": "The selected minimum-size definition explicitly identifies its auto initial value as replacing the CSS2 zero initial value. Other CSS2 algorithms in this section retain their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "line-height",
+      "title": "10.8 Line height calculations: the 'line-height' and 'vertical-align' properties",
+      "level": 2,
+      "text_sha256": "332c2c0577a8bdea0e5ffb36b30f05f9d8c7d07e8fd2771de361226c7ee2376c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.line-height",
+          "css21-visudet.line-height-clause-e4dd2f31b497"
+        ]
+      }
+    },
+    {
+      "id": "leading",
+      "title": "10.8.1 Leading and half-leading",
+      "level": 3,
+      "text_sha256": "30d7d1b42240a224d200ff8f68dcfb4a339d0051fa07a25f1bd67f8d7cd9fda2",
+      "clause_count": 85,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visudet.leading",
+          "css21-visudet.leading-clause-629f7381a270",
+          "css21-visudet.leading-clause-81783b6eb9fb",
+          "css21-visudet.leading-clause-89df53177862",
+          "css21-visudet.leading-clause-8552fba22a91",
+          "css21-visudet.leading-clause-cca2516ebb1d",
+          "css21-visudet.leading-clause-0693d99b5e5d",
+          "css21-visudet.leading-clause-2dac8d89d629",
+          "css21-visudet.leading-clause-e2eda3d1b2d8",
+          "css21-visudet.leading-clause-4a29bc59947e",
+          "css21-visudet.leading-clause-d928b6191c3c",
+          "css21-visudet.leading-clause-3727149fd846",
+          "css21-visudet.leading-clause-6fc61f8d7139",
+          "css21-visudet.leading-clause-e38914ddcda6",
+          "css21-visudet.leading-clause-06850fdcbe25",
+          "css21-visudet.leading-clause-9e0656c35814"
+        ]
+      }
+    }
+  ]
+}

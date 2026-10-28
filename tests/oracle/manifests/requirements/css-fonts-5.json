@@ -1,0 +1,2376 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-fonts-5.introduction",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "aba3b7ce0d56f146d94da0e58a0179129989ee5eb6eb978d78d19e63dfbfa770"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.values",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.text-scale-meta",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "text-scale-meta"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text-Scale meta element.",
+      "locator": {
+        "section_id": "text-scale-meta",
+        "text_sha256": "0176fa20e67dbceffcc9dbe556149f32f2c16f906919ac2169a261ba77295c92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.text-scale-meta-clause-a9cbaa7b291a",
+        "css-fonts-5.text-scale-meta-clause-ac0681eba41b",
+        "css-fonts-5.text-scale-meta-clause-d1949c29408c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.text-scale-meta-clause-a9cbaa7b291a",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "text-scale-meta"
+      ],
+      "behaviour": "Text-Scale meta element — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-scale-meta",
+        "clause_index": 0,
+        "clause_sha256": "a9cbaa7b291a98f17564b62f547ceb8aa9fe7d13d6148b62b386d098fea4c8f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.text-scale-meta-clause-ac0681eba41b",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "text-scale-meta"
+      ],
+      "behaviour": "Text-Scale meta element — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-scale-meta",
+        "clause_index": 3,
+        "clause_sha256": "ac0681eba41b12a6117853e580c2c171c2d11196f95395a604b28f8df14f65f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.text-scale-meta-clause-d1949c29408c",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "text-scale-meta"
+      ],
+      "behaviour": "Text-Scale meta element — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-scale-meta",
+        "clause_index": 6,
+        "clause_sha256": "d1949c29408c1d70f0b6e5b351359a4e6202b4ad58005d52cdc18ac501ff8956"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.text-scale-meta-keywords",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "text-scale-meta-keywords"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Keywords.",
+      "locator": {
+        "section_id": "text-scale-meta-keywords",
+        "text_sha256": "2b54b6408377a50e897d09bfe1d31d324931a37f88bc08ca265f99c627873c2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.text-scale-meta-keywords-clause-b8510322d7ee"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.text-scale-meta-keywords-clause-b8510322d7ee",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "text-scale-meta-keywords"
+      ],
+      "behaviour": "Keywords — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-scale-meta-keywords",
+        "clause_index": 3,
+        "clause_sha256": "b8510322d7eee88e4ccb622ad9678a0b921b472684b1a0186a1325e2e0e8158a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.legacy-keyword",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "legacy-keyword"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The legacy keyword.",
+      "locator": {
+        "section_id": "legacy-keyword",
+        "text_sha256": "3f0d41eb7898e42a4c417de5c1ff631ce3af255f6fce36f550cb4dc9a1d6f680"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.legacy-keyword-clause-9aab14d40040"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.legacy-keyword-clause-9aab14d40040",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "legacy-keyword"
+      ],
+      "behaviour": "The legacy keyword — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "legacy-keyword",
+        "clause_index": 0,
+        "clause_sha256": "9aab14d40040106a346e83d3f58d360cbba395b0ccde7bea8140fc157988b1c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.scale-keyword",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "scale-keyword"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The scale keyword.",
+      "locator": {
+        "section_id": "scale-keyword",
+        "text_sha256": "42f81fc2801a5536cc77efe5e16648ee048b4a838574da30f20c49fcaed3e41f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.scale-keyword-clause-abe41059ecf9",
+        "css-fonts-5.scale-keyword-clause-763203ce23ff",
+        "css-fonts-5.scale-keyword-clause-b8efdc3b04a9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.scale-keyword-clause-abe41059ecf9",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "scale-keyword"
+      ],
+      "behaviour": "The scale keyword — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "scale-keyword",
+        "clause_index": 1,
+        "clause_sha256": "abe41059ecf90175052f5752ccc2ee491eb61221c9ea0fc4f09f352d7ccdaf88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.scale-keyword-clause-763203ce23ff",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "scale-keyword"
+      ],
+      "behaviour": "The scale keyword — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "scale-keyword",
+        "clause_index": 2,
+        "clause_sha256": "763203ce23ffc1ba8afca2d930220224c0e66365383065bdf148df73617d9884"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.scale-keyword-clause-b8efdc3b04a9",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "scale-keyword"
+      ],
+      "behaviour": "The scale keyword — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "scale-keyword",
+        "clause_index": 3,
+        "clause_sha256": "b8efdc3b04a9e3b5d4305164634520552518ee008fbe1c8054471ad8569771dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.basic-font-props",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "basic-font-props"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Basic Font Properties.",
+      "locator": {
+        "section_id": "basic-font-props",
+        "text_sha256": "4941cee96f00cd83f3349bc695935f40cabfee89384b7557b90a31d9d54d67c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-family-prop",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font family: the font-family property.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.generic-font-families",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "generic-font-families"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Generic font families.",
+      "locator": {
+        "section_id": "generic-font-families",
+        "text_sha256": "ea5bb34e79b7b3db287c1e2261d3b8c43e32cfb1ee053791c20dd4c5651ef1a0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.generic-font-families-clause-91dd09f3a740"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.generic-font-families-clause-91dd09f3a740",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "generic-font-families"
+      ],
+      "behaviour": "Generic font families — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "generic-font-families",
+        "clause_index": 2,
+        "clause_sha256": "91dd09f3a740391d0796fcf99b19a70fd4faa59bd56b92b8420096bd4ba81982"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-weight-prop",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-weight-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font weight: the font-weight property.",
+      "locator": {
+        "section_id": "font-weight-prop",
+        "text_sha256": "679f7c55d039f8e903201b8aad8861f147ecc080abcba58588d25f1d846dceff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-style-prop",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-style-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font style: the font-style property.",
+      "locator": {
+        "section_id": "font-style-prop",
+        "text_sha256": "5ead2e559a5359d96761970e1d4d67bb6a6e7745bafff620f75df4972474cde4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-size-adjust-prop",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-adjust-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative sizing: the font-size-adjust property.",
+      "locator": {
+        "section_id": "font-size-adjust-prop",
+        "text_sha256": "ede7bf7367e9cec46eaba5c5c5e8420f6f28ccf80d4bf987cacdf4b04e5c3d5e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.font-size-adjust-prop-clause-cca2516ebb1d",
+        "css-fonts-5.font-size-adjust-prop-clause-96f542627b1e",
+        "css-fonts-5.font-size-adjust-prop-clause-fa274dcf6ce8",
+        "css-fonts-5.font-size-adjust-prop-clause-426c3f8097ff",
+        "css-fonts-5.font-size-adjust-prop-clause-a4d558339209",
+        "css-fonts-5.font-size-adjust-prop-clause-ce8e832260d7",
+        "css-fonts-5.font-size-adjust-prop-clause-da3c64f4fe10",
+        "css-fonts-5.font-size-adjust-prop-clause-0722c7e39392",
+        "css-fonts-5.font-size-adjust-prop-clause-c912ff8334f9",
+        "css-fonts-5.font-size-adjust-prop-clause-98b81eb3f6eb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-size-adjust-prop-clause-cca2516ebb1d",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-adjust-prop"
+      ],
+      "behaviour": "Relative sizing: the font-size-adjust property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-adjust-prop",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-size-adjust-prop-clause-96f542627b1e",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-adjust-prop"
+      ],
+      "behaviour": "Relative sizing: the font-size-adjust property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-adjust-prop",
+        "clause_index": 38,
+        "clause_sha256": "96f542627b1e6ddadba1300a647219849e01b009e81f559d8821d327c5a6abbd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-size-adjust-prop-clause-fa274dcf6ce8",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-adjust-prop"
+      ],
+      "behaviour": "Relative sizing: the font-size-adjust property — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-adjust-prop",
+        "clause_index": 39,
+        "clause_sha256": "fa274dcf6ce8ce6cc7250aca91e57fc306acb26d9e7a5558aa68348a55c6c054"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-size-adjust-prop-clause-426c3f8097ff",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-adjust-prop"
+      ],
+      "behaviour": "Relative sizing: the font-size-adjust property — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-adjust-prop",
+        "clause_index": 40,
+        "clause_sha256": "426c3f8097ff0a50189f77578214f464ca458ddae315a88aaa5879f53aa2179a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-size-adjust-prop-clause-a4d558339209",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-adjust-prop"
+      ],
+      "behaviour": "Relative sizing: the font-size-adjust property — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-adjust-prop",
+        "clause_index": 49,
+        "clause_sha256": "a4d5583392099721776599be3a995bd9fef63ce62723613468a1dfe7ab6a973a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-size-adjust-prop-clause-ce8e832260d7",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-adjust-prop"
+      ],
+      "behaviour": "Relative sizing: the font-size-adjust property — normative clause 51, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-adjust-prop",
+        "clause_index": 50,
+        "clause_sha256": "ce8e832260d7341e26861f6291266157e8c66dd816c12d04d7bc53608f478212"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-size-adjust-prop-clause-da3c64f4fe10",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-adjust-prop"
+      ],
+      "behaviour": "Relative sizing: the font-size-adjust property — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-adjust-prop",
+        "clause_index": 56,
+        "clause_sha256": "da3c64f4fe10f80c73219af53fa27ec707e221b2c4f955f03ad10670a9d2958a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-size-adjust-prop-clause-0722c7e39392",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-adjust-prop"
+      ],
+      "behaviour": "Relative sizing: the font-size-adjust property — normative clause 59, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-adjust-prop",
+        "clause_index": 58,
+        "clause_sha256": "0722c7e393924f7e7e28a5beb28aa9af9b93f8dadcc72f1acca60d3b341c91b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-size-adjust-prop-clause-c912ff8334f9",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-adjust-prop"
+      ],
+      "behaviour": "Relative sizing: the font-size-adjust property — normative clause 64, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-adjust-prop",
+        "clause_index": 63,
+        "clause_sha256": "c912ff8334f9f9d9419bd4c6f7a1944a10c3a329c3752234eac2966307ca905b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-size-adjust-prop-clause-98b81eb3f6eb",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-adjust-prop"
+      ],
+      "behaviour": "Relative sizing: the font-size-adjust property — normative clause 65, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-adjust-prop",
+        "clause_index": 64,
+        "clause_sha256": "98b81eb3f6ebd97a106c1d83179d67beda90a9c623a1eacad2d9f5380dae9069"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-resources",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-resources"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font Resources.",
+      "locator": {
+        "section_id": "font-resources",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-face-rule",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-face-rule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The @font-face rule.",
+      "locator": {
+        "section_id": "font-face-rule",
+        "text_sha256": "b869d9bc29f0b8accce1a9ddf1c9c0d1ccd60662f4790a891e3f4ac7fd9b8499"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.src-desc",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "src-desc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font reference: the src descriptor.",
+      "locator": {
+        "section_id": "src-desc",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-face-src-parsing",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-face-src-parsing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Parsing the src descriptor.",
+      "locator": {
+        "section_id": "font-face-src-parsing",
+        "text_sha256": "3dec3f62714ef039f6a5dd129e42a19e28ed10a26135df44b4fb2ae977a408b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.font-face-src-parsing-clause-eac1b221bc4f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-face-src-parsing-clause-eac1b221bc4f",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-face-src-parsing"
+      ],
+      "behaviour": "Parsing the src descriptor — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-face-src-parsing",
+        "clause_index": 0,
+        "clause_sha256": "eac1b221bc4f2ef24f333a4eeb33dd2be41437d9ee7ceee2dfddfb06db0f6b10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-size-desc",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-size-desc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font property descriptors: the font-size.",
+      "locator": {
+        "section_id": "font-size-desc",
+        "text_sha256": "edfbbc1fd5aedd7eea20eaf3e87cc73d97041efced4591087965722528b0747f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.size-adjust-desc",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "size-adjust-desc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Glyph Size Multiplier: the size-adjust descriptor.",
+      "locator": {
+        "section_id": "size-adjust-desc",
+        "text_sha256": "a36a68a143dacb2395b01e069bdf7bf413303a2147ce6ccc98a2ba055c87074e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.size-adjust-desc-clause-7fe77b5e5968",
+        "css-fonts-5.size-adjust-desc-clause-d9a3e250df3a",
+        "css-fonts-5.size-adjust-desc-clause-bee11b846fc7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.size-adjust-desc-clause-7fe77b5e5968",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "size-adjust-desc"
+      ],
+      "behaviour": "Glyph Size Multiplier: the size-adjust descriptor — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "size-adjust-desc",
+        "clause_index": 8,
+        "clause_sha256": "7fe77b5e596850f0cebb5fdbd9ca26d51b9a0bb99426ca0702842a67040a6ab8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.size-adjust-desc-clause-d9a3e250df3a",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "size-adjust-desc"
+      ],
+      "behaviour": "Glyph Size Multiplier: the size-adjust descriptor — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "size-adjust-desc",
+        "clause_index": 9,
+        "clause_sha256": "d9a3e250df3a5bbf36f8f1e55875b76c580fef2bc0c88c335a839078bece44ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.size-adjust-desc-clause-bee11b846fc7",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "size-adjust-desc"
+      ],
+      "behaviour": "Glyph Size Multiplier: the size-adjust descriptor — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "size-adjust-desc",
+        "clause_index": 14,
+        "clause_sha256": "bee11b846fc7ea71eb4daa3750ef2322c72e67b392b205d770a1609adebb103d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-metrics-override-desc",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-metrics-override-desc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line Height Font Metrics Overrides: the ascent-override, descent-override, and line-gap-override descriptors.",
+      "locator": {
+        "section_id": "font-metrics-override-desc",
+        "text_sha256": "5c44bffc703822a6dbf3fa0a5d811d8fb4e0698c90a683eb98e9b2524d5d6fb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-sup-sub-override-desc",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-sup-sub-override-desc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Superscript and subscript metrics overrides: the superscript-position-override, subscript-position-override,superscript-size-override and subscript-size-override descriptors.",
+      "locator": {
+        "section_id": "font-sup-sub-override-desc",
+        "text_sha256": "9951d41fb861cea52ab8335d472bf0d9d014bf2df26c9cd203caaa6c77d03fcc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.font-sup-sub-override-desc-clause-baf61836bd72",
+        "css-fonts-5.font-sup-sub-override-desc-clause-96a9b2742bcc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-sup-sub-override-desc-clause-baf61836bd72",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-sup-sub-override-desc"
+      ],
+      "behaviour": "Superscript and subscript metrics overrides: the superscript-position-override, subscript-position-override,superscript-size-override and subscript-size-override descriptors — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-sup-sub-override-desc",
+        "clause_index": 31,
+        "clause_sha256": "baf61836bd728bf0c5ce4000e439ac9c9d8c6456613137b64f033438f097e20f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-sup-sub-override-desc-clause-96a9b2742bcc",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-sup-sub-override-desc"
+      ],
+      "behaviour": "Superscript and subscript metrics overrides: the superscript-position-override, subscript-position-override,superscript-size-override and subscript-size-override descriptors — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-sup-sub-override-desc",
+        "clause_index": 39,
+        "clause_sha256": "96a9b2742bcca8754203bd711be483de574d645c9fcf1a89a4704b7ebb5ad720"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-rend-props",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-rend-props"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font Feature Properties.",
+      "locator": {
+        "section_id": "font-rend-props",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-language-override-prop",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-language-override-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font language override: the font-language-override property.",
+      "locator": {
+        "section_id": "font-language-override-prop",
+        "text_sha256": "f2897959c0387f8e679ded20ed8c62e01359af0ab588903d147162da0a322a63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-feature-variation-resolution",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-feature-variation-resolution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font Feature and Variation Resolution.",
+      "locator": {
+        "section_id": "font-feature-variation-resolution",
+        "text_sha256": "bc7de2c60dc04a220e68e270c95842b340515559e99119637bf5617ed60d557b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-variation-props",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-variation-props"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font Variation Properties.",
+      "locator": {
+        "section_id": "font-variation-props",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-optical-sizing-def",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-optical-sizing-def"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Optical sizing control: the font-optical-sizing property.",
+      "locator": {
+        "section_id": "font-optical-sizing-def",
+        "text_sha256": "cad57d745a19a0e80cee264adf8b78fca6798014be92e51a6ba4bb02a0a177f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-technologies-formats",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-technologies-formats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font Technologies and Formats.",
+      "locator": {
+        "section_id": "font-technologies-formats",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.font-tech-definitions",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-tech-definitions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font tech.",
+      "locator": {
+        "section_id": "font-tech-definitions",
+        "text_sha256": "7adcfc0a61f62a457d1d63b17443ebb70b594eed476f2d460a845d7f116a21b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.object-model",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "object-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Object Model.",
+      "locator": {
+        "section_id": "object-model",
+        "text_sha256": "ac2603d695cdcb35d997eddb9ad99ae16c51c9764a21d21153a780df30894ebf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.om-fontface",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "om-fontface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSSFontFaceRule interface.",
+      "locator": {
+        "section_id": "om-fontface",
+        "text_sha256": "70d031a2090a96a5fd8ee7a25fdff0ebe9e32e44b56bf03382e05ef7176aed6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.security",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.privacy",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.w3c-conformance",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.w3c-conventions",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.w3c-conventions-clause-5c98c879f070",
+        "css-fonts-5.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.w3c-conventions-clause-5c98c879f070",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.w3c-conformance-classes",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.w3c-conformance-classes-clause-ff408372426c",
+        "css-fonts-5.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.w3c-partial",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.w3c-partial-clause-ef40c4aab200",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.w3c-conform-future-proofing",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.w3c-testing",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.w3c-testing-clause-1e0fff369221",
+        "css-fonts-5.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.w3c-testing-clause-1e0fff369221",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.w3c-testing-clause-ae1210cf9643",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.property-index",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "25a438a93c284cd6e6b20792e66d1fb99dd778832907b2f5ac926c35122a506a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-fonts-5.property-index-clause-73e5892a3ad6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.property-index-clause-73e5892a3ad6",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 15,
+        "clause_sha256": "73e5892a3ad6c3cb092aeaf521303dbb0ea37e47cf01873a9ca3ae6926ae5bfe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-fonts-5.font-face-descriptor-table",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "font-face-descriptor-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in @font-face Descriptors.",
+      "locator": {
+        "section_id": "font-face-descriptor-table",
+        "text_sha256": "daf68136c15c31506e0893857c1e2545e193c03594669db09b6eb5d7dfb997c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.idl-index",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "05daf04ef8b4a73d58f944a047cc10ef691fc74a9eae44373f7f6cbb2095732a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.issues-index",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "9932ba9cfc5e842f18b88e7565020c20bfa52c8f996ff3a4154c0ee4c0dac25c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.import-a3f920e3f838",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://github.com/harfbuzz/boring-expansion-spec/blob/main/avar2.md.",
+      "unresolved_reference": "https://github.com/harfbuzz/boring-expansion-spec/blob/main/avar2.md",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-fonts-5.import-709148d9fced",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.csswg.org/css-size-adjust-1/.",
+      "unresolved_reference": "https://drafts.csswg.org/css-size-adjust-1/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-fonts-5.import-8cac7d115c27",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-fonts-5.title",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Fonts Module Level 5.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "63406117871a65e213898dff09d00323801ff341d68b1491672e97d2d8a684e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.abstract",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "3e8f681c5981cc44762c1d91859ec650167725de58cbdd6ed143a26257a9a779"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.sotd",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "ac16f539d2ab53c69fe04756c0a9935596b94d7d843e25adbf3b19b1e1166068"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.contents",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "165dc0a97e63826c2479d8c95e063293e01f098e3bcf9ca0e759428bf6d31615"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.acknowledgments",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 12. Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "c24837002d9fbbbeebba1be6f5f75c769b9f7e3bc5333ffb4ea678b5d28daa2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.changes",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 13. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.changes-20260206",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "changes-20260206"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 13.1. Changes since the WD of 6 February 2024.",
+      "locator": {
+        "section_id": "changes-20260206",
+        "text_sha256": "d7197203e2a024945c4f5bbd2a6c32c4d201753af4a92567bfe0efb86e750a1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.changes-20211221",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "changes-20211221"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 13.2. Changes since the WD of 21 December 2021.",
+      "locator": {
+        "section_id": "changes-20211221",
+        "text_sha256": "678d64b85c3c3984e75fe199358a2959ea22e3e3957273c672d8736a9f2e83ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.changes-20210729",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "changes-20210729"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 13.3. Changes since the WD of 2021-07-29.",
+      "locator": {
+        "section_id": "changes-20210729",
+        "text_sha256": "bdfac3261f5e7ae09a544858a944ee869455f4393a0373839b4cf87f23d59c56"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.changes-20210629",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "changes-20210629"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 13.4. Changes since the FPWD of 2021-06-29.",
+      "locator": {
+        "section_id": "changes-20210629",
+        "text_sha256": "d01e9c2dee67639f129b0230320cf2c7c4dbc6a462b5b17a38669f003b082843"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.index",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.index-defined-here",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "96377cf81d56fa89a0b903eaa7596ff4c53b4db12805c6cdcde064ff8af88f35"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.index-defined-elsewhere",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "f56455040f23aafb73798cfd7b99d53ee148dcc5738e81b046c7237a0f684f13"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.references",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-fonts-5.informative",
+      "family": "css-fonts-5",
+      "source_id": "css-fonts-5",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "455d39e62c4d9fbbe889bfd11e0f6e8e50147f18bbb79358ef157c87d98ad194"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

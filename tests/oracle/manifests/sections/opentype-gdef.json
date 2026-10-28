@@ -1,0 +1,299 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-gdef",
+  "sections": [
+    {
+      "id": "gdef--glyph-definition-table",
+      "title": "GDEF — Glyph Definition Table",
+      "level": 1,
+      "text_sha256": "214e1897aecdbc0fa38663f3c48b975638d01ca841f95852449b42b2f24c1245",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.gdef-glyph-definition-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "Overview",
+      "level": 2,
+      "text_sha256": "8a1cab3bed037c52db309b89248f5bf6ade3c609ead5ce955258735442f855f1",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.overview",
+          "opentype-gdef.overview-clause-233cd93f40ba",
+          "opentype-gdef.overview-clause-cbc2b32dc8d9",
+          "opentype-gdef.overview-clause-e0e9a96a0f71"
+        ]
+      }
+    },
+    {
+      "id": "gdef-table-structures",
+      "title": "GDEF table structures",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.gdef-table-structures"
+        ]
+      }
+    },
+    {
+      "id": "gdef-header",
+      "title": "GDEF Header",
+      "level": 3,
+      "text_sha256": "35dfa4c29bb0a3f353e3d0f67caaad73d4eb75ca3b77aa8ed77287d8bb0d83af",
+      "clause_count": 77,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.gdef-header"
+        ]
+      }
+    },
+    {
+      "id": "glyph-class-definition-table",
+      "title": "Glyph class definition table",
+      "level": 3,
+      "text_sha256": "964d39cc3603c0905190612ce4a2d2250889e083df418aae1a40a7c98afd037e",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.glyph-class-definition-table"
+        ]
+      }
+    },
+    {
+      "id": "attachment-point-list-table",
+      "title": "Attachment point list table",
+      "level": 3,
+      "text_sha256": "a1a42a9486d31bf5b85b71456016b752950840f2c292b5ff18634d0e9ce91728",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.attachment-point-list-table"
+        ]
+      }
+    },
+    {
+      "id": "ligature-caret-list-table",
+      "title": "Ligature caret list table",
+      "level": 3,
+      "text_sha256": "e9081c89642ccfa96a8fbe74e32b9ca900d3067c30238608d84bc9a39a60e826",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.ligature-caret-list-table",
+          "opentype-gdef.ligature-caret-list-table-clause-d4e34fd1ce4b",
+          "opentype-gdef.ligature-caret-list-table-clause-24148a20b634"
+        ]
+      }
+    },
+    {
+      "id": "mark-attachment-class-definition-table",
+      "title": "Mark attachment class definition table",
+      "level": 3,
+      "text_sha256": "eb8b630424c5817de2e5c1c671b704bd79392ae733a0f370dca855c82ea93578",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.mark-attachment-class-definition-table"
+        ]
+      }
+    },
+    {
+      "id": "mark-glyph-sets-table",
+      "title": "Mark glyph sets table",
+      "level": 3,
+      "text_sha256": "f07810a0836826a8e2f3739befb0a4a0c15ae8fbea825a3a6a29cc45eacfe474",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.mark-glyph-sets-table",
+          "opentype-gdef.mark-glyph-sets-table-clause-2c9542f06a65"
+        ]
+      }
+    },
+    {
+      "id": "item-variation-store-table",
+      "title": "Item variation store table",
+      "level": 3,
+      "text_sha256": "49a6f372a498cd3a5e45aa35436081f4fabb3c1485149f3d5f0e47754ec39748",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.item-variation-store-table",
+          "opentype-gdef.item-variation-store-table-clause-02cfa0db206d"
+        ]
+      }
+    },
+    {
+      "id": "gdef-table-examples",
+      "title": "GDEF table examples",
+      "level": 2,
+      "text_sha256": "dc46f935ec25f00cf931742b094a5f8c2335911ff11b85b2f3802657374ede5e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.gdef-table-examples"
+        ]
+      }
+    },
+    {
+      "id": "example-1-gdef-header",
+      "title": "Example 1: GDEF Header",
+      "level": 3,
+      "text_sha256": "af9d2a52b777059959f34fbcb560889152e6c8be3db72fc020bc31a6424554ad",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.example-1-gdef-header"
+        ]
+      }
+    },
+    {
+      "id": "example-2-glyphclassdef-table",
+      "title": "Example 2: GlyphClassDef table",
+      "level": 3,
+      "text_sha256": "b894a7630393ccce5a4f8095ca741a19a2d25dac58115ded2b9302a4b7713ee3",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.example-2-glyphclassdef-table"
+        ]
+      }
+    },
+    {
+      "id": "example-3-attachlist-table",
+      "title": "Example 3: AttachList table",
+      "level": 3,
+      "text_sha256": "9fb0700d4e3e7d71190b65e3c2c013cfd1be0f92f455f9146269a9258b12fc31",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.example-3-attachlist-table"
+        ]
+      }
+    },
+    {
+      "id": "example-4-ligcaretlist-ligglyph-and-caretvalueformat1-tables",
+      "title": "Example 4: LigCaretList, LigGlyph and CaretValueFormat1 tables",
+      "level": 3,
+      "text_sha256": "9c75ba57ab72b82f8e134e90bf63c45b3762675d3b22eb91ac1905d9bf79f71e",
+      "clause_count": 75,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.example-4-ligcaretlist-ligglyph-and-caretvalueformat1-tables"
+        ]
+      }
+    },
+    {
+      "id": "example-5-caretvalueformat2-table",
+      "title": "Example 5: CaretValueFormat2 table",
+      "level": 3,
+      "text_sha256": "bcf77f782db254911bc68bca40c5e977a4af2656b5cfd6fc5ef9a0904c03691f",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.example-5-caretvalueformat2-table"
+        ]
+      }
+    },
+    {
+      "id": "example-6-caretvalueformat3-table",
+      "title": "Example 6: CaretValueFormat3 table",
+      "level": 3,
+      "text_sha256": "ff66462d1804ae7c1bee93ed96217bed385ce79d93aa360031fea26fb9fdcc3b",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.example-6-caretvalueformat3-table"
+        ]
+      }
+    },
+    {
+      "id": "example-7-mark-attachment-class-definition-table",
+      "title": "Example 7: Mark attachment class definition table",
+      "level": 3,
+      "text_sha256": "d4e9d3ad40748dd77e620c407da9ca64430054aec3e425eb98438e58fb624bd9",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.example-7-mark-attachment-class-definition-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "4e2297f79525355aa3dc07756ae4ae6ba350dc012790f96133dc9fdbf48db6d0",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gdef.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

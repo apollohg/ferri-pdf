@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "source_id": "css-transforms-1",
+  "sections": [
+    {
+      "id": "heading-4f99dc0e1f31",
+      "title": "CSS 2D Transforms Module Level 3",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.heading-4f99dc0e1f31"
+        ]
+      }
+    },
+    {
+      "id": "longstatus-date",
+      "title": "W3C Working Draft 20 March 2009",
+      "level": 2,
+      "text_sha256": "ff760c082fe01aa89f3360d2fe4cc2703922d04603abfe32bc6395a1a18f083a",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.longstatus-date"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "46e2bae9e9e37d45f3b5a256eb24ee92fc51a808f571fb1e6f4f2af069325743",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "72850b721cbf43d39f6300c3def59a3024e317fc54fcc805da6eec82dce46add",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of contents",
+      "level": 2,
+      "text_sha256": "983aee859bd7f2c1f6b11f9f65996061615432fd6aa618881faa02dd82a3f6e6",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "353d572eadc47110e2eacbb5005e3416072f4600a46a8c59a8c9cf13e9092680",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.introduction"
+        ]
+      }
+    },
+    {
+      "id": "transform-property",
+      "title": "2 The ‘transform’ Property",
+      "level": 2,
+      "text_sha256": "d398874a9f7d66a8c07cbd41684394ae8af1659341dc5967ad14d79c205ba8d0",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.transform-property",
+          "css-transforms-1.transform-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "transform-origin-property",
+      "title": "3 The ‘transform-origin’ Property",
+      "level": 2,
+      "text_sha256": "bec5d3119e8ec6be4a98cc1fa2f6b52cdd73a4f397c34f6181be512e922c0c22",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.transform-origin-property",
+          "css-transforms-1.transform-origin-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "transform-functions",
+      "title": "4 The Transformation Functions",
+      "level": 2,
+      "text_sha256": "447cb35f50794f15ebe85f9abdf1c5c22ae7dc8aac7d1875437f5a8612fe99d8",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.transform-functions"
+        ]
+      }
+    },
+    {
+      "id": "transform-values",
+      "title": "5 Transform Values and Lists",
+      "level": 2,
+      "text_sha256": "122c24b748ed5745cc31841ee45f407fd071d34b573ce21e888102310e6d0d50",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.transform-values"
+        ]
+      }
+    },
+    {
+      "id": "animation",
+      "title": "6 Transitions and animations between transform values",
+      "level": 2,
+      "text_sha256": "40f59fed31617f004a7c55fd240ee09ea4f6f533aa8d548c09a9e439690a4c91",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.animation"
+        ]
+      }
+    },
+    {
+      "id": "dom-interfaces",
+      "title": "7 DOM Interfaces",
+      "level": 2,
+      "text_sha256": "6706415e9b457d9c3eab59c1bcfa1454ecfb1972c91423e7bc1af9db21d7e16c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.dom-interfaces"
+        ]
+      }
+    },
+    {
+      "id": "point-interface",
+      "title": "7.1 Point",
+      "level": 3,
+      "text_sha256": "a0b086eb941ee5e94e5839f7061033a512e0176c19b4390d0371d9fd7b076109",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.point-interface"
+        ]
+      }
+    },
+    {
+      "id": "window-interface",
+      "title": "7.2 Window",
+      "level": 3,
+      "text_sha256": "91b404d7c6701b6954159e54706eca6ee0ed0b151a57eac9d5779709384bb99c",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.window-interface",
+          "css-transforms-1.window-interface-clause-5905d41a1c67",
+          "css-transforms-1.window-interface-clause-7f2df2833d4d"
+        ]
+      }
+    },
+    {
+      "id": "cssmatrix-interface",
+      "title": "7.3 CSSMatrix",
+      "level": 3,
+      "text_sha256": "73c3d639304a910f2c5dcb04baae8f2be0c8abf8fc776dd54fc44c75fe873c27",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.cssmatrix-interface",
+          "css-transforms-1.cssmatrix-interface-clause-b3e377ead1e7"
+        ]
+      }
+    },
+    {
+      "id": "csstransformvalue-interface",
+      "title": "7.4 CSSTransformValue",
+      "level": 3,
+      "text_sha256": "f2fab1a10ece525c04fc3a0445f7b7014bd3059f76f9eeca18b6aebfdb8f467e",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.csstransformvalue-interface"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "8 References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative-references",
+      "title": "Normative references",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.normative-references"
+        ]
+      }
+    },
+    {
+      "id": "other-references",
+      "title": "Other references",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.other-references"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property index",
+      "level": 2,
+      "text_sha256": "bc69305042c7fd3f3255afc98aa3e7ed59dc86f1c36985ce5563400ffbfc1dc4",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.property-index"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "149de4af8ad618ff8f1ee4ad4b8b5940a739e7e363c445b34fbe58f03af30ce7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-1.index"
+        ]
+      }
+    }
+  ]
+}

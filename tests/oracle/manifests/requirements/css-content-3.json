@@ -1,0 +1,3056 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-content-3.intro",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "634f57173e7235056150648b24ea3e54e85f4049099c94b6cf244ae3a2cf832f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.values",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.content-property",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inserting and Replacing Content: the content property.",
+      "locator": {
+        "section_id": "content-property",
+        "text_sha256": "acaa951da47b64d5c9b05347ecd17f942be610a93ce29cb84736b4f6bcd110df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.content-property-clause-cca2516ebb1d",
+        "css-content-3.content-property-clause-37ee7a55b49e",
+        "css-content-3.content-property-clause-1f9ec3d7bb2f",
+        "css-content-3.content-property-clause-52a747376c2e",
+        "css-content-3.content-property-clause-4b8cefc02e15",
+        "css-content-3.content-property-clause-af343a5f17b1",
+        "css-content-3.content-property-clause-24824ec67e98",
+        "css-content-3.content-property-clause-8b49869bcdec",
+        "css-content-3.content-property-clause-f4c69fad9d00",
+        "css-content-3.content-property-clause-82bfbf624433",
+        "css-content-3.content-property-clause-85ddc9c53640",
+        "css-content-3.content-property-clause-6539f65c035c",
+        "css-content-3.content-property-clause-9686413ccb1d",
+        "css-content-3.content-property-clause-4f9629100642",
+        "css-content-3.content-property-clause-7d4991c5486d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.content-property-clause-cca2516ebb1d",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-37ee7a55b49e",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 20,
+        "clause_sha256": "37ee7a55b49ec6c7ad67c0755c47e0d6be94fc482b031e3754d7f201ac6ae3e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-1f9ec3d7bb2f",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 31,
+        "clause_sha256": "1f9ec3d7bb2f7ff4d10f36e8b1d8cf57412b9d3444f41d57592a9aca9d53f2ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-52a747376c2e",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 33,
+        "clause_sha256": "52a747376c2e1ace35f6f4000097574b6973ab8575a41ee8d4d5d278174a77c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-4b8cefc02e15",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 35,
+        "clause_sha256": "4b8cefc02e153377ecb4bc945a3cd214a7d53fd308ab81f9679a0f4ff2741433"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-af343a5f17b1",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 51, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 50,
+        "clause_sha256": "af343a5f17b1f38c2069e8669672cf4007a07e6f30e72389c6f0996713ac0967"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-24824ec67e98",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 51,
+        "clause_sha256": "24824ec67e98943fc569dfe95500c6d23ec988ff12c1df5d1dfdbf1c7b336e66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-8b49869bcdec",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 56, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 55,
+        "clause_sha256": "8b49869bcdec2a67243b8eb7842cc78117d0aa06314a62dba499de527671bf52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-f4c69fad9d00",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 59, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 58,
+        "clause_sha256": "f4c69fad9d0096d8dfc8afa40c6722bbb44f2b586ff2f9527fdf9957b5ff3475"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-82bfbf624433",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 64, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 63,
+        "clause_sha256": "82bfbf6244333d7e64194027a993ac1139c8bf85eedd9e6ef61c36fad5c944a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-85ddc9c53640",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 65, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 64,
+        "clause_sha256": "85ddc9c5364086ac3184b908679949ef81112b9878b22457771f0d8522eb3576"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-6539f65c035c",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 67, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 66,
+        "clause_sha256": "6539f65c035cef17c0350c4c177e6a346a03b0f9dcb6b5936c5164ad87e44892"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-9686413ccb1d",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 70, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 69,
+        "clause_sha256": "9686413ccb1dbb8da89049d8694a4ccdfbabeeed9a91706c7b0a5fa9bce977ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-4f9629100642",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 71, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 70,
+        "clause_sha256": "4f96291006420c28c13ad8fd448720ca63430e04cb819640f2e89955463248f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-property-clause-7d4991c5486d",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Inserting and Replacing Content: the content property — normative clause 72, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-property",
+        "clause_index": 71,
+        "clause_sha256": "7d4991c5486d6d7e842b5a37ce07e2aba08aabd9a1907ec45e9f2d07532e2bc6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.accessibility",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "accessibility"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Accessibility of Generated Content.",
+      "locator": {
+        "section_id": "accessibility",
+        "text_sha256": "a5bfbd17aa026cce54211625e361a61f7a8d13ac631e189744a2bf0b8ee7d933"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.accessibility-clause-25125aa3b08e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.accessibility-clause-25125aa3b08e",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "accessibility"
+      ],
+      "behaviour": "Accessibility of Generated Content — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "accessibility",
+        "clause_index": 0,
+        "clause_sha256": "25125aa3b08ef5aa30d065626201464a7b17f123649338b80ae4ae8344ebc655"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.alt",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "alt"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alternative Text for Accessibility.",
+      "locator": {
+        "section_id": "alt",
+        "text_sha256": "331f69d852e013d10297342b45efd89090e970e3352b996abd6951e42fbe2070"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.alt-clause-b0cda517100d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.alt-clause-b0cda517100d",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "alt"
+      ],
+      "behaviour": "Alternative Text for Accessibility — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "alt",
+        "clause_index": 0,
+        "clause_sha256": "b0cda517100d1238643418b6751de9edba2fee1fbba0a792e2bd9efd45cf329e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-values",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Generated Content Values: the <content-list> type.",
+      "locator": {
+        "section_id": "content-values",
+        "text_sha256": "3af1bed3f34dffd7451371e3083040749ae370d68214a14fd985803e93ac617b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.strings",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "strings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Basic Strings: <string> and <attr()> values.",
+      "locator": {
+        "section_id": "strings",
+        "text_sha256": "1eb28dc88ee62539d0e6c880c6c07526926a8f0948432604e847c2c2e9833dda"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.content-uri",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-uri"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2D Images: <image> values.",
+      "locator": {
+        "section_id": "content-uri",
+        "text_sha256": "1fbc304dfc9aca4945f63686d945069828489f3c8e179a2b1ba4552e609a3864"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.content-uri-clause-98f004290024",
+        "css-content-3.content-uri-clause-53961f0b5f52",
+        "css-content-3.content-uri-clause-549ee313b049"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.content-uri-clause-98f004290024",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-uri"
+      ],
+      "behaviour": "2D Images: <image> values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-uri",
+        "clause_index": 1,
+        "clause_sha256": "98f0042900244bff0e732baf3d907134ad4a835edb35ed140fa281115461c2e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-uri-clause-53961f0b5f52",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-uri"
+      ],
+      "behaviour": "2D Images: <image> values — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-uri",
+        "clause_index": 2,
+        "clause_sha256": "53961f0b5f52aab13217dbcd3b4c872070019cd6d58aa10de17ebed08a154888"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-uri-clause-549ee313b049",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-uri"
+      ],
+      "behaviour": "2D Images: <image> values — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-uri",
+        "clause_index": 3,
+        "clause_sha256": "549ee313b049f82147b01e81a9d67244a9b52e802f51d0d63e8cdd0385a09583"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.element-content",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "element-content"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Elemental Content: the contents keyword.",
+      "locator": {
+        "section_id": "element-content",
+        "text_sha256": "085ff914cdf5caaa44dfc244ca0a6972c33af9bb05aa8b25c78fbe8543866e56"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.element-content-clause-938ab5095af7",
+        "css-content-3.element-content-clause-bdb7fbfcfa1a",
+        "css-content-3.element-content-clause-2fbc13aefff5",
+        "css-content-3.element-content-clause-6a3bfc8a6e59"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.element-content-clause-938ab5095af7",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "element-content"
+      ],
+      "behaviour": "Elemental Content: the contents keyword — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-content",
+        "clause_index": 3,
+        "clause_sha256": "938ab5095af73c78061d83c90727d0da3c37d43bf99ca218fb54122a6fb56c7b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.element-content-clause-bdb7fbfcfa1a",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "element-content"
+      ],
+      "behaviour": "Elemental Content: the contents keyword — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-content",
+        "clause_index": 13,
+        "clause_sha256": "bdb7fbfcfa1a02a3b4b49bb39ec59538bea6601fe108cdcd236631b1a149bbef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.element-content-clause-2fbc13aefff5",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "element-content"
+      ],
+      "behaviour": "Elemental Content: the contents keyword — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-content",
+        "clause_index": 15,
+        "clause_sha256": "2fbc13aefff5879c74c962ec7ba92f0dcacf54da3bfc4e4b1add333ed659b631"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.element-content-clause-6a3bfc8a6e59",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "element-content"
+      ],
+      "behaviour": "Elemental Content: the contents keyword — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-content",
+        "clause_index": 22,
+        "clause_sha256": "6a3bfc8a6e59d40a4d3c443fee5320fa421cd8c61dc682ff527c4ff8221ced95"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.quotes",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "quotes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Quotation Marks.",
+      "locator": {
+        "section_id": "quotes",
+        "text_sha256": "212f029a827122ae8df2e8efd588cad4446f8714f90613b15c3088b8fe63ebb5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.quotes-property",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "quotes-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Quotation Mark System: the quotes property.",
+      "locator": {
+        "section_id": "quotes-property",
+        "text_sha256": "974c0b0150e65dc800eb855d0141a43acf375718a6a85a3b05b38be21d05b59c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.quotes-property-clause-cca2516ebb1d",
+        "css-content-3.quotes-property-clause-4b8cefc02e15",
+        "css-content-3.quotes-property-clause-790981e77c6e",
+        "css-content-3.quotes-property-clause-48bbd2f28fd4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.quotes-property-clause-cca2516ebb1d",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "quotes-property"
+      ],
+      "behaviour": "Quotation Mark System: the quotes property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "quotes-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.quotes-property-clause-4b8cefc02e15",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "quotes-property"
+      ],
+      "behaviour": "Quotation Mark System: the quotes property — normative clause 59, located by its exact source hash.",
+      "locator": {
+        "section_id": "quotes-property",
+        "clause_index": 58,
+        "clause_sha256": "4b8cefc02e153377ecb4bc945a3cd214a7d53fd308ab81f9679a0f4ff2741433"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.quotes-property-clause-790981e77c6e",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "quotes-property"
+      ],
+      "behaviour": "Quotation Mark System: the quotes property — normative clause 68, located by its exact source hash.",
+      "locator": {
+        "section_id": "quotes-property",
+        "clause_index": 67,
+        "clause_sha256": "790981e77c6e15ce60f45b3cb5e224e6d5570de5946419c0db2a9247f1d92c3f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.quotes-property-clause-48bbd2f28fd4",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "quotes-property"
+      ],
+      "behaviour": "Quotation Mark System: the quotes property — normative clause 71, located by its exact source hash.",
+      "locator": {
+        "section_id": "quotes-property",
+        "clause_index": 70,
+        "clause_sha256": "48bbd2f28fd4641f505c90231152630bafd4e79e596090e4b116a7ecb48b2453"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.quote-values",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "quote-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inserting Quotation Marks: the *-quote keywords.",
+      "locator": {
+        "section_id": "quote-values",
+        "text_sha256": "fde144c2cba90e62566d5064d5d965f9edf67e3532f3316f30de130d1c24f403"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.quote-values-clause-5b2af87875d2",
+        "css-content-3.quote-values-clause-9dcc53d474b8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.quote-values-clause-5b2af87875d2",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "quote-values"
+      ],
+      "behaviour": "Inserting Quotation Marks: the *-quote keywords — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "quote-values",
+        "clause_index": 10,
+        "clause_sha256": "5b2af87875d28c112826674648087741778fd9f8d11d2e15083529ea445ad68b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.quote-values-clause-9dcc53d474b8",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "quote-values"
+      ],
+      "behaviour": "Inserting Quotation Marks: the *-quote keywords — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "quote-values",
+        "clause_index": 29,
+        "clause_sha256": "9dcc53d474b87097175ca196dc0ea5bb36fbbed6b7625d775049144c5f5b3822"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.leaders",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "leaders"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Leaders.",
+      "locator": {
+        "section_id": "leaders",
+        "text_sha256": "2392a15278cfb37f1cf5a70360cce4ccc9bcf4c140cff4c9ad18cf3a9d98216a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.leader-function",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "leader-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The leader() function.",
+      "locator": {
+        "section_id": "leader-function",
+        "text_sha256": "7cf0b53e3cec12ee02194034488a1fd83c4be14e43bf5aef28bb99fa539e36a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.leader-rules",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "leader-rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rendering leaders.",
+      "locator": {
+        "section_id": "leader-rules",
+        "text_sha256": "0f779054e30838271dd1da864585316117e4549cefaf92d8e392954f640c8f7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.leader-rules-clause-2b3b5ae51668",
+        "css-content-3.leader-rules-clause-92b6764c212a",
+        "css-content-3.leader-rules-clause-5ee30b5648b5",
+        "css-content-3.leader-rules-clause-ae9d95b1fc3e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.leader-rules-clause-2b3b5ae51668",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "leader-rules"
+      ],
+      "behaviour": "Rendering leaders — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "leader-rules",
+        "clause_index": 1,
+        "clause_sha256": "2b3b5ae51668940096b55731f31d0dd5c7a71c9238a50ba76bfcd305d3149305"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.leader-rules-clause-92b6764c212a",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "leader-rules"
+      ],
+      "behaviour": "Rendering leaders — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "leader-rules",
+        "clause_index": 3,
+        "clause_sha256": "92b6764c212a5b91a6ea3b595031894a3e81131864ab13d1096ff4e116950044"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.leader-rules-clause-5ee30b5648b5",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "leader-rules"
+      ],
+      "behaviour": "Rendering leaders — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "leader-rules",
+        "clause_index": 5,
+        "clause_sha256": "5ee30b5648b561fac5526732b37d0d2018405ae537ea4fd0246d9dd164706301"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.leader-rules-clause-ae9d95b1fc3e",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "leader-rules"
+      ],
+      "behaviour": "Rendering leaders — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "leader-rules",
+        "clause_index": 7,
+        "clause_sha256": "ae9d95b1fc3e69376b6544baf535c7d051591d9441cf3b36ff0e63243d5a06be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.leader-alignment",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "leader-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Procedure for rendering leaders.",
+      "locator": {
+        "section_id": "leader-alignment",
+        "text_sha256": "6a21a5552a08a7269aa77b96b3de7108871afd1bc8076fd6a4955b7a7ae5177c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.cross-references",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "cross-references"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cross References.",
+      "locator": {
+        "section_id": "cross-references",
+        "text_sha256": "109e730d2b03c01f16cf93ab56e4ac47195348d3a20c91f5db7650ad4ddfdce1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.target-counter",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "target-counter"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The target-counter() function.",
+      "locator": {
+        "section_id": "target-counter",
+        "text_sha256": "6cac39aa942478d1f71fb811b7cfa1ece84d50a30176229ff691acef05a16eff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.target-counter-clause-9e32c7fbef83",
+        "css-content-3.target-counter-clause-0174f6cfdfe3",
+        "css-content-3.target-counter-clause-3838bb5e44b5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.target-counter-clause-9e32c7fbef83",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "target-counter"
+      ],
+      "behaviour": "The target-counter() function — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "target-counter",
+        "clause_index": 1,
+        "clause_sha256": "9e32c7fbef8322b19351b7b9dacc83b7310d9ba7c64c726999abebacac69002a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.target-counter-clause-0174f6cfdfe3",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "target-counter"
+      ],
+      "behaviour": "The target-counter() function — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "target-counter",
+        "clause_index": 2,
+        "clause_sha256": "0174f6cfdfe3f86d990232e5b6726bc0e6cf9cdc02f640dcc5a227bcec26c393"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.target-counter-clause-3838bb5e44b5",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "target-counter"
+      ],
+      "behaviour": "The target-counter() function — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "target-counter",
+        "clause_index": 3,
+        "clause_sha256": "3838bb5e44b5c665f207e363af8f5bdba6184fc77a5e3f81c25316bdec09b126"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.target-counters",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "target-counters"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The target-counters() function.",
+      "locator": {
+        "section_id": "target-counters",
+        "text_sha256": "e46b264a263a18e80216fc3bad201d41a19459d327c69b9f01b32bea368d1ed9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.target-text",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "target-text"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The target-text() function.",
+      "locator": {
+        "section_id": "target-text",
+        "text_sha256": "0a5dae040f977a11929b3113396e725b08e76167a39b2676e9a36e6a6edb6635"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.named-strings",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "named-strings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Named Strings.",
+      "locator": {
+        "section_id": "named-strings",
+        "text_sha256": "2d33c228469559fd083d40db11686676a04de0663d62ff4fdb241a67e8d5bdbb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.string-set",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "string-set"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Naming Strings: the string-set property.",
+      "locator": {
+        "section_id": "string-set",
+        "text_sha256": "bdbca133acef089f5f2339e9f571380f187efeed17d0243364bf6a7d24add423"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.string-set-clause-cca2516ebb1d",
+        "css-content-3.string-set-clause-4b8cefc02e15",
+        "css-content-3.string-set-clause-5da841eeb982",
+        "css-content-3.string-set-clause-cfc15b5c6001",
+        "css-content-3.string-set-clause-cd769c444c9b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.string-set-clause-cca2516ebb1d",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "string-set"
+      ],
+      "behaviour": "Naming Strings: the string-set property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "string-set",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.string-set-clause-4b8cefc02e15",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "string-set"
+      ],
+      "behaviour": "Naming Strings: the string-set property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "string-set",
+        "clause_index": 17,
+        "clause_sha256": "4b8cefc02e153377ecb4bc945a3cd214a7d53fd308ab81f9679a0f4ff2741433"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.string-set-clause-5da841eeb982",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "string-set"
+      ],
+      "behaviour": "Naming Strings: the string-set property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "string-set",
+        "clause_index": 23,
+        "clause_sha256": "5da841eeb982eeb128f334221410f84494440ceb63a50c706faeefda993fef2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.string-set-clause-cfc15b5c6001",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "string-set"
+      ],
+      "behaviour": "Naming Strings: the string-set property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "string-set",
+        "clause_index": 26,
+        "clause_sha256": "cfc15b5c6001c35a8e8477f27febf1bb6aaf34ee835938ad3d80fbdfa1665436"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.string-set-clause-cd769c444c9b",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "string-set"
+      ],
+      "behaviour": "Naming Strings: the string-set property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "string-set",
+        "clause_index": 27,
+        "clause_sha256": "cd769c444c9bcaefdc3bb823d31e2b093cf77f36c418ddfc3ebf9f3a9a42ef7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.string-function",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "string-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inserting Named Strings: the string() function.",
+      "locator": {
+        "section_id": "string-function",
+        "text_sha256": "863f58bbb5b8076fb13ef8dc56fb0292bb19182bddf4fb3d090de67ac4555ce5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.string-function-clause-6a3be73a34a2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.string-function-clause-6a3be73a34a2",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "string-function"
+      ],
+      "behaviour": "Inserting Named Strings: the string() function — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "string-function",
+        "clause_index": 1,
+        "clause_sha256": "6a3be73a34a2ed413f0c157d19f7d8c23321030ea09996da50f257eb8d3b1240"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.content-function",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "content-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The content() function.",
+      "locator": {
+        "section_id": "content-function",
+        "text_sha256": "da5c90708e884a9614d778f26259989fe4e68b63c392fc4e7b4402602dbdc1bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.counters",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "counters"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Automatic Counters and Numbering.",
+      "locator": {
+        "section_id": "counters",
+        "text_sha256": "3259a7c54ef62fd5107b099711d73a888b526a11488240a7f3de1715b3a48772"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.counters-clause-1bd2b61580b7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.counters-clause-1bd2b61580b7",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "counters"
+      ],
+      "behaviour": "Automatic Counters and Numbering — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "counters",
+        "clause_index": 1,
+        "clause_sha256": "1bd2b61580b717e6f657db316a6af75fd0a0af07edc8ff3ebe2009c108f31233"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-generation",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-generation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bookmarks.",
+      "locator": {
+        "section_id": "bookmark-generation",
+        "text_sha256": "46c27319f8761d355c098e039be5f5f88e1fe22bf18f63d79fd7755b42e5e924"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.bookmark-generation-clause-c7e714fb340b",
+        "css-content-3.bookmark-generation-clause-0f33b7ed22d6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.bookmark-generation-clause-c7e714fb340b",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-generation"
+      ],
+      "behaviour": "Bookmarks — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-generation",
+        "clause_index": 1,
+        "clause_sha256": "c7e714fb340bcb3f0cf53c45d286e3f85ed393a4ef62bd57deedbf23a8526cf4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-generation-clause-0f33b7ed22d6",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-generation"
+      ],
+      "behaviour": "Bookmarks — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-generation",
+        "clause_index": 2,
+        "clause_sha256": "0f33b7ed22d600e8ab2dc1517ffb46ee4ce810028e40b004787fdc9ca88f56b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-level",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-level"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Setting a Bookmark: the bookmark-level property.",
+      "locator": {
+        "section_id": "bookmark-level",
+        "text_sha256": "fe910bdd39e52299adec3d09cbf51e01a5580974380c3f5e0f2c02ebf2b4849d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.bookmark-level-clause-68154d8f1684",
+        "css-content-3.bookmark-level-clause-cca2516ebb1d",
+        "css-content-3.bookmark-level-clause-473a90cc152b",
+        "css-content-3.bookmark-level-clause-dded592bf957",
+        "css-content-3.bookmark-level-clause-ef3ba9206aff",
+        "css-content-3.bookmark-level-clause-a678185a7853"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.bookmark-level-clause-68154d8f1684",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-level"
+      ],
+      "behaviour": "Setting a Bookmark: the bookmark-level property — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-level",
+        "clause_index": 0,
+        "clause_sha256": "68154d8f16848d8f5ca35c2a8237c1e64aa217ca92b42b7be01951464b7d906c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-level-clause-cca2516ebb1d",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-level"
+      ],
+      "behaviour": "Setting a Bookmark: the bookmark-level property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-level",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-level-clause-473a90cc152b",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-level"
+      ],
+      "behaviour": "Setting a Bookmark: the bookmark-level property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-level",
+        "clause_index": 19,
+        "clause_sha256": "473a90cc152bfebacf90400f2b84ff90019f4b7b2f5b7a37c347bcb7ac130f00"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-level-clause-dded592bf957",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-level"
+      ],
+      "behaviour": "Setting a Bookmark: the bookmark-level property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-level",
+        "clause_index": 23,
+        "clause_sha256": "dded592bf957f8616a6e58293f8ae680482417223ef44b25016c0fa2873a4c5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-level-clause-ef3ba9206aff",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-level"
+      ],
+      "behaviour": "Setting a Bookmark: the bookmark-level property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-level",
+        "clause_index": 24,
+        "clause_sha256": "ef3ba9206aff1a3bd417d70d2de97b769110dad298b1de6713e0ed8521d4bbe7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-level-clause-a678185a7853",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-level"
+      ],
+      "behaviour": "Setting a Bookmark: the bookmark-level property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-level",
+        "clause_index": 25,
+        "clause_sha256": "a678185a785352be92c947f2535709b9c97609d64162b6f1f39dc24e16474036"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-label",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-label"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Labelling a Bookmark: the bookmark-label property.",
+      "locator": {
+        "section_id": "bookmark-label",
+        "text_sha256": "9ab6303ae76d1ecc99b7e5016d44fb129daf680d0724e304eba63b9122043b24"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.bookmark-label-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.bookmark-label-clause-cca2516ebb1d",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-label"
+      ],
+      "behaviour": "Labelling a Bookmark: the bookmark-label property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-label",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-state",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-state"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Initial Bookmark Toggle State: the bookmark-state property.",
+      "locator": {
+        "section_id": "bookmark-state",
+        "text_sha256": "1226bf41585bd4e6bd5a0dc87e48b3a307e0126a6bce1acc45383fac4c721dfb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.bookmark-state-clause-37ae3d917eea",
+        "css-content-3.bookmark-state-clause-cca2516ebb1d",
+        "css-content-3.bookmark-state-clause-e835c4b08b75",
+        "css-content-3.bookmark-state-clause-eea9e0e0d2f7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.bookmark-state-clause-37ae3d917eea",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-state"
+      ],
+      "behaviour": "Initial Bookmark Toggle State: the bookmark-state property — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-state",
+        "clause_index": 0,
+        "clause_sha256": "37ae3d917eea0dde0848e554b84c3c2d55bd1b63c853a2d7a75ed9de86b2e2e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-state-clause-cca2516ebb1d",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-state"
+      ],
+      "behaviour": "Initial Bookmark Toggle State: the bookmark-state property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-state",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-state-clause-e835c4b08b75",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-state"
+      ],
+      "behaviour": "Initial Bookmark Toggle State: the bookmark-state property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-state",
+        "clause_index": 19,
+        "clause_sha256": "e835c4b08b753f6dc152d9c5470dbdc6b75a5e202484dbde3e6b930078b683d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.bookmark-state-clause-eea9e0e0d2f7",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "bookmark-state"
+      ],
+      "behaviour": "Initial Bookmark Toggle State: the bookmark-state property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "bookmark-state",
+        "clause_index": 23,
+        "clause_sha256": "eea9e0e0d2f70b29d2da74145e9bc61c822b5b9458b73e83d20756a04d2758ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.privacy",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.security",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.w3c-conformance",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.w3c-conventions",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.w3c-conventions-clause-5c98c879f070",
+        "css-content-3.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.w3c-conventions-clause-5c98c879f070",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.w3c-conformance-classes",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.w3c-conformance-classes-clause-ff408372426c",
+        "css-content-3.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.w3c-partial",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.w3c-partial-clause-ef40c4aab200",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.w3c-conform-future-proofing",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.w3c-testing",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.w3c-testing-clause-1e0fff369221",
+        "css-content-3.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.w3c-testing-clause-1e0fff369221",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.w3c-testing-clause-ae1210cf9643",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.property-index",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "1a454fca2c360aa04b6b3e805bb6e0f38b5772e727b4ae5d1a16e9efa2cb8661"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-content-3.property-index-clause-4b59fe755d34"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.property-index-clause-4b59fe755d34",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 24,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-content-3.issues-index",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "cf91953e856c0a8ea8755edd83d4786ecc713b8810e0d61070555732e7f68a55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.title",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Generated Content Module Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "ea4729ed108bfb6d068c16c28366591ca0da52ebe1eb06cb788f08158d1efbe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.abstract",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "ab31bc9b06fe1214d846b95a02af1a984fcf619554a858ba5348ed9bea3c45b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.sotd",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "887b4183938d956361c3292ffb1336ebb29f40268bc1eb36fa8bc059a3d032cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.contents",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "b049b26f06bc0e39fa8bd19d536b3ef5de30315de75278a59d110c3856f2cb63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.changes",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 4. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "c05ba014afd1762688ca87ed40d4bdfd50a57125c83124ce79227c3a265752bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.acknowledgements",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgements.",
+      "locator": {
+        "section_id": "acknowledgements",
+        "text_sha256": "5729df8d2ad312e1c3a928f352144b43d12fac2ed1696c39ad0bb67bc8652a36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.index",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.index-defined-here",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "1230d6d6d3fb4e56d2982907701bf3208dcefde7a44d1f14608d52433f291d91"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.index-defined-elsewhere",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "56fc953a3eae647b96ee09e89cfa4881fec4120dafe755a30859f4b5b784fb1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.references",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.normative",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "786855465cd64672e804562be0f6e0f3b9b695624d1796379d2ecf50766a3fc0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-content-3.informative",
+      "family": "css-content-3",
+      "source_id": "css-content-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "9628678a732e36c4c9c4b1ace1ee5875b966c9e05870f164b72def01acce0315"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

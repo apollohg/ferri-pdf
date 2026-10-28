@@ -1,0 +1,4582 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-cff2.cff2-compact-font-format-cff-version-2",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "cff2--compact-font-format-cff-version-2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CFF2 — Compact Font Format (CFF) Version 2.",
+      "locator": {
+        "section_id": "cff2--compact-font-format-cff-version-2",
+        "text_sha256": "214e1897aecdbc0fa38663f3c48b975638d01ca841f95852449b42b2f24c1245"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.introduction",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "fe7a3aa4ef6c98e5c91144fb4f0c5fedbf7c5c5378884e0fa676290952ca4494"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.organization-of-the-cff2-table",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "organization-of-the-cff2-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Organization of the CFF2 table.",
+      "locator": {
+        "section_id": "organization-of-the-cff2-table",
+        "text_sha256": "a70d0e08ecfe2df4eda102555e2fd90e20627dee4f74142759c38c3d7633c695"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.organization-of-the-cff2-table-clause-ec2e109cf22b",
+        "opentype-cff2.organization-of-the-cff2-table-clause-5ed9444552cf",
+        "opentype-cff2.organization-of-the-cff2-table-clause-2143ae63807b",
+        "opentype-cff2.organization-of-the-cff2-table-clause-01aa169f82e2",
+        "opentype-cff2.organization-of-the-cff2-table-clause-4850b174b713"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.organization-of-the-cff2-table-clause-ec2e109cf22b",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "organization-of-the-cff2-table"
+      ],
+      "behaviour": "Organization of the CFF2 table — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "organization-of-the-cff2-table",
+        "clause_index": 0,
+        "clause_sha256": "ec2e109cf22bd8ce652858cd9c8b137c17aa81834c9dd772dc1d643c98b5ae4b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.organization-of-the-cff2-table-clause-5ed9444552cf",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "organization-of-the-cff2-table"
+      ],
+      "behaviour": "Organization of the CFF2 table — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "organization-of-the-cff2-table",
+        "clause_index": 9,
+        "clause_sha256": "5ed9444552cf489e6e47a4669de13b71fb76788f037137a06552dfa4e7068522"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.organization-of-the-cff2-table-clause-2143ae63807b",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "organization-of-the-cff2-table"
+      ],
+      "behaviour": "Organization of the CFF2 table — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "organization-of-the-cff2-table",
+        "clause_index": 14,
+        "clause_sha256": "2143ae63807b9e0ce369d20a7fff561ca69c9b53b12d6c8a5e94076a0d747cae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.organization-of-the-cff2-table-clause-01aa169f82e2",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "organization-of-the-cff2-table"
+      ],
+      "behaviour": "Organization of the CFF2 table — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "organization-of-the-cff2-table",
+        "clause_index": 15,
+        "clause_sha256": "01aa169f82e2922a0d0ab1122e94bdebcdde6dbce22789f45c73f72a24ceba01"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.organization-of-the-cff2-table-clause-4850b174b713",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "organization-of-the-cff2-table"
+      ],
+      "behaviour": "Organization of the CFF2 table — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "organization-of-the-cff2-table",
+        "clause_index": 17,
+        "clause_sha256": "4850b174b713d88cfc63de107830d5388929020e78abc91fc19bba7a6821625f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.encoded-numbers",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "encoded-numbers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Encoded numbers.",
+      "locator": {
+        "section_id": "encoded-numbers",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.encoded-number-formats",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "encoded-number-formats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Encoded number formats.",
+      "locator": {
+        "section_id": "encoded-number-formats",
+        "text_sha256": "10cbc8101329641985b406d66cf5d7d822aa8954cd7b722e0ae605d6fc4e6710"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.encoded-number-formats-clause-5d8c29052dd0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.encoded-number-formats-clause-5d8c29052dd0",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "encoded-number-formats"
+      ],
+      "behaviour": "Encoded number formats — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "encoded-number-formats",
+        "clause_index": 46,
+        "clause_sha256": "5d8c29052dd0a1fd6f9780b9cf068dc1535c70515d7731f9937bf0fac06bdfbc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.binary-coded-decimal",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "binary-coded-decimal"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Binary coded decimal.",
+      "locator": {
+        "section_id": "binary-coded-decimal",
+        "text_sha256": "c5f5e26a85d5d9849fd95372ef386b8055f3b18ff9668edbfca9e282b407e7db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.binary-coded-decimal-clause-adbf282622e0",
+        "opentype-cff2.binary-coded-decimal-clause-79370dbd5d89",
+        "opentype-cff2.binary-coded-decimal-clause-f1234d75178d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.binary-coded-decimal-clause-adbf282622e0",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "binary-coded-decimal"
+      ],
+      "behaviour": "Binary coded decimal — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "binary-coded-decimal",
+        "clause_index": 1,
+        "clause_sha256": "adbf282622e099d75d991cb8b417bb5aa288ab15f6e95b58e1d661cd0c5f3a1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.binary-coded-decimal-clause-79370dbd5d89",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "binary-coded-decimal"
+      ],
+      "behaviour": "Binary coded decimal — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "binary-coded-decimal",
+        "clause_index": 27,
+        "clause_sha256": "79370dbd5d89d4ad211f387d52e93c6a34a0e708ccebdd8c1957659208c27713"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.binary-coded-decimal-clause-f1234d75178d",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "binary-coded-decimal"
+      ],
+      "behaviour": "Binary coded decimal — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "binary-coded-decimal",
+        "clause_index": 46,
+        "clause_sha256": "f1234d75178d892a133a410355a5a990cf75d2f33eba25d575943d4df632f3a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.decoding-dict-and-charstring-data-using-a-stack",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "decoding-dict-and-charstring-data-using-a-stack"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Decoding DICT and CharString data using a stack.",
+      "locator": {
+        "section_id": "decoding-dict-and-charstring-data-using-a-stack",
+        "text_sha256": "8053df75f9f32f12f678b1ca6a5419c753d5eccee0cf352f11c95152e532db2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.decoding-dict-and-charstring-data-using-a-stack-clause-208f59ecc0b8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.decoding-dict-and-charstring-data-using-a-stack-clause-208f59ecc0b8",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "decoding-dict-and-charstring-data-using-a-stack"
+      ],
+      "behaviour": "Decoding DICT and CharString data using a stack — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "decoding-dict-and-charstring-data-using-a-stack",
+        "clause_index": 4,
+        "clause_sha256": "208f59ecc0b898208f3401f4e6bd97c81e68b0c77619ef95656cef7a5db938df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.stack-based-cff2-decoding",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "stack-based-cff2-decoding"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stack-based CFF2 decoding.",
+      "locator": {
+        "section_id": "stack-based-cff2-decoding",
+        "text_sha256": "da29b1eb3d24c24da24dd8e35d3e45f1cb78578ba2645bb2090724b9291f12c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.stack-based-cff2-decoding-clause-193a738ba5a6",
+        "opentype-cff2.stack-based-cff2-decoding-clause-5046991aa734",
+        "opentype-cff2.stack-based-cff2-decoding-clause-3153049be336"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.stack-based-cff2-decoding-clause-193a738ba5a6",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "stack-based-cff2-decoding"
+      ],
+      "behaviour": "Stack-based CFF2 decoding — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "stack-based-cff2-decoding",
+        "clause_index": 0,
+        "clause_sha256": "193a738ba5a62a3a665736cf6a6f27593a4b7bcace22e1a883863fd61b29d0d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.stack-based-cff2-decoding-clause-5046991aa734",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "stack-based-cff2-decoding"
+      ],
+      "behaviour": "Stack-based CFF2 decoding — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "stack-based-cff2-decoding",
+        "clause_index": 5,
+        "clause_sha256": "5046991aa7349ec106cf0c01e3e839a1fd19b12327dc930b775f409b2808502f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.stack-based-cff2-decoding-clause-3153049be336",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "stack-based-cff2-decoding"
+      ],
+      "behaviour": "Stack-based CFF2 decoding — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "stack-based-cff2-decoding",
+        "clause_index": 6,
+        "clause_sha256": "3153049be336b070481e9c049be871ac08585b64b45f3756f70aaa1306d8c34e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.stack-notation",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "stack-notation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stack notation.",
+      "locator": {
+        "section_id": "stack-notation",
+        "text_sha256": "07ac980861cd5626d07ee5c66d232392b0f92c4f30140a949ab54c7ddd2cf0c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.stack-notation-clause-c47c77579c9b",
+        "opentype-cff2.stack-notation-clause-8bd76a9f8ca3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.stack-notation-clause-c47c77579c9b",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "stack-notation"
+      ],
+      "behaviour": "Stack notation — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "stack-notation",
+        "clause_index": 22,
+        "clause_sha256": "c47c77579c9be8753507eb41858af6a1654540834ea8bdf4dbbb70dbe1690db4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.stack-notation-clause-8bd76a9f8ca3",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "stack-notation"
+      ],
+      "behaviour": "Stack notation — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "stack-notation",
+        "clause_index": 23,
+        "clause_sha256": "8bd76a9f8ca3680f7c2b503731be851dac861f9ff0a87a3a02df8d9399997492"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.common-formats-dict-and-index",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "common-formats-dict-and-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Common formats: DICT and INDEX.",
+      "locator": {
+        "section_id": "common-formats-dict-and-index",
+        "text_sha256": "f85f84181d8700a8631638cbdf03e2d59173088a3672b235ace7ea195ad52861"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.dict-data",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "dict-data"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in DICT data.",
+      "locator": {
+        "section_id": "dict-data",
+        "text_sha256": "6560fb5029834d147d68eca882f517c49c316f5c80a58d49de80bf205021f6d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.dict-data-clause-a0338571821b",
+        "opentype-cff2.dict-data-clause-e3d260047a1d",
+        "opentype-cff2.dict-data-clause-2a48e27f155a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.dict-data-clause-a0338571821b",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "dict-data"
+      ],
+      "behaviour": "DICT data — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "dict-data",
+        "clause_index": 1,
+        "clause_sha256": "a0338571821b2a5a98adb13a69d044a012c63d7891c85fca9a1a7f85d86070a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.dict-data-clause-e3d260047a1d",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "dict-data"
+      ],
+      "behaviour": "DICT data — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "dict-data",
+        "clause_index": 6,
+        "clause_sha256": "e3d260047a1d25c3e9c158bfe7c22e819531d60a8ffe99571fae231ebea04194"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.dict-data-clause-2a48e27f155a",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "dict-data"
+      ],
+      "behaviour": "DICT data — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "dict-data",
+        "clause_index": 8,
+        "clause_sha256": "2a48e27f155adf02914bc39a671b5eee437dda6eb589166a55bc9d489e6441ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.header",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Header.",
+      "locator": {
+        "section_id": "header",
+        "text_sha256": "0be0fe97284a121123952c1b9d4a31203182add4bf3d67c316ab308bc8333aab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.header-clause-617154d53c05",
+        "opentype-cff2.header-clause-924005d34ac3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.header-clause-617154d53c05",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "header"
+      ],
+      "behaviour": "Header — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "header",
+        "clause_index": 17,
+        "clause_sha256": "617154d53c055985474bc3a0ea7bd3fcf7ed3136150fde0ef6acc4628cff08d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.header-clause-924005d34ac3",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "header"
+      ],
+      "behaviour": "Header — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "header",
+        "clause_index": 18,
+        "clause_sha256": "924005d34ac354dfe22f3834b8d051c782baa3bc480be1ab546b0938eb54910c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.topdict",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "topdict"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in TopDICT.",
+      "locator": {
+        "section_id": "topdict",
+        "text_sha256": "34912b920e1c29bdee0eaabddf4ec1cd6ce6ac3686c17c70f84907fe5d295376"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.topdict-operator-summary",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "topdict-operator-summary"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in TopDICT operator summary.",
+      "locator": {
+        "section_id": "topdict-operator-summary",
+        "text_sha256": "51caafb6500e65f0642e2c8b7e420a333cfb9a9cd74d3a0fe5db24008e667d34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.topdict-operator-summary-clause-c50135630d1a",
+        "opentype-cff2.topdict-operator-summary-clause-4850b174b713"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.topdict-operator-summary-clause-c50135630d1a",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "topdict-operator-summary"
+      ],
+      "behaviour": "TopDICT operator summary — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "topdict-operator-summary",
+        "clause_index": 0,
+        "clause_sha256": "c50135630d1af83f7120849f5e02903d6b586c8be16b8e864501e4108aebb9b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.topdict-operator-summary-clause-4850b174b713",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "topdict-operator-summary"
+      ],
+      "behaviour": "TopDICT operator summary — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "topdict-operator-summary",
+        "clause_index": 4,
+        "clause_sha256": "4850b174b713d88cfc63de107830d5388929020e78abc91fc19bba7a6821625f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.topdict-operator-specifications",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "topdict-operator-specifications"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in TopDICT operator specifications.",
+      "locator": {
+        "section_id": "topdict-operator-specifications",
+        "text_sha256": "7fe756f973173902f761448e6d9567502008d8855b0a8d9dbc0c6f73f68d5edc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.topdict-operator-specifications-clause-4850b174b713",
+        "opentype-cff2.topdict-operator-specifications-clause-0fea56cd9943",
+        "opentype-cff2.topdict-operator-specifications-clause-a907bb9b983d",
+        "opentype-cff2.topdict-operator-specifications-clause-6b80701fe7bb",
+        "opentype-cff2.topdict-operator-specifications-clause-9db873687f73"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.topdict-operator-specifications-clause-4850b174b713",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "topdict-operator-specifications"
+      ],
+      "behaviour": "TopDICT operator specifications — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "topdict-operator-specifications",
+        "clause_index": 11,
+        "clause_sha256": "4850b174b713d88cfc63de107830d5388929020e78abc91fc19bba7a6821625f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.topdict-operator-specifications-clause-0fea56cd9943",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "topdict-operator-specifications"
+      ],
+      "behaviour": "TopDICT operator specifications — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "topdict-operator-specifications",
+        "clause_index": 22,
+        "clause_sha256": "0fea56cd99432637d7f0b49b0ccaa7c623b7f7244298df2394c7a53219159fa1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.topdict-operator-specifications-clause-a907bb9b983d",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "topdict-operator-specifications"
+      ],
+      "behaviour": "TopDICT operator specifications — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "topdict-operator-specifications",
+        "clause_index": 44,
+        "clause_sha256": "a907bb9b983d997f64cfb423b3f47c090795c6eb4d6b66524436c7a983057a04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.topdict-operator-specifications-clause-6b80701fe7bb",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "topdict-operator-specifications"
+      ],
+      "behaviour": "TopDICT operator specifications — normative clause 56, located by its exact source hash.",
+      "locator": {
+        "section_id": "topdict-operator-specifications",
+        "clause_index": 55,
+        "clause_sha256": "6b80701fe7bbfdce8a7bd032a56f0a701c3b25d2553582c84ddeac5ba7e95a38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.topdict-operator-specifications-clause-9db873687f73",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "topdict-operator-specifications"
+      ],
+      "behaviour": "TopDICT operator specifications — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "topdict-operator-specifications",
+        "clause_index": 57,
+        "clause_sha256": "9db873687f73a740ecac743510b4b09c5d978778a12eac68cdd7158cae976d94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.fontdictindex-fontdictselect-and-fontdict",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fontdictindex-fontdictselect-and-fontdict"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in FontDICTINDEX, FontDICTSelect and FontDICT.",
+      "locator": {
+        "section_id": "fontdictindex-fontdictselect-and-fontdict",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.overview",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overview.",
+      "locator": {
+        "section_id": "overview",
+        "text_sha256": "5d7977c51fb9cb24ce749268a781b3fe18e2ec3369893639b36fa91319a94692"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.fontdictindex",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fontdictindex"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in FontDICTINDEX.",
+      "locator": {
+        "section_id": "fontdictindex",
+        "text_sha256": "74649d74c6b37c2a8a53e73e22472b6d2aee5f019c259060ae814559d58a7056"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.fontdictindex-clause-7acb120fe041",
+        "opentype-cff2.fontdictindex-clause-fc3a1b5c3982"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.fontdictindex-clause-7acb120fe041",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fontdictindex"
+      ],
+      "behaviour": "FontDICTINDEX — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "fontdictindex",
+        "clause_index": 0,
+        "clause_sha256": "7acb120fe041b329f65dd2ef10a65e8a68afc66dfcdfc46ebfcd006c4a25a40f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.fontdictindex-clause-fc3a1b5c3982",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fontdictindex"
+      ],
+      "behaviour": "FontDICTINDEX — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "fontdictindex",
+        "clause_index": 1,
+        "clause_sha256": "fc3a1b5c39826bba9296dc93cabbc1b049ec3a535f7140c505095536ba3b312c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.fontdictselect",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fontdictselect"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in FontDICTSelect.",
+      "locator": {
+        "section_id": "fontdictselect",
+        "text_sha256": "4bce5c29e3f3b12a57747da91eb37a3f9aae554736cf901c07796aaab1f50294"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.fontdictselect-clause-2620458783dc",
+        "opentype-cff2.fontdictselect-clause-2fd838abc485",
+        "opentype-cff2.fontdictselect-clause-e78d7be0b9db"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.fontdictselect-clause-2620458783dc",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fontdictselect"
+      ],
+      "behaviour": "FontDICTSelect — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "fontdictselect",
+        "clause_index": 0,
+        "clause_sha256": "2620458783dc009f39648d9faed9783ac6df9b1614ce7e046cc770b5a1fcfb86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.fontdictselect-clause-2fd838abc485",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fontdictselect"
+      ],
+      "behaviour": "FontDICTSelect — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "fontdictselect",
+        "clause_index": 13,
+        "clause_sha256": "2fd838abc4855594f28f1e2f29f10d536a2b8c50c4950f30fb199e114057858a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.fontdictselect-clause-e78d7be0b9db",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fontdictselect"
+      ],
+      "behaviour": "FontDICTSelect — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "fontdictselect",
+        "clause_index": 40,
+        "clause_sha256": "e78d7be0b9dbb9c4f49a7bbe6b4bd955cf45e618aae6636d1f0374f6c5a9506a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.fontdict",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fontdict"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in FontDICT.",
+      "locator": {
+        "section_id": "fontdict",
+        "text_sha256": "ee2ccffbeabcdea0156b78203e26acd2c523a4262d0b3f93bb4e19a4a5e297b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.fontdict-clause-eff5784be52b",
+        "opentype-cff2.fontdict-clause-13dcc0e02273"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.fontdict-clause-eff5784be52b",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fontdict"
+      ],
+      "behaviour": "FontDICT — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "fontdict",
+        "clause_index": 9,
+        "clause_sha256": "eff5784be52bf494f80de436e988e68133963a39ebca6c7687d0e402cada456e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.fontdict-clause-13dcc0e02273",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fontdict"
+      ],
+      "behaviour": "FontDICT — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "fontdict",
+        "clause_index": 11,
+        "clause_sha256": "13dcc0e02273ee1789b593514c3b164c97a2ab7ce5ac48437c41d11187a938c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in PrivateDICT.",
+      "locator": {
+        "section_id": "privatedict",
+        "text_sha256": "4617f1303d3da661bd591423f880068350575011b8658baaaf473169d50cbdf7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.privatedict-clause-f108f9253cd3",
+        "opentype-cff2.privatedict-clause-b4c31e951226"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.privatedict-clause-f108f9253cd3",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict"
+      ],
+      "behaviour": "PrivateDICT — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict",
+        "clause_index": 1,
+        "clause_sha256": "f108f9253cd35847a816a4b5a77c0315d3f36ab0e3c4a18dd3767cc5171f5aee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-clause-b4c31e951226",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict"
+      ],
+      "behaviour": "PrivateDICT — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict",
+        "clause_index": 2,
+        "clause_sha256": "b4c31e9512268528d71ada510735f0e67ac6da6cba59cb84e0abe8ada7d589a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-operator-summary",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-operator-summary"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in PrivateDICT operator summary.",
+      "locator": {
+        "section_id": "privatedict-operator-summary",
+        "text_sha256": "b3e2f9c201e18b51474c34b35342a71508fdbae9d2d5a0b746566cee975b33c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.privatedict-subroutine-operator",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-subroutine-operator"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in PrivateDICT subroutine operator.",
+      "locator": {
+        "section_id": "privatedict-subroutine-operator",
+        "text_sha256": "1d018407876157a062133e722677fc47b99b1047acb9769c3e920c13a7987c0b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.privatedict-subroutine-operator-clause-0824f9293762"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.privatedict-subroutine-operator-clause-0824f9293762",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-subroutine-operator"
+      ],
+      "behaviour": "PrivateDICT subroutine operator — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-subroutine-operator",
+        "clause_index": 11,
+        "clause_sha256": "0824f92937626c9cb085e4b3afb9da5338c272a6262cefdd24e94fc6d6c965dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-variation-operators",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-variation-operators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in PrivateDICT variation operators.",
+      "locator": {
+        "section_id": "privatedict-variation-operators",
+        "text_sha256": "6c30e6793a4c1bda888f80b650648b817434fb04197fe8e285bf5bcf0cfbbec7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.privatedict-variation-operators-clause-b60e6858b72e",
+        "opentype-cff2.privatedict-variation-operators-clause-eda8cf6e1a87"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.privatedict-variation-operators-clause-b60e6858b72e",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-variation-operators"
+      ],
+      "behaviour": "PrivateDICT variation operators — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-variation-operators",
+        "clause_index": 25,
+        "clause_sha256": "b60e6858b72e0eaa7ead6d0a8e77c15d005f0236d51588450fbdd607c969d111"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-variation-operators-clause-eda8cf6e1a87",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-variation-operators"
+      ],
+      "behaviour": "PrivateDICT variation operators — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-variation-operators",
+        "clause_index": 30,
+        "clause_sha256": "eda8cf6e1a872fae01a3bfc5edd383a2a66ce93c98aff2ada456eb2bc826e168"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in PrivateDICT hinting operators.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "text_sha256": "73b727433a9e5ca417b5cf6690a6149084077f4a8bdc26346ca736eb7d398628"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.privatedict-hinting-operators-clause-3dda031743dc",
+        "opentype-cff2.privatedict-hinting-operators-clause-d2a22cc76289",
+        "opentype-cff2.privatedict-hinting-operators-clause-c03d898c39bf",
+        "opentype-cff2.privatedict-hinting-operators-clause-579c57f13b7b",
+        "opentype-cff2.privatedict-hinting-operators-clause-85b936cfcd7d",
+        "opentype-cff2.privatedict-hinting-operators-clause-d548063b41b6",
+        "opentype-cff2.privatedict-hinting-operators-clause-4fff2d1e8c27",
+        "opentype-cff2.privatedict-hinting-operators-clause-30df284d00d2",
+        "opentype-cff2.privatedict-hinting-operators-clause-65094d7677cd",
+        "opentype-cff2.privatedict-hinting-operators-clause-37d46688e2c8",
+        "opentype-cff2.privatedict-hinting-operators-clause-acca6928cb5f",
+        "opentype-cff2.privatedict-hinting-operators-clause-c702ad74fd32",
+        "opentype-cff2.privatedict-hinting-operators-clause-b24ae953100f",
+        "opentype-cff2.privatedict-hinting-operators-clause-757b77d547a0",
+        "opentype-cff2.privatedict-hinting-operators-clause-7c3bb0977947"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-3dda031743dc",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 15,
+        "clause_sha256": "3dda031743dc2db07db153585f55c18cf75a17e295980efb448509b66d559985"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-d2a22cc76289",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 18,
+        "clause_sha256": "d2a22cc76289f6925ab65b5e744bbb4b341960824455970b643f7003811540ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-c03d898c39bf",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 19,
+        "clause_sha256": "c03d898c39bf1f93146568850afb4fed7be7bf5d9564037a8184ccae9f8719a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-579c57f13b7b",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 41,
+        "clause_sha256": "579c57f13b7bb1327481570bb4b232dfe9cd2eee50c8dc4d2e5b46f3cf8c8251"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-85b936cfcd7d",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 60,
+        "clause_sha256": "85b936cfcd7d0f3c85214d4bfb4652f665022bce4699f1ef18e837cef0fb9da5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-d548063b41b6",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 96, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 95,
+        "clause_sha256": "d548063b41b67e0e7e570f583fd71c79ec233caa92285203ee4262f249b3b4ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-4fff2d1e8c27",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 97, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 96,
+        "clause_sha256": "4fff2d1e8c276ce4a19fc1365415e6a32d1f23ce865e770734e702859ed35004"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-30df284d00d2",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 115, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 114,
+        "clause_sha256": "30df284d00d2a23ba3ee37574860923bf5c884d8bb29f2a8f9cb455f1abb0400"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-65094d7677cd",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 132, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 131,
+        "clause_sha256": "65094d7677cde4ecde237c107fcc7a54b3297c69a5c87e58477aebe61616bbfe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-37d46688e2c8",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 133, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 132,
+        "clause_sha256": "37d46688e2c8d327b96a4a6bdba2562f7f9100f6f59e12e178f94931de257e7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-acca6928cb5f",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 188, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 187,
+        "clause_sha256": "acca6928cb5fdaaa0a9165bbbfc25a580b8a65b90afefd8c8fabd27994d5b672"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-c702ad74fd32",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 189, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 188,
+        "clause_sha256": "c702ad74fd3257ad0758cafba59cdba501ddf5a8a6b5f959feca83aed6582c67"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-b24ae953100f",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 190, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 189,
+        "clause_sha256": "b24ae953100fe5e1e1ca32de8d19e291b0f99dbd50da09c5de1f41b45f673599"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-757b77d547a0",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 191, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 190,
+        "clause_sha256": "757b77d547a0ba6fa2d0ed57199855c12c4e95d072ecae9bd00cf062f6ada636"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.privatedict-hinting-operators-clause-7c3bb0977947",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "privatedict-hinting-operators"
+      ],
+      "behaviour": "PrivateDICT hinting operators — normative clause 213, located by its exact source hash.",
+      "locator": {
+        "section_id": "privatedict-hinting-operators",
+        "clause_index": 212,
+        "clause_sha256": "7c3bb0977947d456b5ac6d654bf55a67da659032062b827faff3b1741362e83f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.operator-ordering-restrictions",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "operator-ordering-restrictions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Operator ordering restrictions.",
+      "locator": {
+        "section_id": "operator-ordering-restrictions",
+        "text_sha256": "7e15edb14d90b1b30795bb99157753966f482e65dfa212eebfe2f2bc5890e2f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.operator-ordering-restrictions-clause-3081f18ed4d9",
+        "opentype-cff2.operator-ordering-restrictions-clause-e3e277eab95b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.operator-ordering-restrictions-clause-3081f18ed4d9",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "operator-ordering-restrictions"
+      ],
+      "behaviour": "Operator ordering restrictions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "operator-ordering-restrictions",
+        "clause_index": 0,
+        "clause_sha256": "3081f18ed4d96573a8f978b2eb86841c517a3f8778a68b216f07312f0d721bd3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.operator-ordering-restrictions-clause-e3e277eab95b",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "operator-ordering-restrictions"
+      ],
+      "behaviour": "Operator ordering restrictions — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "operator-ordering-restrictions",
+        "clause_index": 1,
+        "clause_sha256": "e3e277eab95b6c4087cf9d00b2e469e2f1d9ad10820ed0222d79ab67670f73cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CharString.",
+      "locator": {
+        "section_id": "charstring",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.overview-1",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "overview-1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overview.",
+      "locator": {
+        "section_id": "overview-1",
+        "text_sha256": "d5552f63c7360b253e0bb2bb3ce974303268c89d039e596ec1064ebb04cb951a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.charstringindex",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstringindex"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CharStringINDEX.",
+      "locator": {
+        "section_id": "charstringindex",
+        "text_sha256": "af7f0f379261086c80b9aab42a4b1e2bc9da83632a2759f3eb2903eda5625582"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.charstringindex-clause-194378ea3e8c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.charstringindex-clause-194378ea3e8c",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstringindex"
+      ],
+      "behaviour": "CharStringINDEX — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstringindex",
+        "clause_index": 0,
+        "clause_sha256": "194378ea3e8c6f846191e0da1e543ca63b12f5e6d2b4f34bae3d1d34c64599ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-concepts",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-concepts"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CharString concepts.",
+      "locator": {
+        "section_id": "charstring-concepts",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.hints",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "hints"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Hints.",
+      "locator": {
+        "section_id": "hints",
+        "text_sha256": "2e55e65877097951f02c84f53bc8462383974d274fcd73c6d8600c8198830db8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.hints-clause-6f3af04327f7",
+        "opentype-cff2.hints-clause-d7c7957e8325",
+        "opentype-cff2.hints-clause-726759f22db9",
+        "opentype-cff2.hints-clause-684151489fde",
+        "opentype-cff2.hints-clause-f076f7186dd3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.hints-clause-6f3af04327f7",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "hints"
+      ],
+      "behaviour": "Hints — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "hints",
+        "clause_index": 2,
+        "clause_sha256": "6f3af04327f7714da1cf60f21772617647681bf3cc961c34e24fe2a8277ba0f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.hints-clause-d7c7957e8325",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "hints"
+      ],
+      "behaviour": "Hints — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "hints",
+        "clause_index": 10,
+        "clause_sha256": "d7c7957e8325b2caf8d56bba1b20c4ca5eb0b6b078d3e9fba5de1a4652feda37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.hints-clause-726759f22db9",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "hints"
+      ],
+      "behaviour": "Hints — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "hints",
+        "clause_index": 13,
+        "clause_sha256": "726759f22db9fa197d25250bc5d22e7c3939fc08294e6396e7467410bd30f4a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.hints-clause-684151489fde",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "hints"
+      ],
+      "behaviour": "Hints — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "hints",
+        "clause_index": 22,
+        "clause_sha256": "684151489fde3dd80698916d84a807f69de64827c30e552f4484c87d825d3287"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.hints-clause-f076f7186dd3",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "hints"
+      ],
+      "behaviour": "Hints — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "hints",
+        "clause_index": 38,
+        "clause_sha256": "f076f7186dd3b20bae2dcb45321b892d3654f176e594843424aae505e5ef1828"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.paths",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "paths"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Paths.",
+      "locator": {
+        "section_id": "paths",
+        "text_sha256": "cfdc016e9dd47f470803d3506d2de17f79f19127bf0f46782b1ea27f313aabcb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.paths-clause-29a52a6ffc63",
+        "opentype-cff2.paths-clause-db64b58a5059",
+        "opentype-cff2.paths-clause-ed3e37216628",
+        "opentype-cff2.paths-clause-3b46e004eebe",
+        "opentype-cff2.paths-clause-961fb1541c5b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.paths-clause-29a52a6ffc63",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "paths"
+      ],
+      "behaviour": "Paths — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "paths",
+        "clause_index": 10,
+        "clause_sha256": "29a52a6ffc6382c01a0a0dce3f82232780f4a91269258e2e2a1eb0717ea7c4ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.paths-clause-db64b58a5059",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "paths"
+      ],
+      "behaviour": "Paths — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "paths",
+        "clause_index": 13,
+        "clause_sha256": "db64b58a5059476061ac155a419bcbf8542038ad3f28d2078859d6b1ef784d29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.paths-clause-ed3e37216628",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "paths"
+      ],
+      "behaviour": "Paths — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "paths",
+        "clause_index": 15,
+        "clause_sha256": "ed3e37216628ddbfbdac1d5bfc3dd9aa6d680f4754c3403533cbc4a13bb808cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.paths-clause-3b46e004eebe",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "paths"
+      ],
+      "behaviour": "Paths — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "paths",
+        "clause_index": 20,
+        "clause_sha256": "3b46e004eebed87a0c5793cfedb2478702d4ca39d59096e9cc82f63913ab9e73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.paths-clause-961fb1541c5b",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "paths"
+      ],
+      "behaviour": "Paths — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "paths",
+        "clause_index": 21,
+        "clause_sha256": "961fb1541c5b8206341a762ab6de079a4db14b21760c5b1619183874e946b35b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.subroutines",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "subroutines"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Subroutines.",
+      "locator": {
+        "section_id": "subroutines",
+        "text_sha256": "291b50c96625fec81fbbc3cdb047af3b249b995c5fa1d9595cd35ae19dfd2a14"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.subroutines-clause-da206e303ce5",
+        "opentype-cff2.subroutines-clause-8442edc437d4",
+        "opentype-cff2.subroutines-clause-38158ec9912f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.subroutines-clause-da206e303ce5",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "subroutines"
+      ],
+      "behaviour": "Subroutines — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "subroutines",
+        "clause_index": 9,
+        "clause_sha256": "da206e303ce541b1b483ab00d11d6665bdd2fb1ec37b1841d5e966301b3c113e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.subroutines-clause-8442edc437d4",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "subroutines"
+      ],
+      "behaviour": "Subroutines — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "subroutines",
+        "clause_index": 12,
+        "clause_sha256": "8442edc437d4fbaa25253c6438987d92cc02f32577bf1a72fae6a36d19097861"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.subroutines-clause-38158ec9912f",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "subroutines"
+      ],
+      "behaviour": "Subroutines — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "subroutines",
+        "clause_index": 20,
+        "clause_sha256": "38158ec9912f2e52efad01227753f60cdb58be3e1282519ef02cba11b8d5e011"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-organization",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-organization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CharString organization.",
+      "locator": {
+        "section_id": "charstring-organization",
+        "text_sha256": "f0d84115d7ad810698353a2fe59a68e2503baa28f14851b01ffdf6c11e0104f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.charstring-operators",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-operators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CharString operators.",
+      "locator": {
+        "section_id": "charstring-operators",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.charstring-operator-summary",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-operator-summary"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CharString operator summary.",
+      "locator": {
+        "section_id": "charstring-operator-summary",
+        "text_sha256": "d164908c500f9f6899473918c1c6bd96756184bbe6adaa2fb672133679b11b1b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.charstring-path-operators",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-path-operators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CharString path operators.",
+      "locator": {
+        "section_id": "charstring-path-operators",
+        "text_sha256": "a8204aeea0aafa995b43cf09971ab6323a1813999e0c8f448b21bba978cd7eee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.operators-that-move-the-current-point-and-start-a-new-contour",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "operators-that-move-the-current-point-and-start-a-new-contour"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Operators that move the current point and start a new contour.",
+      "locator": {
+        "section_id": "operators-that-move-the-current-point-and-start-a-new-contour",
+        "text_sha256": "35e550f3240ec6cb2b4db45a724550843d9f68d92187ee75fc7ec4a769812506"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.path-operators-that-draw-line-segments",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "path-operators-that-draw-line-segments"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Path operators that draw line segments.",
+      "locator": {
+        "section_id": "path-operators-that-draw-line-segments",
+        "text_sha256": "55696545731e9ceb50807e9810ae4210beb72c4f592bdf394fe4b92cd6a245d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.path-operators-that-draw-line-segments-clause-79eab011d7ff"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.path-operators-that-draw-line-segments-clause-79eab011d7ff",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "path-operators-that-draw-line-segments"
+      ],
+      "behaviour": "Path operators that draw line segments — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "path-operators-that-draw-line-segments",
+        "clause_index": 6,
+        "clause_sha256": "79eab011d7ffcf4ab9fb120858367eb7b08d5068e862f1dbc0de3265902225ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.path-operators-that-draw-curves",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "path-operators-that-draw-curves"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Path operators that draw curves.",
+      "locator": {
+        "section_id": "path-operators-that-draw-curves",
+        "text_sha256": "ed53b12fca5a2cccddbfedabdabfdab41ad23cb1b1d1803acd60a5d982bfe1e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.path-operators-that-draw-curves-clause-7b9460e251e1",
+        "opentype-cff2.path-operators-that-draw-curves-clause-5ecf21bf40d0",
+        "opentype-cff2.path-operators-that-draw-curves-clause-f45f8c5c8c42"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.path-operators-that-draw-curves-clause-7b9460e251e1",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "path-operators-that-draw-curves"
+      ],
+      "behaviour": "Path operators that draw curves — normative clause 76, located by its exact source hash.",
+      "locator": {
+        "section_id": "path-operators-that-draw-curves",
+        "clause_index": 75,
+        "clause_sha256": "7b9460e251e1a8a10c2d5c21083ddc77f6c3e2a76d7554e02740f11f0f4a71eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.path-operators-that-draw-curves-clause-5ecf21bf40d0",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "path-operators-that-draw-curves"
+      ],
+      "behaviour": "Path operators that draw curves — normative clause 85, located by its exact source hash.",
+      "locator": {
+        "section_id": "path-operators-that-draw-curves",
+        "clause_index": 84,
+        "clause_sha256": "5ecf21bf40d0570d781e23ade48c99e21f8cd77ed2ca67994fc39f657c1eb0f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.path-operators-that-draw-curves-clause-f45f8c5c8c42",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "path-operators-that-draw-curves"
+      ],
+      "behaviour": "Path operators that draw curves — normative clause 111, located by its exact source hash.",
+      "locator": {
+        "section_id": "path-operators-that-draw-curves",
+        "clause_index": 110,
+        "clause_sha256": "f45f8c5c8c42bbe26869ded6b16a345575bd883ccefcde33fcce5d84ab6d3f27"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CharString hint operators.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "text_sha256": "65365a0825b6f3b052e0ada6da9ed20c77a86d760e4532216dbf57a3f4d8d1af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.charstring-hint-operators-clause-178b28855379",
+        "opentype-cff2.charstring-hint-operators-clause-d2053ddb7fc3",
+        "opentype-cff2.charstring-hint-operators-clause-66e66d33f1c2",
+        "opentype-cff2.charstring-hint-operators-clause-c70c5c167730",
+        "opentype-cff2.charstring-hint-operators-clause-de950d9a7a86",
+        "opentype-cff2.charstring-hint-operators-clause-04e217877b49",
+        "opentype-cff2.charstring-hint-operators-clause-b7682d8de8e2",
+        "opentype-cff2.charstring-hint-operators-clause-98e92b689d5e",
+        "opentype-cff2.charstring-hint-operators-clause-3989b8442a4c",
+        "opentype-cff2.charstring-hint-operators-clause-a97325515c93",
+        "opentype-cff2.charstring-hint-operators-clause-85db81d5f8e0",
+        "opentype-cff2.charstring-hint-operators-clause-1bd2b5cc1f5e",
+        "opentype-cff2.charstring-hint-operators-clause-64ec7f00c2a5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-178b28855379",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 23,
+        "clause_sha256": "178b288553795d8d1c63391d96d9da1abe9ed8e52335f4351b8733fbe0c332de"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-d2053ddb7fc3",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 46,
+        "clause_sha256": "d2053ddb7fc355baabac02c854f4cbb70b818f503c5cd6d515d110017bdeccec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-66e66d33f1c2",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 59, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 58,
+        "clause_sha256": "66e66d33f1c27f7df2fc9928308066e1402c3eb099bb8cc8bf248dc165d2c5c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-c70c5c167730",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 60, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 59,
+        "clause_sha256": "c70c5c1677306479a1fbc83b7ca09eac16ca38ec87b3c8a0e78ad4068f2bad68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-de950d9a7a86",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 60,
+        "clause_sha256": "de950d9a7a860282fb190238a1daa4fe683b53b2627551ce33d750734d1517e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-04e217877b49",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 63, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 62,
+        "clause_sha256": "04e217877b49be3eefcdd4aa85a3f34107bfc9735fd0c715acb87acad0e4c579"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-b7682d8de8e2",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 66, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 65,
+        "clause_sha256": "b7682d8de8e2d1545f7d3d41a28854dd9e2c38dc90ccc1cdcb756c3e645667fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-98e92b689d5e",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 68, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 67,
+        "clause_sha256": "98e92b689d5e8ec8ff0a349c45c63995962716500a88681fcac7d2bb1f0cc863"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-3989b8442a4c",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 83, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 82,
+        "clause_sha256": "3989b8442a4c78ffccb5208321dbd222f0b6113d75845ea5275c553c8320a586"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-a97325515c93",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 85, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 84,
+        "clause_sha256": "a97325515c932560d2deb1311f5fc15c6cfd6e0c2f68c2401491e11d077f21e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-85db81d5f8e0",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 88, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 87,
+        "clause_sha256": "85db81d5f8e006858bdc2dd77ee19e0573e06bb2717669bccf466eb1ab828cf5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-1bd2b5cc1f5e",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 91, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 90,
+        "clause_sha256": "1bd2b5cc1f5ededc7e1893a124efccdf9430a21749e7d01adc26d386d407f1bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-hint-operators-clause-64ec7f00c2a5",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-hint-operators"
+      ],
+      "behaviour": "CharString hint operators — normative clause 93, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-hint-operators",
+        "clause_index": 92,
+        "clause_sha256": "64ec7f00c2a588698f2ec1cd48284eb9bec5ad089ea6013d2cab56fcb05918a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-subroutine-operators",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-subroutine-operators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CharString subroutine operators.",
+      "locator": {
+        "section_id": "charstring-subroutine-operators",
+        "text_sha256": "c0e1ef5bb822bf05638bba04558a2864a1f65a5ec58835c84a82905cdd254e35"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.charstring-subroutine-operators-clause-92b7f2c47d42",
+        "opentype-cff2.charstring-subroutine-operators-clause-352abd626e86"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.charstring-subroutine-operators-clause-92b7f2c47d42",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-subroutine-operators"
+      ],
+      "behaviour": "CharString subroutine operators — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-subroutine-operators",
+        "clause_index": 8,
+        "clause_sha256": "92b7f2c47d42d351a1d0dc603cea139a61a03673bb816299786c174a89d11d16"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-subroutine-operators-clause-352abd626e86",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-subroutine-operators"
+      ],
+      "behaviour": "CharString subroutine operators — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-subroutine-operators",
+        "clause_index": 19,
+        "clause_sha256": "352abd626e861b5ddefb4c187b22ac40749c06113923e8cc34e5e3e4de7889ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-variation-operators",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-variation-operators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CharString variation operators.",
+      "locator": {
+        "section_id": "charstring-variation-operators",
+        "text_sha256": "7921129022886ab10400abcaca4e66e417370e54153efacd800156c2baca031e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.charstring-variation-operators-clause-c569f6f32762",
+        "opentype-cff2.charstring-variation-operators-clause-b60e6858b72e",
+        "opentype-cff2.charstring-variation-operators-clause-b474e9640087"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.charstring-variation-operators-clause-c569f6f32762",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-variation-operators"
+      ],
+      "behaviour": "CharString variation operators — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-variation-operators",
+        "clause_index": 8,
+        "clause_sha256": "c569f6f32762eb541a6ecb454c371351ecb9d91393346f71327408c2a680d194"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-variation-operators-clause-b60e6858b72e",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-variation-operators"
+      ],
+      "behaviour": "CharString variation operators — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-variation-operators",
+        "clause_index": 21,
+        "clause_sha256": "b60e6858b72e0eaa7ead6d0a8e77c15d005f0236d51588450fbdd607c969d111"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.charstring-variation-operators-clause-b474e9640087",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "charstring-variation-operators"
+      ],
+      "behaviour": "CharString variation operators — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "charstring-variation-operators",
+        "clause_index": 24,
+        "clause_sha256": "b474e9640087a0ca8d299f4edadcb73bf893fec1c69d95e0ece1b95a96d1bb75"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.opentype-font-variations-in-cff2",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "opentype-font-variations-in-cff2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in OpenType Font Variations in CFF2.",
+      "locator": {
+        "section_id": "opentype-font-variations-in-cff2",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.overview-2",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "overview-2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overview.",
+      "locator": {
+        "section_id": "overview-2",
+        "text_sha256": "ca018d1838fa62b73e27720dc15d34088d0f654c91b6058fd41631673718e7d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.variationstore",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "variationstore"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in VariationStore.",
+      "locator": {
+        "section_id": "variationstore",
+        "text_sha256": "9e648f60d40dca22178cc2f8f97ecfbd332a88e9040a56eeef15151ca98c3fd2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.variationstore-clause-5dedb4b51ba7",
+        "opentype-cff2.variationstore-clause-7715a65db39c",
+        "opentype-cff2.variationstore-clause-d1042b86766e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.variationstore-clause-5dedb4b51ba7",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "variationstore"
+      ],
+      "behaviour": "VariationStore — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "variationstore",
+        "clause_index": 11,
+        "clause_sha256": "5dedb4b51ba7e14990fd70a89d99c3dc300292e0fed034edff7aff039b6cb18e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.variationstore-clause-7715a65db39c",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "variationstore"
+      ],
+      "behaviour": "VariationStore — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "variationstore",
+        "clause_index": 18,
+        "clause_sha256": "7715a65db39c9a59468e02f3b5fbcc40d84d63175829de1da63769c7017b580e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.variationstore-clause-d1042b86766e",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "variationstore"
+      ],
+      "behaviour": "VariationStore — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "variationstore",
+        "clause_index": 19,
+        "clause_sha256": "d1042b86766eadb061f142fe0008dc461817ea6098228860e73f04ef95a12775"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.variation-operators",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "variation-operators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Variation operators.",
+      "locator": {
+        "section_id": "variation-operators",
+        "text_sha256": "5e4a494307a54086cf974258fdfcd3135c2fa3db578c22c5f77ca994533136be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.variation-operators-clause-48b803dd4d41",
+        "opentype-cff2.variation-operators-clause-12e902d06f99",
+        "opentype-cff2.variation-operators-clause-9090d121606f",
+        "opentype-cff2.variation-operators-clause-acb31f6f2ad2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.variation-operators-clause-48b803dd4d41",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "variation-operators"
+      ],
+      "behaviour": "Variation operators — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-operators",
+        "clause_index": 5,
+        "clause_sha256": "48b803dd4d4138d18a777addeee20b90892309911bb8894c47deb7917c2b33a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.variation-operators-clause-12e902d06f99",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "variation-operators"
+      ],
+      "behaviour": "Variation operators — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-operators",
+        "clause_index": 6,
+        "clause_sha256": "12e902d06f9906dbf5bb375d138230ef1c2532664fb9314983ef40a79b66af6f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.variation-operators-clause-9090d121606f",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "variation-operators"
+      ],
+      "behaviour": "Variation operators — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-operators",
+        "clause_index": 18,
+        "clause_sha256": "9090d121606ff85316bbe31b377cbc66e96bf35d04b01a47e32b422f07aa9b7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.variation-operators-clause-acb31f6f2ad2",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "variation-operators"
+      ],
+      "behaviour": "Variation operators — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-operators",
+        "clause_index": 25,
+        "clause_sha256": "acb31f6f2ad2a753b63a748b13352dd784177afcf59bcc0885a6b919fd3f878a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.blended-stem-and-edge-hints",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "blended-stem-and-edge-hints"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Blended stem and edge hints.",
+      "locator": {
+        "section_id": "blended-stem-and-edge-hints",
+        "text_sha256": "ad6b4258322d29cdbdddda8c7812f4fb3e5edd3afd364e70caf1f65d113c9eec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.blended-stem-and-edge-hints-clause-8186e77406c6",
+        "opentype-cff2.blended-stem-and-edge-hints-clause-911d08193c92",
+        "opentype-cff2.blended-stem-and-edge-hints-clause-2332638fec19",
+        "opentype-cff2.blended-stem-and-edge-hints-clause-b6de741b7914",
+        "opentype-cff2.blended-stem-and-edge-hints-clause-03d589f5ba30"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.blended-stem-and-edge-hints-clause-8186e77406c6",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "blended-stem-and-edge-hints"
+      ],
+      "behaviour": "Blended stem and edge hints — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "blended-stem-and-edge-hints",
+        "clause_index": 1,
+        "clause_sha256": "8186e77406c62fac0141ef6445a5ce336f83031161067d3403744a554a29076a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.blended-stem-and-edge-hints-clause-911d08193c92",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "blended-stem-and-edge-hints"
+      ],
+      "behaviour": "Blended stem and edge hints — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "blended-stem-and-edge-hints",
+        "clause_index": 2,
+        "clause_sha256": "911d08193c92052fb0929621d019f9350f78e91c0f34f4e88b4338581109b25a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.blended-stem-and-edge-hints-clause-2332638fec19",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "blended-stem-and-edge-hints"
+      ],
+      "behaviour": "Blended stem and edge hints — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "blended-stem-and-edge-hints",
+        "clause_index": 3,
+        "clause_sha256": "2332638fec197e940fcf118e65fb940c0559e0fe73360ea8b0c5786913067120"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.blended-stem-and-edge-hints-clause-b6de741b7914",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "blended-stem-and-edge-hints"
+      ],
+      "behaviour": "Blended stem and edge hints — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "blended-stem-and-edge-hints",
+        "clause_index": 4,
+        "clause_sha256": "b6de741b79141b69d06ec0ef05f75e41557cfbae4762c67101d3a3cc98434744"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.blended-stem-and-edge-hints-clause-03d589f5ba30",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "blended-stem-and-edge-hints"
+      ],
+      "behaviour": "Blended stem and edge hints — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "blended-stem-and-edge-hints",
+        "clause_index": 5,
+        "clause_sha256": "03d589f5ba30a7b26ba7a9350cbc41a17ebf47fe991c7c8aca0fb64228987e69"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.advanced-uses-of-blend",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "advanced-uses-of-blend"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Advanced uses of blend.",
+      "locator": {
+        "section_id": "advanced-uses-of-blend",
+        "text_sha256": "a1efbf14c54c260e4154c4b26800e90aa8f49b50c1536b4edce48f52c3c57247"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.advanced-uses-of-blend-clause-d6f50832598b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.advanced-uses-of-blend-clause-d6f50832598b",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "advanced-uses-of-blend"
+      ],
+      "behaviour": "Advanced uses of blend — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "advanced-uses-of-blend",
+        "clause_index": 0,
+        "clause_sha256": "d6f50832598b7d1a839aa86994a6ea3cbb270c785b8616893b3572d4d9f94f4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.comparison-of-cff2-variations-with-gvar-variations",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "comparison-of-cff2-variations-with-gvar-variations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Comparison of CFF2 variations with 'gvar' variations.",
+      "locator": {
+        "section_id": "comparison-of-cff2-variations-with-gvar-variations",
+        "text_sha256": "3bb2c24f3cb5ae625ce1015b622fb690a427b05614bba712fb272fe2ad47c82f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.cff2-dependencies-on-other-font-tables",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "cff2-dependencies-on-other-font-tables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CFF2 dependencies on other font tables.",
+      "locator": {
+        "section_id": "cff2-dependencies-on-other-font-tables",
+        "text_sha256": "caf5224eaf854289df7a35dd421c88a7e007bf39067362cd232bec20dc24e0a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.sfnt-header",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "sfnt-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in SFNT header.",
+      "locator": {
+        "section_id": "sfnt-header",
+        "text_sha256": "aca073d747e062c6801d9fa0b31dbdf40bc1115c6ba2b30937969e6705aada18"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.sfnt-header-clause-aca073d747e0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.sfnt-header-clause-aca073d747e0",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "sfnt-header"
+      ],
+      "behaviour": "SFNT header — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sfnt-header",
+        "clause_index": 0,
+        "clause_sha256": "aca073d747e062c6801d9fa0b31dbdf40bc1115c6ba2b30937969e6705aada18"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.maxp-table",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "maxp-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'maxp' table.",
+      "locator": {
+        "section_id": "maxp-table",
+        "text_sha256": "5e358241625c84827c962206852db524f712770d58df0b9153d0f5cca5e864db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.maxp-table-clause-602697a4574d",
+        "opentype-cff2.maxp-table-clause-4ec2e476a67c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.maxp-table-clause-602697a4574d",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "maxp-table"
+      ],
+      "behaviour": "'maxp' table — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "maxp-table",
+        "clause_index": 1,
+        "clause_sha256": "602697a4574d282f0a85e867157e9d8a94af042cf621a7cc0f18b504e8f8d303"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.maxp-table-clause-4ec2e476a67c",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "maxp-table"
+      ],
+      "behaviour": "'maxp' table — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "maxp-table",
+        "clause_index": 3,
+        "clause_sha256": "4ec2e476a67c4111a10cd707477594eeb22f9a1a57217e421b5e9f90d4378ee0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.hmtx-and-hvar-tables",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "hmtx-and-hvar-tables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'hmtx' and HVAR tables.",
+      "locator": {
+        "section_id": "hmtx-and-hvar-tables",
+        "text_sha256": "cca7bc0d7a358eb17231288dab5a1210c021eb7f2e15f7d53b883e97ac08f206"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.vmtx-and-vvar-tables",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "vmtx-and-vvar-tables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'vmtx' and VVAR tables.",
+      "locator": {
+        "section_id": "vmtx-and-vvar-tables",
+        "text_sha256": "69ff5c4b12ce0e77f57e9c4dfb6a88c4714892a421e96c09ae49933df3008f17"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.fvar-table",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fvar-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'fvar' table.",
+      "locator": {
+        "section_id": "fvar-table",
+        "text_sha256": "fe5253b074f09e9e801ca5a85a2bbf23c8cc23b6f614a8f927af696cd91014a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-cff2.fvar-table-clause-6cfa63ffb938"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.fvar-table-clause-6cfa63ffb938",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "fvar-table"
+      ],
+      "behaviour": "'fvar' table — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "fvar-table",
+        "clause_index": 0,
+        "clause_sha256": "6cfa63ffb938f0e3ff01497deeee5fd6990cd564bad0af8d9f26eb14532c2430"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-cff2.gvar-table",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "gvar-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'gvar' table.",
+      "locator": {
+        "section_id": "gvar-table",
+        "text_sha256": "c4762dafec9e29ebc82723bc00abca8d7ba1b2c54b55e857c46e10d0eebe75ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.example-cff2-table",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "example-cff2-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example CFF2 table.",
+      "locator": {
+        "section_id": "example-cff2-table",
+        "text_sha256": "dcda46cc38114580b4892f5015117da6fed3610b61c6135e3b76cd9b034315ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.ms-in-this-article",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.index-data",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "index-data"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in INDEX data.",
+      "locator": {
+        "section_id": "index-data",
+        "text_sha256": "34ebb268b483cfab9c8c38369dbe390e82830e9bcf9dada077cdd372a84864eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.head-table",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "head-table"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 'head' table.",
+      "locator": {
+        "section_id": "head-table",
+        "text_sha256": "daf7ee7c30a63b67141d98d7f201e4efeaa62b0dc37573fa59ce03daa6682217"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.ms-feedback",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.ms-additional-resources-mobile-heading",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "dbd6cce6d759855c1bbef5330834a39ba56ebe89f6214fdce09a98357dac5315"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-cff2.side-doc-outline",
+      "family": "opentype-cff2",
+      "source_id": "opentype-cff2",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

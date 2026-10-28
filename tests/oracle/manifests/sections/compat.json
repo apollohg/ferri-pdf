@@ -1,0 +1,787 @@
+{
+  "schema_version": 1,
+  "source_id": "compat",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Compatibility (Commit 159624eff7222f84fbdaae006e998e65bf60daa0)",
+      "level": 1,
+      "text_sha256": "bd458f4ebc06ac9ca47078f78efc5784f948bddd9ada957bf043fa430436bfc4",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "7cd6d1c5666f7dd064ad8794712c7c0547da9338d497a061071477bc5d6f02f8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.abstract"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "dc543d6ae5de555bd3ef852228820e6166b22949f875013588b22cfa082088c7",
+      "clause_count": 54,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "8aca241989a977b6a8f171b8959f6fa0f0d12a706594de6ff210b47762835d0b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.introduction"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "2. Conformance",
+      "level": 2,
+      "text_sha256": "117628e67c812ed39bb19ed8528b617d83ef65d571b6bc5f4109c1b22f0470c7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.conformance",
+          "compat.conformance-clause-b8e68ad2e013",
+          "compat.conformance-clause-96cba5c63ad0"
+        ]
+      }
+    },
+    {
+      "id": "css-compat-section",
+      "title": "3. CSS Compatibility",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-compat-section"
+        ]
+      }
+    },
+    {
+      "id": "css-at-rules",
+      "title": "3.1. CSS At-rules",
+      "level": 3,
+      "text_sha256": "d8b18b0e231278ada928b3fa8af6023387181860fd80bc152313163b6a470167",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-at-rules",
+          "compat.css-at-rules-clause-63fce987ec0f"
+        ]
+      }
+    },
+    {
+      "id": "css-media-queries",
+      "title": "3.2. CSS Media Queries",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-media-queries"
+        ]
+      }
+    },
+    {
+      "id": "css-media-queries-webkit-device-pixel-ratio",
+      "title": "3.2.1. -webkit-device-pixel-ratio",
+      "level": 4,
+      "text_sha256": "d90b70775a2101e366e403ef14a96fb65e9efa76e0ced8cb324ed05e9fb56132",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-media-queries-webkit-device-pixel-ratio",
+          "compat.css-media-queries-webkit-device-pixel-ratio-clause-ab80a2861ae6",
+          "compat.css-media-queries-webkit-device-pixel-ratio-clause-224573254449",
+          "compat.css-media-queries-webkit-device-pixel-ratio-clause-30dd2e6155b4"
+        ]
+      }
+    },
+    {
+      "id": "css-media-queries-webkit-transform-3d",
+      "title": "3.2.2. -webkit-transform-3d",
+      "level": 4,
+      "text_sha256": "7234e3e78ee5fa90ff0c922313d6f5d87becb051ff4ac60dc7ce2fa753f360e8",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-media-queries-webkit-transform-3d"
+        ]
+      }
+    },
+    {
+      "id": "css-gradient-fns",
+      "title": "3.3. CSS Gradient Functions",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-gradient-fns"
+        ]
+      }
+    },
+    {
+      "id": "css-gradients-webkit-linear-gradient",
+      "title": "3.3.1. -webkit-linear-gradient()",
+      "level": 4,
+      "text_sha256": "a87ebbccbce28846adfd2fee6fb292be7e0cb7ba78b976f239d295db724d17b1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-gradients-webkit-linear-gradient",
+          "compat.css-gradients-webkit-linear-gradient-clause-a87ebbccbce2"
+        ]
+      }
+    },
+    {
+      "id": "css-gradients-webkit-radial-gradient",
+      "title": "3.3.2. -webkit-radial-gradient()",
+      "level": 4,
+      "text_sha256": "2d17d17999a5382e3a1bee63b5b8ea3a517efafb9e40d30d982ee533ba96b926",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-gradients-webkit-radial-gradient",
+          "compat.css-gradients-webkit-radial-gradient-clause-2d17d17999a5"
+        ]
+      }
+    },
+    {
+      "id": "css-gradients-repeating-webkit-linear-gradient",
+      "title": "3.3.3. -webkit-repeating-linear-gradient()",
+      "level": 4,
+      "text_sha256": "9354eb33bc789e615fa4efeb1ce887c9969c652638cdca67e805f8f5e1c2756e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-gradients-repeating-webkit-linear-gradient",
+          "compat.css-gradients-repeating-webkit-linear-gradient-clause-9354eb33bc78"
+        ]
+      }
+    },
+    {
+      "id": "css-gradients-repeating-webkit-radial-gradient",
+      "title": "3.3.4. -webkit-repeating-radial-gradient()",
+      "level": 4,
+      "text_sha256": "f9b4e5f92227d7fb9cef72b80a7a81412e385df3bb7280d94833f7e3448def76",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-gradients-repeating-webkit-radial-gradient",
+          "compat.css-gradients-repeating-webkit-radial-gradient-clause-f9b4e5f92227"
+        ]
+      }
+    },
+    {
+      "id": "css-properties",
+      "title": "3.4. CSS Properties",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-properties"
+        ]
+      }
+    },
+    {
+      "id": "css-simple-aliases",
+      "title": "3.4.1. Legacy name aliases",
+      "level": 4,
+      "text_sha256": "48f8823acf0d400236833c11810f6040e600c16f19514bc5ccd90a5114e89331",
+      "clause_count": 118,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-simple-aliases",
+          "compat.css-simple-aliases-clause-3bea2cf4e989"
+        ]
+      }
+    },
+    {
+      "id": "css-prefixed-aliases",
+      "title": "3.4.2. Prefixed legacy name aliases",
+      "level": 4,
+      "text_sha256": "f57b855dd165ac79f903c73cea7a917889575751eb7b6dd6e51a10639530c105",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-prefixed-aliases",
+          "compat.css-prefixed-aliases-clause-df0a7bb55f2f"
+        ]
+      }
+    },
+    {
+      "id": "css-non-aliased",
+      "title": "3.4.3. Non-aliased vendor prefixed properties",
+      "level": 4,
+      "text_sha256": "0360127fd9a6dcc938d6a347373b3eee42d695754596d46cbe50cf0c47e2efc9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-non-aliased"
+        ]
+      }
+    },
+    {
+      "id": "css-property-mappings",
+      "title": "3.4.4. Property mappings",
+      "level": 4,
+      "text_sha256": "446ae1e704dba9f1e91d3460c5a692f7e20a3cf742d761f63c35047abc7145a5",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-property-mappings",
+          "compat.css-property-mappings-clause-dae55888c382"
+        ]
+      }
+    },
+    {
+      "id": "css-keyword-mappings",
+      "title": "3.4.5. Keyword mappings",
+      "level": 4,
+      "text_sha256": "be0f82bd96a87d2798f581b846dd1e96ed6487280d4c469af5a93aa3330954f2",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-keyword-mappings",
+          "compat.css-keyword-mappings-clause-45dfe4e9a701"
+        ]
+      }
+    },
+    {
+      "id": "text-fill-and-stroking",
+      "title": "3.4.6. Text Fill and Stroking",
+      "level": 4,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.text-fill-and-stroking"
+        ]
+      }
+    },
+    {
+      "id": "the-webkit-text-fill-color",
+      "title": "3.4.6.1. Foreground Text Color: the -webkit-text-fill-color property",
+      "level": 5,
+      "text_sha256": "d8779540c388ac561b79636405bdd1ca424feb4036a186f4e0dd1ed89782ee9a",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.the-webkit-text-fill-color",
+          "compat.the-webkit-text-fill-color-clause-cca2516ebb1d",
+          "compat.the-webkit-text-fill-color-clause-4b59fe755d34",
+          "compat.the-webkit-text-fill-color-clause-3ceb3ae8186d",
+          "compat.the-webkit-text-fill-color-clause-5bfc80bd92f7"
+        ]
+      }
+    },
+    {
+      "id": "the-webkit-text-stroke-color",
+      "title": "3.4.6.2. Text Stroke Color: the -webkit-text-stroke-color property",
+      "level": 5,
+      "text_sha256": "3836dfeecfc29519f6f6effe59386d5a8f681120a99c25b4ba7ab4a0aa8531bb",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.the-webkit-text-stroke-color",
+          "compat.the-webkit-text-stroke-color-clause-cca2516ebb1d",
+          "compat.the-webkit-text-stroke-color-clause-4b59fe755d34"
+        ]
+      }
+    },
+    {
+      "id": "the-webkit-text-stroke-width",
+      "title": "3.4.6.3. Text Stroke Thickness: the -webkit-text-stroke-width property",
+      "level": 5,
+      "text_sha256": "cc5d7b9830062d8f30c07097aa67c4871efee5de1249be9aa94c4c1fae562956",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.the-webkit-text-stroke-width",
+          "compat.the-webkit-text-stroke-width-clause-cca2516ebb1d",
+          "compat.the-webkit-text-stroke-width-clause-ca9dc66c7504",
+          "compat.the-webkit-text-stroke-width-clause-aac84d1a2681"
+        ]
+      }
+    },
+    {
+      "id": "the-webkit-text-stroke",
+      "title": "3.4.6.4. Text Stroke Shorthand: the -webkit-text-stroke property",
+      "level": 5,
+      "text_sha256": "36f78303a75380ae097df14e318c5d37b8d5d0a047308b9435bd262008d969cc",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.the-webkit-text-stroke",
+          "compat.the-webkit-text-stroke-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "css-property-values",
+      "title": "3.5. CSS Property values",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.css-property-values"
+        ]
+      }
+    },
+    {
+      "id": "touch-action",
+      "title": "3.5.1. Additional touch-action values",
+      "level": 4,
+      "text_sha256": "b15b28d9760395b3e9240dac7ad6c8f7c89539ab3f1f9995a32daa79f8a068fc",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.touch-action",
+          "compat.touch-action-clause-cca2516ebb1d",
+          "compat.touch-action-clause-67ab8ec01a3c",
+          "compat.touch-action-clause-d9a7bc26b1be"
+        ]
+      }
+    },
+    {
+      "id": "dom-compat-section",
+      "title": "4. DOM Compatibility",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.dom-compat-section"
+        ]
+      }
+    },
+    {
+      "id": "webkitcssmatrix-interface",
+      "title": "4.1. The WebKitCSSMatrix interface",
+      "level": 3,
+      "text_sha256": "8344e1005302a1ee9dd7567a3b5ed65095ae974a32f42db7b08faf17bc96143d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.webkitcssmatrix-interface"
+        ]
+      }
+    },
+    {
+      "id": "windoworientation-interface",
+      "title": "4.2. window.orientation API",
+      "level": 3,
+      "text_sha256": "36f47c41dd5dc1ae889dc1453f41fadd61ec4a91f709fc73d63088e2396a6a0b",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.windoworientation-interface",
+          "compat.windoworientation-interface-clause-4a6e7f81ec71",
+          "compat.windoworientation-interface-clause-92265e935b22",
+          "compat.windoworientation-interface-clause-7fffcf192b42"
+        ]
+      }
+    },
+    {
+      "id": "dfn-window-orientation-angle",
+      "title": "4.2.1. window.orientation angle",
+      "level": 4,
+      "text_sha256": "ef08d1184b9a929f6195c10daa106c721f87bc309ee217fc936b6e6273817085",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.dfn-window-orientation-angle",
+          "compat.dfn-window-orientation-angle-clause-ff99aa03f383",
+          "compat.dfn-window-orientation-angle-clause-71a3d10bf8ca"
+        ]
+      }
+    },
+    {
+      "id": "event-handlers",
+      "title": "4.2.2. Event Handlers on Window objects and body elements",
+      "level": 4,
+      "text_sha256": "5eaeea08056d4fdb6f5d996105276ae3f5583f636366c2a4d8a7febbe2b3e99b",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.event-handlers",
+          "compat.event-handlers-clause-99817aacbad6"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-section",
+      "title": "5. The User-Agent String",
+      "level": 2,
+      "text_sha256": "9ded1f51f0a4d350f03e4a875ab4e77c95e79361462094caa00e367447d3c4b6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-section"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-patterns",
+      "title": "5.1. User-Agent Tokens",
+      "level": 3,
+      "text_sha256": "fd5e8d9f5ee57d931eef3389d1f229583af2b2ce905f22530a1debc3cd623747",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-patterns"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-token-reference",
+      "title": "5.1.1. User-Agent Token Reference",
+      "level": 4,
+      "text_sha256": "64e771e299a0b52558a6bb281b611799182d7923d48abd58d9c08f89216db645",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-token-reference"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-meta-structure",
+      "title": "5.2. Meta Structure",
+      "level": 3,
+      "text_sha256": "2c47701cdfeb1d7a214bbfabf7eec134cbc2f9fe483e3a3cafbd5e33f03f5ffd",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-meta-structure"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-chrome",
+      "title": "5.3. Chrome",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-chrome"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-pattern-chrome",
+      "title": "5.3.1. Chrome User-Agent pattern",
+      "level": 4,
+      "text_sha256": "c71a61957bdbb0e43346cc7bf1a177a0732de82dfeb6cfa6338217cac1e3e727",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-pattern-chrome"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-tokens-chrome",
+      "title": "5.3.2. Chrome-specific tokens",
+      "level": 4,
+      "text_sha256": "570c051a00cc31e2a63176d921fc589dd3d7a2b0c31c2a34d39b0869a7770fb4",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-tokens-chrome"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-firefox",
+      "title": "5.4. Firefox",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-firefox"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-pattern-firefox",
+      "title": "5.4.1. Firefox User-Agent pattern",
+      "level": 4,
+      "text_sha256": "c93302c3b8a4699d53d4f960806c9d8d4c80f3809c518e89c347f1b9e963850b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-pattern-firefox"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-tokens-firefox",
+      "title": "5.4.2. Firefox-specific tokens",
+      "level": 4,
+      "text_sha256": "d4306e60018b6c6f660fcaa39510090733538320fd41bd95083d8c443353603e",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-tokens-firefox"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-safari",
+      "title": "5.5. Safari",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-safari"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-pattern-safari",
+      "title": "5.5.1. Safari User-Agent pattern",
+      "level": 4,
+      "text_sha256": "5fbf060b7b79bdd576b75fdc9fbad1af0656cf807087b3bba5f0d6309b365f3d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-pattern-safari"
+        ]
+      }
+    },
+    {
+      "id": "ua-string-tokens-safari",
+      "title": "5.5.2. Safari-specific tokens",
+      "level": 4,
+      "text_sha256": "917c42d488bebc5e2f1db98924f59194ce87ee2fe42fde16e2021a05a8519375",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ua-string-tokens-safari"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "Acknowledgements",
+      "level": 2,
+      "text_sha256": "4a8e38f84c44bd883a04b189e869e0f99f997686f73b3cd6b10d931dbfb2f0bf",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "ipr",
+      "title": "Intellectual property rights",
+      "level": 2,
+      "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.ipr"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "0de81ce7c84234947720b1df313490dfb7e3225405c111007923c54ffcb048d5",
+      "clause_count": 107,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "964ba90755342d6f9ff5461df85042df96485f68827ed1add105ad73f052c5b4",
+      "clause_count": 137,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "7f72d16f395ce748fed9b5160daf63482e14debe145b5d63ecf2364e56eee95b",
+      "clause_count": 76,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.import-4f80c079fa8d",
+          "compat.import-709148d9fced",
+          "compat.import-e7dd35961f00",
+          "compat.import-008171b5a918",
+          "compat.import-eb828ff7ded3",
+          "compat.import-d63835611ccb",
+          "compat.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "12c1591367b138514059354ad41f0761a8fc333d170261a606b9ce6bcbefcc8d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "d48409f81afc0bfe63c16a549d6d906fadbf90b80bc440d9687c5b98665e7721",
+      "clause_count": 60,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.property-index",
+          "compat.property-index-clause-4b59fe755d34"
+        ]
+      }
+    },
+    {
+      "id": "media-descriptor-table",
+      "title": "@media Descriptors",
+      "level": 3,
+      "text_sha256": "ac850a5afbce4b39b19790bd1b600c79fa1ac88d2f1f83c92132b6cd736e5bda",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.media-descriptor-table"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "4b722e7b4b1cc91922de2a11449c02d20ac7e6e9d00290f8d838e9f947cfd54e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compat.idl-index"
+        ]
+      }
+    }
+  ]
+}

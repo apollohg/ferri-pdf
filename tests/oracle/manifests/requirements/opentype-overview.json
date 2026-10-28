@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-overview.opentype-overview",
+      "family": "opentype-overview",
+      "source_id": "opentype-overview",
+      "sections": [
+        "opentype-overview"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in OpenType Overview.",
+      "locator": {
+        "section_id": "opentype-overview",
+        "text_sha256": "fd6d2cac97912907ddd56942ca70efe0d97580d6c7ccb469b17bbfe20e562e6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-overview.ms-in-this-article",
+      "family": "opentype-overview",
+      "source_id": "opentype-overview",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-overview.ms-feedback",
+      "family": "opentype-overview",
+      "source_id": "opentype-overview",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-overview.ms-additional-resources-mobile-heading",
+      "family": "opentype-overview",
+      "source_id": "opentype-overview",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "4e2297f79525355aa3dc07756ae4ae6ba350dc012790f96133dc9fdbf48db6d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-overview.side-doc-outline",
+      "family": "opentype-overview",
+      "source_id": "opentype-overview",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

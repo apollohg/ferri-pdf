@@ -1,0 +1,371 @@
+{
+  "schema_version": 1,
+  "source_id": "css-env-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Environment Variables Module Level 1",
+      "level": 1,
+      "text_sha256": "54ab8da93181bc46c8cb9e841cf73ab2ace6cd5df6d406b30342c89a0ae44068",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "945e83b4f654852e62b288c03a786c78904a85b659ec2592f1da054413a702bd",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "cdff88370cd01db15d0ea0dd34b41df4ab3eadb73d6a48e8b619b5478fe7ec99",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "0839a39aea6034d00f911e29f1b257d15d6d660d5ee03812dfbaf66d0130ca1e",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "0c247b405b0af98034bb1574cebbda00db533dc4ad10e74df0605a722c238ff4",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.intro",
+          "css-env-1.intro-clause-ca81664296da"
+        ]
+      }
+    },
+    {
+      "id": "environment",
+      "title": "2. Environment Variables",
+      "level": 2,
+      "text_sha256": "2ab1d84eb8e217cceb5c19e50e863f6d3a5fc24cb34978f639905d17c8379053",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.environment",
+          "css-env-1.environment-clause-e9f521b413a6"
+        ]
+      }
+    },
+    {
+      "id": "safe-area-insets",
+      "title": "2.1. Safe area inset variables",
+      "level": 3,
+      "text_sha256": "027aae5fd3cb6e0a9fc163b20c12a63769d4e288f5ce157b64cb071c62fc4a18",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.safe-area-insets",
+          "css-env-1.safe-area-insets-clause-19c9d51eade1",
+          "css-env-1.safe-area-insets-clause-c5701eebb61d"
+        ]
+      }
+    },
+    {
+      "id": "safe-area-max-insets",
+      "title": "2.2. Safe area maximum inset variables",
+      "level": 3,
+      "text_sha256": "b486fb59f7bd538fcf2a25d6d28c6699ad349d6ba7db2fd9336b0bfee2cc08ea",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.safe-area-max-insets"
+        ]
+      }
+    },
+    {
+      "id": "viewport-segments",
+      "title": "2.3. Viewport segment variables",
+      "level": 3,
+      "text_sha256": "36109968f0e1739e1bc3f406a53d49a28ec84f0bc988ebff69aa73edcbb3a435",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.viewport-segments",
+          "css-env-1.viewport-segments-clause-dd30252b0e74",
+          "css-env-1.viewport-segments-clause-de29b5e738b6",
+          "css-env-1.viewport-segments-clause-029fb556b7d8"
+        ]
+      }
+    },
+    {
+      "id": "text-zoom",
+      "title": "2.4. Preferred Text Zoom",
+      "level": 3,
+      "text_sha256": "62d32d33a76ae2f56f694ebff86d95f2f2081a3bb8989af892917d4817adc4ff",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.text-zoom",
+          "css-env-1.text-zoom-clause-5fe7d3235ee1",
+          "css-env-1.text-zoom-clause-8674d8d225fe",
+          "css-env-1.text-zoom-clause-23240f9bb794"
+        ]
+      }
+    },
+    {
+      "id": "env-function",
+      "title": "3. Using Environment Variables: the env() notation",
+      "level": 2,
+      "text_sha256": "6374b77898e2804af277bd692aed8175cb900064d71890bd043945b50bd1bb64",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.env-function",
+          "css-env-1.env-function-clause-7139b198c467",
+          "css-env-1.env-function-clause-9d0bfccef937",
+          "css-env-1.env-function-clause-65ae67b3ccea",
+          "css-env-1.env-function-clause-78933f5d4d91",
+          "css-env-1.env-function-clause-ed389b65b489",
+          "css-env-1.env-function-clause-4ab2a3d8cb4c",
+          "css-env-1.env-function-clause-e4282cbd85ba"
+        ]
+      }
+    },
+    {
+      "id": "env-in-shorthands",
+      "title": "3.1. Environment Variables in Shorthand Properties",
+      "level": 3,
+      "text_sha256": "21868e8eed106f4075815675418f427a5079ad0f5a4c5d613b38701c060ad9fd",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.env-in-shorthands"
+        ]
+      }
+    },
+    {
+      "id": "priv",
+      "title": "4. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "d672b5dd046fcebe7fae6edab8bc9f6612b25864fc8e4e8fab6dcc39d2c4105a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.priv"
+        ]
+      }
+    },
+    {
+      "id": "sec",
+      "title": "5. Security Considerations",
+      "level": 2,
+      "text_sha256": "70ae785a63118fb637ce2f20ab4177552f481bd093f94bcef68b129126d93269",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.sec"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.w3c-conventions",
+          "css-env-1.w3c-conventions-clause-5c98c879f070",
+          "css-env-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.w3c-conformance-classes",
+          "css-env-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-env-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.w3c-partial",
+          "css-env-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.w3c-testing",
+          "css-env-1.w3c-testing-clause-1e0fff369221",
+          "css-env-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "f67c4badd4aed5f26cb31b58557fe26e97f288e657fe9a9d8b52e49d3cfd4b12",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "35664cf219f3ff96247be6864b485b9d12adfa2648e78074890c1cf52c71a819",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "6103ee17943826764d7ac3ba76356db5f72d57fba2fbf4832c277b260f4e29ab",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.import-709148d9fced"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "8d69549584d3582ac15db8d3c784504cbb16521735bb539961a3c84e654ab667",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-env-1.issues-index",
+          "css-env-1.issues-index-clause-7139b198c467",
+          "css-env-1.issues-index-clause-9d0bfccef937",
+          "css-env-1.issues-index-clause-65ae67b3ccea"
+        ]
+      }
+    }
+  ]
+}

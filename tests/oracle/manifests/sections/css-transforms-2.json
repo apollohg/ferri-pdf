@@ -1,0 +1,884 @@
+{
+  "schema_version": 1,
+  "source_id": "css-transforms-2",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Transforms Module Level 2",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.title"
+        ]
+      }
+    },
+    {
+      "id": "w3c-state",
+      "title": "W3C Working Draft, 9 November 2021",
+      "level": 2,
+      "text_sha256": "d3378f75dd4f6dd7ffa94b2c80db323f4a22e5f1948ba98888f2471268e41799",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.w3c-state"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "9d37b6f0cdef78228b1c392683bb49728edf4adaeb52e8d25abae5ff98ebb933",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "10139312fd66b777a1930693969922743ed0164761672cbd4cb4550f6b4dadf4",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "b8f4bf728354650b666d569e2af2c0dd22ed6aca52d34e15c3d6f1eb1308a395",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "cf2ce1b5704628dc64e3d0201cb0c38088e377bd0bcb474605296753d22c2ca3",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.intro"
+        ]
+      }
+    },
+    {
+      "id": "module-interactions",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "c3d2f73e9be288e2771b10c63e761a9c48d6ec024b6b1734b82307b361be951f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.module-interactions"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "5f8506dcb420c6d6df7be65e3ff0126c9f92cd23f8505cebe02804b8578eccd4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.values"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "2. Terminology",
+      "level": 2,
+      "text_sha256": "3e2373e603890bd67c5da56709121146ca7f7ddf52da7b954eb945090d01f7d8",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.terminology",
+          "css-transforms-2.terminology-clause-9bf3a0946071",
+          "css-transforms-2.terminology-clause-9a091446bbba",
+          "css-transforms-2.terminology-clause-cf5e0b474cb8"
+        ]
+      }
+    },
+    {
+      "id": "serialization-of-the-computed-value",
+      "title": "2.1. Serialization of the computed value of <transform-list>",
+      "level": 3,
+      "text_sha256": "81d339f3ad0100293a552b5e22ff67fd6b337f2c22b305a8a4c88e92a305d8c6",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.serialization-of-the-computed-value",
+          "css-transforms-2.serialization-of-the-computed-value-clause-cc9053dd41a8",
+          "css-transforms-2.serialization-of-the-computed-value-clause-5b356d8defb0"
+        ]
+      }
+    },
+    {
+      "id": "two-dimensional-subset",
+      "title": "3. Two Dimensional Subset",
+      "level": 2,
+      "text_sha256": "c151dfdcf17f922acf3b4856f2242c7b6e1ccc0d37de665811f19c36066afe6c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.two-dimensional-subset",
+          "css-transforms-2.two-dimensional-subset-clause-751095f91a23",
+          "css-transforms-2.two-dimensional-subset-clause-562134da64a4"
+        ]
+      }
+    },
+    {
+      "id": "transform-rendering",
+      "title": "4. The Transform Rendering Model",
+      "level": 2,
+      "text_sha256": "52cf0c18c26d87199a31b0e030f5268abd42ce30f98d8c84c0cde8f0c8dbe700",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.transform-rendering",
+          "css-transforms-2.transform-rendering-clause-b3c9c4bba585",
+          "css-transforms-2.transform-rendering-clause-7f6947d00faa",
+          "css-transforms-2.transform-rendering-clause-ae04ba0e3bbc"
+        ]
+      }
+    },
+    {
+      "id": "3d-transform-rendering",
+      "title": "4.1. 3D Transform Rendering",
+      "level": 3,
+      "text_sha256": "a22fcc1fbf5b8c71986ac3576bc857b512693c6b026df9748d574eded0dafbcf",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.3d-transform-rendering"
+        ]
+      }
+    },
+    {
+      "id": "perspective",
+      "title": "4.1.1. Perspective",
+      "level": 4,
+      "text_sha256": "c235bc8a0ca3b8a9ebf21fa1be034e6c5eaa69b47a7ee2d67b684ba3e51e39a3",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.perspective",
+          "css-transforms-2.perspective-clause-b325be43e0c2",
+          "css-transforms-2.perspective-clause-0e1b5e2a4c09",
+          "css-transforms-2.perspective-clause-f28872688287",
+          "css-transforms-2.perspective-clause-b9bd0e6ca00f"
+        ]
+      }
+    },
+    {
+      "id": "3d-rendering-contexts",
+      "title": "4.1.2. 3D Rendering Contexts",
+      "level": 4,
+      "text_sha256": "3067daaa83f30e76514a6b53f55dedb30aa55411f31043751bce9331f5ab283c",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.3d-rendering-contexts",
+          "css-transforms-2.3d-rendering-contexts-clause-d2636b8bf75d"
+        ]
+      }
+    },
+    {
+      "id": "transformed-element-hierarchies",
+      "title": "4.1.3. Transformed element hierarchies",
+      "level": 4,
+      "text_sha256": "ade36ac2d45acbdab13f38ccc03480748dab15cba3caeef528c47bc885ac6b23",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.transformed-element-hierarchies"
+        ]
+      }
+    },
+    {
+      "id": "accumulated-3d-transformation-matrix-computation",
+      "title": "4.1.4. Accumulated 3D Transformation Matrix Computation",
+      "level": 4,
+      "text_sha256": "fe9931e2792247ec52fe52e3c7b7bb4d55bf7980ab35c3d5611459f4f33812d5",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.accumulated-3d-transformation-matrix-computation",
+          "css-transforms-2.accumulated-3d-transformation-matrix-computation-clause-7d1ee4de4643"
+        ]
+      }
+    },
+    {
+      "id": "backface-visibility",
+      "title": "4.1.5. Backface Visibility",
+      "level": 4,
+      "text_sha256": "6b8b4fa82cf51225404701564d2e57f38ce7f8e5e0420af33ae9b89bd982eda8",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.backface-visibility"
+        ]
+      }
+    },
+    {
+      "id": "processing-of-perspective-transformed-boxes",
+      "title": "4.2. Processing of Perspective-Transformed Boxes",
+      "level": 3,
+      "text_sha256": "f792ca14bfffaa10d53488aa315e249fd98259944d2d06ec5fb12b1e329a6d3b",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.processing-of-perspective-transformed-boxes",
+          "css-transforms-2.processing-of-perspective-transformed-boxes-clause-20dfa0a8fc32",
+          "css-transforms-2.processing-of-perspective-transformed-boxes-clause-a6c223527056",
+          "css-transforms-2.processing-of-perspective-transformed-boxes-clause-f5541822baa7",
+          "css-transforms-2.processing-of-perspective-transformed-boxes-clause-ed1f4e38f0ea"
+        ]
+      }
+    },
+    {
+      "id": "individual-transforms",
+      "title": "5. Individual Transform Properties: the translate, scale, and rotate properties",
+      "level": 2,
+      "text_sha256": "d9d1677d002f85ece3f369da05713b9617607104f4a30b8f99a3ea97cdcc74ba",
+      "clause_count": 69,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.individual-transforms",
+          "css-transforms-2.individual-transforms-clause-cca2516ebb1d",
+          "css-transforms-2.individual-transforms-clause-8a43ffc4183a",
+          "css-transforms-2.individual-transforms-clause-8549ecaaba95",
+          "css-transforms-2.individual-transforms-clause-2e115c679578",
+          "css-transforms-2.individual-transforms-clause-9a24cf52d828",
+          "css-transforms-2.individual-transforms-clause-ba372bc6880f"
+        ]
+      }
+    },
+    {
+      "id": "individual-transform-serialization",
+      "title": "5.1. Serialization",
+      "level": 3,
+      "text_sha256": "af871151f3952bec37fc967e61576acffe513f62e27c3bee15c7b2e6b5910176",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.individual-transform-serialization",
+          "css-transforms-2.individual-transform-serialization-clause-a6be615625b1",
+          "css-transforms-2.individual-transform-serialization-clause-586a448fc0fd",
+          "css-transforms-2.individual-transform-serialization-clause-9ed7833660ca",
+          "css-transforms-2.individual-transform-serialization-clause-4346be788e1e",
+          "css-transforms-2.individual-transform-serialization-clause-802a556da7b0",
+          "css-transforms-2.individual-transform-serialization-clause-aaf6f9720f31",
+          "css-transforms-2.individual-transform-serialization-clause-270ad17bdd72",
+          "css-transforms-2.individual-transform-serialization-clause-6740c02c8d64",
+          "css-transforms-2.individual-transform-serialization-clause-572ee6b52553",
+          "css-transforms-2.individual-transform-serialization-clause-23823d1a5ece",
+          "css-transforms-2.individual-transform-serialization-clause-bc7cacda6872"
+        ]
+      }
+    },
+    {
+      "id": "ctm",
+      "title": "6. Current Transformation Matrix",
+      "level": 2,
+      "text_sha256": "07a82433a01a2cfaea07e3745f3f639ccd118d90316815a6fdeaf2eb85cf892d",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.ctm",
+          "css-transforms-2.ctm-clause-3eaa9919bf41",
+          "css-transforms-2.ctm-clause-c6fa9e0b8bf7",
+          "css-transforms-2.ctm-clause-0117a8ae6ed2",
+          "css-transforms-2.ctm-clause-75e3db0b8524",
+          "css-transforms-2.ctm-clause-72ec130effa5",
+          "css-transforms-2.ctm-clause-e9c5d4ae2ae2"
+        ]
+      }
+    },
+    {
+      "id": "transform-style-property",
+      "title": "7. The transform-style Property",
+      "level": 2,
+      "text_sha256": "e29069c953f0c9b454874c52b261e2d675923c0f58e9bbf7f1466dd303ec7b6b",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.transform-style-property",
+          "css-transforms-2.transform-style-property-clause-cca2516ebb1d",
+          "css-transforms-2.transform-style-property-clause-1a7454c2137d",
+          "css-transforms-2.transform-style-property-clause-b5d035cddcc3"
+        ]
+      }
+    },
+    {
+      "id": "grouping-property-values",
+      "title": "7.1. Grouping property values",
+      "level": 3,
+      "text_sha256": "0f0f489a1968cf947e828a3aafebc193178cbaa0d261b066ea366c23c8eeb7e9",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.grouping-property-values"
+        ]
+      }
+    },
+    {
+      "id": "perspective-property",
+      "title": "8. The perspective Property",
+      "level": 2,
+      "text_sha256": "e97785a0da4930d92fc9b7e127aa76e94b963c76824ff28945954f0263bcca24",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.perspective-property",
+          "css-transforms-2.perspective-property-clause-cca2516ebb1d",
+          "css-transforms-2.perspective-property-clause-871bea868740",
+          "css-transforms-2.perspective-property-clause-2bff0c6bedf6",
+          "css-transforms-2.perspective-property-clause-52f4330b02fa"
+        ]
+      }
+    },
+    {
+      "id": "perspective-origin-property",
+      "title": "9. The perspective-origin Property",
+      "level": 2,
+      "text_sha256": "b9e31ddd5b5d7e45f4b67d12c1b17ddac33ba126a581317d8b3eabca6c341dab",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.perspective-origin-property",
+          "css-transforms-2.perspective-origin-property-clause-cca2516ebb1d",
+          "css-transforms-2.perspective-origin-property-clause-c4f96b59ed81"
+        ]
+      }
+    },
+    {
+      "id": "backface-visibility-property",
+      "title": "10. The backface-visibility Property",
+      "level": 2,
+      "text_sha256": "6b623031567c83bd2d56f178514f5970bde49f897087cfe832172db08d4e01a7",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.backface-visibility-property",
+          "css-transforms-2.backface-visibility-property-clause-cca2516ebb1d",
+          "css-transforms-2.backface-visibility-property-clause-3e92f4bb3de8",
+          "css-transforms-2.backface-visibility-property-clause-3a6b5b6d9d0b"
+        ]
+      }
+    },
+    {
+      "id": "svg-three-dimensional-functions",
+      "title": "11. SVG and 3D transform functions",
+      "level": 2,
+      "text_sha256": "0a5fec89f7a6a61eeb808c3bf51739c0bdd02e79a699ac8f9c4045acacfdcf1e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.svg-three-dimensional-functions",
+          "css-transforms-2.svg-three-dimensional-functions-clause-4d4e8fe47da1"
+        ]
+      }
+    },
+    {
+      "id": "transform-functions",
+      "title": "12. The Transform Functions",
+      "level": 2,
+      "text_sha256": "72727c27383dbbdcea05354f083d69aca2a5ebdd7649836144fab1e3aabab21c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.transform-functions"
+        ]
+      }
+    },
+    {
+      "id": "two-d-transform-functions",
+      "title": "12.1. 2D Transform Functions",
+      "level": 3,
+      "text_sha256": "76fd416ca6434a7939c2da297f951dd4cf9ebab3af7f7c75d7b4e8fce8175f55",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.two-d-transform-functions"
+        ]
+      }
+    },
+    {
+      "id": "three-d-transform-functions",
+      "title": "12.2. 3D Transform Functions",
+      "level": 3,
+      "text_sha256": "69281ebb89bd8262a6c2a3598d183fb6c4b607db9abe2a27941aeb14171b02ba",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.three-d-transform-functions",
+          "css-transforms-2.three-d-transform-functions-clause-af347b9a4bce",
+          "css-transforms-2.three-d-transform-functions-clause-ef21104cef6c"
+        ]
+      }
+    },
+    {
+      "id": "transform-primitives",
+      "title": "12.3. Transform function primitives and derivatives",
+      "level": 3,
+      "text_sha256": "5aced478312a581d144e258e3371684af3d6586c3cade9b6294f664ebf660179",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.transform-primitives"
+        ]
+      }
+    },
+    {
+      "id": "matrix-interpolation",
+      "title": "13. Interpolation of Matrices",
+      "level": 2,
+      "text_sha256": "92fc2271998b3e01ba93af576bc0842de83470a8e700f566268305ad0738bf61",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.matrix-interpolation"
+        ]
+      }
+    },
+    {
+      "id": "interpolation-of-3d-matrices",
+      "title": "13.1. Interpolation of 3D matrices",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.interpolation-of-3d-matrices"
+        ]
+      }
+    },
+    {
+      "id": "decomposing-a-3d-matrix",
+      "title": "13.1.1. Decomposing a 3D matrix",
+      "level": 4,
+      "text_sha256": "45c61f5b806078ba546ea5690625af455f37a3f3bcbb39fb7a7787f4f2e0098e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.decomposing-a-3d-matrix"
+        ]
+      }
+    },
+    {
+      "id": "interpolation-of-decomposed-3d-matrix-values",
+      "title": "13.1.2. Interpolation of decomposed 3D matrix values",
+      "level": 4,
+      "text_sha256": "da03cec70b5fa849dc6f9f440e4a5a99168bf7fd521667b59b241fffde48aee2",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.interpolation-of-decomposed-3d-matrix-values"
+        ]
+      }
+    },
+    {
+      "id": "recomposing-to-a-3d-matrix",
+      "title": "13.1.3. Recomposing to a 3D matrix",
+      "level": 4,
+      "text_sha256": "f9748899cf1f903f26a1cf598bef70862d44af4de7573428f18276d0a27aac85",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.recomposing-to-a-3d-matrix"
+        ]
+      }
+    },
+    {
+      "id": "interpolation-of-transform-functions",
+      "title": "14. Interpolation of primitives and derived transform functions",
+      "level": 2,
+      "text_sha256": "c00d02a118a02fc6cb27d38670b442712bedf1f42b62cdc725d09c27ccc49697",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.interpolation-of-transform-functions",
+          "css-transforms-2.interpolation-of-transform-functions-clause-364c9255938b"
+        ]
+      }
+    },
+    {
+      "id": "combining-transform-lists",
+      "title": "15. Addition and accumulation of transform lists",
+      "level": 2,
+      "text_sha256": "ad9c6a32d305bf7a4e505232a3aaacade1a8cfb75fe57767f07e5607670f341f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.combining-transform-lists",
+          "css-transforms-2.combining-transform-lists-clause-d22c22e6a163"
+        ]
+      }
+    },
+    {
+      "id": "neutral-element",
+      "title": "15.1. Neutral element for addition",
+      "level": 3,
+      "text_sha256": "dcc32303eb42135f53c700377e3ecd4ac0c9d991f76eadca3b6d126b32420eb3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.neutral-element"
+        ]
+      }
+    },
+    {
+      "id": "mathematical-description",
+      "title": "16. Mathematical Description of Transform Functions",
+      "level": 2,
+      "text_sha256": "ed45558b99cd8f879dfa6d6e583764455d17102aa8a55ef1ed467c3bf0c087ff",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.mathematical-description"
+        ]
+      }
+    },
+    {
+      "id": "svg-transform",
+      "title": "17. The SVG transform Attribute",
+      "level": 2,
+      "text_sha256": "6649b55d9819f16222a8de284cd077f9585a3031fdaacbc6adb00fcf66af8aff",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.svg-transform"
+        ]
+      }
+    },
+    {
+      "id": "svg-animation",
+      "title": "18. SVG Animation",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.svg-animation"
+        ]
+      }
+    },
+    {
+      "id": "svg-animate-element",
+      "title": "18.1. The animate and set element",
+      "level": 3,
+      "text_sha256": "dad5a4c437952e20b9e31be07e2aa70701b3d48f76a2ede275c1d295e1bb5180",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.svg-animate-element"
+        ]
+      }
+    },
+    {
+      "id": "more-issues",
+      "title": "19. More Issues",
+      "level": 2,
+      "text_sha256": "a7c6fd90dac5faacff3fb2458dc2a2957b7d883db551b15ff56aa01dea353447",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.more-issues"
+        ]
+      }
+    },
+    {
+      "id": "priv-sec",
+      "title": "20. Security and Privacy Considerations",
+      "level": 2,
+      "text_sha256": "162f39bc79ce7eded9bf2ba5299c9e009b8fa2c68428e851c1a013c157247fda",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.priv-sec"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-recent",
+      "title": "Recent Changes",
+      "level": 3,
+      "text_sha256": "34ef21a1819ce2f9081074b6f1ded223766a1cbcf76945cdba00b1108b0cfb4e",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.changes-recent"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.w3c-conventions",
+          "css-transforms-2.w3c-conventions-clause-5c98c879f070",
+          "css-transforms-2.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.w3c-conformance-classes",
+          "css-transforms-2.w3c-conformance-classes-clause-ff408372426c",
+          "css-transforms-2.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.w3c-partial",
+          "css-transforms-2.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.w3c-testing",
+          "css-transforms-2.w3c-testing-clause-1e0fff369221",
+          "css-transforms-2.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "6c27ee137fa56ac981295cd9dcecb656de552e5846ae993f0c7a1aed68e61463",
+      "clause_count": 171,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "6e8b595ecc2272664fc2fa63df72206825b0864284d0e5a549ab917ba55a5cbd",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "dfa52034bde1c86b5bfffe0bfa3ad0161c9854ea81dc9596c9ace83fb428151b",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "d1e2e0cf273b9ebd77fb7a47278505f4142c90548a68cebe6f5ce8b6a46abf55",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "a66559a21362a6cdce4b1a859a3e61381153ed25dc37dacbafe7d7d8870d5874",
+      "clause_count": 74,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.property-index",
+          "css-transforms-2.property-index-clause-674d5fa645b0",
+          "css-transforms-2.property-index-clause-a6bcb784b4fe",
+          "css-transforms-2.property-index-clause-8a43ffc4183a"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "fddbeb09ed1ca6729d0b8dc4d5dae7063d623c5349cd9f9b0b971cf377300d7d",
+      "clause_count": 115,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-transforms-2.issues-index",
+          "css-transforms-2.issues-index-clause-10a830b959d8",
+          "css-transforms-2.issues-index-clause-d5089d3a5d4b"
+        ]
+      }
+    }
+  ]
+}

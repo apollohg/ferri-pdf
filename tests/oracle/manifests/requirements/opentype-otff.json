@@ -1,0 +1,1344 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-otff.the-opentype-font-file",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "the-opentype-font-file"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The OpenType Font File.",
+      "locator": {
+        "section_id": "the-opentype-font-file",
+        "text_sha256": "50ffcf5320075ebd72e69a5339f9d0b87649eb716273a5198624740b471b41b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.filenames",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "filenames"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Filenames.",
+      "locator": {
+        "section_id": "filenames",
+        "text_sha256": "739f2067d5482e86d4989ec396f21758481d32f349a70cc04d59a7fa9af7e353"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otff.filenames-clause-739f2067d548"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.filenames-clause-739f2067d548",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "filenames"
+      ],
+      "behaviour": "Filenames — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "filenames",
+        "clause_index": 0,
+        "clause_sha256": "739f2067d5482e86d4989ec396f21758481d32f349a70cc04d59a7fa9af7e353"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.data-types",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "data-types"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Data Types.",
+      "locator": {
+        "section_id": "data-types",
+        "text_sha256": "1eb713cec29f11c8fc0a373ab3d90616eba1ab0f4e12da13994da3fa364478ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otff.data-types-clause-866c7f84aacf",
+        "opentype-otff.data-types-clause-1ad85900c942"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.data-types-clause-866c7f84aacf",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "data-types"
+      ],
+      "behaviour": "Data Types — normative clause 69, located by its exact source hash.",
+      "locator": {
+        "section_id": "data-types",
+        "clause_index": 68,
+        "clause_sha256": "866c7f84aacfe605557c8b1f86d3d9c7eac22698a3b1aba9e762b77b3c836be3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.data-types-clause-1ad85900c942",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "data-types"
+      ],
+      "behaviour": "Data Types — normative clause 73, located by its exact source hash.",
+      "locator": {
+        "section_id": "data-types",
+        "clause_index": 72,
+        "clause_sha256": "1ad85900c94253a0b5a272d7e6bc43a5255e62438052b4c394c2fb365c78f0ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.table-version-numbers",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-version-numbers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Table Version Numbers.",
+      "locator": {
+        "section_id": "table-version-numbers",
+        "text_sha256": "17604a6e68abd74dc227209173eff4bd84cc64123eb6e40ae22d042976d72f57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otff.table-version-numbers-clause-d7fceca9d692",
+        "opentype-otff.table-version-numbers-clause-cb68cd0a573b",
+        "opentype-otff.table-version-numbers-clause-1e84cec40e42"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.table-version-numbers-clause-d7fceca9d692",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-version-numbers"
+      ],
+      "behaviour": "Table Version Numbers — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-version-numbers",
+        "clause_index": 8,
+        "clause_sha256": "d7fceca9d692f066ea5be9cb16ff2010bfa08adee901d46ce248619c91fe77c1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.table-version-numbers-clause-cb68cd0a573b",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-version-numbers"
+      ],
+      "behaviour": "Table Version Numbers — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-version-numbers",
+        "clause_index": 11,
+        "clause_sha256": "cb68cd0a573bd45bb5479ed20806ebfb4aa186ad8d932a5a20be6c82e596b6af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.table-version-numbers-clause-1e84cec40e42",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-version-numbers"
+      ],
+      "behaviour": "Table Version Numbers — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-version-numbers",
+        "clause_index": 12,
+        "clause_sha256": "1e84cec40e42270472f30d48bf8e64caa48b02afe1c4286a97037000b6628927"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.organization-of-an-opentype-font",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "organization-of-an-opentype-font"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Organization of an OpenType Font.",
+      "locator": {
+        "section_id": "organization-of-an-opentype-font",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.table-directory",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-directory"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Table Directory.",
+      "locator": {
+        "section_id": "table-directory",
+        "text_sha256": "7947f86371777fc88337ee32ffb7f1c166278fcb5fb1df918c1c3b1013769160"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otff.table-directory-clause-2bc535d058a8",
+        "opentype-otff.table-directory-clause-c3f13075bb47",
+        "opentype-otff.table-directory-clause-654f7311a460",
+        "opentype-otff.table-directory-clause-c81e4063c5d5",
+        "opentype-otff.table-directory-clause-c0e728dcde76",
+        "opentype-otff.table-directory-clause-89f763099b39",
+        "opentype-otff.table-directory-clause-c73b45d963de",
+        "opentype-otff.table-directory-clause-d96871f9bf49"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.table-directory-clause-2bc535d058a8",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-directory"
+      ],
+      "behaviour": "Table Directory — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-directory",
+        "clause_index": 25,
+        "clause_sha256": "2bc535d058a8ef340c2ff3783bf0db8af8f42a8575198b53ed982451e356c682"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.table-directory-clause-c3f13075bb47",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-directory"
+      ],
+      "behaviour": "Table Directory — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-directory",
+        "clause_index": 26,
+        "clause_sha256": "c3f13075bb47ae7097eb7b555fa976bce48edc330a35cd6430f9696631a27a97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.table-directory-clause-654f7311a460",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-directory"
+      ],
+      "behaviour": "Table Directory — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-directory",
+        "clause_index": 28,
+        "clause_sha256": "654f7311a460c3e7f028d51ce9496186cbd8e2ef79314145cb16a524f55fe7dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.table-directory-clause-c81e4063c5d5",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-directory"
+      ],
+      "behaviour": "Table Directory — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-directory",
+        "clause_index": 46,
+        "clause_sha256": "c81e4063c5d5f2eb62a97b3d999fff5b5495fd71eb91128ff5c7fa4c503c46eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.table-directory-clause-c0e728dcde76",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-directory"
+      ],
+      "behaviour": "Table Directory — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-directory",
+        "clause_index": 47,
+        "clause_sha256": "c0e728dcde761ac1bc9e764bc12d80cd7c15db71b8e5102db187abe2917b33a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.table-directory-clause-89f763099b39",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-directory"
+      ],
+      "behaviour": "Table Directory — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-directory",
+        "clause_index": 49,
+        "clause_sha256": "89f763099b39d41b65054c513734a26887cd83338bacdbff8411945976766ecb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.table-directory-clause-c73b45d963de",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-directory"
+      ],
+      "behaviour": "Table Directory — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-directory",
+        "clause_index": 51,
+        "clause_sha256": "c73b45d963de57a933868425dd341e896216c9bda2915f958b349601283de4fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.table-directory-clause-d96871f9bf49",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-directory"
+      ],
+      "behaviour": "Table Directory — normative clause 54, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-directory",
+        "clause_index": 53,
+        "clause_sha256": "d96871f9bf4983b2222f1632874bfcfd99c931e89eff5df38fd0b7aa1a30e85e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.calculating-checksums",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "calculating-checksums"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Calculating Checksums.",
+      "locator": {
+        "section_id": "calculating-checksums",
+        "text_sha256": "054c793f89bb4ad70b4ba8521cc661a5d8f9f787b0cb2f2bc2214f3a1fa2aedc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otff.calculating-checksums-clause-41e55be9cac1",
+        "opentype-otff.calculating-checksums-clause-44905ba5777a",
+        "opentype-otff.calculating-checksums-clause-f31125733afa"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.calculating-checksums-clause-41e55be9cac1",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "calculating-checksums"
+      ],
+      "behaviour": "Calculating Checksums — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "calculating-checksums",
+        "clause_index": 2,
+        "clause_sha256": "41e55be9cac1d1e05fd9c98fdbf37ad00835709d32c05a7d665f7a02c6c1d80a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.calculating-checksums-clause-44905ba5777a",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "calculating-checksums"
+      ],
+      "behaviour": "Calculating Checksums — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "calculating-checksums",
+        "clause_index": 10,
+        "clause_sha256": "44905ba5777a0f724ea9e951da94816f0ab86472e38bb68621d5a3c5ad2f0da3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.calculating-checksums-clause-f31125733afa",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "calculating-checksums"
+      ],
+      "behaviour": "Calculating Checksums — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "calculating-checksums",
+        "clause_index": 11,
+        "clause_sha256": "f31125733afa2c4b97e6e87f74c7ed86b3de5096e15a83920bd7e864b4bffd0f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.font-collections",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "font-collections"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font Collections.",
+      "locator": {
+        "section_id": "font-collections",
+        "text_sha256": "e256dbe2936f1ede588975237fb1e599e66fe7f4f9455ab40ba6faecb08a770d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.the-font-collection-file-structure",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "the-font-collection-file-structure"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Font Collection File Structure.",
+      "locator": {
+        "section_id": "the-font-collection-file-structure",
+        "text_sha256": "ded03041592c9b453fe3e0a37b21e6166470055fed7aec59b8c259157bb3b995"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otff.the-font-collection-file-structure-clause-f4f1de8a1411",
+        "opentype-otff.the-font-collection-file-structure-clause-8f8fc70b195a",
+        "opentype-otff.the-font-collection-file-structure-clause-1aa6f381cafe",
+        "opentype-otff.the-font-collection-file-structure-clause-5a17b97d8592",
+        "opentype-otff.the-font-collection-file-structure-clause-d18deb93563a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.the-font-collection-file-structure-clause-f4f1de8a1411",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "the-font-collection-file-structure"
+      ],
+      "behaviour": "The Font Collection File Structure — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-font-collection-file-structure",
+        "clause_index": 0,
+        "clause_sha256": "f4f1de8a14116aecfdc1abe505abd47d1711c0895e78ab540d3fee1ebe768fae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.the-font-collection-file-structure-clause-8f8fc70b195a",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "the-font-collection-file-structure"
+      ],
+      "behaviour": "The Font Collection File Structure — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-font-collection-file-structure",
+        "clause_index": 1,
+        "clause_sha256": "8f8fc70b195a4658e844fe4e9ac2f4714f784dd5f186f5a465f70964823257c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.the-font-collection-file-structure-clause-1aa6f381cafe",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "the-font-collection-file-structure"
+      ],
+      "behaviour": "The Font Collection File Structure — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-font-collection-file-structure",
+        "clause_index": 2,
+        "clause_sha256": "1aa6f381cafe2dcf8fbc9eec9e4a62423b171d595a7b6cb4f3480e4bc1e87061"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.the-font-collection-file-structure-clause-5a17b97d8592",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "the-font-collection-file-structure"
+      ],
+      "behaviour": "The Font Collection File Structure — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-font-collection-file-structure",
+        "clause_index": 4,
+        "clause_sha256": "5a17b97d85929f3d2632ab8af7d5ea8cdbd8826ac3bdc7bd8c425041c856276a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.the-font-collection-file-structure-clause-d18deb93563a",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "the-font-collection-file-structure"
+      ],
+      "behaviour": "The Font Collection File Structure — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-font-collection-file-structure",
+        "clause_index": 6,
+        "clause_sha256": "d18deb93563ac11f7ce7e70a588c0df29f6f1f5857216d76e447655047c9fdbf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.ttc-header",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "ttc-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in TTC Header.",
+      "locator": {
+        "section_id": "ttc-header",
+        "text_sha256": "54917a1c6fed4c49325a74be03f9e940ca66dbe1737bf6b13961bc1848eb678e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otff.ttc-header-clause-1e2db33f5c98"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.ttc-header-clause-1e2db33f5c98",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "ttc-header"
+      ],
+      "behaviour": "TTC Header — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "ttc-header",
+        "clause_index": 1,
+        "clause_sha256": "1e2db33f5c987deb44a182bccea164c201c29dbb3b738282e3574d5013293815"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.font-tables",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "font-tables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font Tables.",
+      "locator": {
+        "section_id": "font-tables",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.required-tables",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "required-tables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Required Tables.",
+      "locator": {
+        "section_id": "required-tables",
+        "text_sha256": "3bc14b44fcf4b154e7ba32b70532849d1c961e71be1642477f2b3b765799c5b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otff.required-tables-clause-42833ff8fb99"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.required-tables-clause-42833ff8fb99",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "required-tables"
+      ],
+      "behaviour": "Required Tables — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "required-tables",
+        "clause_index": 0,
+        "clause_sha256": "42833ff8fb99ecdd9cc53808d618ed1edd09cf729eca6694a167c69a650f2ba1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.tables-related-to-truetype-outlines",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "tables-related-to-truetype-outlines"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tables Related to TrueType Outlines.",
+      "locator": {
+        "section_id": "tables-related-to-truetype-outlines",
+        "text_sha256": "515c0c70b825acccebcd5d63eb80de49c1d023ec967a8520184f47a1d5a0b4f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.tables-related-to-cff-outlines",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "tables-related-to-cff-outlines"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tables Related to CFF Outlines.",
+      "locator": {
+        "section_id": "tables-related-to-cff-outlines",
+        "text_sha256": "2e27026c1626ea6003c30f56e1076e51b272965c0208b0edc7d241b02f995d02"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.table-related-to-svg-outlines",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "table-related-to-svg-outlines"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Table Related to SVG Outlines.",
+      "locator": {
+        "section_id": "table-related-to-svg-outlines",
+        "text_sha256": "9bbff34d4be757db3dcb91b2d96b83707c4fa69f507ff8313463809933404e6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.tables-related-to-bitmap-glyphs",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "tables-related-to-bitmap-glyphs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tables Related to Bitmap Glyphs.",
+      "locator": {
+        "section_id": "tables-related-to-bitmap-glyphs",
+        "text_sha256": "deff0188348e4ff35c44a6627d5439475fa7226e44115692036dc90c805a1ca2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.advanced-typographic-tables",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "advanced-typographic-tables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Advanced Typographic Tables.",
+      "locator": {
+        "section_id": "advanced-typographic-tables",
+        "text_sha256": "b8408e044ba519cb34c4714bfe4fab13a92e72499bb3bf5e9da94ac710019903"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.tables-used-for-opentype-font-variations",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "tables-used-for-opentype-font-variations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tables used for OpenType Font Variations.",
+      "locator": {
+        "section_id": "tables-used-for-opentype-font-variations",
+        "text_sha256": "b39ecab033ac7f3c857996dfce545a40e88d768ed65116311e09cde10df43844"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otff.tables-used-for-opentype-font-variations-clause-6b357e8e1dcb",
+        "opentype-otff.tables-used-for-opentype-font-variations-clause-43c148dff4a3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.tables-used-for-opentype-font-variations-clause-6b357e8e1dcb",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "tables-used-for-opentype-font-variations"
+      ],
+      "behaviour": "Tables used for OpenType Font Variations — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "tables-used-for-opentype-font-variations",
+        "clause_index": 15,
+        "clause_sha256": "6b357e8e1dcb2c1891c68b3f7ade2c213cedb363f26ec87acd7090acd267b3a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.tables-used-for-opentype-font-variations-clause-43c148dff4a3",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "tables-used-for-opentype-font-variations"
+      ],
+      "behaviour": "Tables used for OpenType Font Variations — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "tables-used-for-opentype-font-variations",
+        "clause_index": 18,
+        "clause_sha256": "43c148dff4a39a4a1f7e964ffb2bd49ecbdf7116febf6977d9a2bdb16fec886d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.tables-related-to-color-fonts",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "tables-related-to-color-fonts"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tables Related to Color Fonts.",
+      "locator": {
+        "section_id": "tables-related-to-color-fonts",
+        "text_sha256": "ab0944ddffb580b32a73c54a246cb833d924466cd9830907a786ca9cf9013579"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.other-opentype-tables",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "other-opentype-tables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Other OpenType Tables.",
+      "locator": {
+        "section_id": "other-opentype-tables",
+        "text_sha256": "4bedf7a34ca68195754ded78a20d37e401b205d55baf2a4916e7c518b9d5e298"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otff.other-opentype-tables-clause-7a1d5745d1af"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.other-opentype-tables-clause-7a1d5745d1af",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "other-opentype-tables"
+      ],
+      "behaviour": "Other OpenType Tables — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "other-opentype-tables",
+        "clause_index": 24,
+        "clause_sha256": "7a1d5745d1afad99d23cd118c783ef66658fe7b763da1229fff5512491ea0384"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otff.ms-in-this-article",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.ms-feedback",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.ms-additional-resources-mobile-heading",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "3eb25b59e14381d11045c4430465c544fb0a9c44ecad8beae369fc9d1fea3786"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otff.side-doc-outline",
+      "family": "opentype-otff",
+      "source_id": "opentype-otff",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

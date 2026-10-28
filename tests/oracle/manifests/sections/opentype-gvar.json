@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-gvar",
+  "sections": [
+    {
+      "id": "gvar--glyph-variations-table",
+      "title": "gvar — Glyph Variations Table",
+      "level": 1,
+      "text_sha256": "27a031c49ca5aad2586555266aed9377037d52d87720761711a0b2d100e9a9f8",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.gvar-glyph-variations-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "Introduction",
+      "level": 2,
+      "text_sha256": "da69aa9156a137dd21a12fc140269dfec10a1426f72c16764edae7c613a91ffa",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.introduction",
+          "opentype-gvar.introduction-clause-be7470d8be41"
+        ]
+      }
+    },
+    {
+      "id": "glyph-variations-table-format",
+      "title": "Glyph variations table format",
+      "level": 2,
+      "text_sha256": "1a80e488fe31b07ad858e45c4cecbc500b1d92b563444a55826a189c48254488",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.glyph-variations-table-format",
+          "opentype-gvar.glyph-variations-table-format-clause-02eb38fa8ebe"
+        ]
+      }
+    },
+    {
+      "id": "gvar-header",
+      "title": "'gvar' header",
+      "level": 2,
+      "text_sha256": "7599a7f79300c1809b76ba251e69a3b6d3d50ca3ac8943bc67fcfb7d1547f234",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.gvar-header",
+          "opentype-gvar.gvar-header-clause-b80e7f653c59",
+          "opentype-gvar.gvar-header-clause-3b70a5fcdef6"
+        ]
+      }
+    },
+    {
+      "id": "shared-tuples-array",
+      "title": "Shared tuples array",
+      "level": 2,
+      "text_sha256": "d37d428729e1c9a4430845ac5d61f798d2442a28d5d051a7a2a8b4e47bca0772",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.shared-tuples-array"
+        ]
+      }
+    },
+    {
+      "id": "the-glyphvariationdata-table-array",
+      "title": "The GlyphVariationData table array",
+      "level": 2,
+      "text_sha256": "c58a509b313f4cdd93c94a032c4f894c8c3d8612322048b76ddea8134c0cf555",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.the-glyphvariationdata-table-array"
+        ]
+      }
+    },
+    {
+      "id": "processing-the-gvar-table",
+      "title": "Processing the 'gvar' table",
+      "level": 2,
+      "text_sha256": "bde3b4fdc49a117a64d0b7b11800712c9243276ff4b560d4e93627a1a9944012",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.processing-the-gvar-table",
+          "opentype-gvar.processing-the-gvar-table-clause-a4fafd4cea3a"
+        ]
+      }
+    },
+    {
+      "id": "point-numbers-and-processing-for-composite-glyphs",
+      "title": "Point numbers and processing for composite glyphs",
+      "level": 2,
+      "text_sha256": "e126dcfed26151513d4b069d119d4a77786534bad630b59853a465db5e3d973b",
+      "clause_count": 135,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.point-numbers-and-processing-for-composite-glyphs",
+          "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-156f01c6f126",
+          "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-71af8e7070ed",
+          "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-c91962de8094",
+          "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-5f3d50e9d19c"
+        ]
+      }
+    },
+    {
+      "id": "inferred-deltas-for-un-referenced-point-numbers",
+      "title": "Inferred deltas for un-referenced point numbers",
+      "level": 2,
+      "text_sha256": "0ef59ba84748f6e3499668859b2c28650c656f4c71988f41952d9f4ac0ba91e5",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers",
+          "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-3662438e18bc",
+          "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-5efd757bb057",
+          "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-99bfa7a95309",
+          "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-0d34ecd951c0",
+          "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-9af50d6ad915",
+          "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-78ca0a44aea0"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "3eb25b59e14381d11045c4430465c544fb0a9c44ecad8beae369fc9d1fea3786",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gvar.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

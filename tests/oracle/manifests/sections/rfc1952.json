@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "source_id": "rfc1952",
+  "sections": [
+    {
+      "id": "heading-d79b73bbd333",
+      "title": "GZIP file format specification version 4.3",
+      "level": 1,
+      "text_sha256": "39fd6a3e59d1e829f97d190afbc03505687a0aff9454de6dd81d06d1af1c1c94",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc1952.heading-d79b73bbd333"
+        ]
+      }
+    },
+    {
+      "id": "section-1",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "8303af9ad23ee290c05c4c18c565071e31fa6691e8fb8d77294a7b31f1356346",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc1952.section-1",
+          "rfc1952.section-1-clause-bc243eaaed18"
+        ]
+      }
+    },
+    {
+      "id": "section-2",
+      "title": "2. Detailed specification",
+      "level": 2,
+      "text_sha256": "7b0d2979cd4adef90dfe28a51f0630ad1929f26d187f7b29e6e362bfbdf97c53",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc1952.section-2",
+          "rfc1952.section-2-clause-ea5b441b31fc",
+          "rfc1952.section-2-clause-ed40577d6934",
+          "rfc1952.section-2-clause-ce121a9da7ff",
+          "rfc1952.section-2-clause-98fde7525037"
+        ]
+      }
+    },
+    {
+      "id": "section-3",
+      "title": "3. References",
+      "level": 2,
+      "text_sha256": "1c41b8cb16481233a47f0210fa8472e9aeb7ef8f64283730bfa493968db64320",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc1952.section-3"
+        ]
+      }
+    },
+    {
+      "id": "section-4",
+      "title": "4. Security Considerations",
+      "level": 2,
+      "text_sha256": "e7102794a860938a332cd679bcb1574b91250b6b93b8ec438b1ec6c2754c7e30",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc1952.section-4"
+        ]
+      }
+    },
+    {
+      "id": "section-5",
+      "title": "5. Acknowledgements",
+      "level": 2,
+      "text_sha256": "d2fd16e880497ff8d5fcdd44597be6d7060571acde611f60b887f31857058552",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc1952.section-5"
+        ]
+      }
+    },
+    {
+      "id": "section-6",
+      "title": "6. Author's Address",
+      "level": 2,
+      "text_sha256": "c2b920ee26eef28b2c7f6cfae4c365a852d0752930ae7a87efebd04dc0e9411b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc1952.section-6"
+        ]
+      }
+    },
+    {
+      "id": "section-7",
+      "title": "7. Appendix: Jean-Loup Gailly's gzip utility",
+      "level": 2,
+      "text_sha256": "2db7aa302cad9045f56edb0282fb61bacb84d79ea697177e88d911dd0a8965f8",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc1952.section-7"
+        ]
+      }
+    },
+    {
+      "id": "section-8",
+      "title": "8. Appendix: Sample CRC Code",
+      "level": 2,
+      "text_sha256": "1b0ef6845dcdd291a790beeaa1246be394e93227aecb54f974482ddfeb1e3002",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc1952.section-8",
+          "rfc1952.section-8-clause-934167f6d3ab"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1148 @@
+{
+  "schema_version": 1,
+  "source_id": "css-values-5",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Values and Units Module Level 5",
+      "level": 1,
+      "text_sha256": "b65aaaf527531d17a4e8d7fd9cd71a83f9ccc9ed811ce6559193489724d6133f",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "9c91b1cf9a7c37caf80a0448f10bdae20b3ebda4bd1c113a2c2f35138fc80975",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "a52f8d8172885e637435ee47878f17f4a4bf09ff18d4d2a575cbdd33b77d5794",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "685a9c28948c8b197e482494e2f5b1b09b3f0955d24b1efaa29d0cea016983fb",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "ba19d686b9149fe931748535a08c30f4ff1c80c9f83124488f1d409a194df79c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "d7235c6c214affbcad271a11aaa06d550ab29f85c951a52be674e6ae27f1ca76",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.placement"
+        ]
+      }
+    },
+    {
+      "id": "textual-values",
+      "title": "2. Textual Data Types",
+      "level": 2,
+      "text_sha256": "a8dea69da77e00b77d494fe5695dd88e0da5687d70ab81ed2405d7cdb54ef662",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.textual-values"
+        ]
+      }
+    },
+    {
+      "id": "value-defs",
+      "title": "3. Value Definition Syntax",
+      "level": 2,
+      "text_sha256": "984f2f3d36e2abb9626f1443f05b1b28e03b4c52821a3e1374b2b00f5dde4a09",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.value-defs"
+        ]
+      }
+    },
+    {
+      "id": "component-functions",
+      "title": "3.1. Functional Notation Definitions",
+      "level": 3,
+      "text_sha256": "2911842a6414d6383c5c3ace9e1aa4c3768a4a3829b234f93e535c3effea7fa7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.component-functions"
+        ]
+      }
+    },
+    {
+      "id": "component-function-commas",
+      "title": "3.1.1. Commas in Function Arguments",
+      "level": 4,
+      "text_sha256": "74568da859e1440bd2c6aab706b16e89a13bce722622504e97eb47f07b6794ef",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.component-function-commas",
+          "css-values-5.component-function-commas-clause-55e699f31c55",
+          "css-values-5.component-function-commas-clause-33ad3bd7b47e",
+          "css-values-5.component-function-commas-clause-d8f3ec880a3b",
+          "css-values-5.component-function-commas-clause-9c8a2488759c"
+        ]
+      }
+    },
+    {
+      "id": "boolean",
+      "title": "3.2. Boolean Expression Multiplier <boolean-expr[]>",
+      "level": 3,
+      "text_sha256": "98207ded97abba6e4341eab24c1a5f0c9a53cf477795e5a8e780bdd18facfc67",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.boolean",
+          "css-values-5.boolean-clause-c52db304a6f5"
+        ]
+      }
+    },
+    {
+      "id": "css-syntax",
+      "title": "3.3. Specifying CSS Syntax in CSS: the <syntax> type",
+      "level": 3,
+      "text_sha256": "c2aff202dc9b1ada6d677f4dd5d67ac454c7ea58afcca3eb90004b47912174b8",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.css-syntax"
+        ]
+      }
+    },
+    {
+      "id": "parse-syntax",
+      "title": "3.3.1. Parsing as <syntax>",
+      "level": 4,
+      "text_sha256": "932c05f1ae781b1558abd57a2de37df11ec2125b29595362935956489d5aea63",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.parse-syntax",
+          "css-values-5.parse-syntax-clause-8e0d6384cc39",
+          "css-values-5.parse-syntax-clause-220af3bf838f",
+          "css-values-5.parse-syntax-clause-36b3561e2ebf"
+        ]
+      }
+    },
+    {
+      "id": "level-4-extensions",
+      "title": "4. Extensions to Level 4 Value Types",
+      "level": 2,
+      "text_sha256": "95243a4448c342cc06ad0566aaf2f253d17f195f8c4dc456a1c0aaca8c606766",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.level-4-extensions"
+        ]
+      }
+    },
+    {
+      "id": "urls",
+      "title": "4.1. Resource Locators: the <url> type",
+      "level": 3,
+      "text_sha256": "c5ddbffd7495808c247747802829c13694ea96a7fb46f6a8247a7ade615c9d24",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.urls"
+        ]
+      }
+    },
+    {
+      "id": "request-url-modifiers",
+      "title": "4.1.1. Request URL Modifiers",
+      "level": 4,
+      "text_sha256": "08da1b1f5c1f6a14fe33f69e5ac10facecd05ec5a7853894ea6e89192f06acc4",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.request-url-modifiers"
+        ]
+      }
+    },
+    {
+      "id": "position",
+      "title": "4.2. 2D Positioning: the <position> type",
+      "level": 3,
+      "text_sha256": "19adfb0a33a3317dbfc4a22c6e195f13d70addd85f0bdba654c11eb78cef8af4",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.position",
+          "css-values-5.position-clause-942c49700a0c"
+        ]
+      }
+    },
+    {
+      "id": "position-parsing",
+      "title": "4.2.1. Parsing <position>",
+      "level": 4,
+      "text_sha256": "c7e9fa7c1038438275bb9943d261c11e56f29a662f4ed7b0a2d2e9ce262d2dcf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.position-parsing"
+        ]
+      }
+    },
+    {
+      "id": "position-serialization",
+      "title": "4.2.2. Serializing <position>",
+      "level": 4,
+      "text_sha256": "be9cc48ff16c66f38bec4fb03ff87efa6a5dc01ea2b89b458df6c06c63b1b598",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.position-serialization",
+          "css-values-5.position-serialization-clause-97966986eb23",
+          "css-values-5.position-serialization-clause-93c47067c768"
+        ]
+      }
+    },
+    {
+      "id": "combine-positions",
+      "title": "4.2.3. Combination of <position>",
+      "level": 4,
+      "text_sha256": "efa1193700891d86a1c13e85ff7aec98c6cad10fc469d983965c5f585db97a74",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.combine-positions"
+        ]
+      }
+    },
+    {
+      "id": "progress",
+      "title": "5. Interpolation Progress Functional Notations",
+      "level": 2,
+      "text_sha256": "5d276e29a937cda8c547bb6887f272acfb1d1c06c0c95500c086abf315018271",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.progress"
+        ]
+      }
+    },
+    {
+      "id": "progress-func",
+      "title": "5.1. Calculated Progress Values: the progress() notation",
+      "level": 3,
+      "text_sha256": "98a3d6cc84980e2d4d6c63e28add232df99b765a2d68ae53ff7647fe92be732d",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.progress-func",
+          "css-values-5.progress-func-clause-5aa8c9071ffd",
+          "css-values-5.foundation-static-function-progress"
+        ]
+      }
+    },
+    {
+      "id": "media-progress-func",
+      "title": "5.2. Media Query Progress Values: the media-progress() notation",
+      "level": 3,
+      "text_sha256": "b2f11315612ecad671825a36de4efd8d6debf6132672a8ca15c768729081dba3",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.media-progress-func",
+          "css-values-5.media-progress-func-clause-fd578ae1e24e",
+          "css-values-5.foundation-static-function-media-progress"
+        ]
+      }
+    },
+    {
+      "id": "container-progress-func",
+      "title": "5.3. Container Query Progress Values: the container-progress() notation",
+      "level": 3,
+      "text_sha256": "9529ba7474e6b566a8fc6a18a6e67dcdcbf619f6e1a276bd7225b13c469cf786",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.container-progress-func",
+          "css-values-5.container-progress-func-clause-8942cb75330e",
+          "css-values-5.container-progress-func-clause-9187d15e08ba"
+        ]
+      }
+    },
+    {
+      "id": "mixing",
+      "title": "6. Mixing and Interpolation Notations: the *-mix() family",
+      "level": 2,
+      "text_sha256": "a79e4beb98ddd86024f52a107c1cc7ac9b10985dc0eda0fa6fa8a405150daa7a",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.mixing"
+        ]
+      }
+    },
+    {
+      "id": "progress-type",
+      "title": "6.1. Representing Interpolation Progress: the <progress> type",
+      "level": 3,
+      "text_sha256": "d68bc1f53a401c55e4ad57e9e4766a7832900d99eadca3e8191771ae7db6cb6c",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.progress-type",
+          "css-values-5.progress-type-clause-86843641f126",
+          "css-values-5.progress-type-clause-4ccc7aa017b2",
+          "css-values-5.progress-type-clause-366e0828f53f"
+        ]
+      }
+    },
+    {
+      "id": "calc-mix",
+      "title": "6.2. Interpolated Numeric and Dimensional Values: the calc-mix() notation",
+      "level": 3,
+      "text_sha256": "1fa0aba631c5a6e73ebd6c402428e1974e6b2e4606cb49cc6b59388ac5f5e445",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.calc-mix",
+          "css-values-5.calc-mix-clause-4dcc4bf88ee9",
+          "css-values-5.calc-mix-clause-325928451ab1",
+          "css-values-5.foundation-static-function-calc-mix"
+        ]
+      }
+    },
+    {
+      "id": "color-mix",
+      "title": "6.3. Interpolated Color Values: the color-mix() notation",
+      "level": 3,
+      "text_sha256": "8848952a2c674293aa669c5182554eafda9c807d3129173d8b89452769d17abf",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.color-mix"
+        ]
+      }
+    },
+    {
+      "id": "cross-fade",
+      "title": "6.4. Interpolated Image Values: the cross-fade() notation",
+      "level": 3,
+      "text_sha256": "fa87fc5ba027896cc6ece3e5cb00659a9a0c5109065611da661f24190897594c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.cross-fade"
+        ]
+      }
+    },
+    {
+      "id": "transform-mix",
+      "title": "6.5. Interpolated Transform Values: the transform-mix() notation",
+      "level": 3,
+      "text_sha256": "3af60fc9e448634969ecc5e7a0d30378f28ae5eb3c80cbf20f18ead42b52de6f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.transform-mix",
+          "css-values-5.transform-mix-clause-c1ee344d4b57"
+        ]
+      }
+    },
+    {
+      "id": "mix",
+      "title": "6.6. Interpolated Property Values: the mix() notation",
+      "level": 3,
+      "text_sha256": "f762b1d2a3a53404455244ede69b2b5e70f76ec974834451a6211beb2c88f3fe",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.mix",
+          "css-values-5.mix-clause-59946bb1adea",
+          "css-values-5.mix-clause-f50059dc7e44",
+          "css-values-5.mix-clause-db668a5549bd",
+          "css-values-5.mix-clause-1c353ca477d3"
+        ]
+      }
+    },
+    {
+      "id": "value-insert",
+      "title": "7. Miscellaneous Value Substituting Functions",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.value-insert"
+        ]
+      }
+    },
+    {
+      "id": "whole-value",
+      "title": "7.1. Representing An Entire Property Value: the <whole-value> type",
+      "level": 3,
+      "text_sha256": "2b84339e1a5b9d37ef006315beac65686377e106f3f7b65bfb3a7f7d0eb8bf9f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.whole-value"
+        ]
+      }
+    },
+    {
+      "id": "first-valid",
+      "title": "7.2. Selecting the First Supported Value: the first-valid() notation",
+      "level": 3,
+      "text_sha256": "c1795b3fe8525153667143a6fd1ec36e93a5c13742f20c25db420f52b841307c",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.first-valid",
+          "css-values-5.first-valid-clause-488254918d48",
+          "css-values-5.first-valid-clause-3a54f02214c1",
+          "css-values-5.first-valid-clause-20e0be33c12b",
+          "css-values-5.first-valid-clause-1489f14f13f5",
+          "css-values-5.first-valid-clause-b19dc04792ad",
+          "css-values-5.foundation-static-function-first-valid"
+        ]
+      }
+    },
+    {
+      "id": "if-notation",
+      "title": "7.3. Conditional Value Selection: the if() notation",
+      "level": 3,
+      "text_sha256": "1e072524290a29eb5908b35275723f34385e18425edef7c92d54e11e1f07f75a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.if-notation",
+          "css-values-5.if-notation-clause-f8e58983bc23",
+          "css-values-5.if-notation-clause-b58e06688d1a",
+          "css-values-5.foundation-static-function-if"
+        ]
+      }
+    },
+    {
+      "id": "toggle-notation",
+      "title": "7.4. Toggling Between Values: the toggle() notation",
+      "level": 3,
+      "text_sha256": "3f59fc39d4d90064ff874ba64872757960a43664bb729bead960283d06cde853",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.toggle-notation",
+          "css-values-5.toggle-notation-clause-a7179a34acc6",
+          "css-values-5.toggle-notation-clause-54faa57a0395",
+          "css-values-5.toggle-notation-clause-741e0b2129b9",
+          "css-values-5.toggle-notation-clause-8256f82f0f4b",
+          "css-values-5.toggle-notation-clause-6f5991db3f80",
+          "css-values-5.toggle-notation-clause-af8360d15ac9",
+          "css-values-5.foundation-static-function-toggle"
+        ]
+      }
+    },
+    {
+      "id": "var-notation",
+      "title": "7.5. Custom Property References: the var() notation",
+      "level": 3,
+      "text_sha256": "efad58c4c0dfbc255f6c21216e5020fe6e49373ba025a007d0190954da451eaa",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.var-notation"
+        ]
+      }
+    },
+    {
+      "id": "inherit-notation",
+      "title": "7.6. Inherited Value References: the inherit() notation",
+      "level": 3,
+      "text_sha256": "49985d6f523194a3c39cd16a466f26d9cc6554e4b26b73aed2ed5a9634696534",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.inherit-notation",
+          "css-values-5.inherit-notation-clause-e4054707505a",
+          "css-values-5.inherit-notation-clause-6841780930bb",
+          "css-values-5.inherit-notation-clause-f219e3f1fc3d",
+          "css-values-5.inherit-notation-clause-31a0cc02eb91",
+          "css-values-5.inherit-notation-clause-33a1c4633154",
+          "css-values-5.foundation-static-function-inherit"
+        ]
+      }
+    },
+    {
+      "id": "attr-notation",
+      "title": "7.7. Attribute References: the attr() notation",
+      "level": 3,
+      "text_sha256": "b57219a44b2151b0af516f40bdfd1cd0d5fc4263dd605e7d3b35a4aadef33964",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.attr-notation",
+          "css-values-5.attr-notation-clause-a0222f977814",
+          "css-values-5.attr-notation-clause-d79786dcada1",
+          "css-values-5.attr-notation-clause-4cdebc03beda",
+          "css-values-5.foundation-static-function-attr"
+        ]
+      }
+    },
+    {
+      "id": "attr-substitution",
+      "title": "7.7.1. Attribute Value Substitution: the attr() notation",
+      "level": 4,
+      "text_sha256": "1518e3489f6b26596ada9d0de41f8055710a50ef694d2d92617240b8620b9a83",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.attr-substitution",
+          "css-values-5.attr-substitution-clause-e0c03a670eae",
+          "css-values-5.attr-substitution-clause-7584b453038b",
+          "css-values-5.attr-substitution-clause-f411537caf6f"
+        ]
+      }
+    },
+    {
+      "id": "attr-security",
+      "title": "7.7.2. Security",
+      "level": 4,
+      "text_sha256": "a4ab2edeffd38cbd95d35605dc7a097833f215032e07738fdf84d784f2cd2469",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.attr-security",
+          "css-values-5.attr-security-clause-4b7369ad594f",
+          "css-values-5.attr-security-clause-c3d8ce8b8438"
+        ]
+      }
+    },
+    {
+      "id": "randomness",
+      "title": "8. Generating Random Values",
+      "level": 2,
+      "text_sha256": "4fc8fba06524dad95391425219143637eb5a273364856e983f21e0040628de67",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.randomness",
+          "css-values-5.randomness-clause-e36daf299353",
+          "css-values-5.randomness-clause-7d244d7733e3"
+        ]
+      }
+    },
+    {
+      "id": "random",
+      "title": "8.1. Generating a Random Numeric Value: the random() function",
+      "level": 3,
+      "text_sha256": "11b6ac20ec484a9c3fb0013433093a5d7981a45e34972c7f9be63d472e78cbfa",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.random",
+          "css-values-5.random-clause-3ea6ada2efbc",
+          "css-values-5.random-clause-ad6c9423a54d",
+          "css-values-5.random-clause-c04835202e2c",
+          "css-values-5.random-clause-d0ce697295d5",
+          "css-values-5.random-clause-e7f71054928c",
+          "css-values-5.random-clause-916543414eee",
+          "css-values-5.random-clause-4a08340c5567",
+          "css-values-5.random-clause-c23f42297db0",
+          "css-values-5.random-clause-160ba659b339",
+          "css-values-5.random-clause-db50f71d8d4a",
+          "css-values-5.foundation-static-function-random"
+        ]
+      }
+    },
+    {
+      "id": "random-infinities",
+      "title": "8.1.1. Argument Ranges",
+      "level": 4,
+      "text_sha256": "a6217615b86ea73aeac800db960bd4c98809ac778d47367593542de2c92a591d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.random-infinities"
+        ]
+      }
+    },
+    {
+      "id": "random-item",
+      "title": "8.2. Picking a Random Item From a List: the random-item() function",
+      "level": 3,
+      "text_sha256": "0f8a4fcb572fad307298b3e7fccd6cceb506abf1b5b567a9df2bb1d5e7435233",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.random-item",
+          "css-values-5.random-item-clause-4c457ffc051f",
+          "css-values-5.random-item-clause-95641e28ae88",
+          "css-values-5.random-item-clause-54baf81311e3",
+          "css-values-5.random-item-clause-0d83e93833c3",
+          "css-values-5.random-item-clause-6de781fd5977",
+          "css-values-5.foundation-static-function-random-item"
+        ]
+      }
+    },
+    {
+      "id": "random-caching",
+      "title": "8.3. Generating/Caching Random Values: the <random-caching-options> value",
+      "level": 3,
+      "text_sha256": "9e6507d340f422af97848200c4daf3ebf5d7a0199a1b9cb16d542af0959c10d1",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.random-caching",
+          "css-values-5.random-caching-clause-7dd6e3f817b5",
+          "css-values-5.random-caching-clause-a1090270b5e3",
+          "css-values-5.random-caching-clause-27e020ac3e77",
+          "css-values-5.random-caching-clause-8a9b377bc1f6",
+          "css-values-5.random-caching-clause-19423ed45550",
+          "css-values-5.random-caching-clause-722b75b1d63f",
+          "css-values-5.random-caching-clause-d0bc68b44b4b",
+          "css-values-5.random-caching-clause-2cbc9caea7f7",
+          "css-values-5.random-caching-clause-06192676f09f"
+        ]
+      }
+    },
+    {
+      "id": "tree-counting",
+      "title": "9. Tree Counting Functions: the sibling-count() and sibling-index() notations",
+      "level": 2,
+      "text_sha256": "6d0d67ae82554f41eaab55bf3e96701dd19a00710eebbf44a234b47c2e3b98be",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.tree-counting",
+          "css-values-5.tree-counting-clause-b37e99884b57",
+          "css-values-5.foundation-static-function-sibling-count-index"
+        ]
+      }
+    },
+    {
+      "id": "calc-size",
+      "title": "10. Calculating With Intrinsic Sizes: the calc-size() function",
+      "level": 2,
+      "text_sha256": "b3352e70cd03f4a3386a6f003f875b6c92080c48c7e4f460c4a4ffa8357cd2fe",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.calc-size",
+          "css-values-5.calc-size-clause-9aa93333995a",
+          "css-values-5.calc-size-clause-d1dfd0b8f2a2",
+          "css-values-5.foundation-static-function-calc-size"
+        ]
+      }
+    },
+    {
+      "id": "simplifying-calc-size",
+      "title": "10.1. Simplifying calc-size()",
+      "level": 3,
+      "text_sha256": "5f7a5dafa7ed82766b0ea6b873f13e713e8181dd5c839a837c609444c28fe9d3",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.simplifying-calc-size",
+          "css-values-5.simplifying-calc-size-clause-b7296d9799ea",
+          "css-values-5.simplifying-calc-size-clause-c7f12eeead77",
+          "css-values-5.simplifying-calc-size-clause-f6de9043dd50"
+        ]
+      }
+    },
+    {
+      "id": "resolving-calc-size",
+      "title": "10.2. Resolving calc-size()",
+      "level": 3,
+      "text_sha256": "c66868d3bc30fc201490b155a2a09facc0fcc3150f9613e512df7fe421abd791",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.resolving-calc-size",
+          "css-values-5.resolving-calc-size-clause-17d0d9f907ca"
+        ]
+      }
+    },
+    {
+      "id": "interp-calc-size",
+      "title": "10.3. Interpolating calc-size()",
+      "level": 3,
+      "text_sha256": "073bdb86613833c03152ead70fe0172cbdd0edb6cea0a49e488e6061676aa561",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.interp-calc-size",
+          "css-values-5.interp-calc-size-clause-32c9b401b6a3",
+          "css-values-5.interp-calc-size-clause-e92cc79a89f6"
+        ]
+      }
+    },
+    {
+      "id": "interpolate-size",
+      "title": "10.4. Interpolating sizing keywords: the interpolate-size property",
+      "level": 3,
+      "text_sha256": "ba2d2c7af5ab66d17fa980eb5ddd947de80cb3368aefe9789f0ef64db5bf19c2",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.interpolate-size",
+          "css-values-5.interpolate-size-clause-0bfb594796d1",
+          "css-values-5.interpolate-size-clause-cca2516ebb1d",
+          "css-values-5.interpolate-size-clause-5e9e425cc8e6",
+          "css-values-5.interpolate-size-clause-3ade41407681",
+          "css-values-5.interpolate-size-clause-98cfd0f9492c"
+        ]
+      }
+    },
+    {
+      "id": "arbitrary-substitution",
+      "title": "Appendix A: Arbitrary Substitution Functions",
+      "level": 2,
+      "text_sha256": "430a794f2da3a393d12e182340b597e69e826474d319243dc68ea24934bbf40c",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.arbitrary-substitution",
+          "css-values-5.arbitrary-substitution-clause-fdda30ac7df6",
+          "css-values-5.arbitrary-substitution-clause-598436d713bd",
+          "css-values-5.arbitrary-substitution-clause-3df1abc593de",
+          "css-values-5.arbitrary-substitution-clause-1aacc2563677",
+          "css-values-5.arbitrary-substitution-clause-ecf0118bec95",
+          "css-values-5.arbitrary-substitution-clause-17bb780d1772",
+          "css-values-5.arbitrary-substitution-clause-7db7cbc5f266",
+          "css-values-5.arbitrary-substitution-clause-70475fbd3fbb",
+          "css-values-5.arbitrary-substitution-clause-22b3dc9f98be",
+          "css-values-5.arbitrary-substitution-clause-be7d9bc2bf35",
+          "css-values-5.arbitrary-substitution-clause-a4b1549915bc",
+          "css-values-5.arbitrary-substitution-clause-18c881887de6",
+          "css-values-5.arbitrary-substitution-clause-5b2f6d3a4cf6",
+          "css-values-5.arbitrary-substitution-clause-aa7798264bcf",
+          "css-values-5.arbitrary-substitution-clause-3e759d3c66ab",
+          "css-values-5.arbitrary-substitution-clause-90e1c887a670",
+          "css-values-5.arbitrary-substitution-clause-4aa91d26c5b0",
+          "css-values-5.arbitrary-substitution-clause-4d545760075d",
+          "css-values-5.arbitrary-substitution-clause-c990b84137b2",
+          "css-values-5.arbitrary-substitution-clause-6c75ce13e3f0",
+          "css-values-5.arbitrary-substitution-clause-735088554680",
+          "css-values-5.arbitrary-substitution-clause-5c798ef1acd7",
+          "css-values-5.foundation-substitution-order"
+        ]
+      }
+    },
+    {
+      "id": "invalid-substitution",
+      "title": "Invalid Substitution",
+      "level": 3,
+      "text_sha256": "605de9fb2122901352c09a8a0f013f40e03bcba313eb4c8c3972194109f16b68",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.invalid-substitution",
+          "css-values-5.invalid-substitution-clause-7ca6c30f2f94",
+          "css-values-5.invalid-substitution-clause-bd1eaca23c9f",
+          "css-values-5.invalid-substitution-clause-017ff78fe732",
+          "css-values-5.invalid-substitution-clause-7702df7e20a3",
+          "css-values-5.invalid-substitution-clause-a65eea9ba935",
+          "css-values-5.invalid-substitution-clause-ce843f5783eb",
+          "css-values-5.foundation-substitution-order"
+        ]
+      }
+    },
+    {
+      "id": "substitution-in-shorthands",
+      "title": "Substitution in Shorthand Properties",
+      "level": 3,
+      "text_sha256": "5e4443c804fff5bfcc2f97be66f6d787ce13f6cfe4390a81dce54c761c482119",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.substitution-in-shorthands",
+          "css-values-5.substitution-in-shorthands-clause-2a65af9b52b9",
+          "css-values-5.substitution-in-shorthands-clause-2984f62a3b77",
+          "css-values-5.substitution-in-shorthands-clause-a7e5dc15c221",
+          "css-values-5.substitution-in-shorthands-clause-67273d17da30",
+          "css-values-5.substitution-in-shorthands-clause-b378ad87a94f",
+          "css-values-5.foundation-substitution-order"
+        ]
+      }
+    },
+    {
+      "id": "long-substitution",
+      "title": "Safely Handling Overly-Long Substitution",
+      "level": 3,
+      "text_sha256": "9ec7eab397a6d484d89a087d00e72e2dba6b80d557efb9d3fab35d3b5b7c0d2c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.long-substitution",
+          "css-values-5.long-substitution-clause-d74a67cd5b23",
+          "css-values-5.long-substitution-clause-56ccd98c9803",
+          "css-values-5.long-substitution-clause-c27060d805b2",
+          "css-values-5.foundation-substitution-order"
+        ]
+      }
+    },
+    {
+      "id": "boolean-logic",
+      "title": "Appendix B: Boolean Logic",
+      "level": 2,
+      "text_sha256": "7b7c590f1275d92dd523f9276c93bb32e60c02168f0de90198e5452b264d1997",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.boolean-logic",
+          "css-values-5.foundation-substitution-order"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "2fed750f7ec0d49fcca1e80fea910263f233d4f51472c2f532c624c6e372f441",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "1e0ec5a7ae021daf5dfb05ea04dd6c50e27264131357956e7ad3109183bbd718",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.changes"
+        ]
+      }
+    },
+    {
+      "id": "additions-L4",
+      "title": "Additions Since Level 4",
+      "level": 3,
+      "text_sha256": "5f62729ebcd2366d56b906f4546d8f97bc93afc5df69a53ca0635272bb5f812f",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.additions-l4",
+          "css-values-5.additions-l4-clause-2b7dc76b63d4",
+          "css-values-5.additions-l4-clause-e100777d7239"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "b02f06907e9d99cfe18af041726a20c7daaa1236dcaa3853b5f6cd775f510c05",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.security"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "e777fa1720d6fba9973d47847c6069989fa2d50ed606fcfed3653ab95d434cf8",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.privacy"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.w3c-conventions",
+          "css-values-5.w3c-conventions-clause-5c98c879f070",
+          "css-values-5.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.w3c-conformance-classes",
+          "css-values-5.w3c-conformance-classes-clause-ff408372426c",
+          "css-values-5.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.w3c-partial",
+          "css-values-5.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.w3c-testing",
+          "css-values-5.w3c-testing-clause-1e0fff369221",
+          "css-values-5.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "088b9b62b078f5fd3b6fcc633ee455d249eb63e3f7e7a9362fd8005245fa732f",
+      "clause_count": 118,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "d0ae34cc85bf7afbc1a7c54b3e15bf29d7126cfe8f3d39e9d9159539086de21b",
+      "clause_count": 222,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "659b2990c70cf4ee9d6afea3c56075f677ee4f48b57fbeaa93ee958b4e885b90",
+      "clause_count": 84,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.import-81d6eacb7a2f",
+          "css-values-5.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "518ebaf205d256111451f946a7eab8f245f793802c1420e91a2d920c4cb406d8",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "fc24080b0d890b9fcd58de185e85748dc9bdf6f7c5b123157049bc40cd6f14ba",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.property-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "780f47a923838ca99706da482f5a166ad05a6bdc51f88218fad2df665521664b",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-values-5.issues-index"
+        ]
+      }
+    }
+  ]
+}

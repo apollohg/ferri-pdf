@@ -1,0 +1,892 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-22",
+  "sections": [
+    {
+      "id": "G14025",
+      "title": "Symbols",
+      "level": 1,
+      "text_sha256": "6868b6363f75d78d9571f31e34b2cfec5e03ff4a3ec8ef5957e97e1dd225acea",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.g14025",
+          "unicode17-chapter-22.g14025-clause-e65fa1b4a518"
+        ]
+      }
+    },
+    {
+      "id": "heading-c3359c964042",
+      "title": "22.1 Currency Symbols",
+      "level": 2,
+      "text_sha256": "f80511b3da12ef7b591fcecab0a7c6e43bb4eb9ead146ad2b7bff13e8f92b2c6",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-c3359c964042",
+          "unicode17-chapter-22.heading-c3359c964042-clause-b8c1a90d84be"
+        ]
+      }
+    },
+    {
+      "id": "heading-6ee2f53bc17f",
+      "title": "22.1.1 Currency Symbols: U+20A0–U+20CF",
+      "level": 3,
+      "text_sha256": "70fa057997a39561fec9bdb6a44d573c75c8ba85a5c8f852d021934e630588a1",
+      "clause_count": 87,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-6ee2f53bc17f",
+          "unicode17-chapter-22.heading-6ee2f53bc17f-clause-ccc9bdc19971"
+        ]
+      }
+    },
+    {
+      "id": "heading-175b572c4006",
+      "title": "22.2 Letterlike Symbols",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-175b572c4006"
+        ]
+      }
+    },
+    {
+      "id": "heading-6a76f7bf52f8",
+      "title": "22.2.1 Letterlike Symbols: U+2100–U+214F",
+      "level": 3,
+      "text_sha256": "9841095d511769626843781149a3c729999f598f1bedb29d16f7c3c0a32513da",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-6a76f7bf52f8",
+          "unicode17-chapter-22.heading-6a76f7bf52f8-clause-ac4988150495",
+          "unicode17-chapter-22.heading-6a76f7bf52f8-clause-99c0789d8526",
+          "unicode17-chapter-22.heading-6a76f7bf52f8-clause-043e9134d168",
+          "unicode17-chapter-22.heading-6a76f7bf52f8-clause-41d81ec617be",
+          "unicode17-chapter-22.heading-6a76f7bf52f8-clause-40f4f4e6e7ad",
+          "unicode17-chapter-22.heading-6a76f7bf52f8-clause-c302912c5ded"
+        ]
+      }
+    },
+    {
+      "id": "heading-f0d65f3c8a8f",
+      "title": "22.2.2 Mathematical Alphanumeric Symbols: U+1D400–U+1D7FF",
+      "level": 3,
+      "text_sha256": "b93c76ed6c05252531036a76d44df0ace108be983a050bfd9fe52425a9b59323",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-f0d65f3c8a8f",
+          "unicode17-chapter-22.heading-f0d65f3c8a8f-clause-b200a0741d37"
+        ]
+      }
+    },
+    {
+      "id": "heading-daab19ca67f4",
+      "title": "22.2.3 Mathematical Alphabets",
+      "level": 3,
+      "text_sha256": "aa5adf7c46ae50ade02a45503b6d9a1c78e51f27ca1f575e395487c650f8a56e",
+      "clause_count": 68,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-daab19ca67f4",
+          "unicode17-chapter-22.heading-daab19ca67f4-clause-4373b6ed040f",
+          "unicode17-chapter-22.heading-daab19ca67f4-clause-eff3605b867d",
+          "unicode17-chapter-22.heading-daab19ca67f4-clause-3fa3b8c174df"
+        ]
+      }
+    },
+    {
+      "id": "heading-1cb6043c0269",
+      "title": "22.2.4 Fonts Used for Mathematical Alphabets",
+      "level": 3,
+      "text_sha256": "1de83354f690599fc80a18ec548fd0ac4c17ed30da85cd5413236b26f3e37499",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-1cb6043c0269",
+          "unicode17-chapter-22.heading-1cb6043c0269-clause-831e6b7304c6",
+          "unicode17-chapter-22.heading-1cb6043c0269-clause-777412149e68",
+          "unicode17-chapter-22.heading-1cb6043c0269-clause-8c7adbf8f19e"
+        ]
+      }
+    },
+    {
+      "id": "heading-e5a89e116af0",
+      "title": "22.2.5 Arabic Mathematical Alphabetic Symbols: U+1EE00–U+1EEFF",
+      "level": 3,
+      "text_sha256": "9fe33e01ffebbe39c87372442f75971d85ed15170d5972d6ea350d706e7d509d",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-e5a89e116af0",
+          "unicode17-chapter-22.heading-e5a89e116af0-clause-9a1b27f84b7f"
+        ]
+      }
+    },
+    {
+      "id": "heading-bc7d2eb6fe70",
+      "title": "22.3 Numerals",
+      "level": 2,
+      "text_sha256": "30b9916b47b5684c29ac6cdad8a94b579190f5e8a202b927c29ebae9f4582793",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-bc7d2eb6fe70"
+        ]
+      }
+    },
+    {
+      "id": "heading-41f52b72c975",
+      "title": "22.3.1 Decimal Digits",
+      "level": 3,
+      "text_sha256": "1375964db6233628c639fd49d0cffd1bd998da62eddde697ec6c869d5345519f",
+      "clause_count": 132,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-41f52b72c975",
+          "unicode17-chapter-22.heading-41f52b72c975-clause-d0add6dec2fe",
+          "unicode17-chapter-22.heading-41f52b72c975-clause-4edabc9cee28"
+        ]
+      }
+    },
+    {
+      "id": "heading-c4255b34a24c",
+      "title": "22.3.2 Other Digits",
+      "level": 3,
+      "text_sha256": "7940c4ba8d97461091ccfe88ba794d1ce06bb92b756b3116533ac8a88656eca9",
+      "clause_count": 104,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-c4255b34a24c",
+          "unicode17-chapter-22.heading-c4255b34a24c-clause-940103956ac7",
+          "unicode17-chapter-22.heading-c4255b34a24c-clause-40870f870bf2",
+          "unicode17-chapter-22.heading-c4255b34a24c-clause-705283aed1b6"
+        ]
+      }
+    },
+    {
+      "id": "heading-a9c239a4be77",
+      "title": "22.3.3 Non-Decimal Radix Systems",
+      "level": 3,
+      "text_sha256": "30ea0e4ed04e53e642c230304ba08b24b9eb264a97f828ed5e2e1a7956d2d95b",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-a9c239a4be77"
+        ]
+      }
+    },
+    {
+      "id": "heading-42bec3f76cd2",
+      "title": "22.3.4 Acrophonic Systems and Other Letter-based Numbers",
+      "level": 3,
+      "text_sha256": "732fbf3657661c48c0a9ec5dd34f10e537e7de94b98fe58200bb3224c92dd00a",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-42bec3f76cd2"
+        ]
+      }
+    },
+    {
+      "id": "heading-ab92d53495d3",
+      "title": "22.3.5 Coptic Epact Numbers: U+102E0–U+102FF",
+      "level": 3,
+      "text_sha256": "01ca609c61017532e4cfd8cc802a394dfe2f20ef3b38ebfd6da3222535322282",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-ab92d53495d3"
+        ]
+      }
+    },
+    {
+      "id": "heading-64314dea7340",
+      "title": "22.3.6 Rumi Numeral Symbols: U+10E60–U+10E7F",
+      "level": 3,
+      "text_sha256": "8a5bf546dab597cd84f51c3b0595a85ec03ccc71ef00e056a2e5570279e91c55",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-64314dea7340"
+        ]
+      }
+    },
+    {
+      "id": "heading-e0f6abc9de89",
+      "title": "22.3.7 Siyaq Numerical Notation Systems",
+      "level": 3,
+      "text_sha256": "58240ecbac010244596c508343a58f387d3700e1324348371905d2228a23dd7e",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-e0f6abc9de89",
+          "unicode17-chapter-22.heading-e0f6abc9de89-clause-96204e74710b"
+        ]
+      }
+    },
+    {
+      "id": "heading-3a9b4a7008a4",
+      "title": "22.3.8 CJK Numerals",
+      "level": 3,
+      "text_sha256": "51063cac54d888e2f25918120207e4aa6426b86fca66564613971679d0091a13",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-3a9b4a7008a4",
+          "unicode17-chapter-22.heading-3a9b4a7008a4-clause-ce670e70b3da",
+          "unicode17-chapter-22.heading-3a9b4a7008a4-clause-84a57763a4ef",
+          "unicode17-chapter-22.heading-3a9b4a7008a4-clause-c63f539ffc47"
+        ]
+      }
+    },
+    {
+      "id": "heading-309859a76f52",
+      "title": "22.3.9 Fractions",
+      "level": 3,
+      "text_sha256": "28e03bbb7e17f958c668f15784bae7d31c10de509762865f7544feda548373f5",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-309859a76f52"
+        ]
+      }
+    },
+    {
+      "id": "heading-76c641dae360",
+      "title": "22.3.10 Common Indic Number Forms: U+A830–U+A83F",
+      "level": 3,
+      "text_sha256": "c285175454b864094d5987298aa0f2d5f5998eb4af59dcb8ee154561b546e477",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-76c641dae360"
+        ]
+      }
+    },
+    {
+      "id": "heading-22e39b785c0d",
+      "title": "22.4 Superscript and Subscript Symbols",
+      "level": 2,
+      "text_sha256": "e16ed8ab60d64dd8ab694437a4a3000fac7dd265f63bb39404456b44af70b7eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-22e39b785c0d"
+        ]
+      }
+    },
+    {
+      "id": "heading-be40a79a8ab6",
+      "title": "22.4.1 Superscripts and Subscripts: U+2070–U+209F",
+      "level": 3,
+      "text_sha256": "03eff7066e0f23fc2709dc02197330ddec90c3305faf22977cd41ad458273c27",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-be40a79a8ab6",
+          "unicode17-chapter-22.heading-be40a79a8ab6-clause-27dbd251266f",
+          "unicode17-chapter-22.heading-be40a79a8ab6-clause-de773862259f"
+        ]
+      }
+    },
+    {
+      "id": "heading-6ffbd61c5a47",
+      "title": "22.5 Mathematical Symbols",
+      "level": 2,
+      "text_sha256": "34510d3e01eb5dbbf3ab3ccbf6460e32ad0349ee90aac27a95245d678aa8246a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-6ffbd61c5a47"
+        ]
+      }
+    },
+    {
+      "id": "heading-fb937741e24c",
+      "title": "22.5.1 Mathematical Operators: U+2200–U+22FF",
+      "level": 3,
+      "text_sha256": "f255048585066025e98bd5f339eaf28457c1dfbad6e5f726d5d645dcc3d43f8a",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-fb937741e24c",
+          "unicode17-chapter-22.heading-fb937741e24c-clause-6066d5c88c41",
+          "unicode17-chapter-22.heading-fb937741e24c-clause-cf60fe184473",
+          "unicode17-chapter-22.heading-fb937741e24c-clause-b4148d83dc6c"
+        ]
+      }
+    },
+    {
+      "id": "heading-d70e30f4316a",
+      "title": "22.5.2 Supplements to Mathematical Symbols and Arrows",
+      "level": 3,
+      "text_sha256": "e8b16c1ec9c79f28abcff920eba64062cad663c90b17f801f8e30f7a7000cefc",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-d70e30f4316a"
+        ]
+      }
+    },
+    {
+      "id": "heading-514f647a46bd",
+      "title": "22.5.3 Supplemental Mathematical Operators: U+2A00–U+2AFF",
+      "level": 3,
+      "text_sha256": "464ab0f4330952c38529ee06205b0807e95670bc50ce778668ff2d65d366b852",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-514f647a46bd"
+        ]
+      }
+    },
+    {
+      "id": "heading-ec56530ce210",
+      "title": "22.5.4 Miscellaneous Mathematical Symbols-A: U+27C0–U+27EF",
+      "level": 3,
+      "text_sha256": "f8d235c0af636cb3ffd301181269d7b0dc95e1e5494ff22ec5fad3911d2449b5",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-ec56530ce210",
+          "unicode17-chapter-22.heading-ec56530ce210-clause-4cf74c7a4e59"
+        ]
+      }
+    },
+    {
+      "id": "heading-44b73f63b469",
+      "title": "22.5.5 Miscellaneous Mathematical Symbols-B: U+2980–U+29FF",
+      "level": 3,
+      "text_sha256": "60fcf861ce7525edb87abe186ce88fea7f24b0a6ba6b161189b86cc9919a7323",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-44b73f63b469",
+          "unicode17-chapter-22.heading-44b73f63b469-clause-a87180763b7d"
+        ]
+      }
+    },
+    {
+      "id": "heading-eba0c8224eeb",
+      "title": "22.5.6 Miscellaneous Symbols and Arrows: U+2B00–U+2BFF",
+      "level": 3,
+      "text_sha256": "cef999a7d6947511735e0dd97d8e4a4d78dadf9d812e06577b33d53f5b5d34c1",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-eba0c8224eeb"
+        ]
+      }
+    },
+    {
+      "id": "heading-f2f19925309a",
+      "title": "22.5.7 Arrows: U+2190–U+21FF",
+      "level": 3,
+      "text_sha256": "55d4b9f398ce30f2ab3400e623d6a16cd333498f187a248cfc83ec10da0855ef",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-f2f19925309a",
+          "unicode17-chapter-22.heading-f2f19925309a-clause-8e5c813f750d"
+        ]
+      }
+    },
+    {
+      "id": "heading-4a1fdee7ea46",
+      "title": "22.5.8 Supplemental Arrows",
+      "level": 3,
+      "text_sha256": "d8cde825e3967e7a23dada9b23dc3efd932f7544858067ecc67e50801f0e23be",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-4a1fdee7ea46"
+        ]
+      }
+    },
+    {
+      "id": "heading-ae8f5b76589f",
+      "title": "22.5.9 Standardized Variants of Mathematical Symbols",
+      "level": 3,
+      "text_sha256": "704fcd7bb0bd81397b89ead946fe87291eafac705497b37c66b38fa919804508",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-ae8f5b76589f"
+        ]
+      }
+    },
+    {
+      "id": "heading-d33c609b265e",
+      "title": "22.6 Invisible Mathematical Operators",
+      "level": 2,
+      "text_sha256": "6ca8763c97ae7a5d7cbf35b36d664f581c0c41390ffe612d36521c9722cd89ab",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-d33c609b265e",
+          "unicode17-chapter-22.heading-d33c609b265e-clause-5f81a627a847"
+        ]
+      }
+    },
+    {
+      "id": "heading-b2a6137166ad",
+      "title": "22.7 Technical Symbols",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-b2a6137166ad"
+        ]
+      }
+    },
+    {
+      "id": "heading-f5e26b7252eb",
+      "title": "22.7.1 Control Pictures: U+2400–U+243F",
+      "level": 3,
+      "text_sha256": "abb42a658b19340b0e5c4c41038bab82875bcfdeb60dfb26d1ece3c81c11af80",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-f5e26b7252eb"
+        ]
+      }
+    },
+    {
+      "id": "heading-b0302e6919f5",
+      "title": "22.7.2 Miscellaneous Technical: U+2300–U+23FF",
+      "level": 3,
+      "text_sha256": "321f7011285bd2783c34f41d8518c066add1a35b9b2d44671ac3c3a99d26d6f6",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-b0302e6919f5",
+          "unicode17-chapter-22.heading-b0302e6919f5-clause-edf26c7a68d3",
+          "unicode17-chapter-22.heading-b0302e6919f5-clause-7844690918f1",
+          "unicode17-chapter-22.heading-b0302e6919f5-clause-5cc2467d9677",
+          "unicode17-chapter-22.heading-b0302e6919f5-clause-b56c61dd68a3",
+          "unicode17-chapter-22.heading-b0302e6919f5-clause-b8659f7ff5db"
+        ]
+      }
+    },
+    {
+      "id": "heading-87c451a9e4f1",
+      "title": "22.7.3 Optical Character Recognition: U+2440–U+245F",
+      "level": 3,
+      "text_sha256": "ff81d6a0af9199d174e3ca376f3a40a8462b7f030421c3119758ce4a057407f9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-87c451a9e4f1"
+        ]
+      }
+    },
+    {
+      "id": "heading-0e7226d8000f",
+      "title": "22.7.4 Symbols for Legacy Computing: U+1FB00-U+1FBFF",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-0e7226d8000f"
+        ]
+      }
+    },
+    {
+      "id": "heading-aa899f61be0f",
+      "title": "Symbols for Legacy Computing Supplement: U+1CC00–U+1CEBF",
+      "level": 3,
+      "text_sha256": "3537eb0ff97d1fab4d67a2affa86be2745e38ac871e745c588ee979ea18b37c2",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-aa899f61be0f"
+        ]
+      }
+    },
+    {
+      "id": "heading-c2526ed985c9",
+      "title": "22.8 Geometrical Symbols",
+      "level": 2,
+      "text_sha256": "2002bef95bca12feaa187921d87cbe5f6fadb0c8397ff150af78a6cd864e20cb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-c2526ed985c9"
+        ]
+      }
+    },
+    {
+      "id": "heading-516887b245ab",
+      "title": "22.8.1 Box Drawing and Block Elements",
+      "level": 3,
+      "text_sha256": "63d8e7239f7d48968007a05759f412690f5f49d231c85b74eac67143faa86876",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-516887b245ab",
+          "unicode17-chapter-22.heading-516887b245ab-clause-fd1068eb0b92",
+          "unicode17-chapter-22.heading-516887b245ab-clause-4eef80ba7a07"
+        ]
+      }
+    },
+    {
+      "id": "heading-0daedbc70f51",
+      "title": "22.8.2 Geometric Shapes: U+25A0–U+25FF",
+      "level": 3,
+      "text_sha256": "f2dae4fc2bb12cd761de5e2ee0d6ed0407f7b7e2094d88548302a3ac57f1f3f2",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-0daedbc70f51",
+          "unicode17-chapter-22.heading-0daedbc70f51-clause-749d97b9af41",
+          "unicode17-chapter-22.heading-0daedbc70f51-clause-f4495fabcce7"
+        ]
+      }
+    },
+    {
+      "id": "heading-592724847d27",
+      "title": "22.8.3 Geometric Shapes Extended: U+1F780–U+1F7FF",
+      "level": 3,
+      "text_sha256": "090ab2a7695682d5e001122c4b67719ac56fa98dc0bcf5761b163fa0a81b45a9",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-592724847d27"
+        ]
+      }
+    },
+    {
+      "id": "heading-83152041ec9d",
+      "title": "22.9 Miscellaneous Symbols",
+      "level": 2,
+      "text_sha256": "0e3e9052409cd2538c1ce687b5d02bf99ff6ef9cd6fa3c2e586bd3cc21e2132b",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-83152041ec9d",
+          "unicode17-chapter-22.heading-83152041ec9d-clause-04591262c78f",
+          "unicode17-chapter-22.heading-83152041ec9d-clause-07d197e3b835",
+          "unicode17-chapter-22.heading-83152041ec9d-clause-0eb505ea2d5f"
+        ]
+      }
+    },
+    {
+      "id": "heading-479e9edf3d94",
+      "title": "22.9.1 Miscellaneous Symbols and Pictographs",
+      "level": 3,
+      "text_sha256": "1fa3a1d73e16868efec633289d45ebf84f50b03a7ec81644d5acd68c0e7841e1",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-479e9edf3d94",
+          "unicode17-chapter-22.heading-479e9edf3d94-clause-7296244b25da"
+        ]
+      }
+    },
+    {
+      "id": "heading-7695698ec367",
+      "title": "22.9.2 Emoticons: U+1F600–U+1F64F",
+      "level": 3,
+      "text_sha256": "ce840b377cade4b9d534eaa654a2b937d911f026880bffc78207797eb37e1b7b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-7695698ec367"
+        ]
+      }
+    },
+    {
+      "id": "heading-a74ebb84c63f",
+      "title": "22.9.3 Transport and Map Symbols: U+1F680–U+1F6FF",
+      "level": 3,
+      "text_sha256": "92929b28f8ce4cde413ffd6e593ee9cc2b1743bc2be64032c80c569b277050ba",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-a74ebb84c63f"
+        ]
+      }
+    },
+    {
+      "id": "heading-0d8d890e72b8",
+      "title": "22.9.4 Dingbats: U+2700–U+27BF",
+      "level": 3,
+      "text_sha256": "ed42a556e89326950ee0a7ed37646ae7ba4ecd9e7766e88d1b620c2c4bdfe105",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-0d8d890e72b8",
+          "unicode17-chapter-22.heading-0d8d890e72b8-clause-4987a83169e5",
+          "unicode17-chapter-22.heading-0d8d890e72b8-clause-8104e4509cc3",
+          "unicode17-chapter-22.heading-0d8d890e72b8-clause-0a43aa540475"
+        ]
+      }
+    },
+    {
+      "id": "heading-86dab638251b",
+      "title": "22.9.5 Ornamental Dingbats: U+1F650–U+1F67F",
+      "level": 3,
+      "text_sha256": "5aed34de618d67fa1e46e52845b236ac4b9705478803e06717385b35fc0e96e7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-86dab638251b"
+        ]
+      }
+    },
+    {
+      "id": "heading-67a4c77dc461",
+      "title": "22.9.6 Alchemical Symbols: U+1F700–U+1F77F",
+      "level": 3,
+      "text_sha256": "74f8855c6e914cd42fb9dfde470a11fb9401eff56c047894d51e3ee678b072c9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-67a4c77dc461"
+        ]
+      }
+    },
+    {
+      "id": "heading-49b8ac7f1b2e",
+      "title": "22.9.7 Mahjong Tiles: U+1F000–U+1F02F",
+      "level": 3,
+      "text_sha256": "52d28e5aac97bf790de919eecfe17f478017379ca3488756cd0a44f0bc8fc10e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-49b8ac7f1b2e"
+        ]
+      }
+    },
+    {
+      "id": "heading-7d874026d278",
+      "title": "22.9.8 Domino Tiles: U+1F030–U+1F09F",
+      "level": 3,
+      "text_sha256": "61a4a2bdc74547a597942e832d89525d0591f1d09dc91e607bbcba483f851ed7",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-7d874026d278"
+        ]
+      }
+    },
+    {
+      "id": "heading-1344d161e0fb",
+      "title": "22.9.9 Playing Cards: U+1F0A0–U+1F0FF",
+      "level": 3,
+      "text_sha256": "a42db4f4134b440b405092d433f5bb38260cee964cabf47a7fb584d5fd897bda",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-1344d161e0fb",
+          "unicode17-chapter-22.heading-1344d161e0fb-clause-a229619476a4"
+        ]
+      }
+    },
+    {
+      "id": "heading-84d651664ed2",
+      "title": "22.9.10 Chess Symbols: U+1FA00–U+1FA6F",
+      "level": 3,
+      "text_sha256": "a84de5625482383f72813ffdd38fa1ddd4f5bd81e44bc71773d62e56c04558e2",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-84d651664ed2"
+        ]
+      }
+    },
+    {
+      "id": "heading-9cdc792807c0",
+      "title": "22.9.11 Yijing Hexagram Symbols: U+4DC0–U+4DFF",
+      "level": 3,
+      "text_sha256": "0a8ebab3167a81a0351118dbb030c85255d179d9bbd1464462e8d329a9e2f14f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-9cdc792807c0"
+        ]
+      }
+    },
+    {
+      "id": "heading-868d99ecb513",
+      "title": "22.9.12 Tai Xuan Jing Symbols: U+1D300–U+1D35F",
+      "level": 3,
+      "text_sha256": "cd60dd32bd33f62aaa41a9959b00a7c3f271359e80492411c19b55d29f0658ca",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-868d99ecb513"
+        ]
+      }
+    },
+    {
+      "id": "heading-b2451ea0ba18",
+      "title": "22.9.13 Ancient Symbols: U+10190–U+101CF",
+      "level": 3,
+      "text_sha256": "cbf4a8b47c5c8d90eaaa86eee30e44eb921704a212a8ac021b4405289a0b63e6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-b2451ea0ba18"
+        ]
+      }
+    },
+    {
+      "id": "heading-4d9be160b6ac",
+      "title": "22.9.14 Phaistos Disc: U+101D0–U+101FF",
+      "level": 3,
+      "text_sha256": "068ea528db4202dd988fd1c1c07aedbaf2be2d81ec3dc0f6742e207b2f5a4f2a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-4d9be160b6ac"
+        ]
+      }
+    },
+    {
+      "id": "heading-c69caec284b9",
+      "title": "22.10 Enclosed and Square",
+      "level": 2,
+      "text_sha256": "d674303a181922a26cb5cdd73c2233698388fc7826a4cca3561ad31c3bbdf50c",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-c69caec284b9"
+        ]
+      }
+    },
+    {
+      "id": "heading-4e125e1abc7a",
+      "title": "22.10.1 Enclosed Alphanumerics: U+2460–U+24FF",
+      "level": 3,
+      "text_sha256": "255ec8d364c5a586374cbd5ecc93b7253d5edd95492a3257231ae3dfcf4426f9",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-4e125e1abc7a"
+        ]
+      }
+    },
+    {
+      "id": "heading-ea142b2ad23b",
+      "title": "22.10.2 Enclosed CJK Letters and Months: U+3200–U+32FF",
+      "level": 3,
+      "text_sha256": "d2bf837c86c560993761eed77da5d0c325d4a27fe5803c27371e5623450c5cf8",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-ea142b2ad23b"
+        ]
+      }
+    },
+    {
+      "id": "heading-54c9108d8c12",
+      "title": "22.10.3 CJK Compatibility: U+3300–U+33FF",
+      "level": 3,
+      "text_sha256": "3bbfa592bf7ce7136c38e1c99d9dd2d84ac910a14861e1ef9c98872d6c5e468c",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-54c9108d8c12"
+        ]
+      }
+    },
+    {
+      "id": "heading-41c9e8f8952c",
+      "title": "22.10.4 Enclosed Alphanumeric Supplement: U+1F100–U+1F1FF",
+      "level": 3,
+      "text_sha256": "1200f3edf571aba5708aef6a5d515cc5732de23be0eb8aab3ffbdeb79dbcf853",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-41c9e8f8952c",
+          "unicode17-chapter-22.heading-41c9e8f8952c-clause-166965432d08",
+          "unicode17-chapter-22.heading-41c9e8f8952c-clause-2816cc98ff4a"
+        ]
+      }
+    },
+    {
+      "id": "heading-0db8ae83897c",
+      "title": "22.10.5 Enclosed Ideographic Supplement: U+1F200–U+1F2FF",
+      "level": 3,
+      "text_sha256": "5bd3c6c64df4e1159e9b29203c40f9a714fd638cfe98eec4bcef1dbcb3aa115a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-22.heading-0db8ae83897c"
+        ]
+      }
+    }
+  ]
+}

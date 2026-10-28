@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-box",
+  "sections": [
+    {
+      "id": "box-model",
+      "title": "8 Box model",
+      "level": 1,
+      "text_sha256": "7efa10f1062e10011713d2dc8180c200d583dda95af07f87cfee10764669a3e6",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.box-model"
+        ]
+      }
+    },
+    {
+      "id": "box-dimensions",
+      "title": "8.1 Box dimensions",
+      "level": 2,
+      "text_sha256": "57655a323dac71249c259bcc3356da263566da8dd90ac9bf5cad620ea5bc8d01",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.box-dimensions"
+        ]
+      }
+    },
+    {
+      "id": "mpb-examples",
+      "title": "8.2 Example of margins, padding, and borders",
+      "level": 2,
+      "text_sha256": "063cd0eed9fbc4de5ede15216afa3e459868e62c6dd825fe739670b9869504c0",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.mpb-examples"
+        ]
+      }
+    },
+    {
+      "id": "margin-properties",
+      "title": "8.3 Margin properties: 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', and 'margin'",
+      "level": 2,
+      "text_sha256": "c905a844143e265458e1862e7e51b4d4e90058223602922da36ae2a2919d3314",
+      "clause_count": 67,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.margin-properties",
+          "css21-box.margin-properties-clause-18e2b1e6dfea",
+          "css21-box.margin-properties-clause-cca2516ebb1d",
+          "css21-box.margin-properties-clause-0a9441610e31",
+          "css21-box.margin-properties-clause-90698b476c19",
+          "css21-box.margin-properties-clause-e95634b63792",
+          "css21-box.margin-properties-clause-4bed44a8a48c"
+        ]
+      }
+    },
+    {
+      "id": "collapsing-margins",
+      "title": "8.3.1 Collapsing margins",
+      "level": 3,
+      "text_sha256": "cccfe8919c4f57125da9eace9bd804e6972c90b3aba1ed80db69240ba63426b9",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.collapsing-margins",
+          "css21-box.collapsing-margins-clause-9748e541fc2d",
+          "css21-box.collapsing-margins-clause-94efef4c2167",
+          "css21-box.collapsing-margins-clause-3f95f3ee581c",
+          "css21-box.collapsing-margins-clause-394424e462dc"
+        ]
+      }
+    },
+    {
+      "id": "padding-properties",
+      "title": "8.4 Padding properties: 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', and 'padding'",
+      "level": 2,
+      "text_sha256": "c1aa15af7145ab4b75b6fe913ced6b071bc9d771510ff25897ad8eb2c41e0bc4",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.padding-properties",
+          "css21-box.padding-properties-clause-218b7cb9eb77",
+          "css21-box.padding-properties-clause-cca2516ebb1d",
+          "css21-box.padding-properties-clause-2fe63b34faa7",
+          "css21-box.padding-properties-clause-f75d455d7785",
+          "css21-box.padding-properties-clause-2e7c73ba3ead"
+        ]
+      }
+    },
+    {
+      "id": "border-properties",
+      "title": "8.5 Border properties",
+      "level": 2,
+      "text_sha256": "caddcce6ec5109b07e9785a7544191e517ddc32dbd12504329190862f55d6be9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.border-properties"
+        ]
+      }
+    },
+    {
+      "id": "border-width-properties",
+      "title": "8.5.1 Border width: 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', and 'border-width'",
+      "level": 3,
+      "text_sha256": "fc6895927aef69f9a4ca5cf147dfe912fd41ab89cf7d96408cbf3f0dae8f144e",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.border-width-properties",
+          "css21-box.border-width-properties-clause-eccff0c6c5f3",
+          "css21-box.border-width-properties-clause-f49dd425ee3e",
+          "css21-box.border-width-properties-clause-004c0c54aac7",
+          "css21-box.border-width-properties-clause-c749dff961ef",
+          "css21-box.border-width-properties-clause-cca2516ebb1d",
+          "css21-box.border-width-properties-clause-91a5c1b3be22",
+          "css21-box.border-width-properties-clause-7f83e996800b",
+          "css21-box.border-width-properties-clause-aa89bfae0031"
+        ]
+      }
+    },
+    {
+      "id": "border-color-properties",
+      "title": "8.5.2 Border color: 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', and 'border-color'",
+      "level": 3,
+      "text_sha256": "b483ad2e623f4134607ac734ead5327f683e5618ef3dd79dd7b51dd29f48fdcf",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.border-color-properties",
+          "css21-box.border-color-properties-clause-7f6bc0356549",
+          "css21-box.border-color-properties-clause-cca2516ebb1d",
+          "css21-box.border-color-properties-clause-58ea50d1b4a9",
+          "css21-box.border-color-properties-clause-5c6b5d933cc1",
+          "css21-box.border-color-properties-clause-0bf984e2520d",
+          "css21-box.border-color-properties-clause-216de3ce295b",
+          "css21-box.border-color-properties-clause-d8233c786e2d",
+          "css21-box.border-color-properties-clause-a87789358a74",
+          "css21-box.border-color-properties-clause-ac3e43fd643d"
+        ]
+      }
+    },
+    {
+      "id": "border-style-properties",
+      "title": "8.5.3 Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style'",
+      "level": 3,
+      "text_sha256": "88af47d35c12b9d8a608ba3c61d83b29113ebc5c7caa4c9a71c228bdf39e78d0",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.border-style-properties",
+          "css21-box.border-style-properties-clause-8109a58458c2",
+          "css21-box.border-style-properties-clause-f256786455ae",
+          "css21-box.border-style-properties-clause-fec10058adec",
+          "css21-box.border-style-properties-clause-4f055adcb2a5",
+          "css21-box.border-style-properties-clause-cca2516ebb1d",
+          "css21-box.border-style-properties-clause-a6d8efc81140",
+          "css21-box.border-style-properties-clause-8e726d5f886d",
+          "css21-box.border-style-properties-clause-08eb4c87a960",
+          "css21-box.border-style-properties-clause-b3eb98b72e33",
+          "css21-box.border-style-properties-clause-244c4e0f5bf3"
+        ]
+      }
+    },
+    {
+      "id": "border-shorthand-properties",
+      "title": "8.5.4 Border shorthand properties: 'border-top', 'border-right', 'border-bottom', 'border-left', and 'border'",
+      "level": 3,
+      "text_sha256": "af06c9a1a26c67f97b237b3ef02aab5c6d671b98b7c983958449c306585b51fd",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.border-shorthand-properties",
+          "css21-box.border-shorthand-properties-clause-0778dd9f3c10",
+          "css21-box.border-shorthand-properties-clause-cca2516ebb1d",
+          "css21-box.border-shorthand-properties-clause-21c855a18ef2",
+          "css21-box.border-shorthand-properties-clause-797cf9df7409",
+          "css21-box.border-shorthand-properties-clause-ed20d5628b0d",
+          "css21-box.border-shorthand-properties-clause-dfbd2097979d"
+        ]
+      }
+    },
+    {
+      "id": "bidi-box-model",
+      "title": "8.6 The box model for inline elements in bidirectional context",
+      "level": 2,
+      "text_sha256": "b953dc0356be36d966827aff89e6d43650cbd7867df29d8d1f9f17ff95c2d511",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-box.bidi-box-model",
+          "css21-box.bidi-box-model-clause-91f91f9b597d"
+        ]
+      }
+    }
+  ]
+}

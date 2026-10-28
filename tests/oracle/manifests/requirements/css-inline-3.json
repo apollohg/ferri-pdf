@@ -1,0 +1,4836 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-inline-3.intro",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "bfe851f0f9188af04d97db58ab8d575bdfa068c58c18b9e7addbe2e04c5949bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.placement",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module Interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "c43f0c82d94e57edc05569d3073f7cd52dea150699d4c092ae4d37e6aa46ba49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.values",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.model",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline Layout Model.",
+      "locator": {
+        "section_id": "model",
+        "text_sha256": "c4a4c730d924fb8af6ac91311b6e53daf7683f7514206ed7994555b2c4bdf28c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.model-clause-f55e4e967427"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.model-clause-f55e4e967427",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "model"
+      ],
+      "behaviour": "Inline Layout Model — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "model",
+        "clause_index": 3,
+        "clause_sha256": "f55e4e967427321f5b92074a1071c116a587dab962d9f831d97fa80faa1a806d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.line-boxes",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-boxes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layout of Line Boxes.",
+      "locator": {
+        "section_id": "line-boxes",
+        "text_sha256": "ae338e2fa443a6b81ad78f686e05dda36ce357fa2bb9492199fa828322077b9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.line-layout",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layout Within Line Boxes.",
+      "locator": {
+        "section_id": "line-layout",
+        "text_sha256": "0f31cd084afd33b0fa18a6157d8e88a6c16ec9801aef0b7e9afb923462a46c38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.invisible-line-boxes",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "invisible-line-boxes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Phantom Line Boxes.",
+      "locator": {
+        "section_id": "invisible-line-boxes",
+        "text_sha256": "c0884edc8ed811c1d9c327554eb94fbdddc320dd667a9b21a85475c051e9ea43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.invisible-line-boxes-clause-0cfe691b727d",
+        "css-inline-3.invisible-line-boxes-clause-d342b00c8547",
+        "css-inline-3.invisible-line-boxes-clause-fd4ecb8cf872"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.invisible-line-boxes-clause-0cfe691b727d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "invisible-line-boxes"
+      ],
+      "behaviour": "Phantom Line Boxes — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "invisible-line-boxes",
+        "clause_index": 0,
+        "clause_sha256": "0cfe691b727dbfa1d1ea24cfd16773b4a37b0a4572fb8791e24b3b8d0d941531"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.invisible-line-boxes-clause-d342b00c8547",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "invisible-line-boxes"
+      ],
+      "behaviour": "Phantom Line Boxes — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "invisible-line-boxes",
+        "clause_index": 1,
+        "clause_sha256": "d342b00c854753232afff963326c2d1633ff7feed1fd4a9909eff60e8c398940"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.invisible-line-boxes-clause-fd4ecb8cf872",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "invisible-line-boxes"
+      ],
+      "behaviour": "Phantom Line Boxes — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "invisible-line-boxes",
+        "clause_index": 12,
+        "clause_sha256": "fd4ecb8cf872bd7fc5266225b473b0ed00604e79504ca034a96bab9335d5fbfd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.paint-order",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "paint-order"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Painting Order.",
+      "locator": {
+        "section_id": "paint-order",
+        "text_sha256": "d909c5d8263f60da02ab2517ad95c5e9c903545155b8d3d7a0b541deb59c2c65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.css-metrics",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "css-metrics"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Baselines and Alignment Metrics.",
+      "locator": {
+        "section_id": "css-metrics",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.baseline-intro",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction to Baselines.",
+      "locator": {
+        "section_id": "baseline-intro",
+        "text_sha256": "6507af319e93be8320596d5964f31490b63ede583384dc2d7558db01e9e26615"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.baseline-intro-clause-3e81b116e104"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.baseline-intro-clause-3e81b116e104",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-intro"
+      ],
+      "behaviour": "Introduction to Baselines — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-intro",
+        "clause_index": 4,
+        "clause_sha256": "3e81b116e10464f8778e0e498b72342ac3d1c0556ae65ca8e0361177bdba04e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-types",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-types"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Baselines and Metrics.",
+      "locator": {
+        "section_id": "baseline-types",
+        "text_sha256": "bdf0e72d16d73176029ce6b27d791e68e712d78ce79db3d083efe676d3fedde0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.baseline-types-clause-e2a4668edd74",
+        "css-inline-3.baseline-types-clause-bfc6c84cd43e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.baseline-types-clause-e2a4668edd74",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-types"
+      ],
+      "behaviour": "Baselines and Metrics — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-types",
+        "clause_index": 32,
+        "clause_sha256": "e2a4668edd74f56991b3e6b08fec29914bb1fc2e74fabc6fcfcaef6495d6f88f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-types-clause-bfc6c84cd43e",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-types"
+      ],
+      "behaviour": "Baselines and Metrics — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-types",
+        "clause_index": 33,
+        "clause_sha256": "bfc6c84cd43e25b54941edd0b427231085d380ea0f09ca8a98e7458ebec7cea2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.ascent-descent",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "ascent-descent"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ascent and Descent Metrics.",
+      "locator": {
+        "section_id": "ascent-descent",
+        "text_sha256": "90ef120e6f589c97ee209586c470f5d9a7d5bf7015be6d13480f388c366812e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.ascent-descent-clause-1fe9555b4ff0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.ascent-descent-clause-1fe9555b4ff0",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "ascent-descent"
+      ],
+      "behaviour": "Ascent and Descent Metrics — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "ascent-descent",
+        "clause_index": 1,
+        "clause_sha256": "1fe9555b4ff08613c6d9a05d58f90fdafa2a62e717114c5985d7c671fd27d342"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.font-line-gap",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "font-line-gap"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line Gap Metrics.",
+      "locator": {
+        "section_id": "font-line-gap",
+        "text_sha256": "d30e574622ca0deebaebd5253f769a0a6a7764cbba563d5693b7256c48281ab6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.font-line-gap-clause-1da139cf44c3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.font-line-gap-clause-1da139cf44c3",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "font-line-gap"
+      ],
+      "behaviour": "Line Gap Metrics — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-line-gap",
+        "clause_index": 2,
+        "clause_sha256": "1da139cf44c33e1fed306a581e07982bb7a781bfd2945ff2025a17f2eb061c78"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-tables",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-tables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Baselines of Glyphs and Boxes.",
+      "locator": {
+        "section_id": "baseline-tables",
+        "text_sha256": "2da45874852688bacf9a7dc828b466433cebb9aca49436176f06d5769ed694fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.baseline-tables-clause-c990bbf6ba5b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.baseline-tables-clause-c990bbf6ba5b",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-tables"
+      ],
+      "behaviour": "Baselines of Glyphs and Boxes — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-tables",
+        "clause_index": 1,
+        "clause_sha256": "c990bbf6ba5b937c9e28a2c97103939b4e0aaad7f3824f0083665fc668847e66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.alignment",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Baseline Alignment.",
+      "locator": {
+        "section_id": "alignment",
+        "text_sha256": "1948ba072d9d99fc6b89f49a648eb77f4baccb819dea10fdaa09a61a13a23b93"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.dominant-baseline-property",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "dominant-baseline-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dominant Baselines: the dominant-baseline property.",
+      "locator": {
+        "section_id": "dominant-baseline-property",
+        "text_sha256": "9517f0c2681a7604f925efc63d8f4f2516f86f51365aca9dfca02ca127c38d1b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.dominant-baseline-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.dominant-baseline-property-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "dominant-baseline-property"
+      ],
+      "behaviour": "Dominant Baselines: the dominant-baseline property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "dominant-baseline-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.transverse-alignment",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "transverse-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Transverse Box Alignment: the vertical-align property.",
+      "locator": {
+        "section_id": "transverse-alignment",
+        "text_sha256": "15a17e5f093c383d029d2b1d8c08bd1c92d964291f30e2463fc7049dd1410b21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.transverse-alignment-clause-cca2516ebb1d",
+        "css-inline-3.transverse-alignment-clause-0883b6f33acd",
+        "css-inline-3.transverse-alignment-clause-2618b7aeaffd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.transverse-alignment-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "transverse-alignment"
+      ],
+      "behaviour": "Transverse Box Alignment: the vertical-align property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "transverse-alignment",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.transverse-alignment-clause-0883b6f33acd",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "transverse-alignment"
+      ],
+      "behaviour": "Transverse Box Alignment: the vertical-align property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "transverse-alignment",
+        "clause_index": 19,
+        "clause_sha256": "0883b6f33acd7bfe25f3b01ca3290547ba85cbfcdf8dbe0fbdc53682974f6153"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.transverse-alignment-clause-2618b7aeaffd",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "transverse-alignment"
+      ],
+      "behaviour": "Transverse Box Alignment: the vertical-align property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "transverse-alignment",
+        "clause_index": 21,
+        "clause_sha256": "2618b7aeaffd6ad73998ae710382efe457747d5d845f6177611f62796935772a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-source",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-source"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alignment Baseline Source: the baseline-source longhand.",
+      "locator": {
+        "section_id": "baseline-source",
+        "text_sha256": "b647053a480e9af146dab8ceb434f223b5136f5e0e16b00c47215f8f7a763526"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.baseline-source-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.baseline-source-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-source"
+      ],
+      "behaviour": "Alignment Baseline Source: the baseline-source longhand — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-source",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.alignment-baseline-property",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "alignment-baseline-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alignment Baseline Type: the alignment-baseline longhand.",
+      "locator": {
+        "section_id": "alignment-baseline-property",
+        "text_sha256": "a30b948556db034a1efae3941952e4ff6a15a6cf8a5cdebb8bf1a40004814ddb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.alignment-baseline-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.alignment-baseline-property-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "alignment-baseline-property"
+      ],
+      "behaviour": "Alignment Baseline Type: the alignment-baseline longhand — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "alignment-baseline-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.alignment-baseline-svg-legacy",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "alignment-baseline-svg-legacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Legacy Values for SVG.",
+      "locator": {
+        "section_id": "alignment-baseline-svg-legacy",
+        "text_sha256": "d104b806f946f0d676a7395c8d04a75e0362c182fcd346adbae15baa0b8b9870"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.baseline-shift-property",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-shift-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Post-Alignment Shift: the baseline-shift longhand.",
+      "locator": {
+        "section_id": "baseline-shift-property",
+        "text_sha256": "25766665c341665b851f3a8f35a11a17b71d982b8cae77ce1dde8773f38a0a32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.baseline-shift-property-clause-cca2516ebb1d",
+        "css-inline-3.baseline-shift-property-clause-c2a2dd001d58",
+        "css-inline-3.baseline-shift-property-clause-bf229d5c0dbe",
+        "css-inline-3.baseline-shift-property-clause-346f7aa7d749",
+        "css-inline-3.baseline-shift-property-clause-8a5c4898e08e",
+        "css-inline-3.baseline-shift-property-clause-4e1eb46c57b4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.baseline-shift-property-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-shift-property"
+      ],
+      "behaviour": "Post-Alignment Shift: the baseline-shift longhand — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-shift-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-shift-property-clause-c2a2dd001d58",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-shift-property"
+      ],
+      "behaviour": "Post-Alignment Shift: the baseline-shift longhand — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-shift-property",
+        "clause_index": 13,
+        "clause_sha256": "c2a2dd001d581101425d4be7e35706fc9eb3468b196ab893666a61e6a8b0c33e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-shift-property-clause-bf229d5c0dbe",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-shift-property"
+      ],
+      "behaviour": "Post-Alignment Shift: the baseline-shift longhand — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-shift-property",
+        "clause_index": 18,
+        "clause_sha256": "bf229d5c0dbe773315c8f76a8326684b73307853ea0e204b28d5aeef5ad6c6e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-shift-property-clause-346f7aa7d749",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-shift-property"
+      ],
+      "behaviour": "Post-Alignment Shift: the baseline-shift longhand — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-shift-property",
+        "clause_index": 33,
+        "clause_sha256": "346f7aa7d749f10ec329754804959164c6e957b4df1be72525264c375b16178e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-shift-property-clause-8a5c4898e08e",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-shift-property"
+      ],
+      "behaviour": "Post-Alignment Shift: the baseline-shift longhand — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-shift-property",
+        "clause_index": 35,
+        "clause_sha256": "8a5c4898e08e394349d93a31a70fcf6cf560ef7811cf1f07a9d2b28075455d93"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-shift-property-clause-4e1eb46c57b4",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-shift-property"
+      ],
+      "behaviour": "Post-Alignment Shift: the baseline-shift longhand — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-shift-property",
+        "clause_index": 36,
+        "clause_sha256": "4e1eb46c57b40295405fa5575c566f63dbfaa5c0e2293a855be66d93c54961c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-shift-svg-legacy",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-shift-svg-legacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Legacy Values for SVG.",
+      "locator": {
+        "section_id": "baseline-shift-svg-legacy",
+        "text_sha256": "786b2f1fe282ef98eba81ec300704ce1904e27248c7bac7ab3a8a7b6ed930a6c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.line-height",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Logical Heights and Inter-line Spacing.",
+      "locator": {
+        "section_id": "line-height",
+        "text_sha256": "8c50c9fe12d988c868f2de02a7f907d152319344dd16e310c6f6b3ff1e007ced"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.line-height-property",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-height-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line Spacing: the line-height property.",
+      "locator": {
+        "section_id": "line-height-property",
+        "text_sha256": "d972c2cbbf5665f03f1f703295a7ab2619dd65387b5c96528e12d56a1cd91d36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.line-height-property-clause-7073b91844ac",
+        "css-inline-3.line-height-property-clause-cca2516ebb1d",
+        "css-inline-3.line-height-property-clause-310dcf318a49",
+        "css-inline-3.line-height-property-clause-041c2934e0ac",
+        "css-inline-3.line-height-property-clause-8916493aad9d",
+        "css-inline-3.line-height-property-clause-414d3964ce83",
+        "css-inline-3.line-height-property-clause-ff37e21bbd15"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.line-height-property-clause-7073b91844ac",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-height-property"
+      ],
+      "behaviour": "Line Spacing: the line-height property — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height-property",
+        "clause_index": 11,
+        "clause_sha256": "7073b91844ac177ce9972f55ae93e993e9730939172d594fa16e0dce57ea0b22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.line-height-property-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-height-property"
+      ],
+      "behaviour": "Line Spacing: the line-height property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.line-height-property-clause-310dcf318a49",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-height-property"
+      ],
+      "behaviour": "Line Spacing: the line-height property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height-property",
+        "clause_index": 13,
+        "clause_sha256": "310dcf318a490c0a6e31a7da6d1b9e0eeea6dbac661a2aecfbe6768bc5f856f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.line-height-property-clause-041c2934e0ac",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-height-property"
+      ],
+      "behaviour": "Line Spacing: the line-height property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height-property",
+        "clause_index": 25,
+        "clause_sha256": "041c2934e0acf30a208e960cbf783580f7488ffbe9630111e3fb26b2a4708e0c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.line-height-property-clause-8916493aad9d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-height-property"
+      ],
+      "behaviour": "Line Spacing: the line-height property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height-property",
+        "clause_index": 29,
+        "clause_sha256": "8916493aad9d886a137544c0ac3e8417f2d802c7fb9bead03c5b61ba37d6dda7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.line-height-property-clause-414d3964ce83",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-height-property"
+      ],
+      "behaviour": "Line Spacing: the line-height property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height-property",
+        "clause_index": 32,
+        "clause_sha256": "414d3964ce83b567b242ef1a3a2397e30d3936750d0dfe0c8903bfadc04ce6ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.line-height-property-clause-ff37e21bbd15",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-height-property"
+      ],
+      "behaviour": "Line Spacing: the line-height property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height-property",
+        "clause_index": 33,
+        "clause_sha256": "ff37e21bbd15e74a96a531381b4c52ccdbf707c65b29381cf55141001bc9e1fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.text-edges",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-edges"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Edge Metrics: the line-fit-edge property.",
+      "locator": {
+        "section_id": "text-edges",
+        "text_sha256": "ae178b348f29c82dbbd6b143e6366a0daabb39ce2d68a0c88d2743fed531f825"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.text-edges-clause-cca2516ebb1d",
+        "css-inline-3.text-edges-clause-e85801d733f7",
+        "css-inline-3.text-edges-clause-c56cdd4e1eee"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.text-edges-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-edges"
+      ],
+      "behaviour": "Text Edge Metrics: the line-fit-edge property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-edges",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.text-edges-clause-e85801d733f7",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-edges"
+      ],
+      "behaviour": "Text Edge Metrics: the line-fit-edge property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-edges",
+        "clause_index": 25,
+        "clause_sha256": "e85801d733f774cc3aaca795eaa5c6c8995a160d1ef2289876c88c261616f384"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.text-edges-clause-c56cdd4e1eee",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-edges"
+      ],
+      "behaviour": "Text Edge Metrics: the line-fit-edge property — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-edges",
+        "clause_index": 45,
+        "clause_sha256": "c56cdd4e1eeeed921b65b433ea78753c6e005a6f231976cd03568cbac412ac87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.inline-height",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "inline-height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Calculating the Logical Height Contributions (“Layout Bounds”) of Inline Boxes.",
+      "locator": {
+        "section_id": "inline-height",
+        "text_sha256": "783e6a03434c4f578e5fe81620fd46e71b6e8fc98f237d678e30236aeb537ae4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.inline-height-clause-217885c374be",
+        "css-inline-3.inline-height-clause-e4bd75a05ec6",
+        "css-inline-3.inline-height-clause-815a63e77c26",
+        "css-inline-3.inline-height-clause-966b916e132d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.inline-height-clause-217885c374be",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "inline-height"
+      ],
+      "behaviour": "Calculating the Logical Height Contributions (“Layout Bounds”) of Inline Boxes — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-height",
+        "clause_index": 2,
+        "clause_sha256": "217885c374be57a482c06ab0a37ff7cd9e9a98fae55c90c25ba7f5b9da06839d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.inline-height-clause-e4bd75a05ec6",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "inline-height"
+      ],
+      "behaviour": "Calculating the Logical Height Contributions (“Layout Bounds”) of Inline Boxes — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-height",
+        "clause_index": 4,
+        "clause_sha256": "e4bd75a05ec6dff812788ce933b2bf2e25b22877dedd9d30e068c51f8cacfdda"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.inline-height-clause-815a63e77c26",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "inline-height"
+      ],
+      "behaviour": "Calculating the Logical Height Contributions (“Layout Bounds”) of Inline Boxes — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-height",
+        "clause_index": 5,
+        "clause_sha256": "815a63e77c2613ac004fb4b0b8a5c5ed34f2334fbccfca4527e0ccc1dedc0ca0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.inline-height-clause-966b916e132d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "inline-height"
+      ],
+      "behaviour": "Calculating the Logical Height Contributions (“Layout Bounds”) of Inline Boxes — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-height",
+        "clause_index": 8,
+        "clause_sha256": "966b916e132d1198caa19a531b2c3f95eebcc435de537c823783863267ace8fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.leading-trim",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "leading-trim"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Trimming Leading Over/Under Text.",
+      "locator": {
+        "section_id": "leading-trim",
+        "text_sha256": "a21d321a64b48e7a4dd2bde8231c97b50833a8fbb98b142996e147baef2964a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.text-box-shorthand",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-box-shorthand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shorthand for Text Box Trimming: the text-box property.",
+      "locator": {
+        "section_id": "text-box-shorthand",
+        "text_sha256": "408bee43e151e4c0b55e1aee127fa61345145548852a17c8102cfd363978967a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.text-box-shorthand-clause-cca2516ebb1d",
+        "css-inline-3.text-box-shorthand-clause-29bbe48538ed",
+        "css-inline-3.text-box-shorthand-clause-e863f1b6f2b4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.text-box-shorthand-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-box-shorthand"
+      ],
+      "behaviour": "Shorthand for Text Box Trimming: the text-box property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-box-shorthand",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.text-box-shorthand-clause-29bbe48538ed",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-box-shorthand"
+      ],
+      "behaviour": "Shorthand for Text Box Trimming: the text-box property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-box-shorthand",
+        "clause_index": 18,
+        "clause_sha256": "29bbe48538ed324e11e4362130324e3799b574748f92c72570161f7b225270c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.text-box-shorthand-clause-e863f1b6f2b4",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-box-shorthand"
+      ],
+      "behaviour": "Shorthand for Text Box Trimming: the text-box property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-box-shorthand",
+        "clause_index": 20,
+        "clause_sha256": "e863f1b6f2b4c5b1c40274341e889ab1b7017051e1b9529a91457c158633e6ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.text-box-trim",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-box-trim"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Trimming Over/Under Text: the text-box-trim property.",
+      "locator": {
+        "section_id": "text-box-trim",
+        "text_sha256": "2ac7eec92ae3dcc60b39bc5f09d68b5df466de79f6c7989ab6133c8b4f8035b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.text-box-trim-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.text-box-trim-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-box-trim"
+      ],
+      "behaviour": "Trimming Over/Under Text: the text-box-trim property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-box-trim",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.text-box-edge",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-box-edge"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Trimming Metrics: the text-box-edge property.",
+      "locator": {
+        "section_id": "text-box-edge",
+        "text_sha256": "4dbbab801ff50ca3a016e6bd023a066e08ba5395bbd332a88b4370fb69769ada"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.text-box-edge-clause-cca2516ebb1d",
+        "css-inline-3.text-box-edge-clause-0d7fd0870e63",
+        "css-inline-3.text-box-edge-clause-36d74c4dfec7",
+        "css-inline-3.text-box-edge-clause-6fd7c6ea5bfc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.text-box-edge-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-box-edge"
+      ],
+      "behaviour": "Text Trimming Metrics: the text-box-edge property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-box-edge",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.text-box-edge-clause-0d7fd0870e63",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-box-edge"
+      ],
+      "behaviour": "Text Trimming Metrics: the text-box-edge property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-box-edge",
+        "clause_index": 17,
+        "clause_sha256": "0d7fd0870e6308fd703acc5060b935f424e5aa938fee9b7c0bd9caa7ac9a81ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.text-box-edge-clause-36d74c4dfec7",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-box-edge"
+      ],
+      "behaviour": "Text Trimming Metrics: the text-box-edge property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-box-edge",
+        "clause_index": 18,
+        "clause_sha256": "36d74c4dfec72467ac68b611f9e97a2b22611eb0131091362df63bd08c50adb2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.text-box-edge-clause-6fd7c6ea5bfc",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "text-box-edge"
+      ],
+      "behaviour": "Text Trimming Metrics: the text-box-edge property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-box-edge",
+        "clause_index": 19,
+        "clause_sha256": "6fd7c6ea5bfc6e6d39424d60d4cbfcf5aef354e463af47834dc12cd93694b132"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.line-fill",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-fill"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline Box Drawing Height: the inline-sizing property.",
+      "locator": {
+        "section_id": "line-fill",
+        "text_sha256": "8dbdd1d5f87ea8af97dc881814cb308c2370e9f4498da31643fac951d6e8807b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.line-fill-clause-cca2516ebb1d",
+        "css-inline-3.line-fill-clause-83cf058400b0",
+        "css-inline-3.line-fill-clause-d50448df0914"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.line-fill-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-fill"
+      ],
+      "behaviour": "Inline Box Drawing Height: the inline-sizing property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-fill",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.line-fill-clause-83cf058400b0",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-fill"
+      ],
+      "behaviour": "Inline Box Drawing Height: the inline-sizing property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-fill",
+        "clause_index": 22,
+        "clause_sha256": "83cf058400b034b0301ca2c9f289f3e7db4b0aa462753c992575ba992bb8c239"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.line-fill-clause-d50448df0914",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "line-fill"
+      ],
+      "behaviour": "Inline Box Drawing Height: the inline-sizing property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-fill",
+        "clause_index": 27,
+        "clause_sha256": "d50448df0914903aadb1c302daaa7903eb55976bcef43af2c5f94599c38ec725"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-styling",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-styling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Initial Letters.",
+      "locator": {
+        "section_id": "initial-letter-styling",
+        "text_sha256": "528f99b1d9e9e53a404f2c846de316bc276124c014b5150dffa8bcde0d99372b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.sizing-drop-initials",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "sizing-drop-initials"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Creating Initial Letters: the initial-letter property.",
+      "locator": {
+        "section_id": "sizing-drop-initials",
+        "text_sha256": "5f5edfd7539bdd42832e7ee0861ab1205804368d223a5d027497df9d47cc62b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.sizing-drop-initials-clause-cca2516ebb1d",
+        "css-inline-3.sizing-drop-initials-clause-98ee2c25f7bb",
+        "css-inline-3.sizing-drop-initials-clause-bf3d074d8985",
+        "css-inline-3.sizing-drop-initials-clause-5b894591ed90"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.sizing-drop-initials-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "sizing-drop-initials"
+      ],
+      "behaviour": "Creating Initial Letters: the initial-letter property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-drop-initials",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.sizing-drop-initials-clause-98ee2c25f7bb",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "sizing-drop-initials"
+      ],
+      "behaviour": "Creating Initial Letters: the initial-letter property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-drop-initials",
+        "clause_index": 23,
+        "clause_sha256": "98ee2c25f7bb00d08051658f97c1120143ee622661f0f4a50f2f39ead87309c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.sizing-drop-initials-clause-bf3d074d8985",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "sizing-drop-initials"
+      ],
+      "behaviour": "Creating Initial Letters: the initial-letter property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-drop-initials",
+        "clause_index": 25,
+        "clause_sha256": "bf3d074d8985db752dab8b134c9d0cf0e98e764829c6ffd333a3f2b666097ef5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.sizing-drop-initials-clause-5b894591ed90",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "sizing-drop-initials"
+      ],
+      "behaviour": "Creating Initial Letters: the initial-letter property — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-drop-initials",
+        "clause_index": 46,
+        "clause_sha256": "5b894591ed908594d5a20831b1fdd56ec9ac8e184f4fc7827e7de7b95f28b1ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.first-most-inline-level",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "first-most-inline-level"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Applicability.",
+      "locator": {
+        "section_id": "first-most-inline-level",
+        "text_sha256": "34a34252e49a235fbb264fabf5df6dad1bce3401de51141f29633dd41d191989"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.first-most-inline-level-clause-15cc05b0070f",
+        "css-inline-3.first-most-inline-level-clause-adfb9d4d1ed5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.first-most-inline-level-clause-15cc05b0070f",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "first-most-inline-level"
+      ],
+      "behaviour": "Applicability — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "first-most-inline-level",
+        "clause_index": 0,
+        "clause_sha256": "15cc05b0070f7384c8b351e2a22b8bfeebdf372b90ef15c79d29f284bb1183f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.first-most-inline-level-clause-adfb9d4d1ed5",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "first-most-inline-level"
+      ],
+      "behaviour": "Applicability — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "first-most-inline-level",
+        "clause_index": 4,
+        "clause_sha256": "adfb9d4d1ed5a9ae955aa24e0313eae616da75744b40b9136d95b2372f554514"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.aligning-initial-letter",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "aligning-initial-letter"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alignment of Initial Letters: the initial-letter-align property.",
+      "locator": {
+        "section_id": "aligning-initial-letter",
+        "text_sha256": "19c216efc1c17e14586eef1f12e0f614906702eb9f41662b8cdea0b9ed6f944c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.aligning-initial-letter-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.aligning-initial-letter-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "aligning-initial-letter"
+      ],
+      "behaviour": "Alignment of Initial Letters: the initial-letter-align property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "aligning-initial-letter",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-align-defaults",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-align-defaults"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UA Default Stylesheet for initial-letter-align.",
+      "locator": {
+        "section_id": "initial-letter-align-defaults",
+        "text_sha256": "9a6bd0997ed19403609804fc770466a745d5fdcbfc2d8efb6524f38a0d1545e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.initial-letter-align-defaults-clause-89f9c3d9e30d",
+        "css-inline-3.initial-letter-align-defaults-clause-38d0d493279a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-align-defaults-clause-89f9c3d9e30d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-align-defaults"
+      ],
+      "behaviour": "UA Default Stylesheet for initial-letter-align — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-align-defaults",
+        "clause_index": 0,
+        "clause_sha256": "89f9c3d9e30d413dd9ed19279bec38ac31900df1fc252faa81eaeb0b86a4ef97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-align-defaults-clause-38d0d493279a",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-align-defaults"
+      ],
+      "behaviour": "UA Default Stylesheet for initial-letter-align — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-align-defaults",
+        "clause_index": 2,
+        "clause_sha256": "38d0d493279a594260b1eeac3681720ef7adf51ec71d6cec6eedb6a215960f63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-layout",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Initial Letter Layout.",
+      "locator": {
+        "section_id": "initial-letter-layout",
+        "text_sha256": "f5ca08809a4185adbbb4da05fb8a6c7e52aa4fc42d8f38aed6cd24f58948be5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.initial-letter-layout-clause-5489eb91d20f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-layout-clause-5489eb91d20f",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-layout"
+      ],
+      "behaviour": "Initial Letter Layout — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-layout",
+        "clause_index": 1,
+        "clause_sha256": "5489eb91d20f29f9dc5692e1f9508bc1b26fbdba5d4395a57190e3cb7d0a5110"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-properties",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Properties Applying to Initial Letters.",
+      "locator": {
+        "section_id": "initial-letter-properties",
+        "text_sha256": "7f9a5ea6d7dcfc3f818e60013b9e78a2b1f1fa979169235f74eb62c32ba3ed31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-box",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-box"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Margins, Borders, and Padding.",
+      "locator": {
+        "section_id": "initial-letter-box",
+        "text_sha256": "5447f59b0714006e9d93e2157f6dae1c675e07820737bd0f18bf8fca177537ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.sizing-initial-letter",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "sizing-initial-letter"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font Sizing of Initial Letters.",
+      "locator": {
+        "section_id": "sizing-initial-letter",
+        "text_sha256": "69af53b096c1fdaf4e9db295c3082becd21072f1886a4810139f974d6d29d22c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.sizing-initial-letter-clause-d3cd34f6aab1",
+        "css-inline-3.sizing-initial-letter-clause-b22e35811d73",
+        "css-inline-3.sizing-initial-letter-clause-36b3a7eb223b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.sizing-initial-letter-clause-d3cd34f6aab1",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "sizing-initial-letter"
+      ],
+      "behaviour": "Font Sizing of Initial Letters — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-initial-letter",
+        "clause_index": 0,
+        "clause_sha256": "d3cd34f6aab1ed4b9b07d882c0ebfe57d59c6df59bf6a5d878bf1ba994792435"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.sizing-initial-letter-clause-b22e35811d73",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "sizing-initial-letter"
+      ],
+      "behaviour": "Font Sizing of Initial Letters — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-initial-letter",
+        "clause_index": 2,
+        "clause_sha256": "b22e35811d734ebda4906190ddffdaa0bccb29260a29ed2e5c095e62e966b3d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.sizing-initial-letter-clause-36b3a7eb223b",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "sizing-initial-letter"
+      ],
+      "behaviour": "Font Sizing of Initial Letters — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-initial-letter",
+        "clause_index": 6,
+        "clause_sha256": "36b3a7eb223b26c7387ea4d9adeb7528c9e7821ee05a6a948daddb7c983f8fb9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-shaping",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-shaping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shaping and Glyph Selection.",
+      "locator": {
+        "section_id": "initial-letter-shaping",
+        "text_sha256": "aafae9ddf5e6fa9f469c63d4d5e61016f9872c10cfd7af88acd768984ea45661"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.initial-letter-shaping-clause-2b02fc6437eb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-shaping-clause-2b02fc6437eb",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-shaping"
+      ],
+      "behaviour": "Shaping and Glyph Selection — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-shaping",
+        "clause_index": 0,
+        "clause_sha256": "2b02fc6437eb8284a20d4b6448dcd486a8beb217cd2d3e1d123c24a14c8dd57d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-box-size",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-box-size"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sizing the Initial Letter Box.",
+      "locator": {
+        "section_id": "initial-letter-box-size",
+        "text_sha256": "3c52c924b7774b519740d19c256b585836ea614453fd8aac493476f8f444b872"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.initial-letter-box-size-clause-c6681fd1510f",
+        "css-inline-3.initial-letter-box-size-clause-34624659fe59",
+        "css-inline-3.initial-letter-box-size-clause-ce8b58ea9423"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-box-size-clause-c6681fd1510f",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-box-size"
+      ],
+      "behaviour": "Sizing the Initial Letter Box — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-box-size",
+        "clause_index": 0,
+        "clause_sha256": "c6681fd1510fe358835fbb41ae1c25625f53dd911a6e5a614a8b34a3da647a0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-box-size-clause-34624659fe59",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-box-size"
+      ],
+      "behaviour": "Sizing the Initial Letter Box — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-box-size",
+        "clause_index": 5,
+        "clause_sha256": "34624659fe594a9f9eaf9c7d602f470add5cb59e719cc873ba7d6a74e93bc3aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-box-size-clause-ce8b58ea9423",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-box-size"
+      ],
+      "behaviour": "Sizing the Initial Letter Box — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-box-size",
+        "clause_index": 8,
+        "clause_sha256": "ce8b58ea94236e22dd2cdc10307811c20c15dae2d7b3afe73bc5c08369c92adc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-content-align",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-content-align"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alignment Within an Initial Letter Box.",
+      "locator": {
+        "section_id": "initial-letter-content-align",
+        "text_sha256": "02c91a1e612fe639f247b1dc0929cba2d7334b39c8795fe33ac933bf8c7dd06c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-position",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Initial Letter Positioning and Spacing.",
+      "locator": {
+        "section_id": "initial-letter-position",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-block-position",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-block-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block-axis Positioning.",
+      "locator": {
+        "section_id": "initial-letter-block-position",
+        "text_sha256": "088dc0179bfa086bd6223edd7bb9f61462d1e41d3a3db2bdcd84f4b4fe24027c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.initial-letter-block-position-clause-096f2c574d40",
+        "css-inline-3.initial-letter-block-position-clause-215bc687b6e2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-block-position-clause-096f2c574d40",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-block-position"
+      ],
+      "behaviour": "Block-axis Positioning — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-block-position",
+        "clause_index": 0,
+        "clause_sha256": "096f2c574d40eca03fd52ff9abf08e70ca6daba520bca89bace43ceefaf95ccb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-block-position-clause-215bc687b6e2",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-block-position"
+      ],
+      "behaviour": "Block-axis Positioning — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-block-position",
+        "clause_index": 6,
+        "clause_sha256": "215bc687b6e2b9b5ce4fdcde40f96bf165fdfe539f1ed7d2f2c5deb3311b4ea5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-inline-position",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-inline-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline Kerning.",
+      "locator": {
+        "section_id": "initial-letter-inline-position",
+        "text_sha256": "f35907c4f48af0281e56864cb14a50ff799eaa7eb84cfd4503f95c3b279255dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-wrapping",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-wrapping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Initial Letter Wrapping: the initial-letter-wrap property.",
+      "locator": {
+        "section_id": "initial-letter-wrapping",
+        "text_sha256": "682188da281302f70185e3b1fd05a2a8460e4c8e86f6dcdd93b44a740b0e548e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.initial-letter-wrapping-clause-cca2516ebb1d",
+        "css-inline-3.initial-letter-wrapping-clause-bcf26d84daf4",
+        "css-inline-3.initial-letter-wrapping-clause-cf76ba02adde",
+        "css-inline-3.initial-letter-wrapping-clause-d8bbfe71b1c0",
+        "css-inline-3.initial-letter-wrapping-clause-079f5508cf37",
+        "css-inline-3.initial-letter-wrapping-clause-e11523da36de",
+        "css-inline-3.initial-letter-wrapping-clause-3996673bf897",
+        "css-inline-3.initial-letter-wrapping-clause-744c73cb42e8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-wrapping-clause-cca2516ebb1d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-wrapping"
+      ],
+      "behaviour": "Initial Letter Wrapping: the initial-letter-wrap property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-wrapping",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-wrapping-clause-bcf26d84daf4",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-wrapping"
+      ],
+      "behaviour": "Initial Letter Wrapping: the initial-letter-wrap property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-wrapping",
+        "clause_index": 14,
+        "clause_sha256": "bcf26d84daf4931ddf398efaa1a6b4ad67c24d2a6b98c48e7fafcee260021c5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-wrapping-clause-cf76ba02adde",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-wrapping"
+      ],
+      "behaviour": "Initial Letter Wrapping: the initial-letter-wrap property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-wrapping",
+        "clause_index": 22,
+        "clause_sha256": "cf76ba02adde2f834c729d3487600e6ae35762dec65f3da77dfa4a4117651be8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-wrapping-clause-d8bbfe71b1c0",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-wrapping"
+      ],
+      "behaviour": "Initial Letter Wrapping: the initial-letter-wrap property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-wrapping",
+        "clause_index": 23,
+        "clause_sha256": "d8bbfe71b1c02645d83f23e071df73c839e8b959270be614a584a45134711316"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-wrapping-clause-079f5508cf37",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-wrapping"
+      ],
+      "behaviour": "Initial Letter Wrapping: the initial-letter-wrap property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-wrapping",
+        "clause_index": 32,
+        "clause_sha256": "079f5508cf37ec25997a5ee49483227301e08f3f906a756e7c5835cabdffb8f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-wrapping-clause-e11523da36de",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-wrapping"
+      ],
+      "behaviour": "Initial Letter Wrapping: the initial-letter-wrap property — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-wrapping",
+        "clause_index": 42,
+        "clause_sha256": "e11523da36de90e314a64fa4fc9ed0db90854738a1b454c689a480f30ec9e646"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-wrapping-clause-3996673bf897",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-wrapping"
+      ],
+      "behaviour": "Initial Letter Wrapping: the initial-letter-wrap property — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-wrapping",
+        "clause_index": 46,
+        "clause_sha256": "3996673bf89702861c1422f731afe566c4778076ff6dce4ac307a9f09f3c8595"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-wrapping-clause-744c73cb42e8",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-wrapping"
+      ],
+      "behaviour": "Initial Letter Wrapping: the initial-letter-wrap property — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-wrapping",
+        "clause_index": 47,
+        "clause_sha256": "744c73cb42e8e86dc66470ab2d58d9531977a5a1768a59efae6edd92e7b1a442"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-line-layout",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-line-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line Layout.",
+      "locator": {
+        "section_id": "initial-letter-line-layout",
+        "text_sha256": "a3db9a9aadbe4512d56233ecf6cd3d2b1927f1e8c3d659c8dd2f4ff62ac6dee1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-inline-flow",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-inline-flow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline Flow Layout: Alignment, Justification, and White Space.",
+      "locator": {
+        "section_id": "initial-letter-inline-flow",
+        "text_sha256": "4000dfbac11c92764953eb752b88dfe242c653cbc8444732bcd9b3e51e94af87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-indentation",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-indentation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Edge Effects: Indentation and Hanging Punctuation.",
+      "locator": {
+        "section_id": "initial-letter-indentation",
+        "text_sha256": "762f20b4cb0e305e5c4daf639c93e280c72b96de49c6770b375c58326b4d1dca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-ancestors",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-ancestors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ancestor Inlines.",
+      "locator": {
+        "section_id": "initial-letter-ancestors",
+        "text_sha256": "6a6f33da1c7f534439a6d3e166ccd012951e23f139f7afb6bd776e8933074d8f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-multi-line",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-multi-line"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Multi-line Initial Letters.",
+      "locator": {
+        "section_id": "initial-letter-multi-line",
+        "text_sha256": "6e20461e435c48ac08794e7e08ae8cf5e671ebc87b38ca6d07bc9c7c463335f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-paragraphs",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-paragraphs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Clearing Initial Letters.",
+      "locator": {
+        "section_id": "initial-letter-paragraphs",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.raised-sunken-caps",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "raised-sunken-caps"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Raised and sunken caps.",
+      "locator": {
+        "section_id": "raised-sunken-caps",
+        "text_sha256": "bf4e3e781f133c0b7279fa7921cfaded0ce1651cf7e7f375b3a1a2b24678fb67"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.short-para-initial-letter",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "short-para-initial-letter"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Short paragraphs with initial letters.",
+      "locator": {
+        "section_id": "short-para-initial-letter",
+        "text_sha256": "6be149eb7f36acffc6d477f827f69b8bd3780254feb213ae081f8fbbd7bc614e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.short-para-initial-letter-clause-d8b842ea7442"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.short-para-initial-letter-clause-d8b842ea7442",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "short-para-initial-letter"
+      ],
+      "behaviour": "Short paragraphs with initial letters — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "short-para-initial-letter",
+        "clause_index": 1,
+        "clause_sha256": "d8b842ea7442ac23d8ebc764128ebb283fab381df49635245fca7e6785a4cc54"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-floats",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-floats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interaction with floats.",
+      "locator": {
+        "section_id": "initial-letter-floats",
+        "text_sha256": "267e9b353baaa96516449d1c4f0bde73d50a9662518c79429a188bcd993b5413"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.initial-letter-floats-clause-02c2838a050a",
+        "css-inline-3.initial-letter-floats-clause-0219dfaf661e",
+        "css-inline-3.initial-letter-floats-clause-02dad7f9427c",
+        "css-inline-3.initial-letter-floats-clause-c901f3d40066"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-floats-clause-02c2838a050a",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-floats"
+      ],
+      "behaviour": "Interaction with floats — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-floats",
+        "clause_index": 2,
+        "clause_sha256": "02c2838a050a3614acb4103f2f3a48a545418fbbca6b00feae6d8ef15c14b095"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-floats-clause-0219dfaf661e",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-floats"
+      ],
+      "behaviour": "Interaction with floats — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-floats",
+        "clause_index": 4,
+        "clause_sha256": "0219dfaf661ed959d1a436ed739fa29dbdbdfbe6a929b81500dbef7b08ed3b32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-floats-clause-02dad7f9427c",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-floats"
+      ],
+      "behaviour": "Interaction with floats — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-floats",
+        "clause_index": 5,
+        "clause_sha256": "02dad7f9427c51f7846476eef858c9da9a4bb93da02d5568646c78661ddab154"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-floats-clause-c901f3d40066",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-floats"
+      ],
+      "behaviour": "Interaction with floats — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-floats",
+        "clause_index": 7,
+        "clause_sha256": "c901f3d40066f427ab68ea715a0c17cc842fb2adbf0bf7fb0d1b6223c53677ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.initial-letter-breaking",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-breaking"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interaction with Fragmentation (Pagination).",
+      "locator": {
+        "section_id": "initial-letter-breaking",
+        "text_sha256": "47db134e198d16753dceffe6567a7eca6211c5f4fb3c2a6cbdfc86ee328e950d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.initial-letter-breaking-clause-37c618c59234"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-breaking-clause-37c618c59234",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-breaking"
+      ],
+      "behaviour": "Interaction with Fragmentation (Pagination) — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-letter-breaking",
+        "clause_index": 1,
+        "clause_sha256": "37c618c592345372fd2fbe6247dee62589f5713a7571fd510d2d53d9fa4545af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-synthesis",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-synthesis"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix A: Synthesizing Alignment Metrics.",
+      "locator": {
+        "section_id": "baseline-synthesis",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.baseline-synthesis-em",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-synthesis-em"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in : Calculating Em-over and Em-under.",
+      "locator": {
+        "section_id": "baseline-synthesis-em",
+        "text_sha256": "68f07f4992f050f3f00665f89d8cb108f8597f07a03a974d53c4f62542805e98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.baseline-synthesis-fonts",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-synthesis-fonts"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in : Synthesizing Baselines (and Other Font Metrics) for Text.",
+      "locator": {
+        "section_id": "baseline-synthesis-fonts",
+        "text_sha256": "872ae78919ac1fd7227efc292654f461a1646f688c2295eb01b7fabfe8d2822d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.baseline-synthesis-fonts-clause-53af7dec4375",
+        "css-inline-3.baseline-synthesis-fonts-clause-5ccbe9924bd9",
+        "css-inline-3.baseline-synthesis-fonts-clause-c6dd11cb06ab"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.baseline-synthesis-fonts-clause-53af7dec4375",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-synthesis-fonts"
+      ],
+      "behaviour": ": Synthesizing Baselines (and Other Font Metrics) for Text — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-synthesis-fonts",
+        "clause_index": 0,
+        "clause_sha256": "53af7dec43757e772fa689edba9015270e0e64e8744b8f798c891f3e2e3a7c7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-synthesis-fonts-clause-5ccbe9924bd9",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-synthesis-fonts"
+      ],
+      "behaviour": ": Synthesizing Baselines (and Other Font Metrics) for Text — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-synthesis-fonts",
+        "clause_index": 23,
+        "clause_sha256": "5ccbe9924bd99d22a7e12065e6fd49915362d7ab12a85a1b6baf6c45c6f1b951"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-synthesis-fonts-clause-c6dd11cb06ab",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-synthesis-fonts"
+      ],
+      "behaviour": ": Synthesizing Baselines (and Other Font Metrics) for Text — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-synthesis-fonts",
+        "clause_index": 26,
+        "clause_sha256": "c6dd11cb06ab3e35ff7f199910e7b4904dcdeb9176fdfc8b88ac1d51363ea1e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.baseline-synthesis-box",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-synthesis-box"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in : Synthesizing Baselines for Atomic Inlines.",
+      "locator": {
+        "section_id": "baseline-synthesis-box",
+        "text_sha256": "7da31d4971305232f0e903c2c796b924f4155b725bb35afc551d07dd3b7b79e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.baseline-synthesis-box-clause-7a68ff730649"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.baseline-synthesis-box-clause-7a68ff730649",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "baseline-synthesis-box"
+      ],
+      "behaviour": ": Synthesizing Baselines for Atomic Inlines — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-synthesis-box",
+        "clause_index": 0,
+        "clause_sha256": "7a68ff730649dabbd14a74804c42bfaffaccd402ff4dcfaaa341284d319bc181"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.privacy",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.security",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.w3c-conformance",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.w3c-conventions",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.w3c-conventions-clause-5c98c879f070",
+        "css-inline-3.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.w3c-conventions-clause-5c98c879f070",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.w3c-conformance-classes",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.w3c-conformance-classes-clause-ff408372426c",
+        "css-inline-3.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.w3c-partial",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.w3c-partial-clause-ef40c4aab200",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.w3c-conform-future-proofing",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.w3c-testing",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.w3c-testing-clause-1e0fff369221",
+        "css-inline-3.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.w3c-testing-clause-1e0fff369221",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.w3c-testing-clause-ae1210cf9643",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.property-index",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "04cf3bbde026ad9ca9e02b9ce629046abcce6c2f1d3715dfe01a7315661d4ce6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-inline-3.property-index-clause-4b59fe755d34",
+        "css-inline-3.property-index-clause-c2a2dd001d58",
+        "css-inline-3.property-index-clause-bcf26d84daf4",
+        "css-inline-3.property-index-clause-7073b91844ac",
+        "css-inline-3.property-index-clause-310dcf318a49"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.property-index-clause-4b59fe755d34",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 24,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.property-index-clause-c2a2dd001d58",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 26,
+        "clause_sha256": "c2a2dd001d581101425d4be7e35706fc9eb3468b196ab893666a61e6a8b0c33e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.property-index-clause-bcf26d84daf4",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 72, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 71,
+        "clause_sha256": "bcf26d84daf4931ddf398efaa1a6b4ad67c24d2a6b98c48e7fafcee260021c5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.property-index-clause-7073b91844ac",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 96, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 95,
+        "clause_sha256": "7073b91844ac177ce9972f55ae93e993e9730939172d594fa16e0dce57ea0b22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.property-index-clause-310dcf318a49",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 99, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 98,
+        "clause_sha256": "310dcf318a490c0a6e31a7da6d1b9e0eeea6dbac661a2aecfbe6768bc5f856f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-inline-3.issues-index",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "8d1d89b2ed9d223f0b5a295728e2f1892a83c5121c49cbd197cd01e54646363a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.title",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Inline Layout Module Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "10488e35b0f0dbfef3d10d55340501abdbab1b2f4b4b3d69335a63f809aac5ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.abstract",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "d3874347c3d92a75fe50df53149fe2d3da987a0b2dcfdf75875c0142ebb11bad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.sotd",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "19053dad908daeeadf18f4e8e722b8985b3a36deffd058f0d870b4681fe6faa5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.contents",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "9dd2dc30c21148905f9359cffeefdb092ec461c7b725c0a4012d744f3b8f0118"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.initial-letter-intro",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "initial-letter-intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.1. An Introduction to Initial Letters.",
+      "locator": {
+        "section_id": "initial-letter-intro",
+        "text_sha256": "5a9d16433a73ad55b664cd557502615412ba26b0a2a1b390eab7928f4ce5a7fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.drop-initial",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "drop-initial"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.1.1. Drop Initial.",
+      "locator": {
+        "section_id": "drop-initial",
+        "text_sha256": "40096e6a158ff21fe365761d922574654f254f415dff1e63e9590021e2f0ac18"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.sunk-initial",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "sunk-initial"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.1.2. Sunken Initial Letters.",
+      "locator": {
+        "section_id": "sunk-initial",
+        "text_sha256": "0ef388da09a98ed731286e6342641596dd14390c984705ffe29eb65c1f4d88e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.raise-initial",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "raise-initial"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.1.3. Raised Initial Letters.",
+      "locator": {
+        "section_id": "raise-initial",
+        "text_sha256": "5499f8fc7886749fda66840d6fec74ad9bff9a7e7c10f76db0db0fdb159d9f5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.selecting-drop-initials",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "selecting-drop-initials"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.2. Selecting Initial Letters.",
+      "locator": {
+        "section_id": "selecting-drop-initials",
+        "text_sha256": "d0b7d494c0bb8085ac403e97036e9b913a4ae59cb722eb6701c4f5be07b57b2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.changes",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "afe9637fc78ac02a22ac4746139f80e28d3a3383c0cbb58accafebce1a52c6d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.ack",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "ack"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "ack",
+        "text_sha256": "470c7585592ab2438e4885519124d470753eb0b4ea757f3c2cf72a8eaec29862"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.index",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.index-defined-here",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "4ef11e2801720607174989f4302a99668129901a62075f780d3bd5800f16c740"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.index-defined-elsewhere",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "615b69dde7313a30c542c42c2e9fc3c5563425a3ee5e176a8c3e882d80846e21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.references",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.normative",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "ac6f178900fb3981414931fb6b5cb5df36ecc414a950ee2e6d6e9f6e52dc3a20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-inline-3.informative",
+      "family": "css-inline-3",
+      "source_id": "css-inline-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "13d4ff4620fe6b8c3c92f6144e5dbc9c9bb28c418bdbd47fdd0ccbce2d1b3965"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

@@ -1,0 +1,327 @@
+{
+  "schema_version": 1,
+  "source_id": "svg-integration",
+  "sections": [
+    {
+      "id": "pagetitle",
+      "title": "SVG Integration",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.pagetitle"
+        ]
+      }
+    },
+    {
+      "id": "pagesubtitle",
+      "title": "W3C First Public Working Draft 17 April 2014",
+      "level": 2,
+      "text_sha256": "e30d8fd7a1e6adacb940bde8e3b450cbfdd33e5e6cda5497e61b6b02186005f7",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.pagesubtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "517e2a6251f9ec7bb9b3d03082828938eee1baa98a65acaed9002bb3b1749e30",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of This Document",
+      "level": 2,
+      "text_sha256": "caaedcc8ae2d49427206eabd91472513425ef7516f1a2f205364d7abc75cb0d7",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.status"
+        ]
+      }
+    },
+    {
+      "id": "toc",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "b0dbee2a07dd2307fe3f84ee0e99c5f30c480dcecd39c9aac7f3337dc415a6f7",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.toc"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "caedd49ca16eae3ab71c14813b51097127b0de4a8b1c5b8e4ebd4311eca6ec8c",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.intro"
+        ]
+      }
+    },
+    {
+      "id": "referencing-modes",
+      "title": "2. Referencing modes",
+      "level": 2,
+      "text_sha256": "b47da60349496b3960cd07007073b2bce7e7d54e8284f07fd2ae8cc8e25d90b0",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.referencing-modes",
+          "svg-integration.referencing-modes-clause-82eba05ebebc",
+          "svg-integration.referencing-modes-clause-2b44f5674834",
+          "svg-integration.referencing-modes-clause-c5640f18ea23",
+          "svg-integration.referencing-modes-clause-fb0286a12e6b",
+          "svg-integration.referencing-modes-clause-e76675c2a98a",
+          "svg-integration.referencing-modes-clause-d2d99124a3b2",
+          "svg-integration.referencing-modes-clause-2f5ce99b9134",
+          "svg-integration.referencing-modes-clause-313bc9f93c4d",
+          "svg-integration.referencing-modes-clause-9779e9d66c24",
+          "svg-integration.referencing-modes-clause-cb6ccb65fccb",
+          "svg-integration.referencing-modes-clause-d8f1fdd7bde0",
+          "svg-integration.referencing-modes-clause-f8d341f9130d",
+          "svg-integration.referencing-modes-clause-731a17ad09bb",
+          "svg-integration.referencing-modes-clause-66e6d72cb6cb",
+          "svg-integration.referencing-modes-clause-fb19bf885eef",
+          "svg-integration.referencing-modes-clause-57abfa4c3c81",
+          "svg-integration.referencing-modes-clause-caae11430db3",
+          "svg-integration.referencing-modes-clause-b717a7363c8b",
+          "svg-integration.referencing-modes-clause-471c3b09de0f",
+          "svg-integration.referencing-modes-clause-9bca6ac21852",
+          "svg-integration.referencing-modes-clause-fae8dff18da3",
+          "svg-integration.referencing-modes-clause-7a4fffb3cfb4"
+        ]
+      }
+    },
+    {
+      "id": "processing-modes",
+      "title": "3. Processing modes",
+      "level": 2,
+      "text_sha256": "7aa94e32d958401e52ead2d46afa3b14a95b6ca909d41724768a9b039006260a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.processing-modes"
+        ]
+      }
+    },
+    {
+      "id": "features",
+      "title": "3.1. Features",
+      "level": 3,
+      "text_sha256": "6722047f5349467a364e38e201910220a76cca4a1733b2b7dd7f411c325de858",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.features",
+          "svg-integration.features-clause-de8eb1223a5c",
+          "svg-integration.features-clause-e0c22a8366b2",
+          "svg-integration.features-clause-e01d3e9703b5",
+          "svg-integration.features-clause-a101e55b9e76",
+          "svg-integration.features-clause-0176c132fa1f",
+          "svg-integration.features-clause-16195d774d8b"
+        ]
+      }
+    },
+    {
+      "id": "dynamic-interactive-mode",
+      "title": "3.2. Dynamic interactive mode",
+      "level": 3,
+      "text_sha256": "6882bbd13909a2dcfe4f5410aa57d6d9b6a7898f5cafc49b1c9397d20056b9f0",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.dynamic-interactive-mode"
+        ]
+      }
+    },
+    {
+      "id": "animated-mode",
+      "title": "3.3. Animated mode",
+      "level": 3,
+      "text_sha256": "5d8b6202291765bd227436307fc0e7f5b8982632ed18a7c6f793cb644385cdda",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.animated-mode",
+          "svg-integration.animated-mode-clause-f1cb33ad1293",
+          "svg-integration.animated-mode-clause-2d906a22aeb2"
+        ]
+      }
+    },
+    {
+      "id": "secure-animated-mode",
+      "title": "3.4. Secure animated mode",
+      "level": 3,
+      "text_sha256": "fc49b5ebd10c0ae7ecc14dfd2ed595615760636a795f949ed850b78c3d0fb261",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.secure-animated-mode",
+          "svg-integration.secure-animated-mode-clause-7b1acc0d9858"
+        ]
+      }
+    },
+    {
+      "id": "static-mode",
+      "title": "3.5. Static mode",
+      "level": 3,
+      "text_sha256": "7d70d88e3725e4722b3052f9c2ff94c5084aa7380796ecd94ed7e07793ef769c",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.static-mode",
+          "svg-integration.static-mode-clause-8bd1bccc9915",
+          "svg-integration.static-mode-clause-2d906a22aeb2"
+        ]
+      }
+    },
+    {
+      "id": "secure-static-mode",
+      "title": "3.6. Secure static mode",
+      "level": 3,
+      "text_sha256": "f3dec1ecc9e22a26a66b2f38b0d541b3c85322fb87cccf66350dbd3adbcf5bb3",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.secure-static-mode",
+          "svg-integration.secure-static-mode-clause-4ee956a007d3"
+        ]
+      }
+    },
+    {
+      "id": "examples",
+      "title": "3.7. Examples",
+      "level": 3,
+      "text_sha256": "ab89e5151df6eee86a2ba627ff4791b0006b5b514e419b8230c3148201d0fac7",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.examples"
+        ]
+      }
+    },
+    {
+      "id": "foreign-content",
+      "title": "4. Embedding foreign content in SVG",
+      "level": 2,
+      "text_sha256": "84fdf639831649deb28a3d8790d3cd0ab293dab057a53906513a47fa419400cf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.foreign-content"
+        ]
+      }
+    },
+    {
+      "id": "foreign-content-html",
+      "title": "4.1. Using HTML in ‘foreignObject’",
+      "level": 3,
+      "text_sha256": "8bbbfa108992ef2b47765d9c7df519bd0cdfdb78473a7d07fb2a573ca9a95ba8",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.foreign-content-html",
+          "svg-integration.foreign-content-html-clause-69ddd1541832"
+        ]
+      }
+    },
+    {
+      "id": "foreign-content-svg",
+      "title": "4.2. Using SVG in ‘foreignObject’",
+      "level": 3,
+      "text_sha256": "337e547a950fc8a98592f10d964c1e79a304961790a8da0ce449a1f000cefabb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.foreign-content-svg"
+        ]
+      }
+    },
+    {
+      "id": "refs",
+      "title": "5. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.refs"
+        ]
+      }
+    },
+    {
+      "id": "normrefs",
+      "title": "5.1. Normative references",
+      "level": 3,
+      "text_sha256": "ab8acd1bbb68ffad74571ce5cbae1c2aa231542513f80523ec5c2f4321149c86",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.normrefs"
+        ]
+      }
+    },
+    {
+      "id": "nonnormrefs",
+      "title": "5.2. Non-normative references",
+      "level": 3,
+      "text_sha256": "2b6f96428a5593fb06441f41ef72b4e2736674352fdfc35bbf4124344dffd3f5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.nonnormrefs"
+        ]
+      }
+    },
+    {
+      "id": "Acknowledgments",
+      "title": "6. Acknowledgments",
+      "level": 2,
+      "text_sha256": "e8d0e90b1a29b647a9eb13f85ca761ff8ed35ce51f6f28cfbbf89f14f13230b1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg-integration.acknowledgments"
+        ]
+      }
+    }
+  ]
+}

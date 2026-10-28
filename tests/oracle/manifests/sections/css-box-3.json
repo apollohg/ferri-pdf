@@ -1,0 +1,496 @@
+{
+  "schema_version": 1,
+  "source_id": "css-box-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Box Model Module Level 3",
+      "level": 1,
+      "text_sha256": "4b5424216435a2785862a7750bd9e5768ae8f2a143c6c3dbb2e0d3987f3189f9",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "479535805b2e855cec6a5a64012bf83ac29352fa728b0a5b0a6ce2553ef59059",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "62ea6de2808aace9b22f6b3d3e853c9638ce86fccb2c7beda31e4e7114fad863",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "08f50b3a7e819d4027f3d60c5ebf873e7d37d468a79ec131595d99c172ecbd98",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "0739c97ee1aa41003cc3312671bebcceed64e78753618e815ce7e8468d611646",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.values"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.2. Module Interactions",
+      "level": 3,
+      "text_sha256": "44d3090783ef0ea37813f6c46f6e666e02a41b979fd0b0f3687f9adf7feffacc",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.placement"
+        ]
+      }
+    },
+    {
+      "id": "box-model",
+      "title": "2. The CSS Box Model",
+      "level": 2,
+      "text_sha256": "efa5d7a31266c69f170caf15651fe08e9c37f8da6330f43f9e77359f4b1f5097",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.box-model"
+        ]
+      }
+    },
+    {
+      "id": "box-edges",
+      "title": "2.1. Boxes and Edges",
+      "level": 3,
+      "text_sha256": "71ba87f758d4ba3d2076277e5b88e42474acc5940110b6d6e45fa0b39c1a3b9a",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.box-edges"
+        ]
+      }
+    },
+    {
+      "id": "fragmentation",
+      "title": "2.2. Fragmentation",
+      "level": 3,
+      "text_sha256": "a61130c9134e7be9afe0a8c0389ea92c0e7bc5d6cbee6e3561fef2708524b321",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.fragmentation"
+        ]
+      }
+    },
+    {
+      "id": "keywords",
+      "title": "2.3. Box-edge Keywords",
+      "level": 3,
+      "text_sha256": "16f381415a655c55f0e317a6d8fcece21c48ead57690d46f3e978e9817311884",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.keywords"
+        ]
+      }
+    },
+    {
+      "id": "margins",
+      "title": "3. Margins",
+      "level": 2,
+      "text_sha256": "a435375f0d9fea4fa595d0d1243a9be1e050571fe67f74409b711651484d2883",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.margins"
+        ]
+      }
+    },
+    {
+      "id": "margin-physical",
+      "title": "3.1. Page-relative (Physical) Margin Properties: the margin-top, margin-right, margin-bottom, and margin-left properties",
+      "level": 3,
+      "text_sha256": "0c18bda1bc8465ab763ab6b6a11df782f691abbc14b9caaf49a70ce3545f4e8c",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.margin-physical",
+          "css-box-3.margin-physical-clause-cca2516ebb1d",
+          "css-box-3.margin-physical-clause-70ca303ace2b",
+          "css-box-3.margin-physical-clause-4b59fe755d34"
+        ]
+      }
+    },
+    {
+      "id": "margin-shorthand",
+      "title": "3.2. Margin Shorthand: the margin property",
+      "level": 3,
+      "text_sha256": "071976b3c0c35c2957a03e65231982306b203f38d5fdd11083c14d0932a4012e",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.margin-shorthand",
+          "css-box-3.margin-shorthand-clause-cca2516ebb1d",
+          "css-box-3.margin-shorthand-clause-d68c94ccc43e"
+        ]
+      }
+    },
+    {
+      "id": "paddings",
+      "title": "4. Padding",
+      "level": 2,
+      "text_sha256": "a86e4a3f39c1b766b592cd72758cab8fe50aadd384d9c6cf6fe218160ef0059e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.paddings"
+        ]
+      }
+    },
+    {
+      "id": "padding-physical",
+      "title": "4.1. Page-relative (Physical) Padding Properties: the padding-top, padding-right, padding-bottom, and padding-left properties",
+      "level": 3,
+      "text_sha256": "8eebaa165224eb23583efb1e3c19174711c8b2cecfa2ff060489c2eba62c253e",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.padding-physical",
+          "css-box-3.padding-physical-clause-cca2516ebb1d",
+          "css-box-3.padding-physical-clause-986b7b70ef39",
+          "css-box-3.padding-physical-clause-4b59fe755d34",
+          "css-box-3.padding-physical-clause-9682d165f771",
+          "css-box-3.padding-physical-clause-8daabcaf3f75"
+        ]
+      }
+    },
+    {
+      "id": "padding-shorthand",
+      "title": "4.2. Padding Shorthand: the padding property",
+      "level": 3,
+      "text_sha256": "8aff226b810d6a7835c45caf47da25ad4f3bbc79976582999aa987624975f5a0",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.padding-shorthand",
+          "css-box-3.padding-shorthand-clause-cca2516ebb1d",
+          "css-box-3.padding-shorthand-clause-caa283590472"
+        ]
+      }
+    },
+    {
+      "id": "borders",
+      "title": "5. Borders",
+      "level": 2,
+      "text_sha256": "866678ccef6e2edb8564276174b9a138257e729b18ad90144fdcf4dd93bbf6ad",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.borders"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "6. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-recent",
+      "title": "6.1. Recent Changes",
+      "level": 3,
+      "text_sha256": "f0ec664bd7d8656e519f2afb01376443179c0524d228e2aa022e439f37cbabab",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.changes-recent"
+        ]
+      }
+    },
+    {
+      "id": "changes-since-L2",
+      "title": "6.2. Changes Since CSS Level 2",
+      "level": 3,
+      "text_sha256": "b64ecadab89ef2e2cfc1243055551c6e57aa4aa78cd5533a42254b98abfca66f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.changes-since-l2"
+        ]
+      }
+    },
+    {
+      "id": "priv",
+      "title": "7. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "7a9934cd805d28ecdc853e3658c088d8318f6b74d084a0689e3487749afe9908",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.priv"
+        ]
+      }
+    },
+    {
+      "id": "sec",
+      "title": "8. Security Considerations",
+      "level": 2,
+      "text_sha256": "5771fe88628ce078ae9af6b8cb38f873ccccbc8215d378b4b1a93763150386c0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.sec"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.w3c-conventions",
+          "css-box-3.w3c-conventions-clause-5c98c879f070",
+          "css-box-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.w3c-conformance-classes",
+          "css-box-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-box-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.w3c-partial",
+          "css-box-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.w3c-testing",
+          "css-box-3.w3c-testing-clause-1e0fff369221",
+          "css-box-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "ab599a5730c89a016d54f9a341b746a274b86af5e4cb1b1ead15ce3385324428",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "e6bef226a3a187cf32facebe5020219411f5109ada65190ebc1dfe1b4b9b885c",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "779b3b7456d63c41133465e1449cc4fe402b6bb8c08b93aa2ddff9d1070da474",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "1da55a0eced8d5273b66f7eb572f8e1d5e011de6ad705275c9bd48de5f864b98",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "1e821e1dfa00228d7c8f531f93333afe3746382db1577280a01413d96cf04f27",
+      "clause_count": 108,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-box-3.property-index",
+          "css-box-3.property-index-clause-4b59fe755d34",
+          "css-box-3.property-index-clause-70ca303ace2b",
+          "css-box-3.property-index-clause-986b7b70ef39"
+        ]
+      }
+    }
+  ]
+}

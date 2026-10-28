@@ -1,0 +1,847 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "i18n-glossary.introduction",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "56d52541d6c3355c421de4e912cdd8951529e6d17737786890b7e7b58582a931"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.links",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "links"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alphabetical links.",
+      "locator": {
+        "section_id": "links",
+        "text_sha256": "73cf1f91025118c48f33835017564ed553da410348314e581cf634655dadd980"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Glossary.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "text_sha256": "d85651db51e1ced0ad54ce71130abcbbef8a9f71322076b0fb6af6764da7367b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "i18n-glossary.x3-glossary-clause-c382a182ffaa",
+        "i18n-glossary.x3-glossary-clause-9bddf43e32db",
+        "i18n-glossary.x3-glossary-clause-0bbdfdbe1884",
+        "i18n-glossary.x3-glossary-clause-cb497082e725",
+        "i18n-glossary.x3-glossary-clause-aca6e5d8f68e",
+        "i18n-glossary.x3-glossary-clause-30cf7b7544d9",
+        "i18n-glossary.x3-glossary-clause-d58f463c3290",
+        "i18n-glossary.x3-glossary-clause-bd5b9d2a4ddb",
+        "i18n-glossary.x3-glossary-clause-314917d3d2b0",
+        "i18n-glossary.x3-glossary-clause-05a753a110a6",
+        "i18n-glossary.x3-glossary-clause-54377e3c3862",
+        "i18n-glossary.x3-glossary-clause-c16406957e17",
+        "i18n-glossary.x3-glossary-clause-078eb538a873",
+        "i18n-glossary.x3-glossary-clause-7f41f4d25d53",
+        "i18n-glossary.x3-glossary-clause-4ae0c46cbcfa",
+        "i18n-glossary.x3-glossary-clause-74ec6060e3b5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-c382a182ffaa",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 4,
+        "clause_sha256": "c382a182ffaafe6e1251bdd78accd8fe17eb8a92d4f564eb0a75516d0582fe4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-9bddf43e32db",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 6,
+        "clause_sha256": "9bddf43e32db41d478780643dd6cd617ba721aadc3119fcbe2e146ce2b7b5a0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-0bbdfdbe1884",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 8,
+        "clause_sha256": "0bbdfdbe188411c9c583cb5564931001568daae6f60cd3321ee693e93090d7ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-cb497082e725",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 12,
+        "clause_sha256": "cb497082e725f1e37952cc5cc41252d6c79d94b070505387bf9d8f5fb397e940"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-aca6e5d8f68e",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 13,
+        "clause_sha256": "aca6e5d8f68e07be7464cff057d8f3399b4fc9dddc440b9b8e1cb4738e159628"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-30cf7b7544d9",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 21,
+        "clause_sha256": "30cf7b7544d9e3ff5c5f2807991b09ad98547799275431c08689848ed0f1b0d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-d58f463c3290",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 48,
+        "clause_sha256": "d58f463c32904647eca904bd06ac3f62e7d24f903de56ee2a885f4cc0eec7ed6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-bd5b9d2a4ddb",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 70, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 69,
+        "clause_sha256": "bd5b9d2a4ddbf787c3512aeb5107ec40cf3d7f8286a818c9e362ee756a11ef1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-314917d3d2b0",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 95, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 94,
+        "clause_sha256": "314917d3d2b0a38255a1320bd70d90b37c4ccda0a88b0e913f5ba9e11afe3e75"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-05a753a110a6",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 110, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 109,
+        "clause_sha256": "05a753a110a62e2ca3a2e5608233c135ecb1aa972951dca5f5e6f30febc93218"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-54377e3c3862",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 119, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 118,
+        "clause_sha256": "54377e3c386284ba20dcca21e470a9dd0174b23ef46caaba7a2282c3a06b84f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-c16406957e17",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 122, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 121,
+        "clause_sha256": "c16406957e1707195512fa18e302ce138482af48c5d53bcbff44df7193152e22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-078eb538a873",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 130, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 129,
+        "clause_sha256": "078eb538a8731a6444310027fcef3ffe518847cde26d4c1e54fb5824f9833fd5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-7f41f4d25d53",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 138, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 137,
+        "clause_sha256": "7f41f4d25d53c81adfe806e9d27c3b7c4189125bacf34c1d8fc92d17a230bc8b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-4ae0c46cbcfa",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 142, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 141,
+        "clause_sha256": "4ae0c46cbcfa17228db00f77bff01471151a523ec64123ee303f2582baf8333f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.x3-glossary-clause-74ec6060e3b5",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "x3-glossary"
+      ],
+      "behaviour": "Glossary — normative clause 144, located by its exact source hash.",
+      "locator": {
+        "section_id": "x3-glossary",
+        "clause_index": 143,
+        "clause_sha256": "74ec6060e3b51c293a1d377e6820d74922e28a109b6c67bef7c4c4c32459dd11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.howto",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "howto"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in How to use this glossary.",
+      "locator": {
+        "section_id": "howto",
+        "text_sha256": "b3ad871ebb00feba4e8f37b69aace7db4128679b24bc621f9408810670cde298"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "i18n-glossary.howto-clause-04692ce63436"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.howto-clause-04692ce63436",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "howto"
+      ],
+      "behaviour": "How to use this glossary — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "howto",
+        "clause_index": 2,
+        "clause_sha256": "04692ce63436987e1681174478ec6d1ae81a18d67645794fbb3ff7566bf62e66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.a-1-relationship-to-the-infra-standard",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "a-1-relationship-to-the-infra-standard"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relationship to the Infra Standard.",
+      "locator": {
+        "section_id": "a-1-relationship-to-the-infra-standard",
+        "text_sha256": "967f5e1ee0e408db6104fc3daa31a3e06a7ffee090f77b242e18be88dd2e5357"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "i18n-glossary.a-1-relationship-to-the-infra-standard-clause-3a1fa12ddc73"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.a-1-relationship-to-the-infra-standard-clause-3a1fa12ddc73",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "a-1-relationship-to-the-infra-standard"
+      ],
+      "behaviour": "Relationship to the Infra Standard — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "a-1-relationship-to-the-infra-standard",
+        "clause_index": 0,
+        "clause_sha256": "3a1fa12ddc7326c0cad90d97f93998c5192421e5e7836feba1625b7c26a845b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.a-2-respec",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "a-2-respec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ReSpec.",
+      "locator": {
+        "section_id": "a-2-respec",
+        "text_sha256": "b687f2ef90314f17f8319e5337a62a2512d7cac597604d3be1226c9687202d54"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.a-3-bikeshed",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "a-3-bikeshed"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bikeshed.",
+      "locator": {
+        "section_id": "a-3-bikeshed",
+        "text_sha256": "6b4b0c9d11e3660d05a4d88e91d6c55b19d4a0baf592b4ee250e81a00b566b08"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "i18n-glossary.a-3-bikeshed-clause-27ed09098768"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.a-3-bikeshed-clause-27ed09098768",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "a-3-bikeshed"
+      ],
+      "behaviour": "Bikeshed — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "a-3-bikeshed",
+        "clause_index": 2,
+        "clause_sha256": "27ed09098768e29efce4ecdf15192da27fe079edf25a57c99565768f4fc7a54d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "i18n-glossary.title",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Internationalization Glossary.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "22d60d93c7652004fba91f51f0d6a56ac64b4712f375d1f7799e06abc31c19ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.abstract",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "5bd904305bf5d5b927e9a99d75b484a78d904a659b7ec404ce89fea3b7f106a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.sotd",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of This Document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "9b6512cfc40da6d011987ab59c355edd91d5baed5b5837ff75cc5be2d802634d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.table-of-contents",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "table-of-contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "table-of-contents",
+        "text_sha256": "3c2f2685ce1cf11d0062e255597f6b1e7b33ad373afd7ca2c92c4b8b3971784c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.b-references",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "b-references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in B. References.",
+      "locator": {
+        "section_id": "b-references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "i18n-glossary.b-1-informative-references",
+      "family": "i18n-glossary",
+      "source_id": "i18n-glossary",
+      "sections": [
+        "b-1-informative-references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in B.1 Informative references.",
+      "locator": {
+        "section_id": "b-1-informative-references",
+        "text_sha256": "1b8f1ed54c81874cc1f28e8596ef7a795b459cfefdf1926275cb4fc9c90239b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

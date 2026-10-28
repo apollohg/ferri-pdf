@@ -1,0 +1,3484 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-multicol-1.introduction",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "1b73ba76da32f1e29934a90083e2a2d765aa7f9789a3b4ceb074247d281ae390"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.introduction-clause-b76495a264c5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.introduction-clause-b76495a264c5",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Introduction — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "introduction",
+        "clause_index": 21,
+        "clause_sha256": "b76495a264c587abd0dd3eee96f928eebcc85ba9efdcd5c55342df65688ae338"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.values",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "5f8506dcb420c6d6df7be65e3ff0126c9f92cd23f8505cebe02804b8578eccd4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.the-multi-column-model",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "the-multi-column-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Multi-Column Model.",
+      "locator": {
+        "section_id": "the-multi-column-model",
+        "text_sha256": "4ac5875e5862817b1ee78f13001f8c700eacbff912fd77b808b4e230f064b189"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.the-multi-column-model-clause-ea0c2baaffa7",
+        "css-multicol-1.the-multi-column-model-clause-02eb25ebceb2",
+        "css-multicol-1.the-multi-column-model-clause-0c555c31a17b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.the-multi-column-model-clause-ea0c2baaffa7",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "the-multi-column-model"
+      ],
+      "behaviour": "The Multi-Column Model — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-multi-column-model",
+        "clause_index": 5,
+        "clause_sha256": "ea0c2baaffa7a0621328cea2b78a93e34bdc6e1036e22f7c1756182a8116ae55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.the-multi-column-model-clause-02eb25ebceb2",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "the-multi-column-model"
+      ],
+      "behaviour": "The Multi-Column Model — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-multi-column-model",
+        "clause_index": 6,
+        "clause_sha256": "02eb25ebceb2e29abd9358c1d6f8b3a9cf280b8cd865d2a42257cbed7393fe51"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.the-multi-column-model-clause-0c555c31a17b",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "the-multi-column-model"
+      ],
+      "behaviour": "The Multi-Column Model — normative clause 168, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-multi-column-model",
+        "clause_index": 167,
+        "clause_sha256": "0c555c31a17b972fc945184fd0e4b3bdd5ae7a36aa72c32a2780a11787a889d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.the-number-and-width-of-columns",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "the-number-and-width-of-columns"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Number and Width of Columns.",
+      "locator": {
+        "section_id": "the-number-and-width-of-columns",
+        "text_sha256": "16665c11ce7f429bcd6b006585eb3b36dbfad25c98856c006c0a2bfa6e39df6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.cw",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cw"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Inline Size of Columns: the column-width property.",
+      "locator": {
+        "section_id": "cw",
+        "text_sha256": "746855ec65e242f6d10f428f77d924f8f35b32937517847c071f725a2289b5d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.cw-clause-cca2516ebb1d",
+        "css-multicol-1.cw-clause-f558e05e17bb",
+        "css-multicol-1.cw-clause-29868e5cb175",
+        "css-multicol-1.cw-clause-714a887168ce",
+        "css-multicol-1.cw-clause-e8a2744ad7cf",
+        "css-multicol-1.cw-clause-b0c6816837e6",
+        "css-multicol-1.cw-clause-ac2ebf6563c4",
+        "css-multicol-1.cw-clause-98af7a37f8e8",
+        "css-multicol-1.cw-clause-3704175a2e5a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.cw-clause-cca2516ebb1d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cw"
+      ],
+      "behaviour": "The Inline Size of Columns: the column-width property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "cw",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cw-clause-f558e05e17bb",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cw"
+      ],
+      "behaviour": "The Inline Size of Columns: the column-width property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "cw",
+        "clause_index": 21,
+        "clause_sha256": "f558e05e17bb6a13f1dd353243ff64f6d6d8d7638457a49630d1f926459833da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cw-clause-29868e5cb175",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cw"
+      ],
+      "behaviour": "The Inline Size of Columns: the column-width property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "cw",
+        "clause_index": 32,
+        "clause_sha256": "29868e5cb175d9f2447970ce521c0f754c99023e57b029e7fd43cc74febc140d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cw-clause-714a887168ce",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cw"
+      ],
+      "behaviour": "The Inline Size of Columns: the column-width property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "cw",
+        "clause_index": 35,
+        "clause_sha256": "714a887168ce35f486d044b93dc3ca5f39fc1c32e0c394560039a01da109429f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cw-clause-e8a2744ad7cf",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cw"
+      ],
+      "behaviour": "The Inline Size of Columns: the column-width property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "cw",
+        "clause_index": 36,
+        "clause_sha256": "e8a2744ad7cfa2f25374136ad41f37c02721c3066a10f67a554734a6eea45bf0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cw-clause-b0c6816837e6",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cw"
+      ],
+      "behaviour": "The Inline Size of Columns: the column-width property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "cw",
+        "clause_index": 37,
+        "clause_sha256": "b0c6816837e6917950df3ab9b406c1c33354918938e139effe839d56dd5a816f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cw-clause-ac2ebf6563c4",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cw"
+      ],
+      "behaviour": "The Inline Size of Columns: the column-width property — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "cw",
+        "clause_index": 45,
+        "clause_sha256": "ac2ebf6563c46fce5f2b8fc56974484c7a245f30d0042a277e3b7ded1431d411"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cw-clause-98af7a37f8e8",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cw"
+      ],
+      "behaviour": "The Inline Size of Columns: the column-width property — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "cw",
+        "clause_index": 46,
+        "clause_sha256": "98af7a37f8e832a923997084649bcd8a076ec879c9910061af273c4320b42a18"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cw-clause-3704175a2e5a",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cw"
+      ],
+      "behaviour": "The Inline Size of Columns: the column-width property — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "cw",
+        "clause_index": 47,
+        "clause_sha256": "3704175a2e5a72d80acb95730dd8d5b18086d1288a9ec6381f04089f25f45a1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cc",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Number of Columns: the column-count property.",
+      "locator": {
+        "section_id": "cc",
+        "text_sha256": "439e280be8cd1fe4318060170896beba1dbd195a3ead8d15ed14a3d88f14d50f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.cc-clause-cca2516ebb1d",
+        "css-multicol-1.cc-clause-4a3980dd62c7",
+        "css-multicol-1.cc-clause-5903f29655a5",
+        "css-multicol-1.cc-clause-db06f23eb2de",
+        "css-multicol-1.cc-clause-fd5e785c07f0",
+        "css-multicol-1.cc-clause-985d02ba3a7f",
+        "css-multicol-1.cc-clause-de84726ad66b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.cc-clause-cca2516ebb1d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cc"
+      ],
+      "behaviour": "The Number of Columns: the column-count property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "cc",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cc-clause-4a3980dd62c7",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cc"
+      ],
+      "behaviour": "The Number of Columns: the column-count property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "cc",
+        "clause_index": 32,
+        "clause_sha256": "4a3980dd62c723b7aec661035878d363e724b11593e457bdb91c0fdd84c70460"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cc-clause-5903f29655a5",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cc"
+      ],
+      "behaviour": "The Number of Columns: the column-count property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "cc",
+        "clause_index": 33,
+        "clause_sha256": "5903f29655a5d894c5c9dc060ff0ee8ea00008d1d9a0058d790ec5f8995d137c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cc-clause-db06f23eb2de",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cc"
+      ],
+      "behaviour": "The Number of Columns: the column-count property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "cc",
+        "clause_index": 34,
+        "clause_sha256": "db06f23eb2de3c674426831c840db9c166172b1368f95b1327a274f9efac65a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cc-clause-fd5e785c07f0",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cc"
+      ],
+      "behaviour": "The Number of Columns: the column-count property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "cc",
+        "clause_index": 36,
+        "clause_sha256": "fd5e785c07f0d380adfaa9438df0cc27facfe2f3b231b1afbe5f5a58994f2a85"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cc-clause-985d02ba3a7f",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cc"
+      ],
+      "behaviour": "The Number of Columns: the column-count property — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "cc",
+        "clause_index": 41,
+        "clause_sha256": "985d02ba3a7f9d7fb2f2be9700f9aafe8a1b4a0ad4ec75073fcd487f086874ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cc-clause-de84726ad66b",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cc"
+      ],
+      "behaviour": "The Number of Columns: the column-count property — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "cc",
+        "clause_index": 42,
+        "clause_sha256": "de84726ad66b32b7428496dabfcc5ec805d5399078727f704efb0aca2a5450fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.columns",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "columns"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The column-width and column-count Shorthand: The columns Property.",
+      "locator": {
+        "section_id": "columns",
+        "text_sha256": "f1a3b04b21d5fdb3a2cd476c80eb14bfe52dbead9cc5bdc854bec1ba62a10266"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.columns-clause-cca2516ebb1d",
+        "css-multicol-1.columns-clause-35a2d46afc17",
+        "css-multicol-1.columns-clause-51999c3a1b13",
+        "css-multicol-1.columns-clause-19c8dc31e313",
+        "css-multicol-1.columns-clause-b526ebdeee07"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.columns-clause-cca2516ebb1d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "columns"
+      ],
+      "behaviour": "The column-width and column-count Shorthand: The columns Property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "columns",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.columns-clause-35a2d46afc17",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "columns"
+      ],
+      "behaviour": "The column-width and column-count Shorthand: The columns Property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "columns",
+        "clause_index": 26,
+        "clause_sha256": "35a2d46afc17982a9176038e435b304b9269d9f5bf1cf8c489416001bc477255"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.columns-clause-51999c3a1b13",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "columns"
+      ],
+      "behaviour": "The column-width and column-count Shorthand: The columns Property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "columns",
+        "clause_index": 27,
+        "clause_sha256": "51999c3a1b13e87856f5fa7c51b2d6ec7d8ccb6bbf97b3f482980aaa4018b2fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.columns-clause-19c8dc31e313",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "columns"
+      ],
+      "behaviour": "The column-width and column-count Shorthand: The columns Property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "columns",
+        "clause_index": 32,
+        "clause_sha256": "19c8dc31e31394b429b9779a646057026eea1b621a8f855d393f651a388564fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.columns-clause-b526ebdeee07",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "columns"
+      ],
+      "behaviour": "The column-width and column-count Shorthand: The columns Property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "columns",
+        "clause_index": 34,
+        "clause_sha256": "b526ebdeee0706556218320a16fd64dcebdb9f0241248b0583bf30e246b65779"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.pseudo-algorithm",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "pseudo-algorithm"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Pseudo-algorithm.",
+      "locator": {
+        "section_id": "pseudo-algorithm",
+        "text_sha256": "5ecef7aa40dfbee1d979a2c4fbcc958d3e0326eb071ca7c8e24212fbc27b667f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.pseudo-algorithm-clause-95c3a7642946",
+        "css-multicol-1.pseudo-algorithm-clause-76fcd48cb00b",
+        "css-multicol-1.pseudo-algorithm-clause-c20d12f258a4",
+        "css-multicol-1.pseudo-algorithm-clause-9a7cec5660dd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.pseudo-algorithm-clause-95c3a7642946",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "pseudo-algorithm"
+      ],
+      "behaviour": "The Pseudo-algorithm — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "pseudo-algorithm",
+        "clause_index": 0,
+        "clause_sha256": "95c3a7642946c076fe32f650a452dd75e35ff88f62bafb81d08c5b62ed0b3848"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.pseudo-algorithm-clause-76fcd48cb00b",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "pseudo-algorithm"
+      ],
+      "behaviour": "The Pseudo-algorithm — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "pseudo-algorithm",
+        "clause_index": 1,
+        "clause_sha256": "76fcd48cb00b0f1684cb3e44e84cd178f6e9af84ab27bb7dd799dd508422c9d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.pseudo-algorithm-clause-c20d12f258a4",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "pseudo-algorithm"
+      ],
+      "behaviour": "The Pseudo-algorithm — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "pseudo-algorithm",
+        "clause_index": 13,
+        "clause_sha256": "c20d12f258a4c0dc32b734c1a5fc50f941f7c7408c28e972c5a198e5ff912599"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.pseudo-algorithm-clause-9a7cec5660dd",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "pseudo-algorithm"
+      ],
+      "behaviour": "The Pseudo-algorithm — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "pseudo-algorithm",
+        "clause_index": 21,
+        "clause_sha256": "9a7cec5660dd9d78283ef6f03ba9e66b71bf332f44a61673d667da7ccc25d3af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.stacking-context",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "stacking-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stacking Context.",
+      "locator": {
+        "section_id": "stacking-context",
+        "text_sha256": "4f07b4ec310611671825ac071fa974e37c08b8f603c0ec9ea553dbb554be039b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.column-gaps-and-rules",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "column-gaps-and-rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Column Gaps and Rules.",
+      "locator": {
+        "section_id": "column-gaps-and-rules",
+        "text_sha256": "dda94d62e371add06c138b9334fbadddfd2373413fdc01c5f0912ddf87b223fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.column-gaps-and-rules-clause-6acdcaa1ae15",
+        "css-multicol-1.column-gaps-and-rules-clause-fea362728124"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.column-gaps-and-rules-clause-6acdcaa1ae15",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "column-gaps-and-rules"
+      ],
+      "behaviour": "Column Gaps and Rules — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-gaps-and-rules",
+        "clause_index": 19,
+        "clause_sha256": "6acdcaa1ae15670ed143f8d1f7788b53cecab18d070e08a53cf82a5603d02b52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.column-gaps-and-rules-clause-fea362728124",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "column-gaps-and-rules"
+      ],
+      "behaviour": "Column Gaps and Rules — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-gaps-and-rules",
+        "clause_index": 20,
+        "clause_sha256": "fea3627281241035fcb5c9c6a537472646905de2c33e992155bfe91c2c2b8aa6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cg",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cg"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gutters Between Columns: the column-gap property.",
+      "locator": {
+        "section_id": "cg",
+        "text_sha256": "97983750c827f927b49a37fbe6cf0cdaabc6f6e8a61384e7ac0e51d64e0790cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.crc",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Color of Column Rules: the column-rule-color property.",
+      "locator": {
+        "section_id": "crc",
+        "text_sha256": "ede81972d792653cf86d5a8314d9c2e462d86e5d25d4e7dd0e41b994bd057aa8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.crc-clause-cca2516ebb1d",
+        "css-multicol-1.crc-clause-dee972826276",
+        "css-multicol-1.crc-clause-d834e275c705",
+        "css-multicol-1.crc-clause-b6d6689e7159",
+        "css-multicol-1.crc-clause-bda523af59f5",
+        "css-multicol-1.crc-clause-125e55c14078",
+        "css-multicol-1.crc-clause-1b50d1020afa",
+        "css-multicol-1.crc-clause-ac4eaf2a2603"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.crc-clause-cca2516ebb1d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crc"
+      ],
+      "behaviour": "The Color of Column Rules: the column-rule-color property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "crc",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crc-clause-dee972826276",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crc"
+      ],
+      "behaviour": "The Color of Column Rules: the column-rule-color property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "crc",
+        "clause_index": 13,
+        "clause_sha256": "dee972826276164f75b2c71903996f1f1ea46b319fbdea6895683953135c8b1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crc-clause-d834e275c705",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crc"
+      ],
+      "behaviour": "The Color of Column Rules: the column-rule-color property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "crc",
+        "clause_index": 19,
+        "clause_sha256": "d834e275c7051d3c9b644b1c7899f5fc84fff8d8d1ddcc6ecccac8230d177ffe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crc-clause-b6d6689e7159",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crc"
+      ],
+      "behaviour": "The Color of Column Rules: the column-rule-color property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "crc",
+        "clause_index": 20,
+        "clause_sha256": "b6d6689e71595c236051550c8c9b73043949f2c606b8bd161b0674d45aacc10e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crc-clause-bda523af59f5",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crc"
+      ],
+      "behaviour": "The Color of Column Rules: the column-rule-color property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "crc",
+        "clause_index": 21,
+        "clause_sha256": "bda523af59f5f9d309aa517e7ec7afbbe0e75ae6dd8018cd3f74eb6377d6ae92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crc-clause-125e55c14078",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crc"
+      ],
+      "behaviour": "The Color of Column Rules: the column-rule-color property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "crc",
+        "clause_index": 23,
+        "clause_sha256": "125e55c14078b230a8446ecac5c524cb0b6aa5114c63e34183c619cd31241259"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crc-clause-1b50d1020afa",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crc"
+      ],
+      "behaviour": "The Color of Column Rules: the column-rule-color property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "crc",
+        "clause_index": 25,
+        "clause_sha256": "1b50d1020afa576592ac0c39767935f222d7d186a024acaab7a10d346b04fb4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crc-clause-ac4eaf2a2603",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crc"
+      ],
+      "behaviour": "The Color of Column Rules: the column-rule-color property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "crc",
+        "clause_index": 26,
+        "clause_sha256": "ac4eaf2a26033879add4929d7186a041fb95bdfb2ba2965372659625ba92b7e3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crs",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Style Of Column Rules: the column-rule-style property.",
+      "locator": {
+        "section_id": "crs",
+        "text_sha256": "e42f2641b5212d6361d1f900f93bbd549040c6084a2290a1e11385288269e5b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.crs-clause-cca2516ebb1d",
+        "css-multicol-1.crs-clause-85e4ac5e991f",
+        "css-multicol-1.crs-clause-7311382b1b34",
+        "css-multicol-1.crs-clause-f782737aaf0e",
+        "css-multicol-1.crs-clause-9eba91477fcf"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.crs-clause-cca2516ebb1d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crs"
+      ],
+      "behaviour": "The Style Of Column Rules: the column-rule-style property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "crs",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crs-clause-85e4ac5e991f",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crs"
+      ],
+      "behaviour": "The Style Of Column Rules: the column-rule-style property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "crs",
+        "clause_index": 18,
+        "clause_sha256": "85e4ac5e991f38b24f5899e22f5347447dd33f33e59e2ccdd3d8851da9ff337f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crs-clause-7311382b1b34",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crs"
+      ],
+      "behaviour": "The Style Of Column Rules: the column-rule-style property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "crs",
+        "clause_index": 20,
+        "clause_sha256": "7311382b1b3400966cb8352032ea13a7ac89056d9e136c2e02c83e912a627b8b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crs-clause-f782737aaf0e",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crs"
+      ],
+      "behaviour": "The Style Of Column Rules: the column-rule-style property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "crs",
+        "clause_index": 21,
+        "clause_sha256": "f782737aaf0ee067dd213be9aff6b10780ace91e0019ae187386141ebde73805"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crs-clause-9eba91477fcf",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crs"
+      ],
+      "behaviour": "The Style Of Column Rules: the column-rule-style property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "crs",
+        "clause_index": 22,
+        "clause_sha256": "9eba91477fcf8ec276bc334271ca02869f716032cc575e06a7dada712d1e744a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crw",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crw"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Width Of Column Rules: the column-rule-width property.",
+      "locator": {
+        "section_id": "crw",
+        "text_sha256": "26ba67cc96e71499a6244269a9adaeac3a2d26d9acb2eaba92297982851538e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.crw-clause-cca2516ebb1d",
+        "css-multicol-1.crw-clause-836169219995",
+        "css-multicol-1.crw-clause-bf9c9c0b5057",
+        "css-multicol-1.crw-clause-62f650d1fdf5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.crw-clause-cca2516ebb1d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crw"
+      ],
+      "behaviour": "The Width Of Column Rules: the column-rule-width property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "crw",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crw-clause-836169219995",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crw"
+      ],
+      "behaviour": "The Width Of Column Rules: the column-rule-width property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "crw",
+        "clause_index": 23,
+        "clause_sha256": "8361692199954debdf513479d41ec464c3d4c783b798d8b0e50c87f951931b8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crw-clause-bf9c9c0b5057",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crw"
+      ],
+      "behaviour": "The Width Of Column Rules: the column-rule-width property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "crw",
+        "clause_index": 24,
+        "clause_sha256": "bf9c9c0b505777d9d0075071042cc769ba856702c5dd96e19302841b7e53b130"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.crw-clause-62f650d1fdf5",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "crw"
+      ],
+      "behaviour": "The Width Of Column Rules: the column-rule-width property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "crw",
+        "clause_index": 27,
+        "clause_sha256": "62f650d1fdf597619281fc53a1a2f753c7a327d030d1f4305adc7a71d5b376b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cr",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cr"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Column Rule Shorthand: the column-rule property.",
+      "locator": {
+        "section_id": "cr",
+        "text_sha256": "0353b2c588d9c44e6241b05c43acebedbcdfc4e2eedce0b6cf9581c6801e5606"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.cr-clause-cca2516ebb1d",
+        "css-multicol-1.cr-clause-29824a06406d",
+        "css-multicol-1.cr-clause-1354066c609d",
+        "css-multicol-1.cr-clause-da2b4a95cd85"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.cr-clause-cca2516ebb1d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cr"
+      ],
+      "behaviour": "Column Rule Shorthand: the column-rule property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "cr",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cr-clause-29824a06406d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cr"
+      ],
+      "behaviour": "Column Rule Shorthand: the column-rule property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "cr",
+        "clause_index": 33,
+        "clause_sha256": "29824a06406de9af72017358052248744b8df8dbc2b8d388759c2012630d4b74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cr-clause-1354066c609d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cr"
+      ],
+      "behaviour": "Column Rule Shorthand: the column-rule property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "cr",
+        "clause_index": 34,
+        "clause_sha256": "1354066c609dcdf78c27dd7a346df75faa9a109c086f234359e9596fdca2cea7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cr-clause-da2b4a95cd85",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cr"
+      ],
+      "behaviour": "Column Rule Shorthand: the column-rule property — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "cr",
+        "clause_index": 41,
+        "clause_sha256": "da2b4a95cd85f5ce0fec2d35e788e4cf12ad2b10001fc27d35f0b0ffb91e8168"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.column-breaks",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "column-breaks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Column Breaks.",
+      "locator": {
+        "section_id": "column-breaks",
+        "text_sha256": "815a2d40d4833e559c0644b8c7e15852e1854a5e0d1568f365092e8656732195"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.column-breaks-clause-b46b200eec35"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.column-breaks-clause-b46b200eec35",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "column-breaks"
+      ],
+      "behaviour": "Column Breaks — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-breaks",
+        "clause_index": 0,
+        "clause_sha256": "b46b200eec3565befdc0bf796ba7c8c082cd0b84cb9565ce80c15ca50505ed9a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.break-before-break-after-break-inside",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "break-before-break-after-break-inside"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Controlling Fragmentation: the break-before, break-after, break-inside properties.",
+      "locator": {
+        "section_id": "break-before-break-after-break-inside",
+        "text_sha256": "0a4e1db06576ab5450ff9a70adb747deeb0e9dce730247ca5405d103f3eb801e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.spanning-columns",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "spanning-columns"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Spanning Columns.",
+      "locator": {
+        "section_id": "spanning-columns",
+        "text_sha256": "f76bf799a5dff91deb06dc64d21de4e2c524faa7ab1376d71d61de452bd69562"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.column-span",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "column-span"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Spanning An Element Across Columns: the column-span property.",
+      "locator": {
+        "section_id": "column-span",
+        "text_sha256": "66afaa31c1a37726468269a6a7c591a4d72f2a42f4217bf37bcd4aaeb3ea0e93"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.column-span-clause-cca2516ebb1d",
+        "css-multicol-1.column-span-clause-4938de1c9bd3",
+        "css-multicol-1.column-span-clause-016c763b08b2",
+        "css-multicol-1.column-span-clause-a46e5db7abdf",
+        "css-multicol-1.column-span-clause-652bdcf0f418"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.column-span-clause-cca2516ebb1d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "column-span"
+      ],
+      "behaviour": "Spanning An Element Across Columns: the column-span property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-span",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.column-span-clause-4938de1c9bd3",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "column-span"
+      ],
+      "behaviour": "Spanning An Element Across Columns: the column-span property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-span",
+        "clause_index": 17,
+        "clause_sha256": "4938de1c9bd3dd8ede3fd977755a4e9293d2aad0e0f401f65fce76c3df1ad27b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.column-span-clause-016c763b08b2",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "column-span"
+      ],
+      "behaviour": "Spanning An Element Across Columns: the column-span property — normative clause 194, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-span",
+        "clause_index": 193,
+        "clause_sha256": "016c763b08b26efb27df7510800cc07894c6123b9c3505807443776216245e6c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.column-span-clause-a46e5db7abdf",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "column-span"
+      ],
+      "behaviour": "Spanning An Element Across Columns: the column-span property — normative clause 197, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-span",
+        "clause_index": 196,
+        "clause_sha256": "a46e5db7abdf5adbb57633f2d1cbb03bb133a205c4e5f0df011cad5cc24c8a00"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.column-span-clause-652bdcf0f418",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "column-span"
+      ],
+      "behaviour": "Spanning An Element Across Columns: the column-span property — normative clause 198, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-span",
+        "clause_index": 197,
+        "clause_sha256": "652bdcf0f418931c16e1421319a205897d3997964f2b527e59ba2ddd63ed914a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.filling-columns",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "filling-columns"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Filling Columns.",
+      "locator": {
+        "section_id": "filling-columns",
+        "text_sha256": "7345b7c55081f38304b080860fefaab5eebea71dac9361f938ef20fb4dbd74e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.filling-columns-clause-7345b7c55081"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.filling-columns-clause-7345b7c55081",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "filling-columns"
+      ],
+      "behaviour": "Filling Columns — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "filling-columns",
+        "clause_index": 0,
+        "clause_sha256": "7345b7c55081f38304b080860fefaab5eebea71dac9361f938ef20fb4dbd74e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cf",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cf"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Column Balancing: the column-fill property.",
+      "locator": {
+        "section_id": "cf",
+        "text_sha256": "3bfcb54d595443b9806ff7983b9358af36c4ef5c2b28e0985257d1d138926cbe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.cf-clause-cca2516ebb1d",
+        "css-multicol-1.cf-clause-4e772fbda623",
+        "css-multicol-1.cf-clause-f4864ba3e7fc",
+        "css-multicol-1.cf-clause-1e46300830ff",
+        "css-multicol-1.cf-clause-ed8c9992b807"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.cf-clause-cca2516ebb1d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cf"
+      ],
+      "behaviour": "Column Balancing: the column-fill property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "cf",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cf-clause-4e772fbda623",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cf"
+      ],
+      "behaviour": "Column Balancing: the column-fill property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "cf",
+        "clause_index": 24,
+        "clause_sha256": "4e772fbda6233ac892eadd523ec909c411b7e6c82569a8a7bda198e29f04560c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cf-clause-f4864ba3e7fc",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cf"
+      ],
+      "behaviour": "Column Balancing: the column-fill property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "cf",
+        "clause_index": 26,
+        "clause_sha256": "f4864ba3e7fc0f78bd99ee31cd09191a7356da262da612d0f3d2b8fe5ceb0834"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cf-clause-1e46300830ff",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cf"
+      ],
+      "behaviour": "Column Balancing: the column-fill property — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "cf",
+        "clause_index": 57,
+        "clause_sha256": "1e46300830ff54ecd1f10f3b95cac871a77e954567aed42ef50a76a7a4263c70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.cf-clause-ed8c9992b807",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "cf"
+      ],
+      "behaviour": "Column Balancing: the column-fill property — normative clause 97, located by its exact source hash.",
+      "locator": {
+        "section_id": "cf",
+        "clause_index": 96,
+        "clause_sha256": "ed8c9992b807b8c3cee8579f25cecbe66408ebceb7ac30ed4385f86e75df631b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.overflow",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow.",
+      "locator": {
+        "section_id": "overflow",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.overflow-inside-multicol-elements",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "overflow-inside-multicol-elements"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow Inside Multicol Containers.",
+      "locator": {
+        "section_id": "overflow-inside-multicol-elements",
+        "text_sha256": "783bbac0fe1dae4cc437775865e8b870c1b9db8e0a9e6ab7ed8ba340c8dc8058"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.pagination-and-overflow-outside-multicol",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "pagination-and-overflow-outside-multicol"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pagination and Overflow Outside Multicol Containers.",
+      "locator": {
+        "section_id": "pagination-and-overflow-outside-multicol",
+        "text_sha256": "44da9b7d0cc244b668743f96f7649256d3edf42c229a4de6b2a785ebea72d95b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.privacy",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "2ec265a2887bcefe99a995a8de576b6ae624ad1a7535e0f825f49c57754c2b9a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.security",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "87513ee80a67b377d3b558178d65b6fbc2f1ec8ec64dd651d8966a0e92b1b84c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.a11y",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "a11y"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Accessibility Considerations.",
+      "locator": {
+        "section_id": "a11y",
+        "text_sha256": "c9d73d3a4ffae2d07523e87a4ea04ab50b2bc55b17599f6323fb3ac0e3639f2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.w3c-conformance",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.w3c-conventions",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.w3c-conventions-clause-5c98c879f070",
+        "css-multicol-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.w3c-conformance-classes",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-multicol-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.w3c-partial",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.w3c-conform-future-proofing",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.w3c-testing",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.w3c-testing-clause-1e0fff369221",
+        "css-multicol-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.w3c-cr-exit-criteria",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+        "css-multicol-1.w3c-cr-exit-criteria-clause-ea752775913a",
+        "css-multicol-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+        "css-multicol-1.w3c-cr-exit-criteria-clause-b67129724911",
+        "css-multicol-1.w3c-cr-exit-criteria-clause-833729d43f23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.w3c-cr-exit-criteria-clause-ea752775913a",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.w3c-cr-exit-criteria-clause-b67129724911",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.w3c-cr-exit-criteria-clause-833729d43f23",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 10,
+        "clause_sha256": "833729d43f239b3deb57bcaaf1c29d2f077e86aad8b396f8458fa182e4db8d99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.property-index",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "4d440e8814176db15af49f782a10d08cd4cce4f2402b496cc8eeca84054cdf18"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-multicol-1.property-index-clause-674d5fa645b0",
+        "css-multicol-1.property-index-clause-4b59fe755d34",
+        "css-multicol-1.property-index-clause-dee972826276"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.property-index-clause-674d5fa645b0",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 15,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.property-index-clause-4b59fe755d34",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 42,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.property-index-clause-dee972826276",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 44,
+        "clause_sha256": "dee972826276164f75b2c71903996f1f1ea46b319fbdea6895683953135c8b1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-multicol-1.title",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Multi-column Layout Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "4e161844f006f19cacd31b11e91f029a1be3d68745a97359722f3531b4e5bf49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.abstract",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "7fb3e041089e7ddc52e723dc5e4dd3026d9fb279334085be11eb8f58d65cd1c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.sotd",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "e34df5457f3244c3d6cf625a10b4ad2261cf1f6951b5715f52560c9b44638d4d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.contents",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "7bc85dc05cf190ebe908069e4d56f440dde19a5e0599296234e290faca81012f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.changes",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix B. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "9a2def4ee299e63f63fcc9dc6132e0c04cecb9b09c90fd45d2abca30a78f068b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.changes-from-20211012",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "changes-from-20211012"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes from the Candidate Recommendation (CR) of 12 October 2021.",
+      "locator": {
+        "section_id": "changes-from-20211012",
+        "text_sha256": "70dec892205cc80d30c803b05968b0fcd6aa4382464f99a5352cf6268535e622"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.changes-from-20210212",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "changes-from-20210212"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes from the Working Draft (WD) of 12 February 2021.",
+      "locator": {
+        "section_id": "changes-from-20210212",
+        "text_sha256": "aaf68637904e890ea4b15667d6f50430ceb633fe7e44afc34ef1e3bd4d2bd597"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.changes-from-20191015",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "changes-from-20191015"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes from the Working Draft (WD) of 15 October 2019.",
+      "locator": {
+        "section_id": "changes-from-20191015",
+        "text_sha256": "ecffb58439902a083b529654cd3dc66700f5d9dcdd31e929c9f51b08fb82bcca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.changes-from-20180528",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "changes-from-20180528"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes from the Working Draft (WD) of 28 May 2018.",
+      "locator": {
+        "section_id": "changes-from-20180528",
+        "text_sha256": "c527170ba7e07bccb48fdf206ec27d21417b85d8f33c4059cd856a386d8b54f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.changes-from-20171005",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "changes-from-20171005"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes from the Working Draft (WD) of 5 October 2017.",
+      "locator": {
+        "section_id": "changes-from-20171005",
+        "text_sha256": "e4f97f9bcec156664b77dee6de14a89a440c7849e1f5c1aada951123e06de33b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.changes-from-20110412",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "changes-from-20110412"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes from the Candidate Recommendation (CR) of 12 April 2011..",
+      "locator": {
+        "section_id": "changes-from-20110412",
+        "text_sha256": "4ad98619d178cccba813dc5ea4dc60ef1d6dd70d81d3bfe7392d5e750c9c5589"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.acknowledgments",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "ae9eda93fa0ed04f3ae2dad65eefc3e73f13cc3f2d68edd86cc0451b7fec1563"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.index",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.index-defined-here",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "5d153cec9647e226af68cd795089439bbbe01bd385b7c4fa1efc633775951485"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.index-defined-elsewhere",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "367200fe6efe53b8e442c7395d9523037e46b9f4088167dff6755a8e2c492129"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.references",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.normative",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "485e62406d5b7320da3cf56f1d8392bdae342d65d2d9a26d4c6eed7586cd64d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-multicol-1.informative",
+      "family": "css-multicol-1",
+      "source_id": "css-multicol-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "b1c160222e4f551eea275d161527ffdafc8fdfedbeb2bb6f7d51eff4144689f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

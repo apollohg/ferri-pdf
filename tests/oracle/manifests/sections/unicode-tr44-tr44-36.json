@@ -1,0 +1,1697 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode-tr44-tr44-36",
+  "sections": [
+    {
+      "id": "heading-f617bf9960ed",
+      "title": "Unicode® Standard Annex #44",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-f617bf9960ed"
+        ]
+      }
+    },
+    {
+      "id": "heading-cf8a1d7b283a",
+      "title": "Unicode Character Database",
+      "level": 1,
+      "text_sha256": "39b2ee28fa50e69adb4fd8741c0abacbdf844eca3cb3b0cdcb76e2e0cc482920",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-cf8a1d7b283a"
+        ]
+      }
+    },
+    {
+      "id": "heading-562e5643bfd0",
+      "title": "Summary",
+      "level": 4,
+      "text_sha256": "d3e926782877d3c1247dd312f3803b4b1b53a71f6233ff60737941b406233db2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-562e5643bfd0"
+        ]
+      }
+    },
+    {
+      "id": "heading-b67e4e63a5c4",
+      "title": "Status",
+      "level": 4,
+      "text_sha256": "969770954d10eb10c58c417e62f0aeb8ceca31b93e33871538ad4b7096754f2f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-b67e4e63a5c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-35d8550f521f",
+      "title": "Contents",
+      "level": 4,
+      "text_sha256": "68351877eccf58677b0b65b2eda00b12efb064c81fa9186b4add4b4515683183",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-35d8550f521f",
+          "unicode-tr44-tr44-36.heading-35d8550f521f-clause-7c4c8b0204a3"
+        ]
+      }
+    },
+    {
+      "id": "Introduction",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "afca8be08552ebfd956883da8e89bb9ca328f794bfbe71bef83c74d0e8ca1e1c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.introduction",
+          "unicode-tr44-tr44-36.introduction-clause-4e21fa5af2ed",
+          "unicode-tr44-tr44-36.introduction-clause-84374ac1e085"
+        ]
+      }
+    },
+    {
+      "id": "Conformance",
+      "title": "2 Conformance",
+      "level": 2,
+      "text_sha256": "99f220e2f5f7391aa9319c94b0dc1ad5fd24179e07bae7e60eb001b26b134f26",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.conformance",
+          "unicode-tr44-tr44-36.conformance-clause-f2e5c5afdb95",
+          "unicode-tr44-tr44-36.conformance-clause-34813c02f573"
+        ]
+      }
+    },
+    {
+      "id": "Simple_Derived",
+      "title": "2.1 Simple and Derived Properties",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.simple-derived"
+        ]
+      }
+    },
+    {
+      "id": "Simple_Props",
+      "title": "2.1.1 Simple Properties",
+      "level": 4,
+      "text_sha256": "03f11f3aec0d48c82ed249c5b87310bb16d5f12a0648a76ad99bd2b2a8bc5e7a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.simple-props"
+        ]
+      }
+    },
+    {
+      "id": "Derived_Props",
+      "title": "2.1.2 Derived Properties",
+      "level": 4,
+      "text_sha256": "6a2f43f5c46b1ed4efc1506790ea7542ff2e41fb0a14e142c8ae75103135d168",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.derived-props",
+          "unicode-tr44-tr44-36.derived-props-clause-bf5addce4bd6",
+          "unicode-tr44-tr44-36.derived-props-clause-181f0a8577a9"
+        ]
+      }
+    },
+    {
+      "id": "Props_External",
+      "title": "2.1.3 Properties Dependent on External Specifications",
+      "level": 4,
+      "text_sha256": "39677b95825dafe6d4104103b0e0c7c6c515d0912afca5023e1d4ca57a134d89",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.props-external"
+        ]
+      }
+    },
+    {
+      "id": "Use_Default",
+      "title": "2.2 Use of Default Values",
+      "level": 3,
+      "text_sha256": "88131f23472e09b6fe21fca1f9c3926ff104c67fc841ae48cba6e87a302adea4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.use-default"
+        ]
+      }
+    },
+    {
+      "id": "Release_Stability",
+      "title": "2.3 Stability of Releases",
+      "level": 3,
+      "text_sha256": "f79c38098cd41ba8ef17cbf195c0be6cc5bae720cbc3ba016793933cc4c1b413",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.release-stability"
+        ]
+      }
+    },
+    {
+      "id": "Allowed_Changes",
+      "title": "2.3.1 Changes to Properties Between Releases",
+      "level": 4,
+      "text_sha256": "15e0226d1928de77a0bef298b9017644973ff86c9f91f04789dd0579cfd939b1",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.allowed-changes",
+          "unicode-tr44-tr44-36.allowed-changes-clause-21f581ed1d24",
+          "unicode-tr44-tr44-36.allowed-changes-clause-d4f86fbbb2aa",
+          "unicode-tr44-tr44-36.allowed-changes-clause-236041d4ae1c"
+        ]
+      }
+    },
+    {
+      "id": "Obsolete_Properties",
+      "title": "2.3.2 Obsolete Properties",
+      "level": 4,
+      "text_sha256": "f2f1f22aaee9bf3278ce379c32f18d9b69a30be62427c1355e8a6ba1471a0b8e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.obsolete-properties"
+        ]
+      }
+    },
+    {
+      "id": "Deprecated_Properties",
+      "title": "2.3.3 Deprecated Properties",
+      "level": 4,
+      "text_sha256": "f33cd6f1661e196bc073fb7a4fd1e5c90f96377adfd4a3f7fc2aa2c2d9664b1a",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.deprecated-properties"
+        ]
+      }
+    },
+    {
+      "id": "Stabilized_Properties",
+      "title": "2.3.4 Stabilized Properties",
+      "level": 4,
+      "text_sha256": "050df904fe2b1bcad53f5863a3011526c1cccb7569118978fc114d49fd4daaa4",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.stabilized-properties",
+          "unicode-tr44-tr44-36.stabilized-properties-clause-3c49956059f1"
+        ]
+      }
+    },
+    {
+      "id": "Provisional_Properties",
+      "title": "2.3.5 Provisional Properties",
+      "level": 4,
+      "text_sha256": "28753f604941e7202421263b824ebdd86d8bd47230648f3e624d9d8ccf39f7b0",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.provisional-properties"
+        ]
+      }
+    },
+    {
+      "id": "Documentation_Files",
+      "title": "3 Documentation",
+      "level": 2,
+      "text_sha256": "a6e724026173ddf5d0000b849716c77db211b15689acf3a52d72bf59e2e7e6af",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.documentation-files"
+        ]
+      }
+    },
+    {
+      "id": "Character_Properties",
+      "title": "3.1 Character Properties in the Standard",
+      "level": 3,
+      "text_sha256": "4fbf9dac5e28e89bc90348d980e89f34f6c822112ab8370f968297cb3bf88dcb",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.character-properties"
+        ]
+      }
+    },
+    {
+      "id": "Property_Model",
+      "title": "3.2 The Character Property Model",
+      "level": 3,
+      "text_sha256": "fc3d2b2aa2bb1d9a9ce28b13437d004b86d00217acec9801293e4ad006de8244",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.property-model"
+        ]
+      }
+    },
+    {
+      "id": "NamesList",
+      "title": "3.3 NamesList.html",
+      "level": 3,
+      "text_sha256": "e942f0220c1e579eb7c9c204dbd6cf20e719aa55b06b66c3323329edb35381b3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.nameslist"
+        ]
+      }
+    },
+    {
+      "id": "StandardizedVariants",
+      "title": "3.4 StandardizedVariants.html",
+      "level": 3,
+      "text_sha256": "52ad09cb5fbf123aa72b7f26641c63793b102840876ac540b11d6d5feaa6a5d4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.standardizedvariants"
+        ]
+      }
+    },
+    {
+      "id": "EmojiVariants",
+      "title": "3.5 Emoji Variation Sequences",
+      "level": 3,
+      "text_sha256": "da83772a79e6b146951b52813bbb9de97872bcb444bb31697b6fec9410030ff9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.emojivariants"
+        ]
+      }
+    },
+    {
+      "id": "Unihan",
+      "title": "3.6 Unihan and UAX #38",
+      "level": 3,
+      "text_sha256": "a865b38038c925a2fab34b6f3882296557dea55574eee6ebb9f5ec1f3302344d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.unihan",
+          "unicode-tr44-tr44-36.unihan-clause-89025b696758"
+        ]
+      }
+    },
+    {
+      "id": "USource",
+      "title": "3.7 UTC-Source Ideographs and UAX #45",
+      "level": 3,
+      "text_sha256": "603e287c78e4e42c6d986d00e1866cc5e7d664dd16c6fdd268bd7de4a476f01d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.usource"
+        ]
+      }
+    },
+    {
+      "id": "Data_File_Comments",
+      "title": "3.8 Data File Comments",
+      "level": 3,
+      "text_sha256": "11a3dd4d081fe0a317c9e28feab92b33ba4eecfa36198f989d1190b152c8f24c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.data-file-comments"
+        ]
+      }
+    },
+    {
+      "id": "Obsolete",
+      "title": "3.9 Obsolete Documentation Files",
+      "level": 3,
+      "text_sha256": "46516e20e01954f351f8030f5f469ca5156b975b9066320a9a08f7d9f94ee23f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.obsolete"
+        ]
+      }
+    },
+    {
+      "id": "UCD_Files",
+      "title": "4 UCD Files",
+      "level": 2,
+      "text_sha256": "77ca8a590d8d1b6312b6b3faff5eab670f45b23c600a18d19c43f7cbce229708",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.ucd-files"
+        ]
+      }
+    },
+    {
+      "id": "Directory_Structure",
+      "title": "4.1 Directory Structure",
+      "level": 3,
+      "text_sha256": "88dc05eee0d5325310cc8f4cff0ca8bd0857207a45bb102d6a3d548895bbe894",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.directory-structure"
+        ]
+      }
+    },
+    {
+      "id": "UCD_Proper",
+      "title": "4.1.1 UCD Files Proper",
+      "level": 4,
+      "text_sha256": "f9c6b0b05bcc80a210da74aa55295d8f3fbe5f9b584f9f2f39db7ad8e93c8e7a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.ucd-proper",
+          "unicode-tr44-tr44-36.ucd-proper-clause-15e0f2320da9"
+        ]
+      }
+    },
+    {
+      "id": "UCD_XML_Files",
+      "title": "4.1.2 UCD XML Files",
+      "level": 4,
+      "text_sha256": "40dde2b7320a2c4dafb41056346a0f43a59f9b1dc5b7d60f0a7656cb25670d8b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.ucd-xml-files"
+        ]
+      }
+    },
+    {
+      "id": "Chart_Files",
+      "title": "4.1.3 Charts",
+      "level": 4,
+      "text_sha256": "8689a72d25312d97c801f9397177e34039487b310c1e18444c2e8984135abd9c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.chart-files"
+        ]
+      }
+    },
+    {
+      "id": "Beta_Review",
+      "title": "4.1.4 Beta Review Considerations",
+      "level": 4,
+      "text_sha256": "3fa7bfb7db2a48d6a5d0178dd51396377120cfde4c6bbc0526eb2dc15d58723f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.beta-review"
+        ]
+      }
+    },
+    {
+      "id": "Directory_History",
+      "title": "4.1.5 File Directory Differences for Early Releases",
+      "level": 4,
+      "text_sha256": "ff83dada9fb5c4f5c53dee9ed27303b7b9f42a585b36880bdc3cefb1ed0a49bd",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.directory-history"
+        ]
+      }
+    },
+    {
+      "id": "Format_Conventions",
+      "title": "4.2 File Format Conventions",
+      "level": 3,
+      "text_sha256": "95c01c3d1e6613968ae6462695250956e380b6909d4661f904da84a942be1588",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.format-conventions"
+        ]
+      }
+    },
+    {
+      "id": "Data_Fields",
+      "title": "4.2.1 Data Fields",
+      "level": 4,
+      "text_sha256": "ff1fcede0e52501a8deff395b3fa33ba296634c70c356d8b9251fad9e992938b",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.data-fields"
+        ]
+      }
+    },
+    {
+      "id": "Code_Points",
+      "title": "4.2.2 Code Points and Sequences",
+      "level": 4,
+      "text_sha256": "9f10e4dfeda361a3b580fa88f3cadf657ba9337b0a4a522dd54192d95ebcec53",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.code-points"
+        ]
+      }
+    },
+    {
+      "id": "Code_Point_Ranges",
+      "title": "4.2.3 Code Point Ranges",
+      "level": 4,
+      "text_sha256": "7da943f70b470191ac07952296ae4c8c491ebb596f24e000c6813a3683d92d0e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.code-point-ranges"
+        ]
+      }
+    },
+    {
+      "id": "Comments",
+      "title": "4.2.4 Comments",
+      "level": 4,
+      "text_sha256": "ca368fde00c90b684f864e4888f98167829644920569fbef1544ab0679e45f0a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.comments",
+          "unicode-tr44-tr44-36.comments-clause-7dd138201805"
+        ]
+      }
+    },
+    {
+      "id": "Code_Point_Labels",
+      "title": "4.2.5 Code Point Labels",
+      "level": 4,
+      "text_sha256": "01288d1760193e19d1f0b21175fd8e920b2dee0cb7c9db32f73485c9e4095a29",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.code-point-labels"
+        ]
+      }
+    },
+    {
+      "id": "Multiple_Properties",
+      "title": "4.2.6 Multiple Properties in One Data File",
+      "level": 4,
+      "text_sha256": "eb8c38ead073dce36c3ecb9f5a0b63abeb12d7e9d5eacc8969410993563a1e2b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.multiple-properties"
+        ]
+      }
+    },
+    {
+      "id": "Binary_Values",
+      "title": "4.2.7 Binary Property Values",
+      "level": 4,
+      "text_sha256": "3823fe616c17682f9eb83c6abdc9ea2b3afb21f19c34297311d1746899aa180e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.binary-values"
+        ]
+      }
+    },
+    {
+      "id": "Multiple_Values",
+      "title": "4.2.8 Multiple Values for Properties",
+      "level": 4,
+      "text_sha256": "cb5ae24b87147a154d82f0aab67703998b1e420f5630e3f9ea32465bc9553b4a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.multiple-values"
+        ]
+      }
+    },
+    {
+      "id": "Default_Values",
+      "title": "4.2.9 Default Values",
+      "level": 4,
+      "text_sha256": "a9496d880e9dee90d7b68eb36f17b69df58392fa215103721b6a298caa519993",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.default-values",
+          "unicode-tr44-tr44-36.default-values-clause-54186429f184"
+        ]
+      }
+    },
+    {
+      "id": "Complex_Default_Values",
+      "title": "4.2.9.1 Complex Default Values",
+      "level": 4,
+      "text_sha256": "9783de8d1beeb36e71b11e4b574770a671c80096ffdd0d1287a59b1363cb3f9d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.complex-default-values",
+          "unicode-tr44-tr44-36.complex-default-values-clause-f04f19efeff5",
+          "unicode-tr44-tr44-36.complex-default-values-clause-08c2f7eba190",
+          "unicode-tr44-tr44-36.complex-default-values-clause-1f1b78f08e77"
+        ]
+      }
+    },
+    {
+      "id": "Missing_Conventions",
+      "title": "4.2.10 @missing Conventions",
+      "level": 4,
+      "text_sha256": "235f65116ab6a7f6d75a3b8c9176f7e0fa1f152ffd446f753a06a3e4b7f40475",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.missing-conventions"
+        ]
+      }
+    },
+    {
+      "id": "Empty_Fields",
+      "title": "4.2.11 Empty Fields",
+      "level": 4,
+      "text_sha256": "5dcc8ed0bf27c2e864dfd743f41742fd8071e5d9bee9a4e7b36ab2be411eb08e",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.empty-fields"
+        ]
+      }
+    },
+    {
+      "id": "Text_Encoding",
+      "title": "4.2.12 Text Encoding",
+      "level": 4,
+      "text_sha256": "371f62a8c36758371e9fd93526fe93ffd503226c4dc1fc5a3e42b6533d284059",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.text-encoding"
+        ]
+      }
+    },
+    {
+      "id": "Line_Termination",
+      "title": "4.2.13 Line Termination",
+      "level": 4,
+      "text_sha256": "c1681f73553fe40cafdce7003de0e9d828aa7d63a9e5b8cc46bd8f62312bd87b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.line-termination"
+        ]
+      }
+    },
+    {
+      "id": "Other_Conventions",
+      "title": "4.2.14 Other Conventions",
+      "level": 4,
+      "text_sha256": "c790933dd8d63fc8386a48babd9172b4a00cc802bc8257dfa6f6ac171dd24a57",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.other-conventions"
+        ]
+      }
+    },
+    {
+      "id": "Other_File_Formats",
+      "title": "4.2.15 Other File Formats",
+      "level": 4,
+      "text_sha256": "33383053c774026aacbf5fc1cbf720918e7cfdfb0fc4c21f2e267fc04d941b1e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.other-file-formats"
+        ]
+      }
+    },
+    {
+      "id": "File_List",
+      "title": "4.3 File List",
+      "level": 3,
+      "text_sha256": "2aff4acb63fde38da94e2e76d78ecb46d3d8ed833f505500c4679b7143b173b2",
+      "clause_count": 75,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.file-list",
+          "unicode-tr44-tr44-36.file-list-clause-770dd3524116"
+        ]
+      }
+    },
+    {
+      "id": "Zipped_Files",
+      "title": "4.4 Zipped Files",
+      "level": 3,
+      "text_sha256": "a96a7ee1c3b6085d0f095632ddba7931218b8a8cb844a2cdad57269d77bb64fb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.zipped-files"
+        ]
+      }
+    },
+    {
+      "id": "UCD_in_XML",
+      "title": "4.5 UCD in XML",
+      "level": 3,
+      "text_sha256": "63481ba40965115731897bb8ca0fce48e85c0b6b166ad10cdac3a299b8cc295a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.ucd-in-xml",
+          "unicode-tr44-tr44-36.ucd-in-xml-clause-63481ba40965"
+        ]
+      }
+    },
+    {
+      "id": "UAX42_doc",
+      "title": "4.5.1 UAX #42",
+      "level": 4,
+      "text_sha256": "f5698b54d84879b9e521088c3d8b65304544f23c1c71abd73924300b8116b583",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.uax42-doc"
+        ]
+      }
+    },
+    {
+      "id": "XML_files",
+      "title": "4.5.2 XML File List",
+      "level": 4,
+      "text_sha256": "2ed16d5fde31ba4b3228221cdfb69233627bb525b400f6fc0118e19b33512236",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.xml-files"
+        ]
+      }
+    },
+    {
+      "id": "Properties",
+      "title": "5 Properties",
+      "level": 2,
+      "text_sha256": "92fd4b17e2ff2ebff79e0baa5815aba8389ebfde200afe2e9b69331950d6e11c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.properties"
+        ]
+      }
+    },
+    {
+      "id": "Property_Index",
+      "title": "5.1 Property Index",
+      "level": 3,
+      "text_sha256": "9355ebe594727a7c2ab4a0a91a6b041bded00f4f678155a652dd95b0b82a4759",
+      "clause_count": 142,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.property-index"
+        ]
+      }
+    },
+    {
+      "id": "About_Property_Table",
+      "title": "5.2 About the Property Table",
+      "level": 3,
+      "text_sha256": "10f3f27ff41340512978b044e4ee7604497daf1e8f7ead9e017433d93b6e554e",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.about-property-table",
+          "unicode-tr44-tr44-36.about-property-table-clause-67f07b627a88",
+          "unicode-tr44-tr44-36.about-property-table-clause-1f074e578254",
+          "unicode-tr44-tr44-36.about-property-table-clause-e2523f56adc0"
+        ]
+      }
+    },
+    {
+      "id": "Property_Definitions",
+      "title": "5.3 Property Definitions",
+      "level": 3,
+      "text_sha256": "c55e03cda58e0e11f2a40994e9469aa52a875ed4aa05130b491d3223139a3291",
+      "clause_count": 534,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.property-definitions",
+          "unicode-tr44-tr44-36.property-definitions-clause-0cf60e775a78",
+          "unicode-tr44-tr44-36.property-definitions-clause-56f08f5d7109",
+          "unicode-tr44-tr44-36.property-definitions-clause-add379dffd0d",
+          "unicode-tr44-tr44-36.property-definitions-clause-51b6c142414d",
+          "unicode-tr44-tr44-36.property-definitions-clause-35540d67e5e3",
+          "unicode-tr44-tr44-36.property-definitions-clause-a103a1ee7ebc",
+          "unicode-tr44-tr44-36.property-definitions-clause-5edb5fa5e2a6",
+          "unicode-tr44-tr44-36.property-definitions-clause-92c926578cee",
+          "unicode-tr44-tr44-36.property-definitions-clause-f952ce7391b1",
+          "unicode-tr44-tr44-36.property-definitions-clause-59a5938a448f",
+          "unicode-tr44-tr44-36.property-definitions-clause-d8c9bb2942c1",
+          "unicode-tr44-tr44-36.property-definitions-clause-f2fcac486c5d",
+          "unicode-tr44-tr44-36.property-definitions-clause-796c0f4b77c9",
+          "unicode-tr44-tr44-36.property-definitions-clause-f5fcf0c47070",
+          "unicode-tr44-tr44-36.property-definitions-clause-c02016e23bc8",
+          "unicode-tr44-tr44-36.property-definitions-clause-a2c380471296",
+          "unicode-tr44-tr44-36.property-definitions-clause-483175fdfb44",
+          "unicode-tr44-tr44-36.property-definitions-clause-1ddd8f00a454",
+          "unicode-tr44-tr44-36.property-definitions-clause-8547e6919e08",
+          "unicode-tr44-tr44-36.property-definitions-clause-4084060a84b7",
+          "unicode-tr44-tr44-36.property-definitions-clause-28f96e5171f4",
+          "unicode-tr44-tr44-36.property-definitions-clause-822ee70c6133",
+          "unicode-tr44-tr44-36.property-definitions-clause-832274abec5d",
+          "unicode-tr44-tr44-36.property-definitions-clause-2b4c28ba7ec1",
+          "unicode-tr44-tr44-36.property-definitions-clause-4c226f842ae7",
+          "unicode-tr44-tr44-36.property-definitions-clause-2074aa76de98",
+          "unicode-tr44-tr44-36.property-definitions-clause-3e301729d22b",
+          "unicode-tr44-tr44-36.property-definitions-clause-8d2ea425f72d",
+          "unicode-tr44-tr44-36.property-definitions-clause-50fb0d8a18fe",
+          "unicode-tr44-tr44-36.property-definitions-clause-8ec6ecd33da9",
+          "unicode-tr44-tr44-36.property-definitions-clause-814f5e57238f"
+        ]
+      }
+    },
+    {
+      "id": "Derivation_InCB",
+      "title": "5.3.1 Derivation of Indic_Conjunct_Break",
+      "level": 4,
+      "text_sha256": "0f797f031edccf03eafa032aae211584dc5bf5dd442b8d2c7cb88daa8d53692d",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.derivation-incb",
+          "unicode-tr44-tr44-36.derivation-incb-clause-f18d637c1b8e"
+        ]
+      }
+    },
+    {
+      "id": "Derived_Extracted",
+      "title": "5.4 Derived Extracted Properties",
+      "level": 3,
+      "text_sha256": "bdb77f813f2d0c9a5046d8a5a536ebea1b56f761fa7cc62eaab15c7dfa12d5c0",
+      "clause_count": 60,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.derived-extracted",
+          "unicode-tr44-tr44-36.derived-extracted-clause-42a9cac23956",
+          "unicode-tr44-tr44-36.derived-extracted-clause-5293ad09d5dd"
+        ]
+      }
+    },
+    {
+      "id": "Contributory_Properties",
+      "title": "5.5 Contributory Properties",
+      "level": 3,
+      "text_sha256": "cb8a40214d59b75360d1cfb3dd0ac1933eba7f9038863ebcc8b276690092a0c1",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.contributory-properties",
+          "unicode-tr44-tr44-36.contributory-properties-clause-29e910b91d16"
+        ]
+      }
+    },
+    {
+      "id": "Casemapping",
+      "title": "5.6 Case and Case Mapping",
+      "level": 3,
+      "text_sha256": "0c39ea39013d061ae7d2b5df9f9cb0a936a7688f7ac0fd8c289669f17a808c82",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.casemapping",
+          "unicode-tr44-tr44-36.casemapping-clause-3cb189b8ea89"
+        ]
+      }
+    },
+    {
+      "id": "Property_Values",
+      "title": "5.7 Property Value Lists",
+      "level": 3,
+      "text_sha256": "363e2afed39c2c6e2bf95ae3cd81c77bac1fcbf9a580e2190499b4ce936ce7b6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.property-values",
+          "unicode-tr44-tr44-36.property-values-clause-363e2afed39c"
+        ]
+      }
+    },
+    {
+      "id": "General_Category_Values",
+      "title": "5.7.1 General Category Values",
+      "level": 4,
+      "text_sha256": "a9a6cd2a3768b0cef778a9d990af456de4458b0df072a62641f81594842ba2f6",
+      "clause_count": 128,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.general-category-values",
+          "unicode-tr44-tr44-36.general-category-values-clause-fbf53b6f094c",
+          "unicode-tr44-tr44-36.general-category-values-clause-15088c6f1a0c"
+        ]
+      }
+    },
+    {
+      "id": "Bidi_Class_Values",
+      "title": "5.7.2 Bidirectional Class Values",
+      "level": 4,
+      "text_sha256": "2d24d556edcef671c8d81af08255a1ca44285e17fd4ee07f111839354c66305d",
+      "clause_count": 80,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.bidi-class-values",
+          "unicode-tr44-tr44-36.bidi-class-values-clause-1a01a8a0eafb",
+          "unicode-tr44-tr44-36.bidi-class-values-clause-446246a8e366"
+        ]
+      }
+    },
+    {
+      "id": "Character_Decomposition_Mappings",
+      "title": "5.7.3 Character Decomposition Mapping",
+      "level": 4,
+      "text_sha256": "f38605839423a029c12049b0bf9ebe12512c9643267270f2ad9103d51e937e21",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.character-decomposition-mappings",
+          "unicode-tr44-tr44-36.character-decomposition-mappings-clause-0d6b6b5d595d",
+          "unicode-tr44-tr44-36.character-decomposition-mappings-clause-92f7ec03d67a",
+          "unicode-tr44-tr44-36.character-decomposition-mappings-clause-5bb25445be60",
+          "unicode-tr44-tr44-36.character-decomposition-mappings-clause-4edb85e7854b"
+        ]
+      }
+    },
+    {
+      "id": "Canonical_Combining_Class_Values",
+      "title": "5.7.4 Canonical Combining Class Values",
+      "level": 4,
+      "text_sha256": "3d4debc71e4f371d6a3bb79c239a2be508ee68a8295988bc985a5176dca8a37f",
+      "clause_count": 89,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.canonical-combining-class-values",
+          "unicode-tr44-tr44-36.canonical-combining-class-values-clause-50fb3a60ce5f",
+          "unicode-tr44-tr44-36.canonical-combining-class-values-clause-b8d28f3e432a",
+          "unicode-tr44-tr44-36.canonical-combining-class-values-clause-ee1b3565156f"
+        ]
+      }
+    },
+    {
+      "id": "Decompositions_and_Normalization",
+      "title": "5.7.5 Decompositions and Normalization",
+      "level": 4,
+      "text_sha256": "eb20f730b99ef11723c97169f16eea30d1f9068b7abc0c19f96065804286b549",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.decompositions-and-normalization",
+          "unicode-tr44-tr44-36.decompositions-and-normalization-clause-140926d836f3",
+          "unicode-tr44-tr44-36.decompositions-and-normalization-clause-4b4848b8d93b"
+        ]
+      }
+    },
+    {
+      "id": "Property_Values_As_Sets",
+      "title": "5.7.6 Properties Whose Values Are Sets of Values",
+      "level": 4,
+      "text_sha256": "5c3b481247ed273c5f1ac657bcd1a16f25b05be2e465cad7131670c77d51b303",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.property-values-as-sets"
+        ]
+      }
+    },
+    {
+      "id": "Property_And_Value_Aliases",
+      "title": "5.8 Property and Property Value Aliases",
+      "level": 3,
+      "text_sha256": "b52220ed4552ef4e38fa7e40a3d963ff7ad53eb4b269fa1c53308c3b5693cfa9",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.property-and-value-aliases",
+          "unicode-tr44-tr44-36.property-and-value-aliases-clause-044ce9a28d83"
+        ]
+      }
+    },
+    {
+      "id": "Property_Aliases",
+      "title": "5.8.1 Property Aliases",
+      "level": 4,
+      "text_sha256": "2c9ecab0567b516125d7bf014fa6d02a092645fc11ec0f9644040a966305d6eb",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.property-aliases",
+          "unicode-tr44-tr44-36.property-aliases-clause-612f50a05582",
+          "unicode-tr44-tr44-36.property-aliases-clause-05d79dcbf832"
+        ]
+      }
+    },
+    {
+      "id": "Property_Value_Aliases",
+      "title": "5.8.2 Property Value Aliases",
+      "level": 4,
+      "text_sha256": "50af5029a2be549d0a63a8588dbfc6de4b9cc842e0a201a4b358143d33d930c8",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.property-value-aliases",
+          "unicode-tr44-tr44-36.property-value-aliases-clause-edaab87c9481"
+        ]
+      }
+    },
+    {
+      "id": "Matching_Rules",
+      "title": "5.9 Matching Rules",
+      "level": 3,
+      "text_sha256": "aba7a7f4baa17480fbc8476405889ef7a4b71e713dcf95fe5ae8652483bc1bf9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.matching-rules",
+          "unicode-tr44-tr44-36.matching-rules-clause-aba7a7f4baa1"
+        ]
+      }
+    },
+    {
+      "id": "Matching_Numeric",
+      "title": "5.9.1 Matching Numeric Property Values",
+      "level": 4,
+      "text_sha256": "b92cd1c971a51fe77be8c5a32cbad997e05073342e6114f62ff7ec86347abb29",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.matching-numeric"
+        ]
+      }
+    },
+    {
+      "id": "Matching_Names",
+      "title": "5.9.2 Matching Character Names",
+      "level": 4,
+      "text_sha256": "32603b7ff240ed2dbf81eb3f9294ee2aa4405210a45be90f038d7434246f2da3",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.matching-names",
+          "unicode-tr44-tr44-36.matching-names-clause-ac8f7badc7ba",
+          "unicode-tr44-tr44-36.matching-names-clause-ff72d1674f13",
+          "unicode-tr44-tr44-36.matching-names-clause-40727cd15402",
+          "unicode-tr44-tr44-36.matching-names-clause-4d79b853a85a"
+        ]
+      }
+    },
+    {
+      "id": "Matching_Symbolic",
+      "title": "5.9.3 Matching Symbolic Values",
+      "level": 4,
+      "text_sha256": "596937c5fa906843eca75477000ada2ba1f6dadf8424ebb098de64f2e3ddec46",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.matching-symbolic",
+          "unicode-tr44-tr44-36.matching-symbolic-clause-b253e292b9e3",
+          "unicode-tr44-tr44-36.matching-symbolic-clause-b3ed321a6d57",
+          "unicode-tr44-tr44-36.matching-symbolic-clause-6576cc220c8f"
+        ]
+      }
+    },
+    {
+      "id": "Invariants",
+      "title": "5.10 Invariants",
+      "level": 3,
+      "text_sha256": "d935ee4865792d57a5798210ead42846b7e12648830019d03a510dea513750af",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.invariants"
+        ]
+      }
+    },
+    {
+      "id": "Property_Invariants",
+      "title": "5.10.1 Character Property Invariants",
+      "level": 4,
+      "text_sha256": "a637dc30687017ac517676f513e83054cf31de54e8599c1d9bfd8abf7fdfbcda",
+      "clause_count": 67,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.property-invariants",
+          "unicode-tr44-tr44-36.property-invariants-clause-1dec51411457",
+          "unicode-tr44-tr44-36.property-invariants-clause-f2fb255412b5"
+        ]
+      }
+    },
+    {
+      "id": "File_Invariants",
+      "title": "5.10.2 UCD File Format Invariants",
+      "level": 4,
+      "text_sha256": "fb5956623dd7f898d1b832b63678a623a05473c81fc8e1b9f795f468a0e7573f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.file-invariants"
+        ]
+      }
+    },
+    {
+      "id": "Invariants_in_Implementations",
+      "title": "5.10.3 Invariants in Implementations",
+      "level": 4,
+      "text_sha256": "0bfbca763ff297453b34ff7180c43c06e9e733dadb80a2a23da4ce22936af796",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.invariants-in-implementations",
+          "unicode-tr44-tr44-36.invariants-in-implementations-clause-fa9917a6c2b9"
+        ]
+      }
+    },
+    {
+      "id": "Validation",
+      "title": "5.11 Validation",
+      "level": 3,
+      "text_sha256": "9bfb66a9866b7a77cf07320ff38579606e2f8f2bd183f2cc93cce54ffc4ed210",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.validation"
+        ]
+      }
+    },
+    {
+      "id": "Validation_of_Enumerated",
+      "title": "5.11.1 Enumerated and Binary Properties",
+      "level": 4,
+      "text_sha256": "129a206b88c4c0b9324b13dfcee4874d4f05fc452c9f34891400cf87d28a590b",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.validation-of-enumerated"
+        ]
+      }
+    },
+    {
+      "id": "Validation_of_CCC",
+      "title": "5.11.2 Canonical_Combining_Class Property",
+      "level": 4,
+      "text_sha256": "6bf43ac40d9fa8b9822afa5fa87c73d0dc6d1404cb597412846b11e42f425ea9",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.validation-of-ccc"
+        ]
+      }
+    },
+    {
+      "id": "Validation_of_Unihan",
+      "title": "5.11.3 Unihan Properties",
+      "level": 4,
+      "text_sha256": "0b5cd46bf279a223700bf3a25df90691988fdb490e1a19a6e633da8e25e18e06",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.validation-of-unihan"
+        ]
+      }
+    },
+    {
+      "id": "Validation_of_Other",
+      "title": "5.11.4 Other Properties",
+      "level": 4,
+      "text_sha256": "522b216af609314667217bb9e88264f49d60b7dfad58ce8df1cccfdaa30bc86d",
+      "clause_count": 120,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.validation-of-other"
+        ]
+      }
+    },
+    {
+      "id": "Validation_of_Multivalued",
+      "title": "5.11.5 Validation of Multivalued Properties",
+      "level": 4,
+      "text_sha256": "3d66e6c15eca2ff625e89cb48eb3e5a40dd96dd7aa2929197927764ca166d19f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.validation-of-multivalued"
+        ]
+      }
+    },
+    {
+      "id": "Deprecation",
+      "title": "5.12 Deprecation",
+      "level": 3,
+      "text_sha256": "ede999d51cb938f130780a1424e48e06742d1bfc53fcbb67b5ac9a5832f7249c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.deprecation",
+          "unicode-tr44-tr44-36.deprecation-clause-cdaa28c4a3b2",
+          "unicode-tr44-tr44-36.deprecation-clause-48ad5713791d"
+        ]
+      }
+    },
+    {
+      "id": "Property_APIs",
+      "title": "5.13 Property APIs",
+      "level": 3,
+      "text_sha256": "c2b83898cdb37c31640ce9c3e82a1bc6ad3b4d63631986dd5def6cd14c214ba6",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.property-apis",
+          "unicode-tr44-tr44-36.property-apis-clause-e173ce95f127",
+          "unicode-tr44-tr44-36.property-apis-clause-7c22f26ceac2",
+          "unicode-tr44-tr44-36.property-apis-clause-f8d94210590a",
+          "unicode-tr44-tr44-36.property-apis-clause-d983903904d3",
+          "unicode-tr44-tr44-36.property-apis-clause-31582a2336c0",
+          "unicode-tr44-tr44-36.property-apis-clause-832f443be08f"
+        ]
+      }
+    },
+    {
+      "id": "Character_Age",
+      "title": "5.14 Character Age",
+      "level": 3,
+      "text_sha256": "f9039d822deeb07e26fcee63f484bf6e641646598e1a0a8bbd3dcf331f86a034",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.character-age",
+          "unicode-tr44-tr44-36.character-age-clause-b33e874ff46f"
+        ]
+      }
+    },
+    {
+      "id": "Test_Files",
+      "title": "6 Test Files",
+      "level": 2,
+      "text_sha256": "3b588b5f8b0149d782d2f28f69fb6ac25e88a6e2ba2e857285a9eee1e98aaad1",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.test-files",
+          "unicode-tr44-tr44-36.test-files-clause-a1d91fe77718",
+          "unicode-tr44-tr44-36.test-files-clause-b243c22918b9",
+          "unicode-tr44-tr44-36.test-files-clause-50494e8171b2",
+          "unicode-tr44-tr44-36.test-files-clause-747c669598ae",
+          "unicode-tr44-tr44-36.test-files-clause-b1d9efeaf316",
+          "unicode-tr44-tr44-36.test-files-clause-16c7c285467f"
+        ]
+      }
+    },
+    {
+      "id": "NormalizationTest_txt",
+      "title": "6.1 NormalizationTest.txt",
+      "level": 3,
+      "text_sha256": "24d25869b04ef01ce97b24a7cc3e55e0d8865f44d40272f9be211070dda8365c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.normalizationtest-txt",
+          "unicode-tr44-tr44-36.normalizationtest-txt-clause-68207e768066",
+          "unicode-tr44-tr44-36.normalizationtest-txt-clause-6be5d233ed1a",
+          "unicode-tr44-tr44-36.normalizationtest-txt-clause-0f39f0baa096",
+          "unicode-tr44-tr44-36.normalizationtest-txt-clause-09b4eef181e9"
+        ]
+      }
+    },
+    {
+      "id": "Segmentation_Test_Files",
+      "title": "6.2 Segmentation Test Files and Documentation",
+      "level": 3,
+      "text_sha256": "c04d9c0f219b10f86cb22863cf7c13fc5b03c029397957b642303d6035bd26ea",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.segmentation-test-files",
+          "unicode-tr44-tr44-36.segmentation-test-files-clause-53720b38c6df",
+          "unicode-tr44-tr44-36.segmentation-test-files-clause-6dd8886cfb4e",
+          "unicode-tr44-tr44-36.segmentation-test-files-clause-142f9e57fb06"
+        ]
+      }
+    },
+    {
+      "id": "BidiTest_txt",
+      "title": "6.3 Bidirectional Test Files",
+      "level": 3,
+      "text_sha256": "141a860291706fbe2b965627f90bf45ff8994f08861b5dc9a29093d2ea5f1c0d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.biditest-txt",
+          "unicode-tr44-tr44-36.biditest-txt-clause-7db27292ecd0",
+          "unicode-tr44-tr44-36.biditest-txt-clause-47918f9ca9d3",
+          "unicode-tr44-tr44-36.biditest-txt-clause-f69725ac7129",
+          "unicode-tr44-tr44-36.biditest-txt-clause-77b1d8e9f194"
+        ]
+      }
+    },
+    {
+      "id": "Change_History",
+      "title": "7 UCD Change History",
+      "level": 2,
+      "text_sha256": "d773ce7b4881b5573843fc9b09bb9ec71fdb0b60504091aaf7d8f07f6d6982d6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.change-history"
+        ]
+      }
+    },
+    {
+      "id": "Unicode_17.0.0",
+      "title": "Unicode 17.0.0",
+      "level": 3,
+      "text_sha256": "569f4b580b88a1de423f68e52056befe16cb93c394cad1c6bf3061c44ce49c7b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.unicode-17-0-0",
+          "unicode-tr44-tr44-36.unicode-17-0-0-clause-99e48415cf3d"
+        ]
+      }
+    },
+    {
+      "id": "heading-c7f3487f1ad2",
+      "title": "Documentation",
+      "level": 4,
+      "text_sha256": "9fb05d194ceda89c0bb336be4e0c27caf609ea7a079b207d563a4a73aba265aa",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-c7f3487f1ad2"
+        ]
+      }
+    },
+    {
+      "id": "heading-f10b4000cb9f",
+      "title": "Core Data",
+      "level": 4,
+      "text_sha256": "2aea1907ba994860283b53ef21fa00b8dbbe18aff85e90659a4b2bd0598e30bd",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-f10b4000cb9f"
+        ]
+      }
+    },
+    {
+      "id": "heading-b284bec89289",
+      "title": "Unihan Database (Unihan.zip)",
+      "level": 4,
+      "text_sha256": "1d657b1376503efdc4a81d8e48c4d2b7ada7c901af75bfcdc7ddd0bba3cee118",
+      "clause_count": 61,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-b284bec89289"
+        ]
+      }
+    },
+    {
+      "id": "heading-79c907801425",
+      "title": "Data for UAX #45",
+      "level": 4,
+      "text_sha256": "72c0e50438d03863f777e6235428d830540337dee8952d151c5aa4d7601ac297",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-79c907801425"
+        ]
+      }
+    },
+    {
+      "id": "heading-31d5fb03fdf2",
+      "title": "Extracted Data",
+      "level": 4,
+      "text_sha256": "2b1f79b73737ccb2d71c7c7018c379d485077d80ae9966bce6a3208a6cd243ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-31d5fb03fdf2"
+        ]
+      }
+    },
+    {
+      "id": "heading-a9af9aa8cd1e",
+      "title": "Conformance Test Data",
+      "level": 4,
+      "text_sha256": "2b1f79b73737ccb2d71c7c7018c379d485077d80ae9966bce6a3208a6cd243ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-a9af9aa8cd1e"
+        ]
+      }
+    },
+    {
+      "id": "heading-cbd236064fa7",
+      "title": "Auxiliary Data for UAX #14 and UAX #29",
+      "level": 4,
+      "text_sha256": "2d5dd8a9f0736e493ba14af5a5868cf6ec5e031c3040775ba731e149a4690fc9",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-cbd236064fa7",
+          "unicode-tr44-tr44-36.heading-cbd236064fa7-clause-37618ff427af"
+        ]
+      }
+    },
+    {
+      "id": "heading-68598f930454",
+      "title": "Documentation for Auxiliary Data",
+      "level": 4,
+      "text_sha256": "2b1f79b73737ccb2d71c7c7018c379d485077d80ae9966bce6a3208a6cd243ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-68598f930454"
+        ]
+      }
+    },
+    {
+      "id": "heading-bfb10ea6436b",
+      "title": "Emoji Data",
+      "level": 4,
+      "text_sha256": "2b1f79b73737ccb2d71c7c7018c379d485077d80ae9966bce6a3208a6cd243ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-bfb10ea6436b"
+        ]
+      }
+    },
+    {
+      "id": "Unicode_16.0.0",
+      "title": "Unicode 16.0.0",
+      "level": 3,
+      "text_sha256": "3c434837b03635e8ac97dcb76307cbb3c8034fa68a3fb1e9fba766b11b65960c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.unicode-16-0-0",
+          "unicode-tr44-tr44-36.unicode-16-0-0-clause-99e48415cf3d"
+        ]
+      }
+    },
+    {
+      "id": "heading-0f51a7042f9d",
+      "title": "Documentation",
+      "level": 4,
+      "text_sha256": "e0df05d7156e2a9ce64ddf96fefde3850a372ab86503263e41b27b23ab598bcd",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-0f51a7042f9d"
+        ]
+      }
+    },
+    {
+      "id": "heading-6f26022e5a44",
+      "title": "Core Data",
+      "level": 4,
+      "text_sha256": "e03f7dbdea51dd3104d5b00ee623d6ec630e9efcc18b9a5cba5dba35a0908e84",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-6f26022e5a44"
+        ]
+      }
+    },
+    {
+      "id": "heading-38aeaa9b624b",
+      "title": "Unihan Database (Unihan.zip)",
+      "level": 4,
+      "text_sha256": "fc98ee80a45fadd9f0f1027ec0d0095b4ba73ca0f0e4b4b5830da80377109c85",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-38aeaa9b624b"
+        ]
+      }
+    },
+    {
+      "id": "heading-9f59a30549c4",
+      "title": "Data for UAX #45",
+      "level": 4,
+      "text_sha256": "48757bffa2a18f2f4bfe6343587e9983c07e033ea0587ab9ef6ab1a202dc2742",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-9f59a30549c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-9fe3062e36a0",
+      "title": "Extracted Data",
+      "level": 4,
+      "text_sha256": "2b1f79b73737ccb2d71c7c7018c379d485077d80ae9966bce6a3208a6cd243ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-9fe3062e36a0"
+        ]
+      }
+    },
+    {
+      "id": "heading-17d15000cfdd",
+      "title": "Conformance Test Data",
+      "level": 4,
+      "text_sha256": "2b1f79b73737ccb2d71c7c7018c379d485077d80ae9966bce6a3208a6cd243ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-17d15000cfdd"
+        ]
+      }
+    },
+    {
+      "id": "heading-40f73b99af7d",
+      "title": "Auxiliary Data for UAX #14 and UAX #29",
+      "level": 4,
+      "text_sha256": "939664491645b7b83c2fd6e0bf55f1ee3b8aacac5e116ae44bdb72898bec82ef",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-40f73b99af7d"
+        ]
+      }
+    },
+    {
+      "id": "heading-5ebbd55c8d96",
+      "title": "Documentation for Auxiliary Data",
+      "level": 4,
+      "text_sha256": "2b1f79b73737ccb2d71c7c7018c379d485077d80ae9966bce6a3208a6cd243ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-5ebbd55c8d96"
+        ]
+      }
+    },
+    {
+      "id": "heading-07d7b5db201f",
+      "title": "Emoji Data",
+      "level": 4,
+      "text_sha256": "2b1f79b73737ccb2d71c7c7018c379d485077d80ae9966bce6a3208a6cd243ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-07d7b5db201f"
+        ]
+      }
+    },
+    {
+      "id": "Acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "6f721caed12daf7d13b75410356fe3b32e697560eb4cccb7a2b871bc828019cd",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "References",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "52200409fadb6ded3d20df7149bc418c64069ee87c9237c92241002e4d5d1f39",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.references"
+        ]
+      }
+    },
+    {
+      "id": "Modifications",
+      "title": "Modifications",
+      "level": 2,
+      "text_sha256": "5d6ab7569c325edba4c8f112b5130db7325332d0428e4dacaa12ee9bf6e559cf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.modifications"
+        ]
+      }
+    },
+    {
+      "id": "heading-5fd059d2d92e",
+      "title": "Revision 36 [KW]",
+      "level": 3,
+      "text_sha256": "7f51cece052804118fa0effcf01681f2f2e73a1c92c96d2c49711112691492f0",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr44-tr44-36.heading-5fd059d2d92e",
+          "unicode-tr44-tr44-36.heading-5fd059d2d92e-clause-e14f4d1cffbd"
+        ]
+      }
+    }
+  ]
+}

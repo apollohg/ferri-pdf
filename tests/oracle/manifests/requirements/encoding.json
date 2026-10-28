@@ -1,0 +1,3107 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "encoding.preface",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "preface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Preface.",
+      "locator": {
+        "section_id": "preface",
+        "text_sha256": "ffc9742ce04981372290b963be5b187273a6fa7b2cb5b62fcad1a1db6f966340"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.security-background",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "security-background"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security background.",
+      "locator": {
+        "section_id": "security-background",
+        "text_sha256": "4df5a5741f0d8758ef24bc770ebe64cb4e46c82960949697c13f37c92d4ce168"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.security-background-clause-bb9726ce22e4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.security-background-clause-bb9726ce22e4",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "security-background"
+      ],
+      "behaviour": "Security background — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "security-background",
+        "clause_index": 1,
+        "clause_sha256": "bb9726ce22e43ce069e3d7223d1b33086da29375b1ad436f0274a578bc5c1787"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.terminology",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terminology",
+        "text_sha256": "1031308aa8802d5e9e986e82d232c03a6fa0c85057a828a985fe871e7b7a81e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.terminology-clause-b15bdb9f131e",
+        "encoding.terminology-clause-9d604dbbfc71",
+        "encoding.terminology-clause-5c7440ea3535"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.terminology-clause-b15bdb9f131e",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Terminology — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "terminology",
+        "clause_index": 3,
+        "clause_sha256": "b15bdb9f131ec5892e90add8238b310acb13fd9f368fc2e6e36b826ce16a0c76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.terminology-clause-9d604dbbfc71",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Terminology — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "terminology",
+        "clause_index": 6,
+        "clause_sha256": "9d604dbbfc71e635dfd920a954af4ea037a794b093dd81014d139aa1f279bb1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.terminology-clause-5c7440ea3535",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Terminology — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "terminology",
+        "clause_index": 57,
+        "clause_sha256": "5c7440ea3535830f0a8eebd9f8861c45fe5052cf049017a175413e28e51e8c86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.encodings",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "encodings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Encodings.",
+      "locator": {
+        "section_id": "encodings",
+        "text_sha256": "d0e246d624a329b7ccdec4341f316a25724f73ad226d18bca017ef3fcf1d31f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.encodings-clause-ba98ae08507a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.encodings-clause-ba98ae08507a",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "encodings"
+      ],
+      "behaviour": "Encodings — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "encodings",
+        "clause_index": 1,
+        "clause_sha256": "ba98ae08507a705e5166bb64fd38e460173d124e8c8d3461a4a081700abe5593"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.encoders-and-decoders",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "encoders-and-decoders"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Encoders and decoders.",
+      "locator": {
+        "section_id": "encoders-and-decoders",
+        "text_sha256": "940f51b03c5ce1f1a353eed62a6818b2ae81ae198a86244949e606de23ad23f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.encoders-and-decoders-clause-2b4e3b4c5ee8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.encoders-and-decoders-clause-2b4e3b4c5ee8",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "encoders-and-decoders"
+      ],
+      "behaviour": "Encoders and decoders — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "encoders-and-decoders",
+        "clause_index": 0,
+        "clause_sha256": "2b4e3b4c5ee87e107af9e8e336fdf578e8aca9d0e0b81785b9af3e91c0d1c577"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.names-and-labels",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "names-and-labels"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Names and labels.",
+      "locator": {
+        "section_id": "names-and-labels",
+        "text_sha256": "1c314500d6a37e38e36a5c2d0b6a7f8c62a4a019790860dd18c458ef129361af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.names-and-labels-clause-b7f199fab634",
+        "encoding.names-and-labels-clause-0cfea211e25c",
+        "encoding.names-and-labels-clause-ef68a1410c2f",
+        "encoding.names-and-labels-clause-f52b531b8b48",
+        "encoding.foundation-encoding-labels-decoders"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.names-and-labels-clause-b7f199fab634",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "names-and-labels"
+      ],
+      "behaviour": "Names and labels — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "names-and-labels",
+        "clause_index": 0,
+        "clause_sha256": "b7f199fab634487963ff2b58e448e273893dda424bf0cc2292110d19cfab7055"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.names-and-labels-clause-0cfea211e25c",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "names-and-labels"
+      ],
+      "behaviour": "Names and labels — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "names-and-labels",
+        "clause_index": 2,
+        "clause_sha256": "0cfea211e25c203dfe0c590dc204fe5ab3e5cc3a573cac1d64efad955eff4912"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.names-and-labels-clause-ef68a1410c2f",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "names-and-labels"
+      ],
+      "behaviour": "Names and labels — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "names-and-labels",
+        "clause_index": 3,
+        "clause_sha256": "ef68a1410c2f6f95025f3bfb62e77f62e7f3f77c7a56d5f9290f438fc86d84aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.names-and-labels-clause-f52b531b8b48",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "names-and-labels"
+      ],
+      "behaviour": "Names and labels — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "names-and-labels",
+        "clause_index": 9,
+        "clause_sha256": "f52b531b8b484882421435306afaa8b24917aee70efc7aaa7c459825101d49c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.output-encodings",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "output-encodings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Output encodings.",
+      "locator": {
+        "section_id": "output-encodings",
+        "text_sha256": "af1d23fe35ff75b11aef08ba02c009f7f0bd46a89fc9229e1f4c681822a02d59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.output-encodings-clause-d1f9dccbfb5c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.output-encodings-clause-d1f9dccbfb5c",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "output-encodings"
+      ],
+      "behaviour": "Output encodings — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "output-encodings",
+        "clause_index": 5,
+        "clause_sha256": "d1f9dccbfb5c09731b98555b63f17eb8f3b4efc3b7f12a5187bcaeac52c39715"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.indexes",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "indexes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Indexes.",
+      "locator": {
+        "section_id": "indexes",
+        "text_sha256": "ebcc816819a2ae60754592433708be328e11e0aed26848ac05058c508c636da3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.specification-hooks",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "specification-hooks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Hooks for standards.",
+      "locator": {
+        "section_id": "specification-hooks",
+        "text_sha256": "2bf80174d5050044f146934846986f1121c2afe7b922ff8d23ccfd484642fb46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.foundation-encoding-labels-decoders"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.legacy-hooks",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "legacy-hooks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Legacy hooks for standards.",
+      "locator": {
+        "section_id": "legacy-hooks",
+        "text_sha256": "96a068d1095f0a4ef2d8297c413a2195b895be1105a7e55ce8f272a44f88c84f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.api",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "api"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in API.",
+      "locator": {
+        "section_id": "api",
+        "text_sha256": "68530ee7621e90e96e83c0f87a124cbe62fe2d47fb9b60f7a0b92fccc4044ef6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.api-clause-08e2b0204f26",
+        "encoding.api-clause-ddd5bc69742f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.api-clause-08e2b0204f26",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "api"
+      ],
+      "behaviour": "API — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "api",
+        "clause_index": 0,
+        "clause_sha256": "08e2b0204f2609556c1d842de8422250de3fda5f8816e51c1c4596f10cba1e7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.api-clause-ddd5bc69742f",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "api"
+      ],
+      "behaviour": "API — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "api",
+        "clause_index": 3,
+        "clause_sha256": "ddd5bc69742f41596c60d9f7c9dea3db09008b6a56dc315e3666a262aec46f31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-mixin-textdecodercommon",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-mixin-textdecodercommon"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interface mixin TextDecoderCommon.",
+      "locator": {
+        "section_id": "interface-mixin-textdecodercommon",
+        "text_sha256": "b65c0221f54117f113c6f5a696a27b33c33dc36bc37512b3fec9508ad72b1f95"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.interface-mixin-textdecodercommon-clause-f35597441f33",
+        "encoding.interface-mixin-textdecodercommon-clause-062288f3e917",
+        "encoding.interface-mixin-textdecodercommon-clause-a1c704c46810"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.interface-mixin-textdecodercommon-clause-f35597441f33",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-mixin-textdecodercommon"
+      ],
+      "behaviour": "Interface mixin TextDecoderCommon — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-mixin-textdecodercommon",
+        "clause_index": 13,
+        "clause_sha256": "f35597441f337d17dcb1b31556be16f7371182f9d8fbf63a650d23a9c3734e10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-mixin-textdecodercommon-clause-062288f3e917",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-mixin-textdecodercommon"
+      ],
+      "behaviour": "Interface mixin TextDecoderCommon — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-mixin-textdecodercommon",
+        "clause_index": 30,
+        "clause_sha256": "062288f3e917e563dd908522bfddbf6c072d1784bc0e1d2ced378f3fb765c9ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-mixin-textdecodercommon-clause-a1c704c46810",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-mixin-textdecodercommon"
+      ],
+      "behaviour": "Interface mixin TextDecoderCommon — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-mixin-textdecodercommon",
+        "clause_index": 34,
+        "clause_sha256": "a1c704c4681080a124530882f967819089a95e81da7b80d239690da2c7be72b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textdecoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interface TextDecoder.",
+      "locator": {
+        "section_id": "interface-textdecoder",
+        "text_sha256": "a146700303a53a4482d1ccd5781e7763805b86a1910030fda22457dd167490ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.interface-textdecoder-clause-a5854cbdf4c8",
+        "encoding.interface-textdecoder-clause-50e344a0b175",
+        "encoding.interface-textdecoder-clause-f73042b4de7e",
+        "encoding.interface-textdecoder-clause-9ba263050870",
+        "encoding.interface-textdecoder-clause-e1525b370b56"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.interface-textdecoder-clause-a5854cbdf4c8",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoder"
+      ],
+      "behaviour": "Interface TextDecoder — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textdecoder",
+        "clause_index": 37,
+        "clause_sha256": "a5854cbdf4c875a9f0c1718a7b90b05f8fa8771d3aa1e23a17d6f783f0241bdf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textdecoder-clause-50e344a0b175",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoder"
+      ],
+      "behaviour": "Interface TextDecoder — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textdecoder",
+        "clause_index": 38,
+        "clause_sha256": "50e344a0b175f659f5a85d749003d68227128af13892ea9afc2d473610eefcf6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textdecoder-clause-f73042b4de7e",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoder"
+      ],
+      "behaviour": "Interface TextDecoder — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textdecoder",
+        "clause_index": 46,
+        "clause_sha256": "f73042b4de7eed4b7de5affbcda54c4bc4d91f96319fe4850c298a816289f9e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textdecoder-clause-9ba263050870",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoder"
+      ],
+      "behaviour": "Interface TextDecoder — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textdecoder",
+        "clause_index": 47,
+        "clause_sha256": "9ba263050870a67689fe81f224a0eb7b8f95232fdcf1a31b9d03fbd2cbccc251"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textdecoder-clause-e1525b370b56",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoder"
+      ],
+      "behaviour": "Interface TextDecoder — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textdecoder",
+        "clause_index": 56,
+        "clause_sha256": "e1525b370b561afb7b234ee97c67b627a38e29e6776cf333f2959ef8f88890d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-mixin-textencodercommon",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-mixin-textencodercommon"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interface mixin TextEncoderCommon.",
+      "locator": {
+        "section_id": "interface-mixin-textencodercommon",
+        "text_sha256": "56196eac589d71f0a51776ad4c3c7148de2004cd4e1bcca4660ced90c914a1ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.interface-textencoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interface TextEncoder.",
+      "locator": {
+        "section_id": "interface-textencoder",
+        "text_sha256": "7cbd3a899985535677c77fb63881ede78e1cbf40beea1fbcb3e9d526c0607517"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.interface-textencoder-clause-60663a78a271",
+        "encoding.interface-textencoder-clause-662d01e9239a",
+        "encoding.interface-textencoder-clause-a28fd9c8a2d6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.interface-textencoder-clause-60663a78a271",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoder"
+      ],
+      "behaviour": "Interface TextEncoder — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textencoder",
+        "clause_index": 38,
+        "clause_sha256": "60663a78a27184e9920b2a59dcac49bb555074e6f9e3a23d2788d7a78d85ea53"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textencoder-clause-662d01e9239a",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoder"
+      ],
+      "behaviour": "Interface TextEncoder — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textencoder",
+        "clause_index": 39,
+        "clause_sha256": "662d01e9239ac1c6b5038834d8812ca55d73a1c753a08e68f2e2d78bf0577086"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textencoder-clause-a28fd9c8a2d6",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoder"
+      ],
+      "behaviour": "Interface TextEncoder — normative clause 70, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textencoder",
+        "clause_index": 69,
+        "clause_sha256": "a28fd9c8a2d6c7848471abd7a41c79f82983ce39bdb52b17f262e1f5320e5389"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textdecoderstream",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoderstream"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interface TextDecoderStream.",
+      "locator": {
+        "section_id": "interface-textdecoderstream",
+        "text_sha256": "079057c323a93ce6ba4052884de98386e7d3c131bd6a70ade09b0ed327a2608e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.interface-textdecoderstream-clause-8af204845959",
+        "encoding.interface-textdecoderstream-clause-ecbfe883886b",
+        "encoding.interface-textdecoderstream-clause-99591aada327",
+        "encoding.interface-textdecoderstream-clause-4e203be63730",
+        "encoding.interface-textdecoderstream-clause-ce379c449682"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.interface-textdecoderstream-clause-8af204845959",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoderstream"
+      ],
+      "behaviour": "Interface TextDecoderStream — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textdecoderstream",
+        "clause_index": 44,
+        "clause_sha256": "8af204845959fafe0b9ba7b188b4ce9f6ea9cb419d793ec350e58e89ea46f74d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textdecoderstream-clause-ecbfe883886b",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoderstream"
+      ],
+      "behaviour": "Interface TextDecoderStream — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textdecoderstream",
+        "clause_index": 46,
+        "clause_sha256": "ecbfe883886b36960df889c2189932a626de18fa4a25cf25bf973ed498e420df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textdecoderstream-clause-99591aada327",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoderstream"
+      ],
+      "behaviour": "Interface TextDecoderStream — normative clause 55, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textdecoderstream",
+        "clause_index": 54,
+        "clause_sha256": "99591aada327bc6def131101105984c45e9c550ce35361c39497f715ce7efe75"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textdecoderstream-clause-4e203be63730",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoderstream"
+      ],
+      "behaviour": "Interface TextDecoderStream — normative clause 79, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textdecoderstream",
+        "clause_index": 78,
+        "clause_sha256": "4e203be63730098b515d85b4d83fda4af7b6c75c034e4fd17bd11caf15f31aaa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textdecoderstream-clause-ce379c449682",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textdecoderstream"
+      ],
+      "behaviour": "Interface TextDecoderStream — normative clause 98, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textdecoderstream",
+        "clause_index": 97,
+        "clause_sha256": "ce379c449682014e8ab995ef5d08aaccf92f38b9e83aed34a2df6bf425373090"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textencoderstream",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoderstream"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interface TextEncoderStream.",
+      "locator": {
+        "section_id": "interface-textencoderstream",
+        "text_sha256": "ba2b5ccd3f066bb5aa0ed30ef32b3f777752466fcf6d30e416f676794c45b62b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.interface-textencoderstream-clause-dc88b8c5e26d",
+        "encoding.interface-textencoderstream-clause-ad94ccefd2b3",
+        "encoding.interface-textencoderstream-clause-6d6426166fed",
+        "encoding.interface-textencoderstream-clause-a0c6797409a1",
+        "encoding.interface-textencoderstream-clause-58501847277e",
+        "encoding.interface-textencoderstream-clause-877e110e43e4",
+        "encoding.interface-textencoderstream-clause-d2b0302d6082",
+        "encoding.interface-textencoderstream-clause-e9ae7708e1e7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.interface-textencoderstream-clause-dc88b8c5e26d",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoderstream"
+      ],
+      "behaviour": "Interface TextEncoderStream — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textencoderstream",
+        "clause_index": 23,
+        "clause_sha256": "dc88b8c5e26d73b15384b5ae6339895ca90a670dcb6df8f811b147cd3fc042a0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textencoderstream-clause-ad94ccefd2b3",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoderstream"
+      ],
+      "behaviour": "Interface TextEncoderStream — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textencoderstream",
+        "clause_index": 25,
+        "clause_sha256": "ad94ccefd2b38bfcab64e3b553ad67b3b7dc9e9b3567db019d4a56d0c92e2e24"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textencoderstream-clause-6d6426166fed",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoderstream"
+      ],
+      "behaviour": "Interface TextEncoderStream — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textencoderstream",
+        "clause_index": 33,
+        "clause_sha256": "6d6426166fed869a2330da9bb5f216aa6aaf5eb996ce9fc1fc1a16f0e392fbb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textencoderstream-clause-a0c6797409a1",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoderstream"
+      ],
+      "behaviour": "Interface TextEncoderStream — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textencoderstream",
+        "clause_index": 57,
+        "clause_sha256": "a0c6797409a186278a192b3df378b5103c97c862ae697039a92721bc4ce4999a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textencoderstream-clause-58501847277e",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoderstream"
+      ],
+      "behaviour": "Interface TextEncoderStream — normative clause 62, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textencoderstream",
+        "clause_index": 61,
+        "clause_sha256": "58501847277ea2cec7bf45e8102089353f856b747425e4a81b2451cbe94ca331"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textencoderstream-clause-877e110e43e4",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoderstream"
+      ],
+      "behaviour": "Interface TextEncoderStream — normative clause 81, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textencoderstream",
+        "clause_index": 80,
+        "clause_sha256": "877e110e43e4414ef40484313236ee7c2a47d1397864f404446a7a6592140f53"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textencoderstream-clause-d2b0302d6082",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoderstream"
+      ],
+      "behaviour": "Interface TextEncoderStream — normative clause 82, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textencoderstream",
+        "clause_index": 81,
+        "clause_sha256": "d2b0302d60823beb78e33ea189a37205dc5ef85dc9ec03d029f503ff67d97f3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.interface-textencoderstream-clause-e9ae7708e1e7",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "interface-textencoderstream"
+      ],
+      "behaviour": "Interface TextEncoderStream — normative clause 90, located by its exact source hash.",
+      "locator": {
+        "section_id": "interface-textencoderstream",
+        "clause_index": 89,
+        "clause_sha256": "e9ae7708e1e7ee51c4f84fa33b1e9d51f72527d7ebfb5a67a8d161aaa88dbd19"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.the-encoding",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "the-encoding"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The encoding.",
+      "locator": {
+        "section_id": "the-encoding",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.utf-8",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "utf-8"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UTF-8.",
+      "locator": {
+        "section_id": "utf-8",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.utf-8-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "utf-8-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UTF-8 decoder.",
+      "locator": {
+        "section_id": "utf-8-decoder",
+        "text_sha256": "9017e1b2c94d6a845d575929544946a8f54bd8e949f59225955d794ad3ed3e95"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.utf-8-decoder-clause-9130e5c40ba0",
+        "encoding.foundation-encoding-labels-decoders"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.utf-8-decoder-clause-9130e5c40ba0",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "utf-8-decoder"
+      ],
+      "behaviour": "UTF-8 decoder — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "utf-8-decoder",
+        "clause_index": 0,
+        "clause_sha256": "9130e5c40ba07eaaae8303cb14fda2347544bd54aed924abff06b837cfd2c18c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.utf-8-encoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "utf-8-encoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UTF-8 encoder.",
+      "locator": {
+        "section_id": "utf-8-encoder",
+        "text_sha256": "c0a86b0885e393c6e6aef044c227d7d904599d64846d38835de44b4ebb9581dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.utf-8-encoder-clause-c2298b985a5e",
+        "encoding.utf-8-encoder-clause-dc3544ff4293"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.utf-8-encoder-clause-c2298b985a5e",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "utf-8-encoder"
+      ],
+      "behaviour": "UTF-8 encoder — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "utf-8-encoder",
+        "clause_index": 24,
+        "clause_sha256": "c2298b985a5e96a7886e5b69f95328562c6571835da97cc3ed830fc069a8df5d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.utf-8-encoder-clause-dc3544ff4293",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "utf-8-encoder"
+      ],
+      "behaviour": "UTF-8 encoder — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "utf-8-encoder",
+        "clause_index": 25,
+        "clause_sha256": "dc3544ff4293d7b601cba903a2752fedb764b7a51f4b5fe91f2f7f1f9404cacd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.legacy-single-byte-encodings",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "legacy-single-byte-encodings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Legacy single-byte encodings.",
+      "locator": {
+        "section_id": "legacy-single-byte-encodings",
+        "text_sha256": "962dd04a94243f10ba2d149abb07decf2f8d3c74cd3c169d8c45f2ec1095ce1b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.single-byte-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "single-byte-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in single-byte decoder.",
+      "locator": {
+        "section_id": "single-byte-decoder",
+        "text_sha256": "d4ad0ab5b92f2840d9ef36f4a0751a64576c511f53f49e739f779a75127c203d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.foundation-encoding-labels-decoders"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.single-byte-encoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "single-byte-encoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in single-byte encoder.",
+      "locator": {
+        "section_id": "single-byte-encoder",
+        "text_sha256": "39e4ce309b34242d109473f3ad398a3f3c24474550694b7829789a522b581eeb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.legacy-multi-byte-chinese-simplified-encodings",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "legacy-multi-byte-chinese-(simplified)-encodings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Legacy multi-byte Chinese (simplified) encodings.",
+      "locator": {
+        "section_id": "legacy-multi-byte-chinese-(simplified)-encodings",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.gbk",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "gbk"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GBK.",
+      "locator": {
+        "section_id": "gbk",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.gbk-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "gbk-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GBK decoder.",
+      "locator": {
+        "section_id": "gbk-decoder",
+        "text_sha256": "5dc3b374c8691770069f449a5bda06ac53cb30021ccf1b23d7e1c0a597901d03"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.gbk-encoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "gbk-encoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GBK encoder.",
+      "locator": {
+        "section_id": "gbk-encoder",
+        "text_sha256": "e8b465b4a8d9fcda204b7cb239ab7a4e670c205ee2aa88a27cc28e658fc4ed9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.gb18030",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "gb18030"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in gb18030.",
+      "locator": {
+        "section_id": "gb18030",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.gb18030-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "gb18030-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in gb18030 decoder.",
+      "locator": {
+        "section_id": "gb18030-decoder",
+        "text_sha256": "ea01bc901d8b70fbd2473559ecfc3c7ec520c294f51e37806941dbc7ffdac554"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.gb18030-encoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "gb18030-encoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in gb18030 encoder.",
+      "locator": {
+        "section_id": "gb18030-encoder",
+        "text_sha256": "2d9e917b43156d2c194413a2d661fe912e1c72d199a8475630bee1217af7bec0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.legacy-multi-byte-chinese-traditional-encodings",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "legacy-multi-byte-chinese-(traditional)-encodings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Legacy multi-byte Chinese (traditional) encodings.",
+      "locator": {
+        "section_id": "legacy-multi-byte-chinese-(traditional)-encodings",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.big5",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "big5"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Big5.",
+      "locator": {
+        "section_id": "big5",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.big5-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "big5-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Big5 decoder.",
+      "locator": {
+        "section_id": "big5-decoder",
+        "text_sha256": "b9369866632fdcf88611050660d66ca641b1ebf8edf8ceac29f7424d4a5068c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.big5-encoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "big5-encoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Big5 encoder.",
+      "locator": {
+        "section_id": "big5-encoder",
+        "text_sha256": "2a579f48d2971a9e25749148199423bdfbfdd6578d432664450c4118c05c506e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.legacy-multi-byte-japanese-encodings",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "legacy-multi-byte-japanese-encodings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Legacy multi-byte Japanese encodings.",
+      "locator": {
+        "section_id": "legacy-multi-byte-japanese-encodings",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.euc-jp",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "euc-jp"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in EUC-JP.",
+      "locator": {
+        "section_id": "euc-jp",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.euc-jp-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "euc-jp-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in EUC-JP decoder.",
+      "locator": {
+        "section_id": "euc-jp-decoder",
+        "text_sha256": "c4d4c8ad253753e643923a2e0e0f27e0a7402859219457d7d645c65062fc3580"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.euc-jp-encoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "euc-jp-encoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in EUC-JP encoder.",
+      "locator": {
+        "section_id": "euc-jp-encoder",
+        "text_sha256": "d6e2525b11d3de1c9b5ea7316380857fc670992d202a21d9f849a227326b0b7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.iso-2022-jp",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "iso-2022-jp"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ISO-2022-JP.",
+      "locator": {
+        "section_id": "iso-2022-jp",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.iso-2022-jp-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "iso-2022-jp-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ISO-2022-JP decoder.",
+      "locator": {
+        "section_id": "iso-2022-jp-decoder",
+        "text_sha256": "decf08a307888bf090e3b92c9f10018149b657c8507ab6e0e62fcbdf263a5310"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.iso-2022-jp-encoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "iso-2022-jp-encoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ISO-2022-JP encoder.",
+      "locator": {
+        "section_id": "iso-2022-jp-encoder",
+        "text_sha256": "9ae9276c600eb62af67e7f3f6287ea99237b8ff22234e8736cba0625c54ed9ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.shift-jis",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "shift_jis"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shift_JIS.",
+      "locator": {
+        "section_id": "shift_jis",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.shift-jis-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "shift_jis-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shift_JIS decoder.",
+      "locator": {
+        "section_id": "shift_jis-decoder",
+        "text_sha256": "1e67588cda757e938a1a69a1c1dc0a00d2a9f88680094bf493dd406db360e81a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.shift-jis-encoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "shift_jis-encoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shift_JIS encoder.",
+      "locator": {
+        "section_id": "shift_jis-encoder",
+        "text_sha256": "c88bafaf01993f11e3a31b1ef79284e7684c30dcebb3f52a2fe342d726f23649"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.legacy-multi-byte-korean-encodings",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "legacy-multi-byte-korean-encodings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Legacy multi-byte Korean encodings.",
+      "locator": {
+        "section_id": "legacy-multi-byte-korean-encodings",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.euc-kr",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "euc-kr"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in EUC-KR.",
+      "locator": {
+        "section_id": "euc-kr",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.euc-kr-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "euc-kr-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in EUC-KR decoder.",
+      "locator": {
+        "section_id": "euc-kr-decoder",
+        "text_sha256": "7611db01ec8c4bba64a2e802ee1d767991678a7c74aff7d09646d39c14c97d70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.euc-kr-encoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "euc-kr-encoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in EUC-KR encoder.",
+      "locator": {
+        "section_id": "euc-kr-encoder",
+        "text_sha256": "c8bd2c511168a555b2fbd4401df80c0446e92cf013219af581293f62bb64c290"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.legacy-miscellaneous-encodings",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "legacy-miscellaneous-encodings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Legacy miscellaneous encodings.",
+      "locator": {
+        "section_id": "legacy-miscellaneous-encodings",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.replacement",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "replacement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in replacement.",
+      "locator": {
+        "section_id": "replacement",
+        "text_sha256": "6bf37c96acef5e6f7cf7a4d5fbf1b7657b8b36dd4a3dbb1d28ba7662bcde8a9c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.replacement-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "replacement-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in replacement decoder.",
+      "locator": {
+        "section_id": "replacement-decoder",
+        "text_sha256": "fb1bca9c20baf53775763a99f583c519248bb3d966c60a0e943eefd671d64067"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.common-infrastructure-for-utf-16be-and-utf-16le",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "common-infrastructure-for-utf-16be-and-utf-16le"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Common infrastructure for UTF-16BE/LE.",
+      "locator": {
+        "section_id": "common-infrastructure-for-utf-16be-and-utf-16le",
+        "text_sha256": "4022036f962fe9ae0e1feb9268a2a473b0f35c94742a15d5148a55ae4cefe0cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.shared-utf-16-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "shared-utf-16-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in shared UTF-16 decoder.",
+      "locator": {
+        "section_id": "shared-utf-16-decoder",
+        "text_sha256": "e8443152b22bfda582fc353f92412b6bbdad89664f10b202cd7e296acab88152"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.shared-utf-16-decoder-clause-351ddef4d128",
+        "encoding.foundation-encoding-labels-decoders"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.shared-utf-16-decoder-clause-351ddef4d128",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "shared-utf-16-decoder"
+      ],
+      "behaviour": "shared UTF-16 decoder — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "shared-utf-16-decoder",
+        "clause_index": 0,
+        "clause_sha256": "351ddef4d128e08f2bec1a121a49ff5c8f93e87edc516b2950c43be870090ac6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.utf-16be",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "utf-16be"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UTF-16BE.",
+      "locator": {
+        "section_id": "utf-16be",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.utf-16be-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "utf-16be-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UTF-16BE decoder.",
+      "locator": {
+        "section_id": "utf-16be-decoder",
+        "text_sha256": "0000b596b81ba548df542baa95c9739463be532c6225e788238fd89e7961f14c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.utf-16le",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "utf-16le"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UTF-16LE.",
+      "locator": {
+        "section_id": "utf-16le",
+        "text_sha256": "36026986ea386b2d5bc852e668466f9abbefc54ae9e481e8ca8a006e72102b0f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.utf-16le-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "utf-16le-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UTF-16LE decoder.",
+      "locator": {
+        "section_id": "utf-16le-decoder",
+        "text_sha256": "3e07444b5f31714962b386b3d231960a056c8f6823a1be988ac1ceab2e1fb6b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.x-user-defined",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "x-user-defined"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in x-user-defined.",
+      "locator": {
+        "section_id": "x-user-defined",
+        "text_sha256": "6301f1e2d6cf91e8c1bce10b2eac662e6bbf01139bb5674143cc37c8e2215f4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.x-user-defined-decoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "x-user-defined-decoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in x-user-defined decoder.",
+      "locator": {
+        "section_id": "x-user-defined-decoder",
+        "text_sha256": "d775de8fe7af87fd370f10bc845520028291c8b50d725d28238a0d4c96d201a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.x-user-defined-encoder",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "x-user-defined-encoder"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in x-user-defined encoder.",
+      "locator": {
+        "section_id": "x-user-defined-encoder",
+        "text_sha256": "8724cd77af142cb8844c5543d1e6f8055b2812a5016ab4dc49e2559b35898bb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.browser-ui",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "browser-ui"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Browser UI.",
+      "locator": {
+        "section_id": "browser-ui",
+        "text_sha256": "6e396c01056968aeb46b8487c0f0ffaa8c4487d3777dbe36d6c7c3f9e4e983f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "encoding.browser-ui-clause-6e396c010569"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.browser-ui-clause-6e396c010569",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "browser-ui"
+      ],
+      "behaviour": "Browser UI — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "browser-ui",
+        "clause_index": 0,
+        "clause_sha256": "6e396c01056968aeb46b8487c0f0ffaa8c4487d3777dbe36d6c7c3f9e4e983f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "encoding.implementation-considerations",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "implementation-considerations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementation considerations.",
+      "locator": {
+        "section_id": "implementation-considerations",
+        "text_sha256": "42039c280bdb3dd816b19b3b05c43961ff328ff435e19431b43220bcdbff18dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.section-index",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "section-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Index.",
+      "locator": {
+        "section_id": "section-index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.idl-index",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "6a069203e421040445f9f195ddb281fec3c9b35bdf07156fc4162bb4d85220c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.import-81d6eacb7a2f",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://tc39.es/ecma262/multipage/.",
+      "unresolved_reference": "https://tc39.es/ecma262/multipage/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "encoding.import-6e81d496e6aa",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://streams.spec.whatwg.org/.",
+      "unresolved_reference": "https://streams.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "encoding.import-8cac7d115c27",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "encoding.title",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Encoding (Commit be17ac5c49881336538acfc7b40dba3c8009144b).",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "a0aa9ff6e4fa22c90d94c03ff4740e8a79c099e5d6bfb0a1072da8ee9dd7a5d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.abstract",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "5556a9ce1ea0c6218be406d2d52f40e9920dbbdae7185eff323cdc37b294329e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.contents",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "fe970b7be590f7d326be316e908b71df058f04d960864499605fcafb84f5d90e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.acknowledgments",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "aee48093e55aa366d19f5e92ad993f53fab8cf4dc63b5ae5e9263ec02042e752"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.ipr",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "ipr"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Intellectual property rights.",
+      "locator": {
+        "section_id": "ipr",
+        "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.index-defined-here",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "c1431de9743d843837604edd4c362f2e2814909a69f88cc7608324deeca68a87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.index-defined-elsewhere",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "61279cb668799541b6528e1591d3ed20bbbed6fe3b841885ce28193d176989d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.references",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.informative",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "2c7c2825257f72f9e0a7689d65e83aacf5f5093ab03770c21764d59e27405e4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "encoding.foundation-encoding-labels-decoders",
+      "family": "encoding",
+      "source_id": "encoding",
+      "sections": [
+        "names-and-labels",
+        "specification-hooks",
+        "utf-8-decoder",
+        "single-byte-decoder",
+        "shared-utf-16-decoder"
+      ],
+      "behaviour": "Use Encoding labels and decoders for supported HTML/CSS byte inputs.",
+      "locator": {
+        "section_id": "names-and-labels",
+        "text_sha256": "1c314500d6a37e38e36a5c2d0b6a7f8c62a4a019790860dd18c458ef129361af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    }
+  ]
+}

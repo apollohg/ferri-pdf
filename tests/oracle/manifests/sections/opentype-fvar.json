@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-fvar",
+  "sections": [
+    {
+      "id": "fvar--font-variations-table",
+      "title": "fvar — Font Variations Table",
+      "level": 1,
+      "text_sha256": "401ad3d13a7b8844f06dd59f58e5b56c0543f96d02c2ed18cbf4efa3bdf97510",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-fvar.fvar-font-variations-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-fvar.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "table-formats",
+      "title": "Table Formats",
+      "level": 2,
+      "text_sha256": "a34ed03e78cfbfd7b51bcceb6e2b11d6c53c41dbd66531c78e2480bf3444c03e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-fvar.table-formats"
+        ]
+      }
+    },
+    {
+      "id": "fvar-header",
+      "title": "'fvar' Header",
+      "level": 3,
+      "text_sha256": "7f568841e4c0e5a86ec4f1d6b06882af0c03cc65724551d3fd97d2cf8a6feff8",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-fvar.fvar-header",
+          "opentype-fvar.fvar-header-clause-862ffad95213",
+          "opentype-fvar.fvar-header-clause-d37bd6e03bb2"
+        ]
+      }
+    },
+    {
+      "id": "variationaxisrecord",
+      "title": "VariationAxisRecord",
+      "level": 3,
+      "text_sha256": "67591ea919b3b605f9f0dbe35b86a328e0bc8692860be972dbfe407bd5bccb1e",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-fvar.variationaxisrecord",
+          "opentype-fvar.variationaxisrecord-clause-78915ca626ca",
+          "opentype-fvar.variationaxisrecord-clause-61c8b4209855",
+          "opentype-fvar.variationaxisrecord-clause-f233970b61e2",
+          "opentype-fvar.variationaxisrecord-clause-805a4a771179"
+        ]
+      }
+    },
+    {
+      "id": "instancerecord",
+      "title": "InstanceRecord",
+      "level": 3,
+      "text_sha256": "311601d5cc6de012d6ad1b3207939eecf8129a8cbe32de34ae13c55c52653a73",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-fvar.instancerecord",
+          "opentype-fvar.instancerecord-clause-1e2dabb870b4",
+          "opentype-fvar.instancerecord-clause-283c90c13be1",
+          "opentype-fvar.instancerecord-clause-b5dbc223aeb3",
+          "opentype-fvar.instancerecord-clause-4a910e7e0ba5",
+          "opentype-fvar.instancerecord-clause-ef28ec583ba1",
+          "opentype-fvar.instancerecord-clause-1fbaed505aec"
+        ]
+      }
+    },
+    {
+      "id": "variation-instance-selection",
+      "title": "Variation Instance Selection",
+      "level": 2,
+      "text_sha256": "05c0c78e9ca0cc21f1e22fa0598fbfa9eb843f759a6620a603f602e96b7805d6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-fvar.variation-instance-selection",
+          "opentype-fvar.variation-instance-selection-clause-05c0c78e9ca0"
+        ]
+      }
+    },
+    {
+      "id": "example",
+      "title": "Example",
+      "level": 2,
+      "text_sha256": "346d491e52e9d4cb1fa3ff1823760df9bb2a6726a40491c9db1a15d412f0a17a",
+      "clause_count": 172,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-fvar.example"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-fvar.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "84167a840b90e15e3de80327a1a3e1a51190ad4213600c4af138fb5c57bdfe95",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-fvar.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-fvar.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

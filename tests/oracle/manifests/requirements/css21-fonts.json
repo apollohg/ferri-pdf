@@ -1,0 +1,1820 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-fonts.q15-0",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "q15.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 15 Fonts.",
+      "locator": {
+        "section_id": "q15.0",
+        "text_sha256": "6f1b1518ce86bda35069013f9d03bc1759d8ed420a80220e0981cb4ce0217a81"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-fonts.q15-0-clause-7d29c3bcaf2e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.q15-0-clause-7d29c3bcaf2e",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "q15.0"
+      ],
+      "behaviour": "15 Fonts — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "q15.0",
+        "clause_index": 2,
+        "clause_sha256": "7d29c3bcaf2e6012bdd59079551d21afcedecfc2858acb9f640de14f178ccd92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.fonts-intro",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "fonts-intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "fonts-intro",
+        "text_sha256": "91a4969509f0749695ef51de194a46127d56859e48226f018f69b59d4d55e5a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.algorithm",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "algorithm"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font matching algorithm.",
+      "locator": {
+        "section_id": "algorithm",
+        "text_sha256": "bd94922d24343d2569b0e3b70bd8348bbe909e787ffa188a84f44d2e7fa159eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-fonts.algorithm-clause-bb54dac1eac2",
+        "css21-fonts.algorithm-clause-438200280379",
+        "css21-fonts.algorithm-clause-a476cdf4e94f",
+        "css21-fonts.algorithm-clause-bd0c81719819",
+        "css21-fonts.algorithm-clause-54e054e81f31",
+        "css21-fonts.algorithm-clause-35cb67be8d24"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.algorithm-clause-bb54dac1eac2",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "algorithm"
+      ],
+      "behaviour": "Font matching algorithm — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm",
+        "clause_index": 0,
+        "clause_sha256": "bb54dac1eac2372da178e1364e0f603d264f3a9aebaa2ee4b5e1940d8aaa5a79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.algorithm-clause-438200280379",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "algorithm"
+      ],
+      "behaviour": "Font matching algorithm — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm",
+        "clause_index": 5,
+        "clause_sha256": "4382002803798aec1223d3b811cff0279c90fc0bb53a92d563673fab9ec0051c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.algorithm-clause-a476cdf4e94f",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "algorithm"
+      ],
+      "behaviour": "Font matching algorithm — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm",
+        "clause_index": 6,
+        "clause_sha256": "a476cdf4e94f94ade2b6a466b5495fdce64d20b93c6af729c390b653f65a4e42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.algorithm-clause-bd0c81719819",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "algorithm"
+      ],
+      "behaviour": "Font matching algorithm — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm",
+        "clause_index": 8,
+        "clause_sha256": "bd0c8171981933ec3a82d8ddca84847df6eb6c5b4e5a50100712d5b39bb81795"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.algorithm-clause-54e054e81f31",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "algorithm"
+      ],
+      "behaviour": "Font matching algorithm — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm",
+        "clause_index": 9,
+        "clause_sha256": "54e054e81f31cd9081689221437e11920be60b6c41282103a4f4b06248a0e2be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.algorithm-clause-35cb67be8d24",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "algorithm"
+      ],
+      "behaviour": "Font matching algorithm — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm",
+        "clause_index": 11,
+        "clause_sha256": "35cb67be8d24be7633a6a3a2f448fb9f9a03dcd9e0482da84d377b3d8c1faee3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-family-prop",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font family: the 'font-family' property.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "text_sha256": "f5ba81eaf6cd10e6cc15b53c2aa81564c9be620a474ab8d678b96ed2fa111d39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-fonts.font-family-prop-clause-41c87d87bd5d",
+        "css21-fonts.font-family-prop-clause-cca2516ebb1d",
+        "css21-fonts.font-family-prop-clause-751ae4628d89",
+        "css21-fonts.font-family-prop-clause-f13dd4dac828",
+        "css21-fonts.font-family-prop-clause-2d4f282d977e",
+        "css21-fonts.font-family-prop-clause-4fe20ddabd7e",
+        "css21-fonts.font-family-prop-clause-872e79c91f58",
+        "css21-fonts.font-family-prop-clause-fa6d3359695c",
+        "css21-fonts.font-family-prop-clause-385b7b432df2",
+        "css21-fonts.font-family-prop-clause-bbc892642ac3",
+        "css21-fonts.font-family-prop-clause-9b40e04fc27c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.font-family-prop-clause-41c87d87bd5d",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Font family: the 'font-family' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "clause_index": 2,
+        "clause_sha256": "41c87d87bd5d2d9c8940c710a5736dace44ed760df262d4901b524915fb387ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-family-prop-clause-cca2516ebb1d",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Font family: the 'font-family' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-family-prop-clause-751ae4628d89",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Font family: the 'font-family' property — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "clause_index": 16,
+        "clause_sha256": "751ae4628d8907c9e203a183c64a23475d0e6583f41d910ce9ca37f6bb225ae2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-family-prop-clause-f13dd4dac828",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Font family: the 'font-family' property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "clause_index": 18,
+        "clause_sha256": "f13dd4dac828344dd03936b89ac5d669785f2a9f8c218ff01de15eccd608bd62"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-family-prop-clause-2d4f282d977e",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Font family: the 'font-family' property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "clause_index": 27,
+        "clause_sha256": "2d4f282d977e94f4f218f44ff926b691260c0b436f3cd1655aa19967f37c218b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-family-prop-clause-4fe20ddabd7e",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Font family: the 'font-family' property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "clause_index": 28,
+        "clause_sha256": "4fe20ddabd7e576f351b72cb49bc7821079098d47b2ecc423d13590c200d74ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-family-prop-clause-872e79c91f58",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Font family: the 'font-family' property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "clause_index": 29,
+        "clause_sha256": "872e79c91f5887b3c5ffd4ef32a14708b995c0a9a663e6b65d7ea73e489d8595"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-family-prop-clause-fa6d3359695c",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Font family: the 'font-family' property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "clause_index": 30,
+        "clause_sha256": "fa6d3359695c75a9bb62a883059a4da9b8b4ae89f43caa294c0a3ef8f81a69ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-family-prop-clause-385b7b432df2",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Font family: the 'font-family' property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "clause_index": 32,
+        "clause_sha256": "385b7b432df29a4fccf9c81ac25ebf4703c0c4ecf6b36aaa7734daaee1e3c78f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-family-prop-clause-bbc892642ac3",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Font family: the 'font-family' property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "clause_index": 35,
+        "clause_sha256": "bbc892642ac3fd7d8d3ff0b5066c4df1bf405fc42ed7caedcf73a23de6677d9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-family-prop-clause-9b40e04fc27c",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-family-prop"
+      ],
+      "behaviour": "Font family: the 'font-family' property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-family-prop",
+        "clause_index": 36,
+        "clause_sha256": "9b40e04fc27c369a20b542986da2f851b0bbe0380a48bcee82dbbf7d85a621e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.generic-font-families",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "generic-font-families"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Generic font families.",
+      "locator": {
+        "section_id": "generic-font-families",
+        "text_sha256": "410ad98f0661e472d6edf6bb5c1ba7127ff2bffe8ebbb1e447b48aaa2bdaa47f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-fonts.generic-font-families-clause-94ee97e22ddf",
+        "css21-fonts.generic-font-families-clause-d5342bb36606"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.generic-font-families-clause-94ee97e22ddf",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "generic-font-families"
+      ],
+      "behaviour": "Generic font families — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "generic-font-families",
+        "clause_index": 0,
+        "clause_sha256": "94ee97e22ddf97b51f3dc35bc58f85597d1f85bbd9a07b110b39ec182eefec2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.generic-font-families-clause-d5342bb36606",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "generic-font-families"
+      ],
+      "behaviour": "Generic font families — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "generic-font-families",
+        "clause_index": 1,
+        "clause_sha256": "d5342bb36606927468c730935c8695af0232adc0e36e74f4cb430233a5a3c234"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.serif-def",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "serif-def"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in serif.",
+      "locator": {
+        "section_id": "serif-def",
+        "text_sha256": "5cad6c1e8a06ed6f8b85743022d2ffbc0523c6b4490d431d3f7ed497223e090a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.sans-serif-def",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "sans-serif-def"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in sans-serif.",
+      "locator": {
+        "section_id": "sans-serif-def",
+        "text_sha256": "13c719daed2ffff1fd7f6526dc6ac588ab937da3efd335ecd3ed20beda6a810d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.cursive-def",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "cursive-def"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in cursive.",
+      "locator": {
+        "section_id": "cursive-def",
+        "text_sha256": "454636a8b14fe91d56a8b72d991ceea82253b1272e754effa00508b465e1eeb9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.fantasy-def",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "fantasy-def"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in fantasy.",
+      "locator": {
+        "section_id": "fantasy-def",
+        "text_sha256": "7782ccc431602bce5e2d68f4379c4931963c20ef1c2012f6e22a5ca47df241e3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.monospace-def",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "monospace-def"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in monospace.",
+      "locator": {
+        "section_id": "monospace-def",
+        "text_sha256": "2b926887af659153212862a023bd6121dae5bc37910aadd912f72da10369ad44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.font-styling",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-styling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font styling: the 'font-style' property.",
+      "locator": {
+        "section_id": "font-styling",
+        "text_sha256": "6e1fb02276d2f7ed5ac3a74f7649396eb5a04b77559e72943e4bb684bdb886c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-fonts.font-styling-clause-48665f42189a",
+        "css21-fonts.font-styling-clause-cca2516ebb1d",
+        "css21-fonts.font-styling-clause-4ac0b893253c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.font-styling-clause-48665f42189a",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-styling"
+      ],
+      "behaviour": "Font styling: the 'font-style' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-styling",
+        "clause_index": 2,
+        "clause_sha256": "48665f42189ac1c33c5ac922196270c2f244dd933e18c61d3ff39e10c11df95e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-styling-clause-cca2516ebb1d",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-styling"
+      ],
+      "behaviour": "Font styling: the 'font-style' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-styling",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-styling-clause-4ac0b893253c",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-styling"
+      ],
+      "behaviour": "Font styling: the 'font-style' property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-styling",
+        "clause_index": 21,
+        "clause_sha256": "4ac0b893253c3afa5c0100d35ecb442cf121e19c3869500683646a18564517cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.small-caps",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "small-caps"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Small-caps: the 'font-variant' property.",
+      "locator": {
+        "section_id": "small-caps",
+        "text_sha256": "87f191d137fc0ba1888a72a5312cbbad41016f5aaceac21bf8b04143faca0109"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-fonts.small-caps-clause-a99fdaa19358",
+        "css21-fonts.small-caps-clause-cca2516ebb1d",
+        "css21-fonts.small-caps-clause-41f091fb0cc8",
+        "css21-fonts.small-caps-clause-73982308c9fe",
+        "css21-fonts.small-caps-clause-efd261a733fd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.small-caps-clause-a99fdaa19358",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "small-caps"
+      ],
+      "behaviour": "Small-caps: the 'font-variant' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "small-caps",
+        "clause_index": 2,
+        "clause_sha256": "a99fdaa19358aa263b1bc672e401fb350c378ab04c6c3b18d2b9bdfe812a9df8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.small-caps-clause-cca2516ebb1d",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "small-caps"
+      ],
+      "behaviour": "Small-caps: the 'font-variant' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "small-caps",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.small-caps-clause-41f091fb0cc8",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "small-caps"
+      ],
+      "behaviour": "Small-caps: the 'font-variant' property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "small-caps",
+        "clause_index": 15,
+        "clause_sha256": "41f091fb0cc86d22731463362c8bd9f9a0d5b3bb1425d987275a4168d6640629"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.small-caps-clause-73982308c9fe",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "small-caps"
+      ],
+      "behaviour": "Small-caps: the 'font-variant' property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "small-caps",
+        "clause_index": 20,
+        "clause_sha256": "73982308c9fec1529dde2c1088205a0aa3a4efed108872474477dab0106acf07"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.small-caps-clause-efd261a733fd",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "small-caps"
+      ],
+      "behaviour": "Small-caps: the 'font-variant' property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "small-caps",
+        "clause_index": 21,
+        "clause_sha256": "efd261a733fd1799cac60f9ca06a3af442f7c327096c1516d4ab9c8f1d21b7b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-boldness",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-boldness"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font boldness: the 'font-weight' property.",
+      "locator": {
+        "section_id": "font-boldness",
+        "text_sha256": "6429dec0614998b2f8951a5d4f45ddedf30ec1d50d40053ea7e3dcb86b1ccf73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-fonts.font-boldness-clause-ea17e4d37ba2",
+        "css21-fonts.font-boldness-clause-cca2516ebb1d",
+        "css21-fonts.font-boldness-clause-2dd14dc5af6e",
+        "css21-fonts.font-boldness-clause-72756627b1e3",
+        "css21-fonts.font-boldness-clause-ea713e1a3e8c",
+        "css21-fonts.font-boldness-clause-381f3ead84ec",
+        "css21-fonts.font-boldness-clause-327f4cabe3b5",
+        "css21-fonts.font-boldness-clause-a9abb51e4906"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.font-boldness-clause-ea17e4d37ba2",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-boldness"
+      ],
+      "behaviour": "Font boldness: the 'font-weight' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-boldness",
+        "clause_index": 2,
+        "clause_sha256": "ea17e4d37ba29601301ba08f7e5a942aabac61842c64b9fac2146b5e4523f154"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-boldness-clause-cca2516ebb1d",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-boldness"
+      ],
+      "behaviour": "Font boldness: the 'font-weight' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-boldness",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-boldness-clause-2dd14dc5af6e",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-boldness"
+      ],
+      "behaviour": "Font boldness: the 'font-weight' property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-boldness",
+        "clause_index": 20,
+        "clause_sha256": "2dd14dc5af6ea5c04527d571ef8e0648b421019920f0eb70ff72bf8da48d6901"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-boldness-clause-72756627b1e3",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-boldness"
+      ],
+      "behaviour": "Font boldness: the 'font-weight' property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-boldness",
+        "clause_index": 30,
+        "clause_sha256": "72756627b1e3ed76ea3b571f0db2cef71312057cf343616fca7fef417fa03426"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-boldness-clause-ea713e1a3e8c",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-boldness"
+      ],
+      "behaviour": "Font boldness: the 'font-weight' property — normative clause 64, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-boldness",
+        "clause_index": 63,
+        "clause_sha256": "ea713e1a3e8caa94b86c33a8d041743d0a26de223c9f2fabd597ae7808fa6871"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-boldness-clause-381f3ead84ec",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-boldness"
+      ],
+      "behaviour": "Font boldness: the 'font-weight' property — normative clause 94, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-boldness",
+        "clause_index": 93,
+        "clause_sha256": "381f3ead84ec764f20b0debab41768084829ec46997ef669310e2dd1f9ab91cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-boldness-clause-327f4cabe3b5",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-boldness"
+      ],
+      "behaviour": "Font boldness: the 'font-weight' property — normative clause 96, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-boldness",
+        "clause_index": 95,
+        "clause_sha256": "327f4cabe3b5757f9145ea90e21edff03861635d1b7ce2499e30b1ee9501e93c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-boldness-clause-a9abb51e4906",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-boldness"
+      ],
+      "behaviour": "Font boldness: the 'font-weight' property — normative clause 97, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-boldness",
+        "clause_index": 96,
+        "clause_sha256": "a9abb51e4906e51d092c62687d6af0552b67d658a2f8355363127b3f1a685bc7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-size-props",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-size-props"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font size: the 'font-size' property.",
+      "locator": {
+        "section_id": "font-size-props",
+        "text_sha256": "593e71924be4f6488518788ae735d9f5cef62e47080babd8510829c2764d45ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-fonts.font-size-props-clause-ec1b8be619bb",
+        "css21-fonts.font-size-props-clause-cca2516ebb1d",
+        "css21-fonts.font-size-props-clause-c0cf3b44bc7b",
+        "css21-fonts.font-size-props-clause-86cfb8f5c870",
+        "css21-fonts.font-size-props-clause-c18a0569e8a5",
+        "css21-fonts.font-size-props-clause-dcee13fb0dc1",
+        "css21-fonts.font-size-props-clause-c9a5ba74ac98",
+        "css21-fonts.font-size-props-clause-e4458c27907e",
+        "css21-fonts.font-size-props-clause-488cc72ccc98",
+        "css21-fonts.font-size-props-clause-d54ef4af105c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.font-size-props-clause-ec1b8be619bb",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-size-props"
+      ],
+      "behaviour": "Font size: the 'font-size' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-props",
+        "clause_index": 2,
+        "clause_sha256": "ec1b8be619bb3b9786404743bf33a0789952176eb31f4c8a1cbcf75ef970c755"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-size-props-clause-cca2516ebb1d",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-size-props"
+      ],
+      "behaviour": "Font size: the 'font-size' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-props",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-size-props-clause-c0cf3b44bc7b",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-size-props"
+      ],
+      "behaviour": "Font size: the 'font-size' property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-props",
+        "clause_index": 15,
+        "clause_sha256": "c0cf3b44bc7b48f8a441de469f60045c6d9d6ba8695721d78e110ee7e9e5fcc9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-size-props-clause-86cfb8f5c870",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-size-props"
+      ],
+      "behaviour": "Font size: the 'font-size' property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-props",
+        "clause_index": 19,
+        "clause_sha256": "86cfb8f5c870932870c165320a352272681e2ab77b2d4377ac021a4725e9c4c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-size-props-clause-c18a0569e8a5",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-size-props"
+      ],
+      "behaviour": "Font size: the 'font-size' property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-props",
+        "clause_index": 36,
+        "clause_sha256": "c18a0569e8a56ab9f67bd0bd67f26c3884f0a972ceb21eac045a0dae5b6e6901"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-size-props-clause-dcee13fb0dc1",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-size-props"
+      ],
+      "behaviour": "Font size: the 'font-size' property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-props",
+        "clause_index": 37,
+        "clause_sha256": "dcee13fb0dc1e5f81cf9b639d559409b09117b1c00328da3c5c8aa46ecd46b48"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-size-props-clause-c9a5ba74ac98",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-size-props"
+      ],
+      "behaviour": "Font size: the 'font-size' property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-props",
+        "clause_index": 38,
+        "clause_sha256": "c9a5ba74ac98f48838e4d855f475c915ff1de586ab11695d3897ac7875475b62"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-size-props-clause-e4458c27907e",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-size-props"
+      ],
+      "behaviour": "Font size: the 'font-size' property — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-props",
+        "clause_index": 40,
+        "clause_sha256": "e4458c27907e0c692714d4b6fcc7d9b803bc7c4dd31218014429ff95a15931fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-size-props-clause-488cc72ccc98",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-size-props"
+      ],
+      "behaviour": "Font size: the 'font-size' property — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-props",
+        "clause_index": 43,
+        "clause_sha256": "488cc72ccc98bc97aec746ac17559ab485361eade53a8043ae1dc5e076aa948a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-size-props-clause-d54ef4af105c",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-size-props"
+      ],
+      "behaviour": "Font size: the 'font-size' property — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-size-props",
+        "clause_index": 45,
+        "clause_sha256": "d54ef4af105cf41fa8fdd55c71d1f95d7da401f63f333c511c32dcd05a6dbf98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-shorthand",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-shorthand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shorthand font property: the 'font' property.",
+      "locator": {
+        "section_id": "font-shorthand",
+        "text_sha256": "c58262c3da0ef8662ebbe6dded6d37a5aac843a7a073c53f33f32e446fe5be0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-fonts.font-shorthand-clause-19bb1547ae10",
+        "css21-fonts.font-shorthand-clause-cca2516ebb1d",
+        "css21-fonts.font-shorthand-clause-26e7e86079ad",
+        "css21-fonts.font-shorthand-clause-8efc88dcac0a",
+        "css21-fonts.font-shorthand-clause-720238d5d0fe",
+        "css21-fonts.font-shorthand-clause-916e473d38e8",
+        "css21-fonts.font-shorthand-clause-9a02415226ed"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-fonts.font-shorthand-clause-19bb1547ae10",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-shorthand"
+      ],
+      "behaviour": "Shorthand font property: the 'font' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-shorthand",
+        "clause_index": 2,
+        "clause_sha256": "19bb1547ae1052fed89a1d19faedcbc2492b943498f39d1f8d933b92a0dda816"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-shorthand-clause-cca2516ebb1d",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-shorthand"
+      ],
+      "behaviour": "Shorthand font property: the 'font' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-shorthand",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-shorthand-clause-26e7e86079ad",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-shorthand"
+      ],
+      "behaviour": "Shorthand font property: the 'font' property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-shorthand",
+        "clause_index": 18,
+        "clause_sha256": "26e7e86079ad2773c6d000715d6e1e7027af75421c44f1a21cee5bb92bb45430"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-shorthand-clause-8efc88dcac0a",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-shorthand"
+      ],
+      "behaviour": "Shorthand font property: the 'font' property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-shorthand",
+        "clause_index": 21,
+        "clause_sha256": "8efc88dcac0ade9d94c7c119de857c047004311b206b4eed3cb57db667183632"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-shorthand-clause-720238d5d0fe",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-shorthand"
+      ],
+      "behaviour": "Shorthand font property: the 'font' property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-shorthand",
+        "clause_index": 34,
+        "clause_sha256": "720238d5d0fe8172a718a864a0317ded0abd50171758a0555e72851c54ea1bc5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-shorthand-clause-916e473d38e8",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-shorthand"
+      ],
+      "behaviour": "Shorthand font property: the 'font' property — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-shorthand",
+        "clause_index": 40,
+        "clause_sha256": "916e473d38e8446e0a7f21a568b6c34ef9091f2485f3fb25068bd2c51cfaf362"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-fonts.font-shorthand-clause-9a02415226ed",
+      "family": "css21-fonts",
+      "source_id": "css21-fonts",
+      "sections": [
+        "font-shorthand"
+      ],
+      "behaviour": "Shorthand font property: the 'font' property — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "font-shorthand",
+        "clause_index": 43,
+        "clause_sha256": "9a02415226edbe050546e39ba532834a715815ef469d67ae4da7526ffc1ed197"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    }
+  ]
+}

@@ -1,0 +1,616 @@
+{
+  "schema_version": 1,
+  "source_id": "css-logical-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Logical Properties and Values Module Level 1",
+      "level": 1,
+      "text_sha256": "0d22bdaf31a6fe22509f29c0fff86684c7484a213ba431edaa894d762e4912bd",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "2e21035419d5b2c7261adc3af6120af1eb1ad9b4229abbc1fa5b2ada8a379b80",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "1938bbaaa5877db0d6ca4af974b2a9dc833112736517d0650efcbb7d4a7e6311",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "26082e21eff07731bd30c57af18feeebfc11bbeb7c834e3aef47dfaa3c93255a",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "54303aaadca80c6483358a8c302fe974df85d5c1220bd439a46eee019ce5db92",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.intro",
+          "css-logical-1.intro-clause-0ce9b70be61b",
+          "css-logical-1.intro-clause-1c386091ae67",
+          "css-logical-1.intro-clause-234235471620",
+          "css-logical-1.intro-clause-10929a98d772"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.values"
+        ]
+      }
+    },
+    {
+      "id": "directional-keywords",
+      "title": "2. Flow-Relative Values: block-start, block-end, inline-start, inline-end",
+      "level": 2,
+      "text_sha256": "9a1a9c36d15ddd460e83625431195793206778d506a60dbdc8f5d42b84f2c85c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.directional-keywords",
+          "css-logical-1.directional-keywords-clause-e6c03908d775"
+        ]
+      }
+    },
+    {
+      "id": "caption-side",
+      "title": "2.1. Logical Values for the caption-side Property",
+      "level": 3,
+      "text_sha256": "00e40e3b55a258de0a1298d9d828f1a7b7b41463bd8cbf66627b072a5ef88b04",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.caption-side",
+          "css-logical-1.caption-side-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "float-clear",
+      "title": "2.2. Flow-Relative Values for the float and clear Properties",
+      "level": 3,
+      "text_sha256": "df1c11efc993c1568a7800da46575c29d409da4424d6028d57a16762df07c11f",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.float-clear",
+          "css-logical-1.float-clear-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "text-align",
+      "title": "2.3. Flow-Relative Values for the text-align Property",
+      "level": 3,
+      "text_sha256": "8c62360360ada0fb2cc1705661aef7ed4bdedf6883eeaa54d7a52c1a2abd49cd",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.text-align",
+          "css-logical-1.text-align-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "page",
+      "title": "3. Flow-Relative Page Classifications",
+      "level": 2,
+      "text_sha256": "646c5353330672e95f41b2c66f6e3a76c400ab2e1a6d17c5a4ef0cc61dbbb0ca",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.page",
+          "css-logical-1.page-clause-2ee96a039f85",
+          "css-logical-1.page-clause-6121174e1dac"
+        ]
+      }
+    },
+    {
+      "id": "box",
+      "title": "4. Flow-Relative Box Model Properties",
+      "level": 2,
+      "text_sha256": "635a9dd4431e16dfbc346e99e37ffbd5785c50ef1e5a6a003ee50f38a6f884e8",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.box",
+          "css-logical-1.box-clause-8226ad509e96",
+          "css-logical-1.box-clause-18e8daffeb2e",
+          "css-logical-1.box-clause-132edf94c70a",
+          "css-logical-1.box-clause-80ec1a9f1f57",
+          "css-logical-1.box-clause-b85c7a445fe5",
+          "css-logical-1.box-clause-810213060ac5",
+          "css-logical-1.box-clause-ceef2027e172"
+        ]
+      }
+    },
+    {
+      "id": "dimension-properties",
+      "title": "4.1. Logical Height and Logical Width: the block-size/inline-size, min-block-size/min-inline-size, and max-block-size/max-inline-size properties",
+      "level": 3,
+      "text_sha256": "2d68bce746f4a22c24a3ef5c121186dcc66574e6e90447ab47457525ca6a6e27",
+      "clause_count": 87,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.dimension-properties",
+          "css-logical-1.dimension-properties-clause-cca2516ebb1d",
+          "css-logical-1.dimension-properties-clause-4b59fe755d34",
+          "css-logical-1.dimension-properties-clause-4a6a03acb7a6",
+          "css-logical-1.dimension-properties-clause-b768450679b1",
+          "css-logical-1.dimension-properties-clause-55628f5a6ca5",
+          "css-logical-1.dimension-properties-clause-7fc53e31c0d5",
+          "css-logical-1.dimension-properties-clause-697ac4c2695e",
+          "css-logical-1.dimension-properties-clause-1d678f5d2814",
+          "css-logical-1.dimension-properties-clause-8e5676e2f3be",
+          "css-logical-1.dimension-properties-clause-0417ce8b7398",
+          "css-logical-1.dimension-properties-clause-16c112f16221",
+          "css-logical-1.dimension-properties-clause-524677fbf470",
+          "css-logical-1.dimension-properties-clause-371bb42a09ad",
+          "css-logical-1.dimension-properties-clause-fc198eed86ae",
+          "css-logical-1.dimension-properties-clause-cb5cb530c7d4",
+          "css-logical-1.dimension-properties-clause-d6837aebb19f",
+          "css-logical-1.dimension-properties-clause-df0e507ad84f",
+          "css-logical-1.foundation-logical-sizing"
+        ]
+      }
+    },
+    {
+      "id": "margin-properties",
+      "title": "4.2. Flow-Relative Margins: the margin-block-start, margin-block-end, margin-inline-start, margin-inline-end properties and margin-block and margin-inline shorthands",
+      "level": 3,
+      "text_sha256": "64c85c1c270af1aedac4558b66023d681fc03f4b28707071fbb1110c8b1c4796",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.margin-properties",
+          "css-logical-1.margin-properties-clause-cca2516ebb1d",
+          "css-logical-1.margin-properties-clause-4b59fe755d34",
+          "css-logical-1.margin-properties-clause-95ddcc55fee3",
+          "css-logical-1.margin-properties-clause-21e72453b89f",
+          "css-logical-1.margin-properties-clause-0e6e3f71b635",
+          "css-logical-1.foundation-logical-sizing"
+        ]
+      }
+    },
+    {
+      "id": "position-properties",
+      "title": "4.3. Flow-Relative Offsets: the inset-block-start, inset-block-end, inset-inline-start, inset-inline-end properties and inset-block, inset-inline, and inset shorthands",
+      "level": 3,
+      "text_sha256": "6a260849535f5d241cfaae9ea917c392f68eb5386874fe189aa28178cc80fb6a",
+      "clause_count": 69,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.position-properties",
+          "css-logical-1.position-properties-clause-cca2516ebb1d",
+          "css-logical-1.position-properties-clause-4b59fe755d34",
+          "css-logical-1.position-properties-clause-87cd38dd2a18",
+          "css-logical-1.position-properties-clause-98ee530d408e",
+          "css-logical-1.position-properties-clause-f7101d78708e",
+          "css-logical-1.position-properties-clause-3056e08cd44e",
+          "css-logical-1.position-properties-clause-d2a6320ccdeb",
+          "css-logical-1.position-properties-clause-825663722ccc",
+          "css-logical-1.foundation-logical-sizing"
+        ]
+      }
+    },
+    {
+      "id": "padding-properties",
+      "title": "4.4. Flow-Relative Padding: the padding-block-start, padding-block-end, padding-inline-start, padding-inline-end properties and padding-block and padding-inline shorthands",
+      "level": 3,
+      "text_sha256": "6cfa6a0b412bf6e6a418437162da8c439be25d7121e0825056982caa3254b4fb",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.padding-properties",
+          "css-logical-1.padding-properties-clause-cca2516ebb1d",
+          "css-logical-1.padding-properties-clause-4b59fe755d34",
+          "css-logical-1.padding-properties-clause-727514e17f0b",
+          "css-logical-1.padding-properties-clause-5e5eb3b350e6",
+          "css-logical-1.padding-properties-clause-089b2c862e3e",
+          "css-logical-1.foundation-logical-sizing"
+        ]
+      }
+    },
+    {
+      "id": "border-properties",
+      "title": "4.5. Flow-Relative Borders",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.border-properties",
+          "css-logical-1.foundation-logical-sizing"
+        ]
+      }
+    },
+    {
+      "id": "border-width",
+      "title": "4.5.1. Flow-Relative Border Widths: the border-block-start-width, border-block-end-width, border-inline-start-width, border-inline-end-width properties and border-block-width and border-inline-width shorthands",
+      "level": 4,
+      "text_sha256": "b5601ac249593bbc5adb60872caa34d420d76758fa3a78a317f36f3ed9dcb8b1",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.border-width",
+          "css-logical-1.border-width-clause-cca2516ebb1d",
+          "css-logical-1.border-width-clause-4b59fe755d34",
+          "css-logical-1.border-width-clause-21a6390444b4",
+          "css-logical-1.border-width-clause-0f896f09b616",
+          "css-logical-1.border-width-clause-22569fc69ce1",
+          "css-logical-1.border-width-clause-742c62f3a816",
+          "css-logical-1.border-width-clause-a0508a381624"
+        ]
+      }
+    },
+    {
+      "id": "border-style",
+      "title": "4.5.2. Flow-Relative Border Styles: the border-block-start-style, border-block-end-style, border-inline-start-style, border-inline-end-style properties and border-block-style and border-inline-style shorthands",
+      "level": 4,
+      "text_sha256": "eabc957cd569ecb075b4388558df83e37c72c62350f40b614fa3054d30f2ed48",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.border-style",
+          "css-logical-1.border-style-clause-cca2516ebb1d",
+          "css-logical-1.border-style-clause-e2d4ed7488e9",
+          "css-logical-1.border-style-clause-210b6b3b96b1",
+          "css-logical-1.border-style-clause-f3ffda7c6446",
+          "css-logical-1.border-style-clause-15077bf70546",
+          "css-logical-1.border-style-clause-1aaf49e3d44f"
+        ]
+      }
+    },
+    {
+      "id": "border-color",
+      "title": "4.5.3. Flow-Relative Border Colors: the border-block-start-color, border-block-end-color, border-inline-start-color, border-inline-end-color properties and border-block-color and border-inline-color shorthands",
+      "level": 4,
+      "text_sha256": "fa010edf04c58fd4bde7ac0548715a93fbe297f878aef8b2cefad18afc6961a4",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.border-color",
+          "css-logical-1.border-color-clause-cca2516ebb1d",
+          "css-logical-1.border-color-clause-4b59fe755d34",
+          "css-logical-1.border-color-clause-79027eea1799",
+          "css-logical-1.border-color-clause-6284277aeec2",
+          "css-logical-1.border-color-clause-da5fea8f5408",
+          "css-logical-1.border-color-clause-b689bff0e827",
+          "css-logical-1.border-color-clause-7a9e3ec97553"
+        ]
+      }
+    },
+    {
+      "id": "border-shorthands",
+      "title": "4.5.4. Flow-Relative Border Shorthands: the border-block-start, border-block-end, border-inline-start, border-inline-end properties and border-block and border-inline shorthands",
+      "level": 4,
+      "text_sha256": "bf6673ab8ffffe18f4808a19db32adff015c930fb9dbc54ce02261ba6eb96f5f",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.border-shorthands",
+          "css-logical-1.border-shorthands-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "border-radius-properties",
+      "title": "4.6. Flow-Relative Corner Rounding: the border-start-start-radius, border-start-end-radius, border-end-start-radius, border-end-end-radius properties",
+      "level": 3,
+      "text_sha256": "79748d659f0d3958d3166d71e59d11cd647d0f4472cf91e21ad6175886a402a7",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.border-radius-properties",
+          "css-logical-1.border-radius-properties-clause-cca2516ebb1d",
+          "css-logical-1.border-radius-properties-clause-4b59fe755d34"
+        ]
+      }
+    },
+    {
+      "id": "logical-shorthand-keyword",
+      "title": "4.7. Four-Directional Shorthand Properties: the margin, padding, border-width, border-style, and border-color shorthands",
+      "level": 3,
+      "text_sha256": "2274ed5a1ddda8597ca83df164c2d0b6a706f793ded41b83a53ee1614b2b43dd",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.logical-shorthand-keyword",
+          "css-logical-1.logical-shorthand-keyword-clause-b4b33055da70"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "5. Acknowledgements",
+      "level": 2,
+      "text_sha256": "91061ac4fd621661de4e7b849412d5258c69f10a00ff7ae74c3bf3967539c15c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "6. Changes",
+      "level": 2,
+      "text_sha256": "26c203d4352cb409a6ec34540a98947d77228b816b23fd92a897b2e29796969f",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "85ef902ab88d989d0bf73b2dd3023e69e8fde6a5a9c638e13caaa33a72f095e7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.security"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.w3c-conventions",
+          "css-logical-1.w3c-conventions-clause-5c98c879f070",
+          "css-logical-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.w3c-conformance-classes",
+          "css-logical-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-logical-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.w3c-partial",
+          "css-logical-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.w3c-testing",
+          "css-logical-1.w3c-testing-clause-1e0fff369221",
+          "css-logical-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "4bdf8f2b302e380b31b62e779d82112ab7911f538d4c1e70f4dede96833fa12a",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "00b245686f6278589f062236a0022f9cfda0afb691c225f20d5ec13d13d11f9c",
+      "clause_count": 103,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "1bc5239d363479745c8bb33baf057fd09c306924bb6f9e913a7d055b5858e560",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "26d5116f12900466ed33288553e890fd2e226738364a17f6fdc95e6ad1e156c4",
+      "clause_count": 521,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.property-index",
+          "css-logical-1.property-index-clause-4b59fe755d34"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "55545ae832d2952643f3802e2f88bd662ec6b44efd42f09d87ea897fc666d62e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-logical-1.issues-index",
+          "css-logical-1.issues-index-clause-10929a98d772"
+        ]
+      }
+    }
+  ]
+}

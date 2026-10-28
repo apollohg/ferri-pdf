@@ -1,0 +1,635 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-fvar.fvar-font-variations-table",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "fvar--font-variations-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in fvar — Font Variations Table.",
+      "locator": {
+        "section_id": "fvar--font-variations-table",
+        "text_sha256": "401ad3d13a7b8844f06dd59f58e5b56c0543f96d02c2ed18cbf4efa3bdf97510"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-fvar.table-formats",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "table-formats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Table Formats.",
+      "locator": {
+        "section_id": "table-formats",
+        "text_sha256": "a34ed03e78cfbfd7b51bcceb6e2b11d6c53c41dbd66531c78e2480bf3444c03e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-fvar.fvar-header",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "fvar-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'fvar' Header.",
+      "locator": {
+        "section_id": "fvar-header",
+        "text_sha256": "7f568841e4c0e5a86ec4f1d6b06882af0c03cc65724551d3fd97d2cf8a6feff8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-fvar.fvar-header-clause-862ffad95213",
+        "opentype-fvar.fvar-header-clause-d37bd6e03bb2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-fvar.fvar-header-clause-862ffad95213",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "fvar-header"
+      ],
+      "behaviour": "'fvar' Header — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "fvar-header",
+        "clause_index": 39,
+        "clause_sha256": "862ffad95213b5661bc2ae2bf36dc1241ced9e913620bc2d2da14dd463d0939c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.fvar-header-clause-d37bd6e03bb2",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "fvar-header"
+      ],
+      "behaviour": "'fvar' Header — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "fvar-header",
+        "clause_index": 40,
+        "clause_sha256": "d37bd6e03bb2ceb37dfb4ccd587a787576182babebda76276135730ec11d6ab8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.variationaxisrecord",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "variationaxisrecord"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in VariationAxisRecord.",
+      "locator": {
+        "section_id": "variationaxisrecord",
+        "text_sha256": "67591ea919b3b605f9f0dbe35b86a328e0bc8692860be972dbfe407bd5bccb1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-fvar.variationaxisrecord-clause-78915ca626ca",
+        "opentype-fvar.variationaxisrecord-clause-61c8b4209855",
+        "opentype-fvar.variationaxisrecord-clause-f233970b61e2",
+        "opentype-fvar.variationaxisrecord-clause-805a4a771179"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-fvar.variationaxisrecord-clause-78915ca626ca",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "variationaxisrecord"
+      ],
+      "behaviour": "VariationAxisRecord — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "variationaxisrecord",
+        "clause_index": 25,
+        "clause_sha256": "78915ca626ca8ec05cd07ac28aa68c103c68815271e9dda864e601e8bb2c7339"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.variationaxisrecord-clause-61c8b4209855",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "variationaxisrecord"
+      ],
+      "behaviour": "VariationAxisRecord — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "variationaxisrecord",
+        "clause_index": 34,
+        "clause_sha256": "61c8b420985514a69170a21d8e96c7bc1b7f83c8570a31f00cc8f4a3ff7167bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.variationaxisrecord-clause-f233970b61e2",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "variationaxisrecord"
+      ],
+      "behaviour": "VariationAxisRecord — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "variationaxisrecord",
+        "clause_index": 38,
+        "clause_sha256": "f233970b61e28943eb830cc21ced868697a53defdeaddece4f7ff83f1c176d15"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.variationaxisrecord-clause-805a4a771179",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "variationaxisrecord"
+      ],
+      "behaviour": "VariationAxisRecord — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "variationaxisrecord",
+        "clause_index": 39,
+        "clause_sha256": "805a4a771179f9fa10d17fe963cab6eed7d6401c017bb7345e34f8a7511d80f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.instancerecord",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "instancerecord"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in InstanceRecord.",
+      "locator": {
+        "section_id": "instancerecord",
+        "text_sha256": "311601d5cc6de012d6ad1b3207939eecf8129a8cbe32de34ae13c55c52653a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-fvar.instancerecord-clause-1e2dabb870b4",
+        "opentype-fvar.instancerecord-clause-283c90c13be1",
+        "opentype-fvar.instancerecord-clause-b5dbc223aeb3",
+        "opentype-fvar.instancerecord-clause-4a910e7e0ba5",
+        "opentype-fvar.instancerecord-clause-ef28ec583ba1",
+        "opentype-fvar.instancerecord-clause-1fbaed505aec"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-fvar.instancerecord-clause-1e2dabb870b4",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "instancerecord"
+      ],
+      "behaviour": "InstanceRecord — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "instancerecord",
+        "clause_index": 26,
+        "clause_sha256": "1e2dabb870b4813c189070e0ee97e161d795a71d5d43bea184815c2e3e07ac21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.instancerecord-clause-283c90c13be1",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "instancerecord"
+      ],
+      "behaviour": "InstanceRecord — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "instancerecord",
+        "clause_index": 27,
+        "clause_sha256": "283c90c13be107608f9486158eff0965ce5a05bb6963f7b0fa769c4a032510b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.instancerecord-clause-b5dbc223aeb3",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "instancerecord"
+      ],
+      "behaviour": "InstanceRecord — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "instancerecord",
+        "clause_index": 28,
+        "clause_sha256": "b5dbc223aeb34a8273cf50538f950aa85655bfc30a5bc913aa70b8f49b1739a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.instancerecord-clause-4a910e7e0ba5",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "instancerecord"
+      ],
+      "behaviour": "InstanceRecord — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "instancerecord",
+        "clause_index": 29,
+        "clause_sha256": "4a910e7e0ba52552b8b12289ee044d6f0a8b3d76897913a2859e880b85e7f217"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.instancerecord-clause-ef28ec583ba1",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "instancerecord"
+      ],
+      "behaviour": "InstanceRecord — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "instancerecord",
+        "clause_index": 30,
+        "clause_sha256": "ef28ec583ba1349b4dae337508104722b556ca9dd685fd9242f9104604fddbc3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.instancerecord-clause-1fbaed505aec",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "instancerecord"
+      ],
+      "behaviour": "InstanceRecord — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "instancerecord",
+        "clause_index": 31,
+        "clause_sha256": "1fbaed505aecae9001b6b825313ebad8cf568e798449f14e4b8ff2d9ae0543dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.variation-instance-selection",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "variation-instance-selection"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Variation Instance Selection.",
+      "locator": {
+        "section_id": "variation-instance-selection",
+        "text_sha256": "05c0c78e9ca0cc21f1e22fa0598fbfa9eb843f759a6620a603f602e96b7805d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-fvar.variation-instance-selection-clause-05c0c78e9ca0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-fvar.variation-instance-selection-clause-05c0c78e9ca0",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "variation-instance-selection"
+      ],
+      "behaviour": "Variation Instance Selection — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-instance-selection",
+        "clause_index": 0,
+        "clause_sha256": "05c0c78e9ca0cc21f1e22fa0598fbfa9eb843f759a6620a603f602e96b7805d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-fvar.example",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "example"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example.",
+      "locator": {
+        "section_id": "example",
+        "text_sha256": "346d491e52e9d4cb1fa3ff1823760df9bb2a6726a40491c9db1a15d412f0a17a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-fvar.ms-in-this-article",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-fvar.ms-feedback",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-fvar.ms-additional-resources-mobile-heading",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "84167a840b90e15e3de80327a1a3e1a51190ad4213600c4af138fb5c57bdfe95"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-fvar.side-doc-outline",
+      "family": "opentype-fvar",
+      "source_id": "opentype-fvar",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

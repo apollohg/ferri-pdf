@@ -1,0 +1,345 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-selector",
+  "sections": [
+    {
+      "id": "q5.0",
+      "title": "5 Selectors",
+      "level": 1,
+      "text_sha256": "978bfcac613271a6304026cc40eb8baf6ecc5f28c0ecc08e9016fadc6634b019",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.q5-0"
+        ]
+      }
+    },
+    {
+      "id": "pattern-matching",
+      "title": "5.1 Pattern matching",
+      "level": 2,
+      "text_sha256": "f2d23a1c9d5a2fd3eb6e9a3a89b0e20ca238c178936d59a5d5a87d425c6105da",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.pattern-matching"
+        ]
+      }
+    },
+    {
+      "id": "selector-syntax",
+      "title": "5.2 Selector syntax",
+      "level": 2,
+      "text_sha256": "7e9db92c78ce588c1d83a7a59d0d4b47bc94db73843a72527f91e753765028f2",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.selector-syntax"
+        ]
+      }
+    },
+    {
+      "id": "grouping",
+      "title": "5.2.1 Grouping",
+      "level": 3,
+      "text_sha256": "f3aab0705783e25c987b01bd828b1a844a5fdef84323783288e6e15adced767c",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.grouping"
+        ]
+      }
+    },
+    {
+      "id": "universal-selector",
+      "title": "5.3 Universal selector",
+      "level": 2,
+      "text_sha256": "e088e0845665914bfb1d6360a649e93c4506a929d367c2401ebd79745aad8e86",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.universal-selector"
+        ]
+      }
+    },
+    {
+      "id": "type-selectors",
+      "title": "5.4 Type selectors",
+      "level": 2,
+      "text_sha256": "681711d8813f693cc96039f9bf038d711f835db3f7e10131c1bda51cef508aa6",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.type-selectors"
+        ]
+      }
+    },
+    {
+      "id": "descendant-selectors",
+      "title": "5.5 Descendant selectors",
+      "level": 2,
+      "text_sha256": "0279d8b3c238c2ea163050705da6fef22ddeacbe3804b9285d6f2515fa7bff97",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.descendant-selectors",
+          "css21-selector.descendant-selectors-clause-848fcf3e38cc"
+        ]
+      }
+    },
+    {
+      "id": "child-selectors",
+      "title": "5.6 Child selectors",
+      "level": 2,
+      "text_sha256": "aca3e05945aa546539bb1df8ee7d7ecb739736bd9a8acdd542c23f36dc264b64",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.child-selectors",
+          "css21-selector.child-selectors-clause-2e93f4ef527a"
+        ]
+      }
+    },
+    {
+      "id": "adjacent-selectors",
+      "title": "5.7 Adjacent sibling selectors",
+      "level": 2,
+      "text_sha256": "34cc119b4e7a893088c0dc09763343389009cec3e5eaf2e1d88d8529e3bcae29",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.adjacent-selectors",
+          "css21-selector.adjacent-selectors-clause-518339952fa8"
+        ]
+      }
+    },
+    {
+      "id": "attribute-selectors",
+      "title": "5.8 Attribute selectors",
+      "level": 2,
+      "text_sha256": "ad04995e3eec8cd6f4a6cf476502bb695fd982a0633ca9c8b7ec508e049ee3de",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.attribute-selectors"
+        ]
+      }
+    },
+    {
+      "id": "matching-attrs",
+      "title": "5.8.1 Matching attributes and attribute values",
+      "level": 3,
+      "text_sha256": "6ebb13194da0533ff20261151498c26205e2220eb055d2cc68e3d7604b8ac9df",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.matching-attrs",
+          "css21-selector.matching-attrs-clause-0d36c82e0022",
+          "css21-selector.matching-attrs-clause-ec8184ce7cf3"
+        ]
+      }
+    },
+    {
+      "id": "default-attrs",
+      "title": "5.8.2 Default attribute values in DTDs",
+      "level": 3,
+      "text_sha256": "e9989794d018b3437a4d60013f203aec2f94dc7f0a06255d3a27635d0d5105a6",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.default-attrs",
+          "css21-selector.default-attrs-clause-7bcbc1f03fb7",
+          "css21-selector.default-attrs-clause-33ab6d15f77a",
+          "css21-selector.default-attrs-clause-c5b2fe4ca57e",
+          "css21-selector.default-attrs-clause-6b98688c3b4b"
+        ]
+      }
+    },
+    {
+      "id": "class-html",
+      "title": "5.8.3 Class selectors",
+      "level": 3,
+      "text_sha256": "b57e1466874d5cc44ae1372e5dbb70c08911059185312b0d1f60bf3055ba6df4",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.class-html",
+          "css21-selector.class-html-clause-725c3dca4ee0",
+          "css21-selector.class-html-clause-126715da67ef",
+          "css21-selector.class-html-clause-a1d6344c08b6",
+          "css21-selector.class-html-clause-6ae4b06586cc"
+        ]
+      }
+    },
+    {
+      "id": "id-selectors",
+      "title": "5.9 ID selectors",
+      "level": 2,
+      "text_sha256": "43e741cff56e4c9ab5ccb2c19be7f11284397747c70326e3966f2febbb07c328",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.id-selectors",
+          "css21-selector.id-selectors-clause-f9ca00e2588b",
+          "css21-selector.id-selectors-clause-d3034bf69d72",
+          "css21-selector.id-selectors-clause-0bde02170d4b"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-classes",
+      "title": "5.10 Pseudo-elements and pseudo-classes",
+      "level": 2,
+      "text_sha256": "fe7c736781a783569a2b36050954acfe0d64450e22e00c0a9305627cbc5fe7e4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.pseudo-classes"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-class-selectors",
+      "title": "5.11 Pseudo-classes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.pseudo-class-selectors"
+        ]
+      }
+    },
+    {
+      "id": "first-child",
+      "title": "5.11.1 :first-child pseudo-class",
+      "level": 3,
+      "text_sha256": "238bc5e99f246627b496ecf3e2acaea780a67ad72608f094dad479116332bf10",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.first-child"
+        ]
+      }
+    },
+    {
+      "id": "x29",
+      "title": "5.11.2 The link pseudo-classes: :link and :visited",
+      "level": 3,
+      "text_sha256": "802b0454c7b4191a2bff05cfabe04849aa3968a1637e6629e25acbdde8734e71",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.x29"
+        ]
+      }
+    },
+    {
+      "id": "x38",
+      "title": "5.11.3 The dynamic pseudo-classes: :hover, :active, and :focus",
+      "level": 3,
+      "text_sha256": "c1c7abfde78aa11da0324cce0e02f7b89543ac3abc89789b54c7780ecc6b99cb",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.x38",
+          "css21-selector.x38-clause-928d4686a2f5",
+          "css21-selector.x38-clause-655362df0d75"
+        ]
+      }
+    },
+    {
+      "id": "x41",
+      "title": "5.11.4 The language pseudo-class: :lang",
+      "level": 3,
+      "text_sha256": "fcb0b620218fe7347777b47c29a7c1c0d3f84f61121933da00ac7b93d39d1bbb",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.x41",
+          "css21-selector.x41-clause-d5d4bfeec145"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-element-selectors",
+      "title": "5.12 Pseudo-elements",
+      "level": 2,
+      "text_sha256": "664fac7171e8b1bafe7a1205fc2562915fe5f00b1484e5c3c87fc2919d39f9bf",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.pseudo-element-selectors"
+        ]
+      }
+    },
+    {
+      "id": "first-line-pseudo",
+      "title": "5.12.1 The :first-line pseudo-element",
+      "level": 3,
+      "text_sha256": "4ac6efc3bc67e996d9e24a94c6a1f221b11fe24c9046c2cbf388adef25964868",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.first-line-pseudo",
+          "css21-selector.first-line-pseudo-clause-033785cf8cdc"
+        ]
+      }
+    },
+    {
+      "id": "x50",
+      "title": "5.12.2 The :first-letter pseudo-element",
+      "level": 3,
+      "text_sha256": "d5dad3b8d76f4db34db2d4ce76bcdfdef9ad19182dd22061865e3e23cd0c9af9",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.x50",
+          "css21-selector.x50-clause-2352550e3c00",
+          "css21-selector.x50-clause-3b342870de63",
+          "css21-selector.x50-clause-89c9cdb6f05c",
+          "css21-selector.x50-clause-5c04a0de00af",
+          "css21-selector.x50-clause-2ac572429d25",
+          "css21-selector.x50-clause-0ff546506f1b",
+          "css21-selector.x50-clause-bdd96ec0d016"
+        ]
+      }
+    },
+    {
+      "id": "x59",
+      "title": "5.12.3 The :before and :after pseudo-elements",
+      "level": 3,
+      "text_sha256": "cd57651a34dd25efc78ffb39899a31564cd8a349df3e3139551f299b20b07eb3",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-selector.x59"
+        ]
+      }
+    }
+  ]
+}

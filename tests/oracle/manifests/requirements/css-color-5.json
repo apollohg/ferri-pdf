@@ -1,0 +1,4871 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-color-5.color-syntax",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The <color> syntax.",
+      "locator": {
+        "section_id": "color-syntax",
+        "text_sha256": "366c71b4643ebc6076603bcebc8df2089f5ae5ee9d165d66c57c036b7a7d5af8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.color-syntax-clause-2b39d597620b",
+        "css-color-5.color-syntax-clause-16b42461cbb2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.color-syntax-clause-2b39d597620b",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-syntax"
+      ],
+      "behaviour": "The <color> syntax — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-syntax",
+        "clause_index": 2,
+        "clause_sha256": "2b39d597620bb50a3ec16fd035b57107f2ea240af60e632932c3a8342ed7216b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-syntax-clause-16b42461cbb2",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-syntax"
+      ],
+      "behaviour": "The <color> syntax — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-syntax",
+        "clause_index": 14,
+        "clause_sha256": "16b42461cbb220e6252334829438294590517d07e695968f276a5a884bc4fbfa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-mix",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mixing Colors: the color-mix() Function.",
+      "locator": {
+        "section_id": "color-mix",
+        "text_sha256": "0fce38297517849243131d31fc76e2f6a81629ef4e8818bc8cc91324a7c2b700"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.color-mix-clause-a61169af2e83"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.color-mix-clause-a61169af2e83",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix"
+      ],
+      "behaviour": "Mixing Colors: the color-mix() Function — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-mix",
+        "clause_index": 4,
+        "clause_sha256": "a61169af2e8359748bbbcb96c743a6b56c43feb9f859a7e663922ccf96c5104d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-mix-space",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-space"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Colorspace for mixing.",
+      "locator": {
+        "section_id": "color-mix-space",
+        "text_sha256": "ad974b152efb9703c23ff51f3207a3177a7aa608ffda86cb188c4ac580b7ffce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.color-mix-percent-norm",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-percent-norm"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Percentage Normalization.",
+      "locator": {
+        "section_id": "color-mix-percent-norm",
+        "text_sha256": "1d2fcaff2208c45face7937530e7905979a3acfb9c83cbaaee0d078024e3d24d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.color-mix-percent-norm-clause-43f08aed7c91"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.color-mix-percent-norm-clause-43f08aed7c91",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-percent-norm"
+      ],
+      "behaviour": "Percentage Normalization — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-mix-percent-norm",
+        "clause_index": 0,
+        "clause_sha256": "43f08aed7c91245b6e64c5bc89f6f2ffea796612033d666740c2b45ff8224441"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-mix-result",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-result"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Calculating the Result of color-mix.",
+      "locator": {
+        "section_id": "color-mix-result",
+        "text_sha256": "3db46875f00c5b52a4f005e5c6fdfc0d1795aeff54b92e6ad3681aa34cd54154"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.color-mix-result-clause-c454558ccb65",
+        "css-color-5.color-mix-result-clause-a61169af2e83",
+        "css-color-5.color-mix-result-clause-46724065ee11"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.color-mix-result-clause-c454558ccb65",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-result"
+      ],
+      "behaviour": "Calculating the Result of color-mix — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-mix-result",
+        "clause_index": 23,
+        "clause_sha256": "c454558ccb658ebd9e11b95d8aa8feefc1dbcae66e08974a62959a2b3c5b4682"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-mix-result-clause-a61169af2e83",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-result"
+      ],
+      "behaviour": "Calculating the Result of color-mix — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-mix-result",
+        "clause_index": 27,
+        "clause_sha256": "a61169af2e8359748bbbcb96c743a6b56c43feb9f859a7e663922ccf96c5104d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-mix-result-clause-46724065ee11",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-result"
+      ],
+      "behaviour": "Calculating the Result of color-mix — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-mix-result",
+        "clause_index": 28,
+        "clause_sha256": "46724065ee119b68595598668deac2544853dc362c823c77c3b954622c52bef6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-mix-color-space-effect",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-color-space-effect"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Effect of Mixing Color Space on color-mix.",
+      "locator": {
+        "section_id": "color-mix-color-space-effect",
+        "text_sha256": "cf55872d1be9a8dd142deda874f9ffccc82bce3a442e26ce06dedc6227939ce9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.color-mix-color-space-effect-clause-606604a8847a",
+        "css-color-5.color-mix-color-space-effect-clause-24afa013e69a",
+        "css-color-5.color-mix-color-space-effect-clause-5bf77940b271"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.color-mix-color-space-effect-clause-606604a8847a",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-color-space-effect"
+      ],
+      "behaviour": "Effect of Mixing Color Space on color-mix — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-mix-color-space-effect",
+        "clause_index": 13,
+        "clause_sha256": "606604a8847a0ef26344d715f45dc7c31e373fbcf3e0c057e7f9b3a509f5b7eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-mix-color-space-effect-clause-24afa013e69a",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-color-space-effect"
+      ],
+      "behaviour": "Effect of Mixing Color Space on color-mix — normative clause 60, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-mix-color-space-effect",
+        "clause_index": 59,
+        "clause_sha256": "24afa013e69a80c57afb5e051ebed08a5a31801f7a465f8aa323576535372244"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-mix-color-space-effect-clause-5bf77940b271",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-color-space-effect"
+      ],
+      "behaviour": "Effect of Mixing Color Space on color-mix — normative clause 69, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-mix-color-space-effect",
+        "clause_index": 68,
+        "clause_sha256": "5bf77940b271c7b40af0cf6f6ae9a9d752f7c822dd7e1b1f48c7017b5c10559e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-mix-with-alpha",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-with-alpha"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Effect of Non-Unity Alpha on color-mix.",
+      "locator": {
+        "section_id": "color-mix-with-alpha",
+        "text_sha256": "c659e49e6dfe04a9f0b50770b844a78415d03a7e939a55b468669b8a06efd86a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.color-mix-with-alpha-clause-5c7b4d322232"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.color-mix-with-alpha-clause-5c7b4d322232",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-mix-with-alpha"
+      ],
+      "behaviour": "Effect of Non-Unity Alpha on color-mix — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-mix-with-alpha",
+        "clause_index": 1,
+        "clause_sha256": "5c7b4d322232b11e358ad26d55af4a9e58c5b173ef7d2ff3a3b16bc2b071e50a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-colors",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-colors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative Colors.",
+      "locator": {
+        "section_id": "relative-colors",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.rcs-intro",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "rcs-intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Processing Model for Relative Colors.",
+      "locator": {
+        "section_id": "rcs-intro",
+        "text_sha256": "0dc2431d094ba3757051ad9b69cc11e078eaba4d3d32f08b8d1f2383e8df329f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.rcs-intro-clause-cdfb60c65c74"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.rcs-intro-clause-cdfb60c65c74",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "rcs-intro"
+      ],
+      "behaviour": "Processing Model for Relative Colors — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "rcs-intro",
+        "clause_index": 11,
+        "clause_sha256": "cdfb60c65c74dfe11901f221f66d702a4ec5083d91e665b4f43e1dedce5c62d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-syntax",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative Color Syntax.",
+      "locator": {
+        "section_id": "relative-syntax",
+        "text_sha256": "c6b1ce40e5c6c4f16bed33fc76bc0b6a6f7edddc92420b5f53a345043755d356"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.relative-syntax-clause-8a8e250291ff",
+        "css-color-5.relative-syntax-clause-a6fc76123e70",
+        "css-color-5.relative-syntax-clause-c9dd8e84c5c8",
+        "css-color-5.relative-syntax-clause-105f38a602bc",
+        "css-color-5.relative-syntax-clause-d85fb8043b05"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.relative-syntax-clause-8a8e250291ff",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-syntax"
+      ],
+      "behaviour": "Relative Color Syntax — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-syntax",
+        "clause_index": 7,
+        "clause_sha256": "8a8e250291ffdd02f69f582f2c19a9a1a112c681b8da4887fb1893fcb154b9f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-syntax-clause-a6fc76123e70",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-syntax"
+      ],
+      "behaviour": "Relative Color Syntax — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-syntax",
+        "clause_index": 34,
+        "clause_sha256": "a6fc76123e70b3c444913f4584f012d7f3ade0aa98edb3ac1a8abab76b791dcc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-syntax-clause-c9dd8e84c5c8",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-syntax"
+      ],
+      "behaviour": "Relative Color Syntax — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-syntax",
+        "clause_index": 35,
+        "clause_sha256": "c9dd8e84c5c80d5bba7297429ea896608625f30a8b5e33319fec049994e1e78c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-syntax-clause-105f38a602bc",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-syntax"
+      ],
+      "behaviour": "Relative Color Syntax — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-syntax",
+        "clause_index": 37,
+        "clause_sha256": "105f38a602bc6f58466056e4a0ae5d3fc1d8babe0e49a9552a34b7c0dc143dff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-syntax-clause-d85fb8043b05",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-syntax"
+      ],
+      "behaviour": "Relative Color Syntax — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-syntax",
+        "clause_index": 38,
+        "clause_sha256": "d85fb8043b0590a4f5c6117454df2df113188536b313c014afeb5927aa07cbb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-rgb",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-RGB"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative sRGB Colors.",
+      "locator": {
+        "section_id": "relative-RGB",
+        "text_sha256": "9c1dd3625ad553b0fc5db5a5e4e7c27c4a50ddc0af6b2dfd08e1435b20aa1c8a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.relative-rgb-clause-03df47f365b3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.relative-rgb-clause-03df47f365b3",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-RGB"
+      ],
+      "behaviour": "Relative sRGB Colors — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-RGB",
+        "clause_index": 4,
+        "clause_sha256": "03df47f365b38b4c54410799241fb147f9026596bf840b5711a86024bb806c24"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-hsl",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-HSL"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative HSL Colors.",
+      "locator": {
+        "section_id": "relative-HSL",
+        "text_sha256": "1de0e17f4bf8b9f111be3cf98e174226b07e4d62a921700ca01fe3d1570676fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.relative-hsl-clause-5fc3ac963ee4",
+        "css-color-5.relative-hsl-clause-f5e30b247f02"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.relative-hsl-clause-5fc3ac963ee4",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-HSL"
+      ],
+      "behaviour": "Relative HSL Colors — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-HSL",
+        "clause_index": 4,
+        "clause_sha256": "5fc3ac963ee44db32fef62e80b73d81ae21843d3dee9f4bc3e3e0020c6b8c3b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-hsl-clause-f5e30b247f02",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-HSL"
+      ],
+      "behaviour": "Relative HSL Colors — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-HSL",
+        "clause_index": 6,
+        "clause_sha256": "f5e30b247f0240972fafe1056b2d4ad751d4053f0f9066b7cece6c311f33ca98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-hwb",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-HWB"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative HWB Colors.",
+      "locator": {
+        "section_id": "relative-HWB",
+        "text_sha256": "a04a9355bc4c4aaaf3bbeba5f6895bc77d9d7e940b620d9835a6bd195284ea5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.relative-hwb-clause-73be52daf9eb",
+        "css-color-5.relative-hwb-clause-5d199fc0853d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.relative-hwb-clause-73be52daf9eb",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-HWB"
+      ],
+      "behaviour": "Relative HWB Colors — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-HWB",
+        "clause_index": 4,
+        "clause_sha256": "73be52daf9eb426298b485f38c0685bcb9759fc6d0dedefd8fd630b1d5c2d6dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-hwb-clause-5d199fc0853d",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-HWB"
+      ],
+      "behaviour": "Relative HWB Colors — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-HWB",
+        "clause_index": 6,
+        "clause_sha256": "5d199fc0853d08e48640447b9bf5033cda62de7e99a1798f730ac7a7f6b09528"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-lab",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-Lab"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative Lab Colors.",
+      "locator": {
+        "section_id": "relative-Lab",
+        "text_sha256": "9717c24e0ff0c22c7df8aaf079eb36b02855f10b8294ec7c3a80cb5f068fef85"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.relative-lab-clause-aba8d63a9323",
+        "css-color-5.relative-lab-clause-a016a0cd0405"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.relative-lab-clause-aba8d63a9323",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-Lab"
+      ],
+      "behaviour": "Relative Lab Colors — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-Lab",
+        "clause_index": 4,
+        "clause_sha256": "aba8d63a93233739e5c0c9f492c91aeb555b7278d8b91550630718afe1133394"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-lab-clause-a016a0cd0405",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-Lab"
+      ],
+      "behaviour": "Relative Lab Colors — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-Lab",
+        "clause_index": 6,
+        "clause_sha256": "a016a0cd040516a980085808d8ee4bfcac1628cec66956544c2d6ccbc73ad68d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-oklab",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-Oklab"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative Oklab Colors.",
+      "locator": {
+        "section_id": "relative-Oklab",
+        "text_sha256": "34b5e4c3e3b57dad5a3c107b913fbca56dd272d5a02c50fed9abc43b6c9d017f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.relative-oklab-clause-176a3a5f20af",
+        "css-color-5.relative-oklab-clause-932b53dc27ce"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.relative-oklab-clause-176a3a5f20af",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-Oklab"
+      ],
+      "behaviour": "Relative Oklab Colors — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-Oklab",
+        "clause_index": 4,
+        "clause_sha256": "176a3a5f20afc07cd69a2619c01a5012c183870e8b28e35feab0313c9be25a77"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-oklab-clause-932b53dc27ce",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-Oklab"
+      ],
+      "behaviour": "Relative Oklab Colors — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-Oklab",
+        "clause_index": 6,
+        "clause_sha256": "932b53dc27ce3278db5fae4332a563ac4ac32779a9a9ee62734c7cdec70ee4bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-lch",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-LCH"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative LCH Colors.",
+      "locator": {
+        "section_id": "relative-LCH",
+        "text_sha256": "5e770f566ef0a3b82e8227ea2c0b6d40ca888dd0c0615bd2946cc43fd7cc14c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.relative-lch-clause-8296dbbb5e1a",
+        "css-color-5.relative-lch-clause-26d962bce3f9",
+        "css-color-5.relative-lch-clause-140895e2b59a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.relative-lch-clause-8296dbbb5e1a",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-LCH"
+      ],
+      "behaviour": "Relative LCH Colors — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-LCH",
+        "clause_index": 4,
+        "clause_sha256": "8296dbbb5e1afcf3795bb9d700e3f7c20131babbd2c2cce5469df084a500bbe1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-lch-clause-26d962bce3f9",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-LCH"
+      ],
+      "behaviour": "Relative LCH Colors — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-LCH",
+        "clause_index": 6,
+        "clause_sha256": "26d962bce3f9c9402688b7eea94c673800479f086f1fc2d036d872608fe8611f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-lch-clause-140895e2b59a",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-LCH"
+      ],
+      "behaviour": "Relative LCH Colors — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-LCH",
+        "clause_index": 8,
+        "clause_sha256": "140895e2b59ae9d7a7ac73169e2252c91bf7dcc0c50b4ed72a1019fc098e6b7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-oklch",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-OkLCh"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative OkLCh Colors.",
+      "locator": {
+        "section_id": "relative-OkLCh",
+        "text_sha256": "0d5161a2735b0fd9f1249bd742734c3d7c6f5cca76131904cdf3b85ec0ccff42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.relative-oklch-clause-1ee90838a81e",
+        "css-color-5.relative-oklch-clause-b8c1774b71da",
+        "css-color-5.relative-oklch-clause-7f0b7003f46f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.relative-oklch-clause-1ee90838a81e",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-OkLCh"
+      ],
+      "behaviour": "Relative OkLCh Colors — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-OkLCh",
+        "clause_index": 4,
+        "clause_sha256": "1ee90838a81e2418f904c57628b7a26e5283dfe66671f08512d775d10d8cb4f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-oklch-clause-b8c1774b71da",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-OkLCh"
+      ],
+      "behaviour": "Relative OkLCh Colors — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-OkLCh",
+        "clause_index": 6,
+        "clause_sha256": "b8c1774b71da828cdb20fb5b7bffbdc5a9c2bab287f04c5b06e0ff55e26b5f93"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-oklch-clause-7f0b7003f46f",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-OkLCh"
+      ],
+      "behaviour": "Relative OkLCh Colors — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-OkLCh",
+        "clause_index": 8,
+        "clause_sha256": "7f0b7003f46fcf958419df5df3945ba793fee27dd4120ee04d2c46f6ed783817"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-alpha",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-alpha"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative Alpha Colors.",
+      "locator": {
+        "section_id": "relative-alpha",
+        "text_sha256": "0b1905cac5c890ba7cfb9cf4c0dd98e008e1974ec0f76da82347a77c1f1c2d42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.relative-alpha-clause-a6fc76123e70",
+        "css-color-5.relative-alpha-clause-c9dd8e84c5c8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.relative-alpha-clause-a6fc76123e70",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-alpha"
+      ],
+      "behaviour": "Relative Alpha Colors — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-alpha",
+        "clause_index": 7,
+        "clause_sha256": "a6fc76123e70b3c444913f4584f012d7f3ade0aa98edb3ac1a8abab76b791dcc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-alpha-clause-c9dd8e84c5c8",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-alpha"
+      ],
+      "behaviour": "Relative Alpha Colors — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-alpha",
+        "clause_index": 8,
+        "clause_sha256": "c9dd8e84c5c80d5bba7297429ea896608625f30a8b5e33319fec049994e1e78c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-function",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying Predefined and Custom Color Spaces: the color() Function.",
+      "locator": {
+        "section_id": "color-function",
+        "text_sha256": "3244e02a87037598749e7127963255f2fd4d6daf00dae332417696709a52fe39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.color-function-clause-f50d1a57fa9a",
+        "css-color-5.color-function-clause-2b3dab70460b",
+        "css-color-5.color-function-clause-04c2178a3707"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.color-function-clause-f50d1a57fa9a",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-function"
+      ],
+      "behaviour": "Specifying Predefined and Custom Color Spaces: the color() Function — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-function",
+        "clause_index": 6,
+        "clause_sha256": "f50d1a57fa9a934bc1481a590a143e3fee1797eb95c80adc83ff79c4ff6a9442"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-function-clause-2b3dab70460b",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-function"
+      ],
+      "behaviour": "Specifying Predefined and Custom Color Spaces: the color() Function — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-function",
+        "clause_index": 7,
+        "clause_sha256": "2b3dab70460b2ca4d99c2f1ce07ea4cf3d14f2418e91bf23d943a9620512cfa2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.color-function-clause-04c2178a3707",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-function"
+      ],
+      "behaviour": "Specifying Predefined and Custom Color Spaces: the color() Function — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-function",
+        "clause_index": 9,
+        "clause_sha256": "04c2178a37070c58db3c988744571bde677672471a2546e6ab0003f75927ba40"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-color-function",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relative Color-Function Colors.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "text_sha256": "887b6df341bf416a954050b0523e1ecce2a74528db47c8e0fb5ce49398a7a123"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.relative-color-function-clause-a7e13bd628f4",
+        "css-color-5.relative-color-function-clause-79856fe8a6ca",
+        "css-color-5.relative-color-function-clause-5ef544f00a4c",
+        "css-color-5.relative-color-function-clause-d279bd2fd41b",
+        "css-color-5.relative-color-function-clause-d04fed2275b3",
+        "css-color-5.relative-color-function-clause-4c573a0c9227",
+        "css-color-5.relative-color-function-clause-cd491556ea03",
+        "css-color-5.relative-color-function-clause-64ff10495313",
+        "css-color-5.relative-color-function-clause-b41924fe9a36",
+        "css-color-5.relative-color-function-clause-abbfdebf595e",
+        "css-color-5.relative-color-function-clause-105f38a602bc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.relative-color-function-clause-a7e13bd628f4",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Relative Color-Function Colors — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "clause_index": 1,
+        "clause_sha256": "a7e13bd628f4356b99d7bb49f3393a6686396ee72c11f2695a15666d86e12471"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-color-function-clause-79856fe8a6ca",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Relative Color-Function Colors — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "clause_index": 4,
+        "clause_sha256": "79856fe8a6ca16a11e9e4d245784ec9300d59432fafe33ae0f39d8a95f592cb5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-color-function-clause-5ef544f00a4c",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Relative Color-Function Colors — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "clause_index": 7,
+        "clause_sha256": "5ef544f00a4cd8b1b61ad34d80ac57ee5688b6f0a207ea776ceac2174c9706aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-color-function-clause-d279bd2fd41b",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Relative Color-Function Colors — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "clause_index": 14,
+        "clause_sha256": "d279bd2fd41b160febd45f08b5a06db67e1de0cdb18515161e2e7d4db16232ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-color-function-clause-d04fed2275b3",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Relative Color-Function Colors — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "clause_index": 15,
+        "clause_sha256": "d04fed2275b390f83890652296d5fd7dfc06a705da1793e8654ae2b473fb10f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-color-function-clause-4c573a0c9227",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Relative Color-Function Colors — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "clause_index": 16,
+        "clause_sha256": "4c573a0c9227fb87b38ea8c10687730c6e179ad998d1418123be464a638af63c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-color-function-clause-cd491556ea03",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Relative Color-Function Colors — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "clause_index": 18,
+        "clause_sha256": "cd491556ea031dca908e6608325ecbef277a164d9beb86fdcebf9ccd9bacf0dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-color-function-clause-64ff10495313",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Relative Color-Function Colors — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "clause_index": 19,
+        "clause_sha256": "64ff10495313743ed51efaeea90a1f6b99123de3270911b61b876f389036ad56"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-color-function-clause-b41924fe9a36",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Relative Color-Function Colors — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "clause_index": 22,
+        "clause_sha256": "b41924fe9a36b629a99db714eada7a987494713e28dbfa5a7686f517e7bb887c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-color-function-clause-abbfdebf595e",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Relative Color-Function Colors — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "clause_index": 23,
+        "clause_sha256": "abbfdebf595e8f5300e9afa455399393c83ca62fe3ddf17fd89f7253ab33b545"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.relative-color-function-clause-105f38a602bc",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "relative-color-function"
+      ],
+      "behaviour": "Relative Color-Function Colors — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "relative-color-function",
+        "clause_index": 26,
+        "clause_sha256": "105f38a602bc6f58466056e4a0ae5d3fc1d8babe0e49a9552a34b7c0dc143dff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.custom-color",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "custom-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Custom Color Spaces.",
+      "locator": {
+        "section_id": "custom-color",
+        "text_sha256": "5e8a9e72b71c6fad40f7b5c01d71bf56ca839886c1c0c43ddd3ad69be9838192"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.at-profile",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying a Color Profile: the @color-profile at-rule.",
+      "locator": {
+        "section_id": "at-profile",
+        "text_sha256": "32125bc19c60b69222a6be0747b3d046486d0c583c2a7580decca3974e202d35"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.at-profile-clause-54b43aa9a57a",
+        "css-color-5.at-profile-clause-262dfc95c32f",
+        "css-color-5.at-profile-clause-2479850383b0",
+        "css-color-5.at-profile-clause-9fe00d58a636",
+        "css-color-5.at-profile-clause-dcf93ebc985a",
+        "css-color-5.at-profile-clause-5059a3c917c4",
+        "css-color-5.at-profile-clause-00e0c18ecbe2",
+        "css-color-5.at-profile-clause-992c0be5994b",
+        "css-color-5.at-profile-clause-421762592494",
+        "css-color-5.at-profile-clause-536c41ff42db",
+        "css-color-5.at-profile-clause-f6b8f42b32b3",
+        "css-color-5.at-profile-clause-00835bd552b8",
+        "css-color-5.at-profile-clause-7d4cd26685f6",
+        "css-color-5.at-profile-clause-3c736f6630e2",
+        "css-color-5.at-profile-clause-65be057432cb",
+        "css-color-5.at-profile-clause-8b74f6a03079"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-54b43aa9a57a",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 4,
+        "clause_sha256": "54b43aa9a57a24034bf44dddf1660039390d848a8cc02c5936d95063064ebc05"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-262dfc95c32f",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 14,
+        "clause_sha256": "262dfc95c32fbe9c0e410d8118756224834a9ed024a26a438db8f81f0d0ea854"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-2479850383b0",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 18,
+        "clause_sha256": "2479850383b0c59aa09e20ac2f312a687ee36e5362297456cd19e0aa58f3a0c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-9fe00d58a636",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 20,
+        "clause_sha256": "9fe00d58a6366cfc3a7aa6f2fef2924b1038eb0f36e4a09b7a7a48a18eec0fdd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-dcf93ebc985a",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 21,
+        "clause_sha256": "dcf93ebc985a678ff7669194c6f45b088144d3ec968d1b406a1c55fe5c428c9c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-5059a3c917c4",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 23,
+        "clause_sha256": "5059a3c917c4bab4ae88ea9e4df56fc94d16bac7d269c093951e69e4610ad745"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-00e0c18ecbe2",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 34,
+        "clause_sha256": "00e0c18ecbe24c8584dfe1a90722a762f65fe031ccc83484ece0f4dc530f5228"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-992c0be5994b",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 35,
+        "clause_sha256": "992c0be5994be4270a8e0a1296883312d7df44bfbb57c51d109c20860bc0ac54"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-421762592494",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 37,
+        "clause_sha256": "421762592494ad79d808e76085902eb8e04a95ba31b5c268d08f8249afd1340e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-536c41ff42db",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 38,
+        "clause_sha256": "536c41ff42dbd5776f2234d6938dd048fb5d517ebd3a2f686ee0f9137a9ad6a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-f6b8f42b32b3",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 41,
+        "clause_sha256": "f6b8f42b32b3f56839990f65b12e996b9ab1c549505222623a0f7c5f38a679e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-00835bd552b8",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 42,
+        "clause_sha256": "00835bd552b83a514c3739d81ef39e945a2d28dcbca677402c0d10340fa2cdc4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-7d4cd26685f6",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 44,
+        "clause_sha256": "7d4cd26685f63fae01feec70aee658eac4f4a83fa837b4f55daeea2eaf25de03"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-3c736f6630e2",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 57,
+        "clause_sha256": "3c736f6630e2b43f2916be7f0e0ae0f87fd9bd2a6bdecdc5bb1a52fd4eddd097"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-65be057432cb",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 62, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 61,
+        "clause_sha256": "65be057432cbdd7c16fccdcffd023721b3e6984f7e8f8b1d8e0f6878cff4e183"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.at-profile-clause-8b74f6a03079",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "at-profile"
+      ],
+      "behaviour": "Specifying a Color Profile: the @color-profile at-rule — normative clause 63, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-profile",
+        "clause_index": 62,
+        "clause_sha256": "8b74f6a03079d999a716cab46edaf6e50877ffb9bfb779736c2feabb8c33506d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.cal-cmyk",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "cal-cmyk"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS and Print: Using Calibrated CMYK and Other Printed Color Spaces.",
+      "locator": {
+        "section_id": "cal-cmyk",
+        "text_sha256": "9df80e1b3689f2078ef97f525760ee2f20a2d6187fc5c83174b8bbdb0f077423"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.cmyk-to-lab",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "cmyk-to-lab"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Converting CMYK colors to Lab.",
+      "locator": {
+        "section_id": "cmyk-to-lab",
+        "text_sha256": "382ea57132182964b80f0e855a810c8c4d6be681657bed661be297b65d7a496c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.lab-to-cmyk",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "lab-to-cmyk"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Converting Lab colors to CMYK.",
+      "locator": {
+        "section_id": "lab-to-cmyk",
+        "text_sha256": "ecfacaa38be9b0f40f4da1781ea8912ef8428bd11dd233244290244226486464"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.device-cmyk",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "device-cmyk"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Uncalibrated CMYK Colors: the device-cmyk() Function.",
+      "locator": {
+        "section_id": "device-cmyk",
+        "text_sha256": "9bf1f712e11796c82a31d665b8d45868d5b880b8ee7897483ab406cfb3fd2439"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.device-cmyk-clause-d4c689c4fbea",
+        "css-color-5.device-cmyk-clause-1810db447699",
+        "css-color-5.device-cmyk-clause-124c252dcefc",
+        "css-color-5.device-cmyk-clause-c6579b0baeb5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.device-cmyk-clause-d4c689c4fbea",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "device-cmyk"
+      ],
+      "behaviour": "Uncalibrated CMYK Colors: the device-cmyk() Function — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "device-cmyk",
+        "clause_index": 4,
+        "clause_sha256": "d4c689c4fbea57c1632f4e83233f30a80273566041633da3ca5c0469fa459667"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.device-cmyk-clause-1810db447699",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "device-cmyk"
+      ],
+      "behaviour": "Uncalibrated CMYK Colors: the device-cmyk() Function — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "device-cmyk",
+        "clause_index": 8,
+        "clause_sha256": "1810db447699a0eda501e931c15680c62b8c4b955bb185e02f11425cd6350e87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.device-cmyk-clause-124c252dcefc",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "device-cmyk"
+      ],
+      "behaviour": "Uncalibrated CMYK Colors: the device-cmyk() Function — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "device-cmyk",
+        "clause_index": 9,
+        "clause_sha256": "124c252dcefc0f6fa825d60a2c5686fbe0ee705e96909ba31cc0b41db49d21f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.device-cmyk-clause-c6579b0baeb5",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "device-cmyk"
+      ],
+      "behaviour": "Uncalibrated CMYK Colors: the device-cmyk() Function — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "device-cmyk",
+        "clause_index": 10,
+        "clause_sha256": "c6579b0baeb5fde62d3243324991e6f7085d59364ef59a69803118ef1995cace"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.cmyk-rgb",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "cmyk-rgb"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Naively Converting Between Uncalibrated CMYK and sRGB-Based Color.",
+      "locator": {
+        "section_id": "cmyk-rgb",
+        "text_sha256": "34c315e033effb4d89849fbd0a5597ce5db9c94e80b82858c12da124a77f4534"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.light-dark",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "light-dark"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Reacting to the used color-scheme: the light-dark() Function.",
+      "locator": {
+        "section_id": "light-dark",
+        "text_sha256": "d01c27abdcc295c5e25b6f1421714eb4f850a9689a8e7cb8d6a6af6386d328a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.light-dark-clause-13c7aa3a1a63"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.light-dark-clause-13c7aa3a1a63",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "light-dark"
+      ],
+      "behaviour": "Reacting to the used color-scheme: the light-dark() Function — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "light-dark",
+        "clause_index": 3,
+        "clause_sha256": "13c7aa3a1a63bc520945a1a558a45e754815d3d7ce5f1ceabcc9dda22059ef92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.contrast-color",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "contrast-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dynamically specifying a text color with adequate contrast: the contrast-color() Function.",
+      "locator": {
+        "section_id": "contrast-color",
+        "text_sha256": "7caf58a0482173ab8549e3c58984aebd42753802bd0762276a284b0b1be93142"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.contrast-color-clause-dbffbed0f63a",
+        "css-color-5.contrast-color-clause-712b01e1b800",
+        "css-color-5.contrast-color-clause-937fa659f0df",
+        "css-color-5.contrast-color-clause-d50375c69b43",
+        "css-color-5.contrast-color-clause-980bb8691474"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.contrast-color-clause-dbffbed0f63a",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "contrast-color"
+      ],
+      "behaviour": "Dynamically specifying a text color with adequate contrast: the contrast-color() Function — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "contrast-color",
+        "clause_index": 4,
+        "clause_sha256": "dbffbed0f63aaa9c9bcebe3addf4c7fbed429189400e27bed7b0df790c9b31f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.contrast-color-clause-712b01e1b800",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "contrast-color"
+      ],
+      "behaviour": "Dynamically specifying a text color with adequate contrast: the contrast-color() Function — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "contrast-color",
+        "clause_index": 5,
+        "clause_sha256": "712b01e1b800bead9683ed1a53d867c99d066fc74881811a407e5cf1d543d9cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.contrast-color-clause-937fa659f0df",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "contrast-color"
+      ],
+      "behaviour": "Dynamically specifying a text color with adequate contrast: the contrast-color() Function — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "contrast-color",
+        "clause_index": 6,
+        "clause_sha256": "937fa659f0df2807379a47da61d82cdb68504b2e4118f4bd2db424f25fef4190"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.contrast-color-clause-d50375c69b43",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "contrast-color"
+      ],
+      "behaviour": "Dynamically specifying a text color with adequate contrast: the contrast-color() Function — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "contrast-color",
+        "clause_index": 11,
+        "clause_sha256": "d50375c69b43c102218dd458febe162626718df6ef65a0533ddcfb99d9c8100c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.contrast-color-clause-980bb8691474",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "contrast-color"
+      ],
+      "behaviour": "Dynamically specifying a text color with adequate contrast: the contrast-color() Function — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "contrast-color",
+        "clause_index": 12,
+        "clause_sha256": "980bb8691474abe5e640a5fcb4b57dcc770a0a449ac2d62dd73294d20411d927"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.interpolation",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "interpolation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color Interpolation.",
+      "locator": {
+        "section_id": "interpolation",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.interpolation-space",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "interpolation-space"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color Space for Interpolation.",
+      "locator": {
+        "section_id": "interpolation-space",
+        "text_sha256": "95abb4571089414d8bfc0824d689e72671ebb5ce1dd4b304c38f9d98d00390e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.interpolation-space-clause-9c7694b154f0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.interpolation-space-clause-9c7694b154f0",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "interpolation-space"
+      ],
+      "behaviour": "Color Space for Interpolation — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolation-space",
+        "clause_index": 2,
+        "clause_sha256": "9c7694b154f0609fdd30ce345a9172803c66b19e6b3d8ddffdfe4df15868809f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.resolving-color-values",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "resolving-color-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resolving <color> Values.",
+      "locator": {
+        "section_id": "resolving-color-values",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.resolving-mix",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "resolving-mix"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resolving color-mix() Values.",
+      "locator": {
+        "section_id": "resolving-mix",
+        "text_sha256": "c87c23e5a1dbf5b0fc1f510f5e7ae8461b795a600156c2a300885a1443df660c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.resolving-mix-clause-6d9293a2acc0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.resolving-mix-clause-6d9293a2acc0",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "resolving-mix"
+      ],
+      "behaviour": "Resolving color-mix() Values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "resolving-mix",
+        "clause_index": 0,
+        "clause_sha256": "6d9293a2acc0db2632322bb8cef559b16def2db87369e26ce70c1654e65cb1c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.resolving-rcs",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "resolving-rcs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resolving Relative Color Syntax Values.",
+      "locator": {
+        "section_id": "resolving-rcs",
+        "text_sha256": "07b36003fedc54d30bbaae613489d95112222fd70ee386ecf0185e5a88e29761"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.resolving-rcs-clause-ee6961c38d86",
+        "css-color-5.resolving-rcs-clause-105f38a602bc",
+        "css-color-5.resolving-rcs-clause-d85fb8043b05",
+        "css-color-5.resolving-rcs-clause-868f71d062cb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.resolving-rcs-clause-ee6961c38d86",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "resolving-rcs"
+      ],
+      "behaviour": "Resolving Relative Color Syntax Values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "resolving-rcs",
+        "clause_index": 0,
+        "clause_sha256": "ee6961c38d86d82020186e55749f5ad605b08e9e6e2ee52c8d96ee8f8bc101f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.resolving-rcs-clause-105f38a602bc",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "resolving-rcs"
+      ],
+      "behaviour": "Resolving Relative Color Syntax Values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "resolving-rcs",
+        "clause_index": 1,
+        "clause_sha256": "105f38a602bc6f58466056e4a0ae5d3fc1d8babe0e49a9552a34b7c0dc143dff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.resolving-rcs-clause-d85fb8043b05",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "resolving-rcs"
+      ],
+      "behaviour": "Resolving Relative Color Syntax Values — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "resolving-rcs",
+        "clause_index": 3,
+        "clause_sha256": "d85fb8043b0590a4f5c6117454df2df113188536b313c014afeb5927aa07cbb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.resolving-rcs-clause-868f71d062cb",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "resolving-rcs"
+      ],
+      "behaviour": "Resolving Relative Color Syntax Values — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "resolving-rcs",
+        "clause_index": 4,
+        "clause_sha256": "868f71d062cb02f73eda1f8c787cf8605a02bce592c4012626693bf8693254f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.resolving-device-cmyk-values",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "resolving-device-cmyk-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resolving device-cmyk Values.",
+      "locator": {
+        "section_id": "resolving-device-cmyk-values",
+        "text_sha256": "6f7a2b159ea9b65a6f034fa8f3fba0a37ecd68e4622c45e019d349091a59250f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.resolving-device-cmyk-values-clause-70309c181aaf",
+        "css-color-5.resolving-device-cmyk-values-clause-c8f0f562a128"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.resolving-device-cmyk-values-clause-70309c181aaf",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "resolving-device-cmyk-values"
+      ],
+      "behaviour": "Resolving device-cmyk Values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "resolving-device-cmyk-values",
+        "clause_index": 0,
+        "clause_sha256": "70309c181aafad0bf085a03227756f1f82cc2aec42da5686703cb756869a9b75"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.resolving-device-cmyk-values-clause-c8f0f562a128",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "resolving-device-cmyk-values"
+      ],
+      "behaviour": "Resolving device-cmyk Values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "resolving-device-cmyk-values",
+        "clause_index": 1,
+        "clause_sha256": "c8f0f562a128d3cdbd2875725fac0c44c330a4f36c4afd26e897733260c9f50b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serial",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serialization.",
+      "locator": {
+        "section_id": "serial",
+        "text_sha256": "0a0c10ec886bbb0b79f3137255a4f0dfc5563f678f2c721b2b2d114414809af1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.serial-clause-b9e33bcb07f2",
+        "css-color-5.serial-clause-b41d0374b042"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.serial-clause-b9e33bcb07f2",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial"
+      ],
+      "behaviour": "Serialization — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "serial",
+        "clause_index": 13,
+        "clause_sha256": "b9e33bcb07f2442b66a0fc7e609a765a7b9ff68e4e681a673862b9bced86944c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serial-clause-b41d0374b042",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial"
+      ],
+      "behaviour": "Serialization — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "serial",
+        "clause_index": 15,
+        "clause_sha256": "b41d0374b042560716ced05eeaa6d2a2500fd64553dbd8bc7449c2476491b092"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serial-color-mix",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-color-mix"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serializing color-mix().",
+      "locator": {
+        "section_id": "serial-color-mix",
+        "text_sha256": "a2351ce52d4bca1d808696971f72c14ac9e997d1a6aad4b2aec1daad41b53eb3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.serial-origin-color",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-origin-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serializing Origin Colors.",
+      "locator": {
+        "section_id": "serial-origin-color",
+        "text_sha256": "03e947b5a6afe06449ef3d00fd99d161f77b1d13d84c9e3a669b239f4e39859c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.serial-relative-color",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-relative-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serializing Relative Color Functions.",
+      "locator": {
+        "section_id": "serial-relative-color",
+        "text_sha256": "3fd87dba697dabfa35b19864be9a9ec4e1b355b67bb8b23af77cbfe5806fcb1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.serial-relative-color-clause-0693fa65e8c4",
+        "css-color-5.serial-relative-color-clause-ecd57f3dc58f",
+        "css-color-5.serial-relative-color-clause-67d84433a24c",
+        "css-color-5.serial-relative-color-clause-c4020b48645e",
+        "css-color-5.serial-relative-color-clause-54e30a8f962e",
+        "css-color-5.serial-relative-color-clause-5268970ae84b",
+        "css-color-5.serial-relative-color-clause-16113faceb2a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.serial-relative-color-clause-0693fa65e8c4",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-relative-color"
+      ],
+      "behaviour": "Serializing Relative Color Functions — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "serial-relative-color",
+        "clause_index": 20,
+        "clause_sha256": "0693fa65e8c42748c8f68bad488f0eb39278def9746c197a14d54ac6eec98207"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serial-relative-color-clause-ecd57f3dc58f",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-relative-color"
+      ],
+      "behaviour": "Serializing Relative Color Functions — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "serial-relative-color",
+        "clause_index": 22,
+        "clause_sha256": "ecd57f3dc58f96e2fbadbb55e0cb66b52e8738da1b51e524c27e93af638c3e28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serial-relative-color-clause-67d84433a24c",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-relative-color"
+      ],
+      "behaviour": "Serializing Relative Color Functions — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "serial-relative-color",
+        "clause_index": 24,
+        "clause_sha256": "67d84433a24c23477e9ebff05f7629d21af06da7e60dd8e5a5aa55f4affe5612"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serial-relative-color-clause-c4020b48645e",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-relative-color"
+      ],
+      "behaviour": "Serializing Relative Color Functions — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "serial-relative-color",
+        "clause_index": 25,
+        "clause_sha256": "c4020b48645e77589f08fc685f4654ad2a3be710c2c559abfa4c9eccdae46b68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serial-relative-color-clause-54e30a8f962e",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-relative-color"
+      ],
+      "behaviour": "Serializing Relative Color Functions — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "serial-relative-color",
+        "clause_index": 28,
+        "clause_sha256": "54e30a8f962e0df5aa64b3e045f75380b975b4b71661c88b247085edf3951297"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serial-relative-color-clause-5268970ae84b",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-relative-color"
+      ],
+      "behaviour": "Serializing Relative Color Functions — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "serial-relative-color",
+        "clause_index": 30,
+        "clause_sha256": "5268970ae84b70e8aa5bd927aca866cd5c90110b5bce74ea76d15b792b07e877"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serial-relative-color-clause-16113faceb2a",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-relative-color"
+      ],
+      "behaviour": "Serializing Relative Color Functions — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "serial-relative-color",
+        "clause_index": 32,
+        "clause_sha256": "16113faceb2a5545fe2d783c13001a92a93d6f94feea758de4c029c6c242f6d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serial-custom-color",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-custom-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serializing Custom Color Spaces.",
+      "locator": {
+        "section_id": "serial-custom-color",
+        "text_sha256": "54959309dcaa2e4dd34c32806a75160f7b7301d69d03378c487418984a8f0f2b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.serial-custom-color-clause-0670796e1c91"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.serial-custom-color-clause-0670796e1c91",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serial-custom-color"
+      ],
+      "behaviour": "Serializing Custom Color Spaces — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "serial-custom-color",
+        "clause_index": 0,
+        "clause_sha256": "0670796e1c9123f74684054e6c2c963e1cd9021a2d93a839a9d14f976dd21075"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serializing-device-cmyk-values",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serializing-device-cmyk-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serializing device-cmyk Values.",
+      "locator": {
+        "section_id": "serializing-device-cmyk-values",
+        "text_sha256": "0ecdcf975c700edc050f32dfc3d2fc0300b96068881c9645fd3a431a4a4743f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.serializing-device-cmyk-values-clause-fd42dd7a4002",
+        "css-color-5.serializing-device-cmyk-values-clause-eda3c3833888",
+        "css-color-5.serializing-device-cmyk-values-clause-2d2e6f98b2c8",
+        "css-color-5.serializing-device-cmyk-values-clause-4ec6d61f6546",
+        "css-color-5.serializing-device-cmyk-values-clause-e62a0642a2ca"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.serializing-device-cmyk-values-clause-fd42dd7a4002",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serializing-device-cmyk-values"
+      ],
+      "behaviour": "Serializing device-cmyk Values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "serializing-device-cmyk-values",
+        "clause_index": 0,
+        "clause_sha256": "fd42dd7a4002b3a55efd0f72332d30b59ad0cceb8b96a5dd029d3e9f28e83c52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serializing-device-cmyk-values-clause-eda3c3833888",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serializing-device-cmyk-values"
+      ],
+      "behaviour": "Serializing device-cmyk Values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "serializing-device-cmyk-values",
+        "clause_index": 1,
+        "clause_sha256": "eda3c3833888578f1d9998bff8ba344b6f25acd5454b4e86e072bc345af2d55d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serializing-device-cmyk-values-clause-2d2e6f98b2c8",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serializing-device-cmyk-values"
+      ],
+      "behaviour": "Serializing device-cmyk Values — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "serializing-device-cmyk-values",
+        "clause_index": 2,
+        "clause_sha256": "2d2e6f98b2c82faa528ad8d880531af695bbf3efd7fd3ecbaec8cf31f297a20a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serializing-device-cmyk-values-clause-4ec6d61f6546",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serializing-device-cmyk-values"
+      ],
+      "behaviour": "Serializing device-cmyk Values — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "serializing-device-cmyk-values",
+        "clause_index": 6,
+        "clause_sha256": "4ec6d61f65460563d21131d34fd98a96a986e841a55ef730199472da8cfe77a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.serializing-device-cmyk-values-clause-e62a0642a2ca",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "serializing-device-cmyk-values"
+      ],
+      "behaviour": "Serializing device-cmyk Values — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "serializing-device-cmyk-values",
+        "clause_index": 7,
+        "clause_sha256": "e62a0642a2ca0a7ffbd48e982c1ef01a6211a5229c804efa9a24a04f243cc6f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.apis",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "apis"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in APIs.",
+      "locator": {
+        "section_id": "apis",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.the-csscolorprofilerule-interface",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "the-csscolorprofilerule-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSSColorProfileRule interface.",
+      "locator": {
+        "section_id": "the-csscolorprofilerule-interface",
+        "text_sha256": "0530a959133e7b1f65e942567c0076e61f2dbbeeb14dae6b9d8b2d16d3a3a50d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.the-csscolorprofilerule-interface-clause-4442ba926ad9",
+        "css-color-5.the-csscolorprofilerule-interface-clause-a6ab876beb86"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.the-csscolorprofilerule-interface-clause-4442ba926ad9",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "the-csscolorprofilerule-interface"
+      ],
+      "behaviour": "The CSSColorProfileRule interface — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscolorprofilerule-interface",
+        "clause_index": 3,
+        "clause_sha256": "4442ba926ad9072ca02074dfbbe23796a25b9a26621025b1c75c55a09452016c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.the-csscolorprofilerule-interface-clause-a6ab876beb86",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "the-csscolorprofilerule-interface"
+      ],
+      "behaviour": "The CSSColorProfileRule interface — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscolorprofilerule-interface",
+        "clause_index": 7,
+        "clause_sha256": "a6ab876beb86580c9d6c09ee443486e350f08bc85030aa73a11d7236f1328a57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.sample",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "sample"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default Style Rules.",
+      "locator": {
+        "section_id": "sample",
+        "text_sha256": "1667e8937b1d5b1da669a30820d2e9218155c739fe2d35eae6695cf910671262"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.security",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "f226b5b42e9f14323fd94f9431a0ec4ac958fa97602d059b2b094fab1d430381"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.privacy",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.a11y-sec",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "a11y-sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Accessibility Considerations.",
+      "locator": {
+        "section_id": "a11y-sec",
+        "text_sha256": "3f3a888128a45a557193de188d8af1a6d000713bd41c195ea7dff64af3776722"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.w3c-conformance",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.w3c-conventions",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.w3c-conventions-clause-5c98c879f070",
+        "css-color-5.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.w3c-conventions-clause-5c98c879f070",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.w3c-conformance-classes",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.w3c-conformance-classes-clause-ff408372426c",
+        "css-color-5.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.w3c-partial",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.w3c-partial-clause-ef40c4aab200",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.w3c-conform-future-proofing",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.w3c-testing",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-5.w3c-testing-clause-1e0fff369221",
+        "css-color-5.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.w3c-testing-clause-1e0fff369221",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.w3c-testing-clause-ae1210cf9643",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-5.property-index",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "547c4769772c9ff811e57bf39809cc6f1c1e6380af2bb402096c995db2287df6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.color-profile-descriptor-table",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-profile-descriptor-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in @color-profile Descriptors.",
+      "locator": {
+        "section_id": "color-profile-descriptor-table",
+        "text_sha256": "4f2fc0a70d6c046b82a50dc5a8a74746ae0cd5253f12f0b83c78c8c8e13495cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.idl-index",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "dfe259dc78132a00b33ee2a4c2981bfd50e3d58e48f1a52a54e02ce896f6e5a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.import-49ecb481009c",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.color.org/specification/ICC.1-2022-05.pdf.",
+      "unresolved_reference": "http://www.color.org/specification/ICC.1-2022-05.pdf",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-color-5.import-8cac7d115c27",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-color-5.title",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Color Module Level 5.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "42a1ce219d5672d0ee95a9fafd9847fb28dad2605adb60d773c6c216967b9d35"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.abstract",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "d76c53af124813f0e8bfc375a0558dd8196b89d2b569d9dba0b643e43b968b53"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.sotd",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "3cc773bd3c0604d1d044c7ee7a63a8f208460dbbedd2b3b1d7c899384c5fae86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.contents",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "57d13db689258928530c772e7db2f49a4786fd2b8b31f97e828e5cdd390e4e9c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.intro",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "f1f274e5b26dce289cde6c8b0b448d6487f3fa0250304339436bcbc5d62915da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.color-conversion-code",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "color-conversion-code"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 14. Sample code for Color Conversions.",
+      "locator": {
+        "section_id": "color-conversion-code",
+        "text_sha256": "764836f9124873883cf61c8f7bd00023f2de111e64281f8830743549b8c8d299"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.changes",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 18. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.changes-20260113",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "changes-20260113"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 18.1. Since the Working Draft of 13 January 2026.",
+      "locator": {
+        "section_id": "changes-20260113",
+        "text_sha256": "9fd3a421d4d1c36894da086d3aa3ced1293986d87f13418ff476c08eaad03a2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.changes-20250318",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "changes-20250318"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 18.2. Since the Working Draft of 18 March 2025.",
+      "locator": {
+        "section_id": "changes-20250318",
+        "text_sha256": "79cded16df5ed239dd7320e6bc219afb8f4b4f517de45a7a580dfb9a556b8470"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.changes-20240229",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "changes-20240229"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 18.3. Since the Working Draft of 29 February 2024.",
+      "locator": {
+        "section_id": "changes-20240229",
+        "text_sha256": "751bbdded04b36de96400cf3173fc7a85ea20cf2e3b9eeed4c36fe3de7002a4c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.changes-20220628",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "changes-20220628"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 18.4. Since the Working Draft of 28 June 2022.",
+      "locator": {
+        "section_id": "changes-20220628",
+        "text_sha256": "ccc53d17945b2a10d0c55718bee40c73243b48dbb3b35a733c3c2a369c0f68b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.changes-20220428",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "changes-20220428"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 18.5. Since the Working Draft of 28 April 2022.",
+      "locator": {
+        "section_id": "changes-20220428",
+        "text_sha256": "25baf1a4419aa6a2297528942f0dbabf9c45d6fd48dce02122d8e1337ab5cc79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.changes-20211215",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "changes-20211215"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 18.6. Since the Working Draft of 15 December 2021.",
+      "locator": {
+        "section_id": "changes-20211215",
+        "text_sha256": "432f173d7bac83145505d8057ba709107dfb12f91aec6e90cf11565c7fee3e12"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.changes-20210601",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "changes-20210601"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 18.7. Since the Working Draft of 1 June 2021.",
+      "locator": {
+        "section_id": "changes-20210601",
+        "text_sha256": "cc939b67bde2fd9f29cf2c3da074d70d7ccb7ba26be2b53d5711f5676def56d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.changes-20200303",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "changes-20200303"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 18.8. Since the FPWD of 10 June 2020.",
+      "locator": {
+        "section_id": "changes-20200303",
+        "text_sha256": "4697cecd51cae6eecb91ac0128930f35a7d768c5f8075d0a47fb50c603e69713"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.changes-from-4",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "changes-from-4"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 18.9. Changes from CSS Color 4.",
+      "locator": {
+        "section_id": "changes-from-4",
+        "text_sha256": "a2c87e9dec3636632eebaafd35f8800e69b5a25f854cffb2584fa9422aaa4705"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.index",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.index-defined-here",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "4f897798ea486fa146fee591eb54c5f182563b99790650843f3c94f6ba14d37b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.index-defined-elsewhere",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "ee1727aa8d86260f9c5b73b55071facf02e4511310beb0b7040deb969da210ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.references",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-5.informative",
+      "family": "css-color-5",
+      "source_id": "css-color-5",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "85fb93bdb7ce113e6cb9fb8d871dfd603f0d96bc3a0a0119d38b959b40acc84a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

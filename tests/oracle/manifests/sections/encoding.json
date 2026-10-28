@@ -1,0 +1,1030 @@
+{
+  "schema_version": 1,
+  "source_id": "encoding",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Encoding (Commit be17ac5c49881336538acfc7b40dba3c8009144b)",
+      "level": 1,
+      "text_sha256": "a0aa9ff6e4fa22c90d94c03ff4740e8a79c099e5d6bfb0a1072da8ee9dd7a5d2",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "5556a9ce1ea0c6218be406d2d52f40e9920dbbdae7185eff323cdc37b294329e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.abstract"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "fe970b7be590f7d326be316e908b71df058f04d960864499605fcafb84f5d90e",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.contents"
+        ]
+      }
+    },
+    {
+      "id": "preface",
+      "title": "1. Preface",
+      "level": 2,
+      "text_sha256": "ffc9742ce04981372290b963be5b187273a6fa7b2cb5b62fcad1a1db6f966340",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.preface"
+        ]
+      }
+    },
+    {
+      "id": "security-background",
+      "title": "2. Security background",
+      "level": 2,
+      "text_sha256": "4df5a5741f0d8758ef24bc770ebe64cb4e46c82960949697c13f37c92d4ce168",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.security-background",
+          "encoding.security-background-clause-bb9726ce22e4"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "3. Terminology",
+      "level": 2,
+      "text_sha256": "1031308aa8802d5e9e986e82d232c03a6fa0c85057a828a985fe871e7b7a81e1",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.terminology",
+          "encoding.terminology-clause-b15bdb9f131e",
+          "encoding.terminology-clause-9d604dbbfc71",
+          "encoding.terminology-clause-5c7440ea3535"
+        ]
+      }
+    },
+    {
+      "id": "encodings",
+      "title": "4. Encodings",
+      "level": 2,
+      "text_sha256": "d0e246d624a329b7ccdec4341f316a25724f73ad226d18bca017ef3fcf1d31f3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.encodings",
+          "encoding.encodings-clause-ba98ae08507a"
+        ]
+      }
+    },
+    {
+      "id": "encoders-and-decoders",
+      "title": "4.1. Encoders and decoders",
+      "level": 3,
+      "text_sha256": "940f51b03c5ce1f1a353eed62a6818b2ae81ae198a86244949e606de23ad23f5",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.encoders-and-decoders",
+          "encoding.encoders-and-decoders-clause-2b4e3b4c5ee8"
+        ]
+      }
+    },
+    {
+      "id": "names-and-labels",
+      "title": "4.2. Names and labels",
+      "level": 3,
+      "text_sha256": "1c314500d6a37e38e36a5c2d0b6a7f8c62a4a019790860dd18c458ef129361af",
+      "clause_count": 293,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.names-and-labels",
+          "encoding.names-and-labels-clause-b7f199fab634",
+          "encoding.names-and-labels-clause-0cfea211e25c",
+          "encoding.names-and-labels-clause-ef68a1410c2f",
+          "encoding.names-and-labels-clause-f52b531b8b48",
+          "encoding.foundation-encoding-labels-decoders"
+        ]
+      }
+    },
+    {
+      "id": "output-encodings",
+      "title": "4.3. Output encodings",
+      "level": 3,
+      "text_sha256": "af1d23fe35ff75b11aef08ba02c009f7f0bd46a89fc9229e1f4c681822a02d59",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.output-encodings",
+          "encoding.output-encodings-clause-d1f9dccbfb5c"
+        ]
+      }
+    },
+    {
+      "id": "indexes",
+      "title": "5. Indexes",
+      "level": 2,
+      "text_sha256": "ebcc816819a2ae60754592433708be328e11e0aed26848ac05058c508c636da3",
+      "clause_count": 86,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.indexes"
+        ]
+      }
+    },
+    {
+      "id": "specification-hooks",
+      "title": "6. Hooks for standards",
+      "level": 2,
+      "text_sha256": "2bf80174d5050044f146934846986f1121c2afe7b922ff8d23ccfd484642fb46",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.specification-hooks",
+          "encoding.foundation-encoding-labels-decoders"
+        ]
+      }
+    },
+    {
+      "id": "legacy-hooks",
+      "title": "6.1. Legacy hooks for standards",
+      "level": 3,
+      "text_sha256": "96a068d1095f0a4ef2d8297c413a2195b895be1105a7e55ce8f272a44f88c84f",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.legacy-hooks"
+        ]
+      }
+    },
+    {
+      "id": "api",
+      "title": "7. API",
+      "level": 2,
+      "text_sha256": "68530ee7621e90e96e83c0f87a124cbe62fe2d47fb9b60f7a0b92fccc4044ef6",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.api",
+          "encoding.api-clause-08e2b0204f26",
+          "encoding.api-clause-ddd5bc69742f"
+        ]
+      }
+    },
+    {
+      "id": "interface-mixin-textdecodercommon",
+      "title": "7.1. Interface mixin TextDecoderCommon",
+      "level": 3,
+      "text_sha256": "b65c0221f54117f113c6f5a696a27b33c33dc36bc37512b3fec9508ad72b1f95",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.interface-mixin-textdecodercommon",
+          "encoding.interface-mixin-textdecodercommon-clause-f35597441f33",
+          "encoding.interface-mixin-textdecodercommon-clause-062288f3e917",
+          "encoding.interface-mixin-textdecodercommon-clause-a1c704c46810"
+        ]
+      }
+    },
+    {
+      "id": "interface-textdecoder",
+      "title": "7.2. Interface TextDecoder",
+      "level": 3,
+      "text_sha256": "a146700303a53a4482d1ccd5781e7763805b86a1910030fda22457dd167490ac",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.interface-textdecoder",
+          "encoding.interface-textdecoder-clause-a5854cbdf4c8",
+          "encoding.interface-textdecoder-clause-50e344a0b175",
+          "encoding.interface-textdecoder-clause-f73042b4de7e",
+          "encoding.interface-textdecoder-clause-9ba263050870",
+          "encoding.interface-textdecoder-clause-e1525b370b56"
+        ]
+      }
+    },
+    {
+      "id": "interface-mixin-textencodercommon",
+      "title": "7.3. Interface mixin TextEncoderCommon",
+      "level": 3,
+      "text_sha256": "56196eac589d71f0a51776ad4c3c7148de2004cd4e1bcca4660ced90c914a1ad",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.interface-mixin-textencodercommon"
+        ]
+      }
+    },
+    {
+      "id": "interface-textencoder",
+      "title": "7.4. Interface TextEncoder",
+      "level": 3,
+      "text_sha256": "7cbd3a899985535677c77fb63881ede78e1cbf40beea1fbcb3e9d526c0607517",
+      "clause_count": 70,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.interface-textencoder",
+          "encoding.interface-textencoder-clause-60663a78a271",
+          "encoding.interface-textencoder-clause-662d01e9239a",
+          "encoding.interface-textencoder-clause-a28fd9c8a2d6"
+        ]
+      }
+    },
+    {
+      "id": "interface-textdecoderstream",
+      "title": "7.5. Interface TextDecoderStream",
+      "level": 3,
+      "text_sha256": "079057c323a93ce6ba4052884de98386e7d3c131bd6a70ade09b0ed327a2608e",
+      "clause_count": 98,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.interface-textdecoderstream",
+          "encoding.interface-textdecoderstream-clause-8af204845959",
+          "encoding.interface-textdecoderstream-clause-ecbfe883886b",
+          "encoding.interface-textdecoderstream-clause-99591aada327",
+          "encoding.interface-textdecoderstream-clause-4e203be63730",
+          "encoding.interface-textdecoderstream-clause-ce379c449682"
+        ]
+      }
+    },
+    {
+      "id": "interface-textencoderstream",
+      "title": "7.6. Interface TextEncoderStream",
+      "level": 3,
+      "text_sha256": "ba2b5ccd3f066bb5aa0ed30ef32b3f777752466fcf6d30e416f676794c45b62b",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.interface-textencoderstream",
+          "encoding.interface-textencoderstream-clause-dc88b8c5e26d",
+          "encoding.interface-textencoderstream-clause-ad94ccefd2b3",
+          "encoding.interface-textencoderstream-clause-6d6426166fed",
+          "encoding.interface-textencoderstream-clause-a0c6797409a1",
+          "encoding.interface-textencoderstream-clause-58501847277e",
+          "encoding.interface-textencoderstream-clause-877e110e43e4",
+          "encoding.interface-textencoderstream-clause-d2b0302d6082",
+          "encoding.interface-textencoderstream-clause-e9ae7708e1e7"
+        ]
+      }
+    },
+    {
+      "id": "the-encoding",
+      "title": "8. The encoding",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.the-encoding"
+        ]
+      }
+    },
+    {
+      "id": "utf-8",
+      "title": "8.1. UTF-8",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.utf-8"
+        ]
+      }
+    },
+    {
+      "id": "utf-8-decoder",
+      "title": "8.1.1. UTF-8 decoder",
+      "level": 4,
+      "text_sha256": "9017e1b2c94d6a845d575929544946a8f54bd8e949f59225955d794ad3ed3e95",
+      "clause_count": 77,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.utf-8-decoder",
+          "encoding.utf-8-decoder-clause-9130e5c40ba0",
+          "encoding.foundation-encoding-labels-decoders"
+        ]
+      }
+    },
+    {
+      "id": "utf-8-encoder",
+      "title": "8.1.2. UTF-8 encoder",
+      "level": 4,
+      "text_sha256": "c0a86b0885e393c6e6aef044c227d7d904599d64846d38835de44b4ebb9581dd",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.utf-8-encoder",
+          "encoding.utf-8-encoder-clause-c2298b985a5e",
+          "encoding.utf-8-encoder-clause-dc3544ff4293"
+        ]
+      }
+    },
+    {
+      "id": "legacy-single-byte-encodings",
+      "title": "9. Legacy single-byte encodings",
+      "level": 2,
+      "text_sha256": "962dd04a94243f10ba2d149abb07decf2f8d3c74cd3c169d8c45f2ec1095ce1b",
+      "clause_count": 111,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.legacy-single-byte-encodings"
+        ]
+      }
+    },
+    {
+      "id": "single-byte-decoder",
+      "title": "9.1. single-byte decoder",
+      "level": 3,
+      "text_sha256": "d4ad0ab5b92f2840d9ef36f4a0751a64576c511f53f49e739f779a75127c203d",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.single-byte-decoder",
+          "encoding.foundation-encoding-labels-decoders"
+        ]
+      }
+    },
+    {
+      "id": "single-byte-encoder",
+      "title": "9.2. single-byte encoder",
+      "level": 3,
+      "text_sha256": "39e4ce309b34242d109473f3ad398a3f3c24474550694b7829789a522b581eeb",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.single-byte-encoder"
+        ]
+      }
+    },
+    {
+      "id": "legacy-multi-byte-chinese-(simplified)-encodings",
+      "title": "10. Legacy multi-byte Chinese (simplified) encodings",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.legacy-multi-byte-chinese-simplified-encodings"
+        ]
+      }
+    },
+    {
+      "id": "gbk",
+      "title": "10.1. GBK",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.gbk"
+        ]
+      }
+    },
+    {
+      "id": "gbk-decoder",
+      "title": "10.1.1. GBK decoder",
+      "level": 4,
+      "text_sha256": "5dc3b374c8691770069f449a5bda06ac53cb30021ccf1b23d7e1c0a597901d03",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.gbk-decoder"
+        ]
+      }
+    },
+    {
+      "id": "gbk-encoder",
+      "title": "10.1.2. GBK encoder",
+      "level": 4,
+      "text_sha256": "e8b465b4a8d9fcda204b7cb239ab7a4e670c205ee2aa88a27cc28e658fc4ed9f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.gbk-encoder"
+        ]
+      }
+    },
+    {
+      "id": "gb18030",
+      "title": "10.2. gb18030",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.gb18030"
+        ]
+      }
+    },
+    {
+      "id": "gb18030-decoder",
+      "title": "10.2.1. gb18030 decoder",
+      "level": 4,
+      "text_sha256": "ea01bc901d8b70fbd2473559ecfc3c7ec520c294f51e37806941dbc7ffdac554",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.gb18030-decoder"
+        ]
+      }
+    },
+    {
+      "id": "gb18030-encoder",
+      "title": "10.2.2. gb18030 encoder",
+      "level": 4,
+      "text_sha256": "2d9e917b43156d2c194413a2d661fe912e1c72d199a8475630bee1217af7bec0",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.gb18030-encoder"
+        ]
+      }
+    },
+    {
+      "id": "legacy-multi-byte-chinese-(traditional)-encodings",
+      "title": "11. Legacy multi-byte Chinese (traditional) encodings",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.legacy-multi-byte-chinese-traditional-encodings"
+        ]
+      }
+    },
+    {
+      "id": "big5",
+      "title": "11.1. Big5",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.big5"
+        ]
+      }
+    },
+    {
+      "id": "big5-decoder",
+      "title": "11.1.1. Big5 decoder",
+      "level": 4,
+      "text_sha256": "b9369866632fdcf88611050660d66ca641b1ebf8edf8ceac29f7424d4a5068c0",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.big5-decoder"
+        ]
+      }
+    },
+    {
+      "id": "big5-encoder",
+      "title": "11.1.2. Big5 encoder",
+      "level": 4,
+      "text_sha256": "2a579f48d2971a9e25749148199423bdfbfdd6578d432664450c4118c05c506e",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.big5-encoder"
+        ]
+      }
+    },
+    {
+      "id": "legacy-multi-byte-japanese-encodings",
+      "title": "12. Legacy multi-byte Japanese encodings",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.legacy-multi-byte-japanese-encodings"
+        ]
+      }
+    },
+    {
+      "id": "euc-jp",
+      "title": "12.1. EUC-JP",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.euc-jp"
+        ]
+      }
+    },
+    {
+      "id": "euc-jp-decoder",
+      "title": "12.1.1. EUC-JP decoder",
+      "level": 4,
+      "text_sha256": "c4d4c8ad253753e643923a2e0e0f27e0a7402859219457d7d645c65062fc3580",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.euc-jp-decoder"
+        ]
+      }
+    },
+    {
+      "id": "euc-jp-encoder",
+      "title": "12.1.2. EUC-JP encoder",
+      "level": 4,
+      "text_sha256": "d6e2525b11d3de1c9b5ea7316380857fc670992d202a21d9f849a227326b0b7c",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.euc-jp-encoder"
+        ]
+      }
+    },
+    {
+      "id": "iso-2022-jp",
+      "title": "12.2. ISO-2022-JP",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.iso-2022-jp"
+        ]
+      }
+    },
+    {
+      "id": "iso-2022-jp-decoder",
+      "title": "12.2.1. ISO-2022-JP decoder",
+      "level": 4,
+      "text_sha256": "decf08a307888bf090e3b92c9f10018149b657c8507ab6e0e62fcbdf263a5310",
+      "clause_count": 136,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.iso-2022-jp-decoder"
+        ]
+      }
+    },
+    {
+      "id": "iso-2022-jp-encoder",
+      "title": "12.2.2. ISO-2022-JP encoder",
+      "level": 4,
+      "text_sha256": "9ae9276c600eb62af67e7f3f6287ea99237b8ff22234e8736cba0625c54ed9ec",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.iso-2022-jp-encoder"
+        ]
+      }
+    },
+    {
+      "id": "shift_jis",
+      "title": "12.3. Shift_JIS",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.shift-jis"
+        ]
+      }
+    },
+    {
+      "id": "shift_jis-decoder",
+      "title": "12.3.1. Shift_JIS decoder",
+      "level": 4,
+      "text_sha256": "1e67588cda757e938a1a69a1c1dc0a00d2a9f88680094bf493dd406db360e81a",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.shift-jis-decoder"
+        ]
+      }
+    },
+    {
+      "id": "shift_jis-encoder",
+      "title": "12.3.2. Shift_JIS encoder",
+      "level": 4,
+      "text_sha256": "c88bafaf01993f11e3a31b1ef79284e7684c30dcebb3f52a2fe342d726f23649",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.shift-jis-encoder"
+        ]
+      }
+    },
+    {
+      "id": "legacy-multi-byte-korean-encodings",
+      "title": "13. Legacy multi-byte Korean encodings",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.legacy-multi-byte-korean-encodings"
+        ]
+      }
+    },
+    {
+      "id": "euc-kr",
+      "title": "13.1. EUC-KR",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.euc-kr"
+        ]
+      }
+    },
+    {
+      "id": "euc-kr-decoder",
+      "title": "13.1.1. EUC-KR decoder",
+      "level": 4,
+      "text_sha256": "7611db01ec8c4bba64a2e802ee1d767991678a7c74aff7d09646d39c14c97d70",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.euc-kr-decoder"
+        ]
+      }
+    },
+    {
+      "id": "euc-kr-encoder",
+      "title": "13.1.2. EUC-KR encoder",
+      "level": 4,
+      "text_sha256": "c8bd2c511168a555b2fbd4401df80c0446e92cf013219af581293f62bb64c290",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.euc-kr-encoder"
+        ]
+      }
+    },
+    {
+      "id": "legacy-miscellaneous-encodings",
+      "title": "14. Legacy miscellaneous encodings",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.legacy-miscellaneous-encodings"
+        ]
+      }
+    },
+    {
+      "id": "replacement",
+      "title": "14.1. replacement",
+      "level": 3,
+      "text_sha256": "6bf37c96acef5e6f7cf7a4d5fbf1b7657b8b36dd4a3dbb1d28ba7662bcde8a9c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.replacement"
+        ]
+      }
+    },
+    {
+      "id": "replacement-decoder",
+      "title": "14.1.1. replacement decoder",
+      "level": 4,
+      "text_sha256": "fb1bca9c20baf53775763a99f583c519248bb3d966c60a0e943eefd671d64067",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.replacement-decoder"
+        ]
+      }
+    },
+    {
+      "id": "common-infrastructure-for-utf-16be-and-utf-16le",
+      "title": "14.2. Common infrastructure for UTF-16BE/LE",
+      "level": 3,
+      "text_sha256": "4022036f962fe9ae0e1feb9268a2a473b0f35c94742a15d5148a55ae4cefe0cb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.common-infrastructure-for-utf-16be-and-utf-16le"
+        ]
+      }
+    },
+    {
+      "id": "shared-utf-16-decoder",
+      "title": "14.2.1. shared UTF-16 decoder",
+      "level": 4,
+      "text_sha256": "e8443152b22bfda582fc353f92412b6bbdad89664f10b202cd7e296acab88152",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.shared-utf-16-decoder",
+          "encoding.shared-utf-16-decoder-clause-351ddef4d128",
+          "encoding.foundation-encoding-labels-decoders"
+        ]
+      }
+    },
+    {
+      "id": "utf-16be",
+      "title": "14.3. UTF-16BE",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.utf-16be"
+        ]
+      }
+    },
+    {
+      "id": "utf-16be-decoder",
+      "title": "14.3.1. UTF-16BE decoder",
+      "level": 4,
+      "text_sha256": "0000b596b81ba548df542baa95c9739463be532c6225e788238fd89e7961f14c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.utf-16be-decoder"
+        ]
+      }
+    },
+    {
+      "id": "utf-16le",
+      "title": "14.4. UTF-16LE",
+      "level": 3,
+      "text_sha256": "36026986ea386b2d5bc852e668466f9abbefc54ae9e481e8ca8a006e72102b0f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.utf-16le"
+        ]
+      }
+    },
+    {
+      "id": "utf-16le-decoder",
+      "title": "14.4.1. UTF-16LE decoder",
+      "level": 4,
+      "text_sha256": "3e07444b5f31714962b386b3d231960a056c8f6823a1be988ac1ceab2e1fb6b6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.utf-16le-decoder"
+        ]
+      }
+    },
+    {
+      "id": "x-user-defined",
+      "title": "14.5. x-user-defined",
+      "level": 3,
+      "text_sha256": "6301f1e2d6cf91e8c1bce10b2eac662e6bbf01139bb5674143cc37c8e2215f4a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.x-user-defined"
+        ]
+      }
+    },
+    {
+      "id": "x-user-defined-decoder",
+      "title": "14.5.1. x-user-defined decoder",
+      "level": 4,
+      "text_sha256": "d775de8fe7af87fd370f10bc845520028291c8b50d725d28238a0d4c96d201a1",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.x-user-defined-decoder"
+        ]
+      }
+    },
+    {
+      "id": "x-user-defined-encoder",
+      "title": "14.5.2. x-user-defined encoder",
+      "level": 4,
+      "text_sha256": "8724cd77af142cb8844c5543d1e6f8055b2812a5016ab4dc49e2559b35898bb1",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.x-user-defined-encoder"
+        ]
+      }
+    },
+    {
+      "id": "browser-ui",
+      "title": "15. Browser UI",
+      "level": 2,
+      "text_sha256": "6e396c01056968aeb46b8487c0f0ffaa8c4487d3777dbe36d6c7c3f9e4e983f1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.browser-ui",
+          "encoding.browser-ui-clause-6e396c010569"
+        ]
+      }
+    },
+    {
+      "id": "implementation-considerations",
+      "title": "Implementation considerations",
+      "level": 2,
+      "text_sha256": "42039c280bdb3dd816b19b3b05c43961ff328ff435e19431b43220bcdbff18dd",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.implementation-considerations"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "aee48093e55aa366d19f5e92ad993f53fab8cf4dc63b5ae5e9263ec02042e752",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "ipr",
+      "title": "Intellectual property rights",
+      "level": 2,
+      "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.ipr"
+        ]
+      }
+    },
+    {
+      "id": "section-index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.section-index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "c1431de9743d843837604edd4c362f2e2814909a69f88cc7608324deeca68a87",
+      "clause_count": 219,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "61279cb668799541b6528e1591d3ed20bbbed6fe3b841885ce28193d176989d6",
+      "clause_count": 79,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "99b8483dcc507feae6117fa2088b985eddb8cd75a8abe40530f65328c58e0fa7",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.import-81d6eacb7a2f",
+          "encoding.import-6e81d496e6aa",
+          "encoding.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "2c7c2825257f72f9e0a7689d65e83aacf5f5093ab03770c21764d59e27405e4a",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.informative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "6a069203e421040445f9f195ddb281fec3c9b35bdf07156fc4162bb4d85220c6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "encoding.idl-index"
+        ]
+      }
+    }
+  ]
+}

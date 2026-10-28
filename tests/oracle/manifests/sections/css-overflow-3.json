@@ -1,0 +1,669 @@
+{
+  "schema_version": 1,
+  "source_id": "css-overflow-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Overflow Module Level 3",
+      "level": 1,
+      "text_sha256": "16e3b5a37cde84e062e684187c58c52103232c1f0834f3872491ff470adf6c54",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "0868cfbae7648ff91302e2891fbc04dface7ec53c32ff0550b921484b1dc57c3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "fb37a88cd6c60385f2e7cf84637d168ed1be143d68803371c1b744bd6bcc1def",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "c2be4bea355b836e2c6af555be1241c3fe8810ab15e4e56a1026a6e605f226aa",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "e8612313a94c9d39715cc59012431ea62da20a6dddacee6531ce36a7549524c0",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.values"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.2. Module Interactions",
+      "level": 3,
+      "text_sha256": "25e6765971ccbc82683067b8d6f7c8f06b6df5b03b78130f5871383c163a7601",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.placement"
+        ]
+      }
+    },
+    {
+      "id": "overflow-concepts",
+      "title": "2. Overflow Concepts and Terminology",
+      "level": 2,
+      "text_sha256": "6501e363650c1f52d40970201b83e53ada3f9785f5c405bb12a723ced45f49ff",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.overflow-concepts",
+          "css-overflow-3.overflow-concepts-clause-81c4c971a6a2",
+          "css-overflow-3.overflow-concepts-clause-4e9be50d4e0c"
+        ]
+      }
+    },
+    {
+      "id": "ink",
+      "title": "2.1. Ink Overflow",
+      "level": 3,
+      "text_sha256": "f64d17beeca6d325ffd2a2c315ed3ddc7e9c5a9721409d06bad2c9d71109a998",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.ink"
+        ]
+      }
+    },
+    {
+      "id": "scrollable",
+      "title": "2.2. Scrollable Overflow",
+      "level": 3,
+      "text_sha256": "de0d788d8d32236e21da054ecca8b01e82aafd69c7a69220c299bc6435431dd6",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.scrollable",
+          "css-overflow-3.scrollable-clause-74549aa6f788",
+          "css-overflow-3.scrollable-clause-eb11d5c065fe",
+          "css-overflow-3.scrollable-clause-9f04f34966af"
+        ]
+      }
+    },
+    {
+      "id": "scrolling",
+      "title": "2.3. Scrolling Overflow",
+      "level": 3,
+      "text_sha256": "09eb093657e2a08136437a201ac8739493dcc3b59bdd0b5360d1819f5efaacb4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.scrolling",
+          "css-overflow-3.scrolling-clause-25c45e9daaca",
+          "css-overflow-3.scrolling-clause-339ae88dc97a"
+        ]
+      }
+    },
+    {
+      "id": "overflow-properties",
+      "title": "3. Scrolling and Clipping Overflow",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.overflow-properties"
+        ]
+      }
+    },
+    {
+      "id": "overflow-control",
+      "title": "3.1. Managing Overflow: the overflow-x, overflow-y, and overflow properties",
+      "level": 3,
+      "text_sha256": "d89efce920a275e72a8b5feb8756c0ba92c706b43563520e331b2542a198aceb",
+      "clause_count": 60,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.overflow-control",
+          "css-overflow-3.overflow-control-clause-cca2516ebb1d",
+          "css-overflow-3.overflow-control-clause-fbbc96111d1d",
+          "css-overflow-3.overflow-control-clause-daaf20db1c5f",
+          "css-overflow-3.overflow-control-clause-955cdf7b97b3",
+          "css-overflow-3.overflow-control-clause-1a6eb7f0b4f0",
+          "css-overflow-3.overflow-control-clause-5cdb39b4c80b",
+          "css-overflow-3.overflow-control-clause-c3973a7329a5",
+          "css-overflow-3.overflow-control-clause-6ca5f441ea02",
+          "css-overflow-3.overflow-control-clause-9799dbe02163"
+        ]
+      }
+    },
+    {
+      "id": "scroll-visibility",
+      "title": "3.1.1. Interaction of visibility and overflow",
+      "level": 4,
+      "text_sha256": "e6797f0534f878d5f36651fef47c88065734388c6fc1cc2abc80721fd7a83443",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.scroll-visibility",
+          "css-overflow-3.scroll-visibility-clause-41bda2b42a10",
+          "css-overflow-3.scroll-visibility-clause-796ccdffd35a"
+        ]
+      }
+    },
+    {
+      "id": "corner-clipping",
+      "title": "3.1.2. Interaction of border-radius and overflow",
+      "level": 4,
+      "text_sha256": "506e27479e4c7b5aa9b87c9dfba9415c36be4ad69d6d19b3a9729fec5cec9293",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.corner-clipping"
+        ]
+      }
+    },
+    {
+      "id": "static-media",
+      "title": "3.1.3. Overflow in Print and Other Static Media",
+      "level": 4,
+      "text_sha256": "eedf251b628a696a0a0fb5fa47bf79b7ecadc87ea5ee1c60f09d9157ae8f2e1d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.static-media",
+          "css-overflow-3.static-media-clause-5bd82ff7971f"
+        ]
+      }
+    },
+    {
+      "id": "overflow-clip-margin",
+      "title": "3.2. Expanding Clipping Bounds: the overflow-clip-margin property",
+      "level": 3,
+      "text_sha256": "1168509880f9c463abfd2f79a907d831f879c47efe0c317264b51c941fa862ee",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.overflow-clip-margin",
+          "css-overflow-3.overflow-clip-margin-clause-cca2516ebb1d",
+          "css-overflow-3.overflow-clip-margin-clause-02a5b51f0dd5",
+          "css-overflow-3.overflow-clip-margin-clause-07e1aab95e53",
+          "css-overflow-3.overflow-clip-margin-clause-f9333058356f",
+          "css-overflow-3.overflow-clip-margin-clause-b556ade01229"
+        ]
+      }
+    },
+    {
+      "id": "overflow-propagation",
+      "title": "3.3. Overflow Viewport Propagation",
+      "level": 3,
+      "text_sha256": "719a0f402c3a56371ceaf314206fb622007a9a9a078369aac451ed6a76807494",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.overflow-propagation",
+          "css-overflow-3.overflow-propagation-clause-0c1241d87abb",
+          "css-overflow-3.overflow-propagation-clause-fdaffaadb0c0"
+        ]
+      }
+    },
+    {
+      "id": "smooth-scrolling",
+      "title": "3.4. Smooth Scrolling: the scroll-behavior Property",
+      "level": 3,
+      "text_sha256": "a83478fed2645587bb683b31d0e8a68d3e65eb854e0a5d6e1a6b7b07764a3b80",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.smooth-scrolling",
+          "css-overflow-3.smooth-scrolling-clause-cca2516ebb1d",
+          "css-overflow-3.smooth-scrolling-clause-4402cb1d00b2",
+          "css-overflow-3.smooth-scrolling-clause-3f5512b58857"
+        ]
+      }
+    },
+    {
+      "id": "scrollbar-layout",
+      "title": "4. Scrollbars and Layout",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.scrollbar-layout"
+        ]
+      }
+    },
+    {
+      "id": "scrollbar-sizing",
+      "title": "4.1. Scrollbar Contributions to Sizing",
+      "level": 3,
+      "text_sha256": "f5d0d75f5587f31f5c25d2a8d7ea82bf736ec4d43962554459087527eddf61dd",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.scrollbar-sizing",
+          "css-overflow-3.scrollbar-sizing-clause-c61871133bab",
+          "css-overflow-3.scrollbar-sizing-clause-dcf39b0b84f4"
+        ]
+      }
+    },
+    {
+      "id": "scrollbar-gutter-property",
+      "title": "4.2. Reserving space for the scrollbar: the scrollbar-gutter property",
+      "level": 3,
+      "text_sha256": "824e03ec76cf7793ac81eb77187b22e476870b6aaf1a414f2be93260179adb47",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.scrollbar-gutter-property",
+          "css-overflow-3.scrollbar-gutter-property-clause-cca2516ebb1d",
+          "css-overflow-3.scrollbar-gutter-property-clause-f3fefc332a80",
+          "css-overflow-3.scrollbar-gutter-property-clause-e50990e16780",
+          "css-overflow-3.scrollbar-gutter-property-clause-67df19ea7229",
+          "css-overflow-3.scrollbar-gutter-property-clause-9810543d94a7"
+        ]
+      }
+    },
+    {
+      "id": "auto-ellipsis",
+      "title": "5. Automatic Ellipses",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.auto-ellipsis"
+        ]
+      }
+    },
+    {
+      "id": "text-overflow",
+      "title": "5.1. Overflow Ellipsis: the text-overflow property",
+      "level": 3,
+      "text_sha256": "6d2fab0d9a9168ec106e6a65a4067d2a6b9828f4c4d75108470d1399a3efafba",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.text-overflow",
+          "css-overflow-3.text-overflow-clause-cca2516ebb1d",
+          "css-overflow-3.text-overflow-clause-57928ea2ab51",
+          "css-overflow-3.text-overflow-clause-5c069a62a139",
+          "css-overflow-3.text-overflow-clause-7ebd5286818b"
+        ]
+      }
+    },
+    {
+      "id": "bidi-ellipsis",
+      "title": "Bidi ellipsis examples",
+      "level": 4,
+      "text_sha256": "5c678bdd0099720cf856a4085da7168c7146e771e51ca7477c85e3057cf17a4a",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.bidi-ellipsis"
+        ]
+      }
+    },
+    {
+      "id": "ellipsing-details",
+      "title": "ellipsing details",
+      "level": 4,
+      "text_sha256": "346030ac36497f1994819d41d83c65e4582d4bd290c0a4e33def323fb4050b59",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.ellipsing-details",
+          "css-overflow-3.ellipsing-details-clause-6b926cc7c84f"
+        ]
+      }
+    },
+    {
+      "id": "ellipsis-interaction",
+      "title": "user interaction with ellipsis",
+      "level": 4,
+      "text_sha256": "e103b3af3a20baede4f705519f4b4efe777564b46eeb6328789c559b8e45971c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.ellipsis-interaction",
+          "css-overflow-3.ellipsis-interaction-clause-6644383eef72"
+        ]
+      }
+    },
+    {
+      "id": "text-overflow-examples",
+      "title": "text-overflow examples",
+      "level": 4,
+      "text_sha256": "37c2385bc96a958d2653c5f6b928a1c93c3a52d07e3e065eef8702fd2f1387e7",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.text-overflow-examples"
+        ]
+      }
+    },
+    {
+      "id": "ellipsis-scrolling",
+      "title": "ellipsis interaction with scrolling interfaces",
+      "level": 4,
+      "text_sha256": "87328a67185159f700d759bfaebba34404a281d3485b07a432fc5f38890a1180",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.ellipsis-scrolling",
+          "css-overflow-3.ellipsis-scrolling-clause-a7cb4b7c8c8d"
+        ]
+      }
+    },
+    {
+      "id": "priv",
+      "title": "Appendix A. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "546cdfa34e298dfe0b4ec2ddd3f91a12f3cc44ca31ee4ac61f3e041811323fc1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.priv"
+        ]
+      }
+    },
+    {
+      "id": "sec",
+      "title": "Appendix B. Security Considerations",
+      "level": 2,
+      "text_sha256": "169addd7ced5c3053a472b57dfdf40591af92f667e7d75e41f98022aee445ca0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.sec"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Appendix C. Changes",
+      "level": 2,
+      "text_sha256": "13497628ba980426638e57092dc5d8f8f4057a4c8e02231e391ca180ad053d38",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "b07c2ab980f58fbd7c1ade89bd51f5ec6bca6e4a920d4789a80316735083aac7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.w3c-conventions",
+          "css-overflow-3.w3c-conventions-clause-5c98c879f070",
+          "css-overflow-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.w3c-conformance-classes",
+          "css-overflow-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-overflow-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.w3c-partial",
+          "css-overflow-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.w3c-testing",
+          "css-overflow-3.w3c-testing-clause-1e0fff369221",
+          "css-overflow-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "2a8a473498b22fc8aa49a0a928719ff9a94835623c274ddefcf88720441e25b8",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "2ea44d312dd29a7cb07c76860cd358ebde8dfa18711c6b692b18df0d0676cbcf",
+      "clause_count": 106,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "4ad2bcf24e46ba231e5cd51345ac9e62cf3ecab6a7dc93a9ccb1482fda09ea2e",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "9074edc76f8850cad85d0b3bfc77ae154428b60dd597d8e1dddaf6f12ce08967",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "6aba75c31b7568535a8e3668a6d433935c7f8e59603e82bfd60dba94c38364eb",
+      "clause_count": 95,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.property-index",
+          "css-overflow-3.property-index-clause-bea81231cd1c",
+          "css-overflow-3.property-index-clause-02a5b51f0dd5"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "3181e214cc32b77849589a29761095717290bcce736974ccd078ae2d07d66d8e",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-overflow-3.issues-index"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,744 @@
+{
+  "schema_version": 1,
+  "source_id": "css-sizing-4",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Box Sizing Module Level 4",
+      "level": 1,
+      "text_sha256": "99e3fabdb223016c7cbd84884bdf1cdd018c9ac9b3d60dd216a077c91a4132b6",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "99687e8cd4f271a06a257777d6c0dc5f02731031fdce98aaa2188f243f3b1647",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "9dcb9314305efd53ef484813650200db9066b4dca3422862738fa15eaafd52db",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "29a30f769502a73f692a630354072bc5211c1f15cc4d51ab1329ac47381ac447",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "72717f714550b54ac5bcf82963de8ddf28fd9216a38c9d1b5828c2f05d7436dc",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module interactions",
+      "level": 3,
+      "text_sha256": "ffae1a8f2ee5e5e8f0d436bb81ff7242e38e5f23233c08062fc0c3a4eeaf6b7d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.placement"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.values"
+        ]
+      }
+    },
+    {
+      "id": "terms",
+      "title": "2. Terminology",
+      "level": 2,
+      "text_sha256": "af7e8a2b3c6bffd86d392f44eb931ac3df753e2cba3a5d4819b9bcc481b8806b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.terms"
+        ]
+      }
+    },
+    {
+      "id": "specifying-sizes",
+      "title": "3. Specifying Box Sizes",
+      "level": 2,
+      "text_sha256": "ca40d47d8c20ebbafe41f5a1df6988b8b9f6b8bb1d60c04e1ed8a3084c560b95",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.specifying-sizes"
+        ]
+      }
+    },
+    {
+      "id": "sizing-properties",
+      "title": "3.1. Sizing Properties",
+      "level": 3,
+      "text_sha256": "26f11c92e8725cec90f3684d7cdd6596f15c000c487b480870f35c17e2ebbc38",
+      "clause_count": 60,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.sizing-properties",
+          "css-sizing-4.sizing-properties-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "sizing-values",
+      "title": "3.2. New Sizing Values: the contain, fit-content(), and calc-size() values",
+      "level": 3,
+      "text_sha256": "28a99d7f892a08c10d489801224c49e8293c214df2264ef6aec2dc74269be0f6",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.sizing-values",
+          "css-sizing-4.sizing-values-clause-158f21953b3a",
+          "css-sizing-4.sizing-values-clause-182ff25c17eb",
+          "css-sizing-4.sizing-values-clause-da326d3f86f8",
+          "css-sizing-4.foundation-aspect-ratio-sizing"
+        ]
+      }
+    },
+    {
+      "id": "ratios",
+      "title": "4. Aspect Ratios",
+      "level": 2,
+      "text_sha256": "1a2a1011dfdf428e4f94d5505bfd130010e4ca5cfeafd83e0a3536da11dc0c77",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.ratios",
+          "css-sizing-4.ratios-clause-10b90716b5a9"
+        ]
+      }
+    },
+    {
+      "id": "aspect-ratio",
+      "title": "4.1. Preferred Aspect Ratios: the aspect-ratio property",
+      "level": 3,
+      "text_sha256": "7a43d0b56c489107b0773db48e7813e881af2f51859a10bc4a9d9921d5cb3090",
+      "clause_count": 282,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.aspect-ratio",
+          "css-sizing-4.aspect-ratio-clause-cca2516ebb1d",
+          "css-sizing-4.aspect-ratio-clause-796eca35f945",
+          "css-sizing-4.aspect-ratio-clause-169b3fab3198",
+          "css-sizing-4.aspect-ratio-clause-5e44a6ccbcd7",
+          "css-sizing-4.foundation-aspect-ratio-sizing"
+        ]
+      }
+    },
+    {
+      "id": "aspect-ratio-automatic",
+      "title": "4.2. Effects of Preferred Aspect Ratio on Automatic Sizes",
+      "level": 3,
+      "text_sha256": "64538b9130c686672fedec637f108fc74cbed5f8e906f666b14f68d8f14040c5",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.aspect-ratio-automatic",
+          "css-sizing-4.foundation-aspect-ratio-sizing"
+        ]
+      }
+    },
+    {
+      "id": "aspect-ratio-margin-collapse",
+      "title": "4.2.1. Margin-collapsing",
+      "level": 4,
+      "text_sha256": "ab061a4a82e81046525d9ba7c716b93b76df4cbdf4f485207b0b7f4aa37bdbaf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.aspect-ratio-margin-collapse",
+          "css-sizing-4.aspect-ratio-margin-collapse-clause-ab061a4a82e8",
+          "css-sizing-4.foundation-aspect-ratio-sizing"
+        ]
+      }
+    },
+    {
+      "id": "aspect-ratio-minimum",
+      "title": "4.3. Automatic Content-based Minimum Sizes",
+      "level": 3,
+      "text_sha256": "da13eccf42532b744ec2f85c38c5c3e849b9ec7fc66d8c2b90569ca56bba47c6",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.aspect-ratio-minimum",
+          "css-sizing-4.foundation-aspect-ratio-sizing"
+        ]
+      }
+    },
+    {
+      "id": "aspect-ratio-size-transfers",
+      "title": "4.4. Min/Max Size Transfers",
+      "level": 3,
+      "text_sha256": "b83590c243bab8415d06f58391ae569f37e95d6ae19fd492fca83408d4ed1597",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.aspect-ratio-size-transfers",
+          "css-sizing-4.foundation-aspect-ratio-sizing"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic",
+      "title": "5. Intrinsic Size Determination",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.intrinsic"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-sizes",
+      "title": "5.1. Intrinsic Sizes",
+      "level": 3,
+      "text_sha256": "15da31bb1143da6ef677975bf818b18d746ef5573a3128e44e8f0fe6d8ef60c9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.intrinsic-sizes"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-size-override",
+      "title": "5.2. Overriding Contained Intrinsic Sizes: the contain-intrinsic-* properties",
+      "level": 3,
+      "text_sha256": "3ba1e3ef5436485d4c0b741bc3f45dceb6a3ac81401697ce6e053b060de8c0f4",
+      "clause_count": 99,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.intrinsic-size-override",
+          "css-sizing-4.intrinsic-size-override-clause-cca2516ebb1d",
+          "css-sizing-4.intrinsic-size-override-clause-56fda4ba22f1",
+          "css-sizing-4.intrinsic-size-override-clause-4b59fe755d34",
+          "css-sizing-4.intrinsic-size-override-clause-be0ca01a7120",
+          "css-sizing-4.intrinsic-size-override-clause-4e2bcff726cf",
+          "css-sizing-4.intrinsic-size-override-clause-8da10b5f09e6",
+          "css-sizing-4.intrinsic-size-override-clause-765e4a3f0e1c",
+          "css-sizing-4.intrinsic-size-override-clause-c965d973bea2"
+        ]
+      }
+    },
+    {
+      "id": "last-remembered",
+      "title": "5.2.1. Last Remembered Size",
+      "level": 4,
+      "text_sha256": "be401ec8b83f48420f3bc62e7a5ac3858b5c1943963f191dffe616c838945edd",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.last-remembered"
+        ]
+      }
+    },
+    {
+      "id": "cis-scrollbars",
+      "title": "5.2.2. Interaction With overflow: auto",
+      "level": 4,
+      "text_sha256": "2f95ebf60b5cd5e24d77752cc190000d7b4ef7f5ea06e8ca2dd897c4c9280549",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.cis-scrollbars",
+          "css-sizing-4.cis-scrollbars-clause-df452843131f",
+          "css-sizing-4.cis-scrollbars-clause-a13f57e02952"
+        ]
+      }
+    },
+    {
+      "id": "responsive-iframes",
+      "title": "5.3. Responsively-sized iframes: the frame-sizing property",
+      "level": 3,
+      "text_sha256": "595d393ddb791c1c101bdd7a5504fd364c7334e58f400c97713f80e93a884e75",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.responsive-iframes",
+          "css-sizing-4.responsive-iframes-clause-cca2516ebb1d",
+          "css-sizing-4.responsive-iframes-clause-49de456bf32a",
+          "css-sizing-4.responsive-iframes-clause-67505e57ed74",
+          "css-sizing-4.responsive-iframes-clause-8d4fa51fa1c1",
+          "css-sizing-4.responsive-iframes-clause-7db7e27c7cfe"
+        ]
+      }
+    },
+    {
+      "id": "iframe-frame-sizing",
+      "title": "5.3.1. HTML iframe Details",
+      "level": 4,
+      "text_sha256": "6c2f7a4dcede629c5c786f86bd40b4e16161129b108c0ee9dea4d2e30cc7bc6a",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.iframe-frame-sizing",
+          "css-sizing-4.iframe-frame-sizing-clause-476a3e470f11"
+        ]
+      }
+    },
+    {
+      "id": "window-requestresize",
+      "title": "5.3.2. Extensions to the Window Interface",
+      "level": 4,
+      "text_sha256": "176a6154e12e88dbc080239193ae0db66877feee03d28d40d271ac08797d1c1a",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.window-requestresize"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-contribution",
+      "title": "5.4. Intrinsic Size Contributions",
+      "level": 3,
+      "text_sha256": "d18dbbac3d9cef87db8ff01ab1f91b7aaaa74a4631dcb40974a04417c32dafe7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.intrinsic-contribution"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-contribution-override",
+      "title": "5.5. Zeroing Min-Content Size Contributions: the min-intrinsic-sizing property",
+      "level": 3,
+      "text_sha256": "8dcf52614b89e49f2c72224e1bf250df2674a1176f853dce433d6e74e7be2ce3",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.intrinsic-contribution-override",
+          "css-sizing-4.intrinsic-contribution-override-clause-cca2516ebb1d",
+          "css-sizing-4.intrinsic-contribution-override-clause-5afb0eaa3e29",
+          "css-sizing-4.intrinsic-contribution-override-clause-d438691b943d",
+          "css-sizing-4.intrinsic-contribution-override-clause-956f78865043"
+        ]
+      }
+    },
+    {
+      "id": "column-sizing",
+      "title": "5.6. New Column Sizing Values: the stretch, min-content, max-content, fit-content, and fit-content() values",
+      "level": 3,
+      "text_sha256": "573a285cf03419a24b6e8b1121dbce6f7e92cb66c8f3d8ca902e534a16142b84",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.column-sizing",
+          "css-sizing-4.column-sizing-clause-cca2516ebb1d",
+          "css-sizing-4.column-sizing-clause-b01ac2e0bfb3",
+          "css-sizing-4.column-sizing-clause-289f6ed23314"
+        ]
+      }
+    },
+    {
+      "id": "extrinsic",
+      "title": "6. Extrinsic Size Determination",
+      "level": 2,
+      "text_sha256": "b51d774609e52a67a3f2462c3a6662ea1e8e6409d4a2f0736160d9b514f0bd6e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.extrinsic"
+        ]
+      }
+    },
+    {
+      "id": "contain-fit-sizing",
+      "title": "6.1. Contain-fit Sizing: stretching while maintaining an aspect ratio",
+      "level": 3,
+      "text_sha256": "698bf2677f73583e3c03555dd730543ffc9aa06c5679ac52bb70156ccb48d41c",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.contain-fit-sizing"
+        ]
+      }
+    },
+    {
+      "id": "percentage-sizing",
+      "title": "6.2. Percentage Sizing",
+      "level": 3,
+      "text_sha256": "b4935894c8ce16bde67bbffc672428b1533c4f1e1e8b1ce21a2933183db6bfa5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.percentage-sizing"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-2021-05",
+      "title": "Changes since 5 May 2021 Working Draft",
+      "level": 3,
+      "text_sha256": "97fba1cf886e71b75144280de72ec50380177f8dbb47c29b7b46449d1954a03e",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.changes-2021-05"
+        ]
+      }
+    },
+    {
+      "id": "changes-2020-10",
+      "title": "Changes since 20 October 2020 Working Draft",
+      "level": 3,
+      "text_sha256": "735cb210036b9e791248fd665278c2dc30665a69b58f640ed39ee6a5796c5d95",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.changes-2020-10"
+        ]
+      }
+    },
+    {
+      "id": "additions-L3",
+      "title": "Additions Since Level 3",
+      "level": 3,
+      "text_sha256": "13ad8eaf0c1e22144300bf3c7450ade7ac078e3655801c2bd6dc272398e208e7",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.additions-l3"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "eb43315e456e5311e59a983ab25713a40e3ac4912c62898282925ca5fcbc4e7c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "priv-sec",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "85b0bbcbc137ec4d540097af52b8b2bbdcc04575c1aed6ca81a878d6150d0b32",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.priv-sec"
+        ]
+      }
+    },
+    {
+      "id": "sec",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "7289157c42346d0cf51863e097d634af796b3f54eefe0fd72f7d5fb35b2fd504",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.sec"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.w3c-conventions",
+          "css-sizing-4.w3c-conventions-clause-5c98c879f070",
+          "css-sizing-4.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.w3c-conformance-classes",
+          "css-sizing-4.w3c-conformance-classes-clause-ff408372426c",
+          "css-sizing-4.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.w3c-partial",
+          "css-sizing-4.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.w3c-testing",
+          "css-sizing-4.w3c-testing-clause-1e0fff369221",
+          "css-sizing-4.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "6e53792d8124cf42e80043153c50d7c587003645ef10591e477dab28d7bc7332",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "24d04474560cbeeeff3636cdbe92fe502d551eee887099611c6abd35e964bea2",
+      "clause_count": 124,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "fbd00686b5448a33d407ccf820d25539b6966736c9844b6a7280730683aada64",
+      "clause_count": 54,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "703cf172b30cff661afabb38dc55028cfd730b53b20d65c4895d4a7787386d09",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "1bbfac89515e6b724ee10d7ff6b47a3f563551522866e638ea9c8a15a3e2581f",
+      "clause_count": 113,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.property-index",
+          "css-sizing-4.property-index-clause-674d5fa645b0",
+          "css-sizing-4.property-index-clause-4b59fe755d34",
+          "css-sizing-4.property-index-clause-56fda4ba22f1"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "ea3f5eff27a257d583869c3295484172d8e484d9b2f2ac88a07802be9737dded",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "7886c8f067d6e2aafe6f665d173098aedfca0818ff95e97d2995abbe4f8bf008",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-sizing-4.issues-index"
+        ]
+      }
+    }
+  ]
+}

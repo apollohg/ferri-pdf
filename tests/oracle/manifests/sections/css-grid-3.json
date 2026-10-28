@@ -1,0 +1,912 @@
+{
+  "schema_version": 1,
+  "source_id": "css-grid-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Grid Layout Module Level 3",
+      "level": 1,
+      "text_sha256": "477755f68bc90a0f5bd41e007538b7216919db5ab4a00dfcc706076e9076462e",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "1ba951022978689e7b4a343b84e3ad41e622710b6cfab105571037769d33955e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "97b8c25bf5f199fde353b361fffe1404046b19e1d6da5df786438875971b187c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "d8fb15613048c589ff5550161947245e7cb70b6ccf3305b28efc2a038c6d936b",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "b7be562fccf9b63299f60dd458c2717166dc63a43ef63abc070efb44e58177db",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "background",
+      "title": "1.1. Background and Motivation",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.background"
+        ]
+      }
+    },
+    {
+      "id": "waterfall",
+      "title": "1.1.1. Waterfall Layout with Auto-placed Items",
+      "level": 4,
+      "text_sha256": "15809794b0daba0eafe95582a7b8185a3caa1630942bdde06e13796801a103df",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.waterfall"
+        ]
+      }
+    },
+    {
+      "id": "collapse",
+      "title": "1.1.2. One-dimensional Grid Layout",
+      "level": 4,
+      "text_sha256": "18bfed5ee1286e8ddf904a9e853624295b665b0dbeec3299e316d2c27f3d3140",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.collapse"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.values"
+        ]
+      }
+    },
+    {
+      "id": "grid-lanes-model",
+      "title": "2. Grid Lanes Layout Model",
+      "level": 2,
+      "text_sha256": "9639536c2d208b27410845ed7e5f2045b669ebddcff3c176cfdc9c0f52548f71",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-lanes-model"
+        ]
+      }
+    },
+    {
+      "id": "order-accessibility",
+      "title": "2.1. Reordering and Accessibility",
+      "level": 3,
+      "text_sha256": "7b290b054bfcf71b82725711a19bf67de6ec3c6c31dd7f65728766ca06b02681",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.order-accessibility",
+          "css-grid-3.order-accessibility-clause-eda1280d72e7",
+          "css-grid-3.order-accessibility-clause-8e643408e2fa",
+          "css-grid-3.order-accessibility-clause-772e4d044c4a"
+        ]
+      }
+    },
+    {
+      "id": "grid-lanes-containers",
+      "title": "2.2. Establishing Grid Lanes Layout",
+      "level": 3,
+      "text_sha256": "a6418a00721579a318ddf7601b59f71a82c49b9f70bb737b067b8dbb8bf207df",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-lanes-containers"
+        ]
+      }
+    },
+    {
+      "id": "grid-lanes-orientation",
+      "title": "2.3. Orienting Grid Lanes Layout",
+      "level": 3,
+      "text_sha256": "56396c7bf2ac3b9f7a73d91cc98dcc988cc4f80ab127bfe40606d086caaf4b60",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-lanes-orientation",
+          "css-grid-3.grid-lanes-orientation-clause-fd3dbaf74e22"
+        ]
+      }
+    },
+    {
+      "id": "grid-lanes-track-templates",
+      "title": "3. Grid Lanes Track Specification",
+      "level": 2,
+      "text_sha256": "bda1c70c2040c72bdffb314bd820f5642ad693965e1f02d9bd4f026e5063f2dc",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-lanes-track-templates",
+          "css-grid-3.grid-lanes-track-templates-clause-c614a174d232"
+        ]
+      }
+    },
+    {
+      "id": "grid-lanes-track-properties",
+      "title": "3.1. Declaring Grid Lanes Track Templates: the grid-template-* properties",
+      "level": 3,
+      "text_sha256": "7dae4f5fc32d0a1bd3cde019b6ec2eb18ce9f2f11493d86e6700511c8da7b6b9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-lanes-track-properties",
+          "css-grid-3.grid-lanes-track-properties-clause-7dae4f5fc32d"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-auto-repeat",
+      "title": "3.1.1. Intrinsic Tracks and repeat()",
+      "level": 4,
+      "text_sha256": "c8c3bcb4ae26415bac7754f471f5afa7f19f5d2de7eef5a207f8b665f03c5ee4",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.intrinsic-auto-repeat",
+          "css-grid-3.intrinsic-auto-repeat-clause-f336e0034c09",
+          "css-grid-3.intrinsic-auto-repeat-clause-7d6d5ea175cf",
+          "css-grid-3.intrinsic-auto-repeat-clause-682bc9e49c14",
+          "css-grid-3.intrinsic-auto-repeat-clause-bbbe3a6a9b0c"
+        ]
+      }
+    },
+    {
+      "id": "subgrids",
+      "title": "3.2. Subgrids",
+      "level": 3,
+      "text_sha256": "31ecc7d66b633982d622b5c5cac4f7808529c0d393dfbbb1d370a10c5f3760a2",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.subgrids",
+          "css-grid-3.subgrids-clause-a311004cb517"
+        ]
+      }
+    },
+    {
+      "id": "repeat-notation",
+      "title": "3.3. Track Repetition: the repeat() notation",
+      "level": 3,
+      "text_sha256": "b5628bd6166297842c4121f08d0f64f0b18eb894f646b1af1181e10d1bca6814",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.repeat-notation"
+        ]
+      }
+    },
+    {
+      "id": "repeat-auto-fit",
+      "title": "3.3.1. repeat(auto-fit)",
+      "level": 4,
+      "text_sha256": "e2d2c56360707b6b2628e75571d20aa19e7231abf6f12828e43656a2bf8f4808",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.repeat-auto-fit"
+        ]
+      }
+    },
+    {
+      "id": "track-sizing",
+      "title": "3.4. Grid Axis Track Sizing",
+      "level": 3,
+      "text_sha256": "45b2b937f40c0df6b072a2e305436c4532d002bd533636add9ddee6d8d725c1a",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.track-sizing",
+          "css-grid-3.track-sizing-clause-356c0cedaf5f"
+        ]
+      }
+    },
+    {
+      "id": "track-sizing-subgrid",
+      "title": "3.4.1. Subgrid Item Contributions",
+      "level": 4,
+      "text_sha256": "b94d6b14cea6e00b4c126850f47083e8ee9d59a28f0fe708417402bdab462952",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.track-sizing-subgrid"
+        ]
+      }
+    },
+    {
+      "id": "track-sizing-performance",
+      "title": "3.4.2. Optimized Track Sizing",
+      "level": 4,
+      "text_sha256": "63eb28cd74f224b106cf0602d471b99363521d418ade9722551e005be824dc22",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.track-sizing-performance",
+          "css-grid-3.track-sizing-performance-clause-b2455b3451b0",
+          "css-grid-3.track-sizing-performance-clause-b9fe7679242d"
+        ]
+      }
+    },
+    {
+      "id": "grid-lanes-track-placement",
+      "title": "4. Grid Lanes Item Placement",
+      "level": 2,
+      "text_sha256": "0aa018497882e211af8304a9462ee945d72e18406575fd5784eaa08546ff7361",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-lanes-track-placement",
+          "css-grid-3.grid-lanes-track-placement-clause-c729e1dc0cba"
+        ]
+      }
+    },
+    {
+      "id": "grid-lanes-placement",
+      "title": "4.1. Specifying Grid Axis Item Placement: the grid-column-* and grid-row-* properties",
+      "level": 3,
+      "text_sha256": "7e7f50c15a0890bc66fe223bf52363e9d593f7309acd77dd78d878fe98e291df",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-lanes-placement"
+        ]
+      }
+    },
+    {
+      "id": "placement-tolerance",
+      "title": "4.2. Placement Precision: the flow-tolerance property",
+      "level": 3,
+      "text_sha256": "f2e524c8c1a0c25f8ba9945f93778744f6f25225e910530a9c4e3e4cc47e5ac2",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.placement-tolerance",
+          "css-grid-3.placement-tolerance-clause-cca2516ebb1d",
+          "css-grid-3.placement-tolerance-clause-986b7b70ef39",
+          "css-grid-3.placement-tolerance-clause-47e5fc63e3b2",
+          "css-grid-3.placement-tolerance-clause-420bb2b83f8b",
+          "css-grid-3.placement-tolerance-clause-f1f1caee067d",
+          "css-grid-3.placement-tolerance-clause-cd63ea57c98c",
+          "css-grid-3.placement-tolerance-clause-12fbf1fee6cc"
+        ]
+      }
+    },
+    {
+      "id": "grid-lanes-dense-packing",
+      "title": "4.3. Dense Placement: the dense keyword",
+      "level": 3,
+      "text_sha256": "8e4f4000c9f2e22651061f15f28306daf3b3f11e430f24a7025ab29ea1923553",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-lanes-dense-packing",
+          "css-grid-3.grid-lanes-dense-packing-clause-dbf62a95e7e5"
+        ]
+      }
+    },
+    {
+      "id": "grid-lanes-layout-algorithm",
+      "title": "4.4. Grid Lanes Layout and Placement Algorithm",
+      "level": 3,
+      "text_sha256": "7fc44993fd99c3f264ddaecf2d7c1c6178f298e29c03f8dce04d0f790addc210",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-lanes-layout-algorithm",
+          "css-grid-3.grid-lanes-layout-algorithm-clause-cb4ee69a371f",
+          "css-grid-3.grid-lanes-layout-algorithm-clause-2ee091742afa",
+          "css-grid-3.grid-lanes-layout-algorithm-clause-b70d3d0812ba",
+          "css-grid-3.grid-lanes-layout-algorithm-clause-54255ee9ac5e"
+        ]
+      }
+    },
+    {
+      "id": "containing-block",
+      "title": "4.4.1. Containing Block",
+      "level": 4,
+      "text_sha256": "6cc20c1f188ebc6cb21e6e2a527725c8fa31957347532b52276c004c3c1c1500",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.containing-block"
+        ]
+      }
+    },
+    {
+      "id": "rtl-example",
+      "title": "4.4.2. Placement and Writing Modes",
+      "level": 4,
+      "text_sha256": "e0c3300ac723ad6ed81688267bec64a9208d952f9db97dda824210edb3b9a1b5",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.rtl-example"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-sizes",
+      "title": "5. Sizing Grid Containers",
+      "level": 2,
+      "text_sha256": "bee96cc8747fa5c328c8af135b6c04f067fb99cc9d53736fd287a88fc176e0fd",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.intrinsic-sizes"
+        ]
+      }
+    },
+    {
+      "id": "alignment",
+      "title": "6. Alignment and Spacing",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.alignment"
+        ]
+      }
+    },
+    {
+      "id": "gutters",
+      "title": "6.1. Gutters: the row-gap, column-gap, and gap properties",
+      "level": 3,
+      "text_sha256": "195b30437c716751e68d2726ece2864393678a432e5e344e2a1e9aed9c576315",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.gutters"
+        ]
+      }
+    },
+    {
+      "id": "grid-axis-alignment",
+      "title": "6.2. Grid-axis Alignment: the align-content/justify-content, align-self/justify-self, and align-items/justify-items properties",
+      "level": 3,
+      "text_sha256": "f62b34d1ab6e64d3e92440dc6a72b3e71a905c9ae3cdc7db48c94f9ba5d9bb48",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-axis-alignment"
+        ]
+      }
+    },
+    {
+      "id": "stacking-content-alignment",
+      "title": "6.3. Stacking-axis Content Distribution: the align-content/justify-content properties",
+      "level": 3,
+      "text_sha256": "d68168688aa9ce2a41d7e09c018d84eef7d0c7d682bd089f79abd97286ad30a2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.stacking-content-alignment"
+        ]
+      }
+    },
+    {
+      "id": "stacking-self-alignment",
+      "title": "6.4. Stacking-axis Self Alignment: the align-self/justify-self and align-items/justify-items properties",
+      "level": 3,
+      "text_sha256": "bcb986451cdd6de625b64d1816019b5781d81dfbec1066c9c824440e0c9434af",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.stacking-self-alignment",
+          "css-grid-3.stacking-self-alignment-clause-bee952fa9ad9"
+        ]
+      }
+    },
+    {
+      "id": "grid-lanes-baseline-alignment",
+      "title": "6.5. Baseline Alignment",
+      "level": 3,
+      "text_sha256": "0639c8be49f5d9b39f6e841e95dffabc7ba0233464e1e6321552a035a6e78497",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-lanes-baseline-alignment"
+        ]
+      }
+    },
+    {
+      "id": "pagination",
+      "title": "7. Fragmentation",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.pagination"
+        ]
+      }
+    },
+    {
+      "id": "stacking-axis-pagination",
+      "title": "7.1. Fragmentation in the stacking axis",
+      "level": 3,
+      "text_sha256": "dc067ce6d7cdfda1ecf30e136ece2d1c3c6191ee7180e89d98f46805d9b31781",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.stacking-axis-pagination"
+        ]
+      }
+    },
+    {
+      "id": "grid-axis-pagination",
+      "title": "7.2. Fragmentation in the Grid Axis",
+      "level": 3,
+      "text_sha256": "1d1a42d6283c1e546f9354f3c8aec61ae1ff768785532ac8cd1ddf690b5df9af",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.grid-axis-pagination"
+        ]
+      }
+    },
+    {
+      "id": "abspos",
+      "title": "8. Absolute Positioning",
+      "level": 2,
+      "text_sha256": "1f1683df4bd197eb0150006a96c3f021e1206e613fcb8996474c643bcd2c21c8",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.abspos"
+        ]
+      }
+    },
+    {
+      "id": "graceful-degradation",
+      "title": "9. Graceful Degradation",
+      "level": 2,
+      "text_sha256": "1499f3ab17ec4a6edc8bd3c90897d65b29ba77f6d4daf729d78350f9e74b35f3",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.graceful-degradation",
+          "css-grid-3.graceful-degradation-clause-0590a94fd35a",
+          "css-grid-3.graceful-degradation-clause-bb22421b6f38"
+        ]
+      }
+    },
+    {
+      "id": "flow-control",
+      "title": "Appendix A: Generic Layout Item Flow Controls: the item-* properties",
+      "level": 2,
+      "text_sha256": "e78d67664d9a64e543bf1fdb0b825e0a6d71cc724f73c4723031109e8e4b329d",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.flow-control",
+          "css-grid-3.flow-control-clause-f29266273e63"
+        ]
+      }
+    },
+    {
+      "id": "item-primary-axis",
+      "title": "Item Flow Axis: item-track/item-direction",
+      "level": 3,
+      "text_sha256": "5653c56e228d6cd20a88b8b55e6bf6e3fc0a56493e0daadc7baecfb524f11b41",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.item-primary-axis",
+          "css-grid-3.item-primary-axis-clause-cca2516ebb1d",
+          "css-grid-3.item-primary-axis-clause-e9f852f5cd21",
+          "css-grid-3.item-primary-axis-clause-749484f8cb10"
+        ]
+      }
+    },
+    {
+      "id": "item-secondary-axis",
+      "title": "Item Cross Axis Placement Mode: item-cross/item-wrap",
+      "level": 3,
+      "text_sha256": "f5a0dacbd077474c87b1345cfe0e7826969ab66a1a6dd4a3bff8cba371c50732",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.item-secondary-axis",
+          "css-grid-3.item-secondary-axis-clause-cca2516ebb1d",
+          "css-grid-3.item-secondary-axis-clause-4fd47baecc26",
+          "css-grid-3.item-secondary-axis-clause-bba834d909e7"
+        ]
+      }
+    },
+    {
+      "id": "item-pack-options",
+      "title": "Item Placement Packing Mode: the item-pack property",
+      "level": 3,
+      "text_sha256": "d313cade9afdcc0238e3d60c0889569131c5389f7d7c25b985eb37abce95be2d",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.item-pack-options",
+          "css-grid-3.item-pack-options-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "item-flow",
+      "title": "Item Placement Shorthand: the item-flow shorthand",
+      "level": 3,
+      "text_sha256": "cd64fb9801f8d687107487010bd2d8512145b8adfa0b5a8c5c8bed5775f047c2",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.item-flow",
+          "css-grid-3.item-flow-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "10. Acknowledgements",
+      "level": 2,
+      "text_sha256": "617f4771e957bd2034ca46b2c4722b3797b1ba8a5f653ed295e0736f20b8ff7f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "11. Security Considerations",
+      "level": 2,
+      "text_sha256": "8e724268561544f5a034363ceae6eaf32c8c1fe6c224527a7cd97cf9a6da866d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.security"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "12. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "429f4fc91cf7e1e1a20c02dffeafbe7336d7ecf841f5024205695df1d174c182",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.privacy"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-3",
+      "title": "Additions Since Level 2",
+      "level": 3,
+      "text_sha256": "75153ba98461713e1bc999f736c93f9dece9101189563442e6715a051a2661cd",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.changes-3"
+        ]
+      }
+    },
+    {
+      "id": "recent-changes",
+      "title": "Recent Changes",
+      "level": 3,
+      "text_sha256": "612e9cb5a0c9452f415db4ba125aa30591c39118740d26b1fe1eff8a6b98bfed",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.recent-changes",
+          "css-grid-3.recent-changes-clause-5738f949edc0"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.w3c-conventions",
+          "css-grid-3.w3c-conventions-clause-5c98c879f070",
+          "css-grid-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.w3c-conformance-classes",
+          "css-grid-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-grid-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.w3c-partial",
+          "css-grid-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.w3c-testing",
+          "css-grid-3.w3c-testing-clause-1e0fff369221",
+          "css-grid-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "d765a5f8af7447f610232088be623a20e334c52988bc6bc2db1970a551ace462",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "f73eec67b11926bf4b63eff7cc62d617614f3d1b8a9538366076f22e401920fc",
+      "clause_count": 115,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "6aa7b37db22cfa0fc25ce8b55697377e0f87b6daf0369ffdb0420ff966c84ec8",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "74e59745b93fff661bc3f90592329b111052fd125b06b8684a0a11385d6fe2d9",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "5279790654cb4c04223f91c823066501c77d5bcea2102372e37ba1c06d24bf82",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.property-index",
+          "css-grid-3.property-index-clause-986b7b70ef39"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "93529e199340546f37ecace6fd10e35754ec8b21052909bc3971a80775591911",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-3.issues-index"
+        ]
+      }
+    }
+  ]
+}

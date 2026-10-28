@@ -1,0 +1,1963 @@
+{
+  "schema_version": 1,
+  "source_id": "selectors-4",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Selectors Level 4",
+      "level": 1,
+      "text_sha256": "4b39b0f3f080537634707de9f7fab30305e97e1aeeb60912b7864960d0748222",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "db67470daf55a2d6b215ba5718a7d77e9f07cf80bfe5f1423e3dcc12c1d85038",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "07a727161f0716194a7027e637e3880fda5baa05df2025fccbdda2d134220f57",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "686c8465fcb56617970f93ee696ade0dc2eaf03d31e135e6ef5b7c0042fcec3a",
+      "clause_count": 134,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.contents"
+        ]
+      }
+    },
+    {
+      "id": "context",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "afb18bd87b633f7e02a21c574081026f1bf67ffcbff2f87fa9096eadeac2a437",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.context"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "2d983b4bf94112cc90ef48c2d6f7176d55d3a1e716c1a0c759e5726ce1e406b7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.placement"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "2. Selectors Overview",
+      "level": 2,
+      "text_sha256": "87593715db387a968105fa2aaa72433d17628236c65ba67a3b82dc75d665a972",
+      "clause_count": 523,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.overview"
+        ]
+      }
+    },
+    {
+      "id": "syntax",
+      "title": "3. Selector Syntax and Structure",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.syntax"
+        ]
+      }
+    },
+    {
+      "id": "structure",
+      "title": "3.1. Structure and Terminology",
+      "level": 3,
+      "text_sha256": "3a41c114d1a427c3e6c854fe07b34cdff4dbb1111cced18bb5b3f2d0942617ce",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.structure",
+          "selectors-4.structure-clause-248437964ed2",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "data-model",
+      "title": "3.2. Data Model",
+      "level": 3,
+      "text_sha256": "3324eb4d43085a291da24a65a5eb192bbb40c44bd556cbf84f3122c34b768d55",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.data-model",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "featureless-elements",
+      "title": "3.2.1. Featureless Elements",
+      "level": 4,
+      "text_sha256": "56a1e5adcf783e86e6613a3e7013627f6c8dc3567cd0c567ef22b655fcd8e0f0",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.featureless-elements",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "scoping",
+      "title": "3.3. Scoped Selectors",
+      "level": 3,
+      "text_sha256": "1033ca6ca18f9a0a3a34411644f89e5205df3db46721679ab41db17d571bf663",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.scoping",
+          "selectors-4.scoping-clause-fa4683346bfc"
+        ]
+      }
+    },
+    {
+      "id": "relative",
+      "title": "3.4. Relative Selectors",
+      "level": 3,
+      "text_sha256": "f3a4880d376cd3340cd385eeed735b3b3ca89be1b0a60c57ef46821a0c8fc807",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.relative",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-classes",
+      "title": "3.5. Pseudo-classes",
+      "level": 3,
+      "text_sha256": "dd6dc65842dba98d0f3c8cdf533a3fdb9fd1454e5e04739c91fcf45952965411",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.pseudo-classes",
+          "selectors-4.pseudo-classes-clause-235108e20766"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-elements",
+      "title": "3.6. Pseudo-elements",
+      "level": 3,
+      "text_sha256": "6b45a28993c52f8c6738ddd23b9ee6793db6ee6a5c1e0349085e65a0b5a60014",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.pseudo-elements"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-element-syntax",
+      "title": "3.6.1. Syntax",
+      "level": 4,
+      "text_sha256": "f448866aa23c0010242512b2bb7461eb401028a97a3057e11cf73716f8fce421",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.pseudo-element-syntax",
+          "selectors-4.pseudo-element-syntax-clause-1e3f696e141f"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-element-attachment",
+      "title": "3.6.2. Binding to the Document Tree",
+      "level": 4,
+      "text_sha256": "94208ce39ec9cc2efbef771c3edcb14b46491f7017c18ac95a07630979152659",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.pseudo-element-attachment"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-element-states",
+      "title": "3.6.3. Pseudo-classing Pseudo-elements",
+      "level": 4,
+      "text_sha256": "f33b5a9ea4543cb89ff1016b9f5afbe49827d1e4c459ed3cb5c182f89d5ee81d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.pseudo-element-states",
+          "selectors-4.pseudo-element-states-clause-9eae14497a2b"
+        ]
+      }
+    },
+    {
+      "id": "sub-pseudo-elements",
+      "title": "3.6.4. Sub-pseudo-elements",
+      "level": 4,
+      "text_sha256": "1a7f0507becebe6a044e0b32768339b50b449c76000581da1cde048ff4c1ec32",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.sub-pseudo-elements",
+          "selectors-4.sub-pseudo-elements-clause-3f332de98777"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-element-structure",
+      "title": "3.6.5. Internal Structure",
+      "level": 4,
+      "text_sha256": "65a506828ac477b3bd1ee20a131d5f7fe470cefb85766e6e9e30b84e33c32fec",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.pseudo-element-structure",
+          "selectors-4.pseudo-element-structure-clause-0cea1a00336f",
+          "selectors-4.pseudo-element-structure-clause-e0237120c060",
+          "selectors-4.pseudo-element-structure-clause-8a1b3670c184"
+        ]
+      }
+    },
+    {
+      "id": "case-sensitive",
+      "title": "3.7. Characters and case sensitivity",
+      "level": 3,
+      "text_sha256": "9294df5e699a557adfdef3dc7015fae68e5bc954b1893d72add8e37b157711e6",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.case-sensitive"
+        ]
+      }
+    },
+    {
+      "id": "namespaces",
+      "title": "3.8. Declaring Namespace Prefixes",
+      "level": 3,
+      "text_sha256": "11550fd4c5e93af23a2d134c88bd87bcecf479c673ba8c92653b8f1beb901f1f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.namespaces",
+          "selectors-4.namespaces-clause-11550fd4c5e9"
+        ]
+      }
+    },
+    {
+      "id": "invalid",
+      "title": "3.9. Invalid Selectors and Error Handling",
+      "level": 3,
+      "text_sha256": "5cf10196352007735fa9706c2ed7f00db580777de9109c609cd418cdab094466",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.invalid",
+          "selectors-4.invalid-clause-b814e4f62f5d",
+          "selectors-4.invalid-clause-173c4cfdf562",
+          "selectors-4.invalid-clause-1315ce25dd87",
+          "selectors-4.invalid-clause-f6f71492a664",
+          "selectors-4.invalid-clause-bdc020769d1e",
+          "selectors-4.invalid-clause-ae1d3c36afc9",
+          "selectors-4.invalid-clause-1486b7807144",
+          "selectors-4.invalid-clause-9c6fbe0aaa1c"
+        ]
+      }
+    },
+    {
+      "id": "legacy-aliasing",
+      "title": "3.10. Legacy Aliases",
+      "level": 3,
+      "text_sha256": "84c74adb19378ed3d1227e68c81e2d67b9c577980c68fca92a14f7c90ab194f1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.legacy-aliasing"
+        ]
+      }
+    },
+    {
+      "id": "logical-combination",
+      "title": "4. Logical Combinations",
+      "level": 2,
+      "text_sha256": "5935572dfda29b2ef0246e7cec5b609db643fe0926ef2a558bb158bad55239be",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.logical-combination",
+          "selectors-4.logical-combination-clause-a4458c36f30d"
+        ]
+      }
+    },
+    {
+      "id": "grouping",
+      "title": "4.1. Selector Lists",
+      "level": 3,
+      "text_sha256": "200c42df50ca80aa8cec8fb381a6ba35a9d4849638a5301ab7382d01b40a5cb2",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.grouping",
+          "selectors-4.grouping-clause-00d408d072f6",
+          "selectors-4.grouping-clause-d2584a182387",
+          "selectors-4.foundation-static-selector-logical"
+        ]
+      }
+    },
+    {
+      "id": "matches",
+      "title": "4.2. The Matches-Any Pseudo-class: :is()",
+      "level": 3,
+      "text_sha256": "87efef6be00861e18e15e696e7f7926ca9170b845a04fd963d9e27713310fb68",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.matches",
+          "selectors-4.foundation-static-selector-logical"
+        ]
+      }
+    },
+    {
+      "id": "negation",
+      "title": "4.3. The Negation (Matches-None) Pseudo-class: :not()",
+      "level": 3,
+      "text_sha256": "084a4cabfe0ee0319d3c58f1b39d2fc80035176caf964f0c560e9335fc81a7dd",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.negation",
+          "selectors-4.foundation-static-selector-logical"
+        ]
+      }
+    },
+    {
+      "id": "zero-matches",
+      "title": "4.4. The Specificity-adjustment Pseudo-class: :where()",
+      "level": 3,
+      "text_sha256": "1ac78b71361c1c45e54466399408c7765abc705d6f34961c3e78b8f0fc1229f0",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.zero-matches",
+          "selectors-4.foundation-static-selector-logical"
+        ]
+      }
+    },
+    {
+      "id": "relational",
+      "title": "4.5. The Relational Pseudo-class: :has()",
+      "level": 3,
+      "text_sha256": "54e654f61e28a4efc74c82d1c26530ab337ec3fbfe4caa535d972e635e4f99bd",
+      "clause_count": 98,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.relational",
+          "selectors-4.relational-clause-07a3c811aad7",
+          "selectors-4.foundation-static-selector-logical"
+        ]
+      }
+    },
+    {
+      "id": "elemental-selectors",
+      "title": "5. Elemental selectors",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.elemental-selectors"
+        ]
+      }
+    },
+    {
+      "id": "type-selectors",
+      "title": "5.1. Type (tag name) selector",
+      "level": 3,
+      "text_sha256": "4e79ea29c4feeaf8a320ccc0411d3454bf963fe89e221ce9a5b63c35272fa8a2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.type-selectors",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "the-universal-selector",
+      "title": "5.2. Universal selector",
+      "level": 3,
+      "text_sha256": "5d2648db7ae8f28de1227c776e2fd8c0e58b8507aedbb80afc09a05d9688a780",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-universal-selector",
+          "selectors-4.the-universal-selector-clause-f0226acd324b",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "type-nmsp",
+      "title": "5.3. Namespaces in Elemental Selectors",
+      "level": 3,
+      "text_sha256": "78a8adb9751dfe4eaf00093383c10459f1c650dd40a806c10fbfe8aae48d5ea6",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.type-nmsp",
+          "selectors-4.type-nmsp-clause-7bcc274e483f",
+          "selectors-4.type-nmsp-clause-dcfed17379de",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "the-defined-pseudo",
+      "title": "5.4. The Defined Pseudo-class: :defined",
+      "level": 3,
+      "text_sha256": "e9f2bd1322f01db951ff05673cf7832c200005920839966cb0846bdaa65e8030",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-defined-pseudo",
+          "selectors-4.foundation-static-selector-language-links"
+        ]
+      }
+    },
+    {
+      "id": "attribute-selectors",
+      "title": "6. Attribute selectors",
+      "level": 2,
+      "text_sha256": "1c080d2bb92d10d65f74ac9f19bc85badb52229c481a2818815ddc1e5c3a7499",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.attribute-selectors",
+          "selectors-4.attribute-selectors-clause-b86e5bb2b78d"
+        ]
+      }
+    },
+    {
+      "id": "attribute-representation",
+      "title": "6.1. Attribute presence and value selectors",
+      "level": 3,
+      "text_sha256": "6ee9dd7c792701a1520fcc96dd19dd32beca3670db01e604391403d4bac5804d",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.attribute-representation",
+          "selectors-4.attribute-representation-clause-26d8d9a552a5",
+          "selectors-4.attribute-representation-clause-556777b839d2",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "attribute-substrings",
+      "title": "6.2. Substring matching attribute selectors",
+      "level": 3,
+      "text_sha256": "f73cff43c5bc35b432ec297bfbaf064d2510ed3f9248457a6068d1ff5b640e2e",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.attribute-substrings",
+          "selectors-4.attribute-substrings-clause-d02d9902c67e",
+          "selectors-4.attribute-substrings-clause-af43daf3d7c2",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "attribute-case",
+      "title": "6.3. Case-sensitivity",
+      "level": 3,
+      "text_sha256": "66da1c7aebb295f148aa23bc306df5804493f4965c0d2a30316a100096ea1622",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.attribute-case",
+          "selectors-4.attribute-case-clause-1984b71adc39",
+          "selectors-4.attribute-case-clause-fc9b96b32695",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "attrnmsp",
+      "title": "6.4. Attribute selectors and namespaces",
+      "level": 3,
+      "text_sha256": "c51469ebe6b52e2b61fd3c32158a3f62257f081c7095158a552eb0bbbc78fead",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.attrnmsp",
+          "selectors-4.attrnmsp-clause-87e844136b44",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "def-values",
+      "title": "6.5. Default attribute values in DTDs",
+      "level": 3,
+      "text_sha256": "08c48cdb8fb6312b9b4532dd471a542f397cfde3c40b4beb4fd4729ec60f4356",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.def-values",
+          "selectors-4.def-values-clause-ef40c46bff4e",
+          "selectors-4.def-values-clause-99df3dd1a356",
+          "selectors-4.def-values-clause-725dfe3da4be",
+          "selectors-4.def-values-clause-fd36732fa75d"
+        ]
+      }
+    },
+    {
+      "id": "class-html",
+      "title": "6.6. Class selectors",
+      "level": 3,
+      "text_sha256": "7b3f3c2c5214dcd48a10f67ce7d43fd6319ee4f67e5e8f20e96324f28d7be099",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.class-html",
+          "selectors-4.class-html-clause-e9c06048f3ff",
+          "selectors-4.class-html-clause-6ae4b06586cc",
+          "selectors-4.class-html-clause-212144cf1ec0",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "id-selectors",
+      "title": "6.7. ID selectors",
+      "level": 3,
+      "text_sha256": "78aaeeed0d7bce40006f7b2ae89d3e3afdb5ece890b8e97d8d6685fbbea07d8a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.id-selectors",
+          "selectors-4.id-selectors-clause-c8d629114311",
+          "selectors-4.id-selectors-clause-bee0a906e620",
+          "selectors-4.id-selectors-clause-8b25ac23340c",
+          "selectors-4.id-selectors-clause-c0fba2fac717",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "linguistic-pseudos",
+      "title": "7. Linguistic Pseudo-classes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.linguistic-pseudos"
+        ]
+      }
+    },
+    {
+      "id": "the-dir-pseudo",
+      "title": "7.1. The Directionality Pseudo-class: :dir()",
+      "level": 3,
+      "text_sha256": "590c733530c59ea96b82dcfc2e9fad95f3d516e40e88353947a55cbf6493f8d2",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-dir-pseudo",
+          "selectors-4.the-dir-pseudo-clause-8bc5f99bd1bb",
+          "selectors-4.foundation-static-selector-language-links"
+        ]
+      }
+    },
+    {
+      "id": "the-lang-pseudo",
+      "title": "7.2. The Language Pseudo-class: :lang()",
+      "level": 3,
+      "text_sha256": "935bc48f37b168395fd2e94ae664d89bc242d69d4af66d44a1d58091a8f50c34",
+      "clause_count": 86,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-lang-pseudo",
+          "selectors-4.the-lang-pseudo-clause-66f67205fcba",
+          "selectors-4.the-lang-pseudo-clause-0a344269ecfa",
+          "selectors-4.the-lang-pseudo-clause-b13d3220108d",
+          "selectors-4.foundation-static-selector-language-links"
+        ]
+      }
+    },
+    {
+      "id": "location",
+      "title": "8. Location Pseudo-classes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.location"
+        ]
+      }
+    },
+    {
+      "id": "the-any-link-pseudo",
+      "title": "8.1. The Hyperlink Pseudo-class: :any-link",
+      "level": 3,
+      "text_sha256": "753ec0d3344405f8d2289226bd0966d0a0d9707b77273125c4451775f841dfff",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-any-link-pseudo",
+          "selectors-4.foundation-static-selector-language-links"
+        ]
+      }
+    },
+    {
+      "id": "link",
+      "title": "8.2. The Link History Pseudo-classes: :link and :visited",
+      "level": 3,
+      "text_sha256": "b421d1334d2212bfa2fbcdeef86678fd421f82cdeeb5a3bdac6942ffe5670b35",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.link",
+          "selectors-4.link-clause-b580fd4b7c06",
+          "selectors-4.foundation-static-selector-language-links"
+        ]
+      }
+    },
+    {
+      "id": "the-target-pseudo",
+      "title": "8.3. The Target Pseudo-class: :target",
+      "level": 3,
+      "text_sha256": "a3a0e434b2d61565e1d5951e54be39e890d1ecc523103acbd70820379af86630",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-target-pseudo",
+          "selectors-4.the-target-pseudo-clause-cea79cb02b50",
+          "selectors-4.foundation-static-selector-language-links"
+        ]
+      }
+    },
+    {
+      "id": "the-scope-pseudo",
+      "title": "8.4. The Reference Element Pseudo-class: :scope",
+      "level": 3,
+      "text_sha256": "1efe7e035625e1c246675ae3658fca95b8f8d2937d000f7b571c2833a0c43e6b",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-scope-pseudo",
+          "selectors-4.the-scope-pseudo-clause-46d887b6d61f",
+          "selectors-4.foundation-static-selector-language-links"
+        ]
+      }
+    },
+    {
+      "id": "useraction-pseudos",
+      "title": "9. User Action Pseudo-classes",
+      "level": 2,
+      "text_sha256": "c8863567c37def050a615f01088a03dd704f763eba3c3a30f26ddc28cf3c469a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.useraction-pseudos"
+        ]
+      }
+    },
+    {
+      "id": "the-hover-pseudo",
+      "title": "9.1. The Pointer Hover Pseudo-class: :hover",
+      "level": 3,
+      "text_sha256": "5667573c5f25d1cfe7adccc805236ed7867a76da0b158ea4e887cc0be277a758",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-hover-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-active-pseudo",
+      "title": "9.2. The Activation Pseudo-class: :active",
+      "level": 3,
+      "text_sha256": "e63c654d6385689f4293ec5813191feda09ec6d9e2f8e937556842ce0a99d11b",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-active-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-focus-pseudo",
+      "title": "9.3. The Input Focus Pseudo-class: :focus",
+      "level": 3,
+      "text_sha256": "d014bde10c18762fda2b15d72eeba1809fa4e2addf58ea77de181a5c68ae821b",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-focus-pseudo",
+          "selectors-4.the-focus-pseudo-clause-8976828949b6"
+        ]
+      }
+    },
+    {
+      "id": "the-focus-visible-pseudo",
+      "title": "9.4. The Focus-Indicated Pseudo-class: :focus-visible",
+      "level": 3,
+      "text_sha256": "097f343188ef68a12156a87929ccb2f1fe7bfee15b57a2ad27fd98da87eb8c5e",
+      "clause_count": 61,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-focus-visible-pseudo",
+          "selectors-4.the-focus-visible-pseudo-clause-d92d5072fb7f",
+          "selectors-4.the-focus-visible-pseudo-clause-ab3bdc82e656"
+        ]
+      }
+    },
+    {
+      "id": "the-focus-within-pseudo",
+      "title": "9.5. The Focus Container Pseudo-class: :focus-within",
+      "level": 3,
+      "text_sha256": "a49e3a0a8b62653d03d0844cb116085d59e05cb38bf65813b6901496480b6b00",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-focus-within-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "resource-pseudos",
+      "title": "10. Resource State Pseudo-classes",
+      "level": 2,
+      "text_sha256": "4c7a8f5de5cd6f464224552c47a4099e294c081488b3c97eaf9b0cf245dc86d7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.resource-pseudos"
+        ]
+      }
+    },
+    {
+      "id": "video-state",
+      "title": "10.1. Media Playback State: the :playing, :paused, and :seeking pseudo-classes",
+      "level": 3,
+      "text_sha256": "25aff8c87b1da023489a6379b5c776b4f91523b50c22c51ab293546fb095bf97",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.video-state"
+        ]
+      }
+    },
+    {
+      "id": "media-loading-state",
+      "title": "10.2. Media Loading State: the :buffering and :stalled pseudo-classes",
+      "level": 3,
+      "text_sha256": "28be96eea55f6d08bb16e9d7e1bc5ff7c867e2bda9a6f7c31a1e88dcc3091d02",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.media-loading-state"
+        ]
+      }
+    },
+    {
+      "id": "sound-state",
+      "title": "10.3. Sound State: the :muted and :volume-locked pseudo-classes",
+      "level": 3,
+      "text_sha256": "eda65ef97d8313bbb80a599e2f3ae5de252952d7e12c7ae80af2591a8594ad6d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.sound-state",
+          "selectors-4.sound-state-clause-eff57ad557cb"
+        ]
+      }
+    },
+    {
+      "id": "display-state-pseudos",
+      "title": "11. Element Display State Pseudo-classes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.display-state-pseudos"
+        ]
+      }
+    },
+    {
+      "id": "open-state",
+      "title": "11.1. Collapse State: the :open pseudo-class",
+      "level": 3,
+      "text_sha256": "12281fdf92f37fb1437767d10efaf4d37c34b244205a94170300a3be2e31f4e7",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.open-state"
+        ]
+      }
+    },
+    {
+      "id": "popover-open-state",
+      "title": "11.2. Popover State: the :popover-open pseudo-class",
+      "level": 3,
+      "text_sha256": "efca34f81f2034819ede837633d1cf42fc93f72f2f38c9a5a2e66126a9fbbe08",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.popover-open-state"
+        ]
+      }
+    },
+    {
+      "id": "modal-state",
+      "title": "11.3. Modal (Exclusive Interaction) State: the :modal pseudo-class",
+      "level": 3,
+      "text_sha256": "da58b2ad9771111e4c1aba03e3668a878a4cf6f7d6d67d67e15ed9c37f511322",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.modal-state"
+        ]
+      }
+    },
+    {
+      "id": "fullscreen-state",
+      "title": "11.4. Fullscreen Presentation State: the :fullscreen pseudo-class",
+      "level": 3,
+      "text_sha256": "45b616f565f8e8c7d19aaed9fb032baa787d546e472d92ce371d64eb0a8578e6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.fullscreen-state"
+        ]
+      }
+    },
+    {
+      "id": "pip-state",
+      "title": "11.5. Picture-in-Picture Presentation State: the :picture-in-picture pseudo-class",
+      "level": 3,
+      "text_sha256": "a4e3b8f4f026cfe4341170f259bf138ed7bba546c1472b5c437c5efe35f32f8c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.pip-state"
+        ]
+      }
+    },
+    {
+      "id": "input-pseudos",
+      "title": "12. The Input Pseudo-classes",
+      "level": 2,
+      "text_sha256": "93818314df706153d26329c41e833cdd80cb08e2505cfbf314b4032fc7332874",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.input-pseudos"
+        ]
+      }
+    },
+    {
+      "id": "input-states",
+      "title": "12.1. Input Control States",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.input-states"
+        ]
+      }
+    },
+    {
+      "id": "enableddisabled",
+      "title": "12.1.1. The :enabled and :disabled Pseudo-classes",
+      "level": 4,
+      "text_sha256": "242736ca8ca136ec2202091eb9f589dbee7081df471c24c2297ab673cd08c9cb",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.enableddisabled",
+          "selectors-4.enableddisabled-clause-3a82b1702c8a",
+          "selectors-4.enableddisabled-clause-43ce97122416",
+          "selectors-4.foundation-initial-control-selectors"
+        ]
+      }
+    },
+    {
+      "id": "rw-pseudos",
+      "title": "12.1.2. The Mutability Pseudo-classes: :read-only and :read-write",
+      "level": 4,
+      "text_sha256": "1e5b30b51ab7c83c7fd8bcaa88bc937e9458856eecc4c19731f734675aa1322e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.rw-pseudos",
+          "selectors-4.foundation-initial-control-selectors"
+        ]
+      }
+    },
+    {
+      "id": "placeholder",
+      "title": "12.1.3. The Placeholder-shown Pseudo-class: :placeholder-shown",
+      "level": 4,
+      "text_sha256": "36755a1b86f693a69c1ed423787a840396f7cc32ec49ca8c68b9d56c5a1d64ba",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.placeholder",
+          "selectors-4.foundation-initial-control-selectors"
+        ]
+      }
+    },
+    {
+      "id": "autofill",
+      "title": "12.1.4. The Automatic Input Pseudo-class: :autofill",
+      "level": 4,
+      "text_sha256": "8b73a9adb39a121bc2d8660697b7a2ae59179078409b930d3dcdb0ebcf2b3c6b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.autofill",
+          "selectors-4.foundation-initial-control-selectors"
+        ]
+      }
+    },
+    {
+      "id": "the-default-pseudo",
+      "title": "12.1.5. The Default-option Pseudo-class: :default",
+      "level": 4,
+      "text_sha256": "5054002bd445b98361db8ae62c1017b0b3d2ef07176ec7169ea0456af9fbf8a6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-default-pseudo",
+          "selectors-4.foundation-initial-control-selectors"
+        ]
+      }
+    },
+    {
+      "id": "input-value-states",
+      "title": "12.2. Input Value States",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.input-value-states"
+        ]
+      }
+    },
+    {
+      "id": "checked",
+      "title": "12.2.1. The Selected-option Pseudo-classes: :checked, :unchecked, and :indeterminate",
+      "level": 4,
+      "text_sha256": "40cdde3e1895698967430a5bc077c906f1d5f499e553317c34b11ba237efc695",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.checked",
+          "selectors-4.foundation-initial-control-selectors"
+        ]
+      }
+    },
+    {
+      "id": "ui-validity",
+      "title": "12.3. Input Value-checking",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.ui-validity"
+        ]
+      }
+    },
+    {
+      "id": "validity-pseudos",
+      "title": "12.3.1. The Validity Pseudo-classes: :valid and :invalid",
+      "level": 4,
+      "text_sha256": "d261c8164878915283295c3d149663b4e774ad95b552c2f4768b5cbf4ee5700c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.validity-pseudos",
+          "selectors-4.validity-pseudos-clause-4b20e8214e15",
+          "selectors-4.validity-pseudos-clause-efb9af4308d6",
+          "selectors-4.foundation-initial-control-selectors"
+        ]
+      }
+    },
+    {
+      "id": "range-pseudos",
+      "title": "12.3.2. The Range Pseudo-classes: :in-range and :out-of-range",
+      "level": 4,
+      "text_sha256": "1eedd670e1a807342e723a59b5639962001c53320d91b5db71c0ed25b98c06aa",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.range-pseudos",
+          "selectors-4.foundation-initial-control-selectors"
+        ]
+      }
+    },
+    {
+      "id": "opt-pseudos",
+      "title": "12.3.3. The Optionality Pseudo-classes: :required and :optional",
+      "level": 4,
+      "text_sha256": "60da4e09f98e6e294cae49cb283f886c5100103896347e4a4c0eb58d849e850d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.opt-pseudos",
+          "selectors-4.opt-pseudos-clause-396dbfec454f",
+          "selectors-4.opt-pseudos-clause-08a768da037e",
+          "selectors-4.opt-pseudos-clause-4fa1095a6737",
+          "selectors-4.opt-pseudos-clause-8c1e4d1fbd31",
+          "selectors-4.foundation-initial-control-selectors"
+        ]
+      }
+    },
+    {
+      "id": "user-pseudos",
+      "title": "12.3.4. The User-interaction Pseudo-classes: :user-valid and :user-invalid",
+      "level": 4,
+      "text_sha256": "2c033e13bac1e9e3967ef4c1046129c5b85594eb50aca829408f5747ddac0d08",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.user-pseudos",
+          "selectors-4.user-pseudos-clause-f44dc7a830b7",
+          "selectors-4.user-pseudos-clause-78e7462f65c0",
+          "selectors-4.user-pseudos-clause-3f0f5c6a7940",
+          "selectors-4.user-pseudos-clause-0eeef746f007",
+          "selectors-4.user-pseudos-clause-ca19565a15ae",
+          "selectors-4.user-pseudos-clause-e51594b73543",
+          "selectors-4.user-pseudos-clause-d5fe4fec7f8f",
+          "selectors-4.foundation-initial-control-selectors"
+        ]
+      }
+    },
+    {
+      "id": "structural-pseudos",
+      "title": "13. Tree-Structural pseudo-classes",
+      "level": 2,
+      "text_sha256": "68ff241442393ccb8923962b492debed0b9e319a92aef36e554a101b43796aae",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.structural-pseudos",
+          "selectors-4.structural-pseudos-clause-81f7d5d4da1a",
+          "selectors-4.foundation-static-selector-logical"
+        ]
+      }
+    },
+    {
+      "id": "the-root-pseudo",
+      "title": "13.1. :root pseudo-class",
+      "level": 3,
+      "text_sha256": "9ae960dcac453a504b8f7d293e1777fb674b4a0f670dc7cc97bec655054077ed",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-root-pseudo",
+          "selectors-4.foundation-static-selector-logical"
+        ]
+      }
+    },
+    {
+      "id": "the-empty-pseudo",
+      "title": "13.2. :empty pseudo-class",
+      "level": 3,
+      "text_sha256": "82d124f7c74ca4ddee8448791c50b971a211f1fa7e9e73dfa117a67bf142925b",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-empty-pseudo",
+          "selectors-4.the-empty-pseudo-clause-c2a5dbac9061",
+          "selectors-4.foundation-static-selector-logical"
+        ]
+      }
+    },
+    {
+      "id": "child-index",
+      "title": "13.3. Child-indexed Pseudo-classes",
+      "level": 3,
+      "text_sha256": "2223f3025632e535f1eb36eaf3c5a6b12f6692e3407e990a6569d7df2b0b67fa",
+      "clause_count": 76,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.child-index",
+          "selectors-4.child-index-clause-92494421a7b3",
+          "selectors-4.foundation-static-selector-logical"
+        ]
+      }
+    },
+    {
+      "id": "the-nth-child-pseudo",
+      "title": "13.3.1. :nth-child() pseudo-class",
+      "level": 4,
+      "text_sha256": "b8afa8c668a7ae3eb4b6199ae89a6b27a140b57a5aedc30f8c30f1c47f1a8522",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-nth-child-pseudo",
+          "selectors-4.the-nth-child-pseudo-clause-c8558007ce70",
+          "selectors-4.the-nth-child-pseudo-clause-f5dbc247121e"
+        ]
+      }
+    },
+    {
+      "id": "the-nth-last-child-pseudo",
+      "title": "13.3.2. :nth-last-child() pseudo-class",
+      "level": 4,
+      "text_sha256": "8e524f71a4c8fcb4f995b04dd291bfc8f48f599cb23f9f17889b676158342ed3",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-nth-last-child-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-first-child-pseudo",
+      "title": "13.3.3. :first-child pseudo-class",
+      "level": 4,
+      "text_sha256": "626c9a6a478323a1ef0248fc037f52e658751f4172c2fd35a78a61c3def8de1f",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-first-child-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-last-child-pseudo",
+      "title": "13.3.4. :last-child pseudo-class",
+      "level": 4,
+      "text_sha256": "bcd24691c6552a2c86265bda774405218a5d9d52a5361ecda72d008caece72d0",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-last-child-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-only-child-pseudo",
+      "title": "13.3.5. :only-child pseudo-class",
+      "level": 4,
+      "text_sha256": "f8b4653cf836fab8b2e7378e05e1bf17acef38336f4da5452e68a814228208c6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-only-child-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "typed-child-index",
+      "title": "13.4. Typed Child-indexed Pseudo-classes",
+      "level": 3,
+      "text_sha256": "b09ea6915fbe918538f53404753fd02af9ec8916d2e40c5dab5c1f73f05dd87a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.typed-child-index",
+          "selectors-4.typed-child-index-clause-971fa50a49a0",
+          "selectors-4.foundation-static-selector-logical"
+        ]
+      }
+    },
+    {
+      "id": "the-nth-of-type-pseudo",
+      "title": "13.4.1. :nth-of-type() pseudo-class",
+      "level": 4,
+      "text_sha256": "6544125c1c78687be0a9f1e09072bf4f2c4befa366b6d60561eaf725e050711d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-nth-of-type-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-nth-last-of-type-pseudo",
+      "title": "13.4.2. :nth-last-of-type() pseudo-class",
+      "level": 4,
+      "text_sha256": "8e14ac79887cf656f695e4c6006bef735aee1684b70b4e5b8d2cf60c14abedbc",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-nth-last-of-type-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-first-of-type-pseudo",
+      "title": "13.4.3. :first-of-type pseudo-class",
+      "level": 4,
+      "text_sha256": "73758143fbd4f2311af1ec4cb64d076564d2f6b541175989bbdb165558876c77",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-first-of-type-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-last-of-type-pseudo",
+      "title": "13.4.4. :last-of-type pseudo-class",
+      "level": 4,
+      "text_sha256": "3197f833b4ac985af30871e07d4e7199916e73552c4e92e30a7e95c7f97b383d",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-last-of-type-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-only-of-type-pseudo",
+      "title": "13.4.5. :only-of-type pseudo-class",
+      "level": 4,
+      "text_sha256": "4ecc3c112bce6454722cdff71bc15b13d376d391309b169484975c32d70d92cd",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.the-only-of-type-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "combinators",
+      "title": "14. Combinators",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.combinators",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "descendant-combinators",
+      "title": "14.1. Descendant combinator ( )",
+      "level": 3,
+      "text_sha256": "cf21468a36f2d6fe80f0316d48693ef09e3339009334d935eff6aedb3dbc00b4",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.descendant-combinators",
+          "selectors-4.descendant-combinators-clause-3ffc041c1fb8"
+        ]
+      }
+    },
+    {
+      "id": "child-combinators",
+      "title": "14.2. Child combinator (>)",
+      "level": 3,
+      "text_sha256": "1adbf44b077edac72a9f171b53941370994d3b39ab9478f3bd699566623b5618",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.child-combinators",
+          "selectors-4.child-combinators-clause-d1a07f003b4a"
+        ]
+      }
+    },
+    {
+      "id": "adjacent-sibling-combinators",
+      "title": "14.3. Next-sibling combinator (+)",
+      "level": 3,
+      "text_sha256": "b08ed5aa40f2a0ef2888f1b033913463f0c6b68b5cddb300878d903cca7c02ad",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.adjacent-sibling-combinators",
+          "selectors-4.adjacent-sibling-combinators-clause-43c5aff6f71f",
+          "selectors-4.adjacent-sibling-combinators-clause-a76bd65c4aa2"
+        ]
+      }
+    },
+    {
+      "id": "general-sibling-combinators",
+      "title": "14.4. Subsequent-sibling combinator (~)",
+      "level": 3,
+      "text_sha256": "5dc2e6a96bcb5aeabe42586990d45aa915b9fd4bdc7a5eb632b33772ee6e37c1",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.general-sibling-combinators"
+        ]
+      }
+    },
+    {
+      "id": "specificity-rules",
+      "title": "15. Calculating a selector’s specificity",
+      "level": 2,
+      "text_sha256": "c1f0c5218e881acc0a7efa19202667d44a6a3896b345bdc7ef141171da11e5bd",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.specificity-rules",
+          "selectors-4.specificity-rules-clause-e94df095d85a",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "grammar",
+      "title": "16. Grammar",
+      "level": 2,
+      "text_sha256": "7981f7541a3d645c0d76cc6ad5913189b0d0e091fa5d1c3a3191ccc22d6ccce0",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.grammar",
+          "selectors-4.grammar-clause-781aaf023463",
+          "selectors-4.grammar-clause-d6e9b63e0bcb",
+          "selectors-4.grammar-clause-ef40b3b4f3b5",
+          "selectors-4.grammar-clause-aaecdaeb9fe4",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "forgiving-selector",
+      "title": "16.1. <forgiving-selector-list> and <forgiving-relative-selector-list>",
+      "level": 3,
+      "text_sha256": "0172589f455a94b68ebc98509d4f4fcebc64ccbad99531bedbd6168f9aea4f84",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.forgiving-selector",
+          "selectors-4.forgiving-selector-clause-5af8105ffa29",
+          "selectors-4.forgiving-selector-clause-aa919a3adca5",
+          "selectors-4.forgiving-selector-clause-4bb1b957d569",
+          "selectors-4.foundation-static-selector-structure"
+        ]
+      }
+    },
+    {
+      "id": "api-hooks",
+      "title": "17. API Hooks",
+      "level": 2,
+      "text_sha256": "79fcf0362f557f65d5050ac96da7c14ecc1f3241e4203bab5e1b0c78fb546085",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.api-hooks",
+          "selectors-4.api-hooks-clause-6af7dc953357"
+        ]
+      }
+    },
+    {
+      "id": "parse-selector",
+      "title": "17.1. Parse A Selector",
+      "level": 3,
+      "text_sha256": "86fcd4269b2bdc3cbe0f7a453b642d5a12090ce636d9db35f6814bd3be0f8317",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.parse-selector",
+          "selectors-4.parse-selector-clause-dfb9e9f83114",
+          "selectors-4.parse-selector-clause-cc2c8eeb41c3"
+        ]
+      }
+    },
+    {
+      "id": "parse-relative-selector",
+      "title": "17.2. Parse A Relative Selector",
+      "level": 3,
+      "text_sha256": "7c12dcbfd1fe5695fbea5796bdd8118eb61c5a041a01d0ee1c2dec40615d14bc",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.parse-relative-selector",
+          "selectors-4.parse-relative-selector-clause-cd747050598f",
+          "selectors-4.parse-relative-selector-clause-cc2c8eeb41c3"
+        ]
+      }
+    },
+    {
+      "id": "match-against-element",
+      "title": "17.3. Match a Selector Against an Element",
+      "level": 3,
+      "text_sha256": "012edf8eb6da9300bf0d5ff72ffe758638c0f58f452035b56afa25a0427c2980",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.match-against-element",
+          "selectors-4.match-against-element-clause-2f68c3028ff3",
+          "selectors-4.match-against-element-clause-ac2f2bcd5396",
+          "selectors-4.match-against-element-clause-e048b7a372ff"
+        ]
+      }
+    },
+    {
+      "id": "match-against-pseudo-element",
+      "title": "17.4. Match a Selector Against a Pseudo-element",
+      "level": 3,
+      "text_sha256": "30d175491b16ba844e5053c513bf5566e8ca3d82e595c7c554a108cd5609d3c2",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.match-against-pseudo-element",
+          "selectors-4.match-against-pseudo-element-clause-8f704b644487",
+          "selectors-4.match-against-pseudo-element-clause-11cd3d5b3fbd",
+          "selectors-4.match-against-pseudo-element-clause-c754a0286705"
+        ]
+      }
+    },
+    {
+      "id": "match-against-tree",
+      "title": "17.5. Match a Selector Against a Tree",
+      "level": 3,
+      "text_sha256": "c91aa393d95b31ab5282cc6bc9ac1b8927dd584a67ea55ec052be819f9b9bea8",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.match-against-tree",
+          "selectors-4.match-against-tree-clause-779d9a83c3eb",
+          "selectors-4.match-against-tree-clause-332ae98ca232"
+        ]
+      }
+    },
+    {
+      "id": "dom-mapping",
+      "title": "Appendix A: Guidance on Mapping Source Documents & Data to an Element Tree",
+      "level": 2,
+      "text_sha256": "8ff8b3f939cc88ae2781a80d65b63b23bc13c8e3560de353356c3389df12bca9",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.dom-mapping"
+        ]
+      }
+    },
+    {
+      "id": "compat",
+      "title": "Appendix B: Obsolete but Required -webkit- Parsing Quirks for Web Compat",
+      "level": 2,
+      "text_sha256": "9d0d8f8146fb8c081ca4cc183a8db20a7636a8e49bf014407e0eebcec387fadd",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.compat",
+          "selectors-4.compat-clause-1f53c4c777a7",
+          "selectors-4.compat-clause-c025dbb599d8",
+          "selectors-4.compat-clause-acc2d9f6f4a1",
+          "selectors-4.compat-clause-21f6bfa1ea77",
+          "selectors-4.compat-clause-54e08b951385",
+          "selectors-4.compat-clause-ff5107230f30",
+          "selectors-4.compat-clause-5cf5a06bfaa2",
+          "selectors-4.compat-clause-ed9b252aee35"
+        ]
+      }
+    },
+    {
+      "id": "visited-privacy",
+      "title": "Appendix C: Example Privacy-Preserving :visited Restrictions",
+      "level": 2,
+      "text_sha256": "2b3392283e980e7e8650e199796ccd8d6bc24f645e576a37ca1b90d277e7451f",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.visited-privacy",
+          "selectors-4.visited-privacy-clause-0dd7e582cc5c",
+          "selectors-4.foundation-static-selector-language-links"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "18. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-2022-11",
+      "title": "18.1. Changes since the 11 November 2022 Working Draft",
+      "level": 3,
+      "text_sha256": "3bb2c015a26e992c10277d463f2198ccdb7451dbfbf9a5a1c40179a744d2c298",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.changes-2022-11"
+        ]
+      }
+    },
+    {
+      "id": "changes-2022-05",
+      "title": "18.2. Changes since the 7 May 2022 Working Draft",
+      "level": 3,
+      "text_sha256": "ace78091cb4c63018168af80aa31ddb265975e46ed346692bcc0e816fd5dfd23",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.changes-2022-05"
+        ]
+      }
+    },
+    {
+      "id": "changes-2018-11",
+      "title": "18.3. Changes since the 21 November 2018 Working Draft",
+      "level": 3,
+      "text_sha256": "0ab81c92b15c43912d3f5e8c88f64ba4a68f5016d9cad17589cad42bf0521c8f",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.changes-2018-11"
+        ]
+      }
+    },
+    {
+      "id": "changes-2018-02",
+      "title": "18.4. Changes since the 2 February 2018 Working Draft",
+      "level": 3,
+      "text_sha256": "0698caede079c37d57f96597247931efd0f6e3f08df98e894cd5246b6579e98f",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.changes-2018-02"
+        ]
+      }
+    },
+    {
+      "id": "changes-2013",
+      "title": "18.5. Changes since the 2 May 2013 Working Draft",
+      "level": 3,
+      "text_sha256": "fe62fef114cb75c5bfe82ed31c1fde86357519602b9e94af11f165d5be5add5d",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.changes-2013"
+        ]
+      }
+    },
+    {
+      "id": "changes-2012",
+      "title": "18.6. Changes since the 23 August 2012 Working Draft",
+      "level": 3,
+      "text_sha256": "1d6e2b98f51c6ad1bf95d38538d211d900f747ad225da6435573d23bbf4df253",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.changes-2012"
+        ]
+      }
+    },
+    {
+      "id": "changes-2011",
+      "title": "18.7. Changes since the 29 September 2011 Working Draft",
+      "level": 3,
+      "text_sha256": "f5ffc7a86da08d0011f89fd3d5a50b5887ae43942ba128cb4d2a09822923fb6b",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.changes-2011"
+        ]
+      }
+    },
+    {
+      "id": "changes-level-3",
+      "title": "18.8. Changes Since Level 3",
+      "level": 3,
+      "text_sha256": "eec813f7b8fe4e06c074d4f0b1d59db1d63726b3bbe69c0f0fe6cbafa1d89e84",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.changes-level-3"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "19. Acknowledgements",
+      "level": 2,
+      "text_sha256": "6615b931b39c52b3c2cb82200c813710dadd1ef91f9b209ea959076226ee9c04",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "3dd8a2d2836f50d83a4afe4c0c5a3fa0018b075c0fe25873c08aefdfcc2c5924",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "7de47c944a5171a61669605bbdf718a13d077facc746e3f86f242322d50f1e78",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.security"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.w3c-conventions",
+          "selectors-4.w3c-conventions-clause-5c98c879f070",
+          "selectors-4.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.w3c-conformance-classes",
+          "selectors-4.w3c-conformance-classes-clause-ff408372426c",
+          "selectors-4.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.w3c-partial",
+          "selectors-4.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.w3c-testing",
+          "selectors-4.w3c-testing-clause-1e0fff369221",
+          "selectors-4.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "a70ab6228a76c2170852687f245a0009d7eeceb2fb0c836509ff7fefe5d9940c",
+      "clause_count": 156,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "7d9e3d4dfca0b232da781a6aa90dada6094db49561f0ac178c45e82822d32c0e",
+      "clause_count": 137,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "fd738e6a881fc3af37a254cf2c57d0aad6cb8cf0c41d824bcec61d2c4d7b5a8f",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.import-08a458136010",
+          "selectors-4.import-e391596041fb"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "571c4f40d692ede3d867e81f6c3924939137b8e2da1079aeb71aaae68fd26e43",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.informative"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "fdb9a983229d5fa440a7f1e9e31af80a9587e0f13bebdbbad195e1234c3845c4",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-4.issues-index"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1425 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-scoping-1.subtitle",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "subtitle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C First Public Working Draft, 3 April 2014.",
+      "locator": {
+        "section_id": "subtitle",
+        "text_sha256": "789a2154cb0e55a5a268e9c03edd7c141afbb82f44c7cd305798bec19eee3822"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.intro",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 1 Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "ab5df625bc76dbd4e163bed2dd888df828f90159bb93556525c31821b6541d46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.scope",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "scope"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2 Scoped Styles.",
+      "locator": {
+        "section_id": "scope",
+        "text_sha256": "1a584add9f03d0bbbf7dc15f9315e1daa2ee5b5361c64b2b7cc4d14c22a86be6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.scoping-mechanisms",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "scoping-mechanisms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scoping Mechanisms.",
+      "locator": {
+        "section_id": "scoping-mechanisms",
+        "text_sha256": "fa7c343296d3ac39855f392cbd43b57e01db26f1d8c99a520fa7f6ee49b0e031"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.scoping-markup",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "scoping-markup"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document Markup for Scoping.",
+      "locator": {
+        "section_id": "scoping-markup",
+        "text_sha256": "49dc41435874e8caf170d7f6219bf3b3236a96b15fea771cbe86e36e4524387a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.scope-atrule",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "scope-atrule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Syntax for Scoping: the @scope rule.",
+      "locator": {
+        "section_id": "scope-atrule",
+        "text_sha256": "304215cc69cd0166a2455022cb68e946b32574deae00cfae225177ca2ba5b393"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scoping-1.scope-atrule-clause-7b43b004a339",
+        "css-scoping-1.scope-atrule-clause-8df23a1054fd",
+        "css-scoping-1.scope-atrule-clause-0698f7e006a3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.scope-atrule-clause-7b43b004a339",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "scope-atrule"
+      ],
+      "behaviour": "CSS Syntax for Scoping: the @scope rule — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "scope-atrule",
+        "clause_index": 4,
+        "clause_sha256": "7b43b004a339a86e19322380c36383ea8bf8871db1e2d669dcef9738c8da6c82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.scope-atrule-clause-8df23a1054fd",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "scope-atrule"
+      ],
+      "behaviour": "CSS Syntax for Scoping: the @scope rule — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "scope-atrule",
+        "clause_index": 10,
+        "clause_sha256": "8df23a1054fd83f2ad76415d120a6f198bf00a5857afd830dff720afb855ebba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.scope-atrule-clause-0698f7e006a3",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "scope-atrule"
+      ],
+      "behaviour": "CSS Syntax for Scoping: the @scope rule — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "scope-atrule",
+        "clause_index": 12,
+        "clause_sha256": "0698f7e006a3f6656cd5b4e2cce0661791f6c6126a2d35a1490eb394c64ba819"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.scoping-context",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "scoping-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Querying the Scoping Context.",
+      "locator": {
+        "section_id": "scoping-context",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.scope-pseudo",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "scope-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selecting the Scoping Root: :scope pseudo-class.",
+      "locator": {
+        "section_id": "scope-pseudo",
+        "text_sha256": "b8b2f3383ad013c02deebf7c8b72a0d06510111317faee040ac7bfb27e3558ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.scope-content-pseudo",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "scope-content-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selecting Outside the Scope: :scope-context() pseudo-class.",
+      "locator": {
+        "section_id": "scope-content-pseudo",
+        "text_sha256": "24bd82070fcd50770f5b54d8a466803352da72a225f127c3598a20a713cb406a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.shadow-dom",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "shadow-dom"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 3 Shadow Encapsulation.",
+      "locator": {
+        "section_id": "shadow-dom",
+        "text_sha256": "7142f75af532d2c0ed2870b00d5af17466da5261c9aac532b7ea97bcdda8624f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scoping-1.shadow-dom-clause-1858ff82f3d7",
+        "css-scoping-1.shadow-dom-clause-7cc4f2bdb0ad"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.shadow-dom-clause-1858ff82f3d7",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "shadow-dom"
+      ],
+      "behaviour": "3 Shadow Encapsulation — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "shadow-dom",
+        "clause_index": 3,
+        "clause_sha256": "1858ff82f3d79344ddaf9df6b0f810ee974ea90fd47e5ef4d0f31e932308a240"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.shadow-dom-clause-7cc4f2bdb0ad",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "shadow-dom"
+      ],
+      "behaviour": "3 Shadow Encapsulation — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "shadow-dom",
+        "clause_index": 7,
+        "clause_sha256": "7cc4f2bdb0ad6f137b27b4d9597143b6fb2fcf457c82fff6a21b51b502f313e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.selectors-data-model",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "selectors-data-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shadow DOM Selection Model.",
+      "locator": {
+        "section_id": "selectors-data-model",
+        "text_sha256": "e763263a2dc687560af00479cfd3f820333ef4dcd798c46b0b2dffc1021aa0dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.host-element",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "host-element"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Host Elements in a Shadow Tree.",
+      "locator": {
+        "section_id": "host-element",
+        "text_sha256": "e25ba0156263adb5b7788cf2e741642036d2ffd4a0b792d5ce830716253e8a5d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.selectors",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shadow DOM Selectors.",
+      "locator": {
+        "section_id": "selectors",
+        "text_sha256": "6f52e3734de414147932b795dfa782129372783b4f027f761e89e37e4424895d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.host-selector",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "host-selector"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selecting Into the Light: the :host, :host(), and :host-context() pseudo-classes.",
+      "locator": {
+        "section_id": "host-selector",
+        "text_sha256": "f838192fdc158de8ae024863358440a558274bc7e90c57a12b413ff080c48d8b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.shadow-pseudoelement",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "shadow-pseudoelement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selecting Into the Dark: the ::shadow pseudo-element.",
+      "locator": {
+        "section_id": "shadow-pseudoelement",
+        "text_sha256": "86fa98854926196a694090e5c528009e393bc9a048c7bbedeca70837c96093fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scoping-1.shadow-pseudoelement-clause-d4dbb8fe1de4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.shadow-pseudoelement-clause-d4dbb8fe1de4",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "shadow-pseudoelement"
+      ],
+      "behaviour": "Selecting Into the Dark: the ::shadow pseudo-element — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "shadow-pseudoelement",
+        "clause_index": 1,
+        "clause_sha256": "d4dbb8fe1de4be2bb6daafdfb5ae79feb92f2ee1cd252e404d8d45083a616e38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.content-combinator",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "content-combinator"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selecting Shadow-Projected Content: the ::content pseudo-element.",
+      "locator": {
+        "section_id": "content-combinator",
+        "text_sha256": "99f5d3f28a9dbc6bbc215c072616fefdb5fbdbca31ce5c5483d9f534bba786f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scoping-1.content-combinator-clause-4dba22af5cfa"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.content-combinator-clause-4dba22af5cfa",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "content-combinator"
+      ],
+      "behaviour": "Selecting Shadow-Projected Content: the ::content pseudo-element — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-combinator",
+        "clause_index": 2,
+        "clause_sha256": "4dba22af5cfad2aff9df3500351894142195d26d9df2546b1316b1062aceabdd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.deep-combinator",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "deep-combinator"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selecting Through Shadows: the /deep/ combinator.",
+      "locator": {
+        "section_id": "deep-combinator",
+        "text_sha256": "a786cbf754829736a2805c9d70acabf8ccdae07199cbfd4e1d798e90191cd4dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.shadow-cascading",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "shadow-cascading"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shadow Cascading & Inheritance.",
+      "locator": {
+        "section_id": "shadow-cascading",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.cascading",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "cascading"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascading.",
+      "locator": {
+        "section_id": "cascading",
+        "text_sha256": "be1903d0ffcb27f83a606c5c11d424212a854e2730ba5cbbe02d736e0478b44f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scoping-1.cascading-clause-de67518f3581"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.cascading-clause-de67518f3581",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "cascading"
+      ],
+      "behaviour": "Cascading — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "cascading",
+        "clause_index": 1,
+        "clause_sha256": "de67518f35814495cb4248e9e2a03166a56d019e55cda39b24835fbc1844e56a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.inheritance",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "inheritance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inheritance.",
+      "locator": {
+        "section_id": "inheritance",
+        "text_sha256": "49a478e949fa306065a47148b81ae0b0ce57da514843124ffbbcac2cb9d5d334"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scoping-1.inheritance-clause-7251d9392ea2",
+        "css-scoping-1.inheritance-clause-c562a3e721ef"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.inheritance-clause-7251d9392ea2",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "inheritance"
+      ],
+      "behaviour": "Inheritance — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "inheritance",
+        "clause_index": 0,
+        "clause_sha256": "7251d9392ea220c5cfea0cd4288ea1068f58cd942b1f9c8c594014d8e65dae61"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.inheritance-clause-c562a3e721ef",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "inheritance"
+      ],
+      "behaviour": "Inheritance — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "inheritance",
+        "clause_index": 1,
+        "clause_sha256": "c562a3e721efab725b137fa594797001490ad71130404e4d1181372d2ed146dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.fragment-scoping",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "fragment-scoping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 4 Fragmented Styling.",
+      "locator": {
+        "section_id": "fragment-scoping",
+        "text_sha256": "0193ec526aa3bfb36f1d803ecdef8a18aa8e217d62eed3573bb0899241626daa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.the-region-pseudo-element",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "the-region-pseudo-element"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Region-based Styling: the ::region pseudo-element.",
+      "locator": {
+        "section_id": "the-region-pseudo-element",
+        "text_sha256": "1f1ec5406089400e99faf36e818e488f9870cd8dcead66b13b916131aa224a58"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scoping-1.the-region-pseudo-element-clause-59d80e2146a5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.the-region-pseudo-element-clause-59d80e2146a5",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "the-region-pseudo-element"
+      ],
+      "behaviour": "Region-based Styling: the ::region pseudo-element — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-region-pseudo-element",
+        "clause_index": 10,
+        "clause_sha256": "59d80e2146a5f79b764d11f4425dfc600e66e579559181a57f07e76f5e13379f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.conformance",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.conventions",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "conventions",
+        "text_sha256": "acb258dc27373bbfdcd07816f2e573041b50e9f35d9f9a3a64ca89c816865611"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scoping-1.conventions-clause-6abbe28898f0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.conventions-clause-6abbe28898f0",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conventions",
+        "clause_index": 0,
+        "clause_sha256": "6abbe28898f04f06c3df34bdfedec00f0f19e823fcf139f5d2d79b1692543553"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.conformance-classes",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scoping-1.conformance-classes-clause-ff408372426c",
+        "css-scoping-1.conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.conformance-classes-clause-ff408372426c",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.conformance-classes-clause-d9976214330c",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.partial",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scoping-1.partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.partial-clause-ef40c4aab200",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.experimental",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "experimental"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Experimental implementations.",
+      "locator": {
+        "section_id": "experimental",
+        "text_sha256": "d65302001727731f480732eea29f70c56e93286eee5ffd392400e6a470f873c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.testing",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "testing",
+        "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scoping-1.testing-clause-1e0fff369221",
+        "css-scoping-1.testing-clause-c7ed0d126be3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.testing-clause-1e0fff369221",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.testing-clause-c7ed0d126be3",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "testing",
+        "clause_index": 2,
+        "clause_sha256": "c7ed0d126be3854ca3a86569b068a6069b272f15531252ad1bf9883a45eb699a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scoping-1.property-index",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "547c4769772c9ff811e57bf39809cc6f1c1e6380af2bb402096c995db2287df6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.issues-index",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "20c8a72d69142450a7ad3466e3b1745fe71bec082aa55984fb18f9a74ce31511"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.title",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Scoping Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.abstract",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "2c64b5547234407497e274280a0f6152ac53f7d777b07e2105a9e68e68197775"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.status",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "9fc75e8d0a096394dafe2f8617f6a00c4942f647c7c4e1f4e8dc835675e52555"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.contents",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "c9b7eaef77f76863a5dad6b077514998b04656137ca5ce583fd89c50811bca06"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.references",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.normative",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "d42e74cc9493a4d121e92b4bcef93dff132ad62aaf9a57686d6e7b38a39dab83"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.informative",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "6ee7a4ec5d6c781dc4df44c16de0d83bb5cc4543912968e885c3105f866d6627"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scoping-1.index",
+      "family": "css-scoping-1",
+      "source_id": "css-scoping-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "3c6d91084a6821f20347fc6278a760388eb7b0ebfac62c40110408299c9aff3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

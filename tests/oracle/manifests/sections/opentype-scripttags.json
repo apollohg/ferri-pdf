@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-scripttags",
+  "sections": [
+    {
+      "id": "script-tags",
+      "title": "Script Tags",
+      "level": 1,
+      "text_sha256": "2e3d6d7073d05bb67eef84960a0bd4ddb0be9793de17aa6d2671fd42558f1e9e",
+      "clause_count": 391,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-scripttags.script-tags"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-scripttags.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-scripttags.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "8779ad52b4971ab35bb6ff10b0d80b80952f614b9b559787d55eeed4dcbd0e4a",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-scripttags.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-scripttags.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,345 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-otff",
+  "sections": [
+    {
+      "id": "the-opentype-font-file",
+      "title": "The OpenType Font File",
+      "level": 1,
+      "text_sha256": "50ffcf5320075ebd72e69a5339f9d0b87649eb716273a5198624740b471b41b1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.the-opentype-font-file"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "filenames",
+      "title": "Filenames",
+      "level": 2,
+      "text_sha256": "739f2067d5482e86d4989ec396f21758481d32f349a70cc04d59a7fa9af7e353",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.filenames",
+          "opentype-otff.filenames-clause-739f2067d548"
+        ]
+      }
+    },
+    {
+      "id": "data-types",
+      "title": "Data Types",
+      "level": 2,
+      "text_sha256": "1eb713cec29f11c8fc0a373ab3d90616eba1ab0f4e12da13994da3fa364478ba",
+      "clause_count": 73,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.data-types",
+          "opentype-otff.data-types-clause-866c7f84aacf",
+          "opentype-otff.data-types-clause-1ad85900c942"
+        ]
+      }
+    },
+    {
+      "id": "table-version-numbers",
+      "title": "Table Version Numbers",
+      "level": 2,
+      "text_sha256": "17604a6e68abd74dc227209173eff4bd84cc64123eb6e40ae22d042976d72f57",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.table-version-numbers",
+          "opentype-otff.table-version-numbers-clause-d7fceca9d692",
+          "opentype-otff.table-version-numbers-clause-cb68cd0a573b",
+          "opentype-otff.table-version-numbers-clause-1e84cec40e42"
+        ]
+      }
+    },
+    {
+      "id": "organization-of-an-opentype-font",
+      "title": "Organization of an OpenType Font",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.organization-of-an-opentype-font"
+        ]
+      }
+    },
+    {
+      "id": "table-directory",
+      "title": "Table Directory",
+      "level": 3,
+      "text_sha256": "7947f86371777fc88337ee32ffb7f1c166278fcb5fb1df918c1c3b1013769160",
+      "clause_count": 54,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.table-directory",
+          "opentype-otff.table-directory-clause-2bc535d058a8",
+          "opentype-otff.table-directory-clause-c3f13075bb47",
+          "opentype-otff.table-directory-clause-654f7311a460",
+          "opentype-otff.table-directory-clause-c81e4063c5d5",
+          "opentype-otff.table-directory-clause-c0e728dcde76",
+          "opentype-otff.table-directory-clause-89f763099b39",
+          "opentype-otff.table-directory-clause-c73b45d963de",
+          "opentype-otff.table-directory-clause-d96871f9bf49"
+        ]
+      }
+    },
+    {
+      "id": "calculating-checksums",
+      "title": "Calculating Checksums",
+      "level": 3,
+      "text_sha256": "054c793f89bb4ad70b4ba8521cc661a5d8f9f787b0cb2f2bc2214f3a1fa2aedc",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.calculating-checksums",
+          "opentype-otff.calculating-checksums-clause-41e55be9cac1",
+          "opentype-otff.calculating-checksums-clause-44905ba5777a",
+          "opentype-otff.calculating-checksums-clause-f31125733afa"
+        ]
+      }
+    },
+    {
+      "id": "font-collections",
+      "title": "Font Collections",
+      "level": 2,
+      "text_sha256": "e256dbe2936f1ede588975237fb1e599e66fe7f4f9455ab40ba6faecb08a770d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.font-collections"
+        ]
+      }
+    },
+    {
+      "id": "the-font-collection-file-structure",
+      "title": "The Font Collection File Structure",
+      "level": 3,
+      "text_sha256": "ded03041592c9b453fe3e0a37b21e6166470055fed7aec59b8c259157bb3b995",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.the-font-collection-file-structure",
+          "opentype-otff.the-font-collection-file-structure-clause-f4f1de8a1411",
+          "opentype-otff.the-font-collection-file-structure-clause-8f8fc70b195a",
+          "opentype-otff.the-font-collection-file-structure-clause-1aa6f381cafe",
+          "opentype-otff.the-font-collection-file-structure-clause-5a17b97d8592",
+          "opentype-otff.the-font-collection-file-structure-clause-d18deb93563a"
+        ]
+      }
+    },
+    {
+      "id": "ttc-header",
+      "title": "TTC Header",
+      "level": 3,
+      "text_sha256": "54917a1c6fed4c49325a74be03f9e940ca66dbe1737bf6b13961bc1848eb678e",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.ttc-header",
+          "opentype-otff.ttc-header-clause-1e2db33f5c98"
+        ]
+      }
+    },
+    {
+      "id": "font-tables",
+      "title": "Font Tables",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.font-tables"
+        ]
+      }
+    },
+    {
+      "id": "required-tables",
+      "title": "Required Tables",
+      "level": 3,
+      "text_sha256": "3bc14b44fcf4b154e7ba32b70532849d1c961e71be1642477f2b3b765799c5b3",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.required-tables",
+          "opentype-otff.required-tables-clause-42833ff8fb99"
+        ]
+      }
+    },
+    {
+      "id": "tables-related-to-truetype-outlines",
+      "title": "Tables Related to TrueType Outlines",
+      "level": 3,
+      "text_sha256": "515c0c70b825acccebcd5d63eb80de49c1d023ec967a8520184f47a1d5a0b4f7",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.tables-related-to-truetype-outlines"
+        ]
+      }
+    },
+    {
+      "id": "tables-related-to-cff-outlines",
+      "title": "Tables Related to CFF Outlines",
+      "level": 3,
+      "text_sha256": "2e27026c1626ea6003c30f56e1076e51b272965c0208b0edc7d241b02f995d02",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.tables-related-to-cff-outlines"
+        ]
+      }
+    },
+    {
+      "id": "table-related-to-svg-outlines",
+      "title": "Table Related to SVG Outlines",
+      "level": 3,
+      "text_sha256": "9bbff34d4be757db3dcb91b2d96b83707c4fa69f507ff8313463809933404e6d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.table-related-to-svg-outlines"
+        ]
+      }
+    },
+    {
+      "id": "tables-related-to-bitmap-glyphs",
+      "title": "Tables Related to Bitmap Glyphs",
+      "level": 3,
+      "text_sha256": "deff0188348e4ff35c44a6627d5439475fa7226e44115692036dc90c805a1ca2",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.tables-related-to-bitmap-glyphs"
+        ]
+      }
+    },
+    {
+      "id": "advanced-typographic-tables",
+      "title": "Advanced Typographic Tables",
+      "level": 3,
+      "text_sha256": "b8408e044ba519cb34c4714bfe4fab13a92e72499bb3bf5e9da94ac710019903",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.advanced-typographic-tables"
+        ]
+      }
+    },
+    {
+      "id": "tables-used-for-opentype-font-variations",
+      "title": "Tables used for OpenType Font Variations",
+      "level": 3,
+      "text_sha256": "b39ecab033ac7f3c857996dfce545a40e88d768ed65116311e09cde10df43844",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.tables-used-for-opentype-font-variations",
+          "opentype-otff.tables-used-for-opentype-font-variations-clause-6b357e8e1dcb",
+          "opentype-otff.tables-used-for-opentype-font-variations-clause-43c148dff4a3"
+        ]
+      }
+    },
+    {
+      "id": "tables-related-to-color-fonts",
+      "title": "Tables Related to Color Fonts",
+      "level": 3,
+      "text_sha256": "ab0944ddffb580b32a73c54a246cb833d924466cd9830907a786ca9cf9013579",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.tables-related-to-color-fonts"
+        ]
+      }
+    },
+    {
+      "id": "other-opentype-tables",
+      "title": "Other OpenType Tables",
+      "level": 3,
+      "text_sha256": "4bedf7a34ca68195754ded78a20d37e401b205d55baf2a4916e7c518b9d5e298",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.other-opentype-tables",
+          "opentype-otff.other-opentype-tables-clause-7a1d5745d1af"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "3eb25b59e14381d11045c4430465c544fb0a9c44ecad8beae369fc9d1fea3786",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otff.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

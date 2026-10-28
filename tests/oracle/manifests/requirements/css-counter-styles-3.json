@@ -1,0 +1,3928 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-counter-styles-3.profile-and-date",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "profile-and-date"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Candidate Recommendation Snapshot, 27 July 2021.",
+      "locator": {
+        "section_id": "profile-and-date",
+        "text_sha256": "e1ed069ced9f75a5a8422b61b7beb57e8cb2e4d515e89b178a18891086f22c3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.intro",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "5ad6589497d235377a950d55e3c2571e5c48b28ddc26b5c1c24ff037e582c091"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-styles",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-styles"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Counter Styles.",
+      "locator": {
+        "section_id": "counter-styles",
+        "text_sha256": "0bfdb72f8a4d21d2b993a5cbbcbb4c3e97757277db322aa56f7a4100ba0d3fc9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.counter-styles-clause-cba4af7e43cb",
+        "css-counter-styles-3.counter-styles-clause-0708357c8e43",
+        "css-counter-styles-3.counter-styles-clause-2f87193a9521",
+        "css-counter-styles-3.counter-styles-clause-8cc5c2459448",
+        "css-counter-styles-3.counter-styles-clause-d15151b4a685",
+        "css-counter-styles-3.counter-styles-clause-f5263069ebca"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-styles-clause-cba4af7e43cb",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-styles"
+      ],
+      "behaviour": "Counter Styles — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-styles",
+        "clause_index": 2,
+        "clause_sha256": "cba4af7e43cb64f8e4878a4b62ff07439e60b16ae09ddeb4a7232068c3a6b5bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-styles-clause-0708357c8e43",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-styles"
+      ],
+      "behaviour": "Counter Styles — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-styles",
+        "clause_index": 10,
+        "clause_sha256": "0708357c8e43bc9d95132888ef1515affc5ef587e69c4530ac0b0daec7076d8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-styles-clause-2f87193a9521",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-styles"
+      ],
+      "behaviour": "Counter Styles — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-styles",
+        "clause_index": 11,
+        "clause_sha256": "2f87193a9521ce5b7c487161ef27ac26113108bce28b8fa5ba7ef68b2919e5aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-styles-clause-8cc5c2459448",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-styles"
+      ],
+      "behaviour": "Counter Styles — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-styles",
+        "clause_index": 12,
+        "clause_sha256": "8cc5c24594488fe191be6510d425232b4b37e2723a55b73fbe004053370400c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-styles-clause-d15151b4a685",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-styles"
+      ],
+      "behaviour": "Counter Styles — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-styles",
+        "clause_index": 16,
+        "clause_sha256": "d15151b4a685a65f486bb70b2bf52d105d59871365895ade720048cc19fea23e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-styles-clause-f5263069ebca",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-styles"
+      ],
+      "behaviour": "Counter Styles — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-styles",
+        "clause_index": 17,
+        "clause_sha256": "f5263069ebca2e121bf195c3d4ff5f9c85b69f8f5dadc0712e20167f38ce33db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.the-counter-style-rule",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-counter-style-rule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Defining Custom Counter Styles: the @counter-style rule.",
+      "locator": {
+        "section_id": "the-counter-style-rule",
+        "text_sha256": "914f34d0fd72c7f8a415edc918be98cbbbf98f8f6cd731de77179e4e5f548334"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.the-counter-style-rule-clause-f875ae993e96",
+        "css-counter-styles-3.the-counter-style-rule-clause-82aebf8250b1",
+        "css-counter-styles-3.the-counter-style-rule-clause-40527b28d06b",
+        "css-counter-styles-3.the-counter-style-rule-clause-c225f691300e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.the-counter-style-rule-clause-f875ae993e96",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-counter-style-rule"
+      ],
+      "behaviour": "Defining Custom Counter Styles: the @counter-style rule — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-counter-style-rule",
+        "clause_index": 0,
+        "clause_sha256": "f875ae993e9638ebfc4665cccfa8d0d82d92dbb5fa5e48015cbbcf1ed9cfa21f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.the-counter-style-rule-clause-82aebf8250b1",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-counter-style-rule"
+      ],
+      "behaviour": "Defining Custom Counter Styles: the @counter-style rule — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-counter-style-rule",
+        "clause_index": 4,
+        "clause_sha256": "82aebf8250b161ca49b56a956d89a0dca1c47ac3f0132ef85ce78a2827ef2e9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.the-counter-style-rule-clause-40527b28d06b",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-counter-style-rule"
+      ],
+      "behaviour": "Defining Custom Counter Styles: the @counter-style rule — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-counter-style-rule",
+        "clause_index": 7,
+        "clause_sha256": "40527b28d06bacd72d3d9d27347c3e52b8287b8b9d98e66ef18394e831f71a26"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.the-counter-style-rule-clause-c225f691300e",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-counter-style-rule"
+      ],
+      "behaviour": "Defining Custom Counter Styles: the @counter-style rule — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-counter-style-rule",
+        "clause_index": 10,
+        "clause_sha256": "c225f691300ef9259d967225127b4f8f7b1e8ba9eb7e7177d2cc413d21ee6e2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-system",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-system"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Counter algorithms: the system descriptor.",
+      "locator": {
+        "section_id": "counter-style-system",
+        "text_sha256": "ef7229f81a0c59290fbc33e97bf9c09f948aa7e390fc425e4e1ef970b4381598"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.counter-style-system-clause-3495cfbb248c",
+        "css-counter-styles-3.counter-style-system-clause-29855626eb85",
+        "css-counter-styles-3.counter-style-system-clause-c5fa2d3e1aca"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-system-clause-3495cfbb248c",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-system"
+      ],
+      "behaviour": "Counter algorithms: the system descriptor — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-system",
+        "clause_index": 7,
+        "clause_sha256": "3495cfbb248c816fac348747a4e4da223ba8962a4c7a68060dfa2b2d4b70ded6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-system-clause-29855626eb85",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-system"
+      ],
+      "behaviour": "Counter algorithms: the system descriptor — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-system",
+        "clause_index": 8,
+        "clause_sha256": "29855626eb854092b8539e7dc511d44e502212f3dd0b989be844a9b0dcc825e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-system-clause-c5fa2d3e1aca",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-system"
+      ],
+      "behaviour": "Counter algorithms: the system descriptor — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-system",
+        "clause_index": 9,
+        "clause_sha256": "c5fa2d3e1aca2a3db9d1c85000e31abcd9ecaa80626d6e3e43a864cb1e293fdd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.cyclic-system",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "cyclic-system"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cycling Symbols: the cyclic system.",
+      "locator": {
+        "section_id": "cyclic-system",
+        "text_sha256": "517545fa438844f8c028a4d4f96c19ac48d7659ccf86517c4bfb1e4d9c180e71"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.cyclic-system-clause-163adfdb7a7e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.cyclic-system-clause-163adfdb7a7e",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "cyclic-system"
+      ],
+      "behaviour": "Cycling Symbols: the cyclic system — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-system",
+        "clause_index": 1,
+        "clause_sha256": "163adfdb7a7e23a0bdee78a12ecb687539464443ede6930474f3e8c4359d0c20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.fixed-system",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "fixed-system"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Exhaustible Symbols: the fixed system.",
+      "locator": {
+        "section_id": "fixed-system",
+        "text_sha256": "dd9539662478d97ee2ac45c5f0e78d98c5a6c4ba2dea0fdc97b7eb03618d85f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.fixed-system-clause-a9c3776de8a4",
+        "css-counter-styles-3.fixed-system-clause-8cd27df2ac1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.fixed-system-clause-a9c3776de8a4",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "fixed-system"
+      ],
+      "behaviour": "Exhaustible Symbols: the fixed system — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "fixed-system",
+        "clause_index": 1,
+        "clause_sha256": "a9c3776de8a45998f30139d717fcbc06042e2a0b89d5818ac40c70546d5583a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.fixed-system-clause-8cd27df2ac1d",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "fixed-system"
+      ],
+      "behaviour": "Exhaustible Symbols: the fixed system — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "fixed-system",
+        "clause_index": 6,
+        "clause_sha256": "8cd27df2ac1de09aad649dfed4ff539e1d05d010f02df493003f9a246aeb0543"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.symbolic-system",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "symbolic-system"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Repeating Symbols: the symbolic system.",
+      "locator": {
+        "section_id": "symbolic-system",
+        "text_sha256": "cbb469c094f084bc2fc91e05a424232d067faa24a81248510e47ae345f8ad7c1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.symbolic-system-clause-c186b3782cb0",
+        "css-counter-styles-3.symbolic-system-clause-32406f754ccb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.symbolic-system-clause-c186b3782cb0",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "symbolic-system"
+      ],
+      "behaviour": "Repeating Symbols: the symbolic system — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "symbolic-system",
+        "clause_index": 1,
+        "clause_sha256": "c186b3782cb0c800948248327541e7ae98e446939e81bd95c3b1ebff351502a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.symbolic-system-clause-32406f754ccb",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "symbolic-system"
+      ],
+      "behaviour": "Repeating Symbols: the symbolic system — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "symbolic-system",
+        "clause_index": 7,
+        "clause_sha256": "32406f754ccb5a522ec4b3c2955ba224625a478c0ac2823cbf277b8569781f85"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.alphabetic-system",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "alphabetic-system"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bijective Numerals: the alphabetic system.",
+      "locator": {
+        "section_id": "alphabetic-system",
+        "text_sha256": "c18a9547b0977747dd06352ec48084c424df77cfe2ce9c7bd71e744f14271d5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.alphabetic-system-clause-1ab5e6388cfa",
+        "css-counter-styles-3.alphabetic-system-clause-7a60908309b8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.alphabetic-system-clause-1ab5e6388cfa",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "alphabetic-system"
+      ],
+      "behaviour": "Bijective Numerals: the alphabetic system — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "alphabetic-system",
+        "clause_index": 1,
+        "clause_sha256": "1ab5e6388cfa9869434f813da0ef3a24ab08b12dea48a9bb03f9614958355b3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.alphabetic-system-clause-7a60908309b8",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "alphabetic-system"
+      ],
+      "behaviour": "Bijective Numerals: the alphabetic system — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "alphabetic-system",
+        "clause_index": 5,
+        "clause_sha256": "7a60908309b81b21ca51d8e915404bc8438544bf6736b5824f12a818067813ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.numeric-system",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "numeric-system"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Positional Numerals: the numeric system.",
+      "locator": {
+        "section_id": "numeric-system",
+        "text_sha256": "5bda3d890f2c95f224252fff70d1823e5c41275d7ffa1ce6c8876c4100dde8dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.numeric-system-clause-8ba747fe3121",
+        "css-counter-styles-3.numeric-system-clause-b0a15e6ca778"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.numeric-system-clause-8ba747fe3121",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "numeric-system"
+      ],
+      "behaviour": "Positional Numerals: the numeric system — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-system",
+        "clause_index": 1,
+        "clause_sha256": "8ba747fe3121d3c608de129a93e48af1169310e26c33a3ad3c4019dc4ed86c87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.numeric-system-clause-b0a15e6ca778",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "numeric-system"
+      ],
+      "behaviour": "Positional Numerals: the numeric system — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-system",
+        "clause_index": 5,
+        "clause_sha256": "b0a15e6ca7784bda2017be1cdfedb18482269a3618fe0bef41ac66d7e425f0a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.additive-system",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "additive-system"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Accumulating Numerals: the additive system.",
+      "locator": {
+        "section_id": "additive-system",
+        "text_sha256": "46084cedcb58302d5ad15e1330ddca7abd5eda6abe4709a3cc66e26533573e61"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.additive-system-clause-2af1cc9d190c",
+        "css-counter-styles-3.additive-system-clause-513551a38602",
+        "css-counter-styles-3.additive-system-clause-74634a65c12d",
+        "css-counter-styles-3.additive-system-clause-ac12ce69f442",
+        "css-counter-styles-3.additive-system-clause-ca449b8d22df"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.additive-system-clause-2af1cc9d190c",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "additive-system"
+      ],
+      "behaviour": "Accumulating Numerals: the additive system — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "additive-system",
+        "clause_index": 1,
+        "clause_sha256": "2af1cc9d190c43ba029affc96769f3f086ec19abcd5afa57d84ae28c34ecca2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.additive-system-clause-513551a38602",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "additive-system"
+      ],
+      "behaviour": "Accumulating Numerals: the additive system — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "additive-system",
+        "clause_index": 11,
+        "clause_sha256": "513551a386024e13e15eff5843ab94b79eee033a91febb159a4d937a8b9973fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.additive-system-clause-74634a65c12d",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "additive-system"
+      ],
+      "behaviour": "Accumulating Numerals: the additive system — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "additive-system",
+        "clause_index": 28,
+        "clause_sha256": "74634a65c12d1d0abb7198a367aa4d6675d1d7829730166d9aac42ca4fbc6184"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.additive-system-clause-ac12ce69f442",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "additive-system"
+      ],
+      "behaviour": "Accumulating Numerals: the additive system — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "additive-system",
+        "clause_index": 29,
+        "clause_sha256": "ac12ce69f44267bb42a2bf408a557e74843e4856a40b9f9db8c1f65b5c9508be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.additive-system-clause-ca449b8d22df",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "additive-system"
+      ],
+      "behaviour": "Accumulating Numerals: the additive system — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "additive-system",
+        "clause_index": 30,
+        "clause_sha256": "ca449b8d22dfc6b4f3ee79de43949ea6180532cff94e1747afa243c52da09e8c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.extends-system",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "extends-system"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Building from Existing Counter Styles: the extends system.",
+      "locator": {
+        "section_id": "extends-system",
+        "text_sha256": "e6a6024d87920038d6d62231b523239f64fb381833f9b5567e1992e9fc80017a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.extends-system-clause-8eb07f596aac",
+        "css-counter-styles-3.extends-system-clause-5505256d78af",
+        "css-counter-styles-3.extends-system-clause-9dcddf4b372a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.extends-system-clause-8eb07f596aac",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "extends-system"
+      ],
+      "behaviour": "Building from Existing Counter Styles: the extends system — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "extends-system",
+        "clause_index": 0,
+        "clause_sha256": "8eb07f596aacf9a1dfb42c616cf014d3028a90bc4f709d296b2918d7a876e91f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.extends-system-clause-5505256d78af",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "extends-system"
+      ],
+      "behaviour": "Building from Existing Counter Styles: the extends system — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "extends-system",
+        "clause_index": 1,
+        "clause_sha256": "5505256d78af0cb0604ba641cf17815c2d6741a924b1f6a58882e6d6e5c5c413"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.extends-system-clause-9dcddf4b372a",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "extends-system"
+      ],
+      "behaviour": "Building from Existing Counter Styles: the extends system — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "extends-system",
+        "clause_index": 3,
+        "clause_sha256": "9dcddf4b372a91551846ce0a364a90867436dd80013da004fae1f933ec72e34c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-negative",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-negative"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Formatting negative values: the negative descriptor.",
+      "locator": {
+        "section_id": "counter-style-negative",
+        "text_sha256": "dd353e0aa998e87753c91b517f0e5cef08dede21d8782b7d543a8d1d63074d96"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-prefix",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-prefix"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Symbols before the marker: the prefix descriptor.",
+      "locator": {
+        "section_id": "counter-style-prefix",
+        "text_sha256": "46177728d295bb043064cbe4dbc206ed6011e7fccc5480d9d79585e87ddbb1b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.counter-style-prefix-clause-d42ca23381c4",
+        "css-counter-styles-3.counter-style-prefix-clause-044ffaf950e8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-prefix-clause-d42ca23381c4",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-prefix"
+      ],
+      "behaviour": "Symbols before the marker: the prefix descriptor — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-prefix",
+        "clause_index": 8,
+        "clause_sha256": "d42ca23381c4bfe28da8d4f74270b208322a857769971db2a26f29b0abeed50b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-prefix-clause-044ffaf950e8",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-prefix"
+      ],
+      "behaviour": "Symbols before the marker: the prefix descriptor — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-prefix",
+        "clause_index": 9,
+        "clause_sha256": "044ffaf950e8aa90f95ffba8a2985af70f31589a8cc40228a935b171a2b49a28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-suffix",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-suffix"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Symbols after the marker: the suffix descriptor.",
+      "locator": {
+        "section_id": "counter-style-suffix",
+        "text_sha256": "4cb5aa368b80705bfad254ba2cb308d4c31ac575f9a170a5d3cddcbe1ba40e1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.counter-style-suffix-clause-cf69b139b892",
+        "css-counter-styles-3.counter-style-suffix-clause-0d55c6a0a120"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-suffix-clause-cf69b139b892",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-suffix"
+      ],
+      "behaviour": "Symbols after the marker: the suffix descriptor — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-suffix",
+        "clause_index": 8,
+        "clause_sha256": "cf69b139b892969c7110b40e828923c96fae93af5b987481549dbefc93917fb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-suffix-clause-0d55c6a0a120",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-suffix"
+      ],
+      "behaviour": "Symbols after the marker: the suffix descriptor — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-suffix",
+        "clause_index": 9,
+        "clause_sha256": "0d55c6a0a120b14c21c329fd6b317a6da9c4a387f83e00ad0be2512df734120b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-range",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-range"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Limiting the counter scope: the range descriptor.",
+      "locator": {
+        "section_id": "counter-style-range",
+        "text_sha256": "deccf9ea7a5ecb0b4adcda155bccf7f710992eaab1a1565cdc120a9eb428b968"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.counter-style-range-clause-a49375eb264f",
+        "css-counter-styles-3.counter-style-range-clause-0bedd150946c",
+        "css-counter-styles-3.counter-style-range-clause-7fa6fe110c0b",
+        "css-counter-styles-3.counter-style-range-clause-6676cd97627e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-range-clause-a49375eb264f",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-range"
+      ],
+      "behaviour": "Limiting the counter scope: the range descriptor — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-range",
+        "clause_index": 15,
+        "clause_sha256": "a49375eb264f0a8b6cc4a3a814b6b861b64aecb5bffc0aac0ec05be097b003d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-range-clause-0bedd150946c",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-range"
+      ],
+      "behaviour": "Limiting the counter scope: the range descriptor — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-range",
+        "clause_index": 16,
+        "clause_sha256": "0bedd150946c169184aa64b04f8948abf792984957ba9f44745c5d98fd58fdae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-range-clause-7fa6fe110c0b",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-range"
+      ],
+      "behaviour": "Limiting the counter scope: the range descriptor — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-range",
+        "clause_index": 17,
+        "clause_sha256": "7fa6fe110c0b0a185f4dfd036cb4fb136fef8ced5d5611fcdf6bdbda41636d50"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-range-clause-6676cd97627e",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-range"
+      ],
+      "behaviour": "Limiting the counter scope: the range descriptor — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-range",
+        "clause_index": 18,
+        "clause_sha256": "6676cd97627e45959e4f65fa894deced6c5a20a1f2dde1b0b2367d5349fd747d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-pad",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-pad"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Zero-Padding and Constant-Width Representations: the pad descriptor.",
+      "locator": {
+        "section_id": "counter-style-pad",
+        "text_sha256": "802f7ecec9c58df06172804a679d16bae4ba917f33970cfef8b8b7f116fd159f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.counter-style-pad-clause-37ac7a4ac7f5",
+        "css-counter-styles-3.counter-style-pad-clause-91d1f9382005",
+        "css-counter-styles-3.counter-style-pad-clause-710aed41146f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-pad-clause-37ac7a4ac7f5",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-pad"
+      ],
+      "behaviour": "Zero-Padding and Constant-Width Representations: the pad descriptor — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-pad",
+        "clause_index": 9,
+        "clause_sha256": "37ac7a4ac7f5d0f98fd06c7256af4a12fd522cb7823fe24426bdeba07ded5a6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-pad-clause-91d1f9382005",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-pad"
+      ],
+      "behaviour": "Zero-Padding and Constant-Width Representations: the pad descriptor — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-pad",
+        "clause_index": 14,
+        "clause_sha256": "91d1f938200538784415c6fa909dcb897e3a57264272f94d722dfcc7187920e3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-pad-clause-710aed41146f",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-pad"
+      ],
+      "behaviour": "Zero-Padding and Constant-Width Representations: the pad descriptor — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-pad",
+        "clause_index": 15,
+        "clause_sha256": "710aed41146fc7cc123fc72af475569838a9ef67a57d269ab893ef390d302843"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-fallback",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-fallback"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Defining fallback: the fallback descriptor.",
+      "locator": {
+        "section_id": "counter-style-fallback",
+        "text_sha256": "9098972e63dac0f19e3f4020a0067990d6b6e3897be239d1b56edf6684a1a81a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.counter-style-fallback-clause-bf354c304409",
+        "css-counter-styles-3.counter-style-fallback-clause-454d4ff65ebe"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-fallback-clause-bf354c304409",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-fallback"
+      ],
+      "behaviour": "Defining fallback: the fallback descriptor — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-fallback",
+        "clause_index": 8,
+        "clause_sha256": "bf354c30440945ae0d293e6654c5fb2a028d65c3d635ab92ec6a8d382c7efd7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-fallback-clause-454d4ff65ebe",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-fallback"
+      ],
+      "behaviour": "Defining fallback: the fallback descriptor — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-fallback",
+        "clause_index": 10,
+        "clause_sha256": "454d4ff65ebe9835281f3a7a4446623ce3b80be5b7de4fedf1136ec0a685fa19"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-symbols",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-symbols"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Marker characters: the symbols and additive-symbols descriptors.",
+      "locator": {
+        "section_id": "counter-style-symbols",
+        "text_sha256": "e8e94e14264e6087a962ca443fb8976d21c06a192585f9ae1e689d545ebb3ad8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.counter-style-symbols-clause-62ea354d7f84",
+        "css-counter-styles-3.counter-style-symbols-clause-98b93cc1e6d0",
+        "css-counter-styles-3.counter-style-symbols-clause-acf1c21d4e30",
+        "css-counter-styles-3.counter-style-symbols-clause-fc3ea93bcec4",
+        "css-counter-styles-3.counter-style-symbols-clause-9e64349dffce"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-symbols-clause-62ea354d7f84",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-symbols"
+      ],
+      "behaviour": "Marker characters: the symbols and additive-symbols descriptors — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-symbols",
+        "clause_index": 16,
+        "clause_sha256": "62ea354d7f840d754f6cf2e344faa100b8c69375670becf0e489d805060f0f78"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-symbols-clause-98b93cc1e6d0",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-symbols"
+      ],
+      "behaviour": "Marker characters: the symbols and additive-symbols descriptors — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-symbols",
+        "clause_index": 17,
+        "clause_sha256": "98b93cc1e6d093b688ee33f03ee843b4a352393de0c8885a44e4cfede14dd459"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-symbols-clause-acf1c21d4e30",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-symbols"
+      ],
+      "behaviour": "Marker characters: the symbols and additive-symbols descriptors — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-symbols",
+        "clause_index": 18,
+        "clause_sha256": "acf1c21d4e3076bcbfe6ba95ada614b599c7cf13800100fca9eb87322d196405"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-symbols-clause-fc3ea93bcec4",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-symbols"
+      ],
+      "behaviour": "Marker characters: the symbols and additive-symbols descriptors — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-symbols",
+        "clause_index": 21,
+        "clause_sha256": "fc3ea93bcec4df62614e013aaef885c9c5a1a7276c2e34a0776fbe4ada206597"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-symbols-clause-9e64349dffce",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-symbols"
+      ],
+      "behaviour": "Marker characters: the symbols and additive-symbols descriptors — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-symbols",
+        "clause_index": 22,
+        "clause_sha256": "9e64349dffce9baab0e2e0aa71a90205989808300335493b0a6dc92e0f60d4eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-speak-as",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-speak-as"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Speech Synthesis: the speak-as descriptor.",
+      "locator": {
+        "section_id": "counter-style-speak-as",
+        "text_sha256": "98405074f29d324d474a67a9b1d01d1eb56002f0417f9f37034097cb0d5cdbd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.counter-style-speak-as-clause-a6236f5045e3",
+        "css-counter-styles-3.counter-style-speak-as-clause-eb4a351545eb",
+        "css-counter-styles-3.counter-style-speak-as-clause-0b4110a5c878"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-speak-as-clause-a6236f5045e3",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-speak-as"
+      ],
+      "behaviour": "Speech Synthesis: the speak-as descriptor — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-speak-as",
+        "clause_index": 7,
+        "clause_sha256": "a6236f5045e358e7c5292b28b0a2594d1a7af7f56733e95bf1d0b31616ed7216"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-speak-as-clause-eb4a351545eb",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-speak-as"
+      ],
+      "behaviour": "Speech Synthesis: the speak-as descriptor — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-speak-as",
+        "clause_index": 18,
+        "clause_sha256": "eb4a351545ebcc74a65e0495d889cb60d93f7ea558df4828051b5f9e50d52e84"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-speak-as-clause-0b4110a5c878",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-speak-as"
+      ],
+      "behaviour": "Speech Synthesis: the speak-as descriptor — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter-style-speak-as",
+        "clause_index": 23,
+        "clause_sha256": "0b4110a5c878be7a36577e0d6485ca9428e805794c8ee6c82deebafac76bd10d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.symbols-function",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "symbols-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Defining Anonymous Counter Styles: the symbols() function.",
+      "locator": {
+        "section_id": "symbols-function",
+        "text_sha256": "56ae0423999777da23c3dd81da137202412dac0e5e716a974ca84ea81b621c49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.symbols-function-clause-341fab46d3d4",
+        "css-counter-styles-3.symbols-function-clause-e195e27df35f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.symbols-function-clause-341fab46d3d4",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "symbols-function"
+      ],
+      "behaviour": "Defining Anonymous Counter Styles: the symbols() function — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "symbols-function",
+        "clause_index": 2,
+        "clause_sha256": "341fab46d3d4cd5c5d3f1e716b955255fdab54b0ad9a14ba323e225f24decadd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.symbols-function-clause-e195e27df35f",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "symbols-function"
+      ],
+      "behaviour": "Defining Anonymous Counter Styles: the symbols() function — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "symbols-function",
+        "clause_index": 3,
+        "clause_sha256": "e195e27df35fa2150a37dfa8947858497bf393824722966b0d0514e6685ed3f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.extending-css2",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "extending-css2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extending list-style-type, counter(), and counters().",
+      "locator": {
+        "section_id": "extending-css2",
+        "text_sha256": "7e980acb07a2f4fdd45b854e5e4941037290e30a95d6c45d43175192cc42f23f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.extending-css2-clause-d5ead186f480"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.extending-css2-clause-d5ead186f480",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "extending-css2"
+      ],
+      "behaviour": "Extending list-style-type, counter(), and counters() — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "extending-css2",
+        "clause_index": 2,
+        "clause_sha256": "d5ead186f4801f5bd41cc87fb1286b96b381135f953dc0a419068dbc2073be87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.predefined-counters",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "predefined-counters"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Simple Predefined Counter Styles.",
+      "locator": {
+        "section_id": "predefined-counters",
+        "text_sha256": "b10aa3e672c2dc09000fcc03162cc2517a2f7674bd242dc96c5466e996efec55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.predefined-counters-clause-b10aa3e672c2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.predefined-counters-clause-b10aa3e672c2",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "predefined-counters"
+      ],
+      "behaviour": "Simple Predefined Counter Styles — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "predefined-counters",
+        "clause_index": 0,
+        "clause_sha256": "b10aa3e672c2dc09000fcc03162cc2517a2f7674bd242dc96c5466e996efec55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.simple-numeric",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "simple-numeric"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Numeric: decimal, decimal-leading-zero, arabic-indic, armenian, upper-armenian, lower-armenian, bengali, cambodian, khmer, cjk-decimal, devanagari, georgian, gujarati, gurmukhi, hebrew, kannada, lao, malayalam, mongolian, myanmar, oriya, persian, lower-roman, upper-roman, tamil, telugu, thai, tibetan.",
+      "locator": {
+        "section_id": "simple-numeric",
+        "text_sha256": "23d8012fd151bf336a9d3a47e57b114f40d3eacf2d8b9683499481b4e4c32024"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.simple-numeric-clause-b84c917a7e4d",
+        "css-counter-styles-3.simple-numeric-clause-581d27275826"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.simple-numeric-clause-b84c917a7e4d",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "simple-numeric"
+      ],
+      "behaviour": "Numeric: decimal, decimal-leading-zero, arabic-indic, armenian, upper-armenian, lower-armenian, bengali, cambodian, khmer, cjk-decimal, devanagari, georgian, gujarati, gurmukhi, hebrew, kannada, lao, malayalam, mongolian, myanmar, oriya, persian, lower-roman, upper-roman, tamil, telugu, thai, tibetan — normative clause 56, located by its exact source hash.",
+      "locator": {
+        "section_id": "simple-numeric",
+        "clause_index": 55,
+        "clause_sha256": "b84c917a7e4d45ac6eb4c09724f000e08246fac08e8c4c94e9e446a7260d4aab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.simple-numeric-clause-581d27275826",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "simple-numeric"
+      ],
+      "behaviour": "Numeric: decimal, decimal-leading-zero, arabic-indic, armenian, upper-armenian, lower-armenian, bengali, cambodian, khmer, cjk-decimal, devanagari, georgian, gujarati, gurmukhi, hebrew, kannada, lao, malayalam, mongolian, myanmar, oriya, persian, lower-roman, upper-roman, tamil, telugu, thai, tibetan — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "simple-numeric",
+        "clause_index": 56,
+        "clause_sha256": "581d272758260c27e00d8aced58b3980ddabdc8fdccde9e31d84b725c08b48fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.simple-alphabetic",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "simple-alphabetic"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alphabetic: lower-alpha, lower-latin, upper-alpha, upper-latin, lower-greek, hiragana, hiragana-iroha, katakana, katakana-iroha.",
+      "locator": {
+        "section_id": "simple-alphabetic",
+        "text_sha256": "08afeb06c694871cf08e21c555aa57c48a8bbda26d50f201df59d34bae972821"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.simple-symbolic",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "simple-symbolic"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Symbolic: disc, circle, square, disclosure-open, disclosure-closed.",
+      "locator": {
+        "section_id": "simple-symbolic",
+        "text_sha256": "dca7dd30373c15954481653d33fa346240b3e19f13e62cadb4541dac4b84027f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.simple-symbolic-clause-f123046aeb27",
+        "css-counter-styles-3.simple-symbolic-clause-bc6e0b6fa4fe",
+        "css-counter-styles-3.simple-symbolic-clause-43e04286333c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.simple-symbolic-clause-f123046aeb27",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "simple-symbolic"
+      ],
+      "behaviour": "Symbolic: disc, circle, square, disclosure-open, disclosure-closed — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "simple-symbolic",
+        "clause_index": 10,
+        "clause_sha256": "f123046aeb278b1aa34268c0ff34f0206282161caeeafda2c487776af9b58e31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.simple-symbolic-clause-bc6e0b6fa4fe",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "simple-symbolic"
+      ],
+      "behaviour": "Symbolic: disc, circle, square, disclosure-open, disclosure-closed — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "simple-symbolic",
+        "clause_index": 11,
+        "clause_sha256": "bc6e0b6fa4fe186e06e8aa5389adfefc6b3cdf1f1790210d1ff46477a4469e9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.simple-symbolic-clause-43e04286333c",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "simple-symbolic"
+      ],
+      "behaviour": "Symbolic: disc, circle, square, disclosure-open, disclosure-closed — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "simple-symbolic",
+        "clause_index": 12,
+        "clause_sha256": "43e04286333c73e5a3f9c919150d1a855df2a7463bd79094b47b6df915bbdd1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.simple-fixed",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "simple-fixed"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fixed: cjk-earthly-branch, cjk-heavenly-stem.",
+      "locator": {
+        "section_id": "simple-fixed",
+        "text_sha256": "94f031a877f814f08270bc68cb90d6700a105865b541429895dbeaf8445390c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.complex-predefined-counters",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "complex-predefined-counters"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Complex Predefined Counter Styles.",
+      "locator": {
+        "section_id": "complex-predefined-counters",
+        "text_sha256": "f98452c0395e8cd766ad52e189f31ae41f903da77c518d0dff79eb034f62e42f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.complex-predefined-counters-clause-5328e6436cbc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.complex-predefined-counters-clause-5328e6436cbc",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "complex-predefined-counters"
+      ],
+      "behaviour": "Complex Predefined Counter Styles — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "complex-predefined-counters",
+        "clause_index": 1,
+        "clause_sha256": "5328e6436cbcecb6a72b748535e609c47be49be40e81fac5f1b608b4f5d48b13"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.complex-cjk",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "complex-cjk"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Longhand East Asian Counter Styles.",
+      "locator": {
+        "section_id": "complex-cjk",
+        "text_sha256": "7ac689438277ef03ccc66978a452a0f993a9f0ba435f6d280d932117197dd00d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.limited-japanese",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "limited-japanese"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Japanese: japanese-informal and japanese-formal.",
+      "locator": {
+        "section_id": "limited-japanese",
+        "text_sha256": "091b543043ed7c00d935d72cc67b201bfd775f79247b6e308afc5ae5fd07d60d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.limited-korean",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "limited-korean"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Korean: korean-hangul-formal, korean-hanja-informal, and korean-hanja-formal.",
+      "locator": {
+        "section_id": "limited-korean",
+        "text_sha256": "7ed99afe80da7f6c9d13cdc8a68e8103f07c791150c89caf4e601702582ea321"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.limited-chinese",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "limited-chinese"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Chinese: simp-chinese-informal, simp-chinese-formal, trad-chinese-informal, and trad-chinese-formal.",
+      "locator": {
+        "section_id": "limited-chinese",
+        "text_sha256": "f06f5f24f143f30e8c200a695d7dfa2f1f875c358c1d0308969cf1267073c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.limited-chinese-clause-10a1930eed52",
+        "css-counter-styles-3.limited-chinese-clause-849bf799b5f0",
+        "css-counter-styles-3.limited-chinese-clause-4f1c789806e8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.limited-chinese-clause-10a1930eed52",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "limited-chinese"
+      ],
+      "behaviour": "Chinese: simp-chinese-informal, simp-chinese-formal, trad-chinese-informal, and trad-chinese-formal — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "limited-chinese",
+        "clause_index": 9,
+        "clause_sha256": "10a1930eed52910100e9b72d65c651dc2eca638fd947d27abb5b345150d6e36e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.limited-chinese-clause-849bf799b5f0",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "limited-chinese"
+      ],
+      "behaviour": "Chinese: simp-chinese-informal, simp-chinese-formal, trad-chinese-informal, and trad-chinese-formal — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "limited-chinese",
+        "clause_index": 10,
+        "clause_sha256": "849bf799b5f001ca73b82c94f60bc4ec2bddf9a9fb430e70e651bfd7be52a23d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.limited-chinese-clause-4f1c789806e8",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "limited-chinese"
+      ],
+      "behaviour": "Chinese: simp-chinese-informal, simp-chinese-formal, trad-chinese-informal, and trad-chinese-formal — normative clause 95, located by its exact source hash.",
+      "locator": {
+        "section_id": "limited-chinese",
+        "clause_index": 94,
+        "clause_sha256": "4f1c789806e82a626b9fd6e7d0df3bffb486c1853b10b106e0cf1c5adb5bb918"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.ethiopic-numeric-counter-style",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "ethiopic-numeric-counter-style"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ethiopic Numeric Counter Style: ethiopic-numeric.",
+      "locator": {
+        "section_id": "ethiopic-numeric-counter-style",
+        "text_sha256": "e5a4171d8d8ef6ab633c0c00ba59cf076a77441c3faaf9b2e9883dd193390e2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.ethiopic-numeric-counter-style-clause-f96bd715ed98",
+        "css-counter-styles-3.ethiopic-numeric-counter-style-clause-e887340af9f9",
+        "css-counter-styles-3.ethiopic-numeric-counter-style-clause-ade3ffe70058"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.ethiopic-numeric-counter-style-clause-f96bd715ed98",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "ethiopic-numeric-counter-style"
+      ],
+      "behaviour": "Ethiopic Numeric Counter Style: ethiopic-numeric — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "ethiopic-numeric-counter-style",
+        "clause_index": 0,
+        "clause_sha256": "f96bd715ed98af407831fd7ecd53637fe2cdfdd15606714357bf73605c66a388"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.ethiopic-numeric-counter-style-clause-e887340af9f9",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "ethiopic-numeric-counter-style"
+      ],
+      "behaviour": "Ethiopic Numeric Counter Style: ethiopic-numeric — normative clause 69, located by its exact source hash.",
+      "locator": {
+        "section_id": "ethiopic-numeric-counter-style",
+        "clause_index": 68,
+        "clause_sha256": "e887340af9f93fe366e4df51b6fbeea628ed7d77f85a7b1a7340ddea999b9b23"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.ethiopic-numeric-counter-style-clause-ade3ffe70058",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "ethiopic-numeric-counter-style"
+      ],
+      "behaviour": "Ethiopic Numeric Counter Style: ethiopic-numeric — normative clause 72, located by its exact source hash.",
+      "locator": {
+        "section_id": "ethiopic-numeric-counter-style",
+        "clause_index": 71,
+        "clause_sha256": "ade3ffe700584d564e33275fe8b75eba666f934431b7a40c08413f94fe1e325a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.additional-predefined",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "additional-predefined"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Additional “Ready-made” Counter Styles.",
+      "locator": {
+        "section_id": "additional-predefined",
+        "text_sha256": "3d8f5b8f0793589910b9b0617812a52b0864808b19463489bf3898447401145c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.apis",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "apis"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in APIs.",
+      "locator": {
+        "section_id": "apis",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.extensions-to-cssrule-interface",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "extensions-to-cssrule-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extensions to the CSSRule interface.",
+      "locator": {
+        "section_id": "extensions-to-cssrule-interface",
+        "text_sha256": "5fb13241247959e6e0823ab6707ec36d56057c838cd840e603428e43fadcf485"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.the-csscounterstylerule-interface",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-csscounterstylerule-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSSCounterStyleRule interface.",
+      "locator": {
+        "section_id": "the-csscounterstylerule-interface",
+        "text_sha256": "3dd494c05597f6be1cbbf33a5c189f5dafc85ab4889c46a3f8e11e8e07ac54f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.the-csscounterstylerule-interface-clause-9434e90a35a8",
+        "css-counter-styles-3.the-csscounterstylerule-interface-clause-8fbf343169d1",
+        "css-counter-styles-3.the-csscounterstylerule-interface-clause-263330a4e9d0",
+        "css-counter-styles-3.the-csscounterstylerule-interface-clause-575425c20eca",
+        "css-counter-styles-3.the-csscounterstylerule-interface-clause-a8b39d39c8bc",
+        "css-counter-styles-3.the-csscounterstylerule-interface-clause-14760f061422"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.the-csscounterstylerule-interface-clause-9434e90a35a8",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-csscounterstylerule-interface"
+      ],
+      "behaviour": "The CSSCounterStyleRule interface — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscounterstylerule-interface",
+        "clause_index": 3,
+        "clause_sha256": "9434e90a35a868982c4218ab10d30044c24983eadf2181b61d7dcc788f4662f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.the-csscounterstylerule-interface-clause-8fbf343169d1",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-csscounterstylerule-interface"
+      ],
+      "behaviour": "The CSSCounterStyleRule interface — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscounterstylerule-interface",
+        "clause_index": 10,
+        "clause_sha256": "8fbf343169d1ea0908c39dc10e548640fcd6aae0548156c11009a5108503bd72"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.the-csscounterstylerule-interface-clause-263330a4e9d0",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-csscounterstylerule-interface"
+      ],
+      "behaviour": "The CSSCounterStyleRule interface — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscounterstylerule-interface",
+        "clause_index": 21,
+        "clause_sha256": "263330a4e9d06e96e58737234e679b4335a0cfebbcaca33d43233cfad07e709a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.the-csscounterstylerule-interface-clause-575425c20eca",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-csscounterstylerule-interface"
+      ],
+      "behaviour": "The CSSCounterStyleRule interface — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscounterstylerule-interface",
+        "clause_index": 24,
+        "clause_sha256": "575425c20eca94c522619928c1d642a6ee662f505232c230e5f0bb6da14e7296"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.the-csscounterstylerule-interface-clause-a8b39d39c8bc",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-csscounterstylerule-interface"
+      ],
+      "behaviour": "The CSSCounterStyleRule interface — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscounterstylerule-interface",
+        "clause_index": 26,
+        "clause_sha256": "a8b39d39c8bce06ee6df0b351b834d0e898d9da056602526151b25b8a0aa644c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.the-csscounterstylerule-interface-clause-14760f061422",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "the-csscounterstylerule-interface"
+      ],
+      "behaviour": "The CSSCounterStyleRule interface — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscounterstylerule-interface",
+        "clause_index": 30,
+        "clause_sha256": "14760f061422d6def070f2d6ccfedfd6481d0742f40abc193665b23eb8f6dc11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.priv-sec",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy and Security Considerations.",
+      "locator": {
+        "section_id": "priv-sec",
+        "text_sha256": "508211c345cc46d3344bf3460ffcde7c9eef7b952e529c627c53a5123db53ee3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-conformance",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-conventions",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.w3c-conventions-clause-5c98c879f070",
+        "css-counter-styles-3.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-conventions-clause-5c98c879f070",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-conformance-classes",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.w3c-conformance-classes-clause-ff408372426c",
+        "css-counter-styles-3.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-partial",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-partial-clause-ef40c4aab200",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-conform-future-proofing",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-testing",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.w3c-testing-clause-1e0fff369221",
+        "css-counter-styles-3.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-testing-clause-1e0fff369221",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-testing-clause-ae1210cf9643",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-cr-exit-criteria",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-counter-styles-3.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+        "css-counter-styles-3.w3c-cr-exit-criteria-clause-ea752775913a",
+        "css-counter-styles-3.w3c-cr-exit-criteria-clause-b7d363ab42db",
+        "css-counter-styles-3.w3c-cr-exit-criteria-clause-b67129724911",
+        "css-counter-styles-3.w3c-cr-exit-criteria-clause-833729d43f23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-cr-exit-criteria-clause-ea752775913a",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-cr-exit-criteria-clause-b7d363ab42db",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-cr-exit-criteria-clause-b67129724911",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.w3c-cr-exit-criteria-clause-833729d43f23",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 10,
+        "clause_sha256": "833729d43f239b3deb57bcaaf1c29d2f077e86aad8b396f8458fa182e4db8d99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-counter-styles-3.property-index",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "547c4769772c9ff811e57bf39809cc6f1c1e6380af2bb402096c995db2287df6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.counter-style-descriptor-table",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "counter-style-descriptor-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in @counter-style Descriptors.",
+      "locator": {
+        "section_id": "counter-style-descriptor-table",
+        "text_sha256": "e92a4f34332c87a4ca6114e4f683198366c5e0fc022767814c65202c6f7a7e76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.idl-index",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "a8403637cbbd18a142ef81522ce2f58acb899c6c31191b2bb4aba18b2e22d6c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.import-6b91f794ab2b",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://heycam.github.io/webidl/.",
+      "unresolved_reference": "https://heycam.github.io/webidl/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-counter-styles-3.title",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Counter Styles Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.abstract",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "bddc6e157ff0b2832369327bf17991f3b684d2f21e2249d398a7cfc07b8aa0f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.status",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "aecb43c3b219beeb04571cb6068599ea0cbb707997464b37a69ad1093dea6192"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.contents",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "8883013e4059dae658f4dad38a1e218f499fee74ab3a1a0f891281f9b0e31b00"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.ua-stylesheet",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "ua-stylesheet"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 10. Sample style sheet for HTML.",
+      "locator": {
+        "section_id": "ua-stylesheet",
+        "text_sha256": "9500a474d259648fec129758665536f710864e1846ed27976050f993bca89920"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.changes",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.changes-2017",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "changes-2017"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the December 2017 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-2017",
+        "text_sha256": "66a848656a3f4eb6ea8daa1d4484cab410a06858f2d81415b6d4d6f451435fbb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.changes-jun-2015",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "changes-jun-2015"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the June 2015 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-jun-2015",
+        "text_sha256": "bdd8bcc1d0703470f51bff5d367300ece6175ad35ba9edfce90b38440b10de2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.changes-feb-2015",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "changes-feb-2015"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the Feb 2015 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-feb-2015",
+        "text_sha256": "c909aa448e8df5221b4cf8cc66383f4ec11248e9126df62d1b2c473f365ee97b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.acknowledgments",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "751fd02ea65a4d146a17fff345afff3df072b0e06e7f5cf785865bed43820a0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.index",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.index-defined-here",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "8ab7521cf4c5fa880a5e85de74d05708608809a4896501c285b93d196630b77b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.index-defined-elsewhere",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "3359efd9d1253ae97f0a8e58e0073afb4cf9494fdb70769bb95b8712eb6d709d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.references",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-counter-styles-3.informative",
+      "family": "css-counter-styles-3",
+      "source_id": "css-counter-styles-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "096744e2c93293fe0f2ce98efa4e0de07ab92deeac3b670b90053a59dc3695b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-11",
+  "sections": [
+    {
+      "id": "G26315",
+      "title": "Cuneiform and Hieroglyphs",
+      "level": 1,
+      "text_sha256": "31a35884e31f86538482ba8117b56ab972167aa5a85d4095f5a13580705ae8f2",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.g26315"
+        ]
+      }
+    },
+    {
+      "id": "heading-479914a3e91b",
+      "title": "11.1 Sumero-Akkadian",
+      "level": 2,
+      "text_sha256": "015f30f33d588a1f952a9ff62412d4a073e3266e4a72d07d4af8384b9261d87a",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-479914a3e91b"
+        ]
+      }
+    },
+    {
+      "id": "heading-865743899638",
+      "title": "11.1.1 Cuneiform: U+12000–U+123FF",
+      "level": 3,
+      "text_sha256": "8a3d5f251efaba8c98737239c87fb9ba7fe583d4f543f4fbf8e3658b21267dc8",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-865743899638"
+        ]
+      }
+    },
+    {
+      "id": "heading-69a28174561e",
+      "title": "11.1.2 Cuneiform Numbers and Punctuation: U+12400–U+1247F",
+      "level": 3,
+      "text_sha256": "b93cdbde0088c3c42a43b8ef4e1a9e0b01d4b5f81b21aa98c62fe046216ee1a9",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-69a28174561e"
+        ]
+      }
+    },
+    {
+      "id": "heading-785ddb2b0965",
+      "title": "11.1.3 Early Dynastic Cuneiform: U+12480–U+1254F",
+      "level": 3,
+      "text_sha256": "ff8a79ed5bfbc712eaf4acb999647f60842e03b55bde7e17365d13777f69566c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-785ddb2b0965"
+        ]
+      }
+    },
+    {
+      "id": "heading-111dee3415a1",
+      "title": "11.2 Ugaritic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-111dee3415a1"
+        ]
+      }
+    },
+    {
+      "id": "heading-fc23a7d40371",
+      "title": "11.2.1 Ugaritic: U+10380–U+1039F",
+      "level": 3,
+      "text_sha256": "09548b7686f4a579a908daf6c35b8e7d2818396476e6808e8cf51f7b67c724c1",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-fc23a7d40371"
+        ]
+      }
+    },
+    {
+      "id": "heading-5f7a937c827f",
+      "title": "11.3 Old Persian",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-5f7a937c827f"
+        ]
+      }
+    },
+    {
+      "id": "heading-c4454e87c99b",
+      "title": "11.3.1 Old Persian: U+103A0–U+103DF",
+      "level": 3,
+      "text_sha256": "4de1c6c3bea9e301f473e43fa065c41c599f87f8b0b6dc42d09c909b069a480e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-c4454e87c99b"
+        ]
+      }
+    },
+    {
+      "id": "heading-574dd6b98915",
+      "title": "11.4 Egyptian Hieroglyphs",
+      "level": 2,
+      "text_sha256": "8f9df438fb0c7fc12616b09697bb4c97070c2c867e5d870c4252fc174b2022c6",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-574dd6b98915",
+          "unicode17-chapter-11.heading-574dd6b98915-clause-b1d6c293a8f0",
+          "unicode17-chapter-11.heading-574dd6b98915-clause-c004430aba37"
+        ]
+      }
+    },
+    {
+      "id": "heading-c61313f0a61c",
+      "title": "11.4.1 Egyptian Hieroglyphs: U+13000–U+1342F",
+      "level": 3,
+      "text_sha256": "92511426691dabfc9c706cfc22ea8a36cfb71e19f07948b02138f202ba45dc0f",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-c61313f0a61c",
+          "unicode17-chapter-11.heading-c61313f0a61c-clause-8e3be852365d",
+          "unicode17-chapter-11.heading-c61313f0a61c-clause-1948cdae3a84"
+        ]
+      }
+    },
+    {
+      "id": "heading-83bfd48ef1c3",
+      "title": "11.4.2 Egyptian Hieroglyphs Extended-A: U+13460–U+143FF",
+      "level": 3,
+      "text_sha256": "ddd361213c08e19c8b48f338b4d488cffbe32b34369ca3b7b6c22e910d9308ea",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-83bfd48ef1c3"
+        ]
+      }
+    },
+    {
+      "id": "heading-69247cb5819a",
+      "title": "11.4.3 Egyptian Hieroglyph Format Controls: U+13430–U+1345F",
+      "level": 3,
+      "text_sha256": "0aff44e70bd6f94a4684057d6bda69716ce17e0a7f819ea5531727c8bfca7659",
+      "clause_count": 150,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-69247cb5819a",
+          "unicode17-chapter-11.heading-69247cb5819a-clause-9a01603817fa",
+          "unicode17-chapter-11.heading-69247cb5819a-clause-a63fc0632fcc",
+          "unicode17-chapter-11.heading-69247cb5819a-clause-d77d24ced356",
+          "unicode17-chapter-11.heading-69247cb5819a-clause-8f904a2a3107",
+          "unicode17-chapter-11.heading-69247cb5819a-clause-3b8b35e4fced",
+          "unicode17-chapter-11.heading-69247cb5819a-clause-120b584e8411",
+          "unicode17-chapter-11.heading-69247cb5819a-clause-b60bf1e5cbee",
+          "unicode17-chapter-11.heading-69247cb5819a-clause-d13f621cdcc8",
+          "unicode17-chapter-11.heading-69247cb5819a-clause-26db09e20430",
+          "unicode17-chapter-11.heading-69247cb5819a-clause-ff37832019da",
+          "unicode17-chapter-11.heading-69247cb5819a-clause-2a809bb7fd9a"
+        ]
+      }
+    },
+    {
+      "id": "heading-53812561d315",
+      "title": "11.4.4 Editorial Marks",
+      "level": 3,
+      "text_sha256": "4620c4d3ceb3c59bee3f7da074f455472f3b67384c2ff3adcd3963920aa00150",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-53812561d315",
+          "unicode17-chapter-11.heading-53812561d315-clause-74e873c71199",
+          "unicode17-chapter-11.heading-53812561d315-clause-4f2438e10291",
+          "unicode17-chapter-11.heading-53812561d315-clause-2a6d49fa0414"
+        ]
+      }
+    },
+    {
+      "id": "heading-87fb65740b42",
+      "title": "11.5 Meroitic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-87fb65740b42"
+        ]
+      }
+    },
+    {
+      "id": "heading-1ab1b597fd4f",
+      "title": "11.5.1 Meroitic Hieroglyphs: U+10980–U+1099F",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-1ab1b597fd4f"
+        ]
+      }
+    },
+    {
+      "id": "heading-9645e6e8bd81",
+      "title": "Meroitic Cursive: U+109A0–U+109FF",
+      "level": 3,
+      "text_sha256": "41831a3a3eb47c8ec233c245a185cf7cf28e59df9b18fea73cb99fc0a8c2eb28",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-9645e6e8bd81"
+        ]
+      }
+    },
+    {
+      "id": "heading-6100a17825fc",
+      "title": "11.6 Anatolian Hieroglyphs",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-6100a17825fc"
+        ]
+      }
+    },
+    {
+      "id": "heading-15290ce47d5d",
+      "title": "11.6.1 Anatolian Hieroglyphs: U+14400–U+1467F",
+      "level": 3,
+      "text_sha256": "8c48fbe66459e55e3bb13e76bb1ab729c3523e263662a18828fce12823ad3d24",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-11.heading-15290ce47d5d",
+          "unicode17-chapter-11.heading-15290ce47d5d-clause-7e1ec0e77cd7",
+          "unicode17-chapter-11.heading-15290ce47d5d-clause-088d2bd4a743"
+        ]
+      }
+    }
+  ]
+}

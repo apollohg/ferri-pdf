@@ -1,0 +1,4189 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-writing-modes-3.subtitle",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "subtitle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Recommendation, 10 December 2019.",
+      "locator": {
+        "section_id": "subtitle",
+        "text_sha256": "4d0ccf1897d12f36de60b4367c4d8edd74e97cd58471913be329ac2eccbde524"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-flow",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-flow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction to Writing Modes.",
+      "locator": {
+        "section_id": "text-flow",
+        "text_sha256": "99a6f9dd263280cc27653c132aa1b2d09ae9beeb47e5f5b75adb7284348ae0bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.text-flow-clause-0eccba2dbef2",
+        "css-writing-modes-3.text-flow-clause-23c97adb8933"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-flow-clause-0eccba2dbef2",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-flow"
+      ],
+      "behaviour": "Introduction to Writing Modes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-flow",
+        "clause_index": 7,
+        "clause_sha256": "0eccba2dbef22f6f6d77983abe0443888d9c58753c6649745390a156e99d94de"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-flow-clause-23c97adb8933",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-flow"
+      ],
+      "behaviour": "Introduction to Writing Modes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-flow",
+        "clause_index": 9,
+        "clause_sha256": "23c97adb89334cd8fcb4fc01847f74088d72303fd4400b0ffb97fac5706b2f7d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.placement",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module Interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "4b31a5c7c456366d68273d9e7155301fd83ad35f2c95822656a7f7882cc6fa6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.placement-clause-d3c0ee02f485"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.placement-clause-d3c0ee02f485",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Module Interactions — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "placement",
+        "clause_index": 1,
+        "clause_sha256": "d3c0ee02f4857b6b419bcded5b50f4fa2b725974510b21fb37723b80d502d90a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.values",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Types and Terminology.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "10451bbad017f18751f49119018cf3df0f5b8e7021984f1f8170c0a8263d9f44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-direction",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-direction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline Direction and Bidirectionality.",
+      "locator": {
+        "section_id": "text-direction",
+        "text_sha256": "fb877a26c576e3ae29fdfac6e77a80c8e8046b5ee7d9460b7247a5feff57c175"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.text-direction-clause-cf7fe3a5a0a0",
+        "css-writing-modes-3.text-direction-clause-661eb48a4ffe",
+        "css-writing-modes-3.text-direction-clause-95f6fe7d9aa2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-direction-clause-cf7fe3a5a0a0",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-direction"
+      ],
+      "behaviour": "Inline Direction and Bidirectionality — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-direction",
+        "clause_index": 2,
+        "clause_sha256": "cf7fe3a5a0a0178a8cabe4ce11eeaa5e5f4c841a2f24061661c6fbd69e5fb8fa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-direction-clause-661eb48a4ffe",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-direction"
+      ],
+      "behaviour": "Inline Direction and Bidirectionality — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-direction",
+        "clause_index": 3,
+        "clause_sha256": "661eb48a4ffed88570f2a9434203ddac3f2f1c88798082cc4f1763c8b524b237"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-direction-clause-95f6fe7d9aa2",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-direction"
+      ],
+      "behaviour": "Inline Direction and Bidirectionality — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-direction",
+        "clause_index": 5,
+        "clause_sha256": "95f6fe7d9aa226454117e17ce55ff8b9280cb3fcc40d23d66aaca3c144790042"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.direction",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "direction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying Directionality: the direction property.",
+      "locator": {
+        "section_id": "direction",
+        "text_sha256": "68743da30bfef56b515a6f4a5dd8498e2572b7f1eb4d8a525bb94f54ead1f867"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.direction-clause-cca2516ebb1d",
+        "css-writing-modes-3.direction-clause-742671f701e6",
+        "css-writing-modes-3.direction-clause-e4f9f5ba53bc",
+        "css-writing-modes-3.direction-clause-d319c6b4e441",
+        "css-writing-modes-3.direction-clause-8dc26148c6db"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.direction-clause-cca2516ebb1d",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "direction"
+      ],
+      "behaviour": "Specifying Directionality: the direction property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "direction",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.direction-clause-742671f701e6",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "direction"
+      ],
+      "behaviour": "Specifying Directionality: the direction property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "direction",
+        "clause_index": 17,
+        "clause_sha256": "742671f701e684375a29546d6814c304412642e7479054a32e2af7f87378aec0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.direction-clause-e4f9f5ba53bc",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "direction"
+      ],
+      "behaviour": "Specifying Directionality: the direction property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "direction",
+        "clause_index": 23,
+        "clause_sha256": "e4f9f5ba53bccd9a979e51575298f89aad8920d619355906333d1c65aa0ec945"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.direction-clause-d319c6b4e441",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "direction"
+      ],
+      "behaviour": "Specifying Directionality: the direction property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "direction",
+        "clause_index": 25,
+        "clause_sha256": "d319c6b4e441e548cb1aaf3d14e7d9a03a8bf47e1126698bf24684b411034aab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.direction-clause-8dc26148c6db",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "direction"
+      ],
+      "behaviour": "Specifying Directionality: the direction property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "direction",
+        "clause_index": 26,
+        "clause_sha256": "8dc26148c6db6be1e5605b6d194e26dd7ae42584b639ef1dcf93b30028349ee3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Embeddings and Overrides: the unicode-bidi property.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "text_sha256": "ef330b57512170aaf0aa02fa932753443c25e4ef5a7b4ffd8ac79642c077fecd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.unicode-bidi-clause-cca2516ebb1d",
+        "css-writing-modes-3.unicode-bidi-clause-ec2163648efe",
+        "css-writing-modes-3.unicode-bidi-clause-91675cfedc29",
+        "css-writing-modes-3.unicode-bidi-clause-ae81354bb452",
+        "css-writing-modes-3.unicode-bidi-clause-6d282d21a4a5",
+        "css-writing-modes-3.unicode-bidi-clause-3bc07ae9fdba",
+        "css-writing-modes-3.unicode-bidi-clause-9033cd7447e7",
+        "css-writing-modes-3.unicode-bidi-clause-1316393cd794",
+        "css-writing-modes-3.unicode-bidi-clause-33c151599918",
+        "css-writing-modes-3.unicode-bidi-clause-a07d3f5794ae",
+        "css-writing-modes-3.unicode-bidi-clause-34abc7a4fb7f",
+        "css-writing-modes-3.unicode-bidi-clause-3379982e51b1",
+        "css-writing-modes-3.unicode-bidi-clause-407b91cb77b2",
+        "css-writing-modes-3.unicode-bidi-clause-4248286e094f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-cca2516ebb1d",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-ec2163648efe",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 17,
+        "clause_sha256": "ec2163648efe80747874772ddefdf14331eba8336a2f820664cfa53f873c5ee2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-91675cfedc29",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 18,
+        "clause_sha256": "91675cfedc297ad7c1efeb0c6b18e872de1a0de2ef178bea29e763a935ad69c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-ae81354bb452",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 20,
+        "clause_sha256": "ae81354bb4525f50483023a55f8015427f492b6531c973bbadaa9f65863c2aa6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-6d282d21a4a5",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 35,
+        "clause_sha256": "6d282d21a4a515feee45c87ce894538d581642829b98e1e008530535ebfe100e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-3bc07ae9fdba",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 38,
+        "clause_sha256": "3bc07ae9fdbad7b96c5bc7a25c560bd38864180ecb6a187f08f30278e5b7044f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-9033cd7447e7",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 45,
+        "clause_sha256": "9033cd7447e780bc0f8fa2cafbabcfded1ba50031be915e709bc64860178e404"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-1316393cd794",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 49,
+        "clause_sha256": "1316393cd7942fdb54299c033b55b24730da18bde518971eb46d1a73659db961"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-33c151599918",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 51, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 50,
+        "clause_sha256": "33c151599918c2c44d109e91bf4d088eab8dcc03446fc8b9956712e35605791d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-a07d3f5794ae",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 51,
+        "clause_sha256": "a07d3f5794ae98a0a89d5f1647513dde732d435350b847acdcd7e331f089d43d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-34abc7a4fb7f",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 91, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 90,
+        "clause_sha256": "34abc7a4fb7f3e04447b78d24d3b43aab7e21fe88d974af1a731c105305a92d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-3379982e51b1",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 93, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 92,
+        "clause_sha256": "3379982e51b169bde29ab7892cc0298521309c484bede8b8e6f5f4cc36ae4ee3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-407b91cb77b2",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 94, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 93,
+        "clause_sha256": "407b91cb77b28b33f49277ff0107dd275bd089077d2269a02077718dfbd5cc1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.unicode-bidi-clause-4248286e094f",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "unicode-bidi"
+      ],
+      "behaviour": "Embeddings and Overrides: the unicode-bidi property — normative clause 95, located by its exact source hash.",
+      "locator": {
+        "section_id": "unicode-bidi",
+        "clause_index": 94,
+        "clause_sha256": "4248286e094f0367d201f04f1da1733350b1dec6bc990e4746371867b359a54c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-example",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-example"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example of Bidirectional Text.",
+      "locator": {
+        "section_id": "bidi-example",
+        "text_sha256": "2ccd59562543dd1790583b6685a900f4a334636e6b017bf1ff0c5770a64926cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.bidi-example-clause-cd2dc7ba6ced",
+        "css-writing-modes-3.bidi-example-clause-434df93d8ce3",
+        "css-writing-modes-3.bidi-example-clause-dc36566a29f0",
+        "css-writing-modes-3.bidi-example-clause-606c8bf5fd9b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-example-clause-cd2dc7ba6ced",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-example"
+      ],
+      "behaviour": "Example of Bidirectional Text — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-example",
+        "clause_index": 0,
+        "clause_sha256": "cd2dc7ba6cedf9bc58bf1033f08459f9a48ef9b2ea3bf848c2fa353d962094ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-example-clause-434df93d8ce3",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-example"
+      ],
+      "behaviour": "Example of Bidirectional Text — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-example",
+        "clause_index": 7,
+        "clause_sha256": "434df93d8ce356ef40e26bd866495f67ecc918e741b9f6bdf77054c0c83deda9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-example-clause-dc36566a29f0",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-example"
+      ],
+      "behaviour": "Example of Bidirectional Text — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-example",
+        "clause_index": 8,
+        "clause_sha256": "dc36566a29f06c77909ddd8bc8bf326e4190c517ecce5a0d17c4c028dfa3f95d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-example-clause-606c8bf5fd9b",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-example"
+      ],
+      "behaviour": "Example of Bidirectional Text — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-example",
+        "clause_index": 12,
+        "clause_sha256": "606c8bf5fd9bda2216c988467c57d822526d0fcff987c1473057a25a7480a57d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-algo",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-algo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Applying the Bidirectional Reordering Algorithm.",
+      "locator": {
+        "section_id": "bidi-algo",
+        "text_sha256": "ce21c80589319895fd6162412ddee5f1bae8cdf8a98055106bc03310a34d857a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.bidi-algo-clause-ce21c8058931"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-algo-clause-ce21c8058931",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-algo"
+      ],
+      "behaviour": "Applying the Bidirectional Reordering Algorithm — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-algo",
+        "clause_index": 0,
+        "clause_sha256": "ce21c80589319895fd6162412ddee5f1bae8cdf8a98055106bc03310a34d857a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-para-direction",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-para-direction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bidi Paragraph Embedding Levels.",
+      "locator": {
+        "section_id": "bidi-para-direction",
+        "text_sha256": "b4f62978efd262a82866d5f47ecfdf73afa4c9ee1f04348e21cc2ee43da49214"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.bidi-para-direction-clause-f6604564287e",
+        "css-writing-modes-3.bidi-para-direction-clause-5b22e15f112d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-para-direction-clause-f6604564287e",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-para-direction"
+      ],
+      "behaviour": "Bidi Paragraph Embedding Levels — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-para-direction",
+        "clause_index": 0,
+        "clause_sha256": "f6604564287e58d866ad3e3b39ae043b39999cf568f315fe2966f84607c5c10e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-para-direction-clause-5b22e15f112d",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-para-direction"
+      ],
+      "behaviour": "Bidi Paragraph Embedding Levels — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-para-direction",
+        "clause_index": 1,
+        "clause_sha256": "5b22e15f112d8cdf31eb8b2977f934ccef493b575bcb0f9b1e91d1832b69d918"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-control-codes",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-control-codes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS–Unicode Bidi Control Translation, Text Reordering.",
+      "locator": {
+        "section_id": "bidi-control-codes",
+        "text_sha256": "abb607602d5f4d92e1ccaeb8433d3a5451e060741080e000a63a6b5113d6774e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.bidi-control-codes-clause-b3d0f5be67b2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-control-codes-clause-b3d0f5be67b2",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-control-codes"
+      ],
+      "behaviour": "CSS–Unicode Bidi Control Translation, Text Reordering — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-control-codes",
+        "clause_index": 0,
+        "clause_sha256": "b3d0f5be67b29bff5151c793b3c5966fdbe973c771f285343ab51c27cd4438d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-atomic-inlines",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-atomic-inlines"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bidi Treatment of Atomic Inlines.",
+      "locator": {
+        "section_id": "bidi-atomic-inlines",
+        "text_sha256": "97d484c53e148ab6c64967d23105b7ab769a52d28f071ef5cedbb7d4b05dd5b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-embedding-breaks",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-embedding-breaks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Paragraph Breaks Within Embeddings and Isolates.",
+      "locator": {
+        "section_id": "bidi-embedding-breaks",
+        "text_sha256": "d14ad6c7501f13e9010abd83b48e76b5660ac82f13126f0797b45bc933de55d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-box-model",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-box-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Reordering-induced Box Fragmentation.",
+      "locator": {
+        "section_id": "bidi-box-model",
+        "text_sha256": "2b38040aaae8248eb25625047db3739a0454dc7181118ad176321d6af6ecd2e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.bidi-box-model-clause-6e5a1af81fb6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.bidi-box-model-clause-6e5a1af81fb6",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "bidi-box-model"
+      ],
+      "behaviour": "Reordering-induced Box Fragmentation — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-box-model",
+        "clause_index": 1,
+        "clause_sha256": "6e5a1af81fb6f44a00bb74371634aa67e7517394cc0c7ff1e4e4aa31a4f74828"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.vertical-modes",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "vertical-modes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Vertical Writing Modes.",
+      "locator": {
+        "section_id": "vertical-modes",
+        "text_sha256": "0f89f1fd156251467838ef42186058b7f8536194d6635b5a409c47b12e8d4e99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.vertical-intro",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "vertical-intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction to Vertical Writing.",
+      "locator": {
+        "section_id": "vertical-intro",
+        "text_sha256": "ba8c3ae06faf53c10af420f6a99357be609894028dced1e1657964b5dbf0ca39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.block-flow",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "block-flow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block Flow Direction: the writing-mode property.",
+      "locator": {
+        "section_id": "block-flow",
+        "text_sha256": "060ad9b10809ae3407ae398fc7d4af1c636a1cd6e842d575b9b0a0f64210035f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.block-flow-clause-cca2516ebb1d",
+        "css-writing-modes-3.block-flow-clause-36406d3329c4",
+        "css-writing-modes-3.block-flow-clause-d45322c98d53",
+        "css-writing-modes-3.block-flow-clause-12b1447d90a1",
+        "css-writing-modes-3.block-flow-clause-781cf8c74e90",
+        "css-writing-modes-3.block-flow-clause-18bb9ce2f151"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.block-flow-clause-cca2516ebb1d",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "block-flow"
+      ],
+      "behaviour": "Block Flow Direction: the writing-mode property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-flow",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.block-flow-clause-36406d3329c4",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "block-flow"
+      ],
+      "behaviour": "Block Flow Direction: the writing-mode property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-flow",
+        "clause_index": 24,
+        "clause_sha256": "36406d3329c466d4eee1e80ae9d47bebe1dbdcf49bbdfca40dd6aca6e43e17e5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.block-flow-clause-d45322c98d53",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "block-flow"
+      ],
+      "behaviour": "Block Flow Direction: the writing-mode property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-flow",
+        "clause_index": 32,
+        "clause_sha256": "d45322c98d53b64e872f262e33904b1a3a88a958c90bafe3872759d79c959914"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.block-flow-clause-12b1447d90a1",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "block-flow"
+      ],
+      "behaviour": "Block Flow Direction: the writing-mode property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-flow",
+        "clause_index": 34,
+        "clause_sha256": "12b1447d90a11aca9d5405feaf09fc808cfb5914a4b4f66c16afade7da0e3a23"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.block-flow-clause-781cf8c74e90",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "block-flow"
+      ],
+      "behaviour": "Block Flow Direction: the writing-mode property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-flow",
+        "clause_index": 38,
+        "clause_sha256": "781cf8c74e904ef30b569bf9c8110ac26bd07934b0b0d819b3d08d59ba96b911"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.block-flow-clause-18bb9ce2f151",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "block-flow"
+      ],
+      "behaviour": "Block Flow Direction: the writing-mode property — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-flow",
+        "clause_index": 39,
+        "clause_sha256": "18bb9ce2f151c9d344b6d40efb8d6a07bf17ff2750bc867143a98c658d2b3194"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.svg-writing-mode",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "svg-writing-mode"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Obsolete SVG1.1 writing-mode Values.",
+      "locator": {
+        "section_id": "svg-writing-mode",
+        "text_sha256": "e99699ac334b692df32f0a9a1122a30932c96ad254557b82a7a3332248d9ad49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.svg-writing-mode-css",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "svg-writing-mode-css"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Supporting SVG1.1 writing-mode values in CSS syntax.",
+      "locator": {
+        "section_id": "svg-writing-mode-css",
+        "text_sha256": "085eb60a4d46ca907ce6be999c91dbbc18d161c6781bcb8953c27fa3822c9f11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.svg-writing-mode-css-clause-b69fd12c20f6",
+        "css-writing-modes-3.svg-writing-mode-css-clause-7a15102667bd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.svg-writing-mode-css-clause-b69fd12c20f6",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "svg-writing-mode-css"
+      ],
+      "behaviour": "Supporting SVG1.1 writing-mode values in CSS syntax — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "svg-writing-mode-css",
+        "clause_index": 0,
+        "clause_sha256": "b69fd12c20f6d5fd6ecc5ae30ccc2c50be036cf04a02cdda658ecbf8f3e45422"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.svg-writing-mode-css-clause-7a15102667bd",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "svg-writing-mode-css"
+      ],
+      "behaviour": "Supporting SVG1.1 writing-mode values in CSS syntax — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "svg-writing-mode-css",
+        "clause_index": 2,
+        "clause_sha256": "7a15102667bdcea49e2288e51a064655e600557af4b657bd169f9dd7b4736986"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.svg-writing-mode-markup",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "svg-writing-mode-markup"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Supporting SVG1.1 writing-mode values in presentational attributes.",
+      "locator": {
+        "section_id": "svg-writing-mode-markup",
+        "text_sha256": "06a47e2e001d8b35b205dac236d2e586c01a71f25cb1912c1e8a89c37023b0ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.svg-writing-mode-markup-clause-f65f94fcd989"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.svg-writing-mode-markup-clause-f65f94fcd989",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "svg-writing-mode-markup"
+      ],
+      "behaviour": "Supporting SVG1.1 writing-mode values in presentational attributes — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "svg-writing-mode-markup",
+        "clause_index": 0,
+        "clause_sha256": "f65f94fcd98923bfaf5b44edde75b7dccafff151f1533b829bdcf8ec6f7ddff4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.inline-alignment",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "inline-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline-level Alignment.",
+      "locator": {
+        "section_id": "inline-alignment",
+        "text_sha256": "8747e1298f898028ca3e3fac56f59bf18875039920feb21d7b6b1672f1a91a3b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-baselines",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-baselines"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Baselines.",
+      "locator": {
+        "section_id": "text-baselines",
+        "text_sha256": "c5d24cbca26c296af7cfed9a29a18aeb5734ed84d2e4425bce14a4547ada2132"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.replaced-baselines",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "replaced-baselines"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Atomic Inline Baselines.",
+      "locator": {
+        "section_id": "replaced-baselines",
+        "text_sha256": "430450a085bd8996ba82bc56453a5a78b299a37620b1f195e3cfe9f1453a1608"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.baseline-alignment",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "baseline-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Baseline Alignment.",
+      "locator": {
+        "section_id": "baseline-alignment",
+        "text_sha256": "1a2b8cec93fe0126fe411edc127972ec6b7b46c96c818aa3925c7e1a1b54e872"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.intro-text-layout",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "intro-text-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction to Vertical Text Layout.",
+      "locator": {
+        "section_id": "intro-text-layout",
+        "text_sha256": "1936f522ca1036cfda2c704870e1544439d37fd057b4766b215c5b4e6dd4bd16"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-orientation",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-orientation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Orienting Text: the text-orientation property.",
+      "locator": {
+        "section_id": "text-orientation",
+        "text_sha256": "b7bffdcbed3492d3b42292cd27397b096f736159e3cea16aa4646d2c2b1c7250"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.text-orientation-clause-cca2516ebb1d",
+        "css-writing-modes-3.text-orientation-clause-ab9f7b0674cc",
+        "css-writing-modes-3.text-orientation-clause-e283aa6ad2ed",
+        "css-writing-modes-3.text-orientation-clause-f994fd8947e9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-orientation-clause-cca2516ebb1d",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-orientation"
+      ],
+      "behaviour": "Orienting Text: the text-orientation property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-orientation",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-orientation-clause-ab9f7b0674cc",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-orientation"
+      ],
+      "behaviour": "Orienting Text: the text-orientation property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-orientation",
+        "clause_index": 26,
+        "clause_sha256": "ab9f7b0674cced399b9052a1bf915d41c53d5e0f9131cb2f1e1961adc5cba949"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-orientation-clause-e283aa6ad2ed",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-orientation"
+      ],
+      "behaviour": "Orienting Text: the text-orientation property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-orientation",
+        "clause_index": 27,
+        "clause_sha256": "e283aa6ad2ed275f5c28a550f19070da9f997ea1a9e186f828e9d2a2f41b270f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-orientation-clause-f994fd8947e9",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-orientation"
+      ],
+      "behaviour": "Orienting Text: the text-orientation property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-orientation",
+        "clause_index": 30,
+        "clause_sha256": "f994fd8947e9f6a9b7c39a12b8e954e7d0d5256a3fc43aa0c8ff6017af6308c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.vertical-font-features",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "vertical-font-features"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Vertical Typesetting and Font Features.",
+      "locator": {
+        "section_id": "vertical-font-features",
+        "text_sha256": "3b9745fcba1426823b7957f3f9db072da1c8046a823aa2f59e1f5181c36df9d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.vertical-font-features-clause-fb535219d513",
+        "css-writing-modes-3.vertical-font-features-clause-dc0e0eb6fa5a",
+        "css-writing-modes-3.vertical-font-features-clause-1f266dce859a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.vertical-font-features-clause-fb535219d513",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "vertical-font-features"
+      ],
+      "behaviour": "Vertical Typesetting and Font Features — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "vertical-font-features",
+        "clause_index": 2,
+        "clause_sha256": "fb535219d5139b8a4486be7a2e6053b77e461ac82ba5acb28dde7142a9450273"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.vertical-font-features-clause-dc0e0eb6fa5a",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "vertical-font-features"
+      ],
+      "behaviour": "Vertical Typesetting and Font Features — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "vertical-font-features",
+        "clause_index": 3,
+        "clause_sha256": "dc0e0eb6fa5a8096d2b1e53d470b8316d7fec631973fcb8f914c1556d1a01cc9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.vertical-font-features-clause-1f266dce859a",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "vertical-font-features"
+      ],
+      "behaviour": "Vertical Typesetting and Font Features — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "vertical-font-features",
+        "clause_index": 4,
+        "clause_sha256": "1f266dce859a697766102d8b744ddc0c795db9c9ce201ad50bfbde3d7739c47a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.vertical-orientations",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "vertical-orientations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mixed Vertical Orientations.",
+      "locator": {
+        "section_id": "vertical-orientations",
+        "text_sha256": "9a7a8f9ea66a1c55fdf422b08729553300af13ce2608a7b551bc1a88799d19e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.vertical-orientations-clause-69f44d0447d6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.vertical-orientations-clause-69f44d0447d6",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "vertical-orientations"
+      ],
+      "behaviour": "Mixed Vertical Orientations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "vertical-orientations",
+        "clause_index": 0,
+        "clause_sha256": "69f44d0447d6f296aae3a345cc9fdc9d77f1bc3267066c903547fbb36075ab41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.glyph-orientation",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "glyph-orientation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Obsolete: the SVG1.1 glyph-orientation-vertical property.",
+      "locator": {
+        "section_id": "glyph-orientation",
+        "text_sha256": "47acbba30268f834cb5a1a2e98b9661fefdd34601c638da0244c0b828a6bc170"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.glyph-orientation-clause-cca2516ebb1d",
+        "css-writing-modes-3.glyph-orientation-clause-d40517dc1a66",
+        "css-writing-modes-3.glyph-orientation-clause-4a136ef3f29f",
+        "css-writing-modes-3.glyph-orientation-clause-1148457b61e8",
+        "css-writing-modes-3.glyph-orientation-clause-384030e1ac55"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.glyph-orientation-clause-cca2516ebb1d",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "glyph-orientation"
+      ],
+      "behaviour": "Obsolete: the SVG1.1 glyph-orientation-vertical property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "glyph-orientation",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.glyph-orientation-clause-d40517dc1a66",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "glyph-orientation"
+      ],
+      "behaviour": "Obsolete: the SVG1.1 glyph-orientation-vertical property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "glyph-orientation",
+        "clause_index": 17,
+        "clause_sha256": "d40517dc1a66780334e45ba646d149da8b51097faad212c1c230bf37967b6a33"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.glyph-orientation-clause-4a136ef3f29f",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "glyph-orientation"
+      ],
+      "behaviour": "Obsolete: the SVG1.1 glyph-orientation-vertical property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "glyph-orientation",
+        "clause_index": 18,
+        "clause_sha256": "4a136ef3f29f7c008f6abd7fd37b03cb83a83f4f3e337ee32258f601d44cade1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.glyph-orientation-clause-1148457b61e8",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "glyph-orientation"
+      ],
+      "behaviour": "Obsolete: the SVG1.1 glyph-orientation-vertical property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "glyph-orientation",
+        "clause_index": 30,
+        "clause_sha256": "1148457b61e852d15974a7f25dd42a67fd16bb9a4190a346c15a34f60d9b6f81"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.glyph-orientation-clause-384030e1ac55",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "glyph-orientation"
+      ],
+      "behaviour": "Obsolete: the SVG1.1 glyph-orientation-vertical property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "glyph-orientation",
+        "clause_index": 32,
+        "clause_sha256": "384030e1ac55e719441f1f4437181a910abb34a19b72da21f6b440f15427855e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.logical-directions",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "logical-directions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-relative Directions.",
+      "locator": {
+        "section_id": "logical-directions",
+        "text_sha256": "09bbd71f2bb2cdf979f2c820594e33eb71b15c6cfc3c9268f32177cd01310ba7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.line-directions",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "line-directions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line-relative Directions.",
+      "locator": {
+        "section_id": "line-directions",
+        "text_sha256": "61b8aeed4034be617fa89fbc252c6c92bbb552e44166a0d94fa03a1e5cefd27c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.logical-to-physical",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "logical-to-physical"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Abstract-to-Physical Mappings.",
+      "locator": {
+        "section_id": "logical-to-physical",
+        "text_sha256": "d403f9482e2c562ec2b62133efe8b8b41624830e3bd7f542201805e9df428c21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.logical-to-physical-clause-ad503c06ccd8",
+        "css-writing-modes-3.logical-to-physical-clause-e25435b8f76f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.logical-to-physical-clause-ad503c06ccd8",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "logical-to-physical"
+      ],
+      "behaviour": "Abstract-to-Physical Mappings — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "logical-to-physical",
+        "clause_index": 51,
+        "clause_sha256": "ad503c06ccd8135075655749c43cc8548ad558814c47e5fc53746ba74d73eb00"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.logical-to-physical-clause-e25435b8f76f",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "logical-to-physical"
+      ],
+      "behaviour": "Abstract-to-Physical Mappings — normative clause 53, located by its exact source hash.",
+      "locator": {
+        "section_id": "logical-to-physical",
+        "clause_index": 52,
+        "clause_sha256": "e25435b8f76f2efe94088343e0eb72793d46bb8c1c34f57a19374b46a09558df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.vertical-layout",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "vertical-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Principles of Layout in Vertical Writing Modes.",
+      "locator": {
+        "section_id": "vertical-layout",
+        "text_sha256": "ab4c6384cd0dc4d91bcfcee1bc0942ce82e72d23d940c50f60693065afcefad4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.vertical-layout-clause-4b668fdb67b3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.vertical-layout-clause-4b668fdb67b3",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "vertical-layout"
+      ],
+      "behaviour": "Principles of Layout in Vertical Writing Modes — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "vertical-layout",
+        "clause_index": 6,
+        "clause_sha256": "4b668fdb67b3ff74ef85a9499a773302ffbeaf0a68912674b8b3f12aa8274c86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.dimension-mapping",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "dimension-mapping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dimensional Mapping.",
+      "locator": {
+        "section_id": "dimension-mapping",
+        "text_sha256": "4929a18a799162d51eda38a47f0bb7db4ae96215197a1625dcb8ffe987331064"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.orthogonal-flows",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "orthogonal-flows"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Orthogonal Flows.",
+      "locator": {
+        "section_id": "orthogonal-flows",
+        "text_sha256": "33b679cbe4ecb3935babd2701406f92a4020bc0bd99164a6aa39a46915de974d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.orthogonal-flows-clause-44a5c467c678"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.orthogonal-flows-clause-44a5c467c678",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "orthogonal-flows"
+      ],
+      "behaviour": "Orthogonal Flows — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "orthogonal-flows",
+        "clause_index": 11,
+        "clause_sha256": "44a5c467c678ce8e5f25f25339b16c840adb44ccb96218f9463273fbca115546"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.orthogonal-auto",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "orthogonal-auto"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Available Space of Orthogonal Flows.",
+      "locator": {
+        "section_id": "orthogonal-auto",
+        "text_sha256": "eb72e165c96dead68f177bbe9c70d72b086170dc87c960a74932921dba7182dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.orthogonal-layout",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "orthogonal-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Auto-sizing Orthogonal Flow Roots.",
+      "locator": {
+        "section_id": "orthogonal-layout",
+        "text_sha256": "d48574be44483bb5536eaaf206c9d27bc62fe4336f1d5063f36a4cdb5037f704"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.logical-direction-layout",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "logical-direction-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flow-Relative Mappings.",
+      "locator": {
+        "section_id": "logical-direction-layout",
+        "text_sha256": "d9284dc50be98c6e74f4096321d3f1655206708c88913ea8918ca4e3812f94ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.logical-direction-layout-clause-83571db9e466"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.logical-direction-layout-clause-83571db9e466",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "logical-direction-layout"
+      ],
+      "behaviour": "Flow-Relative Mappings — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "logical-direction-layout",
+        "clause_index": 4,
+        "clause_sha256": "83571db9e466adabad3097217a2187b295e2a657b18354a5b3acfcf6056161f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.line-mappings",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "line-mappings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line-Relative Mappings.",
+      "locator": {
+        "section_id": "line-mappings",
+        "text_sha256": "98b93c1ae18f27ee2ec676bef932482a2ae834c9890f1631c009f0375be3471c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.physical-only",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "physical-only"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Purely Physical Mappings.",
+      "locator": {
+        "section_id": "physical-only",
+        "text_sha256": "16de769b55031827bdb41edcc74350a2ff2c455188447609de9ec4a42f0e8579"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.principal-flow",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "principal-flow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Principal Writing Mode.",
+      "locator": {
+        "section_id": "principal-flow",
+        "text_sha256": "8091241cdd02700fcfca246da3a262c27e523262170744fca3dec94822558960"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.principal-flow-clause-1d1d74a99abc",
+        "css-writing-modes-3.principal-flow-clause-3d262dbabe42"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.principal-flow-clause-1d1d74a99abc",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "principal-flow"
+      ],
+      "behaviour": "The Principal Writing Mode — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "principal-flow",
+        "clause_index": 1,
+        "clause_sha256": "1d1d74a99abc8ea4f52430af20bd77606049a199e6bff1dc9907e748bf7be54c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.principal-flow-clause-3d262dbabe42",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "principal-flow"
+      ],
+      "behaviour": "The Principal Writing Mode — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "principal-flow",
+        "clause_index": 2,
+        "clause_sha256": "3d262dbabe422be988c1b9b6739e737c2ceec8938a9284ec16ee2c22bccd52e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.icb",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "icb"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Propagation to the Initial Containing Block.",
+      "locator": {
+        "section_id": "icb",
+        "text_sha256": "e2a301c22ab9a4fa3c97a056063d954d365a6d303be943764720f6aaca02e0fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.page-direction",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "page-direction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page Flow: the page progression direction.",
+      "locator": {
+        "section_id": "page-direction",
+        "text_sha256": "1b9f2c6f6e54223e029fa1e7e875c06327a7cdc155c6e38cf8630f5ebc28a23c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Glyph Composition.",
+      "locator": {
+        "section_id": "text-combine",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-upright",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-upright"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Horizontal-in-Vertical Composition: the text-combine-upright property.",
+      "locator": {
+        "section_id": "text-combine-upright",
+        "text_sha256": "630a54bc042f1418ea5d36b7556032e408d8bc6b140e0cccc773b62647ee4df2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.text-combine-upright-clause-cca2516ebb1d",
+        "css-writing-modes-3.text-combine-upright-clause-4497cccc5109",
+        "css-writing-modes-3.text-combine-upright-clause-f216cb793238"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-upright-clause-cca2516ebb1d",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-upright"
+      ],
+      "behaviour": "Horizontal-in-Vertical Composition: the text-combine-upright property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-combine-upright",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-upright-clause-4497cccc5109",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-upright"
+      ],
+      "behaviour": "Horizontal-in-Vertical Composition: the text-combine-upright property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-combine-upright",
+        "clause_index": 17,
+        "clause_sha256": "4497cccc5109b6e994b13cb368b225a4250b92b2768af902c31217529ff31c63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-upright-clause-f216cb793238",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-upright"
+      ],
+      "behaviour": "Horizontal-in-Vertical Composition: the text-combine-upright property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-combine-upright",
+        "clause_index": 30,
+        "clause_sha256": "f216cb793238c71e2c98868d1270b89c0376b90a1e7d411ca5769cd6b2613fa1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-runs",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-runs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Run Rules.",
+      "locator": {
+        "section_id": "text-combine-runs",
+        "text_sha256": "35ba6e61e62c5d762f7efb5b2cf9822e417b8df8479bf77fa607fa4279d87b78"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.text-combine-runs-clause-dbf2f3346f8f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-runs-clause-dbf2f3346f8f",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-runs"
+      ],
+      "behaviour": "Text Run Rules — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-combine-runs",
+        "clause_index": 1,
+        "clause_sha256": "dbf2f3346f8f698e8a92021bdeabd289214009d236662971ad2a3cff7ad79c0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-layout",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layout Rules.",
+      "locator": {
+        "section_id": "text-combine-layout",
+        "text_sha256": "ebd227a9e6e1f39838e718378b9e0b05c17cb18412debb5b08e7d158f1228152"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.text-combine-layout-clause-2c8862494e51",
+        "css-writing-modes-3.text-combine-layout-clause-738183551bd4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-layout-clause-2c8862494e51",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-layout"
+      ],
+      "behaviour": "Layout Rules — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-combine-layout",
+        "clause_index": 0,
+        "clause_sha256": "2c8862494e5121eaaf9253a99a89a14c2cf561d65424accf40d1b50809a7ea7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-layout-clause-738183551bd4",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-layout"
+      ],
+      "behaviour": "Layout Rules — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-combine-layout",
+        "clause_index": 1,
+        "clause_sha256": "738183551bd4f242316a33008b08c704f9582f7ce11e17bcd5b4cb2f9c17ff78"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-compression",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-compression"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Compression Rules.",
+      "locator": {
+        "section_id": "text-combine-compression",
+        "text_sha256": "d50c01e656201e0c51abcde5bd6868167af460b049f24a33940a3f1799ede15b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.text-combine-compression-clause-e609ce8c923d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-compression-clause-e609ce8c923d",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-compression"
+      ],
+      "behaviour": "Compression Rules — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-combine-compression",
+        "clause_index": 0,
+        "clause_sha256": "e609ce8c923df6bf4703fba08c68f927cfca1c444dab743c08a866375f1c3a78"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-fullwidth",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-fullwidth"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Full-width Characters.",
+      "locator": {
+        "section_id": "text-combine-fullwidth",
+        "text_sha256": "ef9496479e4b93901357b2ebf5befd97d58a08e4e602d02c1e6a6d1aa023a412"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.text-combine-fullwidth-clause-ef0e02f6ce55"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.text-combine-fullwidth-clause-ef0e02f6ce55",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "text-combine-fullwidth"
+      ],
+      "behaviour": "Full-width Characters — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-combine-fullwidth",
+        "clause_index": 0,
+        "clause_sha256": "ef0e02f6ce55013b3b57e232d7dff3fc65dc22650c1b613c8c9ec178f5274d1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.priv-sec",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy and Security Considerations.",
+      "locator": {
+        "section_id": "priv-sec",
+        "text_sha256": "91a947de90cd3ca38256a2a1ed8710f1ae14f242d3498d4e49288c8de14886bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.conformance",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.document-conventions",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "document-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "document-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.document-conventions-clause-5c98c879f070",
+        "css-writing-modes-3.document-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.document-conventions-clause-5c98c879f070",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "document-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "document-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.document-conventions-clause-33a5ed16a48d",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "document-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "document-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.conform-classes",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "conform-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "conform-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.conform-classes-clause-ff408372426c",
+        "css-writing-modes-3.conform-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.conform-classes-clause-ff408372426c",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "conform-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.conform-classes-clause-d9976214330c",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "conform-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.conform-responsible",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "conform-responsible"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Requirements for Responsible Implementation of CSS.",
+      "locator": {
+        "section_id": "conform-responsible",
+        "text_sha256": "63e281f28ed2ebefafb560d6716cfc98d63caa0f55f4ae36a918cca31886f4b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.conform-partial",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "conform-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial Implementations.",
+      "locator": {
+        "section_id": "conform-partial",
+        "text_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.conform-partial-clause-db223ebb5aec"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.conform-partial-clause-db223ebb5aec",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "conform-partial"
+      ],
+      "behaviour": "Partial Implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-partial",
+        "clause_index": 0,
+        "clause_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.conform-future-proofing",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.conform-testing",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "conform-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of CR-level Features.",
+      "locator": {
+        "section_id": "conform-testing",
+        "text_sha256": "85a2aab62de157ff88eb104ecdbf2c4c32e685f5fa12638fd5357bdf89415d2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-writing-modes-3.conform-testing-clause-003938d8c19a",
+        "css-writing-modes-3.conform-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.conform-testing-clause-003938d8c19a",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "conform-testing"
+      ],
+      "behaviour": "Implementations of CR-level Features — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-testing",
+        "clause_index": 0,
+        "clause_sha256": "003938d8c19a7542e7b704d552edf8474ca7c592719839b92ffb1c28c24763ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.conform-testing-clause-ae1210cf9643",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "conform-testing"
+      ],
+      "behaviour": "Implementations of CR-level Features — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-writing-modes-3.property-index",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "66ae2dc36062ded353ce0e22516fd162b70506da001780af847343e6bdfe9156"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.import-93f9b7e9ae0c",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://tools.ietf.org/html/rfc6919.",
+      "unresolved_reference": "https://tools.ietf.org/html/rfc6919",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-writing-modes-3.title",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Writing Modes Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.abstract",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "a8685f178a73b25d3c20099ee077c979661b20197ff33dfa2a6a2c731a9ec1cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.status",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "9ed1653637be3e68343677fff3075147e969bff470ee6e09e3469858fd991777"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.contents",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "d5047674b0898ad0623944dab3f6903215e34cabb5c3a6955ce00172859c5448"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.intro-baselines",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "intro-baselines"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 4.1. Introduction to Baselines.",
+      "locator": {
+        "section_id": "intro-baselines",
+        "text_sha256": "13280d57e7048aca2ddbc49d51453dc53925333f338f0a618cea9bbffe4002e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.abstract-box",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "abstract-box"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 6. Abstract Box Terminology.",
+      "locator": {
+        "section_id": "abstract-box",
+        "text_sha256": "7a32173e4601afcc5d31223e301eb9ef28070a23bb86be868a0f5f5048b6e38c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.abstract-axes",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "abstract-axes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 6.1. Abstract Dimensions.",
+      "locator": {
+        "section_id": "abstract-axes",
+        "text_sha256": "62f03af78af47d4280a8c8cfbc53f372b333a3d70507cf047f079245b231a291"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.abstract-layout",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "abstract-layout"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7. Abstract Box Layout.",
+      "locator": {
+        "section_id": "abstract-layout",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.orthogonal-pagination",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "orthogonal-pagination"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.3.3. Fragmenting Orthogonal Flows.",
+      "locator": {
+        "section_id": "orthogonal-pagination",
+        "text_sha256": "a43c8d190a9cd5aa8ee32221991adb3ae4db54ba312eb2e01cfbc0df3554a7f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.changes",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.changes-20190903",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "changes-20190903"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the September 2019 CSS Writing Modes Module Level 3 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-20190903",
+        "text_sha256": "f5cd95f47b3d0b58ee2c0b6dd4823c7d47ea4d5dc60828722c646c819fde076c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.changes-20190730",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "changes-20190730"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the July 2019 CSS Writing Modes Module Level 3 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-20190730",
+        "text_sha256": "aafc160869751e8d398b1eaffcd3aff37749ff5fab7d495e6e9eabfaf3d0a712"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.changes-201805",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "changes-201805"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the May 2018 CSS Writing Modes Module Level 3 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-201805",
+        "text_sha256": "0ff9fed55b011cc202b5e4a8cb1e2f6307dca9d274b2fd732829b40e69f2b208"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.changes-201712",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "changes-201712"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the December 2017 CSS Writing Modes Module Level 3 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-201712",
+        "text_sha256": "e3d466c1204c974284b1a3f80d42a00313769cc3db8f2068512c5a1f7760a54c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.changes-201512",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "changes-201512"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the December 2015 CSS Writing Modes Module Level 3 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-201512",
+        "text_sha256": "8b40555060b9db6332566529574df3d5286e54d33d610d7c719e70a5abf3e5c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.changes-201311",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "changes-201311"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the March 2014 CSS Writing Modes Module Level 3 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-201311",
+        "text_sha256": "41932e5df85e59746a2538df2eb0e825d596e81a0c4ede711112b5f8654173a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.acknowledgements",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgements.",
+      "locator": {
+        "section_id": "acknowledgements",
+        "text_sha256": "185bfc549870b7ebaa0710e9fffa3fb591c3689dda76d4d50ae1c26edfb1b93c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.script-orientations",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "script-orientations"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix A: Vertical Scripts in Unicode.",
+      "locator": {
+        "section_id": "script-orientations",
+        "text_sha256": "168146fb280a98bdee34f1c04740985221878364dd84b853799dbdb8d641fc44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.index",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.index-defined-here",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "660a50d198bad9368d6c02d053f04e567308dd225ffac8684ad491dcd75b644f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.index-defined-elsewhere",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "dfd43c0a6065764f9ee99e31866f95da8b6dc5ccb355b2dc2bb15272b4b86bef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.references",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-writing-modes-3.informative",
+      "family": "css-writing-modes-3",
+      "source_id": "css-writing-modes-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "1d799e45062e9b95ca4a5846c64d88d484b19377a78ce02508fafc36c9a29eb0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

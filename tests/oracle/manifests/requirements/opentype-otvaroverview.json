@@ -1,0 +1,1605 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-otvaroverview.opentype-font-variations-overview",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "opentype-font-variations-overview"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in OpenType Font Variations Overview.",
+      "locator": {
+        "section_id": "opentype-font-variations-overview",
+        "text_sha256": "d4e9eccdadfe9ceade06b7d53e4ae5cc2ae457ecb89b86b6a5d90278c9262ea6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.introduction",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "2759335f3b74bb7c091268be1dc99ddb10b3db7a00b0deca0982df6c7bc00be1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otvaroverview.introduction-clause-f821c4c7da10",
+        "opentype-otvaroverview.introduction-clause-f73710ec8c1f",
+        "opentype-otvaroverview.introduction-clause-e0ed388a836a",
+        "opentype-otvaroverview.introduction-clause-aeeba5984f02"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.introduction-clause-f821c4c7da10",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Introduction — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "introduction",
+        "clause_index": 9,
+        "clause_sha256": "f821c4c7da10501a0246435131b863afc0b47d7d797945cda5a4a2a6b2043f9c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.introduction-clause-f73710ec8c1f",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Introduction — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "introduction",
+        "clause_index": 10,
+        "clause_sha256": "f73710ec8c1fe1cb4d18eeed839e7170b0e8601c5a1562d7146ccaeb3b267d28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.introduction-clause-e0ed388a836a",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Introduction — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "introduction",
+        "clause_index": 11,
+        "clause_sha256": "e0ed388a836af5d3c98aef0e31107c66553c905de1cd0d9e771686165e0eb126"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.introduction-clause-aeeba5984f02",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Introduction — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "introduction",
+        "clause_index": 12,
+        "clause_sha256": "aeeba5984f0251b467200baf4118366294edf16e1860098586d000817328d970"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.terminology",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terminology",
+        "text_sha256": "36e0a85d4306ac825cc3035c52ccac10643fa65752295e946b7b3a161efde30c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otvaroverview.terminology-clause-da9f27e5ab86"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.terminology-clause-da9f27e5ab86",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Terminology — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "terminology",
+        "clause_index": 21,
+        "clause_sha256": "da9f27e5ab86cab855e5d9647f336bb64d8d91a1abe31dea2df2b40b67b14bf4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-space-default-instances-and-adjustment-deltas",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-space-default-instances-and-adjustment-deltas"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Variation Space, Default Instances and Adjustment Deltas.",
+      "locator": {
+        "section_id": "variation-space-default-instances-and-adjustment-deltas",
+        "text_sha256": "1d4a923c2b29893e033180f2d5a783a1c6459c4f73a2ba25d64c1b5e537b7648"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otvaroverview.variation-space-default-instances-and-adjustment-deltas-clause-1da03f29cee3",
+        "opentype-otvaroverview.variation-space-default-instances-and-adjustment-deltas-clause-1ab40b351bd7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-space-default-instances-and-adjustment-deltas-clause-1da03f29cee3",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-space-default-instances-and-adjustment-deltas"
+      ],
+      "behaviour": "Variation Space, Default Instances and Adjustment Deltas — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-space-default-instances-and-adjustment-deltas",
+        "clause_index": 0,
+        "clause_sha256": "1da03f29cee39e21d4359dd10c4094366b392292a1bd06c51dd80fe1516b719f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-space-default-instances-and-adjustment-deltas-clause-1ab40b351bd7",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-space-default-instances-and-adjustment-deltas"
+      ],
+      "behaviour": "Variation Space, Default Instances and Adjustment Deltas — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-space-default-instances-and-adjustment-deltas",
+        "clause_index": 13,
+        "clause_sha256": "1ab40b351bd7d82cc1178f982e22d20a56866bbd05536ebe817a2524d1af6fb8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.coordinate-scales-and-normalization",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "coordinate-scales-and-normalization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Coordinate Scales and Normalization.",
+      "locator": {
+        "section_id": "coordinate-scales-and-normalization",
+        "text_sha256": "c7d46506d305a6f6d3a372e8e950a22028caef2bf9a1661803e957ac9fa755c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otvaroverview.coordinate-scales-and-normalization-clause-ec30b08654eb",
+        "opentype-otvaroverview.coordinate-scales-and-normalization-clause-3a3e85695dec",
+        "opentype-otvaroverview.coordinate-scales-and-normalization-clause-4f2f616c4639",
+        "opentype-otvaroverview.coordinate-scales-and-normalization-clause-d7e1b28d2365",
+        "opentype-otvaroverview.coordinate-scales-and-normalization-clause-448971ca7e84",
+        "opentype-otvaroverview.coordinate-scales-and-normalization-clause-0e0a00307fe2",
+        "opentype-otvaroverview.coordinate-scales-and-normalization-clause-00f1a2b1774e",
+        "opentype-otvaroverview.coordinate-scales-and-normalization-clause-2011f15cdb1b",
+        "opentype-otvaroverview.coordinate-scales-and-normalization-clause-da38b9ba8d48",
+        "opentype-otvaroverview.coordinate-scales-and-normalization-clause-b37e8f249628"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.coordinate-scales-and-normalization-clause-ec30b08654eb",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "coordinate-scales-and-normalization"
+      ],
+      "behaviour": "Coordinate Scales and Normalization — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "coordinate-scales-and-normalization",
+        "clause_index": 15,
+        "clause_sha256": "ec30b08654ebe5c7191584b9d7eb7fd339c6d14cca169d6cf85802365121f1fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.coordinate-scales-and-normalization-clause-3a3e85695dec",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "coordinate-scales-and-normalization"
+      ],
+      "behaviour": "Coordinate Scales and Normalization — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "coordinate-scales-and-normalization",
+        "clause_index": 24,
+        "clause_sha256": "3a3e85695dec0421063f8e5d254a590f4981cf5cdd83d9002d26a94a2969844a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.coordinate-scales-and-normalization-clause-4f2f616c4639",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "coordinate-scales-and-normalization"
+      ],
+      "behaviour": "Coordinate Scales and Normalization — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "coordinate-scales-and-normalization",
+        "clause_index": 26,
+        "clause_sha256": "4f2f616c4639eb8910638514b88e6e04930999c307578dcc7dfc63e29f416fd1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.coordinate-scales-and-normalization-clause-d7e1b28d2365",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "coordinate-scales-and-normalization"
+      ],
+      "behaviour": "Coordinate Scales and Normalization — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "coordinate-scales-and-normalization",
+        "clause_index": 28,
+        "clause_sha256": "d7e1b28d236539cf628861914b14293d71495e0ab5dde1e2176b15cd502b1a49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.coordinate-scales-and-normalization-clause-448971ca7e84",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "coordinate-scales-and-normalization"
+      ],
+      "behaviour": "Coordinate Scales and Normalization — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "coordinate-scales-and-normalization",
+        "clause_index": 29,
+        "clause_sha256": "448971ca7e84e710f54939c5b0c92b04857b83cfb0e5b49ba020880a8f9bed89"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.coordinate-scales-and-normalization-clause-0e0a00307fe2",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "coordinate-scales-and-normalization"
+      ],
+      "behaviour": "Coordinate Scales and Normalization — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "coordinate-scales-and-normalization",
+        "clause_index": 33,
+        "clause_sha256": "0e0a00307fe2d5670b91c7d4a9077e2d6adf99162b4c1158a75abdbbae48f2c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.coordinate-scales-and-normalization-clause-00f1a2b1774e",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "coordinate-scales-and-normalization"
+      ],
+      "behaviour": "Coordinate Scales and Normalization — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "coordinate-scales-and-normalization",
+        "clause_index": 35,
+        "clause_sha256": "00f1a2b1774ed729cb498fe6d1f313f73e650cbacb8583b9f99e56fd8db7cddd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.coordinate-scales-and-normalization-clause-2011f15cdb1b",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "coordinate-scales-and-normalization"
+      ],
+      "behaviour": "Coordinate Scales and Normalization — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "coordinate-scales-and-normalization",
+        "clause_index": 40,
+        "clause_sha256": "2011f15cdb1b5aa6ea406b8af8d6b77ebce38c328e624b40b76e230235156eab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.coordinate-scales-and-normalization-clause-da38b9ba8d48",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "coordinate-scales-and-normalization"
+      ],
+      "behaviour": "Coordinate Scales and Normalization — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "coordinate-scales-and-normalization",
+        "clause_index": 44,
+        "clause_sha256": "da38b9ba8d48b29e638a8e05d1fc10d6bc60e0c239eeb72048e93852a8f7b7e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.coordinate-scales-and-normalization-clause-b37e8f249628",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "coordinate-scales-and-normalization"
+      ],
+      "behaviour": "Coordinate Scales and Normalization — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "coordinate-scales-and-normalization",
+        "clause_index": 48,
+        "clause_sha256": "b37e8f249628e485be200fa1be8d3efeb9b71e127b91b8658c36e64b9ef36504"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.avar-normalization-example",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "avar-normalization-example"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'avar' normalization example.",
+      "locator": {
+        "section_id": "avar-normalization-example",
+        "text_sha256": "fca537391606762454e84213de8725ef4bd11eb37b821d78d267d2f2b6a1f897"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otvaroverview.avar-normalization-example-clause-cc641eb5a08f",
+        "opentype-otvaroverview.avar-normalization-example-clause-6e0cac28ccdb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.avar-normalization-example-clause-cc641eb5a08f",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "avar-normalization-example"
+      ],
+      "behaviour": "'avar' normalization example — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "avar-normalization-example",
+        "clause_index": 1,
+        "clause_sha256": "cc641eb5a08f39d0840e922f2dfe222f4d410df643cc68c9368df8f86ca8ca93"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.avar-normalization-example-clause-6e0cac28ccdb",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "avar-normalization-example"
+      ],
+      "behaviour": "'avar' normalization example — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "avar-normalization-example",
+        "clause_index": 28,
+        "clause_sha256": "6e0cac28ccdb2c088b6c7f8071c03427398416973892c155be8398b9e57372ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Variation Data.",
+      "locator": {
+        "section_id": "variation-data",
+        "text_sha256": "ddfb061cc11e2171f84753a5b0a8fa9c26448477e6ec8080dbfcfb2818e65b60"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otvaroverview.variation-data-clause-c7491819baa6",
+        "opentype-otvaroverview.variation-data-clause-57b30688fc1e",
+        "opentype-otvaroverview.variation-data-clause-96669a3c9fed",
+        "opentype-otvaroverview.variation-data-clause-172810d13739"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-clause-c7491819baa6",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data"
+      ],
+      "behaviour": "Variation Data — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data",
+        "clause_index": 21,
+        "clause_sha256": "c7491819baa6520aa5e85393337bd5434e73efef0393d5c678ecf016c4ae6420"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-clause-57b30688fc1e",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data"
+      ],
+      "behaviour": "Variation Data — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data",
+        "clause_index": 23,
+        "clause_sha256": "57b30688fc1e39734c54788847e82998c4f1be9cca85cadf25a194d3d80f9c8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-clause-96669a3c9fed",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data"
+      ],
+      "behaviour": "Variation Data — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data",
+        "clause_index": 28,
+        "clause_sha256": "96669a3c9fed254933d869b0ad720872439c159cdf59ea29571e3b199aa99bd1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-clause-172810d13739",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data"
+      ],
+      "behaviour": "Variation Data — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data",
+        "clause_index": 30,
+        "clause_sha256": "172810d13739f1dbe2300343e17dc32df908a10ca2afd5a51f6e3ce2c628ec3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data-tables-and-miscellaneous-requirements"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Variation Data Tables and Miscellaneous Requirements.",
+      "locator": {
+        "section_id": "variation-data-tables-and-miscellaneous-requirements",
+        "text_sha256": "a9ef1887b736932640be07e56e63c26bbcb021f6a885022233686670c9bd1fb2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-969f619225fb",
+        "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-b99ee8222e19",
+        "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-0c9f0289e312",
+        "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-511ae3ba115c",
+        "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-3c9772bad7cd",
+        "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-775be760c614",
+        "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-72650fc56b99",
+        "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-47b6e4ff1391",
+        "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-4a481abff8d7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-969f619225fb",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data-tables-and-miscellaneous-requirements"
+      ],
+      "behaviour": "Variation Data Tables and Miscellaneous Requirements — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data-tables-and-miscellaneous-requirements",
+        "clause_index": 10,
+        "clause_sha256": "969f619225fb4817dc87784de3249dc19db2b2620c14bb4e4d85cabe1bc4c5a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-b99ee8222e19",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data-tables-and-miscellaneous-requirements"
+      ],
+      "behaviour": "Variation Data Tables and Miscellaneous Requirements — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data-tables-and-miscellaneous-requirements",
+        "clause_index": 11,
+        "clause_sha256": "b99ee8222e199236ac2ef242a9bbeb1305ed8b7241333b13c78dabb22ad38f0c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-0c9f0289e312",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data-tables-and-miscellaneous-requirements"
+      ],
+      "behaviour": "Variation Data Tables and Miscellaneous Requirements — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data-tables-and-miscellaneous-requirements",
+        "clause_index": 12,
+        "clause_sha256": "0c9f0289e312a0242a2fefec5347ecec06c1740e27e598a22f4f70dcd818133f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-511ae3ba115c",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data-tables-and-miscellaneous-requirements"
+      ],
+      "behaviour": "Variation Data Tables and Miscellaneous Requirements — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data-tables-and-miscellaneous-requirements",
+        "clause_index": 13,
+        "clause_sha256": "511ae3ba115cc32b3aa40cf87748491bba4c280f51b37e6a93c41db87875975a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-3c9772bad7cd",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data-tables-and-miscellaneous-requirements"
+      ],
+      "behaviour": "Variation Data Tables and Miscellaneous Requirements — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data-tables-and-miscellaneous-requirements",
+        "clause_index": 14,
+        "clause_sha256": "3c9772bad7cdcfe96d752c6fbaa48ab11f866267b8f48e11d5a5ec55f13072f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-775be760c614",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data-tables-and-miscellaneous-requirements"
+      ],
+      "behaviour": "Variation Data Tables and Miscellaneous Requirements — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data-tables-and-miscellaneous-requirements",
+        "clause_index": 18,
+        "clause_sha256": "775be760c6148376727c1023f46b1dd2c67bd85f99043e4c8872a60922f9bf9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-72650fc56b99",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data-tables-and-miscellaneous-requirements"
+      ],
+      "behaviour": "Variation Data Tables and Miscellaneous Requirements — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data-tables-and-miscellaneous-requirements",
+        "clause_index": 22,
+        "clause_sha256": "72650fc56b992be11f65c8ff2fef6d9838e9e04c12cc46363b9920f5ae98c1e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-47b6e4ff1391",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data-tables-and-miscellaneous-requirements"
+      ],
+      "behaviour": "Variation Data Tables and Miscellaneous Requirements — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data-tables-and-miscellaneous-requirements",
+        "clause_index": 27,
+        "clause_sha256": "47b6e4ff1391f7254b4aacbc3156d54fc4a738ce43b404e554979f1899c5a0f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-4a481abff8d7",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "variation-data-tables-and-miscellaneous-requirements"
+      ],
+      "behaviour": "Variation Data Tables and Miscellaneous Requirements — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "variation-data-tables-and-miscellaneous-requirements",
+        "clause_index": 28,
+        "clause_sha256": "4a481abff8d72936a40f0ae83508a5e89d9c6ea1f0b9da7fa3612a7bf0b4494c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "algorithm-for-interpolation-of-instance-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Algorithm for Interpolation of Instance Values.",
+      "locator": {
+        "section_id": "algorithm-for-interpolation-of-instance-values",
+        "text_sha256": "b6797dc6acb62655fb2d68ec7fd32da8b220c285df90ceb2679766d553b75a98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-890208dea216",
+        "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-cb5e262f3e60",
+        "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-657b4b649556",
+        "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-280133921505",
+        "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-724a0627acad",
+        "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-0813a0c345fd",
+        "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-755ceb187720",
+        "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-5c2d463b1334",
+        "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-7106047d9578"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-890208dea216",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "algorithm-for-interpolation-of-instance-values"
+      ],
+      "behaviour": "Algorithm for Interpolation of Instance Values — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-for-interpolation-of-instance-values",
+        "clause_index": 8,
+        "clause_sha256": "890208dea21699c6dc762bd522be818466eb8a320c3a098e7611e15a710a3f89"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-cb5e262f3e60",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "algorithm-for-interpolation-of-instance-values"
+      ],
+      "behaviour": "Algorithm for Interpolation of Instance Values — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-for-interpolation-of-instance-values",
+        "clause_index": 9,
+        "clause_sha256": "cb5e262f3e60aaa3002e0e0cac1b65c4384e9088d4c525df2a80b1a2d3ea6f9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-657b4b649556",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "algorithm-for-interpolation-of-instance-values"
+      ],
+      "behaviour": "Algorithm for Interpolation of Instance Values — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-for-interpolation-of-instance-values",
+        "clause_index": 14,
+        "clause_sha256": "657b4b6495569c3d9c0f4e8188c6117f16c41ea1ad8607f40a7ad968dda21c8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-280133921505",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "algorithm-for-interpolation-of-instance-values"
+      ],
+      "behaviour": "Algorithm for Interpolation of Instance Values — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-for-interpolation-of-instance-values",
+        "clause_index": 22,
+        "clause_sha256": "280133921505b2f28631a2c6f7eda8d936306fe3b6a03d6691189700dbe20452"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-724a0627acad",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "algorithm-for-interpolation-of-instance-values"
+      ],
+      "behaviour": "Algorithm for Interpolation of Instance Values — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-for-interpolation-of-instance-values",
+        "clause_index": 23,
+        "clause_sha256": "724a0627acad00d3030b818225f9a221f18df94d84a5ffb91357d09f157eb760"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-0813a0c345fd",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "algorithm-for-interpolation-of-instance-values"
+      ],
+      "behaviour": "Algorithm for Interpolation of Instance Values — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-for-interpolation-of-instance-values",
+        "clause_index": 24,
+        "clause_sha256": "0813a0c345fd7e651d3d1413a8285b60794e349cfc0c288702cf106bf4ea3da9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-755ceb187720",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "algorithm-for-interpolation-of-instance-values"
+      ],
+      "behaviour": "Algorithm for Interpolation of Instance Values — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-for-interpolation-of-instance-values",
+        "clause_index": 25,
+        "clause_sha256": "755ceb18772067bf4e5d6f5becc009fc4e4f46526785ad46686c99a768746102"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-5c2d463b1334",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "algorithm-for-interpolation-of-instance-values"
+      ],
+      "behaviour": "Algorithm for Interpolation of Instance Values — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-for-interpolation-of-instance-values",
+        "clause_index": 26,
+        "clause_sha256": "5c2d463b1334f6d01944d87fc4a424f0ccffbf3c076d4fb8360809c625e93fc4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-7106047d9578",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "algorithm-for-interpolation-of-instance-values"
+      ],
+      "behaviour": "Algorithm for Interpolation of Instance Values — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-for-interpolation-of-instance-values",
+        "clause_index": 27,
+        "clause_sha256": "7106047d95782d48c7501c696eca6ad09ea7773e5b01f0bde04ddab6488ee3d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.interpolation-example",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "interpolation-example"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interpolation Example.",
+      "locator": {
+        "section_id": "interpolation-example",
+        "text_sha256": "5b535c64701950db418f5d8988877097eca1d19a210b7d4229edd4492b59bffe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otvaroverview.interpolation-example-clause-a02446359947"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.interpolation-example-clause-a02446359947",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "interpolation-example"
+      ],
+      "behaviour": "Interpolation Example — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolation-example",
+        "clause_index": 2,
+        "clause_sha256": "a024463599473418693b09ac6b6f73c38aa0e8a2f1262454b2d8679464f23d7b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.dynamic-generation-of-static-instance-fonts",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "dynamic-generation-of-static-instance-fonts"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dynamic Generation of Static Instance Fonts.",
+      "locator": {
+        "section_id": "dynamic-generation-of-static-instance-fonts",
+        "text_sha256": "73e9c9bade08a3fce27e218d819a1b0b928160a1ef093e95b88d00dcbdbbd2b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-otvaroverview.dynamic-generation-of-static-instance-fonts-clause-a5f2761ecc25",
+        "opentype-otvaroverview.dynamic-generation-of-static-instance-fonts-clause-4c52ea5cb4b5",
+        "opentype-otvaroverview.dynamic-generation-of-static-instance-fonts-clause-fc03bccbf9b7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.dynamic-generation-of-static-instance-fonts-clause-a5f2761ecc25",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "dynamic-generation-of-static-instance-fonts"
+      ],
+      "behaviour": "Dynamic Generation of Static Instance Fonts — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "dynamic-generation-of-static-instance-fonts",
+        "clause_index": 2,
+        "clause_sha256": "a5f2761ecc254d99e410f1d3850719763abd3e92621d20556e0b9065fc39ee0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.dynamic-generation-of-static-instance-fonts-clause-4c52ea5cb4b5",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "dynamic-generation-of-static-instance-fonts"
+      ],
+      "behaviour": "Dynamic Generation of Static Instance Fonts — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "dynamic-generation-of-static-instance-fonts",
+        "clause_index": 4,
+        "clause_sha256": "4c52ea5cb4b5bcb81a3c50a629431ed6bd22c6106fcce2a6ac16c2ab18e712a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.dynamic-generation-of-static-instance-fonts-clause-fc03bccbf9b7",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "dynamic-generation-of-static-instance-fonts"
+      ],
+      "behaviour": "Dynamic Generation of Static Instance Fonts — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "dynamic-generation-of-static-instance-fonts",
+        "clause_index": 5,
+        "clause_sha256": "fc03bccbf9b749a0a243de6412a9649bb140398dd18a5263708527720a88d667"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-otvaroverview.ms-in-this-article",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.ms-feedback",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.ms-additional-resources-mobile-heading",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "43e7cf8f51a2b5e93dfb8d7b5645db755d4582be9ca7244d88582d984252c045"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-otvaroverview.side-doc-outline",
+      "family": "opentype-otvaroverview",
+      "source_id": "opentype-otvaroverview",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

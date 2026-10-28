@@ -1,0 +1,3496 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "geometry-1.dompoint",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The DOMPoint interfaces.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "text_sha256": "56161b72f8484f433a2bf2c435c2f2e14d31ce9da4984b781ff624043a76b8d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.dompoint-clause-2cdb71bc82bd",
+        "geometry-1.dompoint-clause-8375a7a46448",
+        "geometry-1.dompoint-clause-70205ad89b43",
+        "geometry-1.dompoint-clause-79c0fd2d72d5",
+        "geometry-1.dompoint-clause-3edfbab1b4e8",
+        "geometry-1.dompoint-clause-f45242e6096b",
+        "geometry-1.dompoint-clause-fec30304f980",
+        "geometry-1.dompoint-clause-978e521a0b1f",
+        "geometry-1.dompoint-clause-8fd4bf57e4b8",
+        "geometry-1.dompoint-clause-2f4484f0d46c",
+        "geometry-1.dompoint-clause-e9ef8212dd28"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.dompoint-clause-2cdb71bc82bd",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "The DOMPoint interfaces — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "clause_index": 1,
+        "clause_sha256": "2cdb71bc82bde1849b762a27907351dbb93b28ef6b4e56d8dcf30d88d510db70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dompoint-clause-8375a7a46448",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "The DOMPoint interfaces — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "clause_index": 2,
+        "clause_sha256": "8375a7a46448e8cd8c761feb59e2ca725c144019ea603e41be09f0e316e59f13"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dompoint-clause-70205ad89b43",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "The DOMPoint interfaces — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "clause_index": 3,
+        "clause_sha256": "70205ad89b43207ee6ec1d0672b8fcedf37ce56d61e965b164c647833e1fd263"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dompoint-clause-79c0fd2d72d5",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "The DOMPoint interfaces — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "clause_index": 4,
+        "clause_sha256": "79c0fd2d72d5f656cea39246c1c5f38ecc4d06d0f6d211fb0e7591709c9ef014"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dompoint-clause-3edfbab1b4e8",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "The DOMPoint interfaces — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "clause_index": 5,
+        "clause_sha256": "3edfbab1b4e815a8840d75b6a6d610fd30c84b71843e7d32cd6c72b6039ca908"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dompoint-clause-f45242e6096b",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "The DOMPoint interfaces — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "clause_index": 13,
+        "clause_sha256": "f45242e6096b90103d0440d9adf34b31b41d315f7854656109b1dfa6fe2e75ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dompoint-clause-fec30304f980",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "The DOMPoint interfaces — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "clause_index": 14,
+        "clause_sha256": "fec30304f980b3f1ef7cad05dc40c32085feace7d64bb13e0b3f167e93c5f7a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dompoint-clause-978e521a0b1f",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "The DOMPoint interfaces — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "clause_index": 22,
+        "clause_sha256": "978e521a0b1f25a74de6f97124e6df671e198bea780f47bb21c13bf0a0947b40"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dompoint-clause-8fd4bf57e4b8",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "The DOMPoint interfaces — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "clause_index": 23,
+        "clause_sha256": "8fd4bf57e4b8a92d8b18d8912203b2054b45b0a35a1ae5c995b5333d7654b37c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dompoint-clause-2f4484f0d46c",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "The DOMPoint interfaces — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "clause_index": 24,
+        "clause_sha256": "2f4484f0d46cf5793b46ee1e4037a777541614d474fbb5b5ab8719243fc6599d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dompoint-clause-e9ef8212dd28",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMPoint"
+      ],
+      "behaviour": "The DOMPoint interfaces — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMPoint",
+        "clause_index": 25,
+        "clause_sha256": "e9ef8212dd281424dc3f502c1d50ffab498396ea447d52512b49759fa6a92c08"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.transforming-a-point-with-a-matrix",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "transforming-a-point-with-a-matrix"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Transforming a point with a matrix.",
+      "locator": {
+        "section_id": "transforming-a-point-with-a-matrix",
+        "text_sha256": "c0cd3098bb70d1e475c3ad5a94df188fd5528fcfe583a04d4c15cb511fb1f045"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.domrect",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The DOMRect interfaces.",
+      "locator": {
+        "section_id": "DOMRect",
+        "text_sha256": "07a9cb8e0586be8c3acc1f35d845212979e5959e393bd47d5c51ddf2b8b51939"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.domrect-clause-29e0aa19c216",
+        "geometry-1.domrect-clause-9cf529000cb2",
+        "geometry-1.domrect-clause-67ed8dfdcebe",
+        "geometry-1.domrect-clause-79c0fd2d72d5",
+        "geometry-1.domrect-clause-6587ca03a640",
+        "geometry-1.domrect-clause-f39856f5e8c4",
+        "geometry-1.domrect-clause-52db72db9c2a",
+        "geometry-1.domrect-clause-67f638a4661b",
+        "geometry-1.domrect-clause-5f1f7bc6b451",
+        "geometry-1.domrect-clause-f32e1f500127",
+        "geometry-1.domrect-clause-95723a6fd240",
+        "geometry-1.domrect-clause-82961927b1e3",
+        "geometry-1.domrect-clause-d19c1f2ba1cd",
+        "geometry-1.domrect-clause-a1a67361aa7b",
+        "geometry-1.domrect-clause-a0e2c52ae189"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.domrect-clause-29e0aa19c216",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 16,
+        "clause_sha256": "29e0aa19c216433b40e999003ef53846c95d6fa52fae292f7ebebaa9b5d55286"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-9cf529000cb2",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 17,
+        "clause_sha256": "9cf529000cb26c555437df3a80e14f0c57c91d5babc26dd51752b9dddd737796"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-67ed8dfdcebe",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 18,
+        "clause_sha256": "67ed8dfdcebe1b84e9a96fe40b4c7f10ae13591e40847c3563b7c7cab30a6e03"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-79c0fd2d72d5",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 19,
+        "clause_sha256": "79c0fd2d72d5f656cea39246c1c5f38ecc4d06d0f6d211fb0e7591709c9ef014"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-6587ca03a640",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 20,
+        "clause_sha256": "6587ca03a64071503abfc3394003ea2c330f5a33bcc638f8f2bc38613e142b38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-f39856f5e8c4",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 27,
+        "clause_sha256": "f39856f5e8c4e2e987a17ded4fe701ddd3439483ce070789d9f8c39087fc037a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-52db72db9c2a",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 28,
+        "clause_sha256": "52db72db9c2a6cf95e2ac8d3a8653682fd68c7a77d294988a6d55af29e3b59cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-67f638a4661b",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 36,
+        "clause_sha256": "67f638a4661b3914d2affabcee38310aac74f444b1ccc5cf5903b4db98f78091"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-5f1f7bc6b451",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 37,
+        "clause_sha256": "5f1f7bc6b4515c7470d0bb917fbed9fea25ed329aa9dfd531291240cad8a33c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-f32e1f500127",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 38,
+        "clause_sha256": "f32e1f500127d229497948b182acdf102bba7d0fb1da96ffc529cfb7ac217484"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-95723a6fd240",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 39,
+        "clause_sha256": "95723a6fd2405c6d094e07f118c9b47bc42dacc4e89a4d27e074c12e37700b88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-82961927b1e3",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 40,
+        "clause_sha256": "82961927b1e3c90b485138134c3813c234b4af997e136891d9a7b973ec5b8e73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-d19c1f2ba1cd",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 41,
+        "clause_sha256": "d19c1f2ba1cda005c928e149aa7301ad13fa7304690d0a6eb20cbd35c538ba80"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-a1a67361aa7b",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 42,
+        "clause_sha256": "a1a67361aa7b72189a6a1977f4cbecc0997ebd2dd5a9921616b37b37ce89161f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrect-clause-a0e2c52ae189",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRect"
+      ],
+      "behaviour": "The DOMRect interfaces — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRect",
+        "clause_index": 46,
+        "clause_sha256": "a0e2c52ae18909d7d7dc213bf207a8576ebbf05a1d8308747b2e10a9d706d934"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrectlist",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRectList"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The DOMRectList interface.",
+      "locator": {
+        "section_id": "DOMRectList",
+        "text_sha256": "fef2b6568ff40dbf51198d9ef18f6fa92adb57c173a9b9027c095bd055bfeb60"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.domrectlist-clause-2e402b941af3",
+        "geometry-1.domrectlist-clause-5ff31c53bf95",
+        "geometry-1.domrectlist-clause-27c46023e67b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.domrectlist-clause-2e402b941af3",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRectList"
+      ],
+      "behaviour": "The DOMRectList interface — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRectList",
+        "clause_index": 1,
+        "clause_sha256": "2e402b941af3960ab5d3d09fa0e74edc24038f191e2d306f993c9eed021232bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrectlist-clause-5ff31c53bf95",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRectList"
+      ],
+      "behaviour": "The DOMRectList interface — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRectList",
+        "clause_index": 2,
+        "clause_sha256": "5ff31c53bf95bd12c51a35db9e20f372f361b20aa94404b2bb8a86b1ef084134"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domrectlist-clause-27c46023e67b",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMRectList"
+      ],
+      "behaviour": "The DOMRectList interface — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMRectList",
+        "clause_index": 3,
+        "clause_sha256": "27c46023e67b1dab40563d456ecad6fb48ac45a3a01c1362c6f8ec0d7355fe7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domquad",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMQuad"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The DOMQuad interface.",
+      "locator": {
+        "section_id": "DOMQuad",
+        "text_sha256": "9e4cb2c2f478f7d06f466c06d962f0b108fb5297f0e92c93a7fd6df6d892006f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.domquad-clause-024cd2b75aae",
+        "geometry-1.domquad-clause-486a63489ab1",
+        "geometry-1.domquad-clause-79c0fd2d72d5",
+        "geometry-1.domquad-clause-0ffd2ec0733a",
+        "geometry-1.domquad-clause-55b7f542b6a6",
+        "geometry-1.domquad-clause-ac3c86db99ae",
+        "geometry-1.domquad-clause-c2dbe3a21028",
+        "geometry-1.domquad-clause-a050f10a9056",
+        "geometry-1.domquad-clause-0271e85b8723",
+        "geometry-1.domquad-clause-3fca72f1b5d1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.domquad-clause-024cd2b75aae",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMQuad"
+      ],
+      "behaviour": "The DOMQuad interface — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMQuad",
+        "clause_index": 2,
+        "clause_sha256": "024cd2b75aaeabaa1c58319d3d88a87a9b9bb4e562d2aeb4440119a958c49473"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domquad-clause-486a63489ab1",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMQuad"
+      ],
+      "behaviour": "The DOMQuad interface — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMQuad",
+        "clause_index": 3,
+        "clause_sha256": "486a63489ab16853ba1d99c04776eac54ca7c829b4c721f71d1d7642cc11fff4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domquad-clause-79c0fd2d72d5",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMQuad"
+      ],
+      "behaviour": "The DOMQuad interface — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMQuad",
+        "clause_index": 4,
+        "clause_sha256": "79c0fd2d72d5f656cea39246c1c5f38ecc4d06d0f6d211fb0e7591709c9ef014"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domquad-clause-0ffd2ec0733a",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMQuad"
+      ],
+      "behaviour": "The DOMQuad interface — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMQuad",
+        "clause_index": 5,
+        "clause_sha256": "0ffd2ec0733ab8eda17235ee4f71a4aa9f28ecfd8304900357dfa3d2e4c25867"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domquad-clause-55b7f542b6a6",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMQuad"
+      ],
+      "behaviour": "The DOMQuad interface — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMQuad",
+        "clause_index": 17,
+        "clause_sha256": "55b7f542b6a616a009eb31365fa5c622c3c13ef1bdf043a533dcaf20da7e4e41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domquad-clause-ac3c86db99ae",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMQuad"
+      ],
+      "behaviour": "The DOMQuad interface — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMQuad",
+        "clause_index": 31,
+        "clause_sha256": "ac3c86db99aea201fbebd5df176bd30c47bc1fdf80738cee6ede0a7d71a734f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domquad-clause-c2dbe3a21028",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMQuad"
+      ],
+      "behaviour": "The DOMQuad interface — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMQuad",
+        "clause_index": 43,
+        "clause_sha256": "c2dbe3a210282f48866840f0166f50e1d20e7bcc1da316f932c2c307c9c1ab96"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domquad-clause-a050f10a9056",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMQuad"
+      ],
+      "behaviour": "The DOMQuad interface — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMQuad",
+        "clause_index": 44,
+        "clause_sha256": "a050f10a9056c518ef5746a2987efc95feb2ac02a60b47ee1256d423b7ad40be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domquad-clause-0271e85b8723",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMQuad"
+      ],
+      "behaviour": "The DOMQuad interface — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMQuad",
+        "clause_index": 45,
+        "clause_sha256": "0271e85b8723f775289b1649d8657596c36570075c49aa4d17e1390b6b0b37d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.domquad-clause-3fca72f1b5d1",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMQuad"
+      ],
+      "behaviour": "The DOMQuad interface — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMQuad",
+        "clause_index": 46,
+        "clause_sha256": "3fca72f1b5d11996a46dc0960d1762b14d3389e1920924c366785d7cabb873d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMMatrix"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The DOMMatrix interfaces.",
+      "locator": {
+        "section_id": "DOMMatrix",
+        "text_sha256": "8abee7da6b64827d167eeb96b43b508660d481748f964bb5071330f23a53f6be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.dommatrix-clause-5c7eeb0e4833",
+        "geometry-1.dommatrix-clause-bf4821b8722e",
+        "geometry-1.dommatrix-clause-d36500b764bd",
+        "geometry-1.dommatrix-clause-79c0fd2d72d5",
+        "geometry-1.dommatrix-clause-49ee9a75c1df"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.dommatrix-clause-5c7eeb0e4833",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMMatrix"
+      ],
+      "behaviour": "The DOMMatrix interfaces — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMMatrix",
+        "clause_index": 10,
+        "clause_sha256": "5c7eeb0e483316b9091e001b5cb786894bd618dadaf4d5a8658f6f9c2b56448b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-clause-bf4821b8722e",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMMatrix"
+      ],
+      "behaviour": "The DOMMatrix interfaces — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMMatrix",
+        "clause_index": 11,
+        "clause_sha256": "bf4821b8722e02109b0d95395ed7839be92940297014d0c684831fc72c40ebf4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-clause-d36500b764bd",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMMatrix"
+      ],
+      "behaviour": "The DOMMatrix interfaces — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMMatrix",
+        "clause_index": 12,
+        "clause_sha256": "d36500b764bd330105a0244dd2c597455254ef2c388bbb59017cf4a2bc43ded2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-clause-79c0fd2d72d5",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMMatrix"
+      ],
+      "behaviour": "The DOMMatrix interfaces — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMMatrix",
+        "clause_index": 13,
+        "clause_sha256": "79c0fd2d72d5f656cea39246c1c5f38ecc4d06d0f6d211fb0e7591709c9ef014"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-clause-49ee9a75c1df",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "DOMMatrix"
+      ],
+      "behaviour": "The DOMMatrix interfaces — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "DOMMatrix",
+        "clause_index": 17,
+        "clause_sha256": "49ee9a75c1dfc2f92866e0351679b3c210b3dbac7b662a1d6e9cc809fea2cd28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrixinit-dictionary",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrixinit-dictionary"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in DOMMatrix2DInit and DOMMatrixInit dictionaries.",
+      "locator": {
+        "section_id": "dommatrixinit-dictionary",
+        "text_sha256": "2fde2665c794627c84dfa329f65180eb55d58642a4ffee69f6c2f3e917429448"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.dommatrixinit-dictionary-clause-4a39f9ce9fe9",
+        "geometry-1.dommatrixinit-dictionary-clause-024ffb88656b",
+        "geometry-1.dommatrixinit-dictionary-clause-ea6baf162472"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.dommatrixinit-dictionary-clause-4a39f9ce9fe9",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrixinit-dictionary"
+      ],
+      "behaviour": "DOMMatrix2DInit and DOMMatrixInit dictionaries — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrixinit-dictionary",
+        "clause_index": 0,
+        "clause_sha256": "4a39f9ce9fe9bf55e315193898b842e1ec80d7ee308e47bd86fd0614bde822df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrixinit-dictionary-clause-024ffb88656b",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrixinit-dictionary"
+      ],
+      "behaviour": "DOMMatrix2DInit and DOMMatrixInit dictionaries — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrixinit-dictionary",
+        "clause_index": 27,
+        "clause_sha256": "024ffb88656b71ac6aad4078542e039723cc0a32c8e2df0d61c998be18d742a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrixinit-dictionary-clause-ea6baf162472",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrixinit-dictionary"
+      ],
+      "behaviour": "DOMMatrix2DInit and DOMMatrixInit dictionaries — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrixinit-dictionary",
+        "clause_index": 28,
+        "clause_sha256": "ea6baf162472bd1072bc09d8b32acc395fcd9cd84d088fc75a36e4917e46996d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-parse",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-parse"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Parsing a string into an abstract matrix.",
+      "locator": {
+        "section_id": "dommatrix-parse",
+        "text_sha256": "256570d81e41c41cba30fe17c6a553d4db106e23288d53114444dc98d6ac19b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.dommatrix-parse-clause-ab461406c67d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.dommatrix-parse-clause-ab461406c67d",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-parse"
+      ],
+      "behaviour": "Parsing a string into an abstract matrix — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-parse",
+        "clause_index": 0,
+        "clause_sha256": "ab461406c67d86a3798c708be524df98fdfff17775d1240f8343f581f9ea02a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-create",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-create"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Creating DOMMatrixReadOnly and DOMMatrix objects.",
+      "locator": {
+        "section_id": "dommatrix-create",
+        "text_sha256": "0dd3a7b9822debf4735cb9a3cdde1e369ae6a6371170e376f9575406ea8ccc84"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.dommatrix-create-clause-c39d399e363f",
+        "geometry-1.dommatrix-create-clause-38594acd1aa7",
+        "geometry-1.dommatrix-create-clause-224e1cfd4a76",
+        "geometry-1.dommatrix-create-clause-31456d0c39e7",
+        "geometry-1.dommatrix-create-clause-4c02e7469197",
+        "geometry-1.dommatrix-create-clause-34efaf952962",
+        "geometry-1.dommatrix-create-clause-d4cb9731e527",
+        "geometry-1.dommatrix-create-clause-96b49d8daad8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.dommatrix-create-clause-c39d399e363f",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-create"
+      ],
+      "behaviour": "Creating DOMMatrixReadOnly and DOMMatrix objects — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-create",
+        "clause_index": 22,
+        "clause_sha256": "c39d399e363f7f0ece6e13c143adbec16351e05796c80538b86179342dd56caa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-create-clause-38594acd1aa7",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-create"
+      ],
+      "behaviour": "Creating DOMMatrixReadOnly and DOMMatrix objects — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-create",
+        "clause_index": 48,
+        "clause_sha256": "38594acd1aa7fa6a32ca66ed7baa0710956408d73d81c4715cbae477d960fc5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-create-clause-224e1cfd4a76",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-create"
+      ],
+      "behaviour": "Creating DOMMatrixReadOnly and DOMMatrix objects — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-create",
+        "clause_index": 49,
+        "clause_sha256": "224e1cfd4a76735b32f938c8e1fde5e7924691d778fc5d9935956ee4dd3726a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-create-clause-31456d0c39e7",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-create"
+      ],
+      "behaviour": "Creating DOMMatrixReadOnly and DOMMatrix objects — normative clause 59, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-create",
+        "clause_index": 58,
+        "clause_sha256": "31456d0c39e71f9376a4ee06dc3c14a9889bb209cf463a15453b2123df63a658"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-create-clause-4c02e7469197",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-create"
+      ],
+      "behaviour": "Creating DOMMatrixReadOnly and DOMMatrix objects — normative clause 66, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-create",
+        "clause_index": 65,
+        "clause_sha256": "4c02e7469197580e4736b6d05d21c5f489d18b6e8c5fb898868a11acce9755f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-create-clause-34efaf952962",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-create"
+      ],
+      "behaviour": "Creating DOMMatrixReadOnly and DOMMatrix objects — normative clause 67, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-create",
+        "clause_index": 66,
+        "clause_sha256": "34efaf952962075eae5ce6acea28698c494867a7be0708080ec4658be7aaedf1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-create-clause-d4cb9731e527",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-create"
+      ],
+      "behaviour": "Creating DOMMatrixReadOnly and DOMMatrix objects — normative clause 76, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-create",
+        "clause_index": 75,
+        "clause_sha256": "d4cb9731e527191b2215fcefb0b278f73f40221dda09db268b0b1e2c9ed78c1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-create-clause-96b49d8daad8",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-create"
+      ],
+      "behaviour": "Creating DOMMatrixReadOnly and DOMMatrix objects — normative clause 77, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-create",
+        "clause_index": 76,
+        "clause_sha256": "96b49d8daad8f2128451a4b63c48981907d0199aee85cb728e88cd4c36220196"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in DOMMatrix attributes.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "text_sha256": "796a1075e733816670584681640a4c6b5e51075b9fbc0b34ed8764aacc1a0a26"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.dommatrix-attributes-clause-2e49e7dc496d",
+        "geometry-1.dommatrix-attributes-clause-3fe7d3a05cd7",
+        "geometry-1.dommatrix-attributes-clause-818cfdd6780c",
+        "geometry-1.dommatrix-attributes-clause-5ec43294acf3",
+        "geometry-1.dommatrix-attributes-clause-597533916216",
+        "geometry-1.dommatrix-attributes-clause-99e5fe695baa",
+        "geometry-1.dommatrix-attributes-clause-94b7f8ae3587",
+        "geometry-1.dommatrix-attributes-clause-512d64e6d26c",
+        "geometry-1.dommatrix-attributes-clause-ee07379b99f9",
+        "geometry-1.dommatrix-attributes-clause-1501318ea524",
+        "geometry-1.dommatrix-attributes-clause-e35b5e54e185",
+        "geometry-1.dommatrix-attributes-clause-501d2289395c",
+        "geometry-1.dommatrix-attributes-clause-b4678ad5b1a8",
+        "geometry-1.dommatrix-attributes-clause-52407d9b2710",
+        "geometry-1.dommatrix-attributes-clause-799f3d8ec885",
+        "geometry-1.dommatrix-attributes-clause-08840101746f",
+        "geometry-1.dommatrix-attributes-clause-4ec878f700a4",
+        "geometry-1.dommatrix-attributes-clause-dd1d1df629b2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-2e49e7dc496d",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 1,
+        "clause_sha256": "2e49e7dc496db08e573cdfd3fc337e39f7282a7b9f3663fa6172436e135167f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-3fe7d3a05cd7",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 2,
+        "clause_sha256": "3fe7d3a05cd78823f43aceb8c88841448d26c4bb7feb7cc4b98f4dbedead660e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-818cfdd6780c",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 3,
+        "clause_sha256": "818cfdd6780c2c10a97b4b2dfc55fa09c7b16eebcc7f638fb1aaa841e3c6f34e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-5ec43294acf3",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 4,
+        "clause_sha256": "5ec43294acf3e3915ca34454f7e24156bd833b0478f24200de3cd7f5434941a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-597533916216",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 5,
+        "clause_sha256": "597533916216a302ca2fe30edeb753e33e6cbc6e93c8acfb686d93acbfe7499b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-99e5fe695baa",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 6,
+        "clause_sha256": "99e5fe695baaa0615af0a374f28ff62bd143949c44d30968323dae49f5af30b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-94b7f8ae3587",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 7,
+        "clause_sha256": "94b7f8ae358739ac30db873451562e870f20b8f039f257ab6538a16f92e0d915"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-512d64e6d26c",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 8,
+        "clause_sha256": "512d64e6d26c0bfcfc090af0eff30818c4120972bf1404cc21a1c3fd805efc3f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-ee07379b99f9",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 9,
+        "clause_sha256": "ee07379b99f9145d85a3f25b3df2efb2470f7162bb5a15d2795197d624adeedf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-1501318ea524",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 10,
+        "clause_sha256": "1501318ea524e95c5afef11ebbdc0cff56f116ded8f5f03a41c73acbf148eb34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-e35b5e54e185",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 11,
+        "clause_sha256": "e35b5e54e185a73b9511369b9f6551df70a5dab130f514dffd2966f1aacf646a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-501d2289395c",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 12,
+        "clause_sha256": "501d2289395c407f044ae1934e2ddbab8889212f262373b8a19027e2c98ef25f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-b4678ad5b1a8",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 13,
+        "clause_sha256": "b4678ad5b1a808f802e321449516406c59a882b8740ee4e66fe5bdd97368cfcb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-52407d9b2710",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 14,
+        "clause_sha256": "52407d9b2710c75c8d20d511555adb9245a157993d778b61b84c43aa8d8632e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-799f3d8ec885",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 15,
+        "clause_sha256": "799f3d8ec8852dc76051efa08d9f1c0de144e999a00e39e55b0e550e72650865"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-08840101746f",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 25,
+        "clause_sha256": "08840101746f3669d1275254007cc2ec8911658a4008ffe90916ac3e5eaa5709"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-4ec878f700a4",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 26,
+        "clause_sha256": "4ec878f700a4d9efaa74ee92135628a7e2c0d1eb3820eb0a19c0be4dea33c0d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.dommatrix-attributes-clause-dd1d1df629b2",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "dommatrix-attributes"
+      ],
+      "behaviour": "DOMMatrix attributes — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "dommatrix-attributes",
+        "clause_index": 29,
+        "clause_sha256": "dd1d1df629b2dace817c94a934d6bd81b3233cad28d7e0df0cfc98eb3c9e031d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.immutable-transformation-methods",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "immutable-transformation-methods"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Immutable transformation methods.",
+      "locator": {
+        "section_id": "immutable-transformation-methods",
+        "text_sha256": "828a318cc0e0bfefd46f836a855511b2788ff54811f21ed82318de1fe1437f95"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.mutable-transformation-methods",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "mutable-transformation-methods"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mutable transformation methods.",
+      "locator": {
+        "section_id": "mutable-transformation-methods",
+        "text_sha256": "820235491ffd22c570fe438fc3f246d5b8b52b33fccb2cf823edcbde3cea355b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.mutable-transformation-methods-clause-3e8a019d6ac9",
+        "geometry-1.mutable-transformation-methods-clause-50721b680fc8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.mutable-transformation-methods-clause-3e8a019d6ac9",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "mutable-transformation-methods"
+      ],
+      "behaviour": "Mutable transformation methods — normative clause 81, located by its exact source hash.",
+      "locator": {
+        "section_id": "mutable-transformation-methods",
+        "clause_index": 80,
+        "clause_sha256": "3e8a019d6ac95226f286a4ef9a65d9bf261376cfc830f81862eed56b1cdf73c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.mutable-transformation-methods-clause-50721b680fc8",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "mutable-transformation-methods"
+      ],
+      "behaviour": "Mutable transformation methods — normative clause 85, located by its exact source hash.",
+      "locator": {
+        "section_id": "mutable-transformation-methods",
+        "clause_index": 84,
+        "clause_sha256": "50721b680fc843d26c313451063596d991940fb2fe8551b06928aaed41b609af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.structured-serialization",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "structured-serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Structured serialization.",
+      "locator": {
+        "section_id": "structured-serialization",
+        "text_sha256": "24ef9ddd44520ac49ba3005808655ea8a443eb26c003130b04e30aabf33a41cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.structured-serialization-clause-02fbe789c7ef"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.structured-serialization-clause-02fbe789c7ef",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "structured-serialization"
+      ],
+      "behaviour": "Structured serialization — normative clause 73, located by its exact source hash.",
+      "locator": {
+        "section_id": "structured-serialization",
+        "clause_index": 72,
+        "clause_sha256": "02fbe789c7ef0dcfbacdd481396f80ad217684fe028fe17efa978a44660c3e40"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.security",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "f527e9bea13089039e7400e7468b03389ff74e746f7eeff2a195a06ee4a95e02"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.priv-sec",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "priv-sec",
+        "text_sha256": "cbd7e89d877432328c10ec90650bd27abcc2574bc3d2db6084159a3c0f878ddc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.conventions",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "conventions",
+        "text_sha256": "a0868ef6003aa87f45c379eb873f254dd5057133d22f46ef79fe5cf0154e316a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.w3c-conformance",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.w3c-conventions",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.w3c-conventions-clause-5c98c879f070",
+        "geometry-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.w3c-conventions-clause-5c98c879f070",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.w3c-conformance-classes",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.w3c-conformance-classes-clause-ff408372426c",
+        "geometry-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.w3c-partial",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.w3c-partial-clause-ef40c4aab200",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.w3c-conform-future-proofing",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.w3c-testing",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.w3c-testing-clause-1e0fff369221",
+        "geometry-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.w3c-testing-clause-1e0fff369221",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.w3c-testing-clause-ae1210cf9643",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.w3c-cr-exit-criteria",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+        "geometry-1.w3c-cr-exit-criteria-clause-ea752775913a",
+        "geometry-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+        "geometry-1.w3c-cr-exit-criteria-clause-b67129724911",
+        "geometry-1.w3c-cr-exit-criteria-clause-833729d43f23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.w3c-cr-exit-criteria-clause-ea752775913a",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.w3c-cr-exit-criteria-clause-b67129724911",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.w3c-cr-exit-criteria-clause-833729d43f23",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 10,
+        "clause_sha256": "833729d43f239b3deb57bcaaf1c29d2f077e86aad8b396f8458fa182e4db8d99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.idl-index",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "0c4e0f8d0ac5cd261342650ac5aac08d5aa02d1344275406e734e20cae858287"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "geometry-1.idl-index-clause-f4c1038aeb66"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.idl-index-clause-f4c1038aeb66",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "IDL Index — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "idl-index",
+        "clause_index": 0,
+        "clause_sha256": "f4c1038aeb662d4a7e45628547ed59f06853d2661c8e80d3871763a440f71bcf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "geometry-1.import-81d6eacb7a2f",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://tc39.es/ecma262/multipage/.",
+      "unresolved_reference": "https://tc39.es/ecma262/multipage/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "geometry-1.import-8cac7d115c27",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "geometry-1.title",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Geometry Interfaces Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "8a19676c4cbe49e4efc2fd8f7606cacf65d03aa8074e578e4c564b0209446e04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.abstract",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "e595181888b61493a33321f99692ff7b2aac7334c5c77156f2eac836890a3926"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.sotd",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "d310c50e873d06dab6beefe3ae12366e5822a8096a8e405fcebbe0b099295d21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.contents",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "99ea5159962eec52e6f3bb0ed134d9b935f00e598ccd941b94fc3a3f7774024c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.intro",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "53c8055a6bb3c9eb9725671432ee6ed8ed5fd27405ac6e6f2483bde4dc3e4679"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.historical",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "historical"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 10. Historical.",
+      "locator": {
+        "section_id": "historical",
+        "text_sha256": "fd77a939f1561e03f5a5f8540f2128333294f7dd99ae110f71f9da7e216a2ce8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.historical-cssom-view",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "historical-cssom-view"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 10.1. CSSOM View.",
+      "locator": {
+        "section_id": "historical-cssom-view",
+        "text_sha256": "6f0527710c04f500b780ed4ab33973da425ec232daaf0057fd855d8fbeb0f200"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.historical-svg",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "historical-svg"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 10.2. SVG.",
+      "locator": {
+        "section_id": "historical-svg",
+        "text_sha256": "013b465a2083f672b1fd08b58c09e213d9aeb53dadea313879894fb81d6d22a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.historical-non-standard",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "historical-non-standard"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 10.3. Non-standard.",
+      "locator": {
+        "section_id": "historical-non-standard",
+        "text_sha256": "94b1c0ee136595bc60d532264369f7df9cecddad6dfa9b70b8f023c01a31e42d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.changes",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since last publication.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "5192cda1641fb324bef0f8aec3a4f9aa68bfe7b33e8d772fff98ad572b49d256"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.acknowledgments",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "2a0e318e56fab851f650b0b276b2bd24d3dcf49e6bdd270b2ffac8863b09b97a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.index",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.index-defined-here",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "40f7e434484f23e3930e5f627e742cbd195085e0fa85055b5db175e187bef816"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.index-defined-elsewhere",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "e85a919a3c6d8495bd57797f892df0734a36be0ba8f9a4f337f7ac4c92317da1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.references",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "geometry-1.informative",
+      "family": "geometry-1",
+      "source_id": "geometry-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "48ece950c2b1a4649db4782677ea7df6a81fe1efbd236cee1c912a430865f857"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

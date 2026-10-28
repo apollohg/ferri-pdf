@@ -1,0 +1,4037 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "url.goals",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "goals"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Goals.",
+      "locator": {
+        "section_id": "goals",
+        "text_sha256": "4fd42fec39994014634d234bf5cadbc9fd1023b14deaaa310c16e6db9834fd47"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.goals-clause-055d69400e38"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.goals-clause-055d69400e38",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "goals"
+      ],
+      "behaviour": "Goals — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "goals",
+        "clause_index": 3,
+        "clause_sha256": "055d69400e38961466651a074827a3348b5f2a5aa58e031fe00646d461d75aed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.infrastructure",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "infrastructure"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Infrastructure.",
+      "locator": {
+        "section_id": "infrastructure",
+        "text_sha256": "8269082a457324d1933746f975ded2afe2ceb361ebc4dab32d23b7d6eb0fe334"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.writing",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Writing.",
+      "locator": {
+        "section_id": "writing",
+        "text_sha256": "b753600b4eb84fe938f857d7af6b09dd52972fcc9aaeecd366f358e859217984"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.writing-clause-db60c1e08dcd",
+        "url.writing-clause-7cf14b2ad56e",
+        "url.writing-clause-943440acef0d",
+        "url.writing-clause-a2fb8cf35241",
+        "url.writing-clause-75a9f8561c25",
+        "url.writing-clause-83ad8bf6ed7e",
+        "url.writing-clause-9c83f8ba4a9d",
+        "url.writing-clause-a8a624d0821c",
+        "url.writing-clause-60490085fc51",
+        "url.writing-clause-b113236a0272",
+        "url.writing-clause-9ea55208202d",
+        "url.writing-clause-923fd6284187"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.writing-clause-db60c1e08dcd",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 20,
+        "clause_sha256": "db60c1e08dcd67d772e9226d921a1e915a275316254642e821062a58f6cf6583"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.writing-clause-7cf14b2ad56e",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 66, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 65,
+        "clause_sha256": "7cf14b2ad56eec5b6b24180bea2388eb5a1e6f7320e116bc87bca439a2583dd8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.writing-clause-943440acef0d",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 81, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 80,
+        "clause_sha256": "943440acef0d4ca002806ddde7c6bec03c297e80f23aaed6f2b0da70c12f4e51"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.writing-clause-a2fb8cf35241",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 102, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 101,
+        "clause_sha256": "a2fb8cf35241616a8b3b72c954322958ef3f4658f601fe7509a474142341f3ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.writing-clause-75a9f8561c25",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 125, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 124,
+        "clause_sha256": "75a9f8561c25279da0f2fdf1f8ad54498e912c1957bd3799bd228bbabb336530"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.writing-clause-83ad8bf6ed7e",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 148, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 147,
+        "clause_sha256": "83ad8bf6ed7e8800839d5771fbbdd2c7f6031418e07c41c9853964621e8de65d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.writing-clause-9c83f8ba4a9d",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 153, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 152,
+        "clause_sha256": "9c83f8ba4a9d9c67febf116095b7cbf4bd535e2a24179cbd812260009baaf30b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.writing-clause-a8a624d0821c",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 171, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 170,
+        "clause_sha256": "a8a624d0821c8484c411c7f4e1d14e650a2cd79bd712be7a72cb9c7ab8cd835b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.writing-clause-60490085fc51",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 172, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 171,
+        "clause_sha256": "60490085fc5169e47fc48c8e70733cd1fc7f93f197b29be2bc40f537472f7062"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.writing-clause-b113236a0272",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 174, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 173,
+        "clause_sha256": "b113236a027259ecbdc3c04e496405ad5eab78fa8849d8aac808e77d93bda397"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.writing-clause-9ea55208202d",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 176, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 175,
+        "clause_sha256": "9ea55208202df43fcad95ed8b944e1120667366dc0bf5d67264ca3e57846b36c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.writing-clause-923fd6284187",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "writing"
+      ],
+      "behaviour": "Writing — normative clause 181, located by its exact source hash.",
+      "locator": {
+        "section_id": "writing",
+        "clause_index": 180,
+        "clause_sha256": "923fd6284187dd49b75dfe5e7be0bbee509df9741b243773a992e347a70c1622"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.parsers",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "parsers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Parsers.",
+      "locator": {
+        "section_id": "parsers",
+        "text_sha256": "2e02b693a4b7399004ab4b92764a4d1d2fab6c2843a2093ae4951d0d7c616100"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.percent-encoded-bytes",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "percent-encoded-bytes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Percent-encoded bytes.",
+      "locator": {
+        "section_id": "percent-encoded-bytes",
+        "text_sha256": "2d1af1de14abce4bc10a843b086f9e9a41e3a820039a69ffa6bba7f3dd3df7ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.security-considerations",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "security-considerations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security considerations.",
+      "locator": {
+        "section_id": "security-considerations",
+        "text_sha256": "dfe759ecc6eada374cf4bf0942276555c7fdce13889c75d210ac26e6012b7a3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.security-considerations-clause-bd1d4bbf08e5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.security-considerations-clause-bd1d4bbf08e5",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "security-considerations"
+      ],
+      "behaviour": "Security considerations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "security-considerations",
+        "clause_index": 2,
+        "clause_sha256": "bd1d4bbf08e5d4e0f2fc87cd7f74d987df4fb16a71fa4c38bd4c0caadb2a828c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.hosts-domains-and-ip-addresses",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "hosts-(domains-and-ip-addresses)"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Hosts (domains and IP addresses).",
+      "locator": {
+        "section_id": "hosts-(domains-and-ip-addresses)",
+        "text_sha256": "511d600243b46328fe853606626f2ea6a27faa44261b53363b4b23f62f78088c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.host-representation",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-representation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Host representation.",
+      "locator": {
+        "section_id": "host-representation",
+        "text_sha256": "ed797dcb49b2e87746cf6dfa684e96b5babf5fb949ba13cd1d96b224bc189da3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.host-miscellaneous",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-miscellaneous"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Host miscellaneous.",
+      "locator": {
+        "section_id": "host-miscellaneous",
+        "text_sha256": "0fb45a327c68bd2493edbc2628f3ef800f041ec6479cb0db74ba5f63c62df161"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.host-miscellaneous-clause-58ab67cf16a4",
+        "url.host-miscellaneous-clause-d3d8d9acb51e",
+        "url.host-miscellaneous-clause-8dd6c5947f94",
+        "url.host-miscellaneous-clause-57b4bac1e577"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.host-miscellaneous-clause-58ab67cf16a4",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-miscellaneous"
+      ],
+      "behaviour": "Host miscellaneous — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-miscellaneous",
+        "clause_index": 7,
+        "clause_sha256": "58ab67cf16a42df4d169f3e2709ecd5b2c9060aa187fd37f350b70ee6f94f8bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-miscellaneous-clause-d3d8d9acb51e",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-miscellaneous"
+      ],
+      "behaviour": "Host miscellaneous — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-miscellaneous",
+        "clause_index": 18,
+        "clause_sha256": "d3d8d9acb51ed8e22ff5f6fb56c31fd19920ff4a78879581cd422ccd535ba3b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-miscellaneous-clause-8dd6c5947f94",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-miscellaneous"
+      ],
+      "behaviour": "Host miscellaneous — normative clause 63, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-miscellaneous",
+        "clause_index": 62,
+        "clause_sha256": "8dd6c5947f941e2aee9ba601f048fad14a7c7cc2525b7a797e704cbb8b5586f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-miscellaneous-clause-57b4bac1e577",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-miscellaneous"
+      ],
+      "behaviour": "Host miscellaneous — normative clause 64, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-miscellaneous",
+        "clause_index": 63,
+        "clause_sha256": "57b4bac1e577e51d9cb24774aeb2daa45744ad1ea929fb77d42c9dfc8fa61299"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.idna",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "idna"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDNA.",
+      "locator": {
+        "section_id": "idna",
+        "text_sha256": "5f1442b9db432dae81a802b1a3ba16b6633339cbbc5e4ad9af9e8070260a2190"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.idna-clause-dffe90e95bac",
+        "url.idna-clause-4445425ceb05",
+        "url.idna-clause-8110dcdeb499",
+        "url.idna-clause-b4efa829a42b",
+        "url.idna-clause-d952e852c351"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.idna-clause-dffe90e95bac",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "idna"
+      ],
+      "behaviour": "IDNA — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "idna",
+        "clause_index": 0,
+        "clause_sha256": "dffe90e95bac52a8448e1d663355c63c272a1a3bb6ce5cf15a9917a47b12c924"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.idna-clause-4445425ceb05",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "idna"
+      ],
+      "behaviour": "IDNA — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "idna",
+        "clause_index": 14,
+        "clause_sha256": "4445425ceb057005e81c9e0394f728c76beee9406e860f62060ff5d84bb9a551"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.idna-clause-8110dcdeb499",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "idna"
+      ],
+      "behaviour": "IDNA — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "idna",
+        "clause_index": 15,
+        "clause_sha256": "8110dcdeb49976ae761ab6d4f493777ef7568392ac61a50ef6023d4a24f0fb3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.idna-clause-b4efa829a42b",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "idna"
+      ],
+      "behaviour": "IDNA — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "idna",
+        "clause_index": 30,
+        "clause_sha256": "b4efa829a42b6bf3d44947cc7f61e80faaba7aa811ac4357160029e63951bd59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.idna-clause-d952e852c351",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "idna"
+      ],
+      "behaviour": "IDNA — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "idna",
+        "clause_index": 31,
+        "clause_sha256": "d952e852c351177b2a01420836d36293c5d1bca665d2ecfe750ea82f24b1134d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-writing",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-writing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Host writing.",
+      "locator": {
+        "section_id": "host-writing",
+        "text_sha256": "431599c7c8ea79b19f4c38609e26188104e913b464cdc55e5dbd850e5777b208"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.host-writing-clause-1129e2a1f56f",
+        "url.host-writing-clause-bd14bda5afda",
+        "url.host-writing-clause-e575a7c688a9",
+        "url.host-writing-clause-773cdf9f2c23",
+        "url.host-writing-clause-984defa58455"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.host-writing-clause-1129e2a1f56f",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-writing"
+      ],
+      "behaviour": "Host writing — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-writing",
+        "clause_index": 0,
+        "clause_sha256": "1129e2a1f56f2a61dd7ad416040b1062b7470d9045df3b3bda5f6d8c0bd221fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-writing-clause-bd14bda5afda",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-writing"
+      ],
+      "behaviour": "Host writing — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-writing",
+        "clause_index": 11,
+        "clause_sha256": "bd14bda5afdadfb0cccfffe1d3b1a63899c861735e74d84608ac93041621a044"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-writing-clause-e575a7c688a9",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-writing"
+      ],
+      "behaviour": "Host writing — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-writing",
+        "clause_index": 12,
+        "clause_sha256": "e575a7c688a9e0b5a1e294b8573fe70292b9b30db207d44e049d3d177b6155dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-writing-clause-773cdf9f2c23",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-writing"
+      ],
+      "behaviour": "Host writing — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-writing",
+        "clause_index": 13,
+        "clause_sha256": "773cdf9f2c2316ad22f22d42b56c1f4a6094ba236ba3f1912233ec516a9d4f70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-writing-clause-984defa58455",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-writing"
+      ],
+      "behaviour": "Host writing — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-writing",
+        "clause_index": 25,
+        "clause_sha256": "984defa58455d2a1358697c08683c4146fdfc54341c1195f89188070fe39be2b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-parsing",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-parsing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Host parsing.",
+      "locator": {
+        "section_id": "host-parsing",
+        "text_sha256": "bbcd3fc88d6a90d7a6878e5123749a859c88d6251d198ebaca38b423c0bc9241"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.host-parsing-clause-6c4927a70996",
+        "url.host-parsing-clause-c65cbc4c71c4",
+        "url.host-parsing-clause-a3119b963b10",
+        "url.host-parsing-clause-38a45f90a385",
+        "url.host-parsing-clause-6edf8225e822",
+        "url.host-parsing-clause-55edbaace7f9",
+        "url.host-parsing-clause-107b9d3857ed",
+        "url.host-parsing-clause-ac49570bf3d8",
+        "url.host-parsing-clause-bf071ae46d83",
+        "url.host-parsing-clause-5d33ecfbadd6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.host-parsing-clause-6c4927a70996",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-parsing"
+      ],
+      "behaviour": "Host parsing — normative clause 135, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-parsing",
+        "clause_index": 134,
+        "clause_sha256": "6c4927a70996d7c898e939bd280a4baa493c93ca1dfd4b0dc446a16a2610cace"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-parsing-clause-c65cbc4c71c4",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-parsing"
+      ],
+      "behaviour": "Host parsing — normative clause 156, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-parsing",
+        "clause_index": 155,
+        "clause_sha256": "c65cbc4c71c4725e8eceace71c820d92219655ebb667cb636d15d0d40f6dba89"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-parsing-clause-a3119b963b10",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-parsing"
+      ],
+      "behaviour": "Host parsing — normative clause 172, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-parsing",
+        "clause_index": 171,
+        "clause_sha256": "a3119b963b10c4408cfb42cf2a3f4c3463ce06b9ef7847fd218ce23ba130380d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-parsing-clause-38a45f90a385",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-parsing"
+      ],
+      "behaviour": "Host parsing — normative clause 173, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-parsing",
+        "clause_index": 172,
+        "clause_sha256": "38a45f90a385a0a8fc5e7009505ee9854d8c7f359433f644b670e10cc6f2934d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-parsing-clause-6edf8225e822",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-parsing"
+      ],
+      "behaviour": "Host parsing — normative clause 181, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-parsing",
+        "clause_index": 180,
+        "clause_sha256": "6edf8225e82298c997f00d35c40b154dc872c8398932fc2818cd67d949f122bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-parsing-clause-55edbaace7f9",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-parsing"
+      ],
+      "behaviour": "Host parsing — normative clause 203, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-parsing",
+        "clause_index": 202,
+        "clause_sha256": "55edbaace7f9100ffba4264bc7b096422d66ec3f4e30028950ca33bce89b6875"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-parsing-clause-107b9d3857ed",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-parsing"
+      ],
+      "behaviour": "Host parsing — normative clause 205, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-parsing",
+        "clause_index": 204,
+        "clause_sha256": "107b9d3857edb089474b96fe3b61d9b2cc871b33da01c261c4e55803a94cb813"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-parsing-clause-ac49570bf3d8",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-parsing"
+      ],
+      "behaviour": "Host parsing — normative clause 226, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-parsing",
+        "clause_index": 225,
+        "clause_sha256": "ac49570bf3d819bd92273d90be7f1621ccdbf252fce143b6b7fd9a280986139d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-parsing-clause-bf071ae46d83",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-parsing"
+      ],
+      "behaviour": "Host parsing — normative clause 228, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-parsing",
+        "clause_index": 227,
+        "clause_sha256": "bf071ae46d834b9b533bee1714cd47f768540d6c79a62553777b891e6986b6e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-parsing-clause-5d33ecfbadd6",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-parsing"
+      ],
+      "behaviour": "Host parsing — normative clause 230, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-parsing",
+        "clause_index": 229,
+        "clause_sha256": "5d33ecfbadd6eec3bde0160d1a2af8e4388ba1fafe65d1b472d16e24407468cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-serializing",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-serializing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Host serializing.",
+      "locator": {
+        "section_id": "host-serializing",
+        "text_sha256": "d8af02b6ee1082d87909fd15c41703c1a8fd67235726c975f2fe42163100998c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.host-serializing-clause-bc0eeae499b0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.host-serializing-clause-bc0eeae499b0",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-serializing"
+      ],
+      "behaviour": "Host serializing — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "host-serializing",
+        "clause_index": 49,
+        "clause_sha256": "bc0eeae499b098bbf9163df489211ef0e1d32daa3dfeaf6589a6044c114dc372"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.host-equivalence",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "host-equivalence"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Host equivalence.",
+      "locator": {
+        "section_id": "host-equivalence",
+        "text_sha256": "3dfd71ca01c68af1780df63742da6263046a0ed85e0a288aca9675385db136ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.urls",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "urls"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URLs.",
+      "locator": {
+        "section_id": "urls",
+        "text_sha256": "95c4ef3bd5512582b7e0e95410c55605603d6391ffbb9b84facfee7478bb4f3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-representation",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-representation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URL representation.",
+      "locator": {
+        "section_id": "url-representation",
+        "text_sha256": "2bc578937d188e29bbfddecdf9d6775116740281b1a5f32707a4f33f3850e46b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-miscellaneous",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-miscellaneous"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URL miscellaneous.",
+      "locator": {
+        "section_id": "url-miscellaneous",
+        "text_sha256": "adb46f0d97bc803ebc76335c028d3027dc361fee6b6a60528cb9c71f61dee078"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-writing",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URL writing.",
+      "locator": {
+        "section_id": "url-writing",
+        "text_sha256": "3237a5f26edae2948abadf64f2b0c00a73c3f5c7b76f24096dd06cf03334edda"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.url-writing-clause-f8244c6798db",
+        "url.url-writing-clause-d5847d5e067b",
+        "url.url-writing-clause-938a8bd85ffa",
+        "url.url-writing-clause-5347a27a32af",
+        "url.url-writing-clause-718539742766",
+        "url.url-writing-clause-147dc66b7c19",
+        "url.url-writing-clause-3e84e40f1d53",
+        "url.url-writing-clause-604edc89c87d",
+        "url.url-writing-clause-3ffb760f8f49",
+        "url.url-writing-clause-b7afbabbd97b",
+        "url.url-writing-clause-f95b88fc3896",
+        "url.url-writing-clause-3dc422112623",
+        "url.url-writing-clause-c72bdcb9c64d",
+        "url.url-writing-clause-51a76721dc4c",
+        "url.url-writing-clause-a28499466311",
+        "url.url-writing-clause-1e55a1070c76",
+        "url.url-writing-clause-75ba3fdb08c5",
+        "url.url-writing-clause-504830b50ee2",
+        "url.url-writing-clause-dc7adfea4e73",
+        "url.url-writing-clause-3b2a0b0bf6ca"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-writing-clause-f8244c6798db",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 0,
+        "clause_sha256": "f8244c6798dba7c30341702b70acab31619452d13287d877f2d1382a977d815c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-d5847d5e067b",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 1,
+        "clause_sha256": "d5847d5e067b09ae87fa050c975b5a116385153e3e4245e92a38d8e06b7add46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-938a8bd85ffa",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 2,
+        "clause_sha256": "938a8bd85ffad405deb3f40e5666a58904acdd239a1f59e4058c076257504d4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-5347a27a32af",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 10,
+        "clause_sha256": "5347a27a32af598234124c106ea80265aa6bf4d6e0f78d1506680441d46aea6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-718539742766",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 11,
+        "clause_sha256": "718539742766efbbc82a343ff8bc96edb5efaa4a40533738644b873d49affae0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-147dc66b7c19",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 12,
+        "clause_sha256": "147dc66b7c196742f2732590f78b675e29ebd24b680d0ee34c6519bcd2710b79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-3e84e40f1d53",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 29,
+        "clause_sha256": "3e84e40f1d53b33880c5fca81eee889896f455a27cff96b325d78f5c44b2db2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-604edc89c87d",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 30,
+        "clause_sha256": "604edc89c87d9e6ee5d33b42f64a5f350572dbc347db0449d576d287c37be561"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-3ffb760f8f49",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 35,
+        "clause_sha256": "3ffb760f8f49310315e7f2f476e28c758479954c8aa01c51b07b4bd4d746c525"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-b7afbabbd97b",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 36,
+        "clause_sha256": "b7afbabbd97b1fbb4dab781384cdf515ea949323e6b37b4d36f0b86bd1f101cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-f95b88fc3896",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 37,
+        "clause_sha256": "f95b88fc3896e5a1c8bce46f92a85ba867daab516a8817c18d98c2350732ffe9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-3dc422112623",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 42,
+        "clause_sha256": "3dc4221126233e17dcb1d943fd6335e39703c66ffa2584823e7a9e13dd6dead5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-c72bdcb9c64d",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 43,
+        "clause_sha256": "c72bdcb9c64d9688b04ec1d5f565c2aa75a2d874c4d77c6acf965632ca8d7db8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-51a76721dc4c",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 44,
+        "clause_sha256": "51a76721dc4cd3dc33cc0403597a4004a988822285e5f1ea73cdbd50e3aa6587"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-a28499466311",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 45,
+        "clause_sha256": "a28499466311a200a56ef9517ddcba4f0a9a7905729fde3c57a4a85ed1d48ed5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-1e55a1070c76",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 46,
+        "clause_sha256": "1e55a1070c762de2472bb2123d58b90bfab68011cf08c4cd00e71d1eedeea29b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-75ba3fdb08c5",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 47,
+        "clause_sha256": "75ba3fdb08c590a70db6cec14cbaf0cb0ff1390e0ee61ddfdc9f6bc665abb872"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-504830b50ee2",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 55, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 54,
+        "clause_sha256": "504830b50ee2be697a1cf25e902cd73a666b1b33d97cd0c900143b753f16b675"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-dc7adfea4e73",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 56, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 55,
+        "clause_sha256": "dc7adfea4e73ba3c4b4a40b1de072c0a57d68254abb109fee6a03e591a29f9f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-writing-clause-3b2a0b0bf6ca",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-writing"
+      ],
+      "behaviour": "URL writing — normative clause 66, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-writing",
+        "clause_index": 65,
+        "clause_sha256": "3b2a0b0bf6ca4cca0a424a235700de20a66707db4c3321c0f54d2f9414b03dd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URL parsing.",
+      "locator": {
+        "section_id": "url-parsing",
+        "text_sha256": "b30fb70ae87a5217b1bd676e7a8528795c9d099cd030deb9ba4828846bd24473"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.url-parsing-clause-2040ac1609c7",
+        "url.url-parsing-clause-52c75fcc1077",
+        "url.url-parsing-clause-2c448f2be5f1",
+        "url.url-parsing-clause-14a2d177e749",
+        "url.url-parsing-clause-407ca2768463",
+        "url.url-parsing-clause-8d9d02817317",
+        "url.url-parsing-clause-69c34f01bfa7",
+        "url.url-parsing-clause-9db4cbcd6e1e",
+        "url.url-parsing-clause-d47cb6ce4829",
+        "url.url-parsing-clause-e16308912f5e",
+        "url.url-parsing-clause-128a36d6db88",
+        "url.url-parsing-clause-2ea994869bc4",
+        "url.url-parsing-clause-e871190448b8",
+        "url.url-parsing-clause-1a00b5d86a71",
+        "url.url-parsing-clause-62db22f464bf",
+        "url.url-parsing-clause-5cb971744a07",
+        "url.url-parsing-clause-739f3a2ff37e",
+        "url.url-parsing-clause-6229d8bc1807",
+        "url.url-parsing-clause-292b02296b08",
+        "url.url-parsing-clause-69c756fbabe7",
+        "url.url-parsing-clause-6b947f510f84",
+        "url.url-parsing-clause-73e88a3e43c9",
+        "url.url-parsing-clause-d9e35249eff9",
+        "url.url-parsing-clause-c3f5238c8b44",
+        "url.url-parsing-clause-c50c9f9dce68",
+        "url.url-parsing-clause-6ae7207948f8",
+        "url.foundation-resource-url-resolution"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-parsing-clause-2040ac1609c7",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 15,
+        "clause_sha256": "2040ac1609c798151f51727e8421297cffdc63083ca0da5ece65383b0f114d3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-52c75fcc1077",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 20,
+        "clause_sha256": "52c75fcc107732800d2777b2ac3cef580198bf1351fa7100bebe6f187e3fda8a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-2c448f2be5f1",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 24,
+        "clause_sha256": "2c448f2be5f17015fb8c0fc12b822952b9564caaed8884bb81a1c8a2ffce5682"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-14a2d177e749",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 128, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 127,
+        "clause_sha256": "14a2d177e7496f6153261cdcd86e732c3e962c3fa4daeb414ff83bf7d468ea6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-407ca2768463",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 146, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 145,
+        "clause_sha256": "407ca276846342fc55a8f44dcda0d62d070c776afa922a0c40d5c25d352a3718"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-8d9d02817317",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 150, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 149,
+        "clause_sha256": "8d9d0281731773ef92cede6a14b2e69eee3b00b4d3ae9ab22359d4993e4e44be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-69c34f01bfa7",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 158, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 157,
+        "clause_sha256": "69c34f01bfa7080b8cf0781d471407518846e1794e7b2bc92d2235a36478bdff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-9db4cbcd6e1e",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 174, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 173,
+        "clause_sha256": "9db4cbcd6e1e2cfee43b96fc8e08f49e512722ce90051320ecac8945cc985e4b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-d47cb6ce4829",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 205, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 204,
+        "clause_sha256": "d47cb6ce4829f4c3294b62fafa84dc8fc659fc98fec4a93de8c104c7914d15c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-e16308912f5e",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 278, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 277,
+        "clause_sha256": "e16308912f5edb2d75c79bca089e36916bd77ef2385a6a2b7e3d613caef48497"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-128a36d6db88",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 280, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 279,
+        "clause_sha256": "128a36d6db8853786fd653658e1c0450685a3c3b799d077989f4c83fe85b3109"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-2ea994869bc4",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 308, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 307,
+        "clause_sha256": "2ea994869bc49889ef5511f1f6b98a7e648b0ef5ecd5ec98a3ba8e8cddbbe25b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-e871190448b8",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 317, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 316,
+        "clause_sha256": "e871190448b82c1727026345c2f7c6283e300af817eee7ca1479498e1b27cb1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-1a00b5d86a71",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 336, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 335,
+        "clause_sha256": "1a00b5d86a7185ca7a90097c5f1358089e3ab1cb6dc100698cc8bbd72f1d81d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-62db22f464bf",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 340, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 339,
+        "clause_sha256": "62db22f464bf3cddcde52e5a0a25d14eefccf0ef7cbacc3d950dd3ab24342035"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-5cb971744a07",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 342, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 341,
+        "clause_sha256": "5cb971744a077283d59bb8e36a2c665f1e5d8e1c760466daf89162a98703eee0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-739f3a2ff37e",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 367, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 366,
+        "clause_sha256": "739f3a2ff37e5ae3886facc160fabe8adec0d77f9384255f70b19a729c5f1bf0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-6229d8bc1807",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 389, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 388,
+        "clause_sha256": "6229d8bc18072994488014bdfd3545ffcbc3bd43affa9676af269b52b5d13a09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-292b02296b08",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 400, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 399,
+        "clause_sha256": "292b02296b087666c4b5a5c6f27666e79fd6c0ff9b1f39982294eb415952c5af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-69c756fbabe7",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 426, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 425,
+        "clause_sha256": "69c756fbabe783b54d3c2a49691c08effbb761bf2740ef61a35c4fb3db780df4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-6b947f510f84",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 428, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 427,
+        "clause_sha256": "6b947f510f84efa799cb0eab0075f543184f243985f39c94e448e098ac39b3b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-73e88a3e43c9",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 432, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 431,
+        "clause_sha256": "73e88a3e43c99b1b60056cd7bc0087f274f3e372b053737f08696166a29cd706"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-d9e35249eff9",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 440, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 439,
+        "clause_sha256": "d9e35249eff9f9b5fa282d32715ca410ddaf9c44f10a495f19d19f9976a84869"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-c3f5238c8b44",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 454, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 453,
+        "clause_sha256": "c3f5238c8b443f06ed610771fce16fd335a1aaf4372a4c3c77e3ed697e6d3725"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-c50c9f9dce68",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 487, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 486,
+        "clause_sha256": "c50c9f9dce68692550698c6ab54d33952aecf6eafac39c0a384fd419bff7a58b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-parsing-clause-6ae7207948f8",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing"
+      ],
+      "behaviour": "URL parsing — normative clause 501, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-parsing",
+        "clause_index": 500,
+        "clause_sha256": "6ae7207948f810525d5aae36837d6aaec007ebc8afcc7d8a50d766fd1707be79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-serializing",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-serializing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URL serializing.",
+      "locator": {
+        "section_id": "url-serializing",
+        "text_sha256": "2f0dec303c4f15a929c410d104eefe7b1b2c0855487e581a6063cbcbe1949c2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.foundation-resource-url-resolution"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-equivalence",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-equivalence"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URL equivalence.",
+      "locator": {
+        "section_id": "url-equivalence",
+        "text_sha256": "bd261402a3ddb9d269124a4e972087f0fe5275a7a567a99f25d9ffa992f22a72"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.url-equivalence-clause-0af0d58e3415",
+        "url.foundation-resource-url-resolution"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-equivalence-clause-0af0d58e3415",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-equivalence"
+      ],
+      "behaviour": "URL equivalence — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-equivalence",
+        "clause_index": 19,
+        "clause_sha256": "0af0d58e34153e698f307a946eb2450663b55334aec0faa0883f114fa2ec8ede"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.origin",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "origin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Origin.",
+      "locator": {
+        "section_id": "origin",
+        "text_sha256": "eca80279f5724643689f83affefb39e73471ab7680d89d85219cd83f30bcf2e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-rendering",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URL rendering.",
+      "locator": {
+        "section_id": "url-rendering",
+        "text_sha256": "3705a9479afab746bc7fc49c44dbc8c984f19b26266fcc6cc680622ecd3aaaf0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.url-rendering-clause-3705a9479afa"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-rendering-clause-3705a9479afa",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering"
+      ],
+      "behaviour": "URL rendering — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering",
+        "clause_index": 0,
+        "clause_sha256": "3705a9479afab746bc7fc49c44dbc8c984f19b26266fcc6cc680622ecd3aaaf0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-rendering-simplification",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-simplification"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Simplify non-human-readable or irrelevant components.",
+      "locator": {
+        "section_id": "url-rendering-simplification",
+        "text_sha256": "87f4a5b4fae7614331017d4405ae985a1968bedf7c3e12becf8b348278da77b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.url-rendering-simplification-clause-87cc9efe40cb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-rendering-simplification-clause-87cc9efe40cb",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-simplification"
+      ],
+      "behaviour": "Simplify non-human-readable or irrelevant components — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering-simplification",
+        "clause_index": 3,
+        "clause_sha256": "87cc9efe40cbd55a5e5f42309a3e5b6ac9d69ad49e1ab1a00cd9726c6ef8a257"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-rendering-elision",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-elision"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Elision.",
+      "locator": {
+        "section_id": "url-rendering-elision",
+        "text_sha256": "d6abca20976e289b90c0257b186c37a23cafee3c9eac4ad7a7debd4594c9048c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.url-rendering-elision-clause-0cded10b5505",
+        "url.url-rendering-elision-clause-0fc7f3963df0",
+        "url.url-rendering-elision-clause-7f2dedf1200b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-rendering-elision-clause-0cded10b5505",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-elision"
+      ],
+      "behaviour": "Elision — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering-elision",
+        "clause_index": 0,
+        "clause_sha256": "0cded10b550593f9d5b1751c16195f0f46f60f7746b779ffba8efd4b9ae09cba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-rendering-elision-clause-0fc7f3963df0",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-elision"
+      ],
+      "behaviour": "Elision — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering-elision",
+        "clause_index": 1,
+        "clause_sha256": "0fc7f3963df02fceeae5b4b7a0c559371eedf2aa83e50cc239e5bdc6c50978ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-rendering-elision-clause-7f2dedf1200b",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-elision"
+      ],
+      "behaviour": "Elision — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering-elision",
+        "clause_index": 3,
+        "clause_sha256": "7f2dedf1200b7bd551e3c9ee1b21720f07ffd23a11c28818efb853ddea8bbd11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-rendering-i18n",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-i18n"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Internationalization and special characters.",
+      "locator": {
+        "section_id": "url-rendering-i18n",
+        "text_sha256": "8be59a108c13f1a30cc6e8cab1dac715f0fb7325139b1984e9e44baf454c1451"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.url-rendering-i18n-clause-dfa40955b221",
+        "url.url-rendering-i18n-clause-18c24b75b6b9",
+        "url.url-rendering-i18n-clause-bdf3da8095e8",
+        "url.url-rendering-i18n-clause-f7bd55e02a18",
+        "url.url-rendering-i18n-clause-d5befb52a2dd",
+        "url.url-rendering-i18n-clause-12b0ef803c9d",
+        "url.url-rendering-i18n-clause-8627a2f678b2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-rendering-i18n-clause-dfa40955b221",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-i18n"
+      ],
+      "behaviour": "Internationalization and special characters — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering-i18n",
+        "clause_index": 0,
+        "clause_sha256": "dfa40955b2211c8142911fc9739e93dfd55e1867029957cbe4f6d8f47f456c1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-rendering-i18n-clause-18c24b75b6b9",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-i18n"
+      ],
+      "behaviour": "Internationalization and special characters — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering-i18n",
+        "clause_index": 1,
+        "clause_sha256": "18c24b75b6b9bbb0c50a439419b415907e36172673e7d7bccbc1ba6eb4339f43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-rendering-i18n-clause-bdf3da8095e8",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-i18n"
+      ],
+      "behaviour": "Internationalization and special characters — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering-i18n",
+        "clause_index": 3,
+        "clause_sha256": "bdf3da8095e88e2ac663c0e774ad41d72f7dca220da40ee324ba0ecbbc6bf20e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-rendering-i18n-clause-f7bd55e02a18",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-i18n"
+      ],
+      "behaviour": "Internationalization and special characters — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering-i18n",
+        "clause_index": 4,
+        "clause_sha256": "f7bd55e02a1837ae893ac3fe9b1f5262bd7b5d8463f5c7f83728cde375c9991e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-rendering-i18n-clause-d5befb52a2dd",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-i18n"
+      ],
+      "behaviour": "Internationalization and special characters — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering-i18n",
+        "clause_index": 6,
+        "clause_sha256": "d5befb52a2dd4a5e3fe68e9c0766537f3a0ded1e6249bac60699517c5fc7af2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-rendering-i18n-clause-12b0ef803c9d",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-i18n"
+      ],
+      "behaviour": "Internationalization and special characters — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering-i18n",
+        "clause_index": 7,
+        "clause_sha256": "12b0ef803c9d867f254b2661f10e03b0008ac54883603295ca9fda25e857a222"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-rendering-i18n-clause-8627a2f678b2",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-rendering-i18n"
+      ],
+      "behaviour": "Internationalization and special characters — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-rendering-i18n",
+        "clause_index": 8,
+        "clause_sha256": "8627a2f678b23140949ae969485f3db805ecf0344d1cb47a325ffb18c26f0575"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.application-x-www-form-urlencoded",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "application/x-www-form-urlencoded"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in application/x-www-form-urlencoded.",
+      "locator": {
+        "section_id": "application/x-www-form-urlencoded",
+        "text_sha256": "653271c2c3ab3844623fedaa6d1c93e3d75275c28b3f7959a8e1b3a6ffe70e7d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.urlencoded-parsing",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "urlencoded-parsing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in application/x-www-form-urlencoded parsing.",
+      "locator": {
+        "section_id": "urlencoded-parsing",
+        "text_sha256": "b7dbd057835af152add2de110800d07e82b532a0b2c6d07d3b5ed7e08403dd36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.urlencoded-serializing",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "urlencoded-serializing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in application/x-www-form-urlencoded serializing.",
+      "locator": {
+        "section_id": "urlencoded-serializing",
+        "text_sha256": "fd6f4b532cc9f75a975a283595b3c3f395e28255925de27a2069e5289c31699b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.urlencoded-hooks",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "urlencoded-hooks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Hooks.",
+      "locator": {
+        "section_id": "urlencoded-hooks",
+        "text_sha256": "d188590c36027b1c08ed4ad9d1ef377faf3ec73d5f9a6920c21586c79ef7c1ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.api",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "api"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in API.",
+      "locator": {
+        "section_id": "api",
+        "text_sha256": "08e2b0204f2609556c1d842de8422250de3fda5f8816e51c1c4596f10cba1e7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.api-clause-08e2b0204f26"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.api-clause-08e2b0204f26",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "api"
+      ],
+      "behaviour": "API — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "api",
+        "clause_index": 0,
+        "clause_sha256": "08e2b0204f2609556c1d842de8422250de3fda5f8816e51c1c4596f10cba1e7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-class",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-class"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URL class.",
+      "locator": {
+        "section_id": "url-class",
+        "text_sha256": "4e266d718158d7c8024fbc7235a1f8a03bddc88fcabd9639e608dd0a75098ec1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.interface-urlsearchparams",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "interface-urlsearchparams"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URLSearchParams class.",
+      "locator": {
+        "section_id": "interface-urlsearchparams",
+        "text_sha256": "a062e3aa5e81b9c8ab63e2ff130f543238c62e4e95840e83c73631dc13a13e0b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-apis-elsewhere",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-apis-elsewhere"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URL APIs elsewhere.",
+      "locator": {
+        "section_id": "url-apis-elsewhere",
+        "text_sha256": "fbaf8d952579c9617502293b6f907270e4c782488144fab8bc35796f5612f644"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "url.url-apis-elsewhere-clause-846d43d3268e",
+        "url.url-apis-elsewhere-clause-e7da62005efb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.url-apis-elsewhere-clause-846d43d3268e",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-apis-elsewhere"
+      ],
+      "behaviour": "URL APIs elsewhere — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-apis-elsewhere",
+        "clause_index": 0,
+        "clause_sha256": "846d43d3268ed582ad968dc43deedb84973c0730dffbd2f16fbd9b557a545b1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.url-apis-elsewhere-clause-e7da62005efb",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-apis-elsewhere"
+      ],
+      "behaviour": "URL APIs elsewhere — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "url-apis-elsewhere",
+        "clause_index": 2,
+        "clause_sha256": "e7da62005efbb4676a24e563f24b8c20fd1da9d8120204cf2f4eae3dee267511"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "url.idl-index",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "6d551df2c727e200f81327b8f0aa7f53e30a8d04d79b2c9107b020d17d133bdb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.import-c9c163a7318f",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.unicode.org/reports/tr9/tr9-52.html.",
+      "unresolved_reference": "https://www.unicode.org/reports/tr9/tr9-52.html",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "url.import-ee77cba07bb3",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://w3c.github.io/FileAPI/.",
+      "unresolved_reference": "https://w3c.github.io/FileAPI/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "url.import-7cb8d2b7ea12",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml.",
+      "unresolved_reference": "https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "url.import-5ee8ae6e949b",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://publicsuffix.org/.",
+      "unresolved_reference": "https://publicsuffix.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "url.import-90b8baad5d60",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.unicode.org/reports/tr46/tr46-36.html.",
+      "unresolved_reference": "https://www.unicode.org/reports/tr46/tr46-36.html",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "url.import-8cac7d115c27",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "url.title",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in URL (Commit 845bafca22fb0c5a42c4bf384a9bdea525a2f10d).",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "9187f20b87fb7dfd320e9c91190ad3175c7ceea96d5fe9f19de361828141d2f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.abstract",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "cb7fd7cbbdc9f16508dbf8a2f80080f466fcc56a70745a84fad82c99b215c438"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.contents",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "594320b869d3f6e506a373483cb74639f1f5fc816fa64a66d733df1883f7511b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.acknowledgments",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "eb1c99a98597d40fee4e3484533337270e05bfbeedb69eded8837cadfe482521"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.ipr",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "ipr"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Intellectual property rights.",
+      "locator": {
+        "section_id": "ipr",
+        "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.index",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.index-defined-here",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "3d75d24cdcfeaa34ef3b71d76b8ffc526ea14b65f551e0cd533b0d200e2bea0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.index-defined-elsewhere",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "a884863997398f1653243cbbbe915fe435abb530ca2e94959647080581e0e842"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.references",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.informative",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "635dd948148c56d4f9a8dc46b3a425ed00cde090617a3723fbd65514009e95c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "url.foundation-resource-url-resolution",
+      "family": "url",
+      "source_id": "url",
+      "sections": [
+        "url-parsing",
+        "url-serializing",
+        "url-equivalence"
+      ],
+      "behaviour": "Resolve and identify stylesheet and embedded resource URLs using the shared resolver.",
+      "locator": {
+        "section_id": "url-parsing",
+        "text_sha256": "b30fb70ae87a5217b1bd676e7a8528795c9d099cd030deb9ba4828846bd24473"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    }
+  ]
+}

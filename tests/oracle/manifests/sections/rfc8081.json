@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "source_id": "rfc8081",
+  "sections": [
+    {
+      "id": "heading-725f80f95580",
+      "title": "The \"font\" Top-Level Media Type",
+      "level": 1,
+      "text_sha256": "f355f6c9e7eea44fbfdc14e72908260111fb333744b4769e98abc21e448d7896",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.heading-725f80f95580"
+        ]
+      }
+    },
+    {
+      "id": "section-1",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "d078fb5374e6fbe5aac3b21fbffe11253430576c7b9f4cbf1536d9b2a7dc15a6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-1"
+        ]
+      }
+    },
+    {
+      "id": "section-2",
+      "title": "2. Background and Justification",
+      "level": 2,
+      "text_sha256": "2c6560da1f3bcd3e61ee86726a48a50d1f200f725b4bb72d3066a7491b226232",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-2"
+        ]
+      }
+    },
+    {
+      "id": "section-3",
+      "title": "3. Security Considerations",
+      "level": 2,
+      "text_sha256": "5e9dce4e57d0ea4ffd04e28fb2d3d6ba1753617a90a43572f6bb1586d143fe02",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-3",
+          "rfc8081.section-3-clause-6aafa998341e"
+        ]
+      }
+    },
+    {
+      "id": "section-4",
+      "title": "4. IANA Considerations",
+      "level": 2,
+      "text_sha256": "651faa51ca1d896ecbdfa660caa9416585bf1125e2c427ef4e424a85200e89b1",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-4"
+        ]
+      }
+    },
+    {
+      "id": "section-4.1",
+      "title": "4.1. Definition and Encoding",
+      "level": 3,
+      "text_sha256": "0a05effd2d5c87b160721566f95dac29db1f49772ea0e08e6288f0c9a8a52c39",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-4-1"
+        ]
+      }
+    },
+    {
+      "id": "section-4.2",
+      "title": "4.2. Fragment Identifiers for Font Collections",
+      "level": 3,
+      "text_sha256": "6ecf18c82cab5694d26799f2351c7a24e6c34cb6aa12f87f2d61072844a8f922",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-4-2"
+        ]
+      }
+    },
+    {
+      "id": "section-4.3",
+      "title": "4.3. Registration Procedure",
+      "level": 3,
+      "text_sha256": "38057c6968caa06d2d711c67e962d6c5b24121113cc6473a5dd2378f139696b5",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-4-3"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4",
+      "title": "4.4. Subtype Registrations",
+      "level": 3,
+      "text_sha256": "7b401e1f34afddd69b456b2065c8079fbf574d8fa5c5e65f724b885964167c1e",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-4-4"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4.1",
+      "title": "4.4.1. Generic SFNT Font Type",
+      "level": 4,
+      "text_sha256": "0bec40f658c15b530890708d5af7c225737eb3cbea3aa9171838f9e4a9ccb609",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-4-4-1",
+          "rfc8081.section-4-4-1-clause-b42c57e44835"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4.2",
+      "title": "4.4.2. TTF Font Type",
+      "level": 4,
+      "text_sha256": "eae12c3da5edbea1f423d6c4a3308624df185ba78fcc856c620957f5e0e74073",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-4-4-2",
+          "rfc8081.section-4-4-2-clause-233a5e2aed70"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4.3",
+      "title": "4.4.3. OpenType Layout (OTF) Font Type",
+      "level": 4,
+      "text_sha256": "fe11393cf87751628927bc46cc956ba3d354ba25add26217e4968dbb7fef7235",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-4-4-3",
+          "rfc8081.section-4-4-3-clause-7b6eda55ef43"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4.4",
+      "title": "4.4.4. Collection Font Type",
+      "level": 4,
+      "text_sha256": "6cf2d480e3cafe36c7574080f427172bd96b3e49d867313384ccf12e1ef9308e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-4-4-4",
+          "rfc8081.section-4-4-4-clause-4d8ff79027be"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4.5",
+      "title": "4.4.5. WOFF 1.0",
+      "level": 4,
+      "text_sha256": "bdc8cca8eb7817ffe2196211292ba702369e154f2a945c4b0db1046ed2393a7c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-4-4-5"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4.6",
+      "title": "4.4.6. WOFF 2.0",
+      "level": 4,
+      "text_sha256": "92c4823ce08071951ebbb181a63dd64cdd7d656ce4745d33e52c5bacf7f3c372",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-4-4-6"
+        ]
+      }
+    },
+    {
+      "id": "section-5",
+      "title": "5. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-5"
+        ]
+      }
+    },
+    {
+      "id": "section-5.1",
+      "title": "5.1. Normative References",
+      "level": 3,
+      "text_sha256": "95e723fda515658a17a4d24b75252d83c45d6613d7d132ff102011ec35d60ebf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-5-1"
+        ]
+      }
+    },
+    {
+      "id": "section-5.2",
+      "title": "5.2. Informative References",
+      "level": 3,
+      "text_sha256": "0f9d51d6e4ea9e8cafd5d7018d643a37e5ce0ef658060c384b52b477b0ec0149",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc8081.section-5-2"
+        ]
+      }
+    }
+  ]
+}

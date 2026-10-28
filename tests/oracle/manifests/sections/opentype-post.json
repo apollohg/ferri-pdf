@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-post",
+  "sections": [
+    {
+      "id": "post--postscript-table",
+      "title": "post — PostScript Table",
+      "level": 1,
+      "text_sha256": "214e1897aecdbc0fa38663f3c48b975638d01ca841f95852449b42b2f24c1245",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.post-postscript-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "Overview",
+      "level": 2,
+      "text_sha256": "75a150f522334476bc40bc9e2411b346f26c3b78f6ae9f1b91a964a9d15bcd18",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.overview",
+          "opentype-post.overview-clause-51f95330d890"
+        ]
+      }
+    },
+    {
+      "id": "header",
+      "title": "Header",
+      "level": 2,
+      "text_sha256": "3fe800cc07e0352810d235e322cc96481c4876ab60902d9e323d522ae5b61290",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.header",
+          "opentype-post.header-clause-8c66d35d7c25",
+          "opentype-post.header-clause-7e1824667682"
+        ]
+      }
+    },
+    {
+      "id": "version-10",
+      "title": "Version 1.0",
+      "level": 2,
+      "text_sha256": "855631e07d9fc271a7f1e85389e214a9869fd1556b23fc01eb27e05080463439",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.version-10",
+          "opentype-post.version-10-clause-855631e07d9f"
+        ]
+      }
+    },
+    {
+      "id": "version-20",
+      "title": "Version 2.0",
+      "level": 2,
+      "text_sha256": "66441e77e874e66e6c025bbfab508a04184b0229eab1ea2078b11f49828401bb",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.version-20",
+          "opentype-post.version-20-clause-ce6d5abc3206",
+          "opentype-post.version-20-clause-b25822ce667f"
+        ]
+      }
+    },
+    {
+      "id": "version-25",
+      "title": "Version 2.5",
+      "level": 2,
+      "text_sha256": "b9ce6951d132be38da486247158c913f8c921e6af3a556645a494f972704fcbf",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.version-25"
+        ]
+      }
+    },
+    {
+      "id": "version-30",
+      "title": "Version 3.0",
+      "level": 2,
+      "text_sha256": "42c4177617aa43cd588fd3f729674d0f1b2b82f418c436ad51ad432f701d4bfd",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.version-30",
+          "opentype-post.version-30-clause-c79b2573b362"
+        ]
+      }
+    },
+    {
+      "id": "post-table-and-opentype-font-variations",
+      "title": "'post' Table and OpenType Font Variations",
+      "level": 2,
+      "text_sha256": "c4a9597090239b9e61dd0f04160ae3c2fe62e6060a1ce922a19e3205baa661d2",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.post-table-and-opentype-font-variations"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "4e2297f79525355aa3dc07756ae4ae6ba350dc012790f96133dc9fdbf48db6d0",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-post.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

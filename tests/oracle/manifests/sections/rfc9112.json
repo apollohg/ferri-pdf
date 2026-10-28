@@ -1,0 +1,1187 @@
+{
+  "schema_version": 1,
+  "source_id": "rfc9112",
+  "sections": [
+    {
+      "id": "rfcnum",
+      "title": "RFC 9112",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.rfcnum"
+        ]
+      }
+    },
+    {
+      "id": "title",
+      "title": "HTTP/1.1",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "fa491d89f7a095f5212bc612c45cbb8dfd0514b44b18db3e7527b253356bbce4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.abstract"
+        ]
+      }
+    },
+    {
+      "id": "name-status-of-this-memo",
+      "title": "Status of This Memo",
+      "level": 2,
+      "text_sha256": "a583f938f10fe16915037ad521f8910a4bc92b784644d6511d8d1dc858dc137a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-status-of-this-memo"
+        ]
+      }
+    },
+    {
+      "id": "name-copyright-notice",
+      "title": "Copyright Notice",
+      "level": 2,
+      "text_sha256": "1b18495593b4a0f0ef28880ed806128cc61d7bbc15098e9d2dc3e0f9250cf7f9",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-copyright-notice",
+          "rfc9112.name-copyright-notice-clause-f2ae79166e8a"
+        ]
+      }
+    },
+    {
+      "id": "name-table-of-contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "05903b1eed47d606d523299bcc5bfa588560a9ee3f0dc1abfd61ff2ee8f4153e",
+      "clause_count": 154,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-table-of-contents"
+        ]
+      }
+    },
+    {
+      "id": "name-introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "2301b6b1b0836a539761e92d60aba6cba1c65f8af479f97603f8fd19774ff476",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-introduction"
+        ]
+      }
+    },
+    {
+      "id": "name-requirements-notation",
+      "title": "1.1. Requirements Notation",
+      "level": 3,
+      "text_sha256": "8e7ee8dcb94693f5c6cc8bb8fdd7e96b6f434dce4238be7fc036bb970a9b8c76",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-requirements-notation",
+          "rfc9112.name-requirements-notation-clause-8f1facba91cb"
+        ]
+      }
+    },
+    {
+      "id": "name-syntax-notation",
+      "title": "1.2. Syntax Notation",
+      "level": 3,
+      "text_sha256": "0b2f7e51f095dc6c4706116c53f1c9f7ce649de29953dc97078d09cae3eeb9b2",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-syntax-notation"
+        ]
+      }
+    },
+    {
+      "id": "name-message",
+      "title": "2. Message",
+      "level": 2,
+      "text_sha256": "39d51b4adaa5cb35398f03f2e11731a27f1fd553331e153cd7d743666b3134b2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-message"
+        ]
+      }
+    },
+    {
+      "id": "name-message-format",
+      "title": "2.1. Message Format",
+      "level": 3,
+      "text_sha256": "12c739dee671af42d23fce47786f46eea7c2e2fe0f7dc107ca6f5126550ca260",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-message-format",
+          "rfc9112.name-message-format-clause-c7c87eb2e517",
+          "rfc9112.name-message-format-clause-67d322092ceb"
+        ]
+      }
+    },
+    {
+      "id": "name-message-parsing",
+      "title": "2.2. Message Parsing",
+      "level": 3,
+      "text_sha256": "235e484449d37fee977829f92508b7e17f6abaa4def9169c1e7fa4ed29738cde",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-message-parsing",
+          "rfc9112.name-message-parsing-clause-99bbfba2d90e",
+          "rfc9112.name-message-parsing-clause-39f79c2178b7",
+          "rfc9112.name-message-parsing-clause-4880c3d5371a",
+          "rfc9112.name-message-parsing-clause-c01a8e4db5af",
+          "rfc9112.name-message-parsing-clause-ebfe6c9f2928",
+          "rfc9112.name-message-parsing-clause-ebf358958ea2",
+          "rfc9112.name-message-parsing-clause-bb18f0ba3dcc",
+          "rfc9112.name-message-parsing-clause-923996360b8f"
+        ]
+      }
+    },
+    {
+      "id": "name-http-version",
+      "title": "2.3. HTTP Version",
+      "level": 3,
+      "text_sha256": "04f380b9690b554c21390bc949cb1108e757071c8a464071225134ddc0e8f31c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-http-version",
+          "rfc9112.name-http-version-clause-07a6ee06dabe",
+          "rfc9112.name-http-version-clause-10095660f3ec",
+          "rfc9112.name-http-version-clause-14d8d5f49fa1"
+        ]
+      }
+    },
+    {
+      "id": "name-request-line",
+      "title": "3. Request Line",
+      "level": 2,
+      "text_sha256": "5f132bcfb559bc5b4552e67ee36e35644df46ab86d9658780d2e7accc34a722c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-request-line",
+          "rfc9112.name-request-line-clause-4b201dee01ff"
+        ]
+      }
+    },
+    {
+      "id": "name-method",
+      "title": "3.1. Method",
+      "level": 3,
+      "text_sha256": "86355c91a2612a0452f87a2185df6e357ff1932c97db57af2f1c10a2a6973b80",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-method"
+        ]
+      }
+    },
+    {
+      "id": "name-request-target",
+      "title": "3.2. Request Target",
+      "level": 3,
+      "text_sha256": "da1939ed9795e492f0ebcf7e14437e53e0c9a60792437ea919ae8b1ed3e97e41",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-request-target",
+          "rfc9112.name-request-target-clause-1bd0652a4cab",
+          "rfc9112.name-request-target-clause-999473f14d30",
+          "rfc9112.name-request-target-clause-46fd28e91ff0"
+        ]
+      }
+    },
+    {
+      "id": "name-origin-form",
+      "title": "3.2.1. origin-form",
+      "level": 4,
+      "text_sha256": "929930e25a940926256f271c628a19641066895fb0f6da8b6892ecc0f4455b22",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-origin-form",
+          "rfc9112.name-origin-form-clause-e0d7ce75200b"
+        ]
+      }
+    },
+    {
+      "id": "name-absolute-form",
+      "title": "3.2.2. absolute-form",
+      "level": 4,
+      "text_sha256": "05cef29e1becd853f64e7d643adc2c66271aad8ba9484586f6c50d0ddd3746e2",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-absolute-form",
+          "rfc9112.name-absolute-form-clause-041919540950",
+          "rfc9112.name-absolute-form-clause-8b9c4615f6ea",
+          "rfc9112.name-absolute-form-clause-1dad33992014",
+          "rfc9112.name-absolute-form-clause-30559a95ee51",
+          "rfc9112.name-absolute-form-clause-40625dc0be52"
+        ]
+      }
+    },
+    {
+      "id": "name-authority-form",
+      "title": "3.2.3. authority-form",
+      "level": 4,
+      "text_sha256": "d7653bdd90e4a7749691d061e031a9a09ef62eedc4e4b5d85cb447da1dc92a89",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-authority-form",
+          "rfc9112.name-authority-form-clause-209b8b65af77"
+        ]
+      }
+    },
+    {
+      "id": "name-asterisk-form",
+      "title": "3.2.4. asterisk-form",
+      "level": 4,
+      "text_sha256": "1f2fc4a980360f624f158792dd119e409e3cbae751bd70f112a3f087dcf4c69e",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-asterisk-form",
+          "rfc9112.name-asterisk-form-clause-98cbe8354e5b",
+          "rfc9112.name-asterisk-form-clause-9662b9066331"
+        ]
+      }
+    },
+    {
+      "id": "name-reconstructing-the-target-u",
+      "title": "3.3. Reconstructing the Target URI",
+      "level": 3,
+      "text_sha256": "ee62fa540d9e4b7d74e94068f1d4f333835622f65ff529f9bdae627f7ea60726",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-reconstructing-the-target-u",
+          "rfc9112.name-reconstructing-the-target-u-clause-a6d27ae3652b"
+        ]
+      }
+    },
+    {
+      "id": "name-status-line",
+      "title": "4. Status Line",
+      "level": 2,
+      "text_sha256": "c1f4f41100a97f1b79851ff42b822a95bd6831739a7724e3c03d31f961735510",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-status-line",
+          "rfc9112.name-status-line-clause-16f3f9fb1a79"
+        ]
+      }
+    },
+    {
+      "id": "name-field-syntax",
+      "title": "5. Field Syntax",
+      "level": 2,
+      "text_sha256": "4bdccf9fdc72db4f7899eeaa938c3f11947775cc7446aa3bab59c179b8c39b9c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-field-syntax"
+        ]
+      }
+    },
+    {
+      "id": "name-field-line-parsing",
+      "title": "5.1. Field Line Parsing",
+      "level": 3,
+      "text_sha256": "689cba21a6ac3c0fd5cb23fc85e086deaffec3393edd8778607c3dc16ff5ff14",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-field-line-parsing",
+          "rfc9112.name-field-line-parsing-clause-d2adf38d8fc3",
+          "rfc9112.name-field-line-parsing-clause-7cb7a05813b2"
+        ]
+      }
+    },
+    {
+      "id": "name-obsolete-line-folding",
+      "title": "5.2. Obsolete Line Folding",
+      "level": 3,
+      "text_sha256": "c494f813f6b6b712710fb8481da093f6d8978a0819556e6c66b84e07bdd5d443",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-obsolete-line-folding",
+          "rfc9112.name-obsolete-line-folding-clause-7fc643820a6b",
+          "rfc9112.name-obsolete-line-folding-clause-05e98b8c4658",
+          "rfc9112.name-obsolete-line-folding-clause-91c1114b48da",
+          "rfc9112.name-obsolete-line-folding-clause-3137b63bf427"
+        ]
+      }
+    },
+    {
+      "id": "name-message-body",
+      "title": "6. Message Body",
+      "level": 2,
+      "text_sha256": "fe04f9c3c1f8614418ada5822a34f5cbd5eb75744a9620b7d2f90617fc787652",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-message-body"
+        ]
+      }
+    },
+    {
+      "id": "name-transfer-encoding",
+      "title": "6.1. Transfer-Encoding",
+      "level": 3,
+      "text_sha256": "714c3512cad436fd3ba573301813d92e90af59d78eb09b7df4d79c2288ed8ae3",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-transfer-encoding",
+          "rfc9112.name-transfer-encoding-clause-5aeffe7ac731",
+          "rfc9112.name-transfer-encoding-clause-59c3a6ef2a99",
+          "rfc9112.name-transfer-encoding-clause-78bb3a5fc4be",
+          "rfc9112.name-transfer-encoding-clause-1c60fa33d373",
+          "rfc9112.name-transfer-encoding-clause-e3de5504b03c",
+          "rfc9112.name-transfer-encoding-clause-577e4a01eb4d",
+          "rfc9112.name-transfer-encoding-clause-4368e03050be"
+        ]
+      }
+    },
+    {
+      "id": "name-content-length",
+      "title": "6.2. Content-Length",
+      "level": 3,
+      "text_sha256": "4d0a3b4c57cba3838542772f66600efe75d112c9fa1605eb9abf630c09935377",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-content-length",
+          "rfc9112.name-content-length-clause-e76d53e87f1b"
+        ]
+      }
+    },
+    {
+      "id": "name-message-body-length",
+      "title": "6.3. Message Body Length",
+      "level": 3,
+      "text_sha256": "6e59317ecdfb017dd07e01d70739dc52c269b4ae03f524e0ee6c2ecd0903aa4f",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-message-body-length",
+          "rfc9112.name-message-body-length-clause-7ce6fcff1861",
+          "rfc9112.name-message-body-length-clause-1fe0712ed979",
+          "rfc9112.name-message-body-length-clause-0e31fb93dcb9",
+          "rfc9112.name-message-body-length-clause-d4bf5d4789ce",
+          "rfc9112.name-message-body-length-clause-d44f6aba1bad",
+          "rfc9112.name-message-body-length-clause-bb1a47d12d36",
+          "rfc9112.name-message-body-length-clause-fdc21c68a169",
+          "rfc9112.name-message-body-length-clause-d4e78d915a5f",
+          "rfc9112.name-message-body-length-clause-68e96a9cad92",
+          "rfc9112.name-message-body-length-clause-39c16f98b5e2",
+          "rfc9112.name-message-body-length-clause-303ada38813c"
+        ]
+      }
+    },
+    {
+      "id": "name-transfer-codings",
+      "title": "7. Transfer Codings",
+      "level": 2,
+      "text_sha256": "36fa8a3599229229c59749cf7852667306c5c58b896c3c47d55e3f6192c4304a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-transfer-codings"
+        ]
+      }
+    },
+    {
+      "id": "name-chunked-transfer-coding",
+      "title": "7.1. Chunked Transfer Coding",
+      "level": 3,
+      "text_sha256": "7ba91b7b8a10eae6a6215cf855b9cdcbf84ef550e7204c8a97c4668b8635c122",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-chunked-transfer-coding",
+          "rfc9112.name-chunked-transfer-coding-clause-dc6e4d5985f5",
+          "rfc9112.name-chunked-transfer-coding-clause-fef7cd4ca17d",
+          "rfc9112.name-chunked-transfer-coding-clause-587f996bea8d"
+        ]
+      }
+    },
+    {
+      "id": "name-chunk-extensions",
+      "title": "7.1.1. Chunk Extensions",
+      "level": 4,
+      "text_sha256": "e92c4446b0e48b0d88d3393575b8cf57a9143eceb40321dd232ac70a0acf6df7",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-chunk-extensions",
+          "rfc9112.name-chunk-extensions-clause-05a3ebc570a3"
+        ]
+      }
+    },
+    {
+      "id": "name-chunked-trailer-section",
+      "title": "7.1.2. Chunked Trailer Section",
+      "level": 4,
+      "text_sha256": "7f0a0ac119dde1394da20b92266f9817d177b38d096c728aa25fc801389c7eae",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-chunked-trailer-section",
+          "rfc9112.name-chunked-trailer-section-clause-c13a90bc54b3"
+        ]
+      }
+    },
+    {
+      "id": "name-decoding-chunked",
+      "title": "7.1.3. Decoding Chunked",
+      "level": 4,
+      "text_sha256": "20b47d6f4a62df665db09f85b46e855d6637b194bfd679ff551ee5d4dfb95ab4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-decoding-chunked"
+        ]
+      }
+    },
+    {
+      "id": "name-transfer-codings-for-compre",
+      "title": "7.2. Transfer Codings for Compression",
+      "level": 3,
+      "text_sha256": "c748b9eaf717f1fcee489ccd9d96a82b3766022c79e98d39c85f3aa3dcf0e442",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-transfer-codings-for-compre",
+          "rfc9112.name-transfer-codings-for-compre-clause-2141b1e12a94",
+          "rfc9112.name-transfer-codings-for-compre-clause-0392ad571681"
+        ]
+      }
+    },
+    {
+      "id": "name-transfer-coding-registry",
+      "title": "7.3. Transfer Coding Registry",
+      "level": 3,
+      "text_sha256": "92c931da78a17f692e4b114ed708cad386d3fb5f5e757fe12c41da7a07d3731d",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-transfer-coding-registry",
+          "rfc9112.name-transfer-coding-registry-clause-673d7ca0b24c",
+          "rfc9112.name-transfer-coding-registry-clause-811c89650d86",
+          "rfc9112.name-transfer-coding-registry-clause-36a359ff8c11",
+          "rfc9112.name-transfer-coding-registry-clause-0dafcadbe70e"
+        ]
+      }
+    },
+    {
+      "id": "name-negotiating-transfer-coding",
+      "title": "7.4. Negotiating Transfer Codings",
+      "level": 3,
+      "text_sha256": "52fe47a29895ffb0e76a3365babf77495b108a80789ea30a05d3e5ea7c5a1325",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-negotiating-transfer-coding",
+          "rfc9112.name-negotiating-transfer-coding-clause-d42ec158ef01",
+          "rfc9112.name-negotiating-transfer-coding-clause-26fbc8eda134"
+        ]
+      }
+    },
+    {
+      "id": "name-handling-incomplete-message",
+      "title": "8. Handling Incomplete Messages",
+      "level": 2,
+      "text_sha256": "d028d42ccb0b8a56350444a840baa0a552f1739e277ffa06f779a965f9522495",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-handling-incomplete-message",
+          "rfc9112.name-handling-incomplete-message-clause-fdda12f11041"
+        ]
+      }
+    },
+    {
+      "id": "name-connection-management",
+      "title": "9. Connection Management",
+      "level": 2,
+      "text_sha256": "6e558069c1a4a5a1ad7fbe7a85ce96b94bedab21b3a4a9b26257b97b41d9be65",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-connection-management",
+          "rfc9112.name-connection-management-clause-38ac8c42da6e"
+        ]
+      }
+    },
+    {
+      "id": "name-establishment",
+      "title": "9.1. Establishment",
+      "level": 3,
+      "text_sha256": "5db9279cfc5a1d6735493c83562ce31e2e217e9f68ffb6f7a888883a715d1e28",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-establishment"
+        ]
+      }
+    },
+    {
+      "id": "name-associating-a-response-to-a",
+      "title": "9.2. Associating a Response to a Request",
+      "level": 3,
+      "text_sha256": "45ad7c78367cbfa34b909b859fcb0f56eff78efc1447f117a3d4ef1d7734badf",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-associating-a-response-to-a",
+          "rfc9112.name-associating-a-response-to-a-clause-e2a1a295ee8d",
+          "rfc9112.name-associating-a-response-to-a-clause-45980ca76793"
+        ]
+      }
+    },
+    {
+      "id": "name-persistence",
+      "title": "9.3. Persistence",
+      "level": 3,
+      "text_sha256": "b023199e76bfc2fa9a80ef66b97cf33e3b58f92b5da58ed311ebe2aab00280e9",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-persistence",
+          "rfc9112.name-persistence-clause-782425674b2d",
+          "rfc9112.name-persistence-clause-f9be327d152d",
+          "rfc9112.name-persistence-clause-322c05fd5db1",
+          "rfc9112.name-persistence-clause-0d463858c77e",
+          "rfc9112.name-persistence-clause-7602a89bbbb6"
+        ]
+      }
+    },
+    {
+      "id": "name-retrying-requests",
+      "title": "9.3.1. Retrying Requests",
+      "level": 4,
+      "text_sha256": "390a51eb7755bbd3ff446c8935a193aeb6a85988eec3fd7cf98236e65f049223",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-retrying-requests"
+        ]
+      }
+    },
+    {
+      "id": "name-pipelining",
+      "title": "9.3.2. Pipelining",
+      "level": 4,
+      "text_sha256": "d1ab23401ed86e614508e0e64409de454cab5630473791e9562e99fafde4d565",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-pipelining",
+          "rfc9112.name-pipelining-clause-a6a0342893ca",
+          "rfc9112.name-pipelining-clause-0ed4ade09f92",
+          "rfc9112.name-pipelining-clause-d9d61b1e3d62",
+          "rfc9112.name-pipelining-clause-9d8e13096c63"
+        ]
+      }
+    },
+    {
+      "id": "name-concurrency",
+      "title": "9.4. Concurrency",
+      "level": 3,
+      "text_sha256": "1c63a1450f149c914d5db5b526dc6a06e287fda1502e03a6ae7518be322f4a66",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-concurrency"
+        ]
+      }
+    },
+    {
+      "id": "name-failures-and-timeouts",
+      "title": "9.5. Failures and Timeouts",
+      "level": 3,
+      "text_sha256": "a834fc0f071f653d3bf198182b30ed53090d574b4c5e0bf8cc67e36a62ea63d2",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-failures-and-timeouts",
+          "rfc9112.name-failures-and-timeouts-clause-86bd98fbb432",
+          "rfc9112.name-failures-and-timeouts-clause-1513277a5574",
+          "rfc9112.name-failures-and-timeouts-clause-6e24a09b1563"
+        ]
+      }
+    },
+    {
+      "id": "name-tear-down",
+      "title": "9.6. Tear-down",
+      "level": 3,
+      "text_sha256": "4e6ee2b7f1eddb4652ec5d482b0066b11b5c1790e01a5a281c5cb6e436be7d87",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-tear-down",
+          "rfc9112.name-tear-down-clause-fc65df4c701e",
+          "rfc9112.name-tear-down-clause-1fc22a8057d6",
+          "rfc9112.name-tear-down-clause-dd1ffa1a594b",
+          "rfc9112.name-tear-down-clause-30f21d00c042",
+          "rfc9112.name-tear-down-clause-f9bc8b1d6774"
+        ]
+      }
+    },
+    {
+      "id": "name-tls-connection-initiation",
+      "title": "9.7. TLS Connection Initiation",
+      "level": 3,
+      "text_sha256": "9989ce2c1bcb2edf6ea46ba1dd3a19b495d3f580801ff3b1fb6ae0a5f860816c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-tls-connection-initiation",
+          "rfc9112.name-tls-connection-initiation-clause-2b6eb0cce642"
+        ]
+      }
+    },
+    {
+      "id": "name-tls-connection-closure",
+      "title": "9.8. TLS Connection Closure",
+      "level": 3,
+      "text_sha256": "34a5ba4cd93d06a302afb92dcad46e49ed7eb7c6df2c3929a2aa309f72c08e10",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-tls-connection-closure",
+          "rfc9112.name-tls-connection-closure-clause-69e14f17b375",
+          "rfc9112.name-tls-connection-closure-clause-a5e3d13e803e",
+          "rfc9112.name-tls-connection-closure-clause-e51c8e53d0b4",
+          "rfc9112.name-tls-connection-closure-clause-7b810ff1087d",
+          "rfc9112.name-tls-connection-closure-clause-6c25216648d6"
+        ]
+      }
+    },
+    {
+      "id": "name-enclosing-messages-as-data",
+      "title": "10. Enclosing Messages as Data",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-enclosing-messages-as-data"
+        ]
+      }
+    },
+    {
+      "id": "name-media-type-message-http",
+      "title": "10.1. Media Type message/http",
+      "level": 3,
+      "text_sha256": "4269af4a1b71d3bb832be2941613b56bb372d39f53252c9a6ee653b46d9f35b0",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-media-type-message-http",
+          "rfc9112.name-media-type-message-http-clause-e1be9f50ef31",
+          "rfc9112.name-media-type-message-http-clause-8076ca292115"
+        ]
+      }
+    },
+    {
+      "id": "name-media-type-application-http",
+      "title": "10.2. Media Type application/http",
+      "level": 3,
+      "text_sha256": "269ba1bf9b5415e830f433420838bd7ae04074bf7bf8ff63b8022515487a8c9f",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-media-type-application-http",
+          "rfc9112.name-media-type-application-http-clause-8076ca292115",
+          "rfc9112.name-media-type-application-http-clause-4cbfd1a5fcbc"
+        ]
+      }
+    },
+    {
+      "id": "name-security-considerations",
+      "title": "11. Security Considerations",
+      "level": 2,
+      "text_sha256": "22b316f78ac511ef7b819496b2e120c3e7d8add19eeb0f26b1e924bcac8c1c7f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-security-considerations"
+        ]
+      }
+    },
+    {
+      "id": "name-response-splitting",
+      "title": "11.1. Response Splitting",
+      "level": 3,
+      "text_sha256": "447f820a65bb0671d81a286bf59ea55b361e42bc50bedf9c8b932c7e42d02fc0",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-response-splitting"
+        ]
+      }
+    },
+    {
+      "id": "name-request-smuggling",
+      "title": "11.2. Request Smuggling",
+      "level": 3,
+      "text_sha256": "174daf288a42466cef2c29d99a9b5e1a23cfe9b8764675a8ca898539e17d6f7c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-request-smuggling"
+        ]
+      }
+    },
+    {
+      "id": "name-message-integrity",
+      "title": "11.3. Message Integrity",
+      "level": 3,
+      "text_sha256": "4f33137a1054662817a0ce9f53dc4775dc3c52c0930085365b98db838da79f59",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-message-integrity"
+        ]
+      }
+    },
+    {
+      "id": "name-message-confidentiality",
+      "title": "11.4. Message Confidentiality",
+      "level": 3,
+      "text_sha256": "cd3a8b307be55d72d1765b6f352afc32add31d4ee7d6a9ed831f9fba6a8870eb",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-message-confidentiality"
+        ]
+      }
+    },
+    {
+      "id": "name-iana-considerations",
+      "title": "12. IANA Considerations",
+      "level": 2,
+      "text_sha256": "2cd0d55114db7430dfe3582620372082be46dc4b3ea7d0a38949b5aa32a11d68",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-iana-considerations"
+        ]
+      }
+    },
+    {
+      "id": "name-field-name-registration",
+      "title": "12.1. Field Name Registration",
+      "level": 3,
+      "text_sha256": "2185b922f809cf33ce2e29153bcf433c85f5645aa01e805dcfe26fed2e34fb96",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-field-name-registration"
+        ]
+      }
+    },
+    {
+      "id": "name-media-type-registration",
+      "title": "12.2. Media Type Registration",
+      "level": 3,
+      "text_sha256": "953b134551aa57a9218434864f100b19ee62294bc1ddf8d11c67ccc5e3756f0c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-media-type-registration"
+        ]
+      }
+    },
+    {
+      "id": "name-transfer-coding-registratio",
+      "title": "12.3. Transfer Coding Registration",
+      "level": 3,
+      "text_sha256": "2ab9d869dd3158af8e48f52cff3bdf02e12fe4b75fd52c753a4b83cad4a42b7a",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-transfer-coding-registratio"
+        ]
+      }
+    },
+    {
+      "id": "name-alpn-protocol-id-registrati",
+      "title": "12.4. ALPN Protocol ID Registration",
+      "level": 3,
+      "text_sha256": "0f56781e8c09c3f3eb8f806dd1cb2a9937a75f0dc5f286480594bded8bc5cef7",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-alpn-protocol-id-registrati"
+        ]
+      }
+    },
+    {
+      "id": "name-references",
+      "title": "13. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-references"
+        ]
+      }
+    },
+    {
+      "id": "name-normative-references",
+      "title": "13.1. Normative References",
+      "level": 3,
+      "text_sha256": "6ca542a00986179065bef1d4714c7941187368de3c016dee67d88104e1aafef9",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-normative-references"
+        ]
+      }
+    },
+    {
+      "id": "name-informative-references",
+      "title": "13.2. Informative References",
+      "level": 3,
+      "text_sha256": "1f5b8e57c395acb3f3f61cd36ead2e4482cd6334781450fc7187c1be3bf374cb",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-informative-references"
+        ]
+      }
+    },
+    {
+      "id": "name-collected-abnf",
+      "title": "Appendix A. Collected ABNF",
+      "level": 2,
+      "text_sha256": "d04222b1525df5113e89b773bfa16da1f47b28259ab94c738d5c9a593716f42d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-collected-abnf"
+        ]
+      }
+    },
+    {
+      "id": "name-differences-between-http-an",
+      "title": "Appendix B. Differences between HTTP and MIME",
+      "level": 2,
+      "text_sha256": "f7ca3c7ab4db68a0bb7230c3ecd6cd0094791f14fc7feac7c542d02bf6dee806",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-differences-between-http-an"
+        ]
+      }
+    },
+    {
+      "id": "name-mime-version",
+      "title": "B.1. MIME-Version",
+      "level": 3,
+      "text_sha256": "02ea9f760b2e58fe4e6874557194c85382ded121efbddb2751fd02f5326955b4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-mime-version"
+        ]
+      }
+    },
+    {
+      "id": "name-conversion-to-canonical-for",
+      "title": "B.2. Conversion to Canonical Form",
+      "level": 3,
+      "text_sha256": "875ce403ba6c33aa4fc7cde7ed6ee3567cae36f7759f4deee57704d6786601bc",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-conversion-to-canonical-for"
+        ]
+      }
+    },
+    {
+      "id": "name-conversion-of-date-formats",
+      "title": "B.3. Conversion of Date Formats",
+      "level": 3,
+      "text_sha256": "05eca6352348bcc45e12dd3cb74e91a631a9d4a1d58acf19f8a0cfcd3ab05d87",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-conversion-of-date-formats"
+        ]
+      }
+    },
+    {
+      "id": "name-conversion-of-content-encod",
+      "title": "B.4. Conversion of Content-Encoding",
+      "level": 3,
+      "text_sha256": "dc1f27d6a8563208df7d3bb7f69296faa8c14d7a83dcab3c11cf5124db2dec79",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-conversion-of-content-encod"
+        ]
+      }
+    },
+    {
+      "id": "name-conversion-of-content-trans",
+      "title": "B.5. Conversion of Content-Transfer-Encoding",
+      "level": 3,
+      "text_sha256": "a436adc4529f63d959bb40b9616d0806b39bd1d85704e1199cb61ac905513133",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-conversion-of-content-trans"
+        ]
+      }
+    },
+    {
+      "id": "name-mhtml-and-line-length-limit",
+      "title": "B.6. MHTML and Line Length Limitations",
+      "level": 3,
+      "text_sha256": "f8c956b568505992b67b5afaba2b50302683f8d5d7cb815216f82ae3dce8c388",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-mhtml-and-line-length-limit"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-previous-rfcs",
+      "title": "Appendix C. Changes from Previous RFCs",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-changes-from-previous-rfcs"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-http-09",
+      "title": "C.1. Changes from HTTP/0.9",
+      "level": 3,
+      "text_sha256": "a7adbe21ded6bb2b067874c82aea0c759647f6f3eec2c695d2c8b5e173822750",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-changes-from-http-09"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-http-10",
+      "title": "C.2. Changes from HTTP/1.0",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-changes-from-http-10"
+        ]
+      }
+    },
+    {
+      "id": "name-multihomed-web-servers",
+      "title": "C.2.1. Multihomed Web Servers",
+      "level": 4,
+      "text_sha256": "64f1987e8bcb84e01b4dcd0ac0b9971c22925446271289f18609f42685dce566",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-multihomed-web-servers"
+        ]
+      }
+    },
+    {
+      "id": "name-keep-alive-connections",
+      "title": "C.2.2. Keep-Alive Connections",
+      "level": 4,
+      "text_sha256": "9b64c69d623aee2a55c50997a2ccd50b865fb97cfd9e7cbdf2b711c266096ca3",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-keep-alive-connections"
+        ]
+      }
+    },
+    {
+      "id": "name-introduction-of-transfer-en",
+      "title": "C.2.3. Introduction of Transfer-Encoding",
+      "level": 4,
+      "text_sha256": "ccda6eae7be3805f120c2555798e44727a51f0d00e5e682374114a53039d5437",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-introduction-of-transfer-en"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-rfc-7230",
+      "title": "C.3. Changes from RFC 7230",
+      "level": 3,
+      "text_sha256": "b9798bb1417c612bc1466b8c1cdcf64903367c2e95abe80b0f63a3a0697fbeaf",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-changes-from-rfc-7230",
+          "rfc9112.name-changes-from-rfc-7230-clause-18f396589b70",
+          "rfc9112.name-changes-from-rfc-7230-clause-84f60964de17",
+          "rfc9112.name-changes-from-rfc-7230-clause-e16e15df8c9f"
+        ]
+      }
+    },
+    {
+      "id": "name-acknowledgements",
+      "title": "Acknowledgements",
+      "level": 2,
+      "text_sha256": "3e4607843ab0f11ee39c5e89ccc5252574538b348a699020638b5ea4ec6afc48",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "name-index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "73daa84d9f5ba4aa9255a31086bb2048d0f67e61d71099e9b20099979e6e20d7",
+      "clause_count": 254,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-index"
+        ]
+      }
+    },
+    {
+      "id": "name-authors-addresses",
+      "title": "Authors' Addresses",
+      "level": 2,
+      "text_sha256": "1ed1eb45e20a73fa0ff8e0221cc91b2c84fad2f52671c142253b51b75b304abf",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9112.name-authors-addresses"
+        ]
+      }
+    }
+  ]
+}

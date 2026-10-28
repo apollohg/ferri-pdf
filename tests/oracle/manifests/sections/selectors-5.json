@@ -1,0 +1,526 @@
+{
+  "schema_version": 1,
+  "source_id": "selectors-5",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Selectors Level 5",
+      "level": 1,
+      "text_sha256": "b4394a3bd85635b1b79a640aec065f923f92db161d40d88288fbaef563c2d2ba",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "9f2cdf2abc03e3b72f47ba43ec478c89595d0f218c974b97fbdffa471e49be89",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "1aa174af8c86c4e4bf2349c3fdf0750426852aa10974819f7d883772e423f297",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "4fe1a37876ce85c3206531cabc6f9af1f504232b1daa3985969bb834e80b8305",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "dff3003e495fe26fff0d899a0ac1b186ff4a03a55fe8bc74ee30eae22a4ae804",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "eba2532963afa79ee0fbb06ad4b9062c6ffbea0add5378b3c70f65b3e9693be3",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.placement"
+        ]
+      }
+    },
+    {
+      "id": "location",
+      "title": "2. Location Pseudo-classes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.location"
+        ]
+      }
+    },
+    {
+      "id": "local-pseudo",
+      "title": "2.1. The Local Link Pseudo-class :local-link",
+      "level": 3,
+      "text_sha256": "b8b7a4538078eedfdf09d6a6adfe21938b63125f44ae72b80a2048e874029496",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.local-pseudo",
+          "selectors-5.foundation-static-selectors-level-five"
+        ]
+      }
+    },
+    {
+      "id": "useraction-pseudos",
+      "title": "3. User Action Pseudo-classes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.useraction-pseudos"
+        ]
+      }
+    },
+    {
+      "id": "interest-pseudos",
+      "title": "3.1. The Interest Pseudo-classes: :interest-source and :interest-target",
+      "level": 3,
+      "text_sha256": "07ff4c136b20d0b298156db4c7272a9717a45716bbef06b6101069dbe5db406d",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.interest-pseudos",
+          "selectors-5.foundation-static-selectors-level-five"
+        ]
+      }
+    },
+    {
+      "id": "input-pseudos",
+      "title": "4. The Input Pseudo-classes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.input-pseudos"
+        ]
+      }
+    },
+    {
+      "id": "ui-validity",
+      "title": "4.1. Input Value-checking",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.ui-validity"
+        ]
+      }
+    },
+    {
+      "id": "blank",
+      "title": "4.1.1. The Empty-Value Pseudo-class: :blank",
+      "level": 4,
+      "text_sha256": "6ba310fb796c639dbc2517edb2dca740e7c6de8ce6227624144121a428a00285",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.blank",
+          "selectors-5.foundation-static-selectors-level-five"
+        ]
+      }
+    },
+    {
+      "id": "time-pseudos",
+      "title": "5. Time-dimensional Pseudo-classes",
+      "level": 2,
+      "text_sha256": "2bd3652a4c50b4712fe81bb8ace857eeb3d1f2a424082d882d24c6403d025a42",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.time-pseudos",
+          "selectors-5.foundation-static-selectors-level-five"
+        ]
+      }
+    },
+    {
+      "id": "the-current-pseudo",
+      "title": "5.1. The Current-element Pseudo-class: :current",
+      "level": 3,
+      "text_sha256": "134d6a80074c899d5d1e969e44de3b4c58f7010081cb4a6754d81943129bde62",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.the-current-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-past-pseudo",
+      "title": "5.2. The Past-element Pseudo-class: :past",
+      "level": 3,
+      "text_sha256": "6ff6fe956b559912429737bf8470380a1e87ee6a427166bf77c3050ce28747de",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.the-past-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-future-pseudo",
+      "title": "5.3. The Future-element Pseudo-class: :future",
+      "level": 3,
+      "text_sha256": "b14a3af3f34dac229a6b3a80ccb202195d0cb6b6251edf65d9bbfa70d167d30f",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.the-future-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "custom-state",
+      "title": "6. Exposing custom state: the :state() pseudo-class",
+      "level": 2,
+      "text_sha256": "2e80602eb2dea18444476c945733810fd40a2bc194640297c52cc26ac5b96f2c",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.custom-state"
+        ]
+      }
+    },
+    {
+      "id": "headings",
+      "title": "7. Heading Structures: the heading pseudo-classes :heading, and :heading()",
+      "level": 2,
+      "text_sha256": "48d8c46367d6b6ebfdab97dcb2b23d280aad6a0f64eb9199edbd244e78008b2f",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.headings"
+        ]
+      }
+    },
+    {
+      "id": "grid-structural-selectors",
+      "title": "8. Grid-Structural Selectors",
+      "level": 2,
+      "text_sha256": "16f243e755a25244000071e9e67307863b457c6093e80c0e9c1a5d02e595f773",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.grid-structural-selectors"
+        ]
+      }
+    },
+    {
+      "id": "the-column-combinator",
+      "title": "8.1. Column combinator (||)",
+      "level": 3,
+      "text_sha256": "f81fb93a2d161b3fabae8b61fa4d18e513b674a31340f61c456ea12b301ce3cb",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.the-column-combinator"
+        ]
+      }
+    },
+    {
+      "id": "the-nth-col-pseudo",
+      "title": "8.2. :nth-col() pseudo-class",
+      "level": 3,
+      "text_sha256": "d137dfb821be9b26e74deef8b323ec0293e0a316a65146f5bcb4fabb6efd6226",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.the-nth-col-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "the-nth-last-col-pseudo",
+      "title": "8.3. :nth-last-col() pseudo-class",
+      "level": 3,
+      "text_sha256": "c42523f90b2640178c8c10645f3efcc8da5d7fb7f30341d364689d28cff3165e",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.the-nth-last-col-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "combinators",
+      "title": "9. Combinators",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.combinators"
+        ]
+      }
+    },
+    {
+      "id": "idref-combinators",
+      "title": "9.1. Reference combinators /ref/",
+      "level": 3,
+      "text_sha256": "d3db43b8e7253e6b626d6c3a1a1048e87bccaa3f74d04e79a6bb4c4100d0114f",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.idref-combinators"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "10. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-level-4",
+      "title": "10.1. Changes Since Level 4",
+      "level": 3,
+      "text_sha256": "acce5ab5c7e245e31d82f6c033b53b2dc6312ae6f01c7343f45eed9768652c6d",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.changes-level-4"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "11. Acknowledgements",
+      "level": 2,
+      "text_sha256": "614dc27a087849c7f4388ae2df6c4a24b50401d2ba37b89547214e9c6d0ba16f",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "3808457b0456cc1d35eca1be1bfe7d1d7468e74b0faa9fd8f8f4250d1fa0e23a",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "3808457b0456cc1d35eca1be1bfe7d1d7468e74b0faa9fd8f8f4250d1fa0e23a",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.security"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.w3c-conventions"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.w3c-conformance-classes"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.w3c-partial"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.w3c-testing"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "7af69ed6eddd602c4d61eee34379f06b60bd8886f4d45497b88511de71c44c9b",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "212ae84d3ee8d7b2780ac58c100460be162be75de4b6a42963368994c75f67a4",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "5a953b81d2e4dc1a201ed76b3bc6d35a9f6a17b5f38146216e37dea9fe97fd99",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "bafb20643a733fa583e3763c2b4d42ca691b565eed492b5d0e32607dcbf810e3",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.informative"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "a84e2c5f3bd5f8fc2ed4b00d98f673bc59d2c8ad34809f9f99374b25c9e17b56",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "selectors-5.issues-index"
+        ]
+      }
+    }
+  ]
+}

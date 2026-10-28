@@ -1,0 +1,517 @@
+{
+  "schema_version": 1,
+  "source_id": "css-round-display-1",
+  "sections": [
+    {
+      "id": "heading-df63663ebd51",
+      "title": "CSS Round Display Level 1",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.heading-df63663ebd51"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C Working Draft, 22 December 2016",
+      "level": 2,
+      "text_sha256": "255c2cc8c9db93248cff8f83ede958006c496b2012850d13725003722ed5ee88",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.subtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "f0207b9f2ceb0c6c6e728628282c6cbbc6b91c12b97224a04c514ce2471e42b1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "1ba3e7300fdb83d3282e4558c096b20fe4931afddf5b1b74ee595add0369b93c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "d5ff096c2d0ca2fd83f2a124e2780eec0db336cae35800fe93b93f0c16cff683",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "aea694024eddf11cfc37cf8f772f4b59d088a455cf0244d49eee1ef289a276d4",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.introduction",
+          "css-round-display-1.introduction-clause-6ab4d5026ba3"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "2. Terminology",
+      "level": 2,
+      "text_sha256": "d23ef6e011f6e92219de09ad5dfdcbdefac228ecc8da22d23ad0f5a5b24b1ad2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.terminology"
+        ]
+      }
+    },
+    {
+      "id": "extending-media-queries",
+      "title": "3. Detecting the shape of the display",
+      "level": 2,
+      "text_sha256": "c80a7d2d1e893c6a0340c7ca7d7b6d2526d157ec14ac7ce6ff449a2d7fe5ef4f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.extending-media-queries"
+        ]
+      }
+    },
+    {
+      "id": "shape-media-feature",
+      "title": "3.1. The shape media feature",
+      "level": 3,
+      "text_sha256": "6948668f4c9af723e8036ddb884ad153c17f6616eaea46201bdd265222a67c33",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.shape-media-feature",
+          "css-round-display-1.shape-media-feature-clause-1e39f963a30a",
+          "css-round-display-1.shape-media-feature-clause-43f41d300cbd",
+          "css-round-display-1.shape-media-feature-clause-33ba1b237f44"
+        ]
+      }
+    },
+    {
+      "id": "extending-viewport-rule",
+      "title": "4. Extending the @viewport rule",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.extending-viewport-rule"
+        ]
+      }
+    },
+    {
+      "id": "viewport-fit-descriptor",
+      "title": "4.1. The viewport-fit descriptor",
+      "level": 3,
+      "text_sha256": "a99a2a7b6fc4e91e20ea4e6e9bb5cd868b425aa64508894a733249a605c7af3f",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.viewport-fit-descriptor",
+          "css-round-display-1.viewport-fit-descriptor-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "aligning-content",
+      "title": "5. Aligning content along the display border",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.aligning-content"
+        ]
+      }
+    },
+    {
+      "id": "shape-inside-property",
+      "title": "5.1. The shape-inside property",
+      "level": 3,
+      "text_sha256": "46c80018a097484dc9a3b584b63a173ee693227b0cd379b57f50b9c62822dcc4",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.shape-inside-property",
+          "css-round-display-1.shape-inside-property-clause-cca2516ebb1d",
+          "css-round-display-1.shape-inside-property-clause-7c94de9132f1"
+        ]
+      }
+    },
+    {
+      "id": "drawing-borders",
+      "title": "6. Drawing borders around the display border",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.drawing-borders"
+        ]
+      }
+    },
+    {
+      "id": "border-boundary-property",
+      "title": "6.1. The border-boundary property",
+      "level": 3,
+      "text_sha256": "bdde3c188f1d7a4277b1fb47b1fddb8e635246f01fe24f0b019a4837cee027e8",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.border-boundary-property",
+          "css-round-display-1.border-boundary-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "usecases",
+      "title": "7. Use Cases",
+      "level": 2,
+      "text_sha256": "624943ec8e766249ae47f7c5c5be33699e5f1943bd427486721161ce79173680",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.usecases"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "8. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes_from_March_01_2016",
+      "title": "8.1. Changes from March 1th 2016 version",
+      "level": 3,
+      "text_sha256": "20d3fc1a43740c08abd0da9e33533181e486ab56abd6b6a66d3ca0069d1df8ab",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.changes-from-march-01-2016"
+        ]
+      }
+    },
+    {
+      "id": "security-considerations",
+      "title": "9. Security Considerations",
+      "level": 2,
+      "text_sha256": "a730cf04f3085a21aee77d83511a4a769610473998a413943ae29344acc3ed84",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.security-considerations"
+        ]
+      }
+    },
+    {
+      "id": "privacy-considerations",
+      "title": "10. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "6274a3d99950e02de466a8b5d9a51d9c22505c00c3497c7bc4b4159d8a76ee64",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.privacy-considerations"
+        ]
+      }
+    },
+    {
+      "id": "acks",
+      "title": "11. Acknowledgements",
+      "level": 2,
+      "text_sha256": "a08d6d127bae4050a9aaadb763f99d7407eb7a13ad915897c0f7b447c288c012",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.acks"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.conformance"
+        ]
+      }
+    },
+    {
+      "id": "document-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.document-conventions",
+          "css-round-display-1.document-conventions-clause-5c98c879f070",
+          "css-round-display-1.document-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "conform-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.conform-classes",
+          "css-round-display-1.conform-classes-clause-ff408372426c",
+          "css-round-display-1.conform-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "conform-responsible",
+      "title": "Requirements for Responsible Implementation of CSS",
+      "level": 3,
+      "text_sha256": "63e281f28ed2ebefafb560d6716cfc98d63caa0f55f4ae36a918cca31886f4b3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.conform-responsible"
+        ]
+      }
+    },
+    {
+      "id": "conform-partial",
+      "title": "Partial Implementations",
+      "level": 4,
+      "text_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.conform-partial",
+          "css-round-display-1.conform-partial-clause-db223ebb5aec"
+        ]
+      }
+    },
+    {
+      "id": "conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "conform-testing",
+      "title": "Implementations of CR-level Features",
+      "level": 4,
+      "text_sha256": "19da6a630f4622c83c6857c45f34c180f4a1c3f3acc63d1cbd9c295e91680224",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.conform-testing",
+          "css-round-display-1.conform-testing-clause-003938d8c19a",
+          "css-round-display-1.conform-testing-clause-c7ed0d126be3"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "39b6a9315aa1201b5522c7feb72a3d5b4ba4398ea395646d7f390f912438560f",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "9ec307fbf88bd498ec62ac9874d903a788bb12104bd4fb2d96168ae1c8e12b35",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "4d0542ed9b54409e8f6004dd817add72b7d23adda847604d98bf8101ba6e9424",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "bb755310f9122191dbd4cd08a7880c1ae11f285a9c15474cdded4d90e075c987",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "18dabba0d5c6453720eb18d9fe7ab2009e264cb6e1dcb02b2cd3948d32bcba5a",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.property-index",
+          "css-round-display-1.property-index-clause-7c94de9132f1"
+        ]
+      }
+    },
+    {
+      "id": "media-descriptor-table",
+      "title": "@media Descriptors",
+      "level": 3,
+      "text_sha256": "285b903e1ba499377250a6b06ef441c222eacc9a866cdfe4d787303f1f647230",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.media-descriptor-table"
+        ]
+      }
+    },
+    {
+      "id": "viewport-descriptor-table",
+      "title": "@viewport Descriptors",
+      "level": 3,
+      "text_sha256": "e799fdef9e5c47ab75519e6daa4a412b9fd9d278f539fe8769e89175317e8da6",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.viewport-descriptor-table",
+          "css-round-display-1.viewport-descriptor-table-clause-22edaa34f875"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "762cea0622a919c7efe598c9e91929ab95592b67a529bcbd23af92ed8ebe2117",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-round-display-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

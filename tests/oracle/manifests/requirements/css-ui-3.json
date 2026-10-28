@@ -1,0 +1,3491 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-ui-3.intro",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "56e6a92240e4d5acac476b881d54bfb3466463c80cd47ababbbd33be48e04c47"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.purpose",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "purpose"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Purpose.",
+      "locator": {
+        "section_id": "purpose",
+        "text_sha256": "2491a813c4161824e352feefe3540994995e81fa141f4759c5b326fb41983060"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.interaction",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "interaction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module Interactions.",
+      "locator": {
+        "section_id": "interaction",
+        "text_sha256": "1d807bedda3c2104411b9dd0b16ef81a6256af4a9c5fcaf2943361d62debee7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.values",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "1e771f7cfeaceaa57ac6ece5b5434b6103c6f59efceb92f03f64c96141e3de1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.box-model",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Box Model addition.",
+      "locator": {
+        "section_id": "box-model",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.box-sizing",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Changing the Box Model: the box-sizing property.",
+      "locator": {
+        "section_id": "box-sizing",
+        "text_sha256": "d266b3bf3565d0b9568f10d26b0655499bf30eebc545076c28e3f967dd07750c"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [
+        "css-ui-3.box-sizing-clause-cca2516ebb1d",
+        "css-ui-3.box-sizing-clause-7617cf34ea9d",
+        "css-ui-3.box-sizing-clause-6d47fda2148f",
+        "css-ui-3.box-sizing-clause-42717e1bad0d",
+        "css-ui-3.box-sizing-clause-4c2a1689d7d3",
+        "css-ui-3.box-sizing-clause-cef54b0a118b",
+        "css-ui-3.box-sizing-clause-60510525c155",
+        "css-ui-3.box-sizing-clause-98c5a15ae18e",
+        "css-ui-3.box-sizing-clause-b265458e31cd",
+        "css-ui-3.box-sizing-clause-4717116f4d90",
+        "css-ui-3.box-sizing-clause-8416a00a8233"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.box-sizing-clause-cca2516ebb1d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Changing the Box Model: the box-sizing property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.box-sizing-clause-7617cf34ea9d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Changing the Box Model: the box-sizing property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 22,
+        "clause_sha256": "7617cf34ea9d27d4a25075f4aa5622d5c6edb932f11c48f8151c3eafc350add3"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.box-sizing-clause-6d47fda2148f",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Changing the Box Model: the box-sizing property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 23,
+        "clause_sha256": "6d47fda2148fdfe355173255691fc37a0e8b6de758ae2db1ad6297477faef937"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.box-sizing-clause-42717e1bad0d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Changing the Box Model: the box-sizing property — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 42,
+        "clause_sha256": "42717e1bad0d2182c32eeb4cc4aba4a12181d8378405592908f76b4bb3e11745"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.box-sizing-clause-4c2a1689d7d3",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Changing the Box Model: the box-sizing property — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 43,
+        "clause_sha256": "4c2a1689d7d30c32b2b7cf0800a8b57121de899a36a8bcc015af4fcfce903faf"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.box-sizing-clause-cef54b0a118b",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Changing the Box Model: the box-sizing property — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 46,
+        "clause_sha256": "cef54b0a118b08583393c46e618107bb56ca66a2de0beb8ad3b881c91a71388a"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.box-sizing-clause-60510525c155",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Changing the Box Model: the box-sizing property — normative clause 51, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 50,
+        "clause_sha256": "60510525c155d04f30d9c3b2de09a73037f7d517ee6a25f3b7555e83327f987d"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.box-sizing-clause-98c5a15ae18e",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Changing the Box Model: the box-sizing property — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 51,
+        "clause_sha256": "98c5a15ae18e5a180716f8e3f4965cfcc0f0385954d68f2e7e643c75943ee1ba"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.box-sizing-clause-b265458e31cd",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Changing the Box Model: the box-sizing property — normative clause 53, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 52,
+        "clause_sha256": "b265458e31cd20ec2b048f26c66e0f86107abeabea283a232a8983f0fb4f44f1"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.box-sizing-clause-4717116f4d90",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Changing the Box Model: the box-sizing property — normative clause 55, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 54,
+        "clause_sha256": "4717116f4d90ff11a1be52e21199b7c7a4ea25119f522dd8653254c943672ef0"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.box-sizing-clause-8416a00a8233",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Changing the Box Model: the box-sizing property — normative clause 56, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 55,
+        "clause_sha256": "8416a00a8233f6141ed5fd6506b5533b9391bfbec56492222ac62ee7f21037b1"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.box-sizing-example",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "box-sizing-example"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Using box-sizing to evenly share space.",
+      "locator": {
+        "section_id": "box-sizing-example",
+        "text_sha256": "c9ed827ec8176482ea3e84474b3f09dc3ad3500d48d89955e5929660247ad85a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.outline-props",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-props"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Outline properties.",
+      "locator": {
+        "section_id": "outline-props",
+        "text_sha256": "88de9d8fdecb006ffdce3b6284e2c0854feb4b0f667cd3dfdb0f275b627aa485"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.outline-props-clause-703e72b92c61"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.outline-props-clause-703e72b92c61",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-props"
+      ],
+      "behaviour": "Outline properties — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-props",
+        "clause_index": 6,
+        "clause_sha256": "703e72b92c612775f6f63175635f6265f6c2a7eef6bae8b16d8df7fbf150f9fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Outlines Shorthand: the outline property.",
+      "locator": {
+        "section_id": "outline",
+        "text_sha256": "f8e9096d3c9e7ca15fa13e50bf7459e316d6ac267333bdb8ff681df3d910bfc2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.outline-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.outline-clause-cca2516ebb1d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline"
+      ],
+      "behaviour": "Outlines Shorthand: the outline property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-width",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Outline Thickness: the outline-width property.",
+      "locator": {
+        "section_id": "outline-width",
+        "text_sha256": "e805060f91e3d3dd62c78736ac307fac61d864e945ca3279322ebec08c70a6e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.outline-width-clause-cca2516ebb1d",
+        "css-ui-3.outline-width-clause-f21850a6cc00"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.outline-width-clause-cca2516ebb1d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-width"
+      ],
+      "behaviour": "Outline Thickness: the outline-width property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-width",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-width-clause-f21850a6cc00",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-width"
+      ],
+      "behaviour": "Outline Thickness: the outline-width property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-width",
+        "clause_index": 17,
+        "clause_sha256": "f21850a6cc00fa7807e5dfe9a2bd405a5c491c029db98a06680a1337e765267f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-style",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-style"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Outline Patterns: the outline-style property.",
+      "locator": {
+        "section_id": "outline-style",
+        "text_sha256": "66014e686fb5e50bc107a0a9550647ea361fb5789de72377b29765e8fbb52f62"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.outline-style-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.outline-style-clause-cca2516ebb1d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-style"
+      ],
+      "behaviour": "Outline Patterns: the outline-style property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-style",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-color",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Outline Colors: the outline-color property.",
+      "locator": {
+        "section_id": "outline-color",
+        "text_sha256": "b84be7e6eaaa7e6874a4996862723ccbe489e6cbafdda65ddc9a2d5b30af7038"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.outline-color-clause-cca2516ebb1d",
+        "css-ui-3.outline-color-clause-0f4dbea853c6",
+        "css-ui-3.outline-color-clause-7d75b2489bc6",
+        "css-ui-3.outline-color-clause-025f316eea44",
+        "css-ui-3.outline-color-clause-72b9db541499",
+        "css-ui-3.outline-color-clause-e22ab671e28f",
+        "css-ui-3.outline-color-clause-32f69d1e9559",
+        "css-ui-3.outline-color-clause-c2c1852a26fb",
+        "css-ui-3.outline-color-clause-a7dbc225afd5",
+        "css-ui-3.outline-color-clause-98bae92c020c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.outline-color-clause-cca2516ebb1d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-color"
+      ],
+      "behaviour": "Outline Colors: the outline-color property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-color",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-color-clause-0f4dbea853c6",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-color"
+      ],
+      "behaviour": "Outline Colors: the outline-color property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-color",
+        "clause_index": 13,
+        "clause_sha256": "0f4dbea853c6a6e85a4c153b9671a039337d6dd3816cc9485ca3eb670e266d06"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-color-clause-7d75b2489bc6",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-color"
+      ],
+      "behaviour": "Outline Colors: the outline-color property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-color",
+        "clause_index": 18,
+        "clause_sha256": "7d75b2489bc6df4480408fcc12bc5a1f96244462f294d8f8aabf975b559b6a31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-color-clause-025f316eea44",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-color"
+      ],
+      "behaviour": "Outline Colors: the outline-color property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-color",
+        "clause_index": 19,
+        "clause_sha256": "025f316eea448bdef257a7a97acb954bd5b4665e7040c6638524bce5227ffa5d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-color-clause-72b9db541499",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-color"
+      ],
+      "behaviour": "Outline Colors: the outline-color property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-color",
+        "clause_index": 20,
+        "clause_sha256": "72b9db541499c5c105a2b9d69fdeb8ba0331cf6bafe7cb5708cf0278c98237a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-color-clause-e22ab671e28f",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-color"
+      ],
+      "behaviour": "Outline Colors: the outline-color property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-color",
+        "clause_index": 22,
+        "clause_sha256": "e22ab671e28fd72c9e9933292320b118005eec4c31564bcaada346bbedef5b4c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-color-clause-32f69d1e9559",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-color"
+      ],
+      "behaviour": "Outline Colors: the outline-color property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-color",
+        "clause_index": 26,
+        "clause_sha256": "32f69d1e9559fb7a91b61797d88cab165fcee4362f1179c53f4ea6f6e3fd20d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-color-clause-c2c1852a26fb",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-color"
+      ],
+      "behaviour": "Outline Colors: the outline-color property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-color",
+        "clause_index": 28,
+        "clause_sha256": "c2c1852a26fb7ffbcf2a6857223909b9093a9dbdf7fce65bc3b947011147112d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-color-clause-a7dbc225afd5",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-color"
+      ],
+      "behaviour": "Outline Colors: the outline-color property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-color",
+        "clause_index": 35,
+        "clause_sha256": "a7dbc225afd574925323298c2035ec32b1a4ad7399d655bf4ba41091b4f723b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-color-clause-98bae92c020c",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-color"
+      ],
+      "behaviour": "Outline Colors: the outline-color property — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-color",
+        "clause_index": 40,
+        "clause_sha256": "98bae92c020ca15940b386812379065bd5a699560210a58bd2939ab38ed6384c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-offset",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-offset"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Offsetting the Outline: the outline-offset property.",
+      "locator": {
+        "section_id": "outline-offset",
+        "text_sha256": "66d681d1ecb26881afc826d8b04f5f02b4f469ae4446027af35a2b883f4d4d7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.outline-offset-clause-cca2516ebb1d",
+        "css-ui-3.outline-offset-clause-67b349fd63cb",
+        "css-ui-3.outline-offset-clause-7217a9ac9f1c",
+        "css-ui-3.outline-offset-clause-b4eff796d70a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.outline-offset-clause-cca2516ebb1d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-offset"
+      ],
+      "behaviour": "Offsetting the Outline: the outline-offset property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-offset",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-offset-clause-67b349fd63cb",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-offset"
+      ],
+      "behaviour": "Offsetting the Outline: the outline-offset property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-offset",
+        "clause_index": 18,
+        "clause_sha256": "67b349fd63cbb20427551d1c2772859b68909f26ff75e656d74375379a38b2ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-offset-clause-7217a9ac9f1c",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-offset"
+      ],
+      "behaviour": "Offsetting the Outline: the outline-offset property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-offset",
+        "clause_index": 22,
+        "clause_sha256": "7217a9ac9f1ca7b08acc79d334ee4eb5a4e81b1eab85bb40cc42245d5d02eee1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.outline-offset-clause-b4eff796d70a",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "outline-offset"
+      ],
+      "behaviour": "Offsetting the Outline: the outline-offset property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-offset",
+        "clause_index": 23,
+        "clause_sha256": "b4eff796d70ae8361381c1b5e472ae8ad6542d93ebcae4f731999d541964b4f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.resizing-and-overflow",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "resizing-and-overflow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resizing & Overflow.",
+      "locator": {
+        "section_id": "resizing-and-overflow",
+        "text_sha256": "6c4d93785f9d8f7a2cb35bc72ff9fd102a53ad3e401a594612fe56828712cd67"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.resize",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "resize"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resizing Boxes: the resize property.",
+      "locator": {
+        "section_id": "resize",
+        "text_sha256": "e9c2866ec989c8b18a5cd34e0b14fd1ab651059226394a8d086e52aac567119b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.resize-clause-cca2516ebb1d",
+        "css-ui-3.resize-clause-b31141d8f9c2",
+        "css-ui-3.resize-clause-047455a200e1",
+        "css-ui-3.resize-clause-076d71173ac2",
+        "css-ui-3.resize-clause-d5caadf738b5",
+        "css-ui-3.resize-clause-25b00bec56ec",
+        "css-ui-3.resize-clause-aec6e48c3051",
+        "css-ui-3.resize-clause-73a39959f9e8",
+        "css-ui-3.resize-clause-d6d92f0b98a7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.resize-clause-cca2516ebb1d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "resize"
+      ],
+      "behaviour": "Resizing Boxes: the resize property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "resize",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.resize-clause-b31141d8f9c2",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "resize"
+      ],
+      "behaviour": "Resizing Boxes: the resize property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "resize",
+        "clause_index": 27,
+        "clause_sha256": "b31141d8f9c204b7dccb1aea8d0f0cb27b9387fb6b14405ccf4012cf74e9b251"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.resize-clause-047455a200e1",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "resize"
+      ],
+      "behaviour": "Resizing Boxes: the resize property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "resize",
+        "clause_index": 30,
+        "clause_sha256": "047455a200e1b3949029cbf253959b89bae6e027e3af23f8bc3e4aed680a311b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.resize-clause-076d71173ac2",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "resize"
+      ],
+      "behaviour": "Resizing Boxes: the resize property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "resize",
+        "clause_index": 34,
+        "clause_sha256": "076d71173ac2ec81b24c14c7b2457e69222e24c3f651280f1e2f718767d620b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.resize-clause-d5caadf738b5",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "resize"
+      ],
+      "behaviour": "Resizing Boxes: the resize property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "resize",
+        "clause_index": 35,
+        "clause_sha256": "d5caadf738b561b768c2fa8e89d0caa963b7cd98152d7c0ec30e06c4ea564c93"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.resize-clause-25b00bec56ec",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "resize"
+      ],
+      "behaviour": "Resizing Boxes: the resize property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "resize",
+        "clause_index": 36,
+        "clause_sha256": "25b00bec56ecea26222d2585ae4b1db95bc5c42eec70f9d2cd15e2bc298a733e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.resize-clause-aec6e48c3051",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "resize"
+      ],
+      "behaviour": "Resizing Boxes: the resize property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "resize",
+        "clause_index": 37,
+        "clause_sha256": "aec6e48c305141727e400bcff938674eb78dbfec5d08d55ffccc0d979a2e15ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.resize-clause-73a39959f9e8",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "resize"
+      ],
+      "behaviour": "Resizing Boxes: the resize property — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "resize",
+        "clause_index": 41,
+        "clause_sha256": "73a39959f9e8136697e043f5851bd5433700077e3b344e1d73d8fac63c54bb5e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.resize-clause-d6d92f0b98a7",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "resize"
+      ],
+      "behaviour": "Resizing Boxes: the resize property — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "resize",
+        "clause_index": 42,
+        "clause_sha256": "d6d92f0b98a7ab2c84ad6be126accab7c9f287bfac4aef06f8917a7eecb4c67c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.text-overflow",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "text-overflow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow Ellipsis: the text-overflow property.",
+      "locator": {
+        "section_id": "text-overflow",
+        "text_sha256": "3e677eb2d68a6e28b327e3c468132bf94681937504b92a5fb46cde597e8bffbd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.text-overflow-clause-cca2516ebb1d",
+        "css-ui-3.text-overflow-clause-57928ea2ab51",
+        "css-ui-3.text-overflow-clause-5c069a62a139",
+        "css-ui-3.text-overflow-clause-7ebd5286818b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.text-overflow-clause-cca2516ebb1d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "text-overflow"
+      ],
+      "behaviour": "Overflow Ellipsis: the text-overflow property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-overflow",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.text-overflow-clause-57928ea2ab51",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "text-overflow"
+      ],
+      "behaviour": "Overflow Ellipsis: the text-overflow property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-overflow",
+        "clause_index": 23,
+        "clause_sha256": "57928ea2ab51b7f514a1532f7d6f5eaeeccb1fdfda8173412a94fb473d833d47"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.text-overflow-clause-5c069a62a139",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "text-overflow"
+      ],
+      "behaviour": "Overflow Ellipsis: the text-overflow property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-overflow",
+        "clause_index": 24,
+        "clause_sha256": "5c069a62a1390fb003e7f4c8e95855e16ff9c40ab46ddd1a162e81b08b5c484d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.text-overflow-clause-7ebd5286818b",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "text-overflow"
+      ],
+      "behaviour": "Overflow Ellipsis: the text-overflow property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-overflow",
+        "clause_index": 25,
+        "clause_sha256": "7ebd5286818b0e384c8a82de267ce187f8305bb5b6fa2fbc804041fd6e075b7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.bidi-ellipsis",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "bidi-ellipsis"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bidi ellipsis examples.",
+      "locator": {
+        "section_id": "bidi-ellipsis",
+        "text_sha256": "5c678bdd0099720cf856a4085da7168c7146e771e51ca7477c85e3057cf17a4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.ellipsing-details",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "ellipsing-details"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ellipsing details.",
+      "locator": {
+        "section_id": "ellipsing-details",
+        "text_sha256": "346030ac36497f1994819d41d83c65e4582d4bd290c0a4e33def323fb4050b59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.ellipsing-details-clause-6b926cc7c84f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.ellipsing-details-clause-6b926cc7c84f",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "ellipsing-details"
+      ],
+      "behaviour": "ellipsing details — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "ellipsing-details",
+        "clause_index": 0,
+        "clause_sha256": "6b926cc7c84f5eafc2d7c3f3d88fb4a2b2be3b4b9bf019b4fbbcc9b6d502e0cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.ellipsis-interaction",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "ellipsis-interaction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in user interaction with ellipsis.",
+      "locator": {
+        "section_id": "ellipsis-interaction",
+        "text_sha256": "e103b3af3a20baede4f705519f4b4efe777564b46eeb6328789c559b8e45971c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.ellipsis-interaction-clause-6644383eef72"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.ellipsis-interaction-clause-6644383eef72",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "ellipsis-interaction"
+      ],
+      "behaviour": "user interaction with ellipsis — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "ellipsis-interaction",
+        "clause_index": 1,
+        "clause_sha256": "6644383eef723ac48002c49a38cc4850f68103050a33bdacf7b102dc917bd13a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.text-overflow-examples",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "text-overflow-examples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in text-overflow examples.",
+      "locator": {
+        "section_id": "text-overflow-examples",
+        "text_sha256": "ae22f23bbaefd30c7f384be1c0cad5a29d37c3b45d3fc96d7cfff323f0fb842e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.ellipsis-scrolling",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "ellipsis-scrolling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ellipsis interaction with scrolling interfaces.",
+      "locator": {
+        "section_id": "ellipsis-scrolling",
+        "text_sha256": "0717a165e4526021c4bf36062b4df719db4374605fc2d7fa34a50a57d61a1132"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.ellipsis-scrolling-clause-a7cb4b7c8c8d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.ellipsis-scrolling-clause-a7cb4b7c8c8d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "ellipsis-scrolling"
+      ],
+      "behaviour": "ellipsis interaction with scrolling interfaces — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "ellipsis-scrolling",
+        "clause_index": 2,
+        "clause_sha256": "a7cb4b7c8c8d57e754525031f4b730c28f9e40703910c98c06b33778a207fc9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.pointing-keyboard",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "pointing-keyboard"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pointing Devices and Keyboards.",
+      "locator": {
+        "section_id": "pointing-keyboard",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.pointer-interaction",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "pointer-interaction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pointer interaction.",
+      "locator": {
+        "section_id": "pointer-interaction",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.cursor",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "cursor"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Styling the Cursor: the cursor property.",
+      "locator": {
+        "section_id": "cursor",
+        "text_sha256": "edff2c54899f0eff64df768cfa13b562a744abf3543186f9e539ff3ee2b0f44c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.cursor-clause-cca2516ebb1d",
+        "css-ui-3.cursor-clause-0169a0f5e6a7",
+        "css-ui-3.cursor-clause-9287c317bdb0",
+        "css-ui-3.cursor-clause-9a7a2294bc28",
+        "css-ui-3.cursor-clause-50419894d5eb",
+        "css-ui-3.cursor-clause-a337ec84f8f2",
+        "css-ui-3.cursor-clause-47790b4f5954",
+        "css-ui-3.cursor-clause-4bd80bf6f89c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.cursor-clause-cca2516ebb1d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "cursor"
+      ],
+      "behaviour": "Styling the Cursor: the cursor property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.cursor-clause-0169a0f5e6a7",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "cursor"
+      ],
+      "behaviour": "Styling the Cursor: the cursor property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor",
+        "clause_index": 28,
+        "clause_sha256": "0169a0f5e6a7853ff9413e9b9758a838ed2db0119c9c5f04768273a7da1d833c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.cursor-clause-9287c317bdb0",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "cursor"
+      ],
+      "behaviour": "Styling the Cursor: the cursor property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor",
+        "clause_index": 32,
+        "clause_sha256": "9287c317bdb06fb853f3e2b68862daad42159770f624abc2c78cbdce3550f69f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.cursor-clause-9a7a2294bc28",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "cursor"
+      ],
+      "behaviour": "Styling the Cursor: the cursor property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor",
+        "clause_index": 38,
+        "clause_sha256": "9a7a2294bc28abedaa2a9fa35dfa3318279a94087b5e22d5927083152acb8891"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.cursor-clause-50419894d5eb",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "cursor"
+      ],
+      "behaviour": "Styling the Cursor: the cursor property — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor",
+        "clause_index": 39,
+        "clause_sha256": "50419894d5ebe65d5f4de0dac047acd5f0e5e0c7f54bb7cc4558b6d491061c66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.cursor-clause-a337ec84f8f2",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "cursor"
+      ],
+      "behaviour": "Styling the Cursor: the cursor property — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor",
+        "clause_index": 43,
+        "clause_sha256": "a337ec84f8f28df6736742cec286080731271c53ebd803c6e8fcf21db86017cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.cursor-clause-47790b4f5954",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "cursor"
+      ],
+      "behaviour": "Styling the Cursor: the cursor property — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor",
+        "clause_index": 44,
+        "clause_sha256": "47790b4f5954d2b2849cac01adb9afc8d222ff259b16ab1650961cdd195fa746"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.cursor-clause-4bd80bf6f89c",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "cursor"
+      ],
+      "behaviour": "Styling the Cursor: the cursor property — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor",
+        "clause_index": 51,
+        "clause_sha256": "4bd80bf6f89c0179537cd830c3459cbae7eda867f3bb51b6aef34050b76a2cb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.predefined-cursors",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "predefined-cursors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Predefined Cursors.",
+      "locator": {
+        "section_id": "predefined-cursors",
+        "text_sha256": "50e523d5e2cb5afd896271c90d5bee479d1647bd1cbe59d05204e6d0efa642f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.predefined-cursors-clause-76092990cfac"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.predefined-cursors-clause-76092990cfac",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "predefined-cursors"
+      ],
+      "behaviour": "Predefined Cursors — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "predefined-cursors",
+        "clause_index": 20,
+        "clause_sha256": "76092990cfac0fc79158e6e3c9890347e881e83cb96808d83511fc24321c114d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.canvas-cursor",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "canvas_cursor"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cursor of the canvas.",
+      "locator": {
+        "section_id": "canvas_cursor",
+        "text_sha256": "8e74cb2d75b6eaa431d6c0c218a3bd4541e686d2e8ab4de89753aa4e93642f6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.insertion-caret",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "insertion-caret"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Insertion caret.",
+      "locator": {
+        "section_id": "insertion-caret",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.caret-color",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "caret-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Coloring the Insertion Caret: the caret-color property.",
+      "locator": {
+        "section_id": "caret-color",
+        "text_sha256": "208ff1700455f6536f8d2c9979109bcc754cf1f8f5d309e66a2acd9867cc0396"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.caret-color-clause-cca2516ebb1d",
+        "css-ui-3.caret-color-clause-e9f1c41e8170",
+        "css-ui-3.caret-color-clause-f15040fdb19c",
+        "css-ui-3.caret-color-clause-2c127b8a2124"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.caret-color-clause-cca2516ebb1d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "caret-color"
+      ],
+      "behaviour": "Coloring the Insertion Caret: the caret-color property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "caret-color",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.caret-color-clause-e9f1c41e8170",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "caret-color"
+      ],
+      "behaviour": "Coloring the Insertion Caret: the caret-color property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "caret-color",
+        "clause_index": 13,
+        "clause_sha256": "e9f1c41e8170d895f3e911679ed1dbf5b9fe6045d16bd66f22eb9a8c84fedbb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.caret-color-clause-f15040fdb19c",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "caret-color"
+      ],
+      "behaviour": "Coloring the Insertion Caret: the caret-color property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "caret-color",
+        "clause_index": 18,
+        "clause_sha256": "f15040fdb19c972a72c5bc97942bdcc584355a297efda70f0e6b880f6eaca9e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.caret-color-clause-2c127b8a2124",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "caret-color"
+      ],
+      "behaviour": "Coloring the Insertion Caret: the caret-color property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "caret-color",
+        "clause_index": 24,
+        "clause_sha256": "2c127b8a2124b8143b857f2274836b16aa58cf52f996e7bdea521c9a93de26e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.keyboard",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "keyboard"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Keyboard control.",
+      "locator": {
+        "section_id": "keyboard",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.input-method-editor",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "input-method-editor"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Obsolete: the ime-mode property.",
+      "locator": {
+        "section_id": "input-method-editor",
+        "text_sha256": "eca22ef3029f2b135852697a9212814420a60dcdba352e98720b8a9415ae9254"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.input-method-editor-clause-96776927543d",
+        "css-ui-3.input-method-editor-clause-d0e75e1ef9a5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.input-method-editor-clause-96776927543d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "input-method-editor"
+      ],
+      "behaviour": "Obsolete: the ime-mode property — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "input-method-editor",
+        "clause_index": 1,
+        "clause_sha256": "96776927543d068b0d9adc6e7c3ce86ad58de17e4f66e40b1b22cf7ae067de45"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.input-method-editor-clause-d0e75e1ef9a5",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "input-method-editor"
+      ],
+      "behaviour": "Obsolete: the ime-mode property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "input-method-editor",
+        "clause_index": 2,
+        "clause_sha256": "d0e75e1ef9a57a29e41d859044a82cacb226627fa71521320b97e5943360b1e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.privacy",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix C: Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "1522f8f079c643e084cc5a62b711df6e70586d650ded33e42bf881fee4f97e2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.privacy-clause-0839afd76325"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.privacy-clause-0839afd76325",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Appendix C: Privacy Considerations — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "privacy",
+        "clause_index": 25,
+        "clause_sha256": "0839afd76325d44adcaea8428809b9ea7093f2c24a6cd72f8d94ef0604050986"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.security",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix D: Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "aafac48b655e3665c6f9b355e52fc0678b9b2cb28b767c1410ca36c10a08ec50"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.security-clause-b421a9e5bd38",
+        "css-ui-3.security-clause-755eba4f6c47"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.security-clause-b421a9e5bd38",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Appendix D: Security Considerations — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "security",
+        "clause_index": 3,
+        "clause_sha256": "b421a9e5bd381919576722525fed1bf9c441663bdcaec832104e1a8240ea0282"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.security-clause-755eba4f6c47",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Appendix D: Security Considerations — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "security",
+        "clause_index": 4,
+        "clause_sha256": "755eba4f6c4730220a56848382d4bb7ae8744836f152a068665c0b6471b586e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.default-style-sheet",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "default-style-sheet"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix E: Default style sheet additions for HTML.",
+      "locator": {
+        "section_id": "default-style-sheet",
+        "text_sha256": "ba27f14022020c403acc0f1b495ec3c03efb3ff3fcc9a6cab71c52f1d4af25b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.default-style-sheet-clause-8b246943e29e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.default-style-sheet-clause-8b246943e29e",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "default-style-sheet"
+      ],
+      "behaviour": "Appendix E: Default style sheet additions for HTML — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "default-style-sheet",
+        "clause_index": 2,
+        "clause_sha256": "8b246943e29e22168b2d955866cc9f224b8c38dd92910c256d1efd64b5ae9b63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.w3c-conformance",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.w3c-conventions",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.w3c-conventions-clause-5c98c879f070",
+        "css-ui-3.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.w3c-conventions-clause-5c98c879f070",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.w3c-conformance-classes",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.w3c-conformance-classes-clause-ff408372426c",
+        "css-ui-3.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.w3c-partial",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.w3c-partial-clause-ef40c4aab200",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.w3c-conform-future-proofing",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.w3c-testing",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.w3c-testing-clause-1e0fff369221",
+        "css-ui-3.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.w3c-testing-clause-1e0fff369221",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.w3c-testing-clause-ae1210cf9643",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.property-index",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "fe274a9ee0956570910d9c434e940598a6dc963f81f36ce66b191e3cbff49cc6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ui-3.property-index-clause-fb8163367949",
+        "css-ui-3.property-index-clause-e9f1c41e8170",
+        "css-ui-3.property-index-clause-0f4dbea853c6",
+        "css-ui-3.property-index-clause-e0206ce6f533"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.property-index-clause-fb8163367949",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 24,
+        "clause_sha256": "fb8163367949cb480a23e8a222926e0ea619d54830ea5bd8b437f63382607a14"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.property-index-clause-e9f1c41e8170",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 26,
+        "clause_sha256": "e9f1c41e8170d895f3e911679ed1dbf5b9fe6045d16bd66f22eb9a8c84fedbb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.property-index-clause-0f4dbea853c6",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 54, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 53,
+        "clause_sha256": "0f4dbea853c6a6e85a4c153b9671a039337d6dd3816cc9485ca3eb670e266d06"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.property-index-clause-e0206ce6f533",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 60,
+        "clause_sha256": "e0206ce6f5337bd72b6e01c3a12dfb67c1015975c2f7bf02491cc991e5e33670"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ui-3.title",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Basic User Interface Module Level 3 (CSS3 UI).",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "446d564daf1c25fd790870928c014bc24b9579c28ac3a49e584ba63740a2430f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.abstract",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "4c9809504c86795b30ff67f59b8aa958e78271d7139fd0442905a89bb104fc71"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.sotd",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "c55fc696745c2ff9e3a08041b89a7d0d952405978501b14184d53c405d8995fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.contents",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "6c15eb07b3f1380b27440888c70f3c8f4d85b258685f3216fd9b6865b524d316"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.acknowledgments",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix A: Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "94afbdb4ff6bf17200d34062bab6042c2a3cd11bb80ce92cb1b921f3b146a53d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.changes",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix B: Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "9a2def4ee299e63f63fcc9dc6132e0c04cecb9b09c90fd45d2abca30a78f068b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.changes-2018-06-21",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "changes-2018-06-21"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes from the 21 June 2018 Recommendation (REC).",
+      "locator": {
+        "section_id": "changes-2018-06-21",
+        "text_sha256": "c01ad45a927a83358995d9d84f8798f0a5c851c9ad8c564e3248b3b288514afd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.changes-2021-03-16",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "changes-2021-03-16"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes from the 2 March 2017 Candidate Recommendation (CR).",
+      "locator": {
+        "section_id": "changes-2021-03-16",
+        "text_sha256": "59486d018ae2688432546e2ecad21521e0a7ce22b35ecdfef935436a8fe09dfd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.index",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.index-defined-here",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "c76b5470e2fcf8aedda37528d7aaba4cc47bb7c7b05e5d3d0deaf7a06e8d5c72"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.index-defined-elsewhere",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "12d74f94b232de480f12d88991bc02fe16894e03b39b9e75aa913a6b222498aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.references",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.normative",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "a8ae6d0f7444d2c38be42e2fdb49a156ebe4353e24ac24f2e4c28e6d0fe03b8c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ui-3.informative",
+      "family": "css-ui-3",
+      "source_id": "css-ui-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "d076b71bd03cfdce06bcdf9f99dc7c4fc8b47dfb0fbbd397c55323373bdbfec2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

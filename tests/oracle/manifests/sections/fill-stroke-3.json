@@ -1,0 +1,1020 @@
+{
+  "schema_version": 1,
+  "source_id": "fill-stroke-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Fill and Stroke Module Level 3",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.title"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C First Public Working Draft, 13 April 2017",
+      "level": 2,
+      "text_sha256": "cd4676c051d488003f11134aaa9620cd010c4f644f129ae3dd16dc761eed0efd",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.subtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "d8834487cd069388a2ed61a7ec907983067e900712c2116db5163b20cb0eeb20",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "f3a1487acd9f3e9c1ed5ef2d96cda149a33294124a2b896804b2c7771cd713ad",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "7b7206d94b994e5ad1ec0961ae494679cce785d2d6eae92f2a69adacf6d5890d",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "feeb553515802b8ca940462939f0aa9964f1585c83170236b7f5ee4dd32f959b",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "paint",
+      "title": "2. Paint",
+      "level": 2,
+      "text_sha256": "498d27b921a589b7ec4699b4a328a924b7c88f3528e6868fbd42c67e857c91d8",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.paint"
+        ]
+      }
+    },
+    {
+      "id": "svg-paint",
+      "title": "2.1. SVG-Specific Paints",
+      "level": 3,
+      "text_sha256": "5a803c78d311ea5cd198af4cdebdbcfaa3a0e352587495e2a44cc418e66cab6b",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.svg-paint",
+          "fill-stroke-3.svg-paint-clause-c27af8095196",
+          "fill-stroke-3.svg-paint-clause-8e27efd10216"
+        ]
+      }
+    },
+    {
+      "id": "fills",
+      "title": "3. Fills",
+      "level": 2,
+      "text_sha256": "630cc7e0081cb3e7d5f2f628ed20cf2f0cc3b25e254cffcab102249717d2ea74",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fills",
+          "fill-stroke-3.fills-clause-0a44cf0d15d5"
+        ]
+      }
+    },
+    {
+      "id": "fill-layering",
+      "title": "3.1. Layering Multiple Fills",
+      "level": 3,
+      "text_sha256": "9263d54f301a0d6567eb9548b74db88b68f6b5ff1b1907166538aef1175b4598",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-layering"
+        ]
+      }
+    },
+    {
+      "id": "fill-geometry",
+      "title": "3.2. Fill Geometry",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-geometry"
+        ]
+      }
+    },
+    {
+      "id": "fill-rule",
+      "title": "3.2.1. Winding Rule for SVG shapes: the fill-rule property",
+      "level": 4,
+      "text_sha256": "0fc5fc28de5559cc38dc6a4fd2b7353babc0cefaad115bf6303010bee26e78dc",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-rule",
+          "fill-stroke-3.fill-rule-clause-cca2516ebb1d",
+          "fill-stroke-3.fill-rule-clause-d9f4e73741ad",
+          "fill-stroke-3.fill-rule-clause-fe8f99435026",
+          "fill-stroke-3.fill-rule-clause-e778e67f3936"
+        ]
+      }
+    },
+    {
+      "id": "fill-break",
+      "title": "3.2.2. Fragmented Fills: the fill-break property",
+      "level": 4,
+      "text_sha256": "31c2716d9e03f132c47c20a7ff3095730d37fd3ba91459495bbf0b35189941f0",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-break",
+          "fill-stroke-3.fill-break-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "fill-paint",
+      "title": "3.3. Fill Paint",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-paint"
+        ]
+      }
+    },
+    {
+      "id": "fill-color",
+      "title": "3.3.1. Fill Color: the fill-color property",
+      "level": 4,
+      "text_sha256": "4390c8427c2559248f09cf264229fe9bb47599156eb42613aff0ff29dba14dd6",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-color",
+          "fill-stroke-3.fill-color-clause-cca2516ebb1d",
+          "fill-stroke-3.fill-color-clause-bfe0717776b9",
+          "fill-stroke-3.fill-color-clause-b1891f3b8f53",
+          "fill-stroke-3.fill-color-clause-ca01b9e7bd8b",
+          "fill-stroke-3.fill-color-clause-8b8633342f5b",
+          "fill-stroke-3.fill-color-clause-ae79b58fb8b7",
+          "fill-stroke-3.fill-color-clause-586469136c53"
+        ]
+      }
+    },
+    {
+      "id": "fill-image",
+      "title": "3.3.2. Fill Image Sources: the fill-image property",
+      "level": 4,
+      "text_sha256": "a91395e6d04594f0c2549e1a9bc11d1e760c77d44865e1cde2b2b447b7d61a3e",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-image",
+          "fill-stroke-3.fill-image-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "fill-origin",
+      "title": "3.3.3. Fill Positioning Area: the fill-origin property",
+      "level": 4,
+      "text_sha256": "6176812b60651693d117912f40d586e85b7ca786bd0ee37b6da159771ce0ddcf",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-origin",
+          "fill-stroke-3.fill-origin-clause-cca2516ebb1d",
+          "fill-stroke-3.fill-origin-clause-faac2da73eb4",
+          "fill-stroke-3.fill-origin-clause-47ee370e9a91",
+          "fill-stroke-3.fill-origin-clause-890a767f5725"
+        ]
+      }
+    },
+    {
+      "id": "fill-position",
+      "title": "3.3.4. Positioning Fill Images: the fill-position property",
+      "level": 4,
+      "text_sha256": "177d730ed862e4ae56ab8122e4c2726f13951b5649f30c6bede40fa006c8114f",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-position",
+          "fill-stroke-3.fill-position-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "fill-size",
+      "title": "3.3.5. Sizing Fill Images: the fill-size property",
+      "level": 4,
+      "text_sha256": "0f1c401f0172bf4a5bf02ad22da19e87f521b28d9fcbbd6ac78732ed6d8cfc8e",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-size",
+          "fill-stroke-3.fill-size-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "fill-repeat",
+      "title": "3.3.6. Tiling Fill Images: the fill-repeat property",
+      "level": 4,
+      "text_sha256": "d3b677252cd874dfbde4694fdc97566cdc3f7fe4cbf87595ecacd0bd92ae64fe",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-repeat",
+          "fill-stroke-3.fill-repeat-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "fill-shorthand",
+      "title": "3.3.7. Fill Shorthand: the fill property",
+      "level": 4,
+      "text_sha256": "1a074b9f6970da338a5880b95ae2e5096cb12761739807b4feaf1476c382524b",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-shorthand",
+          "fill-stroke-3.fill-shorthand-clause-cca2516ebb1d",
+          "fill-stroke-3.fill-shorthand-clause-4fc7bbf72197",
+          "fill-stroke-3.fill-shorthand-clause-ed8bdcb1f4b7",
+          "fill-stroke-3.fill-shorthand-clause-cdb398e819d6",
+          "fill-stroke-3.fill-shorthand-clause-83e5cdabef6e"
+        ]
+      }
+    },
+    {
+      "id": "fill-filter",
+      "title": "3.4. Fill Transparency",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-filter"
+        ]
+      }
+    },
+    {
+      "id": "fill-opacity",
+      "title": "3.4.1. Fill Opacity: the fill-opacity property",
+      "level": 4,
+      "text_sha256": "da600b5d4ff7551068c0bdb8ffdacb417ef82ae22668a360918df2ebad0f28d1",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.fill-opacity",
+          "fill-stroke-3.fill-opacity-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "strokes",
+      "title": "4. Strokes (Outlines)",
+      "level": 2,
+      "text_sha256": "49cfed1b60ff9300f4a74f31dedfc1d7ae0badec74fe85d8b7e225cd117f843c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.strokes",
+          "fill-stroke-3.strokes-clause-f6c9da4701d8",
+          "fill-stroke-3.strokes-clause-4daa3f080c3d"
+        ]
+      }
+    },
+    {
+      "id": "stroke-layering",
+      "title": "4.1. Layering Multiple Strokes",
+      "level": 3,
+      "text_sha256": "bf16b4aba999d034882cef3787fa5058d76c24c5f7042561f9a18c1ef03f342b",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-layering",
+          "fill-stroke-3.stroke-layering-clause-6aa0b2810464"
+        ]
+      }
+    },
+    {
+      "id": "stroke-geometry",
+      "title": "4.2. Stroke Geometry",
+      "level": 3,
+      "text_sha256": "9befc21aed55d56b97897b252c9254255323e7ef7ec2be4fb3a16f8276093617",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-geometry",
+          "fill-stroke-3.stroke-geometry-clause-9befc21aed55"
+        ]
+      }
+    },
+    {
+      "id": "stroke-width",
+      "title": "4.2.1. Stroke Thickness: the stroke-width property",
+      "level": 4,
+      "text_sha256": "56ae577fb00d633c28d8cb72274206dd15b5c26e5218be4f58d2b56f6100b30f",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-width",
+          "fill-stroke-3.stroke-width-clause-cca2516ebb1d",
+          "fill-stroke-3.stroke-width-clause-3d3889c844ea",
+          "fill-stroke-3.stroke-width-clause-22c51076b1de"
+        ]
+      }
+    },
+    {
+      "id": "stroke-align",
+      "title": "4.2.2. Stroke Positioning: the stroke-align property",
+      "level": 4,
+      "text_sha256": "fc3bb956627409f50f9fc5cc2f532327fe0671ff7539c4a410e9910e264e07d5",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-align",
+          "fill-stroke-3.stroke-align-clause-cca2516ebb1d",
+          "fill-stroke-3.stroke-align-clause-8362d77eae79",
+          "fill-stroke-3.stroke-align-clause-a5c352f6a672",
+          "fill-stroke-3.stroke-align-clause-18c88382ad78",
+          "fill-stroke-3.stroke-align-clause-fea5882eeceb"
+        ]
+      }
+    },
+    {
+      "id": "stroke-linecap",
+      "title": "4.2.3. Stroke End Shapes: the stroke-linecap property",
+      "level": 4,
+      "text_sha256": "c2fa9b281e7ad7ce4cd226174e492a0dd000362c4ae690477c04c2e0351d478e",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-linecap",
+          "fill-stroke-3.stroke-linecap-clause-cca2516ebb1d",
+          "fill-stroke-3.stroke-linecap-clause-bdfa1e4d2c70",
+          "fill-stroke-3.stroke-linecap-clause-44003420efa4",
+          "fill-stroke-3.stroke-linecap-clause-97126496c9f5"
+        ]
+      }
+    },
+    {
+      "id": "stroke-linejoin",
+      "title": "4.2.4. Stroke Corner Shapes: the stroke-linejoin property",
+      "level": 4,
+      "text_sha256": "889a8411651610dfe103c91e71e1d3731606f908d5e37fabb70ebaaf5d274b99",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-linejoin",
+          "fill-stroke-3.stroke-linejoin-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "stroke-miterlimit",
+      "title": "4.2.5. Stroke Corner Limits: the stroke-miterlimit property",
+      "level": 4,
+      "text_sha256": "61fd6d260db46319fd477a8a5b8bbe1c24cdeef02dc7b8f4e7f9182262770240",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-miterlimit",
+          "fill-stroke-3.stroke-miterlimit-clause-cca2516ebb1d",
+          "fill-stroke-3.stroke-miterlimit-clause-bcc23aa8a1f5",
+          "fill-stroke-3.stroke-miterlimit-clause-72ea1ea516c8",
+          "fill-stroke-3.stroke-miterlimit-clause-cef8d79b85bf"
+        ]
+      }
+    },
+    {
+      "id": "stroke-break",
+      "title": "4.2.6. Fragmented Strokes: the stroke-break property",
+      "level": 4,
+      "text_sha256": "f2cd2dd15e160cd2385060c6d1279d43206f3cd13783d6343de0f6cdd98ad19a",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-break",
+          "fill-stroke-3.stroke-break-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "stroke-dashes",
+      "title": "4.3. Stroke Dashing",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-dashes"
+        ]
+      }
+    },
+    {
+      "id": "stroke-dasharray",
+      "title": "4.3.1. Stroke Dash Patterns: the stroke-dasharray property",
+      "level": 4,
+      "text_sha256": "19106d7c209a474eb97b5656050be026e2f13e0c04cbf045e8db6cfb652722d2",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-dasharray",
+          "fill-stroke-3.stroke-dasharray-clause-cca2516ebb1d",
+          "fill-stroke-3.stroke-dasharray-clause-267f3a573354",
+          "fill-stroke-3.stroke-dasharray-clause-0580cbae17ad",
+          "fill-stroke-3.stroke-dasharray-clause-ea78b86fff49"
+        ]
+      }
+    },
+    {
+      "id": "stroke-dashoffset",
+      "title": "4.3.2. Stroke Dash Start Position: the stroke-dashoffset property",
+      "level": 4,
+      "text_sha256": "6ccc3114ac93df7de6dbaf2582be526ff35757624e9a1e1fc9010bff857d3155",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-dashoffset",
+          "fill-stroke-3.stroke-dashoffset-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "corner-control",
+      "title": "4.3.3. Corner Control: the stroke-dash-corner and stroke-dash-justify properties",
+      "level": 4,
+      "text_sha256": "89648df6901870888edfa478417458045f131a2c12f9400c75e67d9735b1a434",
+      "clause_count": 83,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.corner-control",
+          "fill-stroke-3.corner-control-clause-cca2516ebb1d",
+          "fill-stroke-3.corner-control-clause-40d4169dd84d",
+          "fill-stroke-3.corner-control-clause-02a3af76b809",
+          "fill-stroke-3.corner-control-clause-cd1b736bccd6",
+          "fill-stroke-3.corner-control-clause-e1c96cf20893",
+          "fill-stroke-3.corner-control-clause-0925845a31ac",
+          "fill-stroke-3.corner-control-clause-c156c68b3ea4",
+          "fill-stroke-3.corner-control-clause-30a3504550fd",
+          "fill-stroke-3.corner-control-clause-7f79be62670a",
+          "fill-stroke-3.corner-control-clause-a459a80b06ee",
+          "fill-stroke-3.corner-control-clause-9522db6d708f",
+          "fill-stroke-3.corner-control-clause-be24fd5b96fb"
+        ]
+      }
+    },
+    {
+      "id": "stroke-paint",
+      "title": "4.4. Stroke Paint",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-paint"
+        ]
+      }
+    },
+    {
+      "id": "stroke-color",
+      "title": "4.4.1. Stroke Color: the stroke-color property",
+      "level": 4,
+      "text_sha256": "34bdadbd098b720e17f96fbb186d450f348e59962d9b260b39c133df6bc78c63",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-color",
+          "fill-stroke-3.stroke-color-clause-cca2516ebb1d",
+          "fill-stroke-3.stroke-color-clause-bfe0717776b9",
+          "fill-stroke-3.stroke-color-clause-a936de37c2d7",
+          "fill-stroke-3.stroke-color-clause-c2c9a31ae499",
+          "fill-stroke-3.stroke-color-clause-df9256ea6384"
+        ]
+      }
+    },
+    {
+      "id": "stroke-image",
+      "title": "4.4.2. Stroke Image Sources: the stroke-image property",
+      "level": 4,
+      "text_sha256": "f4d9e81ffda2ddbb419f94d3cc2fca0687e684989718650855abc6190c83d2bb",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-image",
+          "fill-stroke-3.stroke-image-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "stroke-origin",
+      "title": "4.4.3. Stroke Positioning Area: the stroke-origin property",
+      "level": 4,
+      "text_sha256": "b462b0f845348ba189a09ed816d723f66dcaa634fec3cd41f089efe5109054d0",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-origin",
+          "fill-stroke-3.stroke-origin-clause-cca2516ebb1d",
+          "fill-stroke-3.stroke-origin-clause-faac2da73eb4",
+          "fill-stroke-3.stroke-origin-clause-d3f2a09aea91",
+          "fill-stroke-3.stroke-origin-clause-3476a753d891"
+        ]
+      }
+    },
+    {
+      "id": "stroke-position",
+      "title": "4.4.4. Positioning Stroke Images: the stroke-position property",
+      "level": 4,
+      "text_sha256": "bcbf8db82e74cd354336eb994a21e0bce3407eb744b446eb123e4d3b8382cdd7",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-position",
+          "fill-stroke-3.stroke-position-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "stroke-size",
+      "title": "4.4.5. Sizing Stroke Images: the stroke-size property",
+      "level": 4,
+      "text_sha256": "64380754c4239145df181ee4db9177b418d0d25256847a1faea5511a389b8e24",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-size",
+          "fill-stroke-3.stroke-size-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "stroke-repeat",
+      "title": "4.4.6. Tiling Stroke Images: the stroke-repeat property",
+      "level": 4,
+      "text_sha256": "ad66229bb1192396fff6ccc97e318f1b0889520855b63554c75fc7d1772335e9",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-repeat",
+          "fill-stroke-3.stroke-repeat-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "stroke-shorthand",
+      "title": "4.4.7. Stroke Shorthand: the stroke property",
+      "level": 4,
+      "text_sha256": "8b7f2f49126736375da8cca2622b20f1383932f6442f48927de9c808aefbbbf4",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-shorthand",
+          "fill-stroke-3.stroke-shorthand-clause-cca2516ebb1d",
+          "fill-stroke-3.stroke-shorthand-clause-06207e091f97",
+          "fill-stroke-3.stroke-shorthand-clause-9e7cd16b3fe8"
+        ]
+      }
+    },
+    {
+      "id": "stroke-filter",
+      "title": "4.5. Stroke Transparency",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-filter"
+        ]
+      }
+    },
+    {
+      "id": "stroke-opacity",
+      "title": "4.5.1. Stroke Opacity: the stroke-opacity property",
+      "level": 4,
+      "text_sha256": "8ad70f6a7b251fa822c425077d6feff70ace95b560f769dde39c11c2d053150b",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-opacity",
+          "fill-stroke-3.stroke-opacity-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "path-notes",
+      "title": "4.6. Computing the Shape of the Stroke",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.path-notes"
+        ]
+      }
+    },
+    {
+      "id": "stroke-paths",
+      "title": "4.6.1. Stroke Paths",
+      "level": 4,
+      "text_sha256": "d4d19c9a4ee2c02b58caa452f1380c23c38c335f2e1808d2e517e8d7ba582ee1",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.stroke-paths",
+          "fill-stroke-3.stroke-paths-clause-fe2ab3d2bad5",
+          "fill-stroke-3.stroke-paths-clause-998949d0bafa",
+          "fill-stroke-3.stroke-paths-clause-606f20cdfdc7",
+          "fill-stroke-3.stroke-paths-clause-ed81bf6a29b0",
+          "fill-stroke-3.stroke-paths-clause-2b58613eec7c"
+        ]
+      }
+    },
+    {
+      "id": "algo-stroke-shape",
+      "title": "4.6.2. Stroke Shape",
+      "level": 4,
+      "text_sha256": "4a6fff9ece916140d3cdf14d0ebdd1a8fac810a796cd0e26a7de6fcaa0b61963",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.algo-stroke-shape"
+        ]
+      }
+    },
+    {
+      "id": "algo-dash-positions",
+      "title": "4.6.3. Dash Positions",
+      "level": 4,
+      "text_sha256": "b466db8fb3b8001c7951161d015682bdd5c291b840202aec9ab20ff9e95dbb2f",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.algo-dash-positions"
+        ]
+      }
+    },
+    {
+      "id": "algo-cap-shapes",
+      "title": "4.6.4. Cap Shapes",
+      "level": 4,
+      "text_sha256": "55a8fac60c2adf5ca57a66427dbea6e2860c48784bfa1b54e84813c2d5c2c57e",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.algo-cap-shapes"
+        ]
+      }
+    },
+    {
+      "id": "algo-line-join-shape",
+      "title": "4.6.5. Line Join Shape",
+      "level": 4,
+      "text_sha256": "c1d961f48fc24e078f31a875dae6b8bfcb16bf35f01ef82a067b8750672d0b19",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.algo-line-join-shape"
+        ]
+      }
+    },
+    {
+      "id": "algo-arcs-linejoin",
+      "title": "4.6.6. Arcs Linejoin",
+      "level": 4,
+      "text_sha256": "55ba0124fa9b2fbd60a4994b6916f8acae7e404c88aa8001d10587f2f88e6c3e",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.algo-arcs-linejoin",
+          "fill-stroke-3.algo-arcs-linejoin-clause-67f63eacd526",
+          "fill-stroke-3.algo-arcs-linejoin-clause-bc2b7d0e7f1f"
+        ]
+      }
+    },
+    {
+      "id": "perfect-world",
+      "title": "4.7. Perfect-World Syntax",
+      "level": 3,
+      "text_sha256": "54254609af1ba1db171e0700f03ac079e061d58a2fd33a450eca8ac1566f304d",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.perfect-world",
+          "fill-stroke-3.perfect-world-clause-6b31dfdc1bd4"
+        ]
+      }
+    },
+    {
+      "id": "text-decor",
+      "title": "5. Text Decoration Fills and Strokes",
+      "level": 2,
+      "text_sha256": "8ff248c9a8bf16af05f8fcaf174a8ae8b5336db0d1f648397f099ea5d92ffe04",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.text-decor",
+          "fill-stroke-3.text-decor-clause-8d002c16c654",
+          "fill-stroke-3.text-decor-clause-2d1da9de0f25",
+          "fill-stroke-3.text-decor-clause-34501435a135"
+        ]
+      }
+    },
+    {
+      "id": "priv-sec",
+      "title": "6. Privacy and Security Considerations",
+      "level": 2,
+      "text_sha256": "508211c345cc46d3344bf3460ffcde7c9eef7b952e529c627c53a5123db53ee3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.priv-sec"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.conformance"
+        ]
+      }
+    },
+    {
+      "id": "conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.conventions",
+          "fill-stroke-3.conventions-clause-5c98c879f070",
+          "fill-stroke-3.conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.conformance-classes",
+          "fill-stroke-3.conformance-classes-clause-ff408372426c",
+          "fill-stroke-3.conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.partial",
+          "fill-stroke-3.partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.testing",
+          "fill-stroke-3.testing-clause-1e0fff369221",
+          "fill-stroke-3.testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "ba5e42ad5e18c8af422c7c100b5a24a98fb3063c756047599ee450d054577a09",
+      "clause_count": 93,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "8819777217357c4848951389dd2cb97a54ba2f6a55907282b67603c43bc90773",
+      "clause_count": 54,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "9d9d86bceb620418f591523f67101924a4de41a5baed34d71ef5b0c856da93e3",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "f04f7eefcdd92d8b5cd8a5e43bd93c5fa6c1d353f6be7548f048fd0df4233691",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "643a4acebf807cc75e11212259b9e12948207d0c98e085fa81ab1749936d8c19",
+      "clause_count": 290,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.property-index",
+          "fill-stroke-3.property-index-clause-bfe0717776b9"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "3de348aa6d8c194103af6f5040b9cfd6190b85b652118bad36e2d6ead50566d4",
+      "clause_count": 179,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "fill-stroke-3.issues-index"
+        ]
+      }
+    }
+  ]
+}

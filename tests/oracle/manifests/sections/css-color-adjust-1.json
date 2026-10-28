@@ -1,0 +1,572 @@
+{
+  "schema_version": 1,
+  "source_id": "css-color-adjust-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Color Adjustment Module Level 1",
+      "level": 1,
+      "text_sha256": "df03a8f687e869531ba59e2b7af9c87564e94d21a766c8689764859c7249a043",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "cb0e0ac745e17b40ec0ab0b9f663bd71d1471bc3de16d259e16e7b86da649713",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "aeb1e53051e89e2e8cadb235a3c941dce482cfe7255ab638cbff82f83a38024f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "721d7217d2afe86d1417796054fc28e31c1abf8559ed06ee7291858c1cb118c5",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "01fb2da30fa96757ec0955bf784131b7e5784e7643a98946de58ebbb5fe683ee",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.values"
+        ]
+      }
+    },
+    {
+      "id": "preferred",
+      "title": "2. Preferred Color Schemes",
+      "level": 2,
+      "text_sha256": "51b16dcd1804d249f3935fc567cb2d0011253c002a8023d6473ee0c0ef0b213d",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.preferred",
+          "css-color-adjust-1.preferred-clause-3fa2204a3229",
+          "css-color-adjust-1.preferred-clause-221f4e944f44",
+          "css-color-adjust-1.preferred-clause-7293ef19ac60"
+        ]
+      }
+    },
+    {
+      "id": "color-scheme-prop",
+      "title": "2.1. Opting Into a Preferred Color Scheme: the color-scheme property",
+      "level": 3,
+      "text_sha256": "d535f630949df999b4ea8dc3584492bf5a645120f738ea02938d889240c2b9aa",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.color-scheme-prop",
+          "css-color-adjust-1.color-scheme-prop-clause-cca2516ebb1d",
+          "css-color-adjust-1.color-scheme-prop-clause-b6b8d1d5b028",
+          "css-color-adjust-1.color-scheme-prop-clause-123acca31f0e",
+          "css-color-adjust-1.color-scheme-prop-clause-40d57119be91",
+          "css-color-adjust-1.color-scheme-prop-clause-19aeac9524e6",
+          "css-color-adjust-1.color-scheme-prop-clause-c120c5b2a926",
+          "css-color-adjust-1.color-scheme-prop-clause-28b6180082d3",
+          "css-color-adjust-1.color-scheme-prop-clause-d77dcf98c0c2",
+          "css-color-adjust-1.color-scheme-prop-clause-123589967e96"
+        ]
+      }
+    },
+    {
+      "id": "color-scheme-effect",
+      "title": "2.2. Effects of the Used Color Scheme",
+      "level": 3,
+      "text_sha256": "bd9633d6d7b2df2c95bfb6f09d812ca596c88eda878eccf4cdbd343afd4930cd",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.color-scheme-effect",
+          "css-color-adjust-1.color-scheme-effect-clause-f79adcff408e",
+          "css-color-adjust-1.color-scheme-effect-clause-ce334e1b5d79",
+          "css-color-adjust-1.color-scheme-effect-clause-1726ee6c463e",
+          "css-color-adjust-1.color-scheme-effect-clause-dbae988fd9c3"
+        ]
+      }
+    },
+    {
+      "id": "color-scheme-override",
+      "title": "2.3. Overriding the Color Scheme",
+      "level": 3,
+      "text_sha256": "5ba8056e486f89781521ceb5132ee9c97ca5d9613334d1818fbbff4bd9cd9004",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.color-scheme-override",
+          "css-color-adjust-1.color-scheme-override-clause-32b2f93a865c"
+        ]
+      }
+    },
+    {
+      "id": "forced",
+      "title": "3. Forced Color Palettes",
+      "level": 2,
+      "text_sha256": "9fcb59fff7bf3e5752df727b1714e44a6713aa1b9430796105f51c53f1649a98",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.forced",
+          "css-color-adjust-1.forced-clause-d4c17fc7ef9a",
+          "css-color-adjust-1.forced-clause-c27a358ac015"
+        ]
+      }
+    },
+    {
+      "id": "forced-colors-properties",
+      "title": "3.1. Properties Affected by Forced Colors Mode",
+      "level": 3,
+      "text_sha256": "aac38ab8cfb5704763cb61079abbb0ceb26cdde8c3e6eafea7de259d7d4c2fb4",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.forced-colors-properties",
+          "css-color-adjust-1.forced-colors-properties-clause-a610be2d3d6d",
+          "css-color-adjust-1.forced-colors-properties-clause-9b2e59ff21f5",
+          "css-color-adjust-1.forced-colors-properties-clause-e96592a862a9",
+          "css-color-adjust-1.forced-colors-properties-clause-cc3870f7a750",
+          "css-color-adjust-1.forced-colors-properties-clause-ea00c0e29955",
+          "css-color-adjust-1.forced-colors-properties-clause-0a24177d53d5"
+        ]
+      }
+    },
+    {
+      "id": "forced-color-adjust-prop",
+      "title": "3.2. Opting Out of a Forced Color Palette: the forced-color-adjust property",
+      "level": 3,
+      "text_sha256": "c450fc332407b2afe6f1cb71e665d21650ca2f1c9d052810b59a986b444fb55e",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.forced-color-adjust-prop",
+          "css-color-adjust-1.forced-color-adjust-prop-clause-cca2516ebb1d",
+          "css-color-adjust-1.forced-color-adjust-prop-clause-fd17d16bc0ee",
+          "css-color-adjust-1.forced-color-adjust-prop-clause-0f6874778ec4",
+          "css-color-adjust-1.forced-color-adjust-prop-clause-69ab651a84b1",
+          "css-color-adjust-1.forced-color-adjust-prop-clause-0ac2271ac760",
+          "css-color-adjust-1.forced-color-adjust-prop-clause-8588547191f7",
+          "css-color-adjust-1.forced-color-adjust-prop-clause-4c624448e425",
+          "css-color-adjust-1.forced-color-adjust-prop-clause-5984bb459399",
+          "css-color-adjust-1.forced-color-adjust-prop-clause-b69e74cab791",
+          "css-color-adjust-1.forced-color-adjust-prop-clause-1d6197223f77"
+        ]
+      }
+    },
+    {
+      "id": "perf",
+      "title": "4. Performance-based Color Adjustments",
+      "level": 2,
+      "text_sha256": "e0d82b5fa31a3c24b4ba6e97b978f9c8e3775332b616ff7faafe096ab9bf50eb",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.perf"
+        ]
+      }
+    },
+    {
+      "id": "print-color-adjust",
+      "title": "4.1. Ink Economy: the print-color-adjust property",
+      "level": 3,
+      "text_sha256": "d2c095e6bc09df464a52720c59824d7c9e069e94ab1e27406de84daec1fa8602",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.print-color-adjust",
+          "css-color-adjust-1.print-color-adjust-clause-cca2516ebb1d",
+          "css-color-adjust-1.print-color-adjust-clause-4884299482c1",
+          "css-color-adjust-1.print-color-adjust-clause-59c0a449675a",
+          "css-color-adjust-1.print-color-adjust-clause-fa2284b877b4",
+          "css-color-adjust-1.print-color-adjust-clause-a18e963107a5",
+          "css-color-adjust-1.print-color-adjust-clause-1d77d790d569"
+        ]
+      }
+    },
+    {
+      "id": "color-adjust",
+      "title": "4.2. The color-adjust Shorthand",
+      "level": 3,
+      "text_sha256": "9b22b31dc3dbc283eb8816a9c94ac7aa9e581d88d6d730c43d91f3873a341fc9",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.color-adjust",
+          "css-color-adjust-1.color-adjust-clause-cca2516ebb1d",
+          "css-color-adjust-1.color-adjust-clause-c84f6f10afc7",
+          "css-color-adjust-1.color-adjust-clause-a64f6bf13298"
+        ]
+      }
+    },
+    {
+      "id": "color-adjust-emulation",
+      "title": "5. Emulation",
+      "level": 2,
+      "text_sha256": "60d887f8681b6cdc463db98439688912cdcff22ff4cf81a6b66199eec8bc4f91",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.color-adjust-emulation"
+        ]
+      }
+    },
+    {
+      "id": "emulate-forced-colors-mode",
+      "title": "5.1. Emulate Forced Colors Mode",
+      "level": 3,
+      "text_sha256": "5cb73d6e257aac2bfd951a09264ac2196f4cf94989f21f164696f51b09baad2b",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.emulate-forced-colors-mode",
+          "css-color-adjust-1.emulate-forced-colors-mode-clause-8791d46da365"
+        ]
+      }
+    },
+    {
+      "id": "forced-color-palettes",
+      "title": "5.2. Forced Colors Mode Color Palettes",
+      "level": 3,
+      "text_sha256": "19762906645eec7739cd8b5e44395ce1d3e2687aaa76ce126c118a42a00ea9c1",
+      "clause_count": 80,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.forced-color-palettes",
+          "css-color-adjust-1.forced-color-palettes-clause-5a78415b099b"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "6. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "df694efcc546d158da85252a7be0b4097ad8a9c0c72c1b869dbecb9b940e84b2",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.privacy",
+          "css-color-adjust-1.privacy-clause-720d5971ed76"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "7. Security Considerations",
+      "level": 2,
+      "text_sha256": "e5e4771db2c3d5e68338e0522473278f27164752f2ea535aaa6b10b7b44d43c6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.security"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "8. Acknowledgements",
+      "level": 2,
+      "text_sha256": "0ea2980ffb0a21da5b3909b74178461ec23f3eb32b7d24aa31a3b4ef9e0c8c6b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "9. Changes",
+      "level": 2,
+      "text_sha256": "25d795050dbd94e01b9e3d283a6fe6ae752ed1c6ba5be9bd4b72b111c4270266",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.w3c-conventions",
+          "css-color-adjust-1.w3c-conventions-clause-5c98c879f070",
+          "css-color-adjust-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.w3c-conformance-classes",
+          "css-color-adjust-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-color-adjust-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.w3c-partial",
+          "css-color-adjust-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.w3c-testing",
+          "css-color-adjust-1.w3c-testing-clause-1e0fff369221",
+          "css-color-adjust-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.w3c-cr-exit-criteria",
+          "css-color-adjust-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-color-adjust-1.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-color-adjust-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-color-adjust-1.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-color-adjust-1.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "fa940aa0fd8998784981b3634f25e0c29bc4fe6aa2cb292583c4865cbfe0689b",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "f1a82b2bfc84a171b2b4626ce1d55a9adba1b0a073f15d1a1ecf06f8dd5d159f",
+      "clause_count": 107,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "d86f2b8a2440a25d5467f599f72d32672659c23c5668d0c3c65be4842a3df2a3",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "d624997ee386eafc8c08d8eacfba4a7ff1517b48ea933752b43d590f538722f6",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "1b40749e50d6f656e9002a0b6b73415ad70a7442aebaf00f60f10a78d4f7d0b4",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.property-index"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "daff0c1b01e2ba7f98fc3ef408e4b71de4b739e693db7950bdbc672e2e89dd70",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "c5f7005fc9adaba08c8b5c121cc3f86c6ff3c91d38d6d67a4844d8a779ca87db",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-adjust-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

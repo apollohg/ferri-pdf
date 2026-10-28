@@ -1,0 +1,680 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-extensions-1.title",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review static-renderer obligations in CSS Extensions Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "c94fbd6da92bca3858d8c7d379644ca257ae91b049b08b6981b26c440cb7f7e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.abstract",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review static-renderer obligations in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "0a61aa7f9b82c5b72692119cd547c17b42bd5be2c52eddcb8e99b6528d83ea91"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.sotd",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review static-renderer obligations in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "bc63808176b0b3f13fce7b3204f05bafbb88d49f0540079d31238ade78db1118"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.contents",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review static-renderer obligations in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "0cf279276ff42bb5d15b60c9286cb4692de98b967186b1b070dfb15be8d45007"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.intro",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review static-renderer obligations in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "8c724d95eb0b98c25b2be7a8d8b5b51b71f0a015b913bf87875d4f63eadc95b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.extension-name",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "extension-name"
+      ],
+      "behaviour": "Review static-renderer obligations in 2. Extension Names.",
+      "locator": {
+        "section_id": "extension-name",
+        "text_sha256": "a9f339ddc39f791bb366f335f0103e8031f0e99b2727e51f1794de101c22a391"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.custom-selectors",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "custom-selectors"
+      ],
+      "behaviour": "Review static-renderer obligations in 3. Custom Selectors.",
+      "locator": {
+        "section_id": "custom-selectors",
+        "text_sha256": "18c0611c8c2d0bde003aa4db151b97a0dc02b7409f49c5103210a95a15125f6f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.script-custom-selectors",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "script-custom-selectors"
+      ],
+      "behaviour": "Review static-renderer obligations in 3.1. Script-based Custom Selectors.",
+      "locator": {
+        "section_id": "script-custom-selectors",
+        "text_sha256": "9778aaf34211009eb3941a2eed9f0ff0eb68e5a9f902e1d0958873f62af8eda3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.custom-selectors-cssom",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "custom-selectors-cssom"
+      ],
+      "behaviour": "Review static-renderer obligations in 3.2. CSSOM.",
+      "locator": {
+        "section_id": "custom-selectors-cssom",
+        "text_sha256": "1b235dce2c1c7503b201fb7402c4d705a8749296ce581892e19d6cecbc06ac00"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.custom-property",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "custom-property"
+      ],
+      "behaviour": "Review static-renderer obligations in 4. Custom Properties.",
+      "locator": {
+        "section_id": "custom-property",
+        "text_sha256": "ae3ada4882b13738dea359413b1f99860d8a974a36976574db64763dcec10bc0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.custom-functions",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "custom-functions"
+      ],
+      "behaviour": "Review static-renderer obligations in 5. Custom Functions.",
+      "locator": {
+        "section_id": "custom-functions",
+        "text_sha256": "7bc69a772cae7eaf62d3abe20c6fcf006e2cd1d9239d0de3f9a107754b4179b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.custom-combinators",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "custom-combinators"
+      ],
+      "behaviour": "Review static-renderer obligations in 6. Custom Selector Combinators.",
+      "locator": {
+        "section_id": "custom-combinators",
+        "text_sha256": "a1315bb8c3ef83ad43700ab58682268651a1c9870f9274661e545f11d9f49e55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.custom-atrules",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "custom-atrules"
+      ],
+      "behaviour": "Review static-renderer obligations in 7. Custom At-Rules.",
+      "locator": {
+        "section_id": "custom-atrules",
+        "text_sha256": "4999534c7ac0ad36705a29348747c217362ffd11cebc8191f3ddd643f9fef57a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.privacy",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Review static-renderer obligations in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.security",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Review static-renderer obligations in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.w3c-conformance",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Review static-renderer obligations in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.w3c-conventions",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Review static-renderer obligations in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.w3c-conformance-classes",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Review static-renderer obligations in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.w3c-partial",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Review static-renderer obligations in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.w3c-conform-future-proofing",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Review static-renderer obligations in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.w3c-testing",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Review static-renderer obligations in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.index",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review static-renderer obligations in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.index-defined-here",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review static-renderer obligations in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "d12c5f8de998edffb7dded2709040f48b8eb7fd66e8b3195ce2f11613f1a34c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.index-defined-elsewhere",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review static-renderer obligations in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "9343be5402382005e26e21c3fa02efeafe180d808aa16bdcb1ece2e64180a445"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.references",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review static-renderer obligations in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.normative",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review static-renderer obligations in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "4ea1689ba1f5d092efcbe46f940aa2ecf16a60ca71f7389643f0dd93d3a63307"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-extensions-1.issues-index",
+      "family": "css-extensions-1",
+      "source_id": "css-extensions-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Review static-renderer obligations in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "cdc03789ca36e838f2e4490f260a6008f50806df2bb7c9a3a1f89bd15ecbd763"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "New required import; renderer-facing obligations and non-normative material require explicit section review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

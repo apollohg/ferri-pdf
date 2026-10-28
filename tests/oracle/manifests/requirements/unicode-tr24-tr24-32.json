@@ -1,0 +1,1535 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "unicode-tr24-tr24-32.heading-a86fdab44c11",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "heading-a86fdab44c11"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unicode® Standard Annex #24.",
+      "locator": {
+        "section_id": "heading-a86fdab44c11",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.heading-db83bf207681",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "heading-db83bf207681"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unicode Script Property.",
+      "locator": {
+        "section_id": "heading-db83bf207681",
+        "text_sha256": "42a227ee3b2365d66bcd3f01f9581fe712df07cb3f514045e9867a382fed3db6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.heading-562e5643bfd0",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "heading-562e5643bfd0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Summary.",
+      "locator": {
+        "section_id": "heading-562e5643bfd0",
+        "text_sha256": "5a83d019c4b131fac0855ca8a330415c8dcddf0f71597d4daaf201e04a0a794a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.heading-b67e4e63a5c4",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "heading-b67e4e63a5c4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Status.",
+      "locator": {
+        "section_id": "heading-b67e4e63a5c4",
+        "text_sha256": "969770954d10eb10c58c417e62f0aeb8ceca31b93e33871538ad4b7096754f2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.heading-35d8550f521f",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "heading-35d8550f521f"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Contents.",
+      "locator": {
+        "section_id": "heading-35d8550f521f",
+        "text_sha256": "59268ce623b049f04be62063923940129def84865e569cd235d528b65a1a46b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.introduction",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 1 Introduction.",
+      "locator": {
+        "section_id": "Introduction",
+        "text_sha256": "fad8b9d195fc765ddcaacd6b5f1c8e76fc6d4784acb7198bfb29449df347720f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.classification",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Classification"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Examples of Script Classification.",
+      "locator": {
+        "section_id": "Classification",
+        "text_sha256": "5b41d2ada485d72a7d741fba9656366933f92d37293f6d05169f2de660a31abe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.classification-clause-5e80a4a18e16"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.classification-clause-5e80a4a18e16",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Classification"
+      ],
+      "behaviour": "Examples of Script Classification — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Classification",
+        "clause_index": 1,
+        "clause_sha256": "5e80a4a18e162e1f5322a541a091a39c3b7086dd668019124835614959aceb9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-identity",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Identity"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Script Identity and Unicode.",
+      "locator": {
+        "section_id": "Script_Identity",
+        "text_sha256": "3575a148aca326c565ce6a6507ab0174aa321c84d3a340c327e14e9b5af68b43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.scripts-and-blocks",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Scripts_and_Blocks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scripts and Blocks.",
+      "locator": {
+        "section_id": "Scripts_and_Blocks",
+        "text_sha256": "810df28bf1fa9b23d38412f2a73a2b5a0dc3367df98b5bb3c4739416be5d8ab0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-class-proc",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Class_Proc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Script Classification in Text Processing.",
+      "locator": {
+        "section_id": "Script_Class_Proc",
+        "text_sha256": "9e3c35fd923b2e4530cf73c9af62c7428ae5061e4a2674eaebe6e18d13a86b8d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.script-class-proc-clause-1dd58bbcd1ee"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-class-proc-clause-1dd58bbcd1ee",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Class_Proc"
+      ],
+      "behaviour": "Script Classification in Text Processing — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Script_Class_Proc",
+        "clause_index": 1,
+        "clause_sha256": "1dd58bbcd1ee858e070b4ac30027bb90d1cd4b6c72352e71ad65797ca0beac5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.classification-by-script",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Classification_by_Script"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Classification of Text by Script Property.",
+      "locator": {
+        "section_id": "Classification_by_Script",
+        "text_sha256": "2e2ac73dacc6600ac55d940783c70929022794d1ad19a67025e44a0940e6fbc6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.classification-by-script-clause-84651ef8b6a7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.classification-by-script-clause-84651ef8b6a7",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Classification_by_Script"
+      ],
+      "behaviour": "Classification of Text by Script Property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Classification_by_Script",
+        "clause_index": 2,
+        "clause_sha256": "84651ef8b6a7f89c7dbad9bc230531a2c334956a36256705e38625296b60c2c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.out-of-scope",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Out_of_Scope"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Usage Not Reflected in the Script Property.",
+      "locator": {
+        "section_id": "Out_of_Scope",
+        "text_sha256": "e8e81b965e77277b9cfd6fb3c64942054e717d4dfa68fce169cf096610332c1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.out-of-scope-clause-e8e81b965e77"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.out-of-scope-clause-e8e81b965e77",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Out_of_Scope"
+      ],
+      "behaviour": "Usage Not Reflected in the Script Property — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Out_of_Scope",
+        "clause_index": 0,
+        "clause_sha256": "e8e81b965e77277b9cfd6fb3c64942054e717d4dfa68fce169cf096610332c1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2 The Script Property.",
+      "locator": {
+        "section_id": "Script",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-values",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Script Property Values.",
+      "locator": {
+        "section_id": "Script_Values",
+        "text_sha256": "880d2b7d1955c882b1da6abe5e5862afaf1fab011757545a1d838df1616c0818"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.script-values-clause-4020ec32c708"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-values-clause-4020ec32c708",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Values"
+      ],
+      "behaviour": "Script Property Values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Script_Values",
+        "clause_index": 1,
+        "clause_sha256": "4020ec32c708b068a24fbaae135623c003b0e21ce240414559271060ecb6ce99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.relation-to-iso15924",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Relation_To_ISO15924"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relation to ISO 15924 Codes.",
+      "locator": {
+        "section_id": "Relation_To_ISO15924",
+        "text_sha256": "4fb6825311e04dffa0f62e3aad505a19c7ba2a1ef98534262bb1db3f31fb436a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.assignment-script-values",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Assignment_Script_Values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Initial Assignment of Script Property Values.",
+      "locator": {
+        "section_id": "Assignment_Script_Values",
+        "text_sha256": "5dc83fd340fe5395f20c42076802a8e96350ad49a18702eb238c9b1ade9029cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-designators",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Designators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Script Designators in Character and Block Names.",
+      "locator": {
+        "section_id": "Script_Designators",
+        "text_sha256": "e6a8c5a3a2da7484494d08bd8843c019f95e0d78c22f2b2b496b9b8cabe35525"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-value-aliases",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Value_Aliases"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Script Property Value Aliases.",
+      "locator": {
+        "section_id": "Script_Value_Aliases",
+        "text_sha256": "9a35a56b62970892ae14785869b742e99ba992eb7609598cbf1157c01150b00e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.script-value-aliases-clause-227cba7eb891",
+        "unicode-tr24-tr24-32.script-value-aliases-clause-7a22ace52446"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-value-aliases-clause-227cba7eb891",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Value_Aliases"
+      ],
+      "behaviour": "Script Property Value Aliases — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Script_Value_Aliases",
+        "clause_index": 0,
+        "clause_sha256": "227cba7eb89113d369a64153efc5540edf9a423451ca5a6e0d891f69e839f158"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-value-aliases-clause-7a22ace52446",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Value_Aliases"
+      ],
+      "behaviour": "Script Property Value Aliases — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "Script_Value_Aliases",
+        "clause_index": 6,
+        "clause_sha256": "7a22ace524464c39a8617e97f9f03e0c37f7059ed16ce1137d07efc61efc09da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-names",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Names"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Script Names.",
+      "locator": {
+        "section_id": "Script_Names",
+        "text_sha256": "d0cbdaf932ec1b85334257a8a125eb8b55affb0f46a05237ce0b493ace5b57cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.script-names-clause-390c260245a2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-names-clause-390c260245a2",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Names"
+      ],
+      "behaviour": "Script Names — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "Script_Names",
+        "clause_index": 5,
+        "clause_sha256": "390c260245a2f486422b0c98a8e887b1339909829ed86657b8467a8e32c8cc3a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-anomalies",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Anomalies"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Script Anomalies.",
+      "locator": {
+        "section_id": "Script_Anomalies",
+        "text_sha256": "2f540665f5781a97337d8cc47c579c8de814117cbd061d7245b18a8b3cbe48a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.script-anomalies-clause-94035c9889e8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-anomalies-clause-94035c9889e8",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Anomalies"
+      ],
+      "behaviour": "Script Anomalies — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "Script_Anomalies",
+        "clause_index": 15,
+        "clause_sha256": "94035c9889e812b051516b93e1f9211204c06696bd5edea8ad18afdce32dfa3b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-extensions",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Extensions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 3 The Script_Extensions Property.",
+      "locator": {
+        "section_id": "Script_Extensions",
+        "text_sha256": "b6585eba2cc3acac096120bba71d0f227afcf376f1a3bce614397263c3b6c569"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.script-extensions-clause-d1fa876373e3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-extensions-clause-d1fa876373e3",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Extensions"
+      ],
+      "behaviour": "3 The Script_Extensions Property — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Script_Extensions",
+        "clause_index": 0,
+        "clause_sha256": "d1fa876373e3c9eb6d82632bf965ffddb03fdc6e0a788203f2488f24ef0258ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-extensions-def",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Extensions_Def"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Script_Extensions Property Values.",
+      "locator": {
+        "section_id": "Script_Extensions_Def",
+        "text_sha256": "60ae066f017469400abb3979f742391244415bf13490843ffd4a26b3de317a1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.script-extensions-def-clause-d2af517aa425",
+        "unicode-tr24-tr24-32.script-extensions-def-clause-4737ad50c600"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-extensions-def-clause-d2af517aa425",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Extensions_Def"
+      ],
+      "behaviour": "Script_Extensions Property Values — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "Script_Extensions_Def",
+        "clause_index": 7,
+        "clause_sha256": "d2af517aa425abd6e1fc03b33e37fa18eddb7cf66ae91f04d22a06b54b45a1a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-extensions-def-clause-4737ad50c600",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Extensions_Def"
+      ],
+      "behaviour": "Script_Extensions Property Values — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "Script_Extensions_Def",
+        "clause_index": 9,
+        "clause_sha256": "4737ad50c6006a6463c69493b5550c1eff60614e0b0d1c4ed1eed5e82d47c44f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.assignment-scriptx-values",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Assignment_ScriptX_Values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Initial Assignment of Script_Extensions Property Values.",
+      "locator": {
+        "section_id": "Assignment_ScriptX_Values",
+        "text_sha256": "989c2e3ab691d628a5e6cc861714662a7302ad1cf2d661efad31408b221219d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.assignment-scriptx-values-clause-5d4d1f8029bb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.assignment-scriptx-values-clause-5d4d1f8029bb",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Assignment_ScriptX_Values"
+      ],
+      "behaviour": "Initial Assignment of Script_Extensions Property Values — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "Assignment_ScriptX_Values",
+        "clause_index": 5,
+        "clause_sha256": "5d4d1f8029bb6e0651c95edefc3dffe037a80259e914de781cc5e6989dc1b061"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.data-file",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Data_File"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 4 Data Files.",
+      "locator": {
+        "section_id": "Data_File",
+        "text_sha256": "21edf0a44ff03d8d3fa0f857e6836a7c97e252688840bc8d890f2e4556741912"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.data-file-sc",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Data_File_SC"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scripts.txt.",
+      "locator": {
+        "section_id": "Data_File_SC",
+        "text_sha256": "cf66b7e47ce706e1fd16ac8a84f133f639279b0b998eef26930ba6494d2d51a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.data-file-scx",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Data_File_SCX"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ScriptExtensions.txt.",
+      "locator": {
+        "section_id": "Data_File_SCX",
+        "text_sha256": "fc146608e0bee7be17f84983f9289fab8fdce24200bdc8f4a8d71f6f53f678e3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.data-file-pva",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Data_File_PVA"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in PropertyValueAliases.txt.",
+      "locator": {
+        "section_id": "Data_File_PVA",
+        "text_sha256": "1a08abf1f7a8b4c1405312450862137393513981f454569f6427758830db2076"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.implementation",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Implementation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 5 Implementation Notes.",
+      "locator": {
+        "section_id": "Implementation",
+        "text_sha256": "445d86b71ee6565a36012904afd3fd113fc924658d9f48b74455a22e5c04b769"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.common",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Common"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Handling Characters with the Common Script Property.",
+      "locator": {
+        "section_id": "Common",
+        "text_sha256": "a9120a2a54f9c045521d8a26355e921ef53e22bd6ecc36d77612441aa1bc195c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.common-clause-1939dba0321a",
+        "unicode-tr24-tr24-32.common-clause-2794beb2fed0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.common-clause-1939dba0321a",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Common"
+      ],
+      "behaviour": "Handling Characters with the Common Script Property — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Common",
+        "clause_index": 0,
+        "clause_sha256": "1939dba0321a0b269f5fa0c4aa9ec03bba9bb05aaae9a88fea098072a1f97393"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.common-clause-2794beb2fed0",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Common"
+      ],
+      "behaviour": "Handling Characters with the Common Script Property — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Common",
+        "clause_index": 1,
+        "clause_sha256": "2794beb2fed04384965dff9bca56d8ff8011a24765c8955667c764fdc0a66284"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.nonspacing-marks",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Nonspacing_Marks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Handling Combining Marks.",
+      "locator": {
+        "section_id": "Nonspacing_Marks",
+        "text_sha256": "35db96c4c3ce2a2b1043b46265f84cd11be664ede1aeff8cce58b705f01dc672"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.nonspacing-marks-clause-962d5be8043a",
+        "unicode-tr24-tr24-32.nonspacing-marks-clause-fc03e1fec1ee"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.nonspacing-marks-clause-962d5be8043a",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Nonspacing_Marks"
+      ],
+      "behaviour": "Handling Combining Marks — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Nonspacing_Marks",
+        "clause_index": 0,
+        "clause_sha256": "962d5be8043a995ea9aa65669c465e47a37fa5c627b6c0147f9c2acd43667a30"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.nonspacing-marks-clause-fc03e1fec1ee",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Nonspacing_Marks"
+      ],
+      "behaviour": "Handling Combining Marks — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Nonspacing_Marks",
+        "clause_index": 4,
+        "clause_sha256": "fc03e1fec1eeb834ca17ac095d598e9796979026ed7b64b72c5a9e019def406b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.multiple-script-values",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Multiple_Script_Values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Multiple Script Values.",
+      "locator": {
+        "section_id": "Multiple_Script_Values",
+        "text_sha256": "96362a7b2b150a15f40947eff77fcf42c76c2e56ce1b0e70ecf4b775472f7f4d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.multiple-script-values-clause-c51bf4a53058",
+        "unicode-tr24-tr24-32.multiple-script-values-clause-536a8ea2ec65"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.multiple-script-values-clause-c51bf4a53058",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Multiple_Script_Values"
+      ],
+      "behaviour": "Multiple Script Values — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Multiple_Script_Values",
+        "clause_index": 2,
+        "clause_sha256": "c51bf4a53058b15d4b2d8543165d02910cd7f9b723e876c6e1e24c3cd99da1c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.multiple-script-values-clause-536a8ea2ec65",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Multiple_Script_Values"
+      ],
+      "behaviour": "Multiple Script Values — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Multiple_Script_Values",
+        "clause_index": 4,
+        "clause_sha256": "536a8ea2ec65691dd7d6157b66354390aa46a47613e5248305333662b9002db4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-names-in-regex",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Names_in_RegEx"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Using Script Property Values in Regular Expressions.",
+      "locator": {
+        "section_id": "Script_Names_in_RegEx",
+        "text_sha256": "c428fd5b37b26fbf551f6277dce3cffa9aab6fca5720836b1eca6b15cbad3036"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr24-tr24-32.script-names-in-regex-clause-49e1f4a07624"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-names-in-regex-clause-49e1f4a07624",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Names_in_RegEx"
+      ],
+      "behaviour": "Using Script Property Values in Regular Expressions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Script_Names_in_RegEx",
+        "clause_index": 0,
+        "clause_sha256": "49e1f4a07624b0330933b5bcaf964f83bf110e0a9ee6b4eb4fcf3f8a51041487"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.script-names-in-rendering",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Script_Names_in_Rendering"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Use of the Script Property in Rendering Systems.",
+      "locator": {
+        "section_id": "Script_Names_in_Rendering",
+        "text_sha256": "32fafead5c86a2e5371c86832f5e1f4650ca00f0c5f53f74cfa90084d4000ff0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.limitations",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Limitations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Limitations.",
+      "locator": {
+        "section_id": "Limitations",
+        "text_sha256": "94524b3d246846acae49e8e11de496637c3de95bc998727a02c75ae951e984e5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.spoofing",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Spoofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Spoofing.",
+      "locator": {
+        "section_id": "Spoofing",
+        "text_sha256": "42d0a232f7afc67b2ecf0a481d3df0e259075f2bd604fdf6f596da124d513731"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.modifications",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Modifications"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Modifications.",
+      "locator": {
+        "section_id": "Modifications",
+        "text_sha256": "f6326afc675c755471417f565a3f13f7d5960ee6bab65574dab2fe55b61937c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.heading-cc981a7f546a",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "heading-cc981a7f546a"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Revision 32 [KW].",
+      "locator": {
+        "section_id": "heading-cc981a7f546a",
+        "text_sha256": "6f6a09bc574c49512a107cf46ab781bb2b06d5a4b433e580d756f4e63a364994"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.acknowledgments",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "Acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "Acknowledgments",
+        "text_sha256": "f67c527d73cb2b16efa44aae9f5dbcb0e3350b69085d4138c21d99d14e3e844b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr24-tr24-32.references",
+      "family": "unicode-tr24-tr24-32",
+      "source_id": "unicode-tr24-tr24-32",
+      "sections": [
+        "References"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "References",
+        "text_sha256": "8e262b530dd9dea23efac0eca37ae00f8a40d4b1be2872783d65ad768734b47a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

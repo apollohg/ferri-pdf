@@ -1,0 +1,779 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-ui.q18-0",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "q18.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 18 User interface.",
+      "locator": {
+        "section_id": "q18.0",
+        "text_sha256": "e47984d551746f165dd5396206bc3c5543975e4128ba3b8fc89ab5250466a589"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-ui.cursor-props",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "cursor-props"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cursors: the 'cursor' property.",
+      "locator": {
+        "section_id": "cursor-props",
+        "text_sha256": "661836128110b990efa7e1b0b8be0fd573fe4b134c28710a3413093a52fd968d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-ui.cursor-props-clause-797eda7da1de",
+        "css21-ui.cursor-props-clause-cca2516ebb1d",
+        "css21-ui.cursor-props-clause-86a0835e3fe8",
+        "css21-ui.cursor-props-clause-76092990cfac",
+        "css21-ui.cursor-props-clause-9c07ed556a30",
+        "css21-ui.cursor-props-clause-0eda1d4ccdc6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-ui.cursor-props-clause-797eda7da1de",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "cursor-props"
+      ],
+      "behaviour": "Cursors: the 'cursor' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor-props",
+        "clause_index": 2,
+        "clause_sha256": "797eda7da1de1a9141466b4d47bf8a37667020bff75f73b4b90b16870983ffcc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.cursor-props-clause-cca2516ebb1d",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "cursor-props"
+      ],
+      "behaviour": "Cursors: the 'cursor' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor-props",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.cursor-props-clause-86a0835e3fe8",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "cursor-props"
+      ],
+      "behaviour": "Cursors: the 'cursor' property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor-props",
+        "clause_index": 15,
+        "clause_sha256": "86a0835e3fe8a3ceb128ecf4fe0c730ea9e34b0506890a752f43a1ee6e421723"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.cursor-props-clause-76092990cfac",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "cursor-props"
+      ],
+      "behaviour": "Cursors: the 'cursor' property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor-props",
+        "clause_index": 31,
+        "clause_sha256": "76092990cfac0fc79158e6e3c9890347e881e83cb96808d83511fc24321c114d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.cursor-props-clause-9c07ed556a30",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "cursor-props"
+      ],
+      "behaviour": "Cursors: the 'cursor' property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor-props",
+        "clause_index": 37,
+        "clause_sha256": "9c07ed556a30010a80f47bf769cfa14168b4f1fcdbe9ae9b1d73968892a48843"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.cursor-props-clause-0eda1d4ccdc6",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "cursor-props"
+      ],
+      "behaviour": "Cursors: the 'cursor' property — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "cursor-props",
+        "clause_index": 41,
+        "clause_sha256": "0eda1d4ccdc6728403e614155dfc89f315b302cfc1d23029de099dd092819936"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.system-colors",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "system-colors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in System Colors.",
+      "locator": {
+        "section_id": "system-colors",
+        "text_sha256": "f187d0da5d2fe427ec42ac3cac02302d53d542fc990e18f2173152940392e16f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-ui.system-colors-clause-fec0d0ca8fd1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-ui.system-colors-clause-fec0d0ca8fd1",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "system-colors"
+      ],
+      "behaviour": "System Colors — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "system-colors",
+        "clause_index": 2,
+        "clause_sha256": "fec0d0ca8fd19c13d4964cde0aad3d4ea521c9f4556abca1a38450ccb5e23d82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.system-fonts",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "system-fonts"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in User preferences for fonts.",
+      "locator": {
+        "section_id": "system-fonts",
+        "text_sha256": "75ce864c162ee016bf0d071599f39906161a0bef598280e9728b0b9ac2f8c0f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-ui.x2",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dynamic outlines: the 'outline' property.",
+      "locator": {
+        "section_id": "x2",
+        "text_sha256": "e42a3543f46632542cbfd8d58a686b7d09010247c5ffc9ca0561b124587302e3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-ui.x2-clause-98999c7ceab9",
+        "css21-ui.x2-clause-cca2516ebb1d",
+        "css21-ui.x2-clause-fea4ea2cc03b",
+        "css21-ui.x2-clause-c749dff961ef",
+        "css21-ui.x2-clause-d59ff219b376",
+        "css21-ui.x2-clause-4f055adcb2a5",
+        "css21-ui.x2-clause-501ec4469bfa",
+        "css21-ui.x2-clause-2bb374a6e8c2",
+        "css21-ui.x2-clause-7a39c11d8232",
+        "css21-ui.x2-clause-85aa74564232",
+        "css21-ui.x2-clause-a6d5e0b8869d",
+        "css21-ui.x2-clause-12b5e4767233"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-ui.x2-clause-98999c7ceab9",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 6,
+        "clause_sha256": "98999c7ceab9c00f48712e0d94c3ee1a6dd882eaecf7342fb13ee3ff1174b44c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.x2-clause-cca2516ebb1d",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 17,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.x2-clause-fea4ea2cc03b",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 18,
+        "clause_sha256": "fea4ea2cc03baeb55d54786668fa9b834c2d1b3301230bc76b2c0f479b7a3219"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.x2-clause-c749dff961ef",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 22,
+        "clause_sha256": "c749dff961ef741c02a38450a9f8733a7b2a6b836b8a9b2909bcc643f18af851"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.x2-clause-d59ff219b376",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 34,
+        "clause_sha256": "d59ff219b3767ffe6f30464a0feb15aa576a24610ae3d978be4f059b5b397b9b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.x2-clause-4f055adcb2a5",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 38,
+        "clause_sha256": "4f055adcb2a5ab9d71093eec289f76e678698fee3c3595a8ec9a49b91941270e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.x2-clause-501ec4469bfa",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 51, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 50,
+        "clause_sha256": "501ec4469bfa5bb78c6e48213d23f1c1e3c37512b23e9f644839686aec0e0004"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.x2-clause-2bb374a6e8c2",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 55, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 54,
+        "clause_sha256": "2bb374a6e8c219591ec2df68b163678f1fb7fbc6e362caded63e614dd1766296"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.x2-clause-7a39c11d8232",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 72, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 71,
+        "clause_sha256": "7a39c11d8232fa8902bd54bba29373ae960a8cd5a2e470435084c4119711c6e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.x2-clause-85aa74564232",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 73, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 72,
+        "clause_sha256": "85aa74564232d7082bb8eea48ae5fc550bedb764ba8c479ee9b4d7e287af94c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.x2-clause-a6d5e0b8869d",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 82, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 81,
+        "clause_sha256": "a6d5e0b8869d1caec1f3d8dbcb80a3ca3e5ae493cda863b01cd0e03d966e1756"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.x2-clause-12b5e4767233",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "x2"
+      ],
+      "behaviour": "Dynamic outlines: the 'outline' property — normative clause 83, located by its exact source hash.",
+      "locator": {
+        "section_id": "x2",
+        "clause_index": 82,
+        "clause_sha256": "12b5e476723305bf74f0a63690c604c9637ecdf3aae1c98fcc104ad4983ea59c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.outline-focus",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "outline-focus"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Outlines and the focus.",
+      "locator": {
+        "section_id": "outline-focus",
+        "text_sha256": "4e0955f7b3ed12bfbfed267ba6c91e482653918968270ee2c9bd88eb11e191ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-ui.outline-focus-clause-0c68f32af628"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-ui.outline-focus-clause-0c68f32af628",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "outline-focus"
+      ],
+      "behaviour": "Outlines and the focus — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "outline-focus",
+        "clause_index": 0,
+        "clause_sha256": "0c68f32af6281000de1b7f0e640db9487220c6235fbe31696d5c961852c5a455"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.magnification",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "magnification"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Magnification.",
+      "locator": {
+        "section_id": "magnification",
+        "text_sha256": "813fb48c0ee06cd521ea151a889dbe30b831d70968745d0c09d0f101719197ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-ui.magnification-clause-1799e51158c5",
+        "css21-ui.magnification-clause-38d4f76ce20d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-ui.magnification-clause-1799e51158c5",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "magnification"
+      ],
+      "behaviour": "Magnification — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "magnification",
+        "clause_index": 0,
+        "clause_sha256": "1799e51158c5e4b00e54f71c08d74fc53d2fb5e9aec4c796b5664db3799bb257"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-ui.magnification-clause-38d4f76ce20d",
+      "family": "css21-ui",
+      "source_id": "css21-ui",
+      "sections": [
+        "magnification"
+      ],
+      "behaviour": "Magnification — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "magnification",
+        "clause_index": 1,
+        "clause_sha256": "38d4f76ce20d13fdd42a86f0824ea62bd70b07e952d402811665a4e435f881be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    }
+  ]
+}

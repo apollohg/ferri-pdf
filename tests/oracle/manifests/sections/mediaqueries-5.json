@@ -1,0 +1,1702 @@
+{
+  "schema_version": 1,
+  "source_id": "mediaqueries-5",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Media Queries Level 5",
+      "level": 1,
+      "text_sha256": "d71f5a1bacb59349bf455c6e17c7c88ce66b27a6c296455ccd22159d77191c45",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "3f31b460f980898f62ba48e11d6cf788e7b0ac421309bca9f4e3b051823d9b33",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "4c6512b85b7b33999d15665cc5e281dbbc21acbebcca0f110562352464170b7b",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "5a0ca81ba220bbed2755dddfe78de578e5c279ae9060974322a4b58c37a45a1d",
+      "clause_count": 109,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "f8d558600a3890985d961f73f3ab9b50401a5db7285461421b4d5cab8c088b0a",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module interactions",
+      "level": 3,
+      "text_sha256": "50cc1268adf9c49e4c1ed5c38dbd8a6c3d3bb0bec2be7872d0ffabbb4968d88e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.placement"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Values",
+      "level": 3,
+      "text_sha256": "2827d8e1df9c800c10ac1cfb6b2c07259430451d9905ff03ca9da614530f2c2a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.values"
+        ]
+      }
+    },
+    {
+      "id": "units",
+      "title": "1.3. Units",
+      "level": 3,
+      "text_sha256": "91b0aa60c8d946b405e66c4e586a31a8c183ffd00e487b9ae599714f3bf156cd",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.units"
+        ]
+      }
+    },
+    {
+      "id": "media",
+      "title": "2. Media Queries",
+      "level": 2,
+      "text_sha256": "f879883d0a9ac2213042490cc1785bc0340fc6a2f174e40675f5584f45fc487c",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.media",
+          "mediaqueries-5.media-clause-fe2d93288c38",
+          "mediaqueries-5.media-clause-bbe8ff29b8d5"
+        ]
+      }
+    },
+    {
+      "id": "mq-list",
+      "title": "2.1. Combining Media Queries",
+      "level": 3,
+      "text_sha256": "57cfdbc3854ff0a143e6a34172fcc8d509fc03c03830652e990255f79a0f2a7f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mq-list",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "mq-prefix",
+      "title": "2.2. Media Query Modifiers",
+      "level": 3,
+      "text_sha256": "4b417a05d9c342581df24bbb15d055af259fb1844a413b8aa845ef846987a1fe",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mq-prefix",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "mq-not",
+      "title": "2.2.1. Negating a Media Query: the not keyword",
+      "level": 4,
+      "text_sha256": "80dbf5bf9dad33f5231494a4b9a66d2a0ace21f3bfb3d862ef54375e3cc74797",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mq-not",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "mq-only",
+      "title": "2.2.2. Hiding a Media Query From Legacy user agents: the only keyword",
+      "level": 4,
+      "text_sha256": "fdab1af9ed3dc37533bf20062cc8fb033928df04393585bfced980aa0972da1e",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mq-only",
+          "mediaqueries-5.mq-only-clause-139862eaa7c4",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "media-types",
+      "title": "2.3. Media Types",
+      "level": 3,
+      "text_sha256": "6bb93e828ba8aab0b19912ff3d9d65f324ecf52db002a024e0e36bac74b74090",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.media-types",
+          "mediaqueries-5.media-types-clause-48286b43b4f2",
+          "mediaqueries-5.media-types-clause-a7e189d4654f",
+          "mediaqueries-5.media-types-clause-b23ae104cbe1",
+          "mediaqueries-5.media-types-clause-6326f1c73e3d",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "mq-features",
+      "title": "2.4. Media Features",
+      "level": 3,
+      "text_sha256": "18b0529ba25e89abd38ff894b0a224fed94a1084e7ee7e0972e7191ae3d50f1f",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mq-features",
+          "mediaqueries-5.mq-features-clause-c4f8f0cc2574",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "mq-ranges",
+      "title": "2.4.1. Media Feature Types: “range” and “discrete”",
+      "level": 4,
+      "text_sha256": "4eb66c6f2d026110994709da418a57437209d8f595cd2e7be0d7cb0f8eec5dc5",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mq-ranges",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "mq-boolean-context",
+      "title": "2.4.2. Evaluating Media Features in a Boolean Context",
+      "level": 4,
+      "text_sha256": "805d9280b453e678ce959ad7d3eccd20f55cf2b1b98cac96dbc0ba1962680912",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mq-boolean-context",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "mq-range-context",
+      "title": "2.4.3. Evaluating Media Features in a Range Context",
+      "level": 4,
+      "text_sha256": "2483d3ae362ba09c984b6f37e341375b42b1d3be611db63253e5af2967001b01",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mq-range-context",
+          "mediaqueries-5.mq-range-context-clause-928ab9396dff",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "mq-min-max",
+      "title": "2.4.4. Using “min-” and “max-” Prefixes On Range Features",
+      "level": 4,
+      "text_sha256": "813b4df228e27c64be24dafa262bfb5f195d037141b2300920ae83425270b540",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mq-min-max",
+          "mediaqueries-5.mq-min-max-clause-4724fc6dff0f",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "media-conditions",
+      "title": "2.5. Combining Media Features",
+      "level": 3,
+      "text_sha256": "d490da793f2083d4cec52393ec86038a3ba01c957a57c1363b1ac09c086ae50e",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.media-conditions",
+          "mediaqueries-5.media-conditions-clause-9828de00d96b",
+          "mediaqueries-5.media-conditions-clause-9a188200bc39",
+          "mediaqueries-5.media-conditions-clause-619e115c4af8",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "mq-syntax",
+      "title": "3. Syntax",
+      "level": 2,
+      "text_sha256": "e6b471d3db1c46776070b2c9875b05d7fa5893bce269405942aeb608a3f6dc5e",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mq-syntax",
+          "mediaqueries-5.mq-syntax-clause-fb9dd6974e3d",
+          "mediaqueries-5.mq-syntax-clause-603e4576ef31",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "evaluating",
+      "title": "3.1. Evaluating Media Queries",
+      "level": 3,
+      "text_sha256": "12c19fe0aac9470a46ab5e2b10e2b57ebfa7b716525abddb86bed30996f0161a",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.evaluating",
+          "mediaqueries-5.evaluating-clause-63861ba7087e",
+          "mediaqueries-5.evaluating-clause-b930d434efdf",
+          "mediaqueries-5.evaluating-clause-10c32f0a2de1",
+          "mediaqueries-5.evaluating-clause-9b23c31253b7",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "error-handling",
+      "title": "3.2. Error Handling",
+      "level": 3,
+      "text_sha256": "44160257cb552ceeaf3327af24f868523b223102a3f682d4e760d2e6822e9a7f",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.error-handling",
+          "mediaqueries-5.error-handling-clause-70a97bb855e3",
+          "mediaqueries-5.error-handling-clause-1244db17d4f6",
+          "mediaqueries-5.error-handling-clause-9ca36efd63b8",
+          "mediaqueries-5.error-handling-clause-08d9f6b8429b",
+          "mediaqueries-5.error-handling-clause-a13a7a1e4d7c",
+          "mediaqueries-5.error-handling-clause-8c8452bcb3bd",
+          "mediaqueries-5.error-handling-clause-50d22266da44",
+          "mediaqueries-5.error-handling-clause-15c6ee41a21e",
+          "mediaqueries-5.error-handling-clause-8038a03e1c48",
+          "mediaqueries-5.error-handling-clause-d9c8a9e57ce1",
+          "mediaqueries-5.error-handling-clause-5cc46341e111",
+          "mediaqueries-5.error-handling-clause-edc63d634691",
+          "mediaqueries-5.error-handling-clause-68fd74297a7c",
+          "mediaqueries-5.foundation-media-query-syntax"
+        ]
+      }
+    },
+    {
+      "id": "mf-viewport-characteristics",
+      "title": "4. Viewport/Page Characteristics Media Features",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mf-viewport-characteristics"
+        ]
+      }
+    },
+    {
+      "id": "width",
+      "title": "4.1. Width: the width feature",
+      "level": 3,
+      "text_sha256": "c8b22d800a5ec0ab710d10da2b1bdd3f50d6b498049ffd4a9c2f87f6c369ebed",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.width",
+          "mediaqueries-5.width-clause-ec7f82de5157",
+          "mediaqueries-5.width-clause-4c9ce79f9758",
+          "mediaqueries-5.foundation-media-width"
+        ]
+      }
+    },
+    {
+      "id": "height",
+      "title": "4.2. Height: the height feature",
+      "level": 3,
+      "text_sha256": "242c871d721800ed66ad594493f9234ff64208ae2f5ac3ad0f70358265074f2e",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.height",
+          "mediaqueries-5.foundation-media-height"
+        ]
+      }
+    },
+    {
+      "id": "aspect-ratio",
+      "title": "4.3. Aspect-Ratio: the aspect-ratio feature",
+      "level": 3,
+      "text_sha256": "91bb5d330543f1d9d80ff31b2b8a316e35fdfee1d1aea6853a6372dc3203f054",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.aspect-ratio",
+          "mediaqueries-5.foundation-media-aspect-ratio"
+        ]
+      }
+    },
+    {
+      "id": "orientation",
+      "title": "4.4. Orientation: the orientation feature",
+      "level": 3,
+      "text_sha256": "7a6af04e5a98123f1268d4bf72cf2f809bb68f03f623212272d7b4420f958317",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.orientation",
+          "mediaqueries-5.foundation-media-orientation"
+        ]
+      }
+    },
+    {
+      "id": "mf-overflow-block",
+      "title": "4.5. Block-Axis Overflow: the overflow-block feature",
+      "level": 3,
+      "text_sha256": "e90009e240eb3ac1ced01663b5596c3f4b93fe35e2985c2ec4bf6d912d141174",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mf-overflow-block",
+          "mediaqueries-5.foundation-media-overflow-block"
+        ]
+      }
+    },
+    {
+      "id": "mf-overflow-inline",
+      "title": "4.6. Inline-Axis Overflow: the overflow-inline feature",
+      "level": 3,
+      "text_sha256": "01b6c0b21def899c393390e006560d795261af2bf2f49bfd2dfcd6a2c0542169",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mf-overflow-inline",
+          "mediaqueries-5.foundation-media-overflow-inline"
+        ]
+      }
+    },
+    {
+      "id": "mf-horizontal-viewport-segments",
+      "title": "4.7. Horizontal Viewport Segments: the horizontal-viewport-segments feature",
+      "level": 3,
+      "text_sha256": "4b91b6ccc19d0f24c3eb4e79f7cab49f934672abba1ffbb1f293b5d5c6d2c399",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mf-horizontal-viewport-segments",
+          "mediaqueries-5.foundation-media-horizontal-viewport-segments"
+        ]
+      }
+    },
+    {
+      "id": "mf-vertical-viewport-segments",
+      "title": "4.8. Vertical Viewport Segments: the vertical-viewport-segments feature",
+      "level": 3,
+      "text_sha256": "a87963cb23a7ddddd757fa7437c0f7f48f17c740575a53c7da3214eb082777bc",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mf-vertical-viewport-segments",
+          "mediaqueries-5.foundation-media-vertical-viewport-segments"
+        ]
+      }
+    },
+    {
+      "id": "display-modes",
+      "title": "4.9. Display Modes: the display-mode media feature",
+      "level": 3,
+      "text_sha256": "79d003bab3f243e741533a7cfcd258da67dbf856d3cfec381238f5fe50e74ed4",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.display-modes",
+          "mediaqueries-5.display-modes-clause-f833addc95ac",
+          "mediaqueries-5.display-modes-clause-ee634b5a8e07",
+          "mediaqueries-5.display-modes-clause-b4c6941586f5",
+          "mediaqueries-5.foundation-media-display-mode"
+        ]
+      }
+    },
+    {
+      "id": "mf-display-quality",
+      "title": "5. Display Quality Media Features",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mf-display-quality"
+        ]
+      }
+    },
+    {
+      "id": "resolution",
+      "title": "5.1. Display Resolution: the resolution feature",
+      "level": 3,
+      "text_sha256": "79140481bbc47b4d02b0619034b5e9d8c05b114941364c553ec8c112f1831a98",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.resolution",
+          "mediaqueries-5.resolution-clause-8ba10a0cb7bd",
+          "mediaqueries-5.resolution-clause-14233a63cc89",
+          "mediaqueries-5.resolution-clause-bc12845d6ca8",
+          "mediaqueries-5.foundation-media-resolution"
+        ]
+      }
+    },
+    {
+      "id": "scan",
+      "title": "5.2. Display Type: the scan feature",
+      "level": 3,
+      "text_sha256": "786f28dcc0368a1e61cb2cbb5656d9db802f37d6e9f624eee7978d4f6978d3af",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.scan",
+          "mediaqueries-5.scan-clause-a94934b4af25",
+          "mediaqueries-5.scan-clause-3f64dd1c4cef",
+          "mediaqueries-5.scan-clause-70e3a1acb64a",
+          "mediaqueries-5.foundation-media-scan"
+        ]
+      }
+    },
+    {
+      "id": "grid",
+      "title": "5.3. Detecting Console Displays: the grid feature",
+      "level": 3,
+      "text_sha256": "0f755113bc0d8da1ffeb3a007bfb5b0fec5e8a236bbbc160c999a6db0db50c27",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.grid",
+          "mediaqueries-5.grid-clause-864b26fd31ef",
+          "mediaqueries-5.grid-clause-e9191a456814",
+          "mediaqueries-5.foundation-media-grid"
+        ]
+      }
+    },
+    {
+      "id": "update",
+      "title": "5.4. Display Update Frequency: the update feature",
+      "level": 3,
+      "text_sha256": "84a95bb65c90279bf0039040582e10ec59d8a26c3b7d906fdd2cc09476b15b82",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.update",
+          "mediaqueries-5.foundation-media-update"
+        ]
+      }
+    },
+    {
+      "id": "environment-blending",
+      "title": "5.5. Detecting the display technology: the environment-blending feature",
+      "level": 3,
+      "text_sha256": "ad62ad5b7794466945bd8671a5b0867ec9b2b5ffa2ea58a900f66206af7ae532",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.environment-blending",
+          "mediaqueries-5.foundation-media-environment-blending"
+        ]
+      }
+    },
+    {
+      "id": "mf-colors",
+      "title": "6. Color Media Features",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mf-colors"
+        ]
+      }
+    },
+    {
+      "id": "color",
+      "title": "6.1. Color Depth: the color feature",
+      "level": 3,
+      "text_sha256": "91739a1a479bf1bcb47d4e2659d904465a68d4102dd6f3196e2a55c0291aca41",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.color",
+          "mediaqueries-5.color-clause-d8524c74c565",
+          "mediaqueries-5.color-clause-e8f77f90d2d2",
+          "mediaqueries-5.foundation-media-color"
+        ]
+      }
+    },
+    {
+      "id": "color-index",
+      "title": "6.2. Paletted Color Screens: the color-index feature",
+      "level": 3,
+      "text_sha256": "0fc3dd778e0a067838771fb3f09eeed66854ef34c5b695b278dacef7587c8cb0",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.color-index",
+          "mediaqueries-5.foundation-media-color-index"
+        ]
+      }
+    },
+    {
+      "id": "monochrome",
+      "title": "6.3. Monochrome Screens: the monochrome feature",
+      "level": 3,
+      "text_sha256": "8917316febea2c639c7747f4dd579482966bcf29b2d2c25c59e52b13d5d4e1b0",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.monochrome",
+          "mediaqueries-5.foundation-media-monochrome"
+        ]
+      }
+    },
+    {
+      "id": "color-gamut",
+      "title": "6.4. Color Display Quality: the color-gamut feature",
+      "level": 3,
+      "text_sha256": "17a491727cf06258acbbd033f5d3995dd9ada6adeb42005d6c9b2914b44a330c",
+      "clause_count": 70,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.color-gamut",
+          "mediaqueries-5.color-gamut-clause-6c359c1f01c0",
+          "mediaqueries-5.color-gamut-clause-162d46c370d1",
+          "mediaqueries-5.color-gamut-clause-b494e839140f",
+          "mediaqueries-5.foundation-media-color-gamut"
+        ]
+      }
+    },
+    {
+      "id": "dynamic-range",
+      "title": "6.5. Dynamic Range: the dynamic-range feature",
+      "level": 3,
+      "text_sha256": "e83b6d618c598493f24bfb07fedaf764be548f7c39b8d3e68f8c09b91a6584ff",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.dynamic-range",
+          "mediaqueries-5.foundation-media-dynamic-range"
+        ]
+      }
+    },
+    {
+      "id": "contrast-brightness-of-display",
+      "title": "6.5.1. Determining contrast and brightness of display",
+      "level": 4,
+      "text_sha256": "898a20478e39b9d945c54b36300c97bb88f912c27d01fba3007bc41876026ea8",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.contrast-brightness-of-display",
+          "mediaqueries-5.contrast-brightness-of-display-clause-78591f00dd95",
+          "mediaqueries-5.contrast-brightness-of-display-clause-c31ebf905b20"
+        ]
+      }
+    },
+    {
+      "id": "inverted",
+      "title": "6.6. Detecting inverted colors on the display: the inverted-colors feature",
+      "level": 3,
+      "text_sha256": "ba74922898359d290892b7c09beed03aff31ea44f022b0e79314dfeb072a8bb2",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.inverted",
+          "mediaqueries-5.inverted-clause-34e7df795440",
+          "mediaqueries-5.inverted-clause-05ce2b6c6048",
+          "mediaqueries-5.inverted-clause-97030031cb3b",
+          "mediaqueries-5.foundation-media-inverted-colors"
+        ]
+      }
+    },
+    {
+      "id": "mf-interaction",
+      "title": "7. Interaction Media Features",
+      "level": 2,
+      "text_sha256": "e8772c12ece28216c5844ca4199ca9669de4cc13b7b69c4e12bdc3562420bb93",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mf-interaction",
+          "mediaqueries-5.mf-interaction-clause-9d22e2c25611",
+          "mediaqueries-5.mf-interaction-clause-c68d44d83d62",
+          "mediaqueries-5.mf-interaction-clause-109dbc47e176"
+        ]
+      }
+    },
+    {
+      "id": "pointer",
+      "title": "7.1. Pointing Device Quality: the pointer feature",
+      "level": 3,
+      "text_sha256": "279261e7035b50c14f07ceca1b42945f8c027173eedd5ae164b12300b0961f57",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.pointer",
+          "mediaqueries-5.pointer-clause-44e32e9dac33",
+          "mediaqueries-5.pointer-clause-dd3a4f357f1f",
+          "mediaqueries-5.pointer-clause-c10494c55311",
+          "mediaqueries-5.pointer-clause-8874f2e38e57",
+          "mediaqueries-5.foundation-media-pointer"
+        ]
+      }
+    },
+    {
+      "id": "hover",
+      "title": "7.2. Hover Capability: the hover feature",
+      "level": 3,
+      "text_sha256": "dc8a41a0ebc24cb129908b9d94df5e6b9173e846971dbbb95a60a284dbe202a5",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.hover",
+          "mediaqueries-5.hover-clause-043cbca4807b",
+          "mediaqueries-5.hover-clause-1631f674c9e2",
+          "mediaqueries-5.hover-clause-af1e29b5fd54",
+          "mediaqueries-5.hover-clause-ed1054d00d2f",
+          "mediaqueries-5.foundation-media-hover"
+        ]
+      }
+    },
+    {
+      "id": "any-input",
+      "title": "7.3. All Available Interaction Capabilities: the any-pointer and any-hover features",
+      "level": 3,
+      "text_sha256": "034e028b4270e51a3c6ff32c4251171033f680be950ea022e19c21939e3a2a78",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.any-input",
+          "mediaqueries-5.any-input-clause-3c015cb49a01",
+          "mediaqueries-5.any-input-clause-d6f5a8c226c6",
+          "mediaqueries-5.foundation-media-any-pointer-hover"
+        ]
+      }
+    },
+    {
+      "id": "nav-controls",
+      "title": "7.4. Detecting UA-supplied navigation controls: the nav-controls feature",
+      "level": 3,
+      "text_sha256": "5f9af611d63ce925e09757a225284f5897f2a3ac69cd87b9320474b83ec53ff8",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.nav-controls",
+          "mediaqueries-5.nav-controls-clause-df4d284c0395",
+          "mediaqueries-5.nav-controls-clause-088a0ffa364f",
+          "mediaqueries-5.nav-controls-clause-e9fa490c6734",
+          "mediaqueries-5.foundation-media-nav-controls"
+        ]
+      }
+    },
+    {
+      "id": "video-prefixed-features",
+      "title": "8. Video Prefixed Features",
+      "level": 2,
+      "text_sha256": "f6d215a36728f236d28a00ce511dd6977d393f94372eebae1349e1df9057b278",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.video-prefixed-features",
+          "mediaqueries-5.video-prefixed-features-clause-551739a1e0c5",
+          "mediaqueries-5.video-prefixed-features-clause-22dcd28b9cae"
+        ]
+      }
+    },
+    {
+      "id": "video-color-gamut",
+      "title": "8.1. Video Color Display Quality: the video-color-gamut feature",
+      "level": 3,
+      "text_sha256": "c88ddec259936f55c96e3fc79398d8efb55e497444944ccf0d1cf9757a8e5ae5",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.video-color-gamut",
+          "mediaqueries-5.foundation-media-video-color-gamut"
+        ]
+      }
+    },
+    {
+      "id": "video-dynamic-range",
+      "title": "8.2. Video Dynamic Range: the video-dynamic-range feature",
+      "level": 3,
+      "text_sha256": "dcd619af901bed7e1a76cd94ef0c30e93d81a02d13e53745a7201aa1737cd3d1",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.video-dynamic-range",
+          "mediaqueries-5.foundation-media-video-dynamic-range"
+        ]
+      }
+    },
+    {
+      "id": "mf-scripting",
+      "title": "9. Scripting Media Features",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mf-scripting"
+        ]
+      }
+    },
+    {
+      "id": "scripting",
+      "title": "9.1. Scripting Support: the scripting feature",
+      "level": 3,
+      "text_sha256": "a8643abedff322a26f037a56d6ac48d9d976176f00a0aefdd00702b60c1bedb6",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.scripting",
+          "mediaqueries-5.scripting-clause-e24da79f84cc",
+          "mediaqueries-5.scripting-clause-d1ee601c8108",
+          "mediaqueries-5.scripting-clause-1fb85f176138",
+          "mediaqueries-5.scripting-clause-2c3d0ef29511",
+          "mediaqueries-5.scripting-clause-fc459f8b2d79",
+          "mediaqueries-5.foundation-media-scripting"
+        ]
+      }
+    },
+    {
+      "id": "custom-mq",
+      "title": "10. Custom Media Queries",
+      "level": 2,
+      "text_sha256": "1a2b17f1e6bdd0672d86f0708f845ec0c856860624fad1cd1948e2021204d590",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.custom-mq",
+          "mediaqueries-5.custom-mq-clause-e30fb8026d33",
+          "mediaqueries-5.custom-mq-clause-616a5a7b1668",
+          "mediaqueries-5.custom-mq-clause-33da300c097a",
+          "mediaqueries-5.foundation-custom-media-queries"
+        ]
+      }
+    },
+    {
+      "id": "script-custom-mq",
+      "title": "10.1. Script-based Custom Media Queries",
+      "level": 3,
+      "text_sha256": "0d8c1f4cbe984fb88b69c962fb9c55e6aabae475a5c53b113217d156bdb4ff73",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.script-custom-mq"
+        ]
+      }
+    },
+    {
+      "id": "custom-mq-cssom",
+      "title": "11. CSSOM",
+      "level": 2,
+      "text_sha256": "98fa526121e4b4ea7126265de18e0c01819b6d5e4333d4f05366522e9d97533d",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.custom-mq-cssom"
+        ]
+      }
+    },
+    {
+      "id": "mf-user-preferences",
+      "title": "12. User Preference Media Features",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mf-user-preferences"
+        ]
+      }
+    },
+    {
+      "id": "prefers-reduced-motion",
+      "title": "12.1. Detecting the desire for less motion on the page: the prefers-reduced-motion feature",
+      "level": 3,
+      "text_sha256": "ba789697d2429b0e743691f435a7ae7cb76bd457504428645116f63c3c25e7fb",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.prefers-reduced-motion",
+          "mediaqueries-5.foundation-media-prefers-reduced-motion"
+        ]
+      }
+    },
+    {
+      "id": "prefers-reduced-transparency",
+      "title": "12.2. Detecting the desire for reduced transparency on the page: the prefers-reduced-transparency feature",
+      "level": 3,
+      "text_sha256": "205ecfe3b8d6659ba6210f99bd87d49704a430c96d848b3bc3055c247dbf959e",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.prefers-reduced-transparency",
+          "mediaqueries-5.foundation-media-prefers-reduced-transparency"
+        ]
+      }
+    },
+    {
+      "id": "prefers-contrast",
+      "title": "12.3. Detecting the desire for increased or decreased color contrast from elements on the page: the prefers-contrast feature",
+      "level": 3,
+      "text_sha256": "1a444dd1f615834e1d3d98cca1bf65130a9d8ff91bc23608ba7142734bb1ea2b",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.prefers-contrast",
+          "mediaqueries-5.prefers-contrast-clause-a4987566b2f4",
+          "mediaqueries-5.prefers-contrast-clause-309fc27b9430",
+          "mediaqueries-5.prefers-contrast-clause-e3ae6787372c",
+          "mediaqueries-5.foundation-media-prefers-contrast"
+        ]
+      }
+    },
+    {
+      "id": "forced-colors",
+      "title": "12.4. Detecting Forced Colors Mode: the forced-colors feature",
+      "level": 3,
+      "text_sha256": "467611ed4b62258bc876ed6ad0affcd3da2aa1926897fbf7e841130d2106595c",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.forced-colors",
+          "mediaqueries-5.forced-colors-clause-90e643166285",
+          "mediaqueries-5.forced-colors-clause-26aaf20bd8cf",
+          "mediaqueries-5.forced-colors-clause-e93963bc8a78",
+          "mediaqueries-5.forced-colors-clause-8df6b4127286",
+          "mediaqueries-5.foundation-media-forced-colors"
+        ]
+      }
+    },
+    {
+      "id": "prefers-color-scheme",
+      "title": "12.5. Detecting the desire for light or dark color schemes: the prefers-color-scheme feature",
+      "level": 3,
+      "text_sha256": "08a55bf11efc7aa02d5e0266d1a9f409980414a501a9e0847f5cb94499d04dbe",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.prefers-color-scheme",
+          "mediaqueries-5.prefers-color-scheme-clause-fb0998e048f6",
+          "mediaqueries-5.prefers-color-scheme-clause-843dcc2c6f22",
+          "mediaqueries-5.prefers-color-scheme-clause-9748526607f8",
+          "mediaqueries-5.prefers-color-scheme-clause-454dea19d253",
+          "mediaqueries-5.prefers-color-scheme-clause-514a608056ac",
+          "mediaqueries-5.foundation-media-prefers-color-scheme"
+        ]
+      }
+    },
+    {
+      "id": "prefers-reduced-data",
+      "title": "12.6. Detecting the desire for reduced data usage when loading a page: the prefers-reduced-data feature",
+      "level": 3,
+      "text_sha256": "4f09dc6c132e10ab5a2b1e9ad3282a26a7c6ad92477a45edfa131c84f5116bcb",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.prefers-reduced-data",
+          "mediaqueries-5.foundation-media-prefers-reduced-data"
+        ]
+      }
+    },
+    {
+      "id": "auto-pref",
+      "title": "12.7. Automatic handling of User Preferences",
+      "level": 3,
+      "text_sha256": "b59c2e7f22953c368c0e8d279c51ca7d26f74688579b871b74da6533d8389d5b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.auto-pref"
+        ]
+      }
+    },
+    {
+      "id": "script-control-user-prefs",
+      "title": "13. Script Control of User Preferences",
+      "level": 2,
+      "text_sha256": "23323d39f97a3ad844a54f43e94c41af52f4b2189669d8ce556783a2419693a7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.script-control-user-prefs"
+        ]
+      }
+    },
+    {
+      "id": "navigator-interface",
+      "title": "13.1. Extensions to the Navigator interface",
+      "level": 3,
+      "text_sha256": "dcb8c0cf9a344908f3423b5e74d93a225fdbe5e72aeebc58d9e7643710341d98",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.navigator-interface"
+        ]
+      }
+    },
+    {
+      "id": "preferences-attribute",
+      "title": "13.1.1. preferences attribute",
+      "level": 4,
+      "text_sha256": "87d35064f2ace9c872cc91b4ff7125801c4c559a6f2ee1d90caad2f9916d646f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.preferences-attribute"
+        ]
+      }
+    },
+    {
+      "id": "preference-manager",
+      "title": "13.1.2. PreferenceManager interface",
+      "level": 4,
+      "text_sha256": "a5fca6d19f895bccd2ddebeae318862b41e0431954dbb72802392c0b188029d4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.preference-manager"
+        ]
+      }
+    },
+    {
+      "id": "color-scheme-attribute",
+      "title": "13.1.3. colorScheme attribute",
+      "level": 4,
+      "text_sha256": "9e205607a9a9ec341f006600f5b490d57b82fc94b94be43bd57be2507312b312",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.color-scheme-attribute",
+          "mediaqueries-5.color-scheme-attribute-clause-24d0a40270d8",
+          "mediaqueries-5.color-scheme-attribute-clause-a148296b8d5f",
+          "mediaqueries-5.color-scheme-attribute-clause-d3835500b749",
+          "mediaqueries-5.color-scheme-attribute-clause-4d0c0d65da11",
+          "mediaqueries-5.color-scheme-attribute-clause-96fc9e139ca6"
+        ]
+      }
+    },
+    {
+      "id": "contrast-attribute",
+      "title": "13.1.4. contrast attribute",
+      "level": 4,
+      "text_sha256": "62525f87322e0dc6e8d28424bea9afac775db46ad28d58f54b3e6f0707773745",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.contrast-attribute",
+          "mediaqueries-5.contrast-attribute-clause-c2f34e37e534",
+          "mediaqueries-5.contrast-attribute-clause-a148296b8d5f",
+          "mediaqueries-5.contrast-attribute-clause-414667bd561a",
+          "mediaqueries-5.contrast-attribute-clause-0b30a6d7848a"
+        ]
+      }
+    },
+    {
+      "id": "reduced-motion-attribute",
+      "title": "13.1.5. reducedMotion attribute",
+      "level": 4,
+      "text_sha256": "0fcca10e4dcb3ac726dda05b3500a801bf3c22d0594c80173f235aeb4bbc5139",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.reduced-motion-attribute",
+          "mediaqueries-5.reduced-motion-attribute-clause-c973e8a3d2f4",
+          "mediaqueries-5.reduced-motion-attribute-clause-a148296b8d5f",
+          "mediaqueries-5.reduced-motion-attribute-clause-aaaafa45b521",
+          "mediaqueries-5.reduced-motion-attribute-clause-7609397e9144"
+        ]
+      }
+    },
+    {
+      "id": "reduced-transparency-attribute",
+      "title": "13.1.6. reducedTransparency attribute",
+      "level": 4,
+      "text_sha256": "75c4cc506680b615e8e615059238b3303cacda174b8cc5beb22a8ebaf71b85f9",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.reduced-transparency-attribute",
+          "mediaqueries-5.reduced-transparency-attribute-clause-7b5957eb95d7",
+          "mediaqueries-5.reduced-transparency-attribute-clause-a148296b8d5f",
+          "mediaqueries-5.reduced-transparency-attribute-clause-f9f5cac7697d",
+          "mediaqueries-5.reduced-transparency-attribute-clause-0bb6e90bb2ae"
+        ]
+      }
+    },
+    {
+      "id": "reduced-data-attribute",
+      "title": "13.1.7. reducedData attribute",
+      "level": 4,
+      "text_sha256": "ffc8f1183849fa9c412329b27684657dc964c29068ef288ddf707722414d71de",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.reduced-data-attribute",
+          "mediaqueries-5.reduced-data-attribute-clause-281639130d90",
+          "mediaqueries-5.reduced-data-attribute-clause-a148296b8d5f",
+          "mediaqueries-5.reduced-data-attribute-clause-c46eed5f9de8",
+          "mediaqueries-5.reduced-data-attribute-clause-0b06f9bf51a0",
+          "mediaqueries-5.reduced-data-attribute-clause-17190ff8d315"
+        ]
+      }
+    },
+    {
+      "id": "preference-object-interface",
+      "title": "13.1.8. PreferenceObject interface",
+      "level": 4,
+      "text_sha256": "b3e8ba71c716e47f1446181e4628d8f1f1e758659da621beb473e2614e934143",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.preference-object-interface"
+        ]
+      }
+    },
+    {
+      "id": "override-attribute",
+      "title": "13.1.8.1. override attribute",
+      "level": 5,
+      "text_sha256": "68b768e45440eda50e4df875773cdd180dbb9dedad23883f57f08050e6305133",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.override-attribute"
+        ]
+      }
+    },
+    {
+      "id": "preference-value-attribute",
+      "title": "13.1.8.2. value attribute",
+      "level": 5,
+      "text_sha256": "e74f27dcb913545222b8a300a2793151354bbe3104e1dfc7804518d4f0fd21c3",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.preference-value-attribute"
+        ]
+      }
+    },
+    {
+      "id": "valid-values-attribute",
+      "title": "13.1.8.3. validValues attribute",
+      "level": 5,
+      "text_sha256": "09cc81708f3ca67d0bc4aaac1db16e83fa3105bd9f2f6c8c543584a44bc75ed5",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.valid-values-attribute"
+        ]
+      }
+    },
+    {
+      "id": "onchange-attribute",
+      "title": "13.1.8.4. onchange event handler attribute",
+      "level": 5,
+      "text_sha256": "fbd352d19cbaeec74b3fd0b02ffbc40ad71f8cc7b81b57f057e3161e86f803fe",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.onchange-attribute",
+          "mediaqueries-5.onchange-attribute-clause-a93f9fe48484"
+        ]
+      }
+    },
+    {
+      "id": "request-override-method",
+      "title": "13.1.8.5. requestOverride() method",
+      "level": 5,
+      "text_sha256": "a07e11c7001186c638ce4e3c45fd6d446fa13dbad0bf2114db0f24fe1a7a6f3b",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.request-override-method",
+          "mediaqueries-5.request-override-method-clause-44eb98813c1b",
+          "mediaqueries-5.request-override-method-clause-251b2b1ddef1",
+          "mediaqueries-5.request-override-method-clause-a410a09e0e7a",
+          "mediaqueries-5.request-override-method-clause-4e6e66ca5794",
+          "mediaqueries-5.request-override-method-clause-ccd6b586f0f9"
+        ]
+      }
+    },
+    {
+      "id": "clear-override-method",
+      "title": "13.1.8.6. clearOverride() method",
+      "level": 5,
+      "text_sha256": "b7e4d371629a7ed63e9762aa0e0a64ab28c4b4dcf023bdc2c72f10d6c10bfa44",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.clear-override-method",
+          "mediaqueries-5.clear-override-method-clause-95f16d8097f4"
+        ]
+      }
+    },
+    {
+      "id": "mf-deprecated",
+      "title": "Appendix A: Deprecated Media Features",
+      "level": 2,
+      "text_sha256": "f8753620085b96a6de803e9856139dfa75dd32f1bea45c770f3bb5141250fd36",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.mf-deprecated",
+          "mediaqueries-5.mf-deprecated-clause-4b52b3ccf725",
+          "mediaqueries-5.mf-deprecated-clause-6c47eeaf0ad3"
+        ]
+      }
+    },
+    {
+      "id": "device-width",
+      "title": "device-width",
+      "level": 3,
+      "text_sha256": "4a8f5d6b686e6951f611a78a8905db36d8164c8af3c539113ade2905fbbf2fc8",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.device-width",
+          "mediaqueries-5.foundation-media-device-width"
+        ]
+      }
+    },
+    {
+      "id": "device-height",
+      "title": "device-height",
+      "level": 3,
+      "text_sha256": "88a0dd0cffcf11b68e662df4c4bbff436f6d11f5295932d4c29088c0b2a76a15",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.device-height",
+          "mediaqueries-5.foundation-media-device-height"
+        ]
+      }
+    },
+    {
+      "id": "device-aspect-ratio",
+      "title": "device-aspect-ratio",
+      "level": 3,
+      "text_sha256": "80fade092abb048125f9d5463db7773902a27c21b863d964ea90a1484db9d51a",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.device-aspect-ratio",
+          "mediaqueries-5.foundation-media-device-aspect-ratio"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "17668814fd4f1d5744b1a1558cc10dde6ae3f19049db4cdea5fbaff5303a0149",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-since-2021-12-12",
+      "title": "Changes Since the 18 December 2021 Working Draft",
+      "level": 3,
+      "text_sha256": "40ef284ee766264e6331c928f35025ab792da64488b9d103a3b0e754ff50ce8e",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.changes-since-2021-12-12"
+        ]
+      }
+    },
+    {
+      "id": "changes-since-2020-07-31",
+      "title": "Changes Since the 2020-07-31 Working Draft",
+      "level": 3,
+      "text_sha256": "905d26610b5f62a82d3d65d3ef6146915902455ac87fcc38bc7aa16a224786f2",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.changes-since-2020-07-31"
+        ]
+      }
+    },
+    {
+      "id": "changes-since-2020-07-15",
+      "title": "Changes Since the 2020-07-15 Working Draft",
+      "level": 3,
+      "text_sha256": "2757f86f72d791354cfb3529c21b34c2020c771463012d3358f6b96e0c050f97",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.changes-since-2020-07-15"
+        ]
+      }
+    },
+    {
+      "id": "changes-since-2020-06-03",
+      "title": "Changes Since the 2020-06-03 Working Draft",
+      "level": 3,
+      "text_sha256": "bf4106640713f4ff12d4e8d84932d72346cf6fff1ce041ec3a9784cb4531f50b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.changes-since-2020-06-03"
+        ]
+      }
+    },
+    {
+      "id": "changes-since-2020-03-18",
+      "title": "Changes Since the 2020-03-18 Working Draft",
+      "level": 3,
+      "text_sha256": "60c65887f3dfd6a43223caa7f7115ac9ec9c0d422393702ecbe739ccf7f98cb0",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.changes-since-2020-03-18"
+        ]
+      }
+    },
+    {
+      "id": "changes-since-fpwd",
+      "title": "Changes Since the First Public Working Draft",
+      "level": 3,
+      "text_sha256": "21fb6dde65e0555d89ae63879b5d499053b329e2b3a6f4dea0fcb2d2962740e3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.changes-since-fpwd"
+        ]
+      }
+    },
+    {
+      "id": "changes-for-fpwd",
+      "title": "Changes for FPWD (since the Media Queries Level 4)",
+      "level": 3,
+      "text_sha256": "4e21efd0b9cd54d41245dd934f49cb7e1ecaa2ab3ca4763cf0f136acf9e07acf",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.changes-for-fpwd"
+        ]
+      }
+    },
+    {
+      "id": "changes-L4",
+      "title": "Changes Since Media Queries Level 4",
+      "level": 3,
+      "text_sha256": "a56fc22a3164959c14deac521b8e8776bf63208c62227cc3cc9cefd1cde526c8",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.changes-l4"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "7ece328cc26435bbdd0042a63a90ba78cc6ebcf1a9da11d72e510b75545a2836",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "d119f0d0f46e25c9b0329eaa480a2cf5f3c803b49f0abbbab562723ebc71c370",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "cf9e04ec4142a2f8295103ff338deafc3b1c9fd4badc215f925fef367419ec18",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.security"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.w3c-conventions",
+          "mediaqueries-5.w3c-conventions-clause-5c98c879f070",
+          "mediaqueries-5.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.w3c-conformance-classes",
+          "mediaqueries-5.w3c-conformance-classes-clause-ff408372426c",
+          "mediaqueries-5.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.w3c-partial",
+          "mediaqueries-5.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.w3c-testing",
+          "mediaqueries-5.w3c-testing-clause-1e0fff369221",
+          "mediaqueries-5.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "f625870c908fc8eb497e7007f296cadfac82f3210312fd4fa495711e655b4e19",
+      "clause_count": 173,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "7e1965c76052710b7c816990602174f84cd07c3dc93280395ae4bca8cc3d4c5c",
+      "clause_count": 98,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "08334a8ffb8a0d846bae9ac9a99f0d743a8aeb756b9669eaed2ab86463f5de04",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.import-0407a508441e",
+          "mediaqueries-5.import-433fbe8b79ce",
+          "mediaqueries-5.import-9a42ce368333",
+          "mediaqueries-5.import-f7cd2abf5375",
+          "mediaqueries-5.import-487a7b631881",
+          "mediaqueries-5.import-7a686e76eef8",
+          "mediaqueries-5.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "6001ada178c35ad580bc1de4d96d59e46e713d52de0ca17fd682317af88a1540",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "547c4769772c9ff811e57bf39809cc6f1c1e6380af2bb402096c995db2287df6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.property-index"
+        ]
+      }
+    },
+    {
+      "id": "media-descriptor-table",
+      "title": "@media Descriptors",
+      "level": 3,
+      "text_sha256": "63ed86350362039c366031584a19d2bec32f7b4b377b1e84515633741997e838",
+      "clause_count": 115,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.media-descriptor-table"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "0ee6fb34e4e5b320b7a6eda55e99dac4234193fe6898e71e65803a7a89649499",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "a5e795d511481b2f0f48bb8a70bf59ca34836b7956b4303b0eca030fc34ccf09",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mediaqueries-5.issues-index"
+        ]
+      }
+    }
+  ]
+}

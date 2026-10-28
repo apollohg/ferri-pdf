@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "svg2.pagetitle",
+      "family": "svg2",
+      "source_id": "svg2",
+      "sections": [
+        "pagetitle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scalable Vector Graphics (SVG) 2.",
+      "locator": {
+        "section_id": "pagetitle",
+        "text_sha256": "a12db1a0c1ccd11781f05238010747eb2be2ac9743128077c3da8a7eae296164"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "svg2.abstract",
+      "family": "svg2",
+      "source_id": "svg2",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "adbdf96221ca8bf102c6b44b6db739c1dcbd9c3854b4c0e80bb4a9a05895709b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "svg2.status",
+      "family": "svg2",
+      "source_id": "svg2",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of This Document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "abc221ce5a5598d26a9283f504b4de17ad825be2343adacfc1b19166864de824"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "svg2.fulltoc",
+      "family": "svg2",
+      "source_id": "svg2",
+      "sections": [
+        "fulltoc"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "fulltoc",
+        "text_sha256": "ed09534e8d249c1cf75c8f46a3e7e97c576bb2ee4d873db373b3802f35a2f74b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "svg2.acknowledgments",
+      "family": "svg2",
+      "source_id": "svg2",
+      "sections": [
+        "Acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "Acknowledgments",
+        "text_sha256": "92a802c5811ff60a6729868aa9da6cbce93de61a41e0bc2e33f27b9900bee577"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

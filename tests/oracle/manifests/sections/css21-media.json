@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-media",
+  "sections": [
+    {
+      "id": "q7.0",
+      "title": "7 Media types",
+      "level": 1,
+      "text_sha256": "9aa99f624a8e355e1d16e8a59d806d557fbc0ebff00f34476daed0afa643043a",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-media.q7-0"
+        ]
+      }
+    },
+    {
+      "id": "media-intro",
+      "title": "7.1 Introduction to media types",
+      "level": 2,
+      "text_sha256": "9e3a96180227f0c57a914d208548d0c31799e9177459c44fd441ffc103681a30",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-media.media-intro"
+        ]
+      }
+    },
+    {
+      "id": "media-sheets",
+      "title": "7.2 Specifying media-dependent style sheets",
+      "level": 2,
+      "text_sha256": "94631f98924cfde8cb8ae26097869325f5f49c250286dae7c10bdfcb9663bd0d",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-media.media-sheets"
+        ]
+      }
+    },
+    {
+      "id": "at-media-rule",
+      "title": "7.2.1 The @media rule",
+      "level": 3,
+      "text_sha256": "6311f95e46d423a57cbed12b6af036dd9595f4afb62b97e5f6be02989b3794b3",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-media.at-media-rule",
+          "css21-media.at-media-rule-clause-dc5eed0fdee1",
+          "css21-media.at-media-rule-clause-b855c3acbc23"
+        ]
+      }
+    },
+    {
+      "id": "media-types",
+      "title": "7.3 Recognized media types",
+      "level": 2,
+      "text_sha256": "c4920b184dd8755f6b8c320ec72598eea395a9f59906f4e3d0010e06e1a67f5b",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-media.media-types",
+          "css21-media.media-types-clause-1eb96cc96bbe",
+          "css21-media.media-types-clause-244497aea3d5",
+          "css21-media.media-types-clause-78b56223249c",
+          "css21-media.media-types-clause-db9404e2f9b7"
+        ]
+      }
+    },
+    {
+      "id": "media-groups",
+      "title": "7.3.1 Media groups",
+      "level": 3,
+      "text_sha256": "702791da01c9a55dd6c589b3ea781aa6e4107e147ad833bba2cc0328de7bdeee",
+      "clause_count": 61,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-media.media-groups"
+        ]
+      }
+    }
+  ]
+}

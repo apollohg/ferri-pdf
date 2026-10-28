@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-conform",
+  "sections": [
+    {
+      "id": "q3.0",
+      "title": "3 Conformance: Requirements and Recommendations",
+      "level": 1,
+      "text_sha256": "599bcf5249830f62d9d2aad7a5573d8f643a04faeb2e9aa9a17d8b8e94abf0fb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-conform.q3-0"
+        ]
+      }
+    },
+    {
+      "id": "defs",
+      "title": "3.1 Definitions",
+      "level": 2,
+      "text_sha256": "b833b2dcb50d82d5689225e63960ea4022a1381cd0f8e33b515e4f1fb94bd8bc",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-conform.defs",
+          "css21-conform.defs-clause-b54003d3609d",
+          "css21-conform.defs-clause-7bcf75d593a8",
+          "css21-conform.defs-clause-5e2c9e16464f",
+          "css21-conform.defs-clause-3eaab11b1506",
+          "css21-conform.defs-clause-c4569b26d27a",
+          "css21-conform.defs-clause-7150b6a1b2c5",
+          "css21-conform.defs-clause-3e089c95a1ac",
+          "css21-conform.defs-clause-1464d39d09c8",
+          "css21-conform.defs-clause-186e9886fbed",
+          "css21-conform.defs-clause-8bfba142d8e0"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "3.2 UA Conformance",
+      "level": 2,
+      "text_sha256": "d115303edbdc74bb6342795f2af9ac25114e536351736a69a26a2a426d3c9c21",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-conform.conformance",
+          "css21-conform.conformance-clause-f7d91e69c121",
+          "css21-conform.conformance-clause-2ac203b7d79b",
+          "css21-conform.conformance-clause-d9d2985c8bcb",
+          "css21-conform.conformance-clause-2cd40d775111",
+          "css21-conform.conformance-clause-fea9eda23fb1",
+          "css21-conform.conformance-clause-bb5545bbf0f8",
+          "css21-conform.conformance-clause-e0ca22b86a8a",
+          "css21-conform.conformance-clause-7074e3ebec20",
+          "css21-conform.conformance-clause-ff011b42f281",
+          "css21-conform.conformance-clause-65a6041b86f6",
+          "css21-conform.conformance-clause-c85317db1db8",
+          "css21-conform.conformance-clause-c6bdac2fdb73"
+        ]
+      }
+    },
+    {
+      "id": "errors",
+      "title": "3.3 Error conditions",
+      "level": 2,
+      "text_sha256": "29a6d9d3b5d2a2a4c2c645efd9c06062197f274a8bb968e8d803c2f93ae5be0d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-conform.errors"
+        ]
+      }
+    },
+    {
+      "id": "text-css",
+      "title": "3.4 The text/css content type",
+      "level": 2,
+      "text_sha256": "ead10248fdcd94463e42ffdb76d616a0cef512273a635416878a0c85348b4f67",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-conform.text-css"
+        ]
+      }
+    }
+  ]
+}

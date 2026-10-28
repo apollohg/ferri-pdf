@@ -1,0 +1,3165 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-ruby-1.intro",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.ruby-def",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-def"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in What is ruby?.",
+      "locator": {
+        "section_id": "ruby-def",
+        "text_sha256": "82e2224ee37a1da36481c01620df1e8102079d421d44c34dc49a60e6c52cf5b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.placement",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "8deb886b4e9851b28fad664bea17cc07232359b74c9b3ad51eae5a0609576ce4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.placement-clause-1453762527ef"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.placement-clause-1453762527ef",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Module interactions — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "placement",
+        "clause_index": 1,
+        "clause_sha256": "1453762527efcb11f088313c077bfb0159bfb71040ae35463acaa4ab0b371f8a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.values",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "6acb6e79978cad3cb3c439873cfefebabf39918973766e88cd4be4dddbcb786c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.diagram-conventions",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "diagram-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Diagram conventions.",
+      "locator": {
+        "section_id": "diagram-conventions",
+        "text_sha256": "45655a8d6562fe6b2431a472b42865d3eaf6d2039c4ec23fc20ccb301c7359ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.ruby-model",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ruby Box Model.",
+      "locator": {
+        "section_id": "ruby-model",
+        "text_sha256": "97cd19b2837cb819535132b7d4c9aba81e2d63a26fb24fb574f9d421195665a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.ruby-display",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-display"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ruby-specific display Values.",
+      "locator": {
+        "section_id": "ruby-display",
+        "text_sha256": "31210f21c05708c161f74b8349ff1a3a780c6123ca07f42655e3c5623ae9d62c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.ruby-display-clause-a8cff2046a5f",
+        "css-ruby-1.ruby-display-clause-3b11b892066d",
+        "css-ruby-1.ruby-display-clause-89cd3f4c3e9a",
+        "css-ruby-1.ruby-display-clause-57900c283145"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.ruby-display-clause-a8cff2046a5f",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-display"
+      ],
+      "behaviour": "Ruby-specific display Values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-display",
+        "clause_index": 0,
+        "clause_sha256": "a8cff2046a5f5d40f55851cb6fe9fe335d77de35e9799a2e92c21f7aee8d6ae8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-display-clause-3b11b892066d",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-display"
+      ],
+      "behaviour": "Ruby-specific display Values — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-display",
+        "clause_index": 14,
+        "clause_sha256": "3b11b892066dab8947ecef769573be49e66863a2a47d2a0e2612b62c952a0ec7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-display-clause-89cd3f4c3e9a",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-display"
+      ],
+      "behaviour": "Ruby-specific display Values — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-display",
+        "clause_index": 16,
+        "clause_sha256": "89cd3f4c3e9ade031c1ee956b3ef0a865b006f8e9be3df96204c9c2497f5e407"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-display-clause-57900c283145",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-display"
+      ],
+      "behaviour": "Ruby-specific display Values — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-display",
+        "clause_index": 17,
+        "clause_sha256": "57900c2831451a77c2b3ac13e1b5767b3b8fdc44fd45519783819b616984583f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.formatting-context",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "formatting-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Ruby Formatting Context.",
+      "locator": {
+        "section_id": "formatting-context",
+        "text_sha256": "85340e93c0b7c1215b4b54aa4ab5df8c035953383b32bbffc4575ca49be3e511"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.block-ruby",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "block-ruby"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-Inline Ruby.",
+      "locator": {
+        "section_id": "block-ruby",
+        "text_sha256": "dd95345da06f455816329a08425f699c6c7e15c7dbffae68489da572d4a71719"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.block-ruby-clause-42f28b1bef41"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.block-ruby-clause-42f28b1bef41",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "block-ruby"
+      ],
+      "behaviour": "Non-Inline Ruby — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-ruby",
+        "clause_index": 0,
+        "clause_sha256": "42f28b1bef41ba2a6e050df1f9a82fec25853eb5e186c02bd612c6fc04386b75"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.box-fixup",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "box-fixup"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Anonymous Ruby Box Generation.",
+      "locator": {
+        "section_id": "box-fixup",
+        "text_sha256": "6cc069927e99a28a3fa335ac2bb96ed896169df6d0b3e5e72233433e8caf3149"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.box-fixup-clause-50fc549e2cf4",
+        "css-ruby-1.box-fixup-clause-4627db14eed5",
+        "css-ruby-1.box-fixup-clause-254b1f34eda9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.box-fixup-clause-50fc549e2cf4",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "box-fixup"
+      ],
+      "behaviour": "Anonymous Ruby Box Generation — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-fixup",
+        "clause_index": 1,
+        "clause_sha256": "50fc549e2cf47fc6d522b5807a745d68e7e9a75d66ef3712fb3dbe98093bb783"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.box-fixup-clause-4627db14eed5",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "box-fixup"
+      ],
+      "behaviour": "Anonymous Ruby Box Generation — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-fixup",
+        "clause_index": 40,
+        "clause_sha256": "4627db14eed509149e27be153425c563b6e5ded651c6d00e6fa73a3a79ca0d91"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.box-fixup-clause-254b1f34eda9",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "box-fixup"
+      ],
+      "behaviour": "Anonymous Ruby Box Generation — normative clause 54, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-fixup",
+        "clause_index": 53,
+        "clause_sha256": "254b1f34eda9a187c470b242e2f1be450e5d5d9fe5464f8791766ac3828a9426"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-pairing",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-pairing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Annotation Pairing.",
+      "locator": {
+        "section_id": "ruby-pairing",
+        "text_sha256": "91927b7a818a3c4a6f9a6189437fa98a02d8bc811b6ca40fa7e892f1a7f1e54d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.segment-pairing",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "segment-pairing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Segment Pairing and Annotation Levels.",
+      "locator": {
+        "section_id": "segment-pairing",
+        "text_sha256": "e044c0aaeddc6a57fbaa6546c1a9ef89225ab1141b75b0c5d6a04f5f2178ed2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.base-annotation-pairing",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "base-annotation-pairing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unit Pairing and Spanning Annotations.",
+      "locator": {
+        "section_id": "base-annotation-pairing",
+        "text_sha256": "42f92f7b90570046c56ccbd7c84ad0910de1eca05b1dba71b9a9f8c54922a683"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.base-annotation-pairing-clause-131ce9b90a3b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.base-annotation-pairing-clause-131ce9b90a3b",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "base-annotation-pairing"
+      ],
+      "behaviour": "Unit Pairing and Spanning Annotations — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "base-annotation-pairing",
+        "clause_index": 3,
+        "clause_sha256": "131ce9b90a3b5b3621b68fbbe9ff217277bfe249dec68c576c3ef6555710e06f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.hiding",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "hiding"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Hiding Annotations: visibility: collapse and auto-hidden ruby.",
+      "locator": {
+        "section_id": "hiding",
+        "text_sha256": "2d93c405691f2a9ef309a5ab3e9d62164e4599d3c803f7f22be0e746fba13ad2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.hiding-clause-3842301c8147",
+        "css-ruby-1.hiding-clause-e41bc6e3b90b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.hiding-clause-3842301c8147",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "hiding"
+      ],
+      "behaviour": "Hiding Annotations: visibility: collapse and auto-hidden ruby — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "hiding",
+        "clause_index": 5,
+        "clause_sha256": "3842301c8147499207184db7e885ad5d942e83a3f42a6e9533e53e629d4eb544"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.hiding-clause-e41bc6e3b90b",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "hiding"
+      ],
+      "behaviour": "Hiding Annotations: visibility: collapse and auto-hidden ruby — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "hiding",
+        "clause_index": 11,
+        "clause_sha256": "e41bc6e3b90b7dab32548ce475360c2158b805001e6d96c7f920b9b88db08d83"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.white-space",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "white-space"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in White Space Collapsing.",
+      "locator": {
+        "section_id": "white-space",
+        "text_sha256": "1dbf61744d39cb7157884cc37889f19b7b46b275908d8c666a6e3f5d6f4e2269"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.ruby-layout",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ruby Layout.",
+      "locator": {
+        "section_id": "ruby-layout",
+        "text_sha256": "57182b12fec7ec5b13aeb0ee7d725ebc65417f50098bca636b97004e3702a707"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.interlinear-layout",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "interlinear-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interlinear Ruby Layout.",
+      "locator": {
+        "section_id": "interlinear-layout",
+        "text_sha256": "21f1ee9d9158bcb4352ce2067d7b98a74c696608e35402ca27502d3df2a33887"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.interlinear-inline",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "interlinear-inline"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline-axis Interlinear Layout.",
+      "locator": {
+        "section_id": "interlinear-inline",
+        "text_sha256": "a224957586b02c7590dba21b1ea0a6ec757f1b8dc827a1767c8e69fa020aa4d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.interlinear-block",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "interlinear-block"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block-axis Interlinear Layout.",
+      "locator": {
+        "section_id": "interlinear-block",
+        "text_sha256": "ed2c1a278cf159f16da82c78308dac6e4a14d9df14b6730eb3407b2478ca43b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.interlinear-block-clause-cb3765df02c6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.interlinear-block-clause-cb3765df02c6",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "interlinear-block"
+      ],
+      "behaviour": "Block-axis Interlinear Layout — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "interlinear-block",
+        "clause_index": 3,
+        "clause_sha256": "cb3765df02c66523ac0d3cd46517e0f7da432da84ece461aff6ac49dd63c24ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.inter-character-layout",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "inter-character-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inter-character Ruby Layout.",
+      "locator": {
+        "section_id": "inter-character-layout",
+        "text_sha256": "07227af9e36179c969e1b6b36667d942b31695ba3952774a8a107bf170e8a751"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.box-style",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "box-style"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Styling Ruby Boxes.",
+      "locator": {
+        "section_id": "box-style",
+        "text_sha256": "9a014eb56bd5bc70558c4af9f63462083b82a140aa1790b3888a78e9fa5508ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.box-style-clause-95454da0dda0",
+        "css-ruby-1.box-style-clause-fe3baeb0cbd8",
+        "css-ruby-1.box-style-clause-9c6a79c83186"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.box-style-clause-95454da0dda0",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "box-style"
+      ],
+      "behaviour": "Styling Ruby Boxes — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-style",
+        "clause_index": 0,
+        "clause_sha256": "95454da0dda01eada7069719a8b0d416366c5fd17577e8f90c3bddbac6ce995d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.box-style-clause-fe3baeb0cbd8",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "box-style"
+      ],
+      "behaviour": "Styling Ruby Boxes — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-style",
+        "clause_index": 1,
+        "clause_sha256": "fe3baeb0cbd86f01e4af63af43f2afe491337732693b04d9a26ed2640a8df2e5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.box-style-clause-9c6a79c83186",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "box-style"
+      ],
+      "behaviour": "Styling Ruby Boxes — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-style",
+        "clause_index": 3,
+        "clause_sha256": "9c6a79c83186269c1989ef0a424ec74ac2b5a0496432635655908d18c4c9ccf6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.line-breaks",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "line-breaks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Breaking Across Lines.",
+      "locator": {
+        "section_id": "line-breaks",
+        "text_sha256": "044c44c9b74bbdc9ac409e21ff67afd8e1ffbee580c667b314bdd59b95e2a46f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.line-breaks-clause-6c4f323c229d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.line-breaks-clause-6c4f323c229d",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "line-breaks"
+      ],
+      "behaviour": "Breaking Across Lines — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-breaks",
+        "clause_index": 1,
+        "clause_sha256": "6c4f323c229de00551eaaccd35c087ee5daefadd52c32df7476bc947955f97d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.break-between",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "break-between"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Breaking Between Bases.",
+      "locator": {
+        "section_id": "break-between",
+        "text_sha256": "1dbe3d4a78235a9aecf8761189bdce51ea90fcbf873e2de4c371d710b05cf08c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.break-between-clause-8079d170e98d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.break-between-clause-8079d170e98d",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "break-between"
+      ],
+      "behaviour": "Breaking Between Bases — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-between",
+        "clause_index": 2,
+        "clause_sha256": "8079d170e98db24754dc21f0fb165b942d3335527e68aad0600488ff5fe5b4bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.break-within",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "break-within"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Breaking Within Bases.",
+      "locator": {
+        "section_id": "break-within",
+        "text_sha256": "8c83647eb5234eb3eb51cce502916c659b125ce9af11003ca0d21ba72f417467"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.bidi",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "bidi"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bidi Reordering.",
+      "locator": {
+        "section_id": "bidi",
+        "text_sha256": "e9f3236f2f46d18e491a9e3beb773ddae7e7ebcfef71e7e10727acb5ce1e7415"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.bidi-clause-f825be37dd58",
+        "css-ruby-1.bidi-clause-5fa4afc82712",
+        "css-ruby-1.bidi-clause-069c95b742df",
+        "css-ruby-1.bidi-clause-4814e258faf1",
+        "css-ruby-1.bidi-clause-d50529a6eef3",
+        "css-ruby-1.bidi-clause-0711cbb89b2e",
+        "css-ruby-1.bidi-clause-cd7057a110dc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.bidi-clause-f825be37dd58",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "bidi"
+      ],
+      "behaviour": "Bidi Reordering — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi",
+        "clause_index": 0,
+        "clause_sha256": "f825be37dd588ccf5cf32b4c0133dce98f0d07ce48411a6ad03bb94462d75ac2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.bidi-clause-5fa4afc82712",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "bidi"
+      ],
+      "behaviour": "Bidi Reordering — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi",
+        "clause_index": 1,
+        "clause_sha256": "5fa4afc827124bd0d17d504f9ee4088addb56f281824388f0ea7473975517667"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.bidi-clause-069c95b742df",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "bidi"
+      ],
+      "behaviour": "Bidi Reordering — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi",
+        "clause_index": 2,
+        "clause_sha256": "069c95b742dfd3f0a3f676d955f61fc9debc6b8c1c8943dafb669b5ac4171153"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.bidi-clause-4814e258faf1",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "bidi"
+      ],
+      "behaviour": "Bidi Reordering — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi",
+        "clause_index": 3,
+        "clause_sha256": "4814e258faf1ebbd19b78259d91d6cd96fb49b045af5d628344c9b0af1f02b7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.bidi-clause-d50529a6eef3",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "bidi"
+      ],
+      "behaviour": "Bidi Reordering — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi",
+        "clause_index": 4,
+        "clause_sha256": "d50529a6eef3c9e9817f367399a64d076b8980654559d10acccb24987d74bba5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.bidi-clause-0711cbb89b2e",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "bidi"
+      ],
+      "behaviour": "Bidi Reordering — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi",
+        "clause_index": 9,
+        "clause_sha256": "0711cbb89b2e76ec95f6c3d139aaf58df39229aaab2a8c2a051650e640587d2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.bidi-clause-cd7057a110dc",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "bidi"
+      ],
+      "behaviour": "Bidi Reordering — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi",
+        "clause_index": 10,
+        "clause_sha256": "cd7057a110dc0d2ed6ecbe8a065b8a0c83364f0b3293f3a1781c105089348254"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.line-height",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "line-height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line Spacing.",
+      "locator": {
+        "section_id": "line-height",
+        "text_sha256": "095e5b3dbc280ddf518e2ea1bb4f8fc413186100ba917300483de5be7a4eaddb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.line-height-clause-558a2b47c842",
+        "css-ruby-1.line-height-clause-85bfa73495b7",
+        "css-ruby-1.line-height-clause-b39788cb64a4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.line-height-clause-558a2b47c842",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "line-height"
+      ],
+      "behaviour": "Line Spacing — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height",
+        "clause_index": 4,
+        "clause_sha256": "558a2b47c842778970e41548cad9b38b99e654c1c852b9ccb54816d9449b0bf4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.line-height-clause-85bfa73495b7",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "line-height"
+      ],
+      "behaviour": "Line Spacing — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height",
+        "clause_index": 5,
+        "clause_sha256": "85bfa73495b74c91751473859cd2e5f05c3110c7ed21ce657bd2951a1d85f830"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.line-height-clause-b39788cb64a4",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "line-height"
+      ],
+      "behaviour": "Line Spacing — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height",
+        "clause_index": 6,
+        "clause_sha256": "b39788cb64a4af0feb2b38683ef6651d9d098d013864cadc2f8b3e9313bfb4ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-props",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-props"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ruby Formatting Properties.",
+      "locator": {
+        "section_id": "ruby-props",
+        "text_sha256": "95f7c2c1eb124140c101ff527eb6be5761409cae798c07e1d99f8462d1bbbf6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.rubypos",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "rubypos"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ruby Positioning: the ruby-position property.",
+      "locator": {
+        "section_id": "rubypos",
+        "text_sha256": "b04805d6ce4c796f7d6c8e2b55b1f3992059718922146a95da371db21eed7577"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.rubypos-clause-cca2516ebb1d",
+        "css-ruby-1.rubypos-clause-f6b400fc197a",
+        "css-ruby-1.rubypos-clause-662250c4747c",
+        "css-ruby-1.rubypos-clause-4999d648f7da",
+        "css-ruby-1.rubypos-clause-055bdcfdc88d",
+        "css-ruby-1.rubypos-clause-6ade7d623076"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.rubypos-clause-cca2516ebb1d",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "rubypos"
+      ],
+      "behaviour": "Ruby Positioning: the ruby-position property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "rubypos",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.rubypos-clause-f6b400fc197a",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "rubypos"
+      ],
+      "behaviour": "Ruby Positioning: the ruby-position property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "rubypos",
+        "clause_index": 31,
+        "clause_sha256": "f6b400fc197a765bf884bab98720cbceae438140e4cb44d494860501d9ef6cf9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.rubypos-clause-662250c4747c",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "rubypos"
+      ],
+      "behaviour": "Ruby Positioning: the ruby-position property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "rubypos",
+        "clause_index": 32,
+        "clause_sha256": "662250c4747ce675a760e2537340515696340809188d09f09a9a41a09c417ed4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.rubypos-clause-4999d648f7da",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "rubypos"
+      ],
+      "behaviour": "Ruby Positioning: the ruby-position property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "rubypos",
+        "clause_index": 37,
+        "clause_sha256": "4999d648f7da131f3b189544edbba1ae0d69c21c02e193bef808162d0ab13c32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.rubypos-clause-055bdcfdc88d",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "rubypos"
+      ],
+      "behaviour": "Ruby Positioning: the ruby-position property — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "rubypos",
+        "clause_index": 44,
+        "clause_sha256": "055bdcfdc88daddedcc8641646c7c13db1234b3d67a6e2e0320d0f79216ccc80"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.rubypos-clause-6ade7d623076",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "rubypos"
+      ],
+      "behaviour": "Ruby Positioning: the ruby-position property — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "rubypos",
+        "clause_index": 45,
+        "clause_sha256": "6ade7d62307677b7480c8589704ceeade0dc68ee45b4acccbeed077ca4dd8c68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.collapsed-ruby",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "collapsed-ruby"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sharing Annotation Space: the ruby-merge property.",
+      "locator": {
+        "section_id": "collapsed-ruby",
+        "text_sha256": "381a76ad505bd1837253092383740b02189bcff6603e03055e10c4bcbae93b6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.collapsed-ruby-clause-cca2516ebb1d",
+        "css-ruby-1.collapsed-ruby-clause-50f0e3914023",
+        "css-ruby-1.collapsed-ruby-clause-c81880bedf2d",
+        "css-ruby-1.collapsed-ruby-clause-3c9b4907d805"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.collapsed-ruby-clause-cca2516ebb1d",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "collapsed-ruby"
+      ],
+      "behaviour": "Sharing Annotation Space: the ruby-merge property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "collapsed-ruby",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.collapsed-ruby-clause-50f0e3914023",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "collapsed-ruby"
+      ],
+      "behaviour": "Sharing Annotation Space: the ruby-merge property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "collapsed-ruby",
+        "clause_index": 17,
+        "clause_sha256": "50f0e3914023e883c5bbce612c7e915244d09bf40917fa43e746e7b39f853539"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.collapsed-ruby-clause-c81880bedf2d",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "collapsed-ruby"
+      ],
+      "behaviour": "Sharing Annotation Space: the ruby-merge property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "collapsed-ruby",
+        "clause_index": 31,
+        "clause_sha256": "c81880bedf2d41644ddb1d729e2237d1f56e74292f7ec1ebd92c9bd2babc3abb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.collapsed-ruby-clause-3c9b4907d805",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "collapsed-ruby"
+      ],
+      "behaviour": "Sharing Annotation Space: the ruby-merge property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "collapsed-ruby",
+        "clause_index": 32,
+        "clause_sha256": "3c9b4907d805c71f13906653b2fc5a1677ecd559effb13a68275d3d87eba840a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-align-property",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-align-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ruby Text Distribution: the ruby-align property.",
+      "locator": {
+        "section_id": "ruby-align-property",
+        "text_sha256": "d90124a7978d3b0bc45a2306c0484e65288f8278120a8c094413be5bcb346333"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.ruby-align-property-clause-cca2516ebb1d",
+        "css-ruby-1.ruby-align-property-clause-eeba118f6eac",
+        "css-ruby-1.ruby-align-property-clause-83f7c991ebf4",
+        "css-ruby-1.ruby-align-property-clause-b4b97d401dc9",
+        "css-ruby-1.ruby-align-property-clause-e527c40e478b",
+        "css-ruby-1.ruby-align-property-clause-439460f08248",
+        "css-ruby-1.ruby-align-property-clause-f6b82d9387fc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.ruby-align-property-clause-cca2516ebb1d",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-align-property"
+      ],
+      "behaviour": "Ruby Text Distribution: the ruby-align property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-align-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-align-property-clause-eeba118f6eac",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-align-property"
+      ],
+      "behaviour": "Ruby Text Distribution: the ruby-align property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-align-property",
+        "clause_index": 22,
+        "clause_sha256": "eeba118f6eace704d3048297d300feabb5b0e6da68d62d0f82ae7b6e1a25d948"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-align-property-clause-83f7c991ebf4",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-align-property"
+      ],
+      "behaviour": "Ruby Text Distribution: the ruby-align property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-align-property",
+        "clause_index": 23,
+        "clause_sha256": "83f7c991ebf46354ad7339d0a93507a1a77122e13e42f0500e3aaab8e388988d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-align-property-clause-b4b97d401dc9",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-align-property"
+      ],
+      "behaviour": "Ruby Text Distribution: the ruby-align property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-align-property",
+        "clause_index": 35,
+        "clause_sha256": "b4b97d401dc980b9e2dccd0adf6ccc86748141d2f0120c57dd3a25b76cab8572"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-align-property-clause-e527c40e478b",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-align-property"
+      ],
+      "behaviour": "Ruby Text Distribution: the ruby-align property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-align-property",
+        "clause_index": 36,
+        "clause_sha256": "e527c40e478be6773b1cb7732f004ac9fd3f40df60a6e980ee43f868b0948ce0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-align-property-clause-439460f08248",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-align-property"
+      ],
+      "behaviour": "Ruby Text Distribution: the ruby-align property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-align-property",
+        "clause_index": 37,
+        "clause_sha256": "439460f08248d02df23113fb0e3c3c9852aac06c55023f17a16229c82a0bd702"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-align-property-clause-f6b82d9387fc",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-align-property"
+      ],
+      "behaviour": "Ruby Text Distribution: the ruby-align property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-align-property",
+        "clause_index": 38,
+        "clause_sha256": "f6b82d9387fc678f49683b7dd989b527d42fa089c5193b7a5e97a7ad5c60e4ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-text-decoration",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-text-decoration"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ruby Text Decoration.",
+      "locator": {
+        "section_id": "ruby-text-decoration",
+        "text_sha256": "bc970071c9a74e3917d96f2ea0032ef83f2177be5a988282522d94978c7cf08c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.edge-effects",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "edge-effects"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Edge Effects.",
+      "locator": {
+        "section_id": "edge-effects",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.ruby-overhang",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-overhang"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overhanging Ruby: the ruby-overhang property.",
+      "locator": {
+        "section_id": "ruby-overhang",
+        "text_sha256": "a3a9bf379458946e5e3a07587bf647af11ead23429f12e5a75a3faa5bb3f14b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.ruby-overhang-clause-cca2516ebb1d",
+        "css-ruby-1.ruby-overhang-clause-50736318f048",
+        "css-ruby-1.ruby-overhang-clause-b87e60702aa3",
+        "css-ruby-1.ruby-overhang-clause-cac60b5c2d3d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.ruby-overhang-clause-cca2516ebb1d",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-overhang"
+      ],
+      "behaviour": "Overhanging Ruby: the ruby-overhang property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-overhang",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-overhang-clause-50736318f048",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-overhang"
+      ],
+      "behaviour": "Overhanging Ruby: the ruby-overhang property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-overhang",
+        "clause_index": 27,
+        "clause_sha256": "50736318f0486b967f0db9999d65ed2f2070b674e2ecdce1ed01c9799427c9ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-overhang-clause-b87e60702aa3",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-overhang"
+      ],
+      "behaviour": "Overhanging Ruby: the ruby-overhang property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-overhang",
+        "clause_index": 29,
+        "clause_sha256": "b87e60702aa32eba3c8fe52ab2e43b53320d03f49223a4f9f5afefa769ec9c42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.ruby-overhang-clause-cac60b5c2d3d",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "ruby-overhang"
+      ],
+      "behaviour": "Overhanging Ruby: the ruby-overhang property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "ruby-overhang",
+        "clause_index": 30,
+        "clause_sha256": "cac60b5c2d3db7f375e1ed419091163ab5221f463b94c3f24056d190b886d72b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.line-edge",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "line-edge"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line-edge Alignment.",
+      "locator": {
+        "section_id": "line-edge",
+        "text_sha256": "9e00458b451cfb66c5c683a7a68d3b114f16a0ef66526ab127999fed3f313e44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.glossary",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "glossary"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Glossary.",
+      "locator": {
+        "section_id": "glossary",
+        "text_sha256": "d1c1dc5c2763db7dc234e232acf8b4589a230eb8d85d6102ee6e438c9d94b2c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.w3c-conformance",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.w3c-conventions",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.w3c-conventions-clause-5c98c879f070",
+        "css-ruby-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.w3c-conformance-classes",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-ruby-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.w3c-partial",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.w3c-conform-future-proofing",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.w3c-testing",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.w3c-testing-clause-1e0fff369221",
+        "css-ruby-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.property-index",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "40737f8d77db4d86769cb0470c3c3c5cd576956f03dcee4a9beec95dbb2e61a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-ruby-1.property-index-clause-4b59fe755d34"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.property-index-clause-4b59fe755d34",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 15,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-ruby-1.issues-index",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "cd8dd804327c2c8d35817b3a667482f697a1b9087d0e70893795b6daa5516277"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.title",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Ruby Annotation Layout Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "8431ddbce6d9ed6cda18051b7899a3490e5a152e9b74129bf3e73d79d111305d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.abstract",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "0ce4c656d10b9b341e7d80955bd2d9eed75a3737655af8cbfc738c96d61687ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.sotd",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "a1d87c52ac7a02bf90c5a76bd674e7cf9de8f8c5ee93b8b8e5d177f70ffdd307"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.contents",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "f8522a7088a0092bc75fb92d45cd153363258edd510c0789ba1958e23e9b459b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.default-stylesheet",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "default-stylesheet"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix A: Sample Style Sheets.",
+      "locator": {
+        "section_id": "default-stylesheet",
+        "text_sha256": "6cb1bbe60fe9af4625421383aa028a9e848bd3fbf54c44fd35672ae7347b4614"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.default-ua-ruby",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "default-ua-ruby"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in A.1 Default UA Style Sheet.",
+      "locator": {
+        "section_id": "default-ua-ruby",
+        "text_sha256": "a5220232cb6640f6a36b4d90156f4e6ade6ec71875d1f6e34c846d82fec7e655"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.default-inline",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "default-inline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in A.2 Inlining Ruby Annotations.",
+      "locator": {
+        "section_id": "default-inline",
+        "text_sha256": "5e29d1eceabe9f0709ce71a3a8f109d80c0357e3cd6d37d504ad194e98ed5a14"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.default-parens",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "default-parens"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in A.3 Generating Parentheses.",
+      "locator": {
+        "section_id": "default-parens",
+        "text_sha256": "3279731773662ad7b64a1a63bfa605be7807304377a500ad7b7897b6adf5ce5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.acknowledgments",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "6e170517a8ec4e85583989c5d646bd02c88a10afb9cc0bf9bbfd4d3027ae3269"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.changes",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e251ce7e8e99ca49cf86f446d7380b6d347a5f60e4322e370c8066d790088a97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.changes-20211202",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "changes-20211202"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 2 December 2021 WD.",
+      "locator": {
+        "section_id": "changes-20211202",
+        "text_sha256": "f3082bbfe344f758f09a1eda63cd4a61f96ae9a2823645eb5526ea9d62679b42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.changes-20200429",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "changes-20200429"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 29 April 2020 WD.",
+      "locator": {
+        "section_id": "changes-20200429",
+        "text_sha256": "1f6c40ced8c75d3b684a817389da317f3d0beb0d932bb610857711a4dd0127c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.changes-20140805",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "changes-20140805"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 5 August 2014 WD.",
+      "locator": {
+        "section_id": "changes-20140805",
+        "text_sha256": "8424960538f52866a85fe4cc5e5ef0a52770e40d1ccb0f464dec8f6e59a3563b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.changes-20130919",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "changes-20130919"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 19 September 2013 WD.",
+      "locator": {
+        "section_id": "changes-20130919",
+        "text_sha256": "f02461ae659dbf1a1195db10f81bcfd8c917cc3685ca06e45f7381b563ceaf1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.changes-20110630",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "changes-20110630"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 30 June 2011 WD.",
+      "locator": {
+        "section_id": "changes-20110630",
+        "text_sha256": "8bda9c4b5c1c1f30c12b33d9c649618a79c373388f434322f6987170d8d618aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.index",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.index-defined-here",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "acca96b6b0a628191aa7e06ae1b744aba0464d279694ffea8b820d4e1071d822"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.index-defined-elsewhere",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "fbf47d96b2562aa531b8ccd8dba1b7b24b51ec249cb7492981a6caab20bd561e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.references",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.normative",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "c43eeea12798253b0d79a1804887062e0c1f52af24f48843f75852d219f4b040"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-ruby-1.informative",
+      "family": "css-ruby-1",
+      "source_id": "css-ruby-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "bc1e8cd0a941b9f89ecbe370a95a4202a2a26087b0676341ae6aa10212fcce11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

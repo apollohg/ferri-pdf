@@ -1,0 +1,464 @@
+{
+  "schema_version": 1,
+  "source_id": "css-rhythm-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Rhythmic Sizing Module Level 1",
+      "level": 1,
+      "text_sha256": "73a640d796277fda3edaa6905912b7e660df1e87f1f8bbbe10bf60e67d94d944",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "fd61967f99d65081b7e67f1249eade1974b22589f43084022bf0fe4186d9680c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "3fecf0f425f05e656338a79c2d95e4fc28203408559e029b6d712faadc333b7e",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "1154e55a5b0aecc1884c6195a555ee3fc373dfa8ec48e5c687ef82d59fb10588",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "5258447c7507e1f0db986ca6041ce08f028d59d05eab936560b5cc6dffba3cf5",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "eastasia",
+      "title": "1.1. East Asian Casual Vertical Rhythms",
+      "level": 3,
+      "text_sha256": "7f424e9b92e49734978a73e1dc760670cc8c957f8dd76499beb39d8391da0604",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.eastasia",
+          "css-rhythm-1.eastasia-clause-dc66ed53b803",
+          "css-rhythm-1.eastasia-clause-182fb6381c62"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.values"
+        ]
+      }
+    },
+    {
+      "id": "block-height",
+      "title": "2. Adjusting Block-level Box Heights",
+      "level": 2,
+      "text_sha256": "4b9ddbf3d5e23552afba3362b33476fcfaa74ffcd87308f8e3e3e55e6eab76e0",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.block-height",
+          "css-rhythm-1.block-height-clause-ea20310934bb",
+          "css-rhythm-1.block-height-clause-d0b8a3db0975"
+        ]
+      }
+    },
+    {
+      "id": "block-step-size",
+      "title": "2.1. Specifying the Step Size: the block-step-size property",
+      "level": 3,
+      "text_sha256": "27aa6f7b7f89ff1147c3246e8816e9782df37362c96bcb6d336c231fdf3dd111",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.block-step-size",
+          "css-rhythm-1.block-step-size-clause-cca2516ebb1d",
+          "css-rhythm-1.block-step-size-clause-fffddde06e7c",
+          "css-rhythm-1.block-step-size-clause-28b220e0c533",
+          "css-rhythm-1.block-step-size-clause-df9b713dcc5b",
+          "css-rhythm-1.block-step-size-clause-6b400a40668e",
+          "css-rhythm-1.block-step-size-clause-4abb301ea2dc"
+        ]
+      }
+    },
+    {
+      "id": "block-step-insert",
+      "title": "2.2. Specifying the Spacing Type: the block-step-insert property",
+      "level": 3,
+      "text_sha256": "74bca1b64cb17f700bc38eefc55e7eb3803d3d22918176c0e9faa98d388ba75b",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.block-step-insert",
+          "css-rhythm-1.block-step-insert-clause-cca2516ebb1d",
+          "css-rhythm-1.block-step-insert-clause-8fd57d238f09",
+          "css-rhythm-1.block-step-insert-clause-006ff8b93a4b",
+          "css-rhythm-1.block-step-insert-clause-ab1191faefea"
+        ]
+      }
+    },
+    {
+      "id": "block-step-align",
+      "title": "2.3. Specifying Alignment: the block-step-align property",
+      "level": 3,
+      "text_sha256": "afa8ef28efb5dac2accb475385ba82c9b80d684b5d0fed6965658f0a632da014",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.block-step-align",
+          "css-rhythm-1.block-step-align-clause-cca2516ebb1d",
+          "css-rhythm-1.block-step-align-clause-354b886cb8e0",
+          "css-rhythm-1.block-step-align-clause-5514614de6d8",
+          "css-rhythm-1.block-step-align-clause-d53264e30a2a",
+          "css-rhythm-1.block-step-align-clause-0704b0d5228a",
+          "css-rhythm-1.block-step-align-clause-9362f7d2fa9c",
+          "css-rhythm-1.block-step-align-clause-d3a62dee4abb"
+        ]
+      }
+    },
+    {
+      "id": "block-step-round",
+      "title": "2.4. Rounding Method: the block-step-round property",
+      "level": 3,
+      "text_sha256": "00d3cfd22717d1755f5fcd73c36cde1f8905d5a6d2cfddb36384b58a1c7ec197",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.block-step-round",
+          "css-rhythm-1.block-step-round-clause-cca2516ebb1d",
+          "css-rhythm-1.block-step-round-clause-7a6c1e9c14f0",
+          "css-rhythm-1.block-step-round-clause-bce5fbf31a6a",
+          "css-rhythm-1.block-step-round-clause-8018d43ec6d8"
+        ]
+      }
+    },
+    {
+      "id": "block-step",
+      "title": "2.5. Block Step Adjustment Shorthand: the block-step shorthand",
+      "level": 3,
+      "text_sha256": "656e199cc0b0d67fbbd255059609c26a666c9c296be2c2620477d401593ca6d3",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.block-step",
+          "css-rhythm-1.block-step-clause-cca2516ebb1d",
+          "css-rhythm-1.block-step-clause-e79eba635134",
+          "css-rhythm-1.block-step-clause-23674371b5f7",
+          "css-rhythm-1.block-step-clause-90d79f08638f",
+          "css-rhythm-1.block-step-clause-901bcde11622"
+        ]
+      }
+    },
+    {
+      "id": "line-height-step",
+      "title": "3. Adjusting Line Box Heights: the line-height-step property",
+      "level": 2,
+      "text_sha256": "ed7fd3872510fa4e82e144383debb927f33d0b4d80428db886c906b158baa008",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.line-height-step",
+          "css-rhythm-1.line-height-step-clause-cca2516ebb1d",
+          "css-rhythm-1.line-height-step-clause-c395c62e6704",
+          "css-rhythm-1.line-height-step-clause-91f0200c515a",
+          "css-rhythm-1.line-height-step-clause-e32198fca447"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "4. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "babe59204df04747ccb9d9ebc82e7e3be880939b9cb1bd3b9a8f7e9caefad1da",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "5. Security Considerations",
+      "level": 2,
+      "text_sha256": "94c08e43fb969ed5f048a71a18ba3dff2c70bcc14f27dd711c8b50e45fb7e862",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.security"
+        ]
+      }
+    },
+    {
+      "id": "acks",
+      "title": "6. Acknowledgments",
+      "level": 2,
+      "text_sha256": "352d51370e45862f6eb55326a1cdcdccde1efa1cd317077f9e95367f972cf59f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.acks"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "7. Changes",
+      "level": 2,
+      "text_sha256": "98b136e492b6e572b36ef333eb6eeeac0d66fd901177d5f3775aa5318d115cd2",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.w3c-conventions",
+          "css-rhythm-1.w3c-conventions-clause-5c98c879f070",
+          "css-rhythm-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.w3c-conformance-classes",
+          "css-rhythm-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-rhythm-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.w3c-partial",
+          "css-rhythm-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.w3c-testing",
+          "css-rhythm-1.w3c-testing-clause-1e0fff369221",
+          "css-rhythm-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "26f6457f879bb32c9947852102a662cb2d321623b0c3d724b82607e0b0e5b02e",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "bd856de03314d7a9906570f7d6f85871e1ed089349a01566ffc3b579603863e7",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "f9e33c4256d324cbdd99e22accbaf344f13ef14f8f62fc598ea7e0f62ea96490",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "050cf45fdbe7059b71ca6a419ee30be63ae50e7f373b5a08e91569037fcc9389",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "401979fae677bf2e88a5a47eac0f9f6e4fec2022e9e883b4aa3e55f05004c410",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.property-index",
+          "css-rhythm-1.property-index-clause-4b59fe755d34"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "62e335f7a26d4b8f5dc3ae3f3cbd4ec428e7fa09705fc54d80a3235a78519045",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-rhythm-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

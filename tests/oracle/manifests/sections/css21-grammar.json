@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-grammar",
+  "sections": [
+    {
+      "id": "q25.0",
+      "title": "Appendix G. Grammar of CSS 2.1",
+      "level": 1,
+      "text_sha256": "201c195003da19ac68b82f35ff26b7fb9a1ea04417adab65625acb03cda81597",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-grammar.q25-0",
+          "css21-grammar.q25-0-clause-99b6fe465ce3"
+        ]
+      }
+    },
+    {
+      "id": "grammar",
+      "title": "G.1 Grammar",
+      "level": 2,
+      "text_sha256": "f92851ad42ebf5a4b93db60129c949bae9e0b85655bbaf03701412e2c8289dbc",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-grammar.grammar",
+          "css21-grammar.grammar-clause-844893d9ba7a",
+          "css21-grammar.grammar-clause-c6672e81b818"
+        ]
+      }
+    },
+    {
+      "id": "scanner",
+      "title": "G.2 Lexical scanner",
+      "level": 2,
+      "text_sha256": "e224d64eb294ebc3967de88ef58eb04b4a5a22aa355e7e5a5a1ada3b94b2ebdd",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-grammar.scanner",
+          "css21-grammar.scanner-clause-cfdd738bc518"
+        ]
+      }
+    },
+    {
+      "id": "tokenizer-diffs",
+      "title": "G.3 Comparison of tokenization in CSS 2.1 and CSS1",
+      "level": 2,
+      "text_sha256": "fe7e001ecf148caa986ea9e927daff8e8866b8f08fdd64ea430c680cb4f350fa",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-grammar.tokenizer-diffs",
+          "css21-grammar.tokenizer-diffs-clause-b0602ad377bf"
+        ]
+      }
+    },
+    {
+      "id": "q25.4",
+      "title": "G.4 Implementation note",
+      "level": 2,
+      "text_sha256": "86ad252c660760edcdc662c81443bdc9322d67d1740590daaad4675718b2b4ee",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-grammar.q25-4"
+        ]
+      }
+    }
+  ]
+}

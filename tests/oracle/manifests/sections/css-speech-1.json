@@ -1,0 +1,690 @@
+{
+  "schema_version": 1,
+  "source_id": "css-speech-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Speech Module Level 1",
+      "level": 1,
+      "text_sha256": "16c37208769e3a5bf9f573ba54ab9f47ea298714c1bd132771c50d6b516a4b5d",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "ed625cab60628973340136f65a7cea734cc2bbd368b193c1c54597316a007c55",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "4a7e0dc0225ae652b3075bb1e4f7a75b6ee8c3dbe8da6f2f12dce765c9af744b",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "f50cecd0c42749705e6f16c2f846cd59f0848f83a4a014f8f3f89fc8652edc3a",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction, design goals",
+      "level": 2,
+      "text_sha256": "d9ac3f69e7893c5092004ea09081b8b7b11185664c86239a64a8f6690f3930fc",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "background",
+      "title": "2. Background information, CSS 2.1",
+      "level": 2,
+      "text_sha256": "3dbf06f34b0ec3f351702293068a4ee74abda971fde22f0702e878943802a21b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "ssml-rel",
+      "title": "3. Relationship with SSML",
+      "level": 2,
+      "text_sha256": "b12bb76c09247831e6e92bdaa0f8a72a575db446985bdc4a64c3418a7fe533e9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "values",
+      "title": "3.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "example",
+      "title": "4. Example",
+      "level": 2,
+      "text_sha256": "8e3c7ce41d290c4eb64e5e02d9defc6a29deb5c9708fc71cb1e39db673083bf4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "aural-model",
+      "title": "5. The aural formatting model",
+      "level": 2,
+      "text_sha256": "8eaa785b3271658f8bf15a72254b9b091299327d9f84cd95e7fe4f560a0604b6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "mixing-props",
+      "title": "6. Mixing properties",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "mixing-props-voice-volume",
+      "title": "6.1. The voice-volume property",
+      "level": 3,
+      "text_sha256": "491f11aa60bcac1a859a53c67bb466bf37c00aab0ed10eeb750d1f9aca111054",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "mixing-props-voice-balance",
+      "title": "6.2. The voice-balance property",
+      "level": 3,
+      "text_sha256": "6707042b0c46ec5497189620eb1131caa9e718d8526f253649def867af3e03f2",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "speaking-props",
+      "title": "7. Speaking properties",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "speaking-props-speak",
+      "title": "7.1. The speak property",
+      "level": 3,
+      "text_sha256": "03644e5c28a257830f048943f058a124818eb81ab4250b0a933be2da8321ca50",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "speaking-props-speak-as",
+      "title": "7.2. The speak-as property",
+      "level": 3,
+      "text_sha256": "9bdccab2c4ca1e890a6ba6cb676d45a0d5605e87b90a5c11037790096b6a019b",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "pause-props",
+      "title": "8. Pause properties",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "pause-props-pause-before-after",
+      "title": "8.1. The pause-before and pause-after properties",
+      "level": 3,
+      "text_sha256": "2af030456ec4a6e0e45e036301ed276ed2465aa1f317b0d0571ed92395f2a36f",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "pause-props-pause",
+      "title": "8.2. The pause shorthand property",
+      "level": 3,
+      "text_sha256": "6cfedd4bf3d8336ec87f9a5b28e77fd57662dbb355fb2ca13bd12cb652a9178f",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "collapsed-pauses",
+      "title": "8.3. Collapsing pauses",
+      "level": 3,
+      "text_sha256": "05aba55ee7861bbb019672b7a63e26cf710f8b3bf29c55f8fade15db1345b212",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "rest-props",
+      "title": "9. Rest properties",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "rest-props-rest-before-after",
+      "title": "9.1. The rest-before and rest-after properties",
+      "level": 3,
+      "text_sha256": "19824487e4efe369ce5d6ed288680ba9e6f1b2f76222307066ba6ded48746540",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "rest-props-rest",
+      "title": "9.2. The rest shorthand property",
+      "level": 3,
+      "text_sha256": "8f91ad73905d0183f193fba9ffd39a6c04d9ed25e918437f8a58bbae2b698950",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "cue-props",
+      "title": "10. Cue properties",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "cue-props-cue-before-after",
+      "title": "10.1. The cue-before and cue-after properties",
+      "level": 3,
+      "text_sha256": "6fe931bf6259e59306deb04a2bace447abcf85d4aaa45748bccf7ea1593a4f9a",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "cue-props-volume",
+      "title": "10.2. Relation between audio cues and speech synthesis volume levels",
+      "level": 3,
+      "text_sha256": "d1cbbbfe24e024d96c53c6c163bb6f1f84310cea759430b1db902752e70cac51",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "cue-props-cue",
+      "title": "10.3. The cue shorthand property",
+      "level": 3,
+      "text_sha256": "031dac84d7096e1db1a0defb913e43df516511830ba2f06001736f9a52ca666e",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "voice-char-props",
+      "title": "11. Voice characteristic properties",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "voice-props-voice-family",
+      "title": "11.1. The voice-family property",
+      "level": 3,
+      "text_sha256": "b39371dda66ea656c4e84ac14116e548a9d55cb63bf43a9ce351978188477475",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "voice-selection",
+      "title": "11.1.1. Voice selection, content language",
+      "level": 4,
+      "text_sha256": "9734754837375643595f03e4b7d5c084f15be144ce20b6b27afbdb5341f8598f",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "voice-props-voice-rate",
+      "title": "11.2. The voice-rate property",
+      "level": 3,
+      "text_sha256": "5b864fbcb9964008761011232dd1e379bd599c679c46cbcad66a2535714f0080",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "voice-props-voice-pitch",
+      "title": "11.3. The voice-pitch property",
+      "level": 3,
+      "text_sha256": "14cb79ccd2d1d3373b362c63e4559b98d592de1a57600cb7e96aa9a96e28b449",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "voice-props-voice-range",
+      "title": "11.4. The voice-range property",
+      "level": 3,
+      "text_sha256": "cea07df4963cfd6a587ac1835a6e79d6cd470530d22b860a9c5f7acf92f6dd6a",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "voice-props-voice-stress",
+      "title": "11.5. The voice-stress property",
+      "level": 3,
+      "text_sha256": "aee9be4ee1a8202e5dea28b521827abfc62362b19a5f60f7b9c2fab91cf7fe6f",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "duration-props",
+      "title": "12. Voice duration property",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "mixing-props-voice-duration",
+      "title": "12.1. The voice-duration property",
+      "level": 3,
+      "text_sha256": "56c2d0d938ec56433dff5657926a69a9daa2383b55bf04944b5cbae44ef7d784",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "lists",
+      "title": "13. List items and counters styles",
+      "level": 2,
+      "text_sha256": "a061f4f7213ec37bb31a2127074463c34411e08a4a45f6c55e166322e462ce01",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "content",
+      "title": "14. Inserted and replaced content",
+      "level": 2,
+      "text_sha256": "8f58c59a3063f2c6b90145fd8eeaab7c2e84f4a78f50366aaf8322112b310369",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "pronunciation",
+      "title": "15. Pronunciation, phonemes",
+      "level": 2,
+      "text_sha256": "98ea4d2d73fc2f3ac06ba367cbd2d88ecf00d0e3dcfbcf7de355abbf2aa7948b",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "glossary",
+      "title": "Glossary",
+      "level": 3,
+      "text_sha256": "168db07457b62f37ccd6ceb0bce286f2b509dedb9d420519abe38e579f37d91e",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "ack",
+      "title": "Appendix D — Acknowledgements",
+      "level": 2,
+      "text_sha256": "efab0529565eb6c3daae285a0ddd66ac06dfd3f0c94a1d3f1281cde1e4b4c335",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.ack"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Appendix E — Changes",
+      "level": 2,
+      "text_sha256": "ba41bd2d02563bf5edb52394c5290c084e5622d6c14abf33fa4ecb8b6e7327b0",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "7545e1c2c36db71ae3297a550f03e6c90528f9153afb51e914bb5f9312ea1161",
+      "clause_count": 207,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "2bebeb0bed71d877eba52fcf413f4e79d4418025e9dff4bc46a467ebe00daf96",
+      "clause_count": 66,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "57de10641b85d7c7da6aa995f0a38df7b559426e94cb68792ce22888e8ec6eb7",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "3bc04bfb76b1b14bf2d2269a8b8e8293a295ab1eece635ad2fa966c37bd5a3dd",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-speech-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "56133928f9173f03937ef46b2633108b6832d6045b29021d381347926b09aa43",
+      "clause_count": 254,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    }
+  ]
+}

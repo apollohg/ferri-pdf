@@ -1,0 +1,815 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-namespaces-3.subtitle",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "subtitle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Recommendation 29 September 2011, edited in place 20 March 2014.",
+      "locator": {
+        "section_id": "subtitle",
+        "text_sha256": "0300b5b2e72fac9104dedb4a3ea2ec1b4cfd0125a6d3b86124d438f9ff391c57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.conformance",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2 Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "e5f10285487efdce6a9640745452b59e69a80c67af49ca13cfc53027c57913ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-namespaces-3.conformance-clause-9eaa9ae4d6b8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.conformance-clause-9eaa9ae4d6b8",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "2 Conformance — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 6,
+        "clause_sha256": "9eaa9ae4d6b8480625d42522d4fd7171307b68b8ec9151892f5751e58c3f6839"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-namespaces-3.terminology",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terminology",
+        "text_sha256": "8d4e69e24604a4c8d2709852bb7e88e7da6921b71f1e4dbbbdc3e081c4af1df0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.declaration",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "declaration"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 3 Declaring namespaces: the @namespace rule.",
+      "locator": {
+        "section_id": "declaration",
+        "text_sha256": "0298f8b7426046b1656abca73035baca43f453fde4550310380e5dcabd4e39dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-namespaces-3.declaration-clause-ddd40bc9c6bc",
+        "css-namespaces-3.foundation-selector-namespaces"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.declaration-clause-ddd40bc9c6bc",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "declaration"
+      ],
+      "behaviour": "3 Declaring namespaces: the @namespace rule — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "declaration",
+        "clause_index": 9,
+        "clause_sha256": "ddd40bc9c6bcea84d6fc85d2aa26e7705a4c3a8ff712936bbd8cfc55f4b890d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-namespaces-3.syntax",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Syntax.",
+      "locator": {
+        "section_id": "syntax",
+        "text_sha256": "d2af087242ec6010fcf94769be6a2b618b946db58107d5219d5af08855e1a77f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-namespaces-3.syntax-clause-fb099a76ec9c",
+        "css-namespaces-3.syntax-clause-1d5c23ef4cb7",
+        "css-namespaces-3.syntax-clause-1fe726f6dfac",
+        "css-namespaces-3.syntax-clause-e066645fb30b",
+        "css-namespaces-3.foundation-selector-namespaces"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.syntax-clause-fb099a76ec9c",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Syntax — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "syntax",
+        "clause_index": 4,
+        "clause_sha256": "fb099a76ec9cc1de58f0e690c21d06117d0a056a762a79afd3e7f8d52b9df12c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-namespaces-3.syntax-clause-1d5c23ef4cb7",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Syntax — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "syntax",
+        "clause_index": 5,
+        "clause_sha256": "1d5c23ef4cb70df98b4990a00b2e00d9354b847baba5294d841942c5d9b11e4c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-namespaces-3.syntax-clause-1fe726f6dfac",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Syntax — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "syntax",
+        "clause_index": 6,
+        "clause_sha256": "1fe726f6dfac3ccb8883aa6e728cf66d30081caf1d3dab207fbd6caa608d3d82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-namespaces-3.syntax-clause-e066645fb30b",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Syntax — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "syntax",
+        "clause_index": 7,
+        "clause_sha256": "e066645fb30b12948818ac5a1cc2724598d898eb561c086cbe6307b714227843"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-namespaces-3.scope",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "scope"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scope.",
+      "locator": {
+        "section_id": "scope",
+        "text_sha256": "d9c14bbe1819f67f076bb3e69590425eba7f5d45399dd5b2f2b8f1929a59dbea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-namespaces-3.foundation-selector-namespaces"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.prefixes",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "prefixes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Declaring Prefixes.",
+      "locator": {
+        "section_id": "prefixes",
+        "text_sha256": "8a40747a6f3145072ebf9755cb91659fa2271e6374763570cbf73fb07ceb7104"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-namespaces-3.prefixes-clause-3c80b2398bb3",
+        "css-namespaces-3.prefixes-clause-6af1b118924e",
+        "css-namespaces-3.foundation-selector-namespaces"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.prefixes-clause-3c80b2398bb3",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "prefixes"
+      ],
+      "behaviour": "Declaring Prefixes — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "prefixes",
+        "clause_index": 1,
+        "clause_sha256": "3c80b2398bb3cbc690483cc963068fce0fac7862842833579dfd70e433348e82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-namespaces-3.prefixes-clause-6af1b118924e",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "prefixes"
+      ],
+      "behaviour": "Declaring Prefixes — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "prefixes",
+        "clause_index": 3,
+        "clause_sha256": "6af1b118924e000bd3924db6c9feabbb50caf5673ba428200f5c9a7c1fec9a4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-namespaces-3.css-qnames",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "css-qnames"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 4 CSS Qualified Names.",
+      "locator": {
+        "section_id": "css-qnames",
+        "text_sha256": "e57a58aa91df7bb43079a050657f4846b3e810268217fcbfb8d9ca3f08a2d6e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-namespaces-3.css-qnames-clause-b2fb0289d62b",
+        "css-namespaces-3.css-qnames-clause-d9b8241ca17d",
+        "css-namespaces-3.foundation-selector-namespaces"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.css-qnames-clause-b2fb0289d62b",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "css-qnames"
+      ],
+      "behaviour": "4 CSS Qualified Names — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-qnames",
+        "clause_index": 12,
+        "clause_sha256": "b2fb0289d62b7710b67a395b0fee6112fe287a6b1118b4955284cd6570b5c70e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-namespaces-3.css-qnames-clause-d9b8241ca17d",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "css-qnames"
+      ],
+      "behaviour": "4 CSS Qualified Names — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-qnames",
+        "clause_index": 13,
+        "clause_sha256": "d9b8241ca17d25684e576ec7e3a5eadcbc5bcd3116d8ee0a47ed82a66936d51a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-namespaces-3.property-index",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "547c4769772c9ff811e57bf39809cc6f1c1e6380af2bb402096c995db2287df6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.title",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Namespaces Module Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.abstract",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "8a5858c4bd5de9a9e0bdf332098c498ef997ec316c4a17fb435a4b7071774714"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.status",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "1671fefc3dad27c8e6e83d9792b248618a7573ae0674eaf72a4eaa8ec7853320"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.contents",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "dcff423ea16bfb2a1fb4027d12a4e78af69e8192894ad8b5eac86b11d692fb6e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.intro",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1 Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "a997b3ca1c4c2c3c479b12d4e50bf70887636ebd1a7c159c57805980d2d66e8f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.changes",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "9879ce8af91c84aa62a2defe5b70aae11ed4b7824f9868e32ad2959f6f5cb7ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.acks",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "acks"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acks",
+        "text_sha256": "7cf6267420ed9a07125bfd870d5b25181f2c75faccf69cf40e11f69d14fad84a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.references",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.normative",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "94cbaf09c6c54478aa3554a23f9aa3eb7aee9ee24b46aff2de09dc7a3418da6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.informative",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "3d27a24664adfb1be127c542b846547fd7d4c9a6d6c4501479372032da70dcf9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.index",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "0cd756721ce12a00387089bcc7d9235a0a77858728f7c93a25d27245b50b14c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-namespaces-3.foundation-selector-namespaces",
+      "family": "css-namespaces-3",
+      "source_id": "css-namespaces-3",
+      "sections": [
+        "declaration",
+        "syntax",
+        "scope",
+        "prefixes",
+        "css-qnames"
+      ],
+      "behaviour": "Apply stylesheet-local namespace declarations and qualified element/attribute selectors.",
+      "locator": {
+        "section_id": "declaration",
+        "text_sha256": "0298f8b7426046b1656abca73035baca43f453fde4550310380e5dcabd4e39dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    }
+  ]
+}

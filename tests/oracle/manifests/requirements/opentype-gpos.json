@@ -1,0 +1,1741 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-gpos.gpos-glyph-positioning-table",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos--glyph-positioning-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GPOS — Glyph Positioning Table.",
+      "locator": {
+        "section_id": "gpos--glyph-positioning-table",
+        "text_sha256": "214e1897aecdbc0fa38663f3c48b975638d01ca841f95852449b42b2f24c1245"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.overview",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overview.",
+      "locator": {
+        "section_id": "overview",
+        "text_sha256": "1e675aac2c93b8624c1164ecfd4b4b059fda14c1bdc4825fae24f2cd955cef60"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gpos.overview-clause-96ae9aae775d",
+        "opentype-gpos.overview-clause-6cac721f0f41"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.overview-clause-96ae9aae775d",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Overview — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "overview",
+        "clause_index": 2,
+        "clause_sha256": "96ae9aae775d83ff42468e71ed3081102cf951f5667ef0970352cecfd47f730c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.overview-clause-6cac721f0f41",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Overview — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "overview",
+        "clause_index": 7,
+        "clause_sha256": "6cac721f0f4121353eb9af76160c1f9cb077c7a0521bb38d46a13b54d49a5b09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.gpos-table-and-opentype-font-variations",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-table-and-opentype-font-variations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GPOS table and OpenType Font Variations.",
+      "locator": {
+        "section_id": "gpos-table-and-opentype-font-variations",
+        "text_sha256": "5f7b531215ef575d8e467c322dd611a21dc7afdb60ead55ac5f2c9bb5e8e7538"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gpos.gpos-table-and-opentype-font-variations-clause-83a47843d193",
+        "opentype-gpos.gpos-table-and-opentype-font-variations-clause-9c433c2d8637",
+        "opentype-gpos.gpos-table-and-opentype-font-variations-clause-f7d91342abe1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.gpos-table-and-opentype-font-variations-clause-83a47843d193",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-table-and-opentype-font-variations"
+      ],
+      "behaviour": "GPOS table and OpenType Font Variations — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "gpos-table-and-opentype-font-variations",
+        "clause_index": 1,
+        "clause_sha256": "83a47843d19365e7beb54aeded4e22720108e3a66fac9df50728badf7796821e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.gpos-table-and-opentype-font-variations-clause-9c433c2d8637",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-table-and-opentype-font-variations"
+      ],
+      "behaviour": "GPOS table and OpenType Font Variations — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "gpos-table-and-opentype-font-variations",
+        "clause_index": 3,
+        "clause_sha256": "9c433c2d86377a1db69db8097b0fd6afbc46ff4c0ef093c5cc44361b96edaf6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.gpos-table-and-opentype-font-variations-clause-f7d91342abe1",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-table-and-opentype-font-variations"
+      ],
+      "behaviour": "GPOS table and OpenType Font Variations — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "gpos-table-and-opentype-font-variations",
+        "clause_index": 6,
+        "clause_sha256": "f7d91342abe1494ee50fc48920b7ad670cfbca0c0dccbf27cfe73ac5981821dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.gpos-table-organization",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-table-organization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GPOS table organization.",
+      "locator": {
+        "section_id": "gpos-table-organization",
+        "text_sha256": "8826aacca34a005a7a1326819b52770d0ac29cd2b14150ce9f0350cbae83daf3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gpos.gpos-table-organization-clause-7d07d908e44b",
+        "opentype-gpos.gpos-table-organization-clause-473702e17ab7",
+        "opentype-gpos.gpos-table-organization-clause-25a08724e7dc",
+        "opentype-gpos.gpos-table-organization-clause-1102a43b2da5",
+        "opentype-gpos.gpos-table-organization-clause-3e536aa111c2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.gpos-table-organization-clause-7d07d908e44b",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-table-organization"
+      ],
+      "behaviour": "GPOS table organization — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "gpos-table-organization",
+        "clause_index": 2,
+        "clause_sha256": "7d07d908e44b7b4a77e9148a0203e72ea2f5e61084ed0ea64bc1d46d99010ad0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.gpos-table-organization-clause-473702e17ab7",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-table-organization"
+      ],
+      "behaviour": "GPOS table organization — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "gpos-table-organization",
+        "clause_index": 6,
+        "clause_sha256": "473702e17ab74517db3959c485b7179367cfde8f631d681a4e790a15d669ae88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.gpos-table-organization-clause-25a08724e7dc",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-table-organization"
+      ],
+      "behaviour": "GPOS table organization — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "gpos-table-organization",
+        "clause_index": 9,
+        "clause_sha256": "25a08724e7dcef0945249338dd3bfaf31f1d48e1f9841d05a34fe3eb6e0be1cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.gpos-table-organization-clause-1102a43b2da5",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-table-organization"
+      ],
+      "behaviour": "GPOS table organization — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "gpos-table-organization",
+        "clause_index": 11,
+        "clause_sha256": "1102a43b2da50c1bb4e1ff6a2c5457b72d71973ec5dcbe7cc8270f5863f10f4e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.gpos-table-organization-clause-3e536aa111c2",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-table-organization"
+      ],
+      "behaviour": "GPOS table organization — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "gpos-table-organization",
+        "clause_index": 14,
+        "clause_sha256": "3e536aa111c25d956f899a5174dd975a0a81fe44bc0f698d4dfa871d1b307a98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.gpos-table-structures",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-table-structures"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GPOS table structures.",
+      "locator": {
+        "section_id": "gpos-table-structures",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.gpos-header",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GPOS Header.",
+      "locator": {
+        "section_id": "gpos-header",
+        "text_sha256": "e1f7afd3d5b6d16749209e11a9dc0efd24da5c66aa39378ea64f33b72923b57e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-1-subtable-single-adjustment-positioning",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-1-subtable-single-adjustment-positioning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 1 subtable: single adjustment positioning.",
+      "locator": {
+        "section_id": "lookup-type-1-subtable-single-adjustment-positioning",
+        "text_sha256": "d64eed7d0b9b3fb27ebb9f4a6155d2ee9a472437f2049f75e4413131acd63389"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gpos.lookup-type-1-subtable-single-adjustment-positioning-clause-afddd5ae641f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-1-subtable-single-adjustment-positioning-clause-afddd5ae641f",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-1-subtable-single-adjustment-positioning"
+      ],
+      "behaviour": "Lookup type 1 subtable: single adjustment positioning — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-1-subtable-single-adjustment-positioning",
+        "clause_index": 46,
+        "clause_sha256": "afddd5ae641f5d84128409d6f71871d4b74a68b67a4e90fc3a8118f6f628b0c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-2-subtable-pair-adjustment-positioning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 2 subtable: pair adjustment positioning.",
+      "locator": {
+        "section_id": "lookup-type-2-subtable-pair-adjustment-positioning",
+        "text_sha256": "aca3bc74343e5b53005d661ec730c07e2ef8e1e26d75035e6232a7ae0f384e75"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-6a39a81d6804",
+        "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-1b912a44a495",
+        "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-623a6d6a465e",
+        "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-594a2b7512bc",
+        "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-f95df478d2f3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-6a39a81d6804",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-2-subtable-pair-adjustment-positioning"
+      ],
+      "behaviour": "Lookup type 2 subtable: pair adjustment positioning — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-2-subtable-pair-adjustment-positioning",
+        "clause_index": 6,
+        "clause_sha256": "6a39a81d68041bc058158e4277570ceb2687b853ba7d6d7f790578a6a4edd38c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-1b912a44a495",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-2-subtable-pair-adjustment-positioning"
+      ],
+      "behaviour": "Lookup type 2 subtable: pair adjustment positioning — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-2-subtable-pair-adjustment-positioning",
+        "clause_index": 7,
+        "clause_sha256": "1b912a44a495ca542a85a8f0d3f5f10a23f9b791878c4cdffb1bad784f610ac4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-623a6d6a465e",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-2-subtable-pair-adjustment-positioning"
+      ],
+      "behaviour": "Lookup type 2 subtable: pair adjustment positioning — normative clause 67, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-2-subtable-pair-adjustment-positioning",
+        "clause_index": 66,
+        "clause_sha256": "623a6d6a465e8faa31792f095e5f2b46dac30d9a382594cd3fb7fe87563acd37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-594a2b7512bc",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-2-subtable-pair-adjustment-positioning"
+      ],
+      "behaviour": "Lookup type 2 subtable: pair adjustment positioning — normative clause 101, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-2-subtable-pair-adjustment-positioning",
+        "clause_index": 100,
+        "clause_sha256": "594a2b7512bc5bac034cbc5da58d798d77cdf720f36cbe68017f895e93b2e72a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-f95df478d2f3",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-2-subtable-pair-adjustment-positioning"
+      ],
+      "behaviour": "Lookup type 2 subtable: pair adjustment positioning — normative clause 109, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-2-subtable-pair-adjustment-positioning",
+        "clause_index": 108,
+        "clause_sha256": "f95df478d2f3512bb5db44acba10dc58d6de089b5e4592f923d911ece50f371e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-3-subtable-cursive-attachment-positioning",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-3-subtable-cursive-attachment-positioning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 3 subtable: cursive attachment positioning.",
+      "locator": {
+        "section_id": "lookup-type-3-subtable-cursive-attachment-positioning",
+        "text_sha256": "ae23df52bac2b8a3367827778957041b6605d9130f410ddd90521f320cac3a4c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-4-subtable-mark-to-base-attachment-positioning",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-4-subtable-mark-to-base-attachment-positioning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 4 subtable: mark-to-base attachment positioning.",
+      "locator": {
+        "section_id": "lookup-type-4-subtable-mark-to-base-attachment-positioning",
+        "text_sha256": "7743e1b96c376573b5f4e10c476d930cf32a3c0819c20876ea3fd10d3d696d35"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gpos.lookup-type-4-subtable-mark-to-base-attachment-positioning-clause-ac5f2d677191"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-4-subtable-mark-to-base-attachment-positioning-clause-ac5f2d677191",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-4-subtable-mark-to-base-attachment-positioning"
+      ],
+      "behaviour": "Lookup type 4 subtable: mark-to-base attachment positioning — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-4-subtable-mark-to-base-attachment-positioning",
+        "clause_index": 3,
+        "clause_sha256": "ac5f2d677191420e6d436869ccde733f81cb37fe013b5bc589f962d6c242691b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-5-subtable-mark-to-ligature-attachment-positioning",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-5-subtable-mark-to-ligature-attachment-positioning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 5 subtable: mark-to-ligature attachment positioning.",
+      "locator": {
+        "section_id": "lookup-type-5-subtable-mark-to-ligature-attachment-positioning",
+        "text_sha256": "9592f05f8609028f4f959dbdb8bafb667bf38f59931ddac5d4443fca96c603c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gpos.lookup-type-5-subtable-mark-to-ligature-attachment-positioning-clause-e30d0e5a0bfa",
+        "opentype-gpos.lookup-type-5-subtable-mark-to-ligature-attachment-positioning-clause-bf45a75f82b3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-5-subtable-mark-to-ligature-attachment-positioning-clause-e30d0e5a0bfa",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-5-subtable-mark-to-ligature-attachment-positioning"
+      ],
+      "behaviour": "Lookup type 5 subtable: mark-to-ligature attachment positioning — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-5-subtable-mark-to-ligature-attachment-positioning",
+        "clause_index": 1,
+        "clause_sha256": "e30d0e5a0bfac39f2dcea06caae668b32375cf3deb123c483d44e9ecf14012d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-5-subtable-mark-to-ligature-attachment-positioning-clause-bf45a75f82b3",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-5-subtable-mark-to-ligature-attachment-positioning"
+      ],
+      "behaviour": "Lookup type 5 subtable: mark-to-ligature attachment positioning — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-5-subtable-mark-to-ligature-attachment-positioning",
+        "clause_index": 4,
+        "clause_sha256": "bf45a75f82b39a8b8c6828d75b9c7cc0a4f383e062e2c7f96d82cd6e73f9009d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-6-subtable-mark-to-mark-attachment-positioning",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-6-subtable-mark-to-mark-attachment-positioning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 6 subtable: mark-to-mark attachment positioning.",
+      "locator": {
+        "section_id": "lookup-type-6-subtable-mark-to-mark-attachment-positioning",
+        "text_sha256": "4077c155f5bf8da75ae692d69e0d6bc6d95f76fa349142037660ff55daa20e25"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-7-subtable-contextual-positioning",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-7-subtable-contextual-positioning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 7 subtable: contextual positioning.",
+      "locator": {
+        "section_id": "lookup-type-7-subtable-contextual-positioning",
+        "text_sha256": "89eeeece360ecb07f84a5a45e9e24c223e75f2d0cdb3f7bf9fa517f7eeb8533a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-8-subtable-chained-contexts-positioning",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-8-subtable-chained-contexts-positioning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 8 subtable: chained contexts positioning.",
+      "locator": {
+        "section_id": "lookup-type-8-subtable-chained-contexts-positioning",
+        "text_sha256": "c39cc628c5786efd3141a2423a75dcedc2979d043797483ee8b8e810e7303b97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-9-subtable-positioning-subtable-extension",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-9-subtable-positioning-subtable-extension"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 9 subtable: positioning subtable extension.",
+      "locator": {
+        "section_id": "lookup-type-9-subtable-positioning-subtable-extension",
+        "text_sha256": "fc56bac532b0997c531736708701f207eac34deacd76753cfd8a92d4dbb6489c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gpos.lookup-type-9-subtable-positioning-subtable-extension-clause-65865c27e07b",
+        "opentype-gpos.lookup-type-9-subtable-positioning-subtable-extension-clause-a44e654e9179"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-9-subtable-positioning-subtable-extension-clause-65865c27e07b",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-9-subtable-positioning-subtable-extension"
+      ],
+      "behaviour": "Lookup type 9 subtable: positioning subtable extension — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-9-subtable-positioning-subtable-extension",
+        "clause_index": 16,
+        "clause_sha256": "65865c27e07b1b65f648a60fa6de393417fe5943b4b4ecd52036679866af5b66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.lookup-type-9-subtable-positioning-subtable-extension-clause-a44e654e9179",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "lookup-type-9-subtable-positioning-subtable-extension"
+      ],
+      "behaviour": "Lookup type 9 subtable: positioning subtable extension — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-9-subtable-positioning-subtable-extension",
+        "clause_index": 17,
+        "clause_sha256": "a44e654e917957bdde9af6e25c9f6528bde9d68a45e71087d7a2cf3c83959eef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.shared-formats-value-record-anchor-table-mark-array-table",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "shared-formats-value-record-anchor-table-mark-array-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shared formats: value record, anchor table, mark array table.",
+      "locator": {
+        "section_id": "shared-formats-value-record-anchor-table-mark-array-table",
+        "text_sha256": "d0ffbfab4d499f8faf61afec48f1c65a58030ee7f9b086ad67ce523ea1e1e48d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.value-record",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "value-record"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value record.",
+      "locator": {
+        "section_id": "value-record",
+        "text_sha256": "81b848d963cdc9020525c8ffd9438e653230760ec7c6ea58ac92be886239a842"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gpos.value-record-clause-331efe43118b",
+        "opentype-gpos.value-record-clause-7c7c19bfd524"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.value-record-clause-331efe43118b",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "value-record"
+      ],
+      "behaviour": "Value record — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "value-record",
+        "clause_index": 1,
+        "clause_sha256": "331efe43118b9ab2426727ad57fc81f552983c5ab1c6ad414d81db966f98a4ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.value-record-clause-7c7c19bfd524",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "value-record"
+      ],
+      "behaviour": "Value record — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "value-record",
+        "clause_index": 33,
+        "clause_sha256": "7c7c19bfd5246451591c22daf128d598c8258fb13baeb59f3587d2d19368425b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.anchor-table",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "anchor-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Anchor table.",
+      "locator": {
+        "section_id": "anchor-table",
+        "text_sha256": "85e2b1ef967f1d408ab198d474ca4971f69699a3b1fe4e1134750a4d658a4a1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gpos.anchor-table-clause-50d69cc8182b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.anchor-table-clause-50d69cc8182b",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "anchor-table"
+      ],
+      "behaviour": "Anchor table — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-table",
+        "clause_index": 41,
+        "clause_sha256": "50d69cc8182b78133af905df171e8ce67cf4e7e43c67acc410c9828339a6e6b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.mark-array-table",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "mark-array-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mark array table.",
+      "locator": {
+        "section_id": "mark-array-table",
+        "text_sha256": "27adc70aae469a60f4f47e93b21e9d52404a84650bf6814b866964514718681c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gpos.mark-array-table-clause-6bbca87798e6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.mark-array-table-clause-6bbca87798e6",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "mark-array-table"
+      ],
+      "behaviour": "Mark array table — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "mark-array-table",
+        "clause_index": 2,
+        "clause_sha256": "6bbca87798e6edc035c7538fbc9229e537d24b9011dd3937c8184599bd3e08a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gpos.gpos-structure-examples",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "gpos-structure-examples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GPOS structure examples.",
+      "locator": {
+        "section_id": "gpos-structure-examples",
+        "text_sha256": "2788728b137f632340a007966c7e8e30efbaf3205415eb3c7bad7d89c525c971"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-1-gpos-header",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-1-gpos-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 1: GPOS Header.",
+      "locator": {
+        "section_id": "example-1-gpos-header",
+        "text_sha256": "423b45c14b88250bf3c34fc749d1bf426cbee80942735a921a4d28141b910035"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-2-singleposformat1-subtable",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-2-singleposformat1-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 2: SinglePosFormat1 subtable.",
+      "locator": {
+        "section_id": "example-2-singleposformat1-subtable",
+        "text_sha256": "a36853c7d2e04b279195db0f7543237881f14ac23927d269f660cbb9d9cc5566"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-3-singleposformat2-subtable",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-3-singleposformat2-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 3: SinglePosFormat2 subtable.",
+      "locator": {
+        "section_id": "example-3-singleposformat2-subtable",
+        "text_sha256": "2ae854287c6e85c4fe4bf036717f34cb1c1ed97742576cef0de1e84e7ae1a429"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-4-pairposformat1-subtable",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-4-pairposformat1-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 4: PairPosFormat1 subtable.",
+      "locator": {
+        "section_id": "example-4-pairposformat1-subtable",
+        "text_sha256": "749d34e043186f9b24f2d30baf642f3a3e8e4ba593297f702f74813b0d8cf151"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-5-pairposformat2-subtable",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-5-pairposformat2-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 5: PairPosFormat2 subtable.",
+      "locator": {
+        "section_id": "example-5-pairposformat2-subtable",
+        "text_sha256": "7c55eea388f9b18c1addb5361265a91923917af15b244e6398568382d3374276"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-6-cursiveposformat1-subtable",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-6-cursiveposformat1-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 6: CursivePosFormat1 subtable.",
+      "locator": {
+        "section_id": "example-6-cursiveposformat1-subtable",
+        "text_sha256": "547eecc4a2ad0eaed69adb7da71dc099fa7b52f131f2f1b87a6cb572f942d4cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-7-markbaseposformat1-subtable",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-7-markbaseposformat1-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 7: MarkBasePosFormat1 subtable.",
+      "locator": {
+        "section_id": "example-7-markbaseposformat1-subtable",
+        "text_sha256": "832ca5c66cb09668a3ef04c1c6c72ea80f7cb52a849b78fffe259265c7a02794"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-8-markligposformat1-subtable",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-8-markligposformat1-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 8: MarkLigPosFormat1 subtable.",
+      "locator": {
+        "section_id": "example-8-markligposformat1-subtable",
+        "text_sha256": "d723bad9a09a9d22f2e6f36e432808a84bba0065e07c31a196cd1e85ebf14b78"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-9-markmarkposformat1-subtable",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-9-markmarkposformat1-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 9: MarkMarkPosFormat1 subtable.",
+      "locator": {
+        "section_id": "example-9-markmarkposformat1-subtable",
+        "text_sha256": "105952e2885f1618df4491f30fb979f6c03a9592540143ac95936c4e13957730"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-10-contextual-positioning-format-1",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-10-contextual-positioning-format-1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 10: Contextual positioning format 1.",
+      "locator": {
+        "section_id": "example-10-contextual-positioning-format-1",
+        "text_sha256": "f1f05ead7faafaac2a6d9146900315f71441e6e5c63f98f216cfbc46439667c1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-11-contextual-positioning-format-2",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-11-contextual-positioning-format-2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 11: Contextual positioning format 2.",
+      "locator": {
+        "section_id": "example-11-contextual-positioning-format-2",
+        "text_sha256": "296212b80d6c344402c3faf4e5e0984f0fe7be7ad7ebf24a5c9695bb9704775c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-12-contextual-positioning-format-3",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-12-contextual-positioning-format-3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 12: Contextual positioning format 3.",
+      "locator": {
+        "section_id": "example-12-contextual-positioning-format-3",
+        "text_sha256": "bf3c82c2386cde836e231772d57b4b35ed5c931e1aa547fa645ae126a1843210"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-13-sequencelookup-record",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-13-sequencelookup-record"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 13: SequenceLookup record.",
+      "locator": {
+        "section_id": "example-13-sequencelookup-record",
+        "text_sha256": "9d9e00bb0ad8bcfb9f49c8f6bf5fcb1a62fea44faa2c144b3d9f85865c1c5994"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-14-valueformat-and-valuerecord",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-14-valueformat-and-valuerecord"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 14: ValueFormat and ValueRecord.",
+      "locator": {
+        "section_id": "example-14-valueformat-and-valuerecord",
+        "text_sha256": "2c415418f6174030d731fae6c1b668d89e0e5fb149f2dd1a9c48d39967b036c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-15-anchorformat1-table",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-15-anchorformat1-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 15: AnchorFormat1 table.",
+      "locator": {
+        "section_id": "example-15-anchorformat1-table",
+        "text_sha256": "72cc78fe6abe6a8a23a9cab294c9a8626404d62681384e95c638490029429b2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-16-anchorformat2-table",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-16-anchorformat2-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 16: AnchorFormat2 table.",
+      "locator": {
+        "section_id": "example-16-anchorformat2-table",
+        "text_sha256": "60da93a32483894c0eb2cf12898b64feea2da0e5590ff5bf6b5758416bcee0d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-17-anchorformat3-table",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-17-anchorformat3-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 17: AnchorFormat3 table.",
+      "locator": {
+        "section_id": "example-17-anchorformat3-table",
+        "text_sha256": "28318268db169d2c6ddaaa82a4aa6567e9bbdc5bf5f18d9bfd423b819eb81546"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.example-18-markarray-table-and-markrecord",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "example-18-markarray-table-and-markrecord"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 18: MarkArray table and MarkRecord.",
+      "locator": {
+        "section_id": "example-18-markarray-table-and-markrecord",
+        "text_sha256": "417f9a60b8a59917788cef5e0771cc431ad0b3e72a0fa9e7bfc746dfbcc10755"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.ms-in-this-article",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.ms-feedback",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.ms-additional-resources-mobile-heading",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "3eb25b59e14381d11045c4430465c544fb0a9c44ecad8beae369fc9d1fea3786"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gpos.side-doc-outline",
+      "family": "opentype-gpos",
+      "source_id": "opentype-gpos",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

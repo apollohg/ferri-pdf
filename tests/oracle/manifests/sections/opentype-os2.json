@@ -1,0 +1,696 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-os2",
+  "sections": [
+    {
+      "id": "os2--os2-and-windows-metrics-table",
+      "title": "OS/2 — OS/2 and Windows Metrics Table",
+      "level": 1,
+      "text_sha256": "b43020f2cc07cfb02341debe3c0f6e8895a35443eb61ffdf19436bff264ea2c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.os2-os2-and-windows-metrics-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "os2-table-formats",
+      "title": "OS/2 Table Formats",
+      "level": 2,
+      "text_sha256": "d90502d71cbb417f5a8c7d3df28a3cafd8fc050d81c340024a7fa339f4cfb4e6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.os2-table-formats"
+        ]
+      }
+    },
+    {
+      "id": "version-5",
+      "title": "Version 5",
+      "level": 3,
+      "text_sha256": "9a6a82cbfc67d107f180bbb6577dd66cdce523a9175f58cbf3d83e742f0c2eba",
+      "clause_count": 89,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.version-5"
+        ]
+      }
+    },
+    {
+      "id": "version-4",
+      "title": "Version 4",
+      "level": 3,
+      "text_sha256": "15f1ad52351d54af8048ac92f502cf32a5abc7d7f0f50918c668029e99cb42a4",
+      "clause_count": 77,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.version-4"
+        ]
+      }
+    },
+    {
+      "id": "version-3",
+      "title": "Version 3",
+      "level": 3,
+      "text_sha256": "4aa0f11e24f9862569370bc4e93fe13baba8b3d836b981309a87730bec9ccd63",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.version-3"
+        ]
+      }
+    },
+    {
+      "id": "version-2",
+      "title": "Version 2",
+      "level": 3,
+      "text_sha256": "5f665e3c14efd63bff5fbad74d938f7e22290ed762f51531e66edc89fddb6922",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.version-2"
+        ]
+      }
+    },
+    {
+      "id": "version-1",
+      "title": "Version 1",
+      "level": 3,
+      "text_sha256": "4ecd31c6a762b03642191ffa2d3d1109b616950e9d9ccf7099dd0a56c08d1225",
+      "clause_count": 67,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.version-1"
+        ]
+      }
+    },
+    {
+      "id": "version-0",
+      "title": "Version 0",
+      "level": 3,
+      "text_sha256": "31c6bb1a87ae7b3c32d68404350213885d031e624770ba6b30946eb93d5ae1a8",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.version-0",
+          "opentype-os2.version-0-clause-445092ac85c8"
+        ]
+      }
+    },
+    {
+      "id": "os2-field-details",
+      "title": "OS/2 Field Details",
+      "level": 2,
+      "text_sha256": "5568437e3aa903493911ebc2fff9328f902a0e6d2c1b0ad0746a7be7083ef646",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.os2-field-details"
+        ]
+      }
+    },
+    {
+      "id": "version",
+      "title": "version",
+      "level": 3,
+      "text_sha256": "7d3052793ae185b6bad77ed943648c9e972ec8f8fc262c46a61cef825d026501",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.version"
+        ]
+      }
+    },
+    {
+      "id": "xavgcharwidth",
+      "title": "xAvgCharWidth",
+      "level": 3,
+      "text_sha256": "585e16f5505a03a554b575951a8049f0f32ea82a17a231a535934bc6876957c1",
+      "clause_count": 70,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.xavgcharwidth",
+          "opentype-os2.xavgcharwidth-clause-91a5e340c0ad"
+        ]
+      }
+    },
+    {
+      "id": "usweightclass",
+      "title": "usWeightClass",
+      "level": 3,
+      "text_sha256": "16df96769dc45338b2b5f20a32152f28d27ae1d69b852cad8587bd7dd02cd88b",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.usweightclass"
+        ]
+      }
+    },
+    {
+      "id": "uswidthclass",
+      "title": "usWidthClass",
+      "level": 3,
+      "text_sha256": "a8bd54285a500701190478c1ded2bbf862042feb0434ce91df83c84f57b4715c",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.uswidthclass"
+        ]
+      }
+    },
+    {
+      "id": "fstype",
+      "title": "fsType",
+      "level": 3,
+      "text_sha256": "cf0848faf9abb59fab352c6ef63cd22f48a95c755d5aa759dad9e64bd086ef22",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.fstype",
+          "opentype-os2.fstype-clause-ed1cb32f25cf",
+          "opentype-os2.fstype-clause-a04298b65a56",
+          "opentype-os2.fstype-clause-927890cc27b2",
+          "opentype-os2.fstype-clause-bbf90c550b0e",
+          "opentype-os2.fstype-clause-b3d11dcf72be"
+        ]
+      }
+    },
+    {
+      "id": "ysubscriptxsize",
+      "title": "ySubscriptXSize",
+      "level": 3,
+      "text_sha256": "e3c4ffd229b8232e43342df8a36ce2f663069fb7eb43df308a7f0ecbfca9530b",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ysubscriptxsize",
+          "opentype-os2.ysubscriptxsize-clause-32032ea3281f",
+          "opentype-os2.ysubscriptxsize-clause-f4b6a7be176f"
+        ]
+      }
+    },
+    {
+      "id": "ysubscriptysize",
+      "title": "ySubscriptYSize",
+      "level": 3,
+      "text_sha256": "ac846937660304aa61cde522d2539ce22b1f28d1a9fb7ea08d423dd02b8e00de",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ysubscriptysize",
+          "opentype-os2.ysubscriptysize-clause-b207d5405814",
+          "opentype-os2.ysubscriptysize-clause-07c6a94685e2"
+        ]
+      }
+    },
+    {
+      "id": "ysubscriptxoffset",
+      "title": "ySubscriptXOffset",
+      "level": 3,
+      "text_sha256": "9473aa0bd256cc145ba79ed768c349795ae0e64d48dadc90667118248916bec5",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ysubscriptxoffset",
+          "opentype-os2.ysubscriptxoffset-clause-1fdad68c6e65"
+        ]
+      }
+    },
+    {
+      "id": "ysubscriptyoffset",
+      "title": "ySubscriptYOffset",
+      "level": 3,
+      "text_sha256": "3139abdd72310fd8382b504635e80a5b1796b4f2e7b574ab658d11cd726f8275",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ysubscriptyoffset",
+          "opentype-os2.ysubscriptyoffset-clause-04a2e81eae89"
+        ]
+      }
+    },
+    {
+      "id": "ysuperscriptxsize",
+      "title": "ySuperscriptXSize",
+      "level": 3,
+      "text_sha256": "145f6625a9a55c8996b4745d028d604b456e25dafa8af73dd2c9e92e6c20b713",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ysuperscriptxsize",
+          "opentype-os2.ysuperscriptxsize-clause-c1f9b466bcfc",
+          "opentype-os2.ysuperscriptxsize-clause-841f70a0bb0e"
+        ]
+      }
+    },
+    {
+      "id": "ysuperscriptysize",
+      "title": "ySuperscriptYSize",
+      "level": 3,
+      "text_sha256": "ee609c524790381fca41e01c5ec84c7bea687f18b40a0c94dd373d727739e25d",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ysuperscriptysize",
+          "opentype-os2.ysuperscriptysize-clause-3bea0f4b4688",
+          "opentype-os2.ysuperscriptysize-clause-c38bf3a46af4"
+        ]
+      }
+    },
+    {
+      "id": "ysuperscriptxoffset",
+      "title": "ySuperscriptXOffset",
+      "level": 3,
+      "text_sha256": "8e6d98b01a98f407d98b4b7c7ca6038d22aa5f3cf94edef7689e0368c8cd85bf",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ysuperscriptxoffset",
+          "opentype-os2.ysuperscriptxoffset-clause-1f8d32b57427"
+        ]
+      }
+    },
+    {
+      "id": "ysuperscriptyoffset",
+      "title": "ySuperscriptYOffset",
+      "level": 3,
+      "text_sha256": "a61521e0d5c9300bfd989fc0077301309e273f3b91260a7e3d48031e6349e37d",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ysuperscriptyoffset",
+          "opentype-os2.ysuperscriptyoffset-clause-79b782d971db"
+        ]
+      }
+    },
+    {
+      "id": "ystrikeoutsize",
+      "title": "yStrikeoutSize",
+      "level": 3,
+      "text_sha256": "dcc7893d59d2e0f326947698c0765b7d7db5fbbe4ecc9d2f322d1d44c861ef41",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ystrikeoutsize",
+          "opentype-os2.ystrikeoutsize-clause-f88d78114694",
+          "opentype-os2.ystrikeoutsize-clause-38939777d04e"
+        ]
+      }
+    },
+    {
+      "id": "ystrikeoutposition",
+      "title": "yStrikeoutPosition",
+      "level": 3,
+      "text_sha256": "1ad09ec2fbebf48e3b4c3f905e15879aa3a4d649747d25e02319fd9360694c0d",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ystrikeoutposition",
+          "opentype-os2.ystrikeoutposition-clause-93622077b4e6"
+        ]
+      }
+    },
+    {
+      "id": "sfamilyclass",
+      "title": "sFamilyClass",
+      "level": 3,
+      "text_sha256": "ca21d3932b3fd97c8fdd214225fac42ddd92791e3f74495d470792e49b0a9e09",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.sfamilyclass"
+        ]
+      }
+    },
+    {
+      "id": "panose",
+      "title": "panose",
+      "level": 3,
+      "text_sha256": "aad8fb307c84fd9c949f5755e03e6b1027cba93300c0e8a9c25e9f583b035980",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.panose",
+          "opentype-os2.panose-clause-baff95af9552",
+          "opentype-os2.panose-clause-8295545c8bc4",
+          "opentype-os2.panose-clause-9992cdb81768"
+        ]
+      }
+    },
+    {
+      "id": "ulunicoderange",
+      "title": "ulUnicodeRange*",
+      "level": 3,
+      "text_sha256": "b6a7f081a98379a661d87346ec5ce0d1e8fad77c6abbc6a3a5a21f0e08d6a7d4",
+      "clause_count": 588,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ulunicoderange",
+          "opentype-os2.ulunicoderange-clause-bea8794afa80"
+        ]
+      }
+    },
+    {
+      "id": "achvendid",
+      "title": "achVendID",
+      "level": 3,
+      "text_sha256": "850d6fa66801ecddc8f105843e77eef1981a13404e5d5ecc3f0cfe3944a367c0",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.achvendid",
+          "opentype-os2.achvendid-clause-520d8f60dfab"
+        ]
+      }
+    },
+    {
+      "id": "fsselection",
+      "title": "fsSelection",
+      "level": 3,
+      "text_sha256": "81382c08845e87c0f9ba02e9e9a5c1ae315205ef6da07e7cc71d0e5a84ce7e63",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.fsselection",
+          "opentype-os2.fsselection-clause-76c9202080a4",
+          "opentype-os2.fsselection-clause-9ac9ba4a551b"
+        ]
+      }
+    },
+    {
+      "id": "usfirstcharindex",
+      "title": "usFirstCharIndex",
+      "level": 3,
+      "text_sha256": "c3e9bc7602992424d95ac1c00c3716b3bf8aec4af34b8fd8d55fe63b3e1066d2",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.usfirstcharindex",
+          "opentype-os2.usfirstcharindex-clause-347e791a0b1e"
+        ]
+      }
+    },
+    {
+      "id": "uslastcharindex",
+      "title": "usLastCharIndex",
+      "level": 3,
+      "text_sha256": "01fdff844cf932ba8c3664f9ebedd87800977fa63503f80463201474c0c870b8",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.uslastcharindex",
+          "opentype-os2.uslastcharindex-clause-8ec477249f20"
+        ]
+      }
+    },
+    {
+      "id": "stypoascender",
+      "title": "sTypoAscender",
+      "level": 3,
+      "text_sha256": "6a0851f5fd830d206f226e1f5ccbf4ff10a55926cae8c7e1e4d25cca6292816b",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.stypoascender",
+          "opentype-os2.stypoascender-clause-9ae845433e3f",
+          "opentype-os2.stypoascender-clause-6a5f8fc60b21"
+        ]
+      }
+    },
+    {
+      "id": "stypodescender",
+      "title": "sTypoDescender",
+      "level": 3,
+      "text_sha256": "31646767a5e4cca2111b03a1a77ceee92cf96b61e74a261d2c3c9a57c1bb91b0",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.stypodescender",
+          "opentype-os2.stypodescender-clause-fe3760c5c456"
+        ]
+      }
+    },
+    {
+      "id": "stypolinegap",
+      "title": "sTypoLineGap",
+      "level": 3,
+      "text_sha256": "64999f073fdf01482795192d114ef01f0dd7c06d8390c39f329ad549424fd005",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.stypolinegap",
+          "opentype-os2.stypolinegap-clause-168a6b2ba4a6"
+        ]
+      }
+    },
+    {
+      "id": "uswinascent",
+      "title": "usWinAscent",
+      "level": 3,
+      "text_sha256": "6a6f55d39d78848bacf799ac43151a5a27598f9ea11813adafee5800d3711e95",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.uswinascent",
+          "opentype-os2.uswinascent-clause-093db0c079eb"
+        ]
+      }
+    },
+    {
+      "id": "uswindescent",
+      "title": "usWinDescent",
+      "level": 3,
+      "text_sha256": "f486d31a9bbecf8221fa3d6d9d859e96fc67f744831089c4f92df4cc86e941fc",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.uswindescent",
+          "opentype-os2.uswindescent-clause-58909dd9f5e6"
+        ]
+      }
+    },
+    {
+      "id": "ulcodepagerange",
+      "title": "ulCodePageRange*",
+      "level": 3,
+      "text_sha256": "f538e9fd19780ba50556b663f127773e608b0b6ceea07fc9065ac6ba6ddeaf4b",
+      "clause_count": 117,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ulcodepagerange",
+          "opentype-os2.ulcodepagerange-clause-597c640ff015",
+          "opentype-os2.ulcodepagerange-clause-97abad1f6202"
+        ]
+      }
+    },
+    {
+      "id": "sxheight",
+      "title": "sxHeight",
+      "level": 3,
+      "text_sha256": "8ca5a5995125650f46b2fba834b72737e6203d91b016684ca06f109e60396ab3",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.sxheight",
+          "opentype-os2.sxheight-clause-24a10596bdfa",
+          "opentype-os2.sxheight-clause-4032a54606d9"
+        ]
+      }
+    },
+    {
+      "id": "scapheight",
+      "title": "sCapHeight",
+      "level": 3,
+      "text_sha256": "f33f431b0308284f66a216b2d23d5ece26ffcd3793a57c98a002dcbabec8b8de",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.scapheight",
+          "opentype-os2.scapheight-clause-45b651bf207c",
+          "opentype-os2.scapheight-clause-4032a54606d9"
+        ]
+      }
+    },
+    {
+      "id": "usdefaultchar",
+      "title": "usDefaultChar",
+      "level": 3,
+      "text_sha256": "05b250b8a9439085c7b2d7012868ad0164d8521733ad17f4ad4e20d883413dc8",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.usdefaultchar",
+          "opentype-os2.usdefaultchar-clause-4032a54606d9"
+        ]
+      }
+    },
+    {
+      "id": "usbreakchar",
+      "title": "usBreakChar",
+      "level": 3,
+      "text_sha256": "3a928fdb8f46b082016b07c536332c73e63a85028934c44f446547f9bce03128",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.usbreakchar",
+          "opentype-os2.usbreakchar-clause-4032a54606d9"
+        ]
+      }
+    },
+    {
+      "id": "usmaxcontext",
+      "title": "usMaxContext",
+      "level": 3,
+      "text_sha256": "b21b4f96270552999e74477c67dc7038adae822e6912b5f6416ae882b9d257af",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.usmaxcontext",
+          "opentype-os2.usmaxcontext-clause-8d27a13fc070",
+          "opentype-os2.usmaxcontext-clause-4032a54606d9"
+        ]
+      }
+    },
+    {
+      "id": "usloweropticalpointsize",
+      "title": "usLowerOpticalPointSize",
+      "level": 3,
+      "text_sha256": "e56f93169ae2db3a1d2cca4abe6ac19f0bff0f22efab7f7a3bfc5592de253ea6",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.usloweropticalpointsize",
+          "opentype-os2.usloweropticalpointsize-clause-98a1499d0e5a",
+          "opentype-os2.usloweropticalpointsize-clause-39abf2ae7bc8"
+        ]
+      }
+    },
+    {
+      "id": "usupperopticalpointsize",
+      "title": "usUpperOpticalPointSize",
+      "level": 3,
+      "text_sha256": "d8418f62a534d4e91e09ae75513fcfd360c48a542386c214ae3762c85bae1bd0",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.usupperopticalpointsize",
+          "opentype-os2.usupperopticalpointsize-clause-72ce2bbab868",
+          "opentype-os2.usupperopticalpointsize-clause-39abf2ae7bc8"
+        ]
+      }
+    },
+    {
+      "id": "os2-table-and-opentype-font-variations",
+      "title": "OS/2 Table and OpenType Font Variations",
+      "level": 2,
+      "text_sha256": "542e1936b502ab058db857934b77b3e64359b50c49515a850c4d735b6b61b99e",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.os2-table-and-opentype-font-variations",
+          "opentype-os2.os2-table-and-opentype-font-variations-clause-a78f1452ec24",
+          "opentype-os2.os2-table-and-opentype-font-variations-clause-c84005e43294"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "4e2297f79525355aa3dc07756ae4ae6ba350dc012790f96133dc9fdbf48db6d0",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-os2.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

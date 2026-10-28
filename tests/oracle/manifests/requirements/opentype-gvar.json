@@ -1,0 +1,741 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-gvar.gvar-glyph-variations-table",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "gvar--glyph-variations-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in gvar — Glyph Variations Table.",
+      "locator": {
+        "section_id": "gvar--glyph-variations-table",
+        "text_sha256": "27a031c49ca5aad2586555266aed9377037d52d87720761711a0b2d100e9a9f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.introduction",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "da69aa9156a137dd21a12fc140269dfec10a1426f72c16764edae7c613a91ffa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gvar.introduction-clause-be7470d8be41"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.introduction-clause-be7470d8be41",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Introduction — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "introduction",
+        "clause_index": 0,
+        "clause_sha256": "be7470d8be4164d867d3518ef99023194b67109fabe2bf096bd96bc1ffd83f7d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.glyph-variations-table-format",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "glyph-variations-table-format"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Glyph variations table format.",
+      "locator": {
+        "section_id": "glyph-variations-table-format",
+        "text_sha256": "1a80e488fe31b07ad858e45c4cecbc500b1d92b563444a55826a189c48254488"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gvar.glyph-variations-table-format-clause-02eb38fa8ebe"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.glyph-variations-table-format-clause-02eb38fa8ebe",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "glyph-variations-table-format"
+      ],
+      "behaviour": "Glyph variations table format — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "glyph-variations-table-format",
+        "clause_index": 1,
+        "clause_sha256": "02eb38fa8ebe40166971338131601ada61568cc64b3ab313e0787e688605fe52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.gvar-header",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "gvar-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'gvar' header.",
+      "locator": {
+        "section_id": "gvar-header",
+        "text_sha256": "7599a7f79300c1809b76ba251e69a3b6d3d50ca3ac8943bc67fcfb7d1547f234"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gvar.gvar-header-clause-b80e7f653c59",
+        "opentype-gvar.gvar-header-clause-3b70a5fcdef6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.gvar-header-clause-b80e7f653c59",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "gvar-header"
+      ],
+      "behaviour": "'gvar' header — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "gvar-header",
+        "clause_index": 13,
+        "clause_sha256": "b80e7f653c59db479056d12e89b6a3b51103cbe1c5b8df3184797dad161c56d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.gvar-header-clause-3b70a5fcdef6",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "gvar-header"
+      ],
+      "behaviour": "'gvar' header — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "gvar-header",
+        "clause_index": 22,
+        "clause_sha256": "3b70a5fcdef60343ca570db18cb2b3eb1df9db66af0a75f5ef0edf8228fffd43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.shared-tuples-array",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "shared-tuples-array"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shared tuples array.",
+      "locator": {
+        "section_id": "shared-tuples-array",
+        "text_sha256": "d37d428729e1c9a4430845ac5d61f798d2442a28d5d051a7a2a8b4e47bca0772"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.the-glyphvariationdata-table-array",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "the-glyphvariationdata-table-array"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The GlyphVariationData table array.",
+      "locator": {
+        "section_id": "the-glyphvariationdata-table-array",
+        "text_sha256": "c58a509b313f4cdd93c94a032c4f894c8c3d8612322048b76ddea8134c0cf555"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.processing-the-gvar-table",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "processing-the-gvar-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Processing the 'gvar' table.",
+      "locator": {
+        "section_id": "processing-the-gvar-table",
+        "text_sha256": "bde3b4fdc49a117a64d0b7b11800712c9243276ff4b560d4e93627a1a9944012"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gvar.processing-the-gvar-table-clause-a4fafd4cea3a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.processing-the-gvar-table-clause-a4fafd4cea3a",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "processing-the-gvar-table"
+      ],
+      "behaviour": "Processing the 'gvar' table — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-the-gvar-table",
+        "clause_index": 2,
+        "clause_sha256": "a4fafd4cea3a8a21328cb2ddbb245fe29810a19aaaed29441ed3a2329c1759ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.point-numbers-and-processing-for-composite-glyphs",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "point-numbers-and-processing-for-composite-glyphs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Point numbers and processing for composite glyphs.",
+      "locator": {
+        "section_id": "point-numbers-and-processing-for-composite-glyphs",
+        "text_sha256": "e126dcfed26151513d4b069d119d4a77786534bad630b59853a465db5e3d973b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-156f01c6f126",
+        "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-71af8e7070ed",
+        "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-c91962de8094",
+        "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-5f3d50e9d19c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-156f01c6f126",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "point-numbers-and-processing-for-composite-glyphs"
+      ],
+      "behaviour": "Point numbers and processing for composite glyphs — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "point-numbers-and-processing-for-composite-glyphs",
+        "clause_index": 18,
+        "clause_sha256": "156f01c6f126bfc67594e181049db4333071c8e9826b5eb650d9f7431315f97b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-71af8e7070ed",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "point-numbers-and-processing-for-composite-glyphs"
+      ],
+      "behaviour": "Point numbers and processing for composite glyphs — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "point-numbers-and-processing-for-composite-glyphs",
+        "clause_index": 19,
+        "clause_sha256": "71af8e7070ed949c8fa90bbcfbe1ef1e2a7eb86d9debb2e4b126e6e76bdabba0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-c91962de8094",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "point-numbers-and-processing-for-composite-glyphs"
+      ],
+      "behaviour": "Point numbers and processing for composite glyphs — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "point-numbers-and-processing-for-composite-glyphs",
+        "clause_index": 22,
+        "clause_sha256": "c91962de8094d0273d79b62b980fc2a0ce92a3c253d42a507e28348291cca527"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.point-numbers-and-processing-for-composite-glyphs-clause-5f3d50e9d19c",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "point-numbers-and-processing-for-composite-glyphs"
+      ],
+      "behaviour": "Point numbers and processing for composite glyphs — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "point-numbers-and-processing-for-composite-glyphs",
+        "clause_index": 25,
+        "clause_sha256": "5f3d50e9d19ccd72d3a5a2cd7e231b7e169e6f7bea0d3e363f13534e01b86e80"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "inferred-deltas-for-un-referenced-point-numbers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inferred deltas for un-referenced point numbers.",
+      "locator": {
+        "section_id": "inferred-deltas-for-un-referenced-point-numbers",
+        "text_sha256": "0ef59ba84748f6e3499668859b2c28650c656f4c71988f41952d9f4ac0ba91e5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-3662438e18bc",
+        "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-5efd757bb057",
+        "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-99bfa7a95309",
+        "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-0d34ecd951c0",
+        "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-9af50d6ad915",
+        "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-78ca0a44aea0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-3662438e18bc",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "inferred-deltas-for-un-referenced-point-numbers"
+      ],
+      "behaviour": "Inferred deltas for un-referenced point numbers — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "inferred-deltas-for-un-referenced-point-numbers",
+        "clause_index": 4,
+        "clause_sha256": "3662438e18bcb6f5ff5a8c61a30db80ca11661a3d3c608df28294106b36e3dfc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-5efd757bb057",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "inferred-deltas-for-un-referenced-point-numbers"
+      ],
+      "behaviour": "Inferred deltas for un-referenced point numbers — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "inferred-deltas-for-un-referenced-point-numbers",
+        "clause_index": 6,
+        "clause_sha256": "5efd757bb057039a5e45f13f78db07e6114fbd7f309ef189f1072af9bb20548c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-99bfa7a95309",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "inferred-deltas-for-un-referenced-point-numbers"
+      ],
+      "behaviour": "Inferred deltas for un-referenced point numbers — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "inferred-deltas-for-un-referenced-point-numbers",
+        "clause_index": 7,
+        "clause_sha256": "99bfa7a953098ed502281c0e88172cb58fd9a2ffaa316ea8696fec6ff03714ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-0d34ecd951c0",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "inferred-deltas-for-un-referenced-point-numbers"
+      ],
+      "behaviour": "Inferred deltas for un-referenced point numbers — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "inferred-deltas-for-un-referenced-point-numbers",
+        "clause_index": 15,
+        "clause_sha256": "0d34ecd951c09bace3e1ef1007d376266e7f1792d9106588ff7a2a7527862b79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-9af50d6ad915",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "inferred-deltas-for-un-referenced-point-numbers"
+      ],
+      "behaviour": "Inferred deltas for un-referenced point numbers — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "inferred-deltas-for-un-referenced-point-numbers",
+        "clause_index": 16,
+        "clause_sha256": "9af50d6ad915d0af2f4f2a7378d4eb5ace917164a54232ae86b05a4fe5cbe84f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.inferred-deltas-for-un-referenced-point-numbers-clause-78ca0a44aea0",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "inferred-deltas-for-un-referenced-point-numbers"
+      ],
+      "behaviour": "Inferred deltas for un-referenced point numbers — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "inferred-deltas-for-un-referenced-point-numbers",
+        "clause_index": 46,
+        "clause_sha256": "78ca0a44aea0ddfb16c7e38f134da4354d611c881d7417264b42085004f71d16"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gvar.ms-in-this-article",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.ms-feedback",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.ms-additional-resources-mobile-heading",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "3eb25b59e14381d11045c4430465c544fb0a9c44ecad8beae369fc9d1fea3786"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gvar.side-doc-outline",
+      "family": "opentype-gvar",
+      "source_id": "opentype-gvar",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

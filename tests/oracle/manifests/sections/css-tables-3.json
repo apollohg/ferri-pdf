@@ -1,0 +1,1372 @@
+{
+  "schema_version": 1,
+  "source_id": "css-tables-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Table Module Level 3",
+      "level": 1,
+      "text_sha256": "120794a7f052ea49b0aa9e7f2313688acb517c0bc854c286ec6897c592887e67",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "d7af5e65d0efd762bcd8423dbfb9a2de878bbbfe792e8a431671a7cbbc2c5a5d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "e2be8772b95604e1311e2780eec5ee87f72b9863b447f6524bb18670bf978db1",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "bd58e778e8fa5051b50edce5fcf41472ed0ccc524e03cf842952cd77b990d504",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "b05e1962748343c1f497b36b0bd66b7535f9dcca1b10033ede9a2e3edceaf388",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.values"
+        ]
+      }
+    },
+    {
+      "id": "content-model",
+      "title": "2. Content Model",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.content-model"
+        ]
+      }
+    },
+    {
+      "id": "table-structure",
+      "title": "2.1. Table Structure",
+      "level": 3,
+      "text_sha256": "cc33bd86c002bc35a3bc6ae450b21f505e53fac441d2c24b1094a611467a6b7e",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.table-structure",
+          "css-tables-3.table-structure-clause-3798634e6898"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "2.1.1. Terminology",
+      "level": 4,
+      "text_sha256": "1050f6f7201fdc824d784c7faa99b89a855c3e43344d9c5b8b3a834071e07125",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.terminology",
+          "css-tables-3.terminology-clause-dc4c51acad04"
+        ]
+      }
+    },
+    {
+      "id": "fixup",
+      "title": "2.2. Fixup",
+      "level": 3,
+      "text_sha256": "87be5a77865c17a924804cd8421ff9dbda5ada185405e46ab31e95e9ca0174a9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.fixup",
+          "css-tables-3.fixup-clause-bbd10bd8da33",
+          "css-tables-3.fixup-clause-990f6e51d020"
+        ]
+      }
+    },
+    {
+      "id": "fixup-algorithm",
+      "title": "2.2.1. Fixup Algorithm",
+      "level": 4,
+      "text_sha256": "926ca04742ac07af35d97009e1ef8b860dfc8f8bad0ce1657fd86c3df36bd793",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.fixup-algorithm",
+          "css-tables-3.fixup-algorithm-clause-f01f317f2269",
+          "css-tables-3.fixup-algorithm-clause-cebdd257b0dd",
+          "css-tables-3.fixup-algorithm-clause-8281b050d2d3",
+          "css-tables-3.fixup-algorithm-clause-8d9c6a117178",
+          "css-tables-3.fixup-algorithm-clause-ee233001a7bf",
+          "css-tables-3.fixup-algorithm-clause-46cdda84b1aa",
+          "css-tables-3.fixup-algorithm-clause-016eb7e1207d"
+        ]
+      }
+    },
+    {
+      "id": "fixup-boxes",
+      "title": "2.2.2. Characteristics of fixup boxes",
+      "level": 4,
+      "text_sha256": "403e56963e5db42533084bc06f7607385bc0ee555d1fa1cdf0855c29c42f176e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.fixup-boxes",
+          "css-tables-3.fixup-boxes-clause-d0f7b98da4ad"
+        ]
+      }
+    },
+    {
+      "id": "fixup-examples",
+      "title": "2.2.3. Examples",
+      "level": 4,
+      "text_sha256": "cb92f43da8031f7de9b6a54bb2c01a0df95ad9624ea392fe9f5f0c818cbeb84b",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.fixup-examples"
+        ]
+      }
+    },
+    {
+      "id": "layout",
+      "title": "3. Layout",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.layout"
+        ]
+      }
+    },
+    {
+      "id": "layout-principles",
+      "title": "3.1. Core layout principles",
+      "level": 3,
+      "text_sha256": "bfd6f02190f583f22a941f1849e9f8956693e84d00002276906ec25359d2a0bb",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.layout-principles",
+          "css-tables-3.layout-principles-clause-1e2fcc6494a2",
+          "css-tables-3.layout-principles-clause-7d05db92739d",
+          "css-tables-3.layout-principles-clause-e56c7ec49a9d"
+        ]
+      }
+    },
+    {
+      "id": "table-layout-algorithm",
+      "title": "3.2. Table layout algorithm",
+      "level": 3,
+      "text_sha256": "1477e8e549f81946737a601cbd536bacdf71baf5db04a465f9a6326e74fd186f",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.table-layout-algorithm",
+          "css-tables-3.table-layout-algorithm-clause-b6d8ee1312c2",
+          "css-tables-3.table-layout-algorithm-clause-94a5e6df01a5",
+          "css-tables-3.table-layout-algorithm-clause-90fcb37d17f1",
+          "css-tables-3.table-layout-algorithm-clause-ebdec7e4a502",
+          "css-tables-3.table-layout-algorithm-clause-d96401371bb6",
+          "css-tables-3.table-layout-algorithm-clause-ee566cd535c5"
+        ]
+      }
+    },
+    {
+      "id": "dimensioning-the-row-column-grid",
+      "title": "3.3. Dimensioning the row/column grid",
+      "level": 3,
+      "text_sha256": "ea7487fdcf115ab9d394c1993ff7d2d3ea5b46303a09a92fc414cf2d345dccbd",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.dimensioning-the-row-column-grid"
+        ]
+      }
+    },
+    {
+      "id": "dimensioning-the-row-column-grid--step1",
+      "title": "3.3.1. HTML Algorithm",
+      "level": 4,
+      "text_sha256": "6054eb3d91a60bb0aad4476d85c4c39c3123b46a0e49708a5ad3fcb904a1e02f",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.dimensioning-the-row-column-grid-step1",
+          "css-tables-3.dimensioning-the-row-column-grid-step1-clause-654890e49d78",
+          "css-tables-3.dimensioning-the-row-column-grid-step1-clause-e627f4dfcefc"
+        ]
+      }
+    },
+    {
+      "id": "dimensioning-the-row-column-grid--step2",
+      "title": "3.3.2. Track merging",
+      "level": 4,
+      "text_sha256": "e649156cc992e6ad968f14f56b6193839484885c17bba6c2d71b0c731e3bc40e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.dimensioning-the-row-column-grid-step2",
+          "css-tables-3.dimensioning-the-row-column-grid-step2-clause-04e6403eee0c",
+          "css-tables-3.dimensioning-the-row-column-grid-step2-clause-94932940e236",
+          "css-tables-3.dimensioning-the-row-column-grid-step2-clause-f375d7acb353"
+        ]
+      }
+    },
+    {
+      "id": "missing-cells-fixup",
+      "title": "3.4. Missing cells fixup",
+      "level": 3,
+      "text_sha256": "62018593e60d7b1bfc35fd8f2ba7934ebbaf656e3c56a335d7ab76c1b8a48572",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.missing-cells-fixup",
+          "css-tables-3.missing-cells-fixup-clause-85a05cc497bb"
+        ]
+      }
+    },
+    {
+      "id": "layout-modes",
+      "title": "3.5. Table layout modes",
+      "level": 3,
+      "text_sha256": "b4f30a2303a9ce0fd3de013d38528dad2ea9115b830e670c1c9f6eb50e54fbba",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.layout-modes"
+        ]
+      }
+    },
+    {
+      "id": "table-layout-property",
+      "title": "3.5.1. The Table-Layout property",
+      "level": 4,
+      "text_sha256": "ffcff275439f31cbf72438120683e1a574f1c6a1208052e9cce0d969f9145f2a",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.table-layout-property",
+          "css-tables-3.table-layout-property-clause-cca2516ebb1d",
+          "css-tables-3.table-layout-property-clause-380ac2c04e25",
+          "css-tables-3.table-layout-property-clause-97acad328e19",
+          "css-tables-3.table-layout-property-clause-f34cedbfcd91",
+          "css-tables-3.table-layout-property-clause-2fceedb69532",
+          "css-tables-3.table-layout-property-clause-adce753be854"
+        ]
+      }
+    },
+    {
+      "id": "border-collapse-property",
+      "title": "3.5.2. The Border-Collapse property",
+      "level": 4,
+      "text_sha256": "453a209e224006bb6913c3d717c9422e6bfc6405a6e9c1b0c5ad6f03665cc781",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.border-collapse-property",
+          "css-tables-3.border-collapse-property-clause-cca2516ebb1d",
+          "css-tables-3.border-collapse-property-clause-0bccf8595da9",
+          "css-tables-3.border-collapse-property-clause-e283f42e846d",
+          "css-tables-3.border-collapse-property-clause-e7c3cc07bf79"
+        ]
+      }
+    },
+    {
+      "id": "border-spacing-property",
+      "title": "3.5.2.1. The Border-Spacing property",
+      "level": 5,
+      "text_sha256": "36cb782ad3ffa3a9fb854b11e35148014dc84a47061fc502f952b275a8704506",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.border-spacing-property",
+          "css-tables-3.border-spacing-property-clause-cca2516ebb1d",
+          "css-tables-3.border-spacing-property-clause-5b2711af09e1",
+          "css-tables-3.border-spacing-property-clause-17f73d610ea8",
+          "css-tables-3.border-spacing-property-clause-48a686fc6a5f",
+          "css-tables-3.border-spacing-property-clause-62c1a2b9aecc"
+        ]
+      }
+    },
+    {
+      "id": "caption-side-property",
+      "title": "3.5.3. The Caption-Side property",
+      "level": 4,
+      "text_sha256": "dcb6a6082ac46a5e56c01fb97d3b1152840fe81501e51160c777eee1f56330fb",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.caption-side-property",
+          "css-tables-3.caption-side-property-clause-cca2516ebb1d",
+          "css-tables-3.caption-side-property-clause-a2c230d33f0a",
+          "css-tables-3.caption-side-property-clause-f1381267c7cd",
+          "css-tables-3.caption-side-property-clause-98831d48a499"
+        ]
+      }
+    },
+    {
+      "id": "style-overrides",
+      "title": "3.6. Style overrides",
+      "level": 3,
+      "text_sha256": "bbdd07cc33f3e066d418e38211fd0823423c56109b7d4c8a56aa6f8dac97cd21",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.style-overrides"
+        ]
+      }
+    },
+    {
+      "id": "global-style-overrides",
+      "title": "3.6.1. Overrides applying in all modes",
+      "level": 4,
+      "text_sha256": "d2070a7e3bec5ba2cb2a18e209e63b99fb52c3ab0969f98b186b4ccb1b9b9151",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.global-style-overrides",
+          "css-tables-3.global-style-overrides-clause-3467cc54a499",
+          "css-tables-3.global-style-overrides-clause-5684c9004594",
+          "css-tables-3.global-style-overrides-clause-ef3b9f582239",
+          "css-tables-3.global-style-overrides-clause-e981bb0f3d52",
+          "css-tables-3.global-style-overrides-clause-1ea10a78c387",
+          "css-tables-3.global-style-overrides-clause-8511b376bea4"
+        ]
+      }
+    },
+    {
+      "id": "collapsed-style-overrides",
+      "title": "3.6.2. Overrides applying in collapsed-borders mode",
+      "level": 4,
+      "text_sha256": "e4084a0d711a061213bf7abfe686aa637ec4b43cc4e0075edbe2c2a27ecb14db",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.collapsed-style-overrides",
+          "css-tables-3.collapsed-style-overrides-clause-734b59fbe60a",
+          "css-tables-3.collapsed-style-overrides-clause-c927aef0bfac",
+          "css-tables-3.collapsed-style-overrides-clause-3f0585ae2281",
+          "css-tables-3.collapsed-style-overrides-clause-4875419ce24a"
+        ]
+      }
+    },
+    {
+      "id": "border-collapsing",
+      "title": "3.7. Border-collapsing",
+      "level": 3,
+      "text_sha256": "90b28f3c8c2374c2ffbfb9802fa5d97ac89c8734a8432c3598af3a88ebe5e544",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.border-collapsing",
+          "css-tables-3.border-collapsing-clause-474242ceb2a6",
+          "css-tables-3.border-collapsing-clause-e4c97e3c0e1b"
+        ]
+      }
+    },
+    {
+      "id": "conflict-resolution-for-collapsed-borders",
+      "title": "3.7.1. Conflict Resolution for Collapsed Borders",
+      "level": 4,
+      "text_sha256": "9c1daff13039453813af771815c75b724df32723a0c9f9bb2da1a1e25271bb9b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.conflict-resolution-for-collapsed-borders",
+          "css-tables-3.conflict-resolution-for-collapsed-borders-clause-869d35ff6088"
+        ]
+      }
+    },
+    {
+      "id": "border-conflict-resolution-algorithm",
+      "title": "3.7.1.1. Conflict Resolution Algorithm for Collapsed Borders",
+      "level": 5,
+      "text_sha256": "03819143d1717c8120d9bf223da9795b54af86f0c1dc26388c7ceb35c5e887c6",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.border-conflict-resolution-algorithm",
+          "css-tables-3.border-conflict-resolution-algorithm-clause-dbdc8e3e6268",
+          "css-tables-3.border-conflict-resolution-algorithm-clause-fe5acb322174",
+          "css-tables-3.border-conflict-resolution-algorithm-clause-77ddd6808bb1"
+        ]
+      }
+    },
+    {
+      "id": "border-style-harmonization-algorithm",
+      "title": "3.7.1.2. Harmonization Algorithm for Collapsed Borders",
+      "level": 5,
+      "text_sha256": "d883bd729dba8b4c911711d0dc565f72c5f5a52488c3d96b48a787a563d18b83",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.border-style-harmonization-algorithm",
+          "css-tables-3.border-style-harmonization-algorithm-clause-b47db3214d1e"
+        ]
+      }
+    },
+    {
+      "id": "border-specificity",
+      "title": "3.7.1.3. Specificity of a border style",
+      "level": 5,
+      "text_sha256": "93293d8ad92e503f9153d58b294b224751446055f86790fec5ede9fbac7bef53",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.border-specificity"
+        ]
+      }
+    },
+    {
+      "id": "content-measure",
+      "title": "3.8. Computing table measures",
+      "level": 3,
+      "text_sha256": "11fcb4d73b18c9b9ed5cde14dc1ee69bb8457d1e06d9bcd3e814b7d917447598",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.content-measure"
+        ]
+      }
+    },
+    {
+      "id": "computing-undistributable-space",
+      "title": "3.8.1. Computing Undistributable Space",
+      "level": 4,
+      "text_sha256": "b5bf43245442439fae2fa51b805412cd71390a19f7f7bb08c5065d5e362e2954",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.computing-undistributable-space"
+        ]
+      }
+    },
+    {
+      "id": "computing-cell-measures",
+      "title": "3.8.2. Computing Cell Measures",
+      "level": 4,
+      "text_sha256": "a203af55a2bce9277ee93771b12ef72057cd8414581f55fc8e03305aada98284",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.computing-cell-measures",
+          "css-tables-3.computing-cell-measures-clause-1c4325627870",
+          "css-tables-3.computing-cell-measures-clause-2fbe873abfd7",
+          "css-tables-3.computing-cell-measures-clause-b22e834aaaf2",
+          "css-tables-3.computing-cell-measures-clause-4be38d50a18f",
+          "css-tables-3.computing-cell-measures-clause-58626e268e77",
+          "css-tables-3.computing-cell-measures-clause-1a46543fe067",
+          "css-tables-3.computing-cell-measures-clause-74c520ad5e82",
+          "css-tables-3.computing-cell-measures-clause-c4d502dc7937",
+          "css-tables-3.computing-cell-measures-clause-fda113f8e1e8",
+          "css-tables-3.computing-cell-measures-clause-e82ffa49f375",
+          "css-tables-3.computing-cell-measures-clause-aad96c118203"
+        ]
+      }
+    },
+    {
+      "id": "computing-column-measures",
+      "title": "3.8.3. Computing Column Measures",
+      "level": 4,
+      "text_sha256": "d00e916a114aeaea15de2c2ab92c3b424f11b6b5d5aa2bc1dd98f1706cc6b880",
+      "clause_count": 66,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.computing-column-measures",
+          "css-tables-3.computing-column-measures-clause-b4f3cd2e3539",
+          "css-tables-3.computing-column-measures-clause-59e8ee0a9cd5",
+          "css-tables-3.computing-column-measures-clause-8a4562dfdf60",
+          "css-tables-3.computing-column-measures-clause-c52b9320a787",
+          "css-tables-3.computing-column-measures-clause-74436db243d3",
+          "css-tables-3.computing-column-measures-clause-02d7da22cf0e",
+          "css-tables-3.computing-column-measures-clause-63e2b5d7816a"
+        ]
+      }
+    },
+    {
+      "id": "width-distribution",
+      "title": "3.9. Available Width Distribution",
+      "level": 3,
+      "text_sha256": "a4d2097d5aea948bf0a309072a9888bea993e3e9dd40e4500a661502de54490a",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.width-distribution"
+        ]
+      }
+    },
+    {
+      "id": "computing-the-table-width",
+      "title": "3.9.1. Computing the table width",
+      "level": 4,
+      "text_sha256": "84046e03e34435641373c2f0ad779fe92bfd5d10074e1ec739822f4bd5a46a42",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.computing-the-table-width",
+          "css-tables-3.computing-the-table-width-clause-bfeadddafb9b"
+        ]
+      }
+    },
+    {
+      "id": "width-distribution-principles",
+      "title": "3.9.2. Core distribution principles",
+      "level": 4,
+      "text_sha256": "17668814fd4f1d5744b1a1558cc10dde6ae3f19049db4cdea5fbaff5303a0149",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.width-distribution-principles"
+        ]
+      }
+    },
+    {
+      "id": "width-distribution-principles-rN",
+      "title": "3.9.2.1. Rules",
+      "level": 5,
+      "text_sha256": "90be67e7b7c965459115b2c8c8d9a72cd6b39b4eeb62a625b7e8a04a8ad5fc37",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.width-distribution-principles-rn"
+        ]
+      }
+    },
+    {
+      "id": "width-distribution-principles-rR",
+      "title": "3.9.2.2. Available sizings",
+      "level": 5,
+      "text_sha256": "9173af5c12c8f5c9ab4744b04a677847380ac5a7e69beb0c40913e73338263e6",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.width-distribution-principles-rr"
+        ]
+      }
+    },
+    {
+      "id": "width-distribution-algorithm",
+      "title": "3.9.3. Distribution algorithm",
+      "level": 4,
+      "text_sha256": "96caad5d974fe7aafea3ca703ccb10fdeebee94cc958c2efead92c692f0d1bd0",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.width-distribution-algorithm",
+          "css-tables-3.width-distribution-algorithm-clause-03184c0fed97",
+          "css-tables-3.width-distribution-algorithm-clause-c139c9eff503",
+          "css-tables-3.width-distribution-algorithm-clause-ee566cd535c5",
+          "css-tables-3.width-distribution-algorithm-clause-fd47be081f89",
+          "css-tables-3.width-distribution-algorithm-clause-66e5d7f4cdc9"
+        ]
+      }
+    },
+    {
+      "id": "width-distribution-in-fixed-mode",
+      "title": "3.9.3.1. Changes to width distribution in fixed mode",
+      "level": 5,
+      "text_sha256": "b70c6154750e391761157cac0330d2a6ba890a841bddb1d4a2c31bc90bd2d8b7",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.width-distribution-in-fixed-mode",
+          "css-tables-3.width-distribution-in-fixed-mode-clause-71db0003b9d4",
+          "css-tables-3.width-distribution-in-fixed-mode-clause-cbb539008cac",
+          "css-tables-3.width-distribution-in-fixed-mode-clause-bd00b80421ba"
+        ]
+      }
+    },
+    {
+      "id": "distributing-width-to-columns",
+      "title": "3.9.3.2. Distributing excess width to columns",
+      "level": 5,
+      "text_sha256": "a067c1967e252320f4b14943a89f52e874fb3dee4732bfdd20db3e369f90c3cd",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.distributing-width-to-columns",
+          "css-tables-3.distributing-width-to-columns-clause-016a82bf9a9a",
+          "css-tables-3.distributing-width-to-columns-clause-bcde30d3c900",
+          "css-tables-3.distributing-width-to-columns-clause-8ef27ddd547f"
+        ]
+      }
+    },
+    {
+      "id": "height-distribution",
+      "title": "3.10. Available Height Distribution",
+      "level": 3,
+      "text_sha256": "5118d9d08136e3e9f502371604df36390306cd11d421ec8ac08111810a60b7a2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.height-distribution"
+        ]
+      }
+    },
+    {
+      "id": "computing-the-table-height",
+      "title": "3.10.1. Computing the table height",
+      "level": 4,
+      "text_sha256": "a003b8e0b76deed1bc8d7e0c89da8e4d3b98eeb71dfe54e9c73911254dbacbdb",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.computing-the-table-height",
+          "css-tables-3.computing-the-table-height-clause-24c693f387e9",
+          "css-tables-3.computing-the-table-height-clause-dfcc1f14934e",
+          "css-tables-3.computing-the-table-height-clause-65740a6e32c0"
+        ]
+      }
+    },
+    {
+      "id": "row-layout",
+      "title": "3.10.2. Row layout (first pass)",
+      "level": 4,
+      "text_sha256": "552948d2580c747c8b7d6fcee7651269ee07dc4cbe9686ccb7ac92ecdf94d9f6",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.row-layout",
+          "css-tables-3.row-layout-clause-29ffacf47ae4",
+          "css-tables-3.row-layout-clause-5ec33de94998",
+          "css-tables-3.row-layout-clause-5ef702e0359a",
+          "css-tables-3.row-layout-clause-9ec85de62c7c",
+          "css-tables-3.row-layout-clause-d88ebde665a9"
+        ]
+      }
+    },
+    {
+      "id": "row-relayout",
+      "title": "3.10.3. Row layout (second pass)",
+      "level": 4,
+      "text_sha256": "c09b491f99dee5696203a6ded1f80f3106dbdb8a609e69d2d2d9a198e27ae64a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.row-relayout",
+          "css-tables-3.row-relayout-clause-fb5ef40a5868"
+        ]
+      }
+    },
+    {
+      "id": "height-distribution-principles",
+      "title": "3.10.4. Core distribution principles",
+      "level": 4,
+      "text_sha256": "1b07eba1a89094c0adb0ee0f6ba0f3acf110bdb80e5a6eebe4e2763b43802956",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.height-distribution-principles",
+          "css-tables-3.height-distribution-principles-clause-8c97df2326ef",
+          "css-tables-3.height-distribution-principles-clause-19b1ddc0068f",
+          "css-tables-3.height-distribution-principles-clause-3360d3f42b85"
+        ]
+      }
+    },
+    {
+      "id": "height-distribution-algorithm",
+      "title": "3.10.5. Distribution algorithm",
+      "level": 4,
+      "text_sha256": "95b40c61226b329e6ed89cea9c10074a7a3945e5a10cdcf11f954a51ae5c2110",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.height-distribution-algorithm",
+          "css-tables-3.height-distribution-algorithm-clause-22c26197624e",
+          "css-tables-3.height-distribution-algorithm-clause-9ec85de62c7c"
+        ]
+      }
+    },
+    {
+      "id": "table-cell-content-relayout",
+      "title": "3.10.6. Table-cell content layout (second pass)",
+      "level": 4,
+      "text_sha256": "b5488d156273c6a722ff5b4dea1d71fb5cbfe6bc80c8a9e6a2cd62aee16d0396",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.table-cell-content-relayout",
+          "css-tables-3.table-cell-content-relayout-clause-fb55891978da",
+          "css-tables-3.table-cell-content-relayout-clause-12defb502b43",
+          "css-tables-3.table-cell-content-relayout-clause-e38f35f24c13",
+          "css-tables-3.table-cell-content-relayout-clause-4b900343872d",
+          "css-tables-3.table-cell-content-relayout-clause-4965b980dc5d",
+          "css-tables-3.table-cell-content-relayout-clause-92980e275563"
+        ]
+      }
+    },
+    {
+      "id": "bounding-box-assignment",
+      "title": "3.11. Positioning of cells, captions and other internal table boxes",
+      "level": 3,
+      "text_sha256": "7bba897a2ee78b9d1e47f77011eebc4b1cab3c301b7160dc19e4436250243995",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.bounding-box-assignment",
+          "css-tables-3.bounding-box-assignment-clause-5ce56d7d70cd"
+        ]
+      }
+    },
+    {
+      "id": "abspos",
+      "title": "4. Absolute Positioning",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.abspos"
+        ]
+      }
+    },
+    {
+      "id": "abspos-boxes-in-table-root",
+      "title": "4.1. With a table-root as containing block",
+      "level": 3,
+      "text_sha256": "180f1c5e55727f38cf51e4a9f6d72747d5b895725fa2dc060d562872c5e10a0c",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.abspos-boxes-in-table-root"
+        ]
+      }
+    },
+    {
+      "id": "abspos-boxes-in-table-internal",
+      "title": "4.2. With a table-internal as containing block",
+      "level": 3,
+      "text_sha256": "a3b83724e0a0225dbe3633ec2bb5866caff8363787694aa81798eddaa994bd4b",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.abspos-boxes-in-table-internal",
+          "css-tables-3.abspos-boxes-in-table-internal-clause-7b224134f2a1"
+        ]
+      }
+    },
+    {
+      "id": "static-position",
+      "title": "4.3. With a table-internal box as non-containing block parent",
+      "level": 3,
+      "text_sha256": "7fbf8729fa0633ace4c25ee0facd11b089b104be4361101197c7550d788f7c89",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.static-position"
+        ]
+      }
+    },
+    {
+      "id": "rendering",
+      "title": "5. Rendering",
+      "level": 2,
+      "text_sha256": "f3fe2368ada2befe06e040dbb12931624a27a5e6e336ca44b5d9d2e8fe8acf5e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.rendering"
+        ]
+      }
+    },
+    {
+      "id": "paint-order",
+      "title": "5.1. Paint order of cells",
+      "level": 3,
+      "text_sha256": "23374ac394799ab60d964412e6f66a6141bbb34ca4fa25197a04ca49363f081d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.paint-order"
+        ]
+      }
+    },
+    {
+      "id": "empty-cell-rendering",
+      "title": "5.2. Empty cell rendering (separated-borders mode)",
+      "level": 3,
+      "text_sha256": "510fa1297cb5dfa41b52be2e65624b5ca904c647469d03d29735774b66c22fb2",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.empty-cell-rendering",
+          "css-tables-3.empty-cell-rendering-clause-cca2516ebb1d",
+          "css-tables-3.empty-cell-rendering-clause-2556fbf60147",
+          "css-tables-3.empty-cell-rendering-clause-2756fa845192",
+          "css-tables-3.empty-cell-rendering-clause-b93a569db0e2"
+        ]
+      }
+    },
+    {
+      "id": "drawing-backgrounds-and-borders",
+      "title": "5.3. Drawing backgrounds and borders",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.drawing-backgrounds-and-borders"
+        ]
+      }
+    },
+    {
+      "id": "drawing-table-backgrounds-and-borders",
+      "title": "5.3.1. Drawing table backgrounds and borders",
+      "level": 4,
+      "text_sha256": "bbf4626fdce3891706c1ea93b3a9e7d1bbfe15f3d96fce9a46012ce2024f82aa",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.drawing-table-backgrounds-and-borders"
+        ]
+      }
+    },
+    {
+      "id": "drawing-collapsed-borders-1",
+      "title": "5.3.1.1. Changes in collapsed-borders mode",
+      "level": 5,
+      "text_sha256": "d6bb9eaa68b2db814d4d260946a21f836af163ea66926408335fcf9e6b36fa09",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.drawing-collapsed-borders-1"
+        ]
+      }
+    },
+    {
+      "id": "drawing-cell-backgrounds",
+      "title": "5.3.2. Drawing cell backgrounds",
+      "level": 4,
+      "text_sha256": "bc05b6bcd9f6f16afe4d862bb6044075393bd4c1552bec6c02d7aef2180106bc",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.drawing-cell-backgrounds",
+          "css-tables-3.drawing-cell-backgrounds-clause-5a446880bbb6",
+          "css-tables-3.drawing-cell-backgrounds-clause-9dd0a7d4ff3a",
+          "css-tables-3.drawing-cell-backgrounds-clause-08d6e8677444",
+          "css-tables-3.drawing-cell-backgrounds-clause-e65f3246dc94"
+        ]
+      }
+    },
+    {
+      "id": "drawing-cell-borders",
+      "title": "5.3.3. Drawing cell borders",
+      "level": 4,
+      "text_sha256": "22b281515d3bfc0036811547095b978d7ff47d37f8794a43c824cef48c384bf0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.drawing-cell-borders"
+        ]
+      }
+    },
+    {
+      "id": "drawing-collapsed-borders-2",
+      "title": "5.3.3.1. Changes in collapsed-borders mode",
+      "level": 5,
+      "text_sha256": "cf2710952230197a23b940ffbe1fac7cdfe66083edf2fbac549fb2abeaace70e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.drawing-collapsed-borders-2",
+          "css-tables-3.drawing-collapsed-borders-2-clause-ce54f01e2b7a"
+        ]
+      }
+    },
+    {
+      "id": "border-style-overrides",
+      "title": "5.3.4. Border styles (collapsed-borders mode)",
+      "level": 4,
+      "text_sha256": "ae59e2b5ab223a11c171e8eb5b9f0b7e198cd7df3edd65089291f8cd0a4b6d51",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.border-style-overrides"
+        ]
+      }
+    },
+    {
+      "id": "visibility-collapse-rendering",
+      "title": "5.4. Rendering for visibility: collapse",
+      "level": 3,
+      "text_sha256": "80c9cd4c81e28e1d7c79ec5e7a962dc0cb2a899e3dca25c71dbcc082daa8d828",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.visibility-collapse-rendering"
+        ]
+      }
+    },
+    {
+      "id": "visibility-collapse-cell-rendering",
+      "title": "5.4.1. Rendering a visibility: collapse table cell",
+      "level": 4,
+      "text_sha256": "f91d637bd5202c6f27643769abec8b5e6aef61868f0994f0add08c19ca3966ab",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.visibility-collapse-cell-rendering"
+        ]
+      }
+    },
+    {
+      "id": "visibility-collapse-track-rendering",
+      "title": "5.4.2. Rendering a visibility: collapse table-track or table-track-group",
+      "level": 4,
+      "text_sha256": "74dedada03f6802d1d912cd44105b798d4a067c30ec6a6ef6c1c828e99616f3d",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.visibility-collapse-track-rendering"
+        ]
+      }
+    },
+    {
+      "id": "fragmentation",
+      "title": "6. Fragmentation",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.fragmentation"
+        ]
+      }
+    },
+    {
+      "id": "breaking-rules",
+      "title": "6.1. Breaking across fragmentainers",
+      "level": 3,
+      "text_sha256": "61e6a9d702f312d510414c9c131743b98d0f96678c43b3338811d7f6d7adec44",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.breaking-rules",
+          "css-tables-3.breaking-rules-clause-e2804bb47766",
+          "css-tables-3.breaking-rules-clause-9235cc936f79",
+          "css-tables-3.breaking-rules-clause-efca8ce40bc8",
+          "css-tables-3.breaking-rules-clause-2f34c8777dfd",
+          "css-tables-3.rowspan-kept-row-footer-output"
+        ]
+      }
+    },
+    {
+      "id": "repeated-headers",
+      "title": "6.2. Repeating headers across pages",
+      "level": 3,
+      "text_sha256": "0676e8932021d9331d1726c10744d3ce92e0b57be0f14db635cd9adb4b4dbdaa",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.repeated-headers",
+          "css-tables-3.repeated-headers-clause-191f3bc43b53",
+          "css-tables-3.repeated-headers-clause-cc8fd34bdf72",
+          "css-tables-3.repeated-headers-clause-4796c852bda0",
+          "benchmark-output.bench-tables-small.repeated-table-header",
+          "benchmark-output.bench-tables-medium.repeated-table-header",
+          "benchmark-output.bench-tables-large.repeated-table-header"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "7. Security Considerations",
+      "level": 2,
+      "text_sha256": "c018f6d61adddb2eabbbe175ce474187d01509fa170d99c304ff538b3b7ba0d2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.security"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "8. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "c3248a1402a09dcab5328fae498e1a55191856b41db873225bc96a7ff985a9ff",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.privacy"
+        ]
+      }
+    },
+    {
+      "id": "bug-list",
+      "title": "9. List of bugs being tracked",
+      "level": 2,
+      "text_sha256": "0dfbf1d3846ad9e02fbac26ff8190be999c67540f1fa87b471cce6321e5b388b",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.bug-list"
+        ]
+      }
+    },
+    {
+      "id": "appendices",
+      "title": "10. Appendices",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.appendices"
+        ]
+      }
+    },
+    {
+      "id": "mapping",
+      "title": "10.1. Mapping between CSS & HTML attributes",
+      "level": 3,
+      "text_sha256": "30521b535111c188582004c13b538768c15f3e95a134b46a46ccb16435bed188",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.mapping",
+          "css-tables-3.mapping-clause-ef69ecb62d76"
+        ]
+      }
+    },
+    {
+      "id": "TODO",
+      "title": "11. (link here for missing sections)",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.todo"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "12. Changes",
+      "level": 2,
+      "text_sha256": "4ff8d1d684479f268ecdf175db674be6c11f45ba1050559160d85d02825d0e86",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.w3c-conventions",
+          "css-tables-3.w3c-conventions-clause-5c98c879f070",
+          "css-tables-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.w3c-conformance-classes",
+          "css-tables-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-tables-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.w3c-partial",
+          "css-tables-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.w3c-testing",
+          "css-tables-3.w3c-testing-clause-1e0fff369221",
+          "css-tables-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "ec485a46755b96b9c0ea0796862a6f4d36be34c004788c99169a7b89c164d5a1",
+      "clause_count": 85,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "d1e3188249d1ab86adf88b77349cca3d360110fb21e4849850e95b49fdbd792f",
+      "clause_count": 101,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "663cf0354e892a830ab634966d3a2f04024d09f28148814e47bba458f9d8f5aa",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "79cc97a837bb0b8a34fcc1d7a2872798689396198b0444e5ebb40ac437032ae7",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "b77e87c0486dfdbed822e12e127445d5c014ec50d571244c10edc332fbc343fc",
+      "clause_count": 54,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.property-index",
+          "css-tables-3.property-index-clause-674d5fa645b0"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "250a3af6a083232862c20df77ddf8574963183e0dc9add92d6be13ca92a4e17b",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-tables-3.issues-index"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,3066 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-pseudo-4.typographic-pseudos",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "typographic-pseudos"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Typographic Pseudo-elements.",
+      "locator": {
+        "section_id": "typographic-pseudos",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.first-line-pseudo",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-line-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in First-Line Text: the ::first-line pseudo-element.",
+      "locator": {
+        "section_id": "first-line-pseudo",
+        "text_sha256": "267ab6fec0c0cdd6c0ef1d6e15c2c95ab38f5e9f0bc7e1e063d96c769c639b0b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.first-text-line",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-text-line"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Finding the First Formatted Line.",
+      "locator": {
+        "section_id": "first-text-line",
+        "text_sha256": "fe808016182076cae8eee2aa77f946489623ff46e1b5a960609031e5ba29ff8f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.first-line-styling",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-line-styling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Styling the ::first-line Pseudo-element.",
+      "locator": {
+        "section_id": "first-line-styling",
+        "text_sha256": "e382185b880206cd311d220bc524ab36bf52695bc3395ce51e849d28cc1292ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.first-line-inheritance",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-line-inheritance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inheritance and the ::first-line Pseudo-element.",
+      "locator": {
+        "section_id": "first-line-inheritance",
+        "text_sha256": "eb803ca31d5ff1843646349c967064d1c5fe9bf0362df0919eb7ebb70c4c212c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.first-letter-pseudo",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-letter-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in First-Letter Text: ::first-letter pseudo-element and its ::prefix and ::suffix children.",
+      "locator": {
+        "section_id": "first-letter-pseudo",
+        "text_sha256": "5ac678b16a07b91a2a3929c11cd8e3ef3d0bd4757df23c7f1a12f14955951a07"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.first-letter-pattern",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-letter-pattern"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in First Letters and Associated Punctuation.",
+      "locator": {
+        "section_id": "first-letter-pattern",
+        "text_sha256": "12be29d52a88bbb1f21243936c3beeb948542d720c39fe1ed0075ca03d1bc728"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.first-letter-pattern-clause-65715d4c9532",
+        "css-pseudo-4.first-letter-pattern-clause-aa2d2a1f5eda"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.first-letter-pattern-clause-65715d4c9532",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-letter-pattern"
+      ],
+      "behaviour": "First Letters and Associated Punctuation — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "first-letter-pattern",
+        "clause_index": 0,
+        "clause_sha256": "65715d4c953298e2e50f91edb4e1e57987ee708289b3fd334691e69e6a39641b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.first-letter-pattern-clause-aa2d2a1f5eda",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-letter-pattern"
+      ],
+      "behaviour": "First Letters and Associated Punctuation — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "first-letter-pattern",
+        "clause_index": 1,
+        "clause_sha256": "aa2d2a1f5eda6a1f653a734caad0216c1b9b9131648ba88f67afd2385b13979b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.first-letter-application",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-letter-application"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Finding the First-Letter Text.",
+      "locator": {
+        "section_id": "first-letter-application",
+        "text_sha256": "b339030f406057f1886f0ef2821832da28bb45e3e99a2062a64a1e7ec9c0483c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.first-letter-application-clause-20a17539bf6b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.first-letter-application-clause-20a17539bf6b",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-letter-application"
+      ],
+      "behaviour": "Finding the First-Letter Text — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "first-letter-application",
+        "clause_index": 1,
+        "clause_sha256": "20a17539bf6b506a7de2a55a4918a1f0e9f11cb7038d5034c529a48a83209592"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.first-letter-tree",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-letter-tree"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inheritance and Box Tree Structure of the First-Letter Pseudo-elements.",
+      "locator": {
+        "section_id": "first-letter-tree",
+        "text_sha256": "f5b333b7b1c2811d7ec002447cce480bff22a264d0348a73d0ad36b81e07f096"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.first-letter-tree-clause-947984e88bf7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.first-letter-tree-clause-947984e88bf7",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-letter-tree"
+      ],
+      "behaviour": "Inheritance and Box Tree Structure of the First-Letter Pseudo-elements — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "first-letter-tree",
+        "clause_index": 8,
+        "clause_sha256": "947984e88bf7caa71d27049a179a0a847f99d31f2f73aa7dbcf1d857b22ee9a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.first-letter-styling",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "first-letter-styling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Styling the First-Letter Pseudo-elements.",
+      "locator": {
+        "section_id": "first-letter-styling",
+        "text_sha256": "c2b59e2ca7c0a485b56b31659d77128de9dcff932b1e1242a123a6015095b247"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-pseudos",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-pseudos"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Highlight Pseudo-elements.",
+      "locator": {
+        "section_id": "highlight-pseudos",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-selectors",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selecting Highlighted Content: the ::selection, ::search-text, ::target-text, ::spelling-error, ::grammar-error, and ::highlight() pseudo-elements.",
+      "locator": {
+        "section_id": "highlight-selectors",
+        "text_sha256": "4d76e3ec0142fbd404398d6724b5788dc4d3d7d76864dfe639144234f93eaee8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.highlight-selectors-clause-2d3e93ecda45",
+        "css-pseudo-4.highlight-selectors-clause-2274f34dbc8f",
+        "css-pseudo-4.highlight-selectors-clause-8f0b4cd3f6b9",
+        "css-pseudo-4.highlight-selectors-clause-3dcc1fe3745b",
+        "css-pseudo-4.highlight-selectors-clause-2578e2d84557",
+        "css-pseudo-4.highlight-selectors-clause-b892889f6f3d",
+        "css-pseudo-4.highlight-selectors-clause-c90956cc1e63",
+        "css-pseudo-4.highlight-selectors-clause-97e23df21d81",
+        "css-pseudo-4.highlight-selectors-clause-99b2e8ac97a6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-selectors-clause-2d3e93ecda45",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-selectors"
+      ],
+      "behaviour": "Selecting Highlighted Content: the ::selection, ::search-text, ::target-text, ::spelling-error, ::grammar-error, and ::highlight() pseudo-elements — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-selectors",
+        "clause_index": 14,
+        "clause_sha256": "2d3e93ecda452e1a3dd08bdf98b6e089b643220dd0b7f6b946531c08d092551c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-selectors-clause-2274f34dbc8f",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-selectors"
+      ],
+      "behaviour": "Selecting Highlighted Content: the ::selection, ::search-text, ::target-text, ::spelling-error, ::grammar-error, and ::highlight() pseudo-elements — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-selectors",
+        "clause_index": 15,
+        "clause_sha256": "2274f34dbc8f386429d9770ea9b25c2412cad0189a4cc152650b414531478109"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-selectors-clause-8f0b4cd3f6b9",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-selectors"
+      ],
+      "behaviour": "Selecting Highlighted Content: the ::selection, ::search-text, ::target-text, ::spelling-error, ::grammar-error, and ::highlight() pseudo-elements — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-selectors",
+        "clause_index": 16,
+        "clause_sha256": "8f0b4cd3f6b9fbc7d4c4b0b64c515b81ac39fe469ca4523f49577f28bc2e9659"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-selectors-clause-3dcc1fe3745b",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-selectors"
+      ],
+      "behaviour": "Selecting Highlighted Content: the ::selection, ::search-text, ::target-text, ::spelling-error, ::grammar-error, and ::highlight() pseudo-elements — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-selectors",
+        "clause_index": 25,
+        "clause_sha256": "3dcc1fe3745b5ffd1d01b7ee77004130583168d1935747afa4b419c7f1512a9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-selectors-clause-2578e2d84557",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-selectors"
+      ],
+      "behaviour": "Selecting Highlighted Content: the ::selection, ::search-text, ::target-text, ::spelling-error, ::grammar-error, and ::highlight() pseudo-elements — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-selectors",
+        "clause_index": 26,
+        "clause_sha256": "2578e2d84557580b1def574a163e212059bdea263f80b9e78fd7008220973f07"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-selectors-clause-b892889f6f3d",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-selectors"
+      ],
+      "behaviour": "Selecting Highlighted Content: the ::selection, ::search-text, ::target-text, ::spelling-error, ::grammar-error, and ::highlight() pseudo-elements — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-selectors",
+        "clause_index": 27,
+        "clause_sha256": "b892889f6f3d00f8b1f8fc628b2bbe5b9c9d27da9d44901b1269dd4832d77bd0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-selectors-clause-c90956cc1e63",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-selectors"
+      ],
+      "behaviour": "Selecting Highlighted Content: the ::selection, ::search-text, ::target-text, ::spelling-error, ::grammar-error, and ::highlight() pseudo-elements — normative clause 77, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-selectors",
+        "clause_index": 76,
+        "clause_sha256": "c90956cc1e63e543be504a0d1d45cba723aef360606f8c17b04ad558ce6b2cc2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-selectors-clause-97e23df21d81",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-selectors"
+      ],
+      "behaviour": "Selecting Highlighted Content: the ::selection, ::search-text, ::target-text, ::spelling-error, ::grammar-error, and ::highlight() pseudo-elements — normative clause 78, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-selectors",
+        "clause_index": 77,
+        "clause_sha256": "97e23df21d81f8d38f6b85a971a1052ae8718c7b658b2cb7648a9b1a4a263963"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-selectors-clause-99b2e8ac97a6",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-selectors"
+      ],
+      "behaviour": "Selecting Highlighted Content: the ::selection, ::search-text, ::target-text, ::spelling-error, ::grammar-error, and ::highlight() pseudo-elements — normative clause 114, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-selectors",
+        "clause_index": 113,
+        "clause_sha256": "99b2e8ac97a6df419376edc760d965be4a4b7a9e8e527f47fbd2763b0efe0650"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-styling",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-styling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Styling Highlights.",
+      "locator": {
+        "section_id": "highlight-styling",
+        "text_sha256": "4ce0f7cc383999b4a9bd4e9790f3d24e49efdeac543494be24ce133fc5394554"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.highlight-styling-clause-c3c0b1b7ea4c",
+        "css-pseudo-4.highlight-styling-clause-e3d154b8aef9",
+        "css-pseudo-4.highlight-styling-clause-1405bb10cc0e",
+        "css-pseudo-4.highlight-styling-clause-5732cab33513",
+        "css-pseudo-4.highlight-styling-clause-6a55f84402f3",
+        "css-pseudo-4.highlight-styling-clause-e2fede737bb3",
+        "css-pseudo-4.highlight-styling-clause-deb7eac24ba3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-styling-clause-c3c0b1b7ea4c",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-styling"
+      ],
+      "behaviour": "Styling Highlights — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-styling",
+        "clause_index": 0,
+        "clause_sha256": "c3c0b1b7ea4c3c9952ca4f99ed8325f0769bd690aca81d07cc7403b6ddf72444"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-styling-clause-e3d154b8aef9",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-styling"
+      ],
+      "behaviour": "Styling Highlights — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-styling",
+        "clause_index": 26,
+        "clause_sha256": "e3d154b8aef9b02db789187d9e4278d4beef25f43a027d08f525dab94fe058f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-styling-clause-1405bb10cc0e",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-styling"
+      ],
+      "behaviour": "Styling Highlights — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-styling",
+        "clause_index": 29,
+        "clause_sha256": "1405bb10cc0ee99f5212b6f0431a7a88daa8fde0531507cb14c41d43052def76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-styling-clause-5732cab33513",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-styling"
+      ],
+      "behaviour": "Styling Highlights — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-styling",
+        "clause_index": 30,
+        "clause_sha256": "5732cab335133f07b080d0cdbda5e9475b195da50ff81531146982e531af9e16"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-styling-clause-6a55f84402f3",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-styling"
+      ],
+      "behaviour": "Styling Highlights — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-styling",
+        "clause_index": 31,
+        "clause_sha256": "6a55f84402f3f461f06cecdba84f0dd1b9dda82b4ded302029b3cf72392d83cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-styling-clause-e2fede737bb3",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-styling"
+      ],
+      "behaviour": "Styling Highlights — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-styling",
+        "clause_index": 32,
+        "clause_sha256": "e2fede737bb336659990ccf3b64318717af612e6484742f0e21b8d13d0f20e34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-styling-clause-deb7eac24ba3",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-styling"
+      ],
+      "behaviour": "Styling Highlights — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-styling",
+        "clause_index": 34,
+        "clause_sha256": "deb7eac24ba3e483aa4101932a82bd816d6247e0bcb5a47df1fbf308c39996c1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-ua-styles",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-ua-styles"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default UA Styles.",
+      "locator": {
+        "section_id": "highlight-ua-styles",
+        "text_sha256": "3e55919d65c2f7fc0c5c555535552a67451fb1f1746b96e98d5a6c969971f00a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.highlight-ua-styles-clause-30586621c34d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-ua-styles-clause-30586621c34d",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-ua-styles"
+      ],
+      "behaviour": "Default UA Styles — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-ua-styles",
+        "clause_index": 2,
+        "clause_sha256": "30586621c34df95dcbf59150fe86585c272386dbeac9e42422e5ff4c2bf650be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.paired-defaults",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "paired-defaults"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Paired Defaults.",
+      "locator": {
+        "section_id": "paired-defaults",
+        "text_sha256": "77bafe37770ebc479890978e3f8036490d55eff8bbd4262b1e88d8dc37925398"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.paired-defaults-clause-a951e1824d20",
+        "css-pseudo-4.paired-defaults-clause-4f1363844c90"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.paired-defaults-clause-a951e1824d20",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "paired-defaults"
+      ],
+      "behaviour": "Paired Defaults — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "paired-defaults",
+        "clause_index": 0,
+        "clause_sha256": "a951e1824d20f797b87f7ff3119694aeaa57432c3cb2d03c0bd455f128056525"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.paired-defaults-clause-4f1363844c90",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "paired-defaults"
+      ],
+      "behaviour": "Paired Defaults — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "paired-defaults",
+        "clause_index": 4,
+        "clause_sha256": "4f1363844c90fa12087aecd49df6209dd96b5de4a6d3b23cefd11c50bcc73325"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-bounds",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-bounds"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Area of a Highlight.",
+      "locator": {
+        "section_id": "highlight-bounds",
+        "text_sha256": "22a9c55bdf2093f86c4e4504ba471303b80537100b425d997523949767c009c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.highlight-bounds-clause-f149feefebe8",
+        "css-pseudo-4.highlight-bounds-clause-476d13d87d10"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-bounds-clause-f149feefebe8",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-bounds"
+      ],
+      "behaviour": "Area of a Highlight — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-bounds",
+        "clause_index": 1,
+        "clause_sha256": "f149feefebe89cc2fee85cdba05b35b5e7cb986201b56892bbfd43810ff920d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-bounds-clause-476d13d87d10",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-bounds"
+      ],
+      "behaviour": "Area of a Highlight — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-bounds",
+        "clause_index": 4,
+        "clause_sha256": "476d13d87d109b7e7f6624c989b4a41a826cdfa6e14e4d57109bc2760c761a61"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-cascade",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-cascade"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascading and Per-Element Highlight Styles.",
+      "locator": {
+        "section_id": "highlight-cascade",
+        "text_sha256": "fa75beb81efde65a192e4edbfe4f3710d868c5ca8564d32542fd29f62bbd9dcc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.highlight-cascade-clause-85f18ad22f65",
+        "css-pseudo-4.highlight-cascade-clause-182723eb93d4",
+        "css-pseudo-4.highlight-cascade-clause-2241020ad2a2",
+        "css-pseudo-4.highlight-cascade-clause-a59fa5493d1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-cascade-clause-85f18ad22f65",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-cascade"
+      ],
+      "behaviour": "Cascading and Per-Element Highlight Styles — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-cascade",
+        "clause_index": 1,
+        "clause_sha256": "85f18ad22f651b00721fda1bb83f391b51e03a25b021c10912e37a1fa73ff306"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-cascade-clause-182723eb93d4",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-cascade"
+      ],
+      "behaviour": "Cascading and Per-Element Highlight Styles — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-cascade",
+        "clause_index": 2,
+        "clause_sha256": "182723eb93d4fd5b5ae6e16a63ce14ac9d9f8a7d8fc7746a86f70562f190ba0c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-cascade-clause-2241020ad2a2",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-cascade"
+      ],
+      "behaviour": "Cascading and Per-Element Highlight Styles — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-cascade",
+        "clause_index": 3,
+        "clause_sha256": "2241020ad2a2b8551c821688419040e9f7b73fe8e8a12776381cdace0dadc1c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-cascade-clause-a59fa5493d1d",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-cascade"
+      ],
+      "behaviour": "Cascading and Per-Element Highlight Styles — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-cascade",
+        "clause_index": 14,
+        "clause_sha256": "a59fa5493d1de76fe5429bece66b703165474739945631d3dee65901f402b86e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-painting",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-painting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Painting the Highlight.",
+      "locator": {
+        "section_id": "highlight-painting",
+        "text_sha256": "038466abc88904c3a686a07e360fe79af8fcb0fdaa481767b43845b7a9de1ff1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-backgrounds",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-backgrounds"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Backgrounds.",
+      "locator": {
+        "section_id": "highlight-backgrounds",
+        "text_sha256": "986c4f3dcbd31b6b85f0f922fab08ed5581a9a3bf3c861287d1f75319df14387"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-shadows",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-shadows"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shadows.",
+      "locator": {
+        "section_id": "highlight-shadows",
+        "text_sha256": "7bb92c750d7cfc900276de0d299e5e49adff8818f0f44891fffac35f0d534736"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-text",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-text"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text and Text Decorations.",
+      "locator": {
+        "section_id": "highlight-text",
+        "text_sha256": "d0bc7013a02c563b8bb4ccf76509753e12b63c7b428005f667591ad8f112189b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-replaced",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-replaced"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Replaced Elements.",
+      "locator": {
+        "section_id": "highlight-replaced",
+        "text_sha256": "36e8e8686fc6e10afc68ec932ee05e9251fd76161a3136f6dcd67e1a2bfd75c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.highlight-replaced-clause-595a1fb8cfd7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-replaced-clause-595a1fb8cfd7",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-replaced"
+      ],
+      "behaviour": "Replaced Elements — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-replaced",
+        "clause_index": 0,
+        "clause_sha256": "595a1fb8cfd7d06a668abe282d00e1aae5930bd8574cda2c190e00f60f19410d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.highlight-security",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations for Highlighting.",
+      "locator": {
+        "section_id": "highlight-security",
+        "text_sha256": "85458fc26d73bf1957056bd3bdb9af019bb65cc7533a512304694f27db47ea52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.highlight-security-clause-85458fc26d73"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.highlight-security-clause-85458fc26d73",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "highlight-security"
+      ],
+      "behaviour": "Security Considerations for Highlighting — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-security",
+        "clause_index": 0,
+        "clause_sha256": "85458fc26d73bf1957056bd3bdb9af019bb65cc7533a512304694f27db47ea52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.treelike",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "treelike"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tree-Abiding Pseudo-elements.",
+      "locator": {
+        "section_id": "treelike",
+        "text_sha256": "562f2bbd7bb32a21c53b5289b3126d3b5ae18c19ddb587b45f973974f8001ad4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.treelike-clause-4a6d067e78e3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.treelike-clause-4a6d067e78e3",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "treelike"
+      ],
+      "behaviour": "Tree-Abiding Pseudo-elements — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "treelike",
+        "clause_index": 0,
+        "clause_sha256": "4a6d067e78e3b9103a33c7c7ad9dc6b57438327e77e245bd87b9dd86e39ae7b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.generated-content",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "generated-content"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Generated Content Pseudo-elements: ::before and ::after.",
+      "locator": {
+        "section_id": "generated-content",
+        "text_sha256": "3965844720ffd31c1b347c235aa563b1926a68ee33834d4f96eba77a8fd729c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.generated-content-clause-4167beb76a22",
+        "css-pseudo-4.generated-content-clause-7314a11d18a6",
+        "css-pseudo-4.generated-content-clause-5900ef287ecb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.generated-content-clause-4167beb76a22",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "generated-content"
+      ],
+      "behaviour": "Generated Content Pseudo-elements: ::before and ::after — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "generated-content",
+        "clause_index": 0,
+        "clause_sha256": "4167beb76a22e89b99bd2feb144604adc4e46cc1d291d11fb07bb44a59912a36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.generated-content-clause-7314a11d18a6",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "generated-content"
+      ],
+      "behaviour": "Generated Content Pseudo-elements: ::before and ::after — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "generated-content",
+        "clause_index": 9,
+        "clause_sha256": "7314a11d18a658ac3e60a5a2c03acc3992c2f1692e8e438964ce5896a442f603"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.generated-content-clause-5900ef287ecb",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "generated-content"
+      ],
+      "behaviour": "Generated Content Pseudo-elements: ::before and ::after — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "generated-content",
+        "clause_index": 11,
+        "clause_sha256": "5900ef287ecbb7cd2f8cf4e7b993d0852c7d6111a71728edef069a784777db90"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.marker-pseudo",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "marker-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in List Markers: the ::marker pseudo-element.",
+      "locator": {
+        "section_id": "marker-pseudo",
+        "text_sha256": "0189b09c3f25886bbc90911bbeff2f276590a44febe5ad0ce26ecb922d5411b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.marker-pseudo-clause-0da285aa1866",
+        "css-pseudo-4.marker-pseudo-clause-084dd88c81c5",
+        "css-pseudo-4.marker-pseudo-clause-be8f3bd1a274",
+        "css-pseudo-4.marker-pseudo-clause-15a98957d3e1",
+        "css-pseudo-4.marker-pseudo-clause-46c2169d755a",
+        "css-pseudo-4.marker-pseudo-clause-7ebdcafd28cd",
+        "css-pseudo-4.marker-pseudo-clause-63e9f5636910",
+        "css-pseudo-4.marker-pseudo-clause-39b864de1f1f",
+        "css-pseudo-4.marker-pseudo-clause-f5a6986d98f0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.marker-pseudo-clause-0da285aa1866",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "marker-pseudo"
+      ],
+      "behaviour": "List Markers: the ::marker pseudo-element — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "marker-pseudo",
+        "clause_index": 5,
+        "clause_sha256": "0da285aa186663af9d302ea45cf2d2ca7a21bb3d47b5083c0a70ead701bcb788"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.marker-pseudo-clause-084dd88c81c5",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "marker-pseudo"
+      ],
+      "behaviour": "List Markers: the ::marker pseudo-element — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "marker-pseudo",
+        "clause_index": 6,
+        "clause_sha256": "084dd88c81c5e18cdf29f5f7889c8e489c50aa1edee4a8a3496402ca1f248b50"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.marker-pseudo-clause-be8f3bd1a274",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "marker-pseudo"
+      ],
+      "behaviour": "List Markers: the ::marker pseudo-element — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "marker-pseudo",
+        "clause_index": 31,
+        "clause_sha256": "be8f3bd1a274389b16ed954d8e2880e7cf236f126eaac9c647201a4c92a358f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.marker-pseudo-clause-15a98957d3e1",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "marker-pseudo"
+      ],
+      "behaviour": "List Markers: the ::marker pseudo-element — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "marker-pseudo",
+        "clause_index": 40,
+        "clause_sha256": "15a98957d3e1a26236cab4a02a43e19545689a75b30ed0799544745c9fb2db02"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.marker-pseudo-clause-46c2169d755a",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "marker-pseudo"
+      ],
+      "behaviour": "List Markers: the ::marker pseudo-element — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "marker-pseudo",
+        "clause_index": 41,
+        "clause_sha256": "46c2169d755ab7f08b6877520b8ed27928a6dada2b993d896bea48e44e21e890"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.marker-pseudo-clause-7ebdcafd28cd",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "marker-pseudo"
+      ],
+      "behaviour": "List Markers: the ::marker pseudo-element — normative clause 65, located by its exact source hash.",
+      "locator": {
+        "section_id": "marker-pseudo",
+        "clause_index": 64,
+        "clause_sha256": "7ebdcafd28cdc2ab716e4ebed6e62d220f15ad3db357138db0e0ce7ffcdea875"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.marker-pseudo-clause-63e9f5636910",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "marker-pseudo"
+      ],
+      "behaviour": "List Markers: the ::marker pseudo-element — normative clause 72, located by its exact source hash.",
+      "locator": {
+        "section_id": "marker-pseudo",
+        "clause_index": 71,
+        "clause_sha256": "63e9f5636910475efb829535c6a7876cbff64cbc81711c46af26c110c956a4d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.marker-pseudo-clause-39b864de1f1f",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "marker-pseudo"
+      ],
+      "behaviour": "List Markers: the ::marker pseudo-element — normative clause 75, located by its exact source hash.",
+      "locator": {
+        "section_id": "marker-pseudo",
+        "clause_index": 74,
+        "clause_sha256": "39b864de1f1f86c245e823f4d4217eb8f3580899784772f862247ce8b4391e9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.marker-pseudo-clause-f5a6986d98f0",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "marker-pseudo"
+      ],
+      "behaviour": "List Markers: the ::marker pseudo-element — normative clause 76, located by its exact source hash.",
+      "locator": {
+        "section_id": "marker-pseudo",
+        "clause_index": 75,
+        "clause_sha256": "f5a6986d98f0513ecadea89b3bd9591560c5f6993a5f35afaa5d7b11cafb0c49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.placeholder-pseudo",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "placeholder-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Placeholder Input: the ::placeholder pseudo-element.",
+      "locator": {
+        "section_id": "placeholder-pseudo",
+        "text_sha256": "bc42a54c23ecbb61b00cb10709a6d697b102fddf40e914d78c3e02cf27deb577"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.placeholder-pseudo-clause-05a7f0165384",
+        "css-pseudo-4.placeholder-pseudo-clause-8028a62412c0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.placeholder-pseudo-clause-05a7f0165384",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "placeholder-pseudo"
+      ],
+      "behaviour": "Placeholder Input: the ::placeholder pseudo-element — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "placeholder-pseudo",
+        "clause_index": 3,
+        "clause_sha256": "05a7f0165384b79467a0b10369bd657f82925a3fee67ac6a382fe8be9d40cf74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.placeholder-pseudo-clause-8028a62412c0",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "placeholder-pseudo"
+      ],
+      "behaviour": "Placeholder Input: the ::placeholder pseudo-element — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "placeholder-pseudo",
+        "clause_index": 10,
+        "clause_sha256": "8028a62412c0da8cfbb36c57c412cb0c890de958d0f040dc8ae9e370798b056e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.element-like",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "element-like"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Element-backed Pseudo-Elements.",
+      "locator": {
+        "section_id": "element-like",
+        "text_sha256": "e4feececdb9ffd7aa0e1c3527b98502c6cbb59e31970caeb25952f8049649ff4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.element-like-clause-d4a60234388e",
+        "css-pseudo-4.element-like-clause-9bee6e47f464"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.element-like-clause-d4a60234388e",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "element-like"
+      ],
+      "behaviour": "Element-backed Pseudo-Elements — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-like",
+        "clause_index": 1,
+        "clause_sha256": "d4a60234388efb373d70678ed5db13413aef9a4c6c2eabbb3befe20c2e02c803"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.element-like-clause-9bee6e47f464",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "element-like"
+      ],
+      "behaviour": "Element-backed Pseudo-Elements — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-like",
+        "clause_index": 7,
+        "clause_sha256": "9bee6e47f4642f90113fbb4a7d8637e1e774c20fc44e815734f8c79e2ca7843d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.file-selector-button-pseudo",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "file-selector-button-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in File Selector Button: the ::file-selector-button pseudo-element.",
+      "locator": {
+        "section_id": "file-selector-button-pseudo",
+        "text_sha256": "82f18d9fcc9bdad95096b1f0b417cd7d951bf0f1104e5851f3840ee57be304b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.file-selector-button-pseudo-clause-405d4b694661"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.file-selector-button-pseudo-clause-405d4b694661",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "file-selector-button-pseudo"
+      ],
+      "behaviour": "File Selector Button: the ::file-selector-button pseudo-element — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "file-selector-button-pseudo",
+        "clause_index": 6,
+        "clause_sha256": "405d4b6946615bc6fa872b50adfb745d9b8dddb8b543b4ef92dbf12c27352a6e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.details-content-pseudo",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "details-content-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Expandable contents of details element: the ::details-content pseudo-element.",
+      "locator": {
+        "section_id": "details-content-pseudo",
+        "text_sha256": "d7118c632c210c6b68b999dc39614eb582e9054784481f5af4741e773cdc04e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.interactions",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "interactions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overlapping Pseudo-element Interactions.",
+      "locator": {
+        "section_id": "interactions",
+        "text_sha256": "b669166187a5e681d581643c4f6f02a4f0d4a8cccd69bd94f02442a75b3f672a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.cssom",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "cssom"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Additions to the CSS Object Model.",
+      "locator": {
+        "section_id": "cssom",
+        "text_sha256": "bc4e06236fb84e3469cd8bdbec30a78ebd12d60140cb76f1e60f54e6e51ae8b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.csspseudoelement-interface",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "CSSPseudoElement-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSPseudoElement Interface.",
+      "locator": {
+        "section_id": "CSSPseudoElement-interface",
+        "text_sha256": "951d5fb3135f6f77715d958bb50af5691e6dfaa5d1f59c3e80a7ae815665bc60"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.window-interface",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "window-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in pseudo() method of the Element interface.",
+      "locator": {
+        "section_id": "window-interface",
+        "text_sha256": "0d4a68c54959ef34b83d3c9c99578092f5a589a0530b719823e70995158e7bed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.window-interface-clause-5b5e2fbda5a7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.window-interface-clause-5b5e2fbda5a7",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "window-interface"
+      ],
+      "behaviour": "pseudo() method of the Element interface — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "window-interface",
+        "clause_index": 8,
+        "clause_sha256": "5b5e2fbda5a7acd6073846f754c4f5853b48c4f3fc71828fc302470786316b74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.getcomputedstyle",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "getComputedStyle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in getComputedStyle().",
+      "locator": {
+        "section_id": "getComputedStyle",
+        "text_sha256": "35e0253599cb47e0944f9b6cabb410130f6c682b85bbb02a53f162875507e5f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.css2-compat",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "css2-compat"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Compatibility Syntax.",
+      "locator": {
+        "section_id": "css2-compat",
+        "text_sha256": "cd9af6fe1565508bf66c4537be272f419a02d7d435836c8ede8b3ed31e91e3fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.css2-compat-clause-cd9af6fe1565"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.css2-compat-clause-cd9af6fe1565",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "css2-compat"
+      ],
+      "behaviour": "Compatibility Syntax — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "css2-compat",
+        "clause_index": 0,
+        "clause_sha256": "cd9af6fe1565508bf66c4537be272f419a02d7d435836c8ede8b3ed31e91e3fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.security",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "b2cff26a5ebbc93b262f81b77b3b7872bd259177235a1868744cccdd6f4b1810"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.privacy",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "d2e8e6dc79d463ac6f2bb7f29c5a0564c6b3455ad06093e923ac47ca81da57e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.w3c-conformance",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.w3c-conventions",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.w3c-conventions-clause-5c98c879f070",
+        "css-pseudo-4.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.w3c-conventions-clause-5c98c879f070",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.w3c-conformance-classes",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.w3c-conformance-classes-clause-ff408372426c",
+        "css-pseudo-4.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.w3c-partial",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.w3c-partial-clause-ef40c4aab200",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.w3c-conform-future-proofing",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.w3c-testing",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-pseudo-4.w3c-testing-clause-1e0fff369221",
+        "css-pseudo-4.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.w3c-testing-clause-1e0fff369221",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.w3c-testing-clause-ae1210cf9643",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-pseudo-4.idl-index",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "5dab687b04025797ab82d144dac5a3700189c3f8b99f56285cfa79369032433f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.issues-index",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "5f9a128bca962a431a2467425de4271e067d76b29e8ba5219553e68b40139561"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.import-8cac7d115c27",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-pseudo-4.title",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Pseudo-Elements Module Level 4.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "47b5378fb0a394095956047c6071db6e7d21cd9ab0e8ce453b7999ade4c2416c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.abstract",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "d2f63e963b90e66c7d594c266e060375863938631bbfedf425fbfa2dfd617380"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.sotd",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "08340322b90f12e536b68dbf059506ed3e5c71fc377ab124dc140ed2c1ae1493"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.contents",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "b7aad1dd29ecdfe985f392520691a9e77c2d0a00280417f752fc99a26f8be29e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.intro",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "e61ca684e99567c9230ddc2f7fbc6a342da53133cbf726c45d959bf51f25011b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.changes",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "dee9d4350283036d4e373a43c780ab73b5cd24ccfdd4d3f0c019667b4210eb21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.acknowledgements",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgements.",
+      "locator": {
+        "section_id": "acknowledgements",
+        "text_sha256": "5a90774faa94450ff5782d0f8bcc06c4dc557d1eda69f57fb2684e3f3dfe1d28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.index",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.index-defined-here",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "e643f819d02a89ac3fb18b39e667c0b3a0a024415a4784989681ddde8cd2fbf2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.index-defined-elsewhere",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "a11f2e389b9a945c3c3a4cb4290e30fa3c21a82b32a9e5ebe4ace046bfe48cdb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.references",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-pseudo-4.informative",
+      "family": "css-pseudo-4",
+      "source_id": "css-pseudo-4",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "a20325de831719e0e8989e76678197994dd67299f307fe3783c383fd25109ed4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

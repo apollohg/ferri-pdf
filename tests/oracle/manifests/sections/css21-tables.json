@@ -1,0 +1,339 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-tables",
+  "sections": [
+    {
+      "id": "q17.0",
+      "title": "17 Tables",
+      "level": 1,
+      "text_sha256": "280a4168b8b8b21bc354b1d430472a2e2a0e113031b967ebfaf5b48133c3f843",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.q17-0"
+        ]
+      }
+    },
+    {
+      "id": "tables-intro",
+      "title": "17.1 Introduction to tables",
+      "level": 2,
+      "text_sha256": "fa42ff8bf581b580cf52bbe3da6a317f35392189bc2650d9aaf1ac37dd3105eb",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.tables-intro",
+          "css21-tables.tables-intro-clause-20ce95fc60b9",
+          "css21-tables.tables-intro-clause-83b6f7796db1",
+          "css21-tables.tables-intro-clause-8ecce21cbfed",
+          "css21-tables.tables-intro-clause-87a5ec51b537"
+        ]
+      }
+    },
+    {
+      "id": "table-display",
+      "title": "17.2 The CSS table model",
+      "level": 2,
+      "text_sha256": "17718b82d21536943d6f223fe008e76f6b8b44c3afdebfb79622d7120eccadc6",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.table-display",
+          "css21-tables.table-display-clause-dfc59f1aeef9",
+          "css21-tables.table-display-clause-2795921f278e"
+        ]
+      }
+    },
+    {
+      "id": "anonymous-boxes",
+      "title": "17.2.1 Anonymous table objects",
+      "level": 3,
+      "text_sha256": "57d2b76c7ccf06084b657a1f48cce551511bcddc7f62d1c03589675bf6e4c91e",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.anonymous-boxes",
+          "css21-tables.anonymous-boxes-clause-ba51c8a2020c",
+          "css21-tables.anonymous-boxes-clause-5adefd8f5251",
+          "css21-tables.anonymous-boxes-clause-f8e24e165ced",
+          "css21-tables.anonymous-boxes-clause-8b965975397f"
+        ]
+      }
+    },
+    {
+      "id": "columns",
+      "title": "17.3 Columns",
+      "level": 2,
+      "text_sha256": "752f1e3faada30acfb2fc0aef75b6ed2d9db98905a1f06bf4a4a841f5dcde4ca",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.columns",
+          "css21-tables.columns-clause-daea671cdb2e",
+          "css21-tables.columns-clause-c1fa640224ca",
+          "css21-tables.columns-clause-1d8c897c8b59"
+        ]
+      }
+    },
+    {
+      "id": "model",
+      "title": "17.4 Tables in the visual formatting model",
+      "level": 2,
+      "text_sha256": "2653cbf6f451a3e2bc0ab9dbf94788d37bc8ad5395c09d231a46a8210207dbbe",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.model",
+          "css21-tables.model-clause-c450ad99c43b"
+        ]
+      }
+    },
+    {
+      "id": "caption-position",
+      "title": "17.4.1 Caption position and alignment",
+      "level": 3,
+      "text_sha256": "c8869495728cfe56298ef5bbe996b8095a9cab3b3ee0970df4ba9aef52272017",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.caption-position",
+          "css21-tables.caption-position-clause-bcc7c9a39177",
+          "css21-tables.caption-position-clause-cca2516ebb1d",
+          "css21-tables.caption-position-clause-ae459ffdd322"
+        ]
+      }
+    },
+    {
+      "id": "table-layout",
+      "title": "17.5 Visual layout of table contents",
+      "level": 2,
+      "text_sha256": "d7df5ecb2428fcc8e5b2f195aeaad9344d7ff9d73f9af3f8fa23a53b68e23414",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.table-layout",
+          "css21-tables.table-layout-clause-11e6e5d3f2fc",
+          "css21-tables.table-layout-clause-56cc5bd03bac"
+        ]
+      }
+    },
+    {
+      "id": "table-layers",
+      "title": "17.5.1 Table layers and transparency",
+      "level": 3,
+      "text_sha256": "3e7e3fd40536d12820d802705cf0f4f7d203e0574e68482e7c1fca91ad2f5e3c",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.table-layers"
+        ]
+      }
+    },
+    {
+      "id": "width-layout",
+      "title": "17.5.2 Table width algorithms: the 'table-layout' property",
+      "level": 3,
+      "text_sha256": "8aab9983f24d396cbb3108e687cc0315f0d51bc1dd179afdcec7a9f061099a29",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.width-layout",
+          "css21-tables.width-layout-clause-9fde2b09e25d",
+          "css21-tables.width-layout-clause-603130df9000",
+          "css21-tables.width-layout-clause-8a6de76c36a0",
+          "css21-tables.width-layout-clause-cca2516ebb1d",
+          "css21-tables.width-layout-clause-2d50d12c9f53",
+          "css21-tables.width-layout-clause-bccc5536aed4",
+          "css21-tables.width-layout-clause-49fdf3248918",
+          "css21-tables.width-layout-clause-7e284559bd11",
+          "css21-tables.width-layout-clause-2147a4df6790"
+        ]
+      }
+    },
+    {
+      "id": "fixed-table-layout",
+      "title": "17.5.2.1 Fixed table layout",
+      "level": 4,
+      "text_sha256": "d391d9cb32cc663f08df2c3a7425b9adbf665837112b490b56785858e5652526",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.fixed-table-layout",
+          "css21-tables.fixed-table-layout-clause-8c50832dafe4",
+          "css21-tables.fixed-table-layout-clause-5499a18e34cc",
+          "css21-tables.fixed-table-layout-clause-e0513f510a7b",
+          "css21-tables.fixed-table-layout-clause-ed48501499f6",
+          "css21-tables.fixed-table-layout-clause-017e07a97c16"
+        ]
+      }
+    },
+    {
+      "id": "auto-table-layout",
+      "title": "17.5.2.2 Automatic table layout",
+      "level": 4,
+      "text_sha256": "d4f37fe8746f2ba87dcfc87573abce5c7a2b436504b661eae2e7071f8d32bf53",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.auto-table-layout",
+          "css21-tables.auto-table-layout-clause-5c571a93b6b1",
+          "css21-tables.auto-table-layout-clause-fe7e02f3dc2c",
+          "css21-tables.auto-table-layout-clause-63c4dc8064d3",
+          "css21-tables.auto-table-layout-clause-8d85a0ad82c5",
+          "css21-tables.auto-table-layout-clause-4a482b0bfcb1",
+          "css21-tables.auto-table-layout-clause-0c7781d7e629",
+          "css21-tables.auto-table-layout-clause-d904be51a23d",
+          "css21-tables.auto-table-layout-clause-d37d55f92fbe"
+        ]
+      }
+    },
+    {
+      "id": "height-layout",
+      "title": "17.5.3 Table height algorithms",
+      "level": 3,
+      "text_sha256": "942a943f6fd17287f571c89578df1bb9c1e5fa5a5067ac9d737fff7aba2ad7dc",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.height-layout",
+          "css21-tables.height-layout-clause-ddddec439243",
+          "css21-tables.height-layout-clause-87935a5214e4",
+          "css21-tables.height-layout-clause-0d1a146a07d6",
+          "css21-tables.height-layout-clause-df8e18887d8d",
+          "css21-tables.height-layout-clause-1bcfcdf64858"
+        ]
+      }
+    },
+    {
+      "id": "column-alignment",
+      "title": "17.5.4 Horizontal alignment in a column",
+      "level": 3,
+      "text_sha256": "53563a030c9ee7fb6f55a91a008665e3fbf6e385fd757e25722050253f4efa04",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.column-alignment"
+        ]
+      }
+    },
+    {
+      "id": "dynamic-effects",
+      "title": "17.5.5 Dynamic row and column effects",
+      "level": 3,
+      "text_sha256": "26361d655f33382851f5d214e326102b1fd31a9bae2ad5ba8b8719f490ef1138",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.dynamic-effects"
+        ]
+      }
+    },
+    {
+      "id": "borders",
+      "title": "17.6 Borders",
+      "level": 2,
+      "text_sha256": "4c9cc67373bb6b7de62aadfd021decec4a948f63d764b1f5907b238d3060e41b",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.borders",
+          "css21-tables.borders-clause-2570ffb91bac",
+          "css21-tables.borders-clause-cca2516ebb1d",
+          "css21-tables.borders-clause-605545fca48c"
+        ]
+      }
+    },
+    {
+      "id": "separated-borders",
+      "title": "17.6.1 The separated borders model",
+      "level": 3,
+      "text_sha256": "2f2ec744797737da0c2c789942d80d835390a0c20b362d8e365073b7dffd834c",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.separated-borders",
+          "css21-tables.separated-borders-clause-cd45c0829af6",
+          "css21-tables.separated-borders-clause-cca2516ebb1d",
+          "css21-tables.separated-borders-clause-c077a18e4110",
+          "css21-tables.separated-borders-clause-677762ba9d3a",
+          "css21-tables.separated-borders-clause-a1d31bff5c24"
+        ]
+      }
+    },
+    {
+      "id": "empty-cells",
+      "title": "17.6.1.1 Borders and Backgrounds around empty cells: the 'empty-cells' property",
+      "level": 4,
+      "text_sha256": "257d414fd7259bd1858a1cc4da6529acb66cf7065c1190ba3b9d2ca60c35aec7",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.empty-cells",
+          "css21-tables.empty-cells-clause-b551928efad9",
+          "css21-tables.empty-cells-clause-cca2516ebb1d",
+          "css21-tables.empty-cells-clause-b870c2ff25ad"
+        ]
+      }
+    },
+    {
+      "id": "collapsing-borders",
+      "title": "17.6.2 The collapsing border model",
+      "level": 3,
+      "text_sha256": "373ee97ec6588d3067dde0a7d1eb917035f00cd96b4167e0aebc3b901af255a0",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.collapsing-borders",
+          "css21-tables.collapsing-borders-clause-530de86df78f",
+          "css21-tables.collapsing-borders-clause-5ffea4d91125",
+          "css21-tables.collapsing-borders-clause-42cd3ed29f31"
+        ]
+      }
+    },
+    {
+      "id": "border-conflict-resolution",
+      "title": "17.6.2.1 Border conflict resolution",
+      "level": 4,
+      "text_sha256": "8c1c0250c6aafb60c275ec56da51f719ebff86b443d8b78ae0bde6d693dbdcef",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.border-conflict-resolution"
+        ]
+      }
+    },
+    {
+      "id": "table-border-styles",
+      "title": "17.6.3 Border styles",
+      "level": 3,
+      "text_sha256": "5c7d14377d4d140374cda05781fdfa260633307076e9700eb3da6f59e8c822a5",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-tables.table-border-styles"
+        ]
+      }
+    }
+  ]
+}

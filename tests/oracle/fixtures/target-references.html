@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>target-references</title><style>@font-face { font-family: Probe; src: url('../assets/DejaVuSans.ttf'); }
+@page { size: 500pt 300pt; margin: 36pt; font: 10pt Probe; }
+@page chapter { @top-left { content: 'Target ' target-counter('#launch', page) ': ' target-text('#launch'); } }
+html, body { margin: 0; padding: 0; }
+body { font: 10pt/15pt Probe; counter-reset: chapter 4 section 2; }
+p, h2 { margin: 0; font: inherit; }
+a { color: black; text-decoration: none; }
+h2 { counter-increment: chapter 2; break-after: auto; }
+.chapter { page: chapter; break-before: page; counter-reset: section 4; }
+.last { break-before: page; }
+#launch::before { content: 'Before '; }
+#launch::after { content: ' After'; }
+.forward::after { content: '[' target-counter(attr(href), chapter, upper-roman) ';' target-counters(attr(href), section, '.', upper-roman) ';' target-text(attr(href)) ';page ' target-counter(attr(href), page) ']'; }
+.parts::after { content: '[' target-text('#launch', before) '|' target-text('#launch', content) '|' target-text('#launch', after) '|' target-text('#launch', first-letter) ']'; }
+.back::after { content: '[' target-counter(attr(href), chapter) ';' target-text(attr(href)) ';page ' target-counter(attr(href), page) ']'; }</style></head><body><section><p id="intro">Introduction</p><p><a class="forward" href="#launch">Forward</a></p><p class="parts">Parts</p></section>
+<section class="chapter"><h2 id="launch">Launch window</h2><p><a class="back" href="#intro">Back</a></p></section>
+<h2 class="last">Later chapter</h2></body></html>

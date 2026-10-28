@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "tolerances": {
+    "resolution_dpi": 144,
+    "points_per_inch": 72,
+    "pixel_delta": 32,
+    "glyph_origin_pt": 0.25,
+    "glyph_truncation_units_per_em": 1000,
+    "glyph_matrix_pt": 0.001,
+    "glyph_colour": 0.00392156862745098,
+    "line_cluster_pt": 1.0,
+    "word_box_slack_pt": 0.01,
+    "direction_digits": 3,
+    "mismatch_report_limit": 10,
+    "metric_compatible_fonts": {
+      "ArialMT": "LiberationSans",
+      "Arial-BoldMT": "LiberationSans-Bold",
+      "Arial-ItalicMT": "LiberationSans-Italic",
+      "Arial-BoldItalicMT": "LiberationSans-BoldItalic",
+      "TimesNewRomanPSMT": "LiberationSerif",
+      "TimesNewRomanPS-BoldMT": "LiberationSerif-Bold",
+      "TimesNewRomanPS-ItalicMT": "LiberationSerif-Italic",
+      "TimesNewRomanPS-BoldItalicMT": "LiberationSerif-BoldItalic"
+    },
+    "word_box_em": {
+      "before": 0.1,
+      "after": 1.0,
+      "below": 0.35,
+      "above": 1.0
+    },
+    "text_ink_floor_px": 24,
+    "changed_ink_fraction": 0.02,
+    "regional_dark_threshold": 96,
+    "regional_ink_coverage_fraction": 0.1,
+    "command_timeout_s": 120,
+    "ink_lightness_cutoff": 250
+  }
+}

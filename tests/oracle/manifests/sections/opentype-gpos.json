@@ -1,0 +1,577 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-gpos",
+  "sections": [
+    {
+      "id": "gpos--glyph-positioning-table",
+      "title": "GPOS — Glyph Positioning Table",
+      "level": 1,
+      "text_sha256": "214e1897aecdbc0fa38663f3c48b975638d01ca841f95852449b42b2f24c1245",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.gpos-glyph-positioning-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "Overview",
+      "level": 2,
+      "text_sha256": "1e675aac2c93b8624c1164ecfd4b4b059fda14c1bdc4825fae24f2cd955cef60",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.overview",
+          "opentype-gpos.overview-clause-96ae9aae775d",
+          "opentype-gpos.overview-clause-6cac721f0f41"
+        ]
+      }
+    },
+    {
+      "id": "gpos-table-and-opentype-font-variations",
+      "title": "GPOS table and OpenType Font Variations",
+      "level": 2,
+      "text_sha256": "5f7b531215ef575d8e467c322dd611a21dc7afdb60ead55ac5f2c9bb5e8e7538",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.gpos-table-and-opentype-font-variations",
+          "opentype-gpos.gpos-table-and-opentype-font-variations-clause-83a47843d193",
+          "opentype-gpos.gpos-table-and-opentype-font-variations-clause-9c433c2d8637",
+          "opentype-gpos.gpos-table-and-opentype-font-variations-clause-f7d91342abe1"
+        ]
+      }
+    },
+    {
+      "id": "gpos-table-organization",
+      "title": "GPOS table organization",
+      "level": 2,
+      "text_sha256": "8826aacca34a005a7a1326819b52770d0ac29cd2b14150ce9f0350cbae83daf3",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.gpos-table-organization",
+          "opentype-gpos.gpos-table-organization-clause-7d07d908e44b",
+          "opentype-gpos.gpos-table-organization-clause-473702e17ab7",
+          "opentype-gpos.gpos-table-organization-clause-25a08724e7dc",
+          "opentype-gpos.gpos-table-organization-clause-1102a43b2da5",
+          "opentype-gpos.gpos-table-organization-clause-3e536aa111c2"
+        ]
+      }
+    },
+    {
+      "id": "gpos-table-structures",
+      "title": "GPOS table structures",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.gpos-table-structures"
+        ]
+      }
+    },
+    {
+      "id": "gpos-header",
+      "title": "GPOS Header",
+      "level": 3,
+      "text_sha256": "e1f7afd3d5b6d16749209e11a9dc0efd24da5c66aa39378ea64f33b72923b57e",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.gpos-header"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-1-subtable-single-adjustment-positioning",
+      "title": "Lookup type 1 subtable: single adjustment positioning",
+      "level": 3,
+      "text_sha256": "d64eed7d0b9b3fb27ebb9f4a6155d2ee9a472437f2049f75e4413131acd63389",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.lookup-type-1-subtable-single-adjustment-positioning",
+          "opentype-gpos.lookup-type-1-subtable-single-adjustment-positioning-clause-afddd5ae641f"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-2-subtable-pair-adjustment-positioning",
+      "title": "Lookup type 2 subtable: pair adjustment positioning",
+      "level": 3,
+      "text_sha256": "aca3bc74343e5b53005d661ec730c07e2ef8e1e26d75035e6232a7ae0f384e75",
+      "clause_count": 120,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning",
+          "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-6a39a81d6804",
+          "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-1b912a44a495",
+          "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-623a6d6a465e",
+          "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-594a2b7512bc",
+          "opentype-gpos.lookup-type-2-subtable-pair-adjustment-positioning-clause-f95df478d2f3"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-3-subtable-cursive-attachment-positioning",
+      "title": "Lookup type 3 subtable: cursive attachment positioning",
+      "level": 3,
+      "text_sha256": "ae23df52bac2b8a3367827778957041b6605d9130f410ddd90521f320cac3a4c",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.lookup-type-3-subtable-cursive-attachment-positioning"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-4-subtable-mark-to-base-attachment-positioning",
+      "title": "Lookup type 4 subtable: mark-to-base attachment positioning",
+      "level": 3,
+      "text_sha256": "7743e1b96c376573b5f4e10c476d930cf32a3c0819c20876ea3fd10d3d696d35",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.lookup-type-4-subtable-mark-to-base-attachment-positioning",
+          "opentype-gpos.lookup-type-4-subtable-mark-to-base-attachment-positioning-clause-ac5f2d677191"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-5-subtable-mark-to-ligature-attachment-positioning",
+      "title": "Lookup type 5 subtable: mark-to-ligature attachment positioning",
+      "level": 3,
+      "text_sha256": "9592f05f8609028f4f959dbdb8bafb667bf38f59931ddac5d4443fca96c603c5",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.lookup-type-5-subtable-mark-to-ligature-attachment-positioning",
+          "opentype-gpos.lookup-type-5-subtable-mark-to-ligature-attachment-positioning-clause-e30d0e5a0bfa",
+          "opentype-gpos.lookup-type-5-subtable-mark-to-ligature-attachment-positioning-clause-bf45a75f82b3"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-6-subtable-mark-to-mark-attachment-positioning",
+      "title": "Lookup type 6 subtable: mark-to-mark attachment positioning",
+      "level": 3,
+      "text_sha256": "4077c155f5bf8da75ae692d69e0d6bc6d95f76fa349142037660ff55daa20e25",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.lookup-type-6-subtable-mark-to-mark-attachment-positioning"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-7-subtable-contextual-positioning",
+      "title": "Lookup type 7 subtable: contextual positioning",
+      "level": 3,
+      "text_sha256": "89eeeece360ecb07f84a5a45e9e24c223e75f2d0cdb3f7bf9fa517f7eeb8533a",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.lookup-type-7-subtable-contextual-positioning"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-8-subtable-chained-contexts-positioning",
+      "title": "Lookup type 8 subtable: chained contexts positioning",
+      "level": 3,
+      "text_sha256": "c39cc628c5786efd3141a2423a75dcedc2979d043797483ee8b8e810e7303b97",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.lookup-type-8-subtable-chained-contexts-positioning"
+        ]
+      }
+    },
+    {
+      "id": "lookup-type-9-subtable-positioning-subtable-extension",
+      "title": "Lookup type 9 subtable: positioning subtable extension",
+      "level": 3,
+      "text_sha256": "fc56bac532b0997c531736708701f207eac34deacd76753cfd8a92d4dbb6489c",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.lookup-type-9-subtable-positioning-subtable-extension",
+          "opentype-gpos.lookup-type-9-subtable-positioning-subtable-extension-clause-65865c27e07b",
+          "opentype-gpos.lookup-type-9-subtable-positioning-subtable-extension-clause-a44e654e9179"
+        ]
+      }
+    },
+    {
+      "id": "shared-formats-value-record-anchor-table-mark-array-table",
+      "title": "Shared formats: value record, anchor table, mark array table",
+      "level": 3,
+      "text_sha256": "d0ffbfab4d499f8faf61afec48f1c65a58030ee7f9b086ad67ce523ea1e1e48d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.shared-formats-value-record-anchor-table-mark-array-table"
+        ]
+      }
+    },
+    {
+      "id": "value-record",
+      "title": "Value record",
+      "level": 4,
+      "text_sha256": "81b848d963cdc9020525c8ffd9438e653230760ec7c6ea58ac92be886239a842",
+      "clause_count": 74,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.value-record",
+          "opentype-gpos.value-record-clause-331efe43118b",
+          "opentype-gpos.value-record-clause-7c7c19bfd524"
+        ]
+      }
+    },
+    {
+      "id": "anchor-table",
+      "title": "Anchor table",
+      "level": 4,
+      "text_sha256": "85e2b1ef967f1d408ab198d474ca4971f69699a3b1fe4e1134750a4d658a4a1f",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.anchor-table",
+          "opentype-gpos.anchor-table-clause-50d69cc8182b"
+        ]
+      }
+    },
+    {
+      "id": "mark-array-table",
+      "title": "Mark array table",
+      "level": 4,
+      "text_sha256": "27adc70aae469a60f4f47e93b21e9d52404a84650bf6814b866964514718681c",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.mark-array-table",
+          "opentype-gpos.mark-array-table-clause-6bbca87798e6"
+        ]
+      }
+    },
+    {
+      "id": "gpos-structure-examples",
+      "title": "GPOS structure examples",
+      "level": 2,
+      "text_sha256": "2788728b137f632340a007966c7e8e30efbaf3205415eb3c7bad7d89c525c971",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.gpos-structure-examples"
+        ]
+      }
+    },
+    {
+      "id": "example-1-gpos-header",
+      "title": "Example 1: GPOS Header",
+      "level": 3,
+      "text_sha256": "423b45c14b88250bf3c34fc749d1bf426cbee80942735a921a4d28141b910035",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-1-gpos-header"
+        ]
+      }
+    },
+    {
+      "id": "example-2-singleposformat1-subtable",
+      "title": "Example 2: SinglePosFormat1 subtable",
+      "level": 3,
+      "text_sha256": "a36853c7d2e04b279195db0f7543237881f14ac23927d269f660cbb9d9cc5566",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-2-singleposformat1-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-3-singleposformat2-subtable",
+      "title": "Example 3: SinglePosFormat2 subtable",
+      "level": 3,
+      "text_sha256": "2ae854287c6e85c4fe4bf036717f34cb1c1ed97742576cef0de1e84e7ae1a429",
+      "clause_count": 61,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-3-singleposformat2-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-4-pairposformat1-subtable",
+      "title": "Example 4: PairPosFormat1 subtable",
+      "level": 3,
+      "text_sha256": "749d34e043186f9b24f2d30baf642f3a3e8e4ba593297f702f74813b0d8cf151",
+      "clause_count": 81,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-4-pairposformat1-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-5-pairposformat2-subtable",
+      "title": "Example 5: PairPosFormat2 subtable",
+      "level": 3,
+      "text_sha256": "7c55eea388f9b18c1addb5361265a91923917af15b244e6398568382d3374276",
+      "clause_count": 125,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-5-pairposformat2-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-6-cursiveposformat1-subtable",
+      "title": "Example 6: CursivePosFormat1 subtable",
+      "level": 3,
+      "text_sha256": "547eecc4a2ad0eaed69adb7da71dc099fa7b52f131f2f1b87a6cb572f942d4cf",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-6-cursiveposformat1-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-7-markbaseposformat1-subtable",
+      "title": "Example 7: MarkBasePosFormat1 subtable",
+      "level": 3,
+      "text_sha256": "832ca5c66cb09668a3ef04c1c6c72ea80f7cb52a849b78fffe259265c7a02794",
+      "clause_count": 128,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-7-markbaseposformat1-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-8-markligposformat1-subtable",
+      "title": "Example 8: MarkLigPosFormat1 subtable",
+      "level": 3,
+      "text_sha256": "d723bad9a09a9d22f2e6f36e432808a84bba0065e07c31a196cd1e85ebf14b78",
+      "clause_count": 152,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-8-markligposformat1-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-9-markmarkposformat1-subtable",
+      "title": "Example 9: MarkMarkPosFormat1 subtable",
+      "level": 3,
+      "text_sha256": "105952e2885f1618df4491f30fb979f6c03a9592540143ac95936c4e13957730",
+      "clause_count": 93,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-9-markmarkposformat1-subtable"
+        ]
+      }
+    },
+    {
+      "id": "example-10-contextual-positioning-format-1",
+      "title": "Example 10: Contextual positioning format 1",
+      "level": 3,
+      "text_sha256": "f1f05ead7faafaac2a6d9146900315f71441e6e5c63f98f216cfbc46439667c1",
+      "clause_count": 61,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-10-contextual-positioning-format-1"
+        ]
+      }
+    },
+    {
+      "id": "example-11-contextual-positioning-format-2",
+      "title": "Example 11: Contextual positioning format 2",
+      "level": 3,
+      "text_sha256": "296212b80d6c344402c3faf4e5e0984f0fe7be7ad7ebf24a5c9695bb9704775c",
+      "clause_count": 228,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-11-contextual-positioning-format-2"
+        ]
+      }
+    },
+    {
+      "id": "example-12-contextual-positioning-format-3",
+      "title": "Example 12: Contextual positioning format 3",
+      "level": 3,
+      "text_sha256": "bf3c82c2386cde836e231772d57b4b35ed5c931e1aa547fa645ae126a1843210",
+      "clause_count": 133,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-12-contextual-positioning-format-3"
+        ]
+      }
+    },
+    {
+      "id": "example-13-sequencelookup-record",
+      "title": "Example 13: SequenceLookup record",
+      "level": 3,
+      "text_sha256": "9d9e00bb0ad8bcfb9f49c8f6bf5fcb1a62fea44faa2c144b3d9f85865c1c5994",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-13-sequencelookup-record"
+        ]
+      }
+    },
+    {
+      "id": "example-14-valueformat-and-valuerecord",
+      "title": "Example 14: ValueFormat and ValueRecord",
+      "level": 3,
+      "text_sha256": "2c415418f6174030d731fae6c1b668d89e0e5fb149f2dd1a9c48d39967b036c5",
+      "clause_count": 91,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-14-valueformat-and-valuerecord"
+        ]
+      }
+    },
+    {
+      "id": "example-15-anchorformat1-table",
+      "title": "Example 15: AnchorFormat1 table",
+      "level": 3,
+      "text_sha256": "72cc78fe6abe6a8a23a9cab294c9a8626404d62681384e95c638490029429b2f",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-15-anchorformat1-table"
+        ]
+      }
+    },
+    {
+      "id": "example-16-anchorformat2-table",
+      "title": "Example 16: AnchorFormat2 table",
+      "level": 3,
+      "text_sha256": "60da93a32483894c0eb2cf12898b64feea2da0e5590ff5bf6b5758416bcee0d7",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-16-anchorformat2-table"
+        ]
+      }
+    },
+    {
+      "id": "example-17-anchorformat3-table",
+      "title": "Example 17: AnchorFormat3 table",
+      "level": 3,
+      "text_sha256": "28318268db169d2c6ddaaa82a4aa6567e9bbdc5bf5f18d9bfd423b819eb81546",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-17-anchorformat3-table"
+        ]
+      }
+    },
+    {
+      "id": "example-18-markarray-table-and-markrecord",
+      "title": "Example 18: MarkArray table and MarkRecord",
+      "level": 3,
+      "text_sha256": "417f9a60b8a59917788cef5e0771cc431ad0b3e72a0fa9e7bfc746dfbcc10755",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.example-18-markarray-table-and-markrecord"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "3eb25b59e14381d11045c4430465c544fb0a9c44ecad8beae369fc9d1fea3786",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-gpos.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

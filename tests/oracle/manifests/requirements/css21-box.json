@@ -1,0 +1,1636 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-box.box-model",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "box-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 8 Box model.",
+      "locator": {
+        "section_id": "box-model",
+        "text_sha256": "7efa10f1062e10011713d2dc8180c200d583dda95af07f87cfee10764669a3e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.box-dimensions",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "box-dimensions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Box dimensions.",
+      "locator": {
+        "section_id": "box-dimensions",
+        "text_sha256": "57655a323dac71249c259bcc3356da263566da8dd90ac9bf5cad620ea5bc8d01"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.mpb-examples",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "mpb-examples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example of margins, padding, and borders.",
+      "locator": {
+        "section_id": "mpb-examples",
+        "text_sha256": "063cd0eed9fbc4de5ede15216afa3e459868e62c6dd825fe739670b9869504c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.margin-properties",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Margin properties: 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', and 'margin'.",
+      "locator": {
+        "section_id": "margin-properties",
+        "text_sha256": "c905a844143e265458e1862e7e51b4d4e90058223602922da36ae2a2919d3314"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-box.margin-properties-clause-18e2b1e6dfea",
+        "css21-box.margin-properties-clause-cca2516ebb1d",
+        "css21-box.margin-properties-clause-0a9441610e31",
+        "css21-box.margin-properties-clause-90698b476c19",
+        "css21-box.margin-properties-clause-e95634b63792",
+        "css21-box.margin-properties-clause-4bed44a8a48c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.margin-properties-clause-18e2b1e6dfea",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Margin properties: 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', and 'margin' — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-properties",
+        "clause_index": 11,
+        "clause_sha256": "18e2b1e6dfeaba496348ad07f832a6f905270a21c112f5eadf1d692dadb2d7a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.margin-properties-clause-cca2516ebb1d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Margin properties: 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', and 'margin' — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-properties",
+        "clause_index": 22,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.margin-properties-clause-0a9441610e31",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Margin properties: 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', and 'margin' — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-properties",
+        "clause_index": 24,
+        "clause_sha256": "0a9441610e311a6c36f4e42af825a74293484d39c2a27e3f9197fdb7d833dbe5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.margin-properties-clause-90698b476c19",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Margin properties: 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', and 'margin' — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-properties",
+        "clause_index": 43,
+        "clause_sha256": "90698b476c1925d1e9837efb3f8d7d4b49818b19d5ddcbed241a04ff03220353"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.margin-properties-clause-e95634b63792",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Margin properties: 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', and 'margin' — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-properties",
+        "clause_index": 47,
+        "clause_sha256": "e95634b637920931a02f6435fd4c233db355b85a876246c06c4defc63433b6a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.margin-properties-clause-4bed44a8a48c",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "margin-properties"
+      ],
+      "behaviour": "Margin properties: 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', and 'margin' — normative clause 67, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-properties",
+        "clause_index": 66,
+        "clause_sha256": "4bed44a8a48c18fe207b6e8eac631ea10b71c08b46d2e67f6d341a474b957c34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.collapsing-margins",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "collapsing-margins"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Collapsing margins.",
+      "locator": {
+        "section_id": "collapsing-margins",
+        "text_sha256": "cccfe8919c4f57125da9eace9bd804e6972c90b3aba1ed80db69240ba63426b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-box.collapsing-margins-clause-9748e541fc2d",
+        "css21-box.collapsing-margins-clause-94efef4c2167",
+        "css21-box.collapsing-margins-clause-3f95f3ee581c",
+        "css21-box.collapsing-margins-clause-394424e462dc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.collapsing-margins-clause-9748e541fc2d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "collapsing-margins"
+      ],
+      "behaviour": "Collapsing margins — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "collapsing-margins",
+        "clause_index": 7,
+        "clause_sha256": "9748e541fc2d37bd50b3cf4f1e9589b8a092f03b32090655bdfc7eeeb3e04c73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.collapsing-margins-clause-94efef4c2167",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "collapsing-margins"
+      ],
+      "behaviour": "Collapsing margins — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "collapsing-margins",
+        "clause_index": 11,
+        "clause_sha256": "94efef4c21679b8bd21b9bd060d836a8e924960ec6e1bae35b3f3b9e2a9b438b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.collapsing-margins-clause-3f95f3ee581c",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "collapsing-margins"
+      ],
+      "behaviour": "Collapsing margins — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "collapsing-margins",
+        "clause_index": 12,
+        "clause_sha256": "3f95f3ee581cd810aba088dbe4acbf2e9e6cfc02335720614f1cfc1cdb9c38d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.collapsing-margins-clause-394424e462dc",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "collapsing-margins"
+      ],
+      "behaviour": "Collapsing margins — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "collapsing-margins",
+        "clause_index": 28,
+        "clause_sha256": "394424e462dced4bf1d3b5a4e6e5bb7032db396b45e89540a619888f0f29a29e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.padding-properties",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Padding properties: 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', and 'padding'.",
+      "locator": {
+        "section_id": "padding-properties",
+        "text_sha256": "c1aa15af7145ab4b75b6fe913ced6b071bc9d771510ff25897ad8eb2c41e0bc4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-box.padding-properties-clause-218b7cb9eb77",
+        "css21-box.padding-properties-clause-cca2516ebb1d",
+        "css21-box.padding-properties-clause-2fe63b34faa7",
+        "css21-box.padding-properties-clause-f75d455d7785",
+        "css21-box.padding-properties-clause-2e7c73ba3ead"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.padding-properties-clause-218b7cb9eb77",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Padding properties: 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', and 'padding' — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-properties",
+        "clause_index": 9,
+        "clause_sha256": "218b7cb9eb7782fb7671084c9335a40c3de86afc6021d2f9df97a10b544adaf5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.padding-properties-clause-cca2516ebb1d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Padding properties: 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', and 'padding' — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-properties",
+        "clause_index": 20,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.padding-properties-clause-2fe63b34faa7",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Padding properties: 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', and 'padding' — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-properties",
+        "clause_index": 24,
+        "clause_sha256": "2fe63b34faa750c4744a9c1d97c88d707ff291c4d36d2d37139a29ac049b2f79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.padding-properties-clause-f75d455d7785",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Padding properties: 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', and 'padding' — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-properties",
+        "clause_index": 28,
+        "clause_sha256": "f75d455d7785fd76971e8b64616f8a5a8d33d31cc9b465220fd2eca4eb91c7bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.padding-properties-clause-2e7c73ba3ead",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "padding-properties"
+      ],
+      "behaviour": "Padding properties: 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', and 'padding' — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-properties",
+        "clause_index": 47,
+        "clause_sha256": "2e7c73ba3ead98bb7d615cc6d05333d46a9247a510b41d4ed87b57d0728705d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-properties",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Border properties.",
+      "locator": {
+        "section_id": "border-properties",
+        "text_sha256": "caddcce6ec5109b07e9785a7544191e517ddc32dbd12504329190862f55d6be9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.border-width-properties",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-width-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Border width: 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', and 'border-width'.",
+      "locator": {
+        "section_id": "border-width-properties",
+        "text_sha256": "fc6895927aef69f9a4ca5cf147dfe912fd41ab89cf7d96408cbf3f0dae8f144e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-box.border-width-properties-clause-eccff0c6c5f3",
+        "css21-box.border-width-properties-clause-f49dd425ee3e",
+        "css21-box.border-width-properties-clause-004c0c54aac7",
+        "css21-box.border-width-properties-clause-c749dff961ef",
+        "css21-box.border-width-properties-clause-cca2516ebb1d",
+        "css21-box.border-width-properties-clause-91a5c1b3be22",
+        "css21-box.border-width-properties-clause-7f83e996800b",
+        "css21-box.border-width-properties-clause-aa89bfae0031"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.border-width-properties-clause-eccff0c6c5f3",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-width-properties"
+      ],
+      "behaviour": "Border width: 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', and 'border-width' — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width-properties",
+        "clause_index": 8,
+        "clause_sha256": "eccff0c6c5f31bbdcdb912becbd0cedd148e84454d7756db45dc7d689917f662"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-width-properties-clause-f49dd425ee3e",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-width-properties"
+      ],
+      "behaviour": "Border width: 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', and 'border-width' — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width-properties",
+        "clause_index": 10,
+        "clause_sha256": "f49dd425ee3e2b9e2c14bfcd6a102fec0225e2838da438690b52d6a53c115ae6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-width-properties-clause-004c0c54aac7",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-width-properties"
+      ],
+      "behaviour": "Border width: 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', and 'border-width' — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width-properties",
+        "clause_index": 11,
+        "clause_sha256": "004c0c54aac79420c0b3b4e4721f547345d3bf492124a29e7ed226b1bb23ae60"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-width-properties-clause-c749dff961ef",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-width-properties"
+      ],
+      "behaviour": "Border width: 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', and 'border-width' — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width-properties",
+        "clause_index": 14,
+        "clause_sha256": "c749dff961ef741c02a38450a9f8733a7b2a6b836b8a9b2909bcc643f18af851"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-width-properties-clause-cca2516ebb1d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-width-properties"
+      ],
+      "behaviour": "Border width: 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', and 'border-width' — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width-properties",
+        "clause_index": 25,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-width-properties-clause-91a5c1b3be22",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-width-properties"
+      ],
+      "behaviour": "Border width: 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', and 'border-width' — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width-properties",
+        "clause_index": 27,
+        "clause_sha256": "91a5c1b3be22a3e9fca0c469db6e70d8509d3619ba0b475863b35c355656dd48"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-width-properties-clause-7f83e996800b",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-width-properties"
+      ],
+      "behaviour": "Border width: 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', and 'border-width' — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width-properties",
+        "clause_index": 31,
+        "clause_sha256": "7f83e996800bf2e5b4f2e0a61312c3c9eccf8099518dcc5f404b9c0b3db7d09b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-width-properties-clause-aa89bfae0031",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-width-properties"
+      ],
+      "behaviour": "Border width: 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', and 'border-width' — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width-properties",
+        "clause_index": 49,
+        "clause_sha256": "aa89bfae0031a45f87406985f595bfd2ad484155b5cf21e06b620f7f57d2d5b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-color-properties",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-color-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Border color: 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', and 'border-color'.",
+      "locator": {
+        "section_id": "border-color-properties",
+        "text_sha256": "b483ad2e623f4134607ac734ead5327f683e5618ef3dd79dd7b51dd29f48fdcf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-box.border-color-properties-clause-7f6bc0356549",
+        "css21-box.border-color-properties-clause-cca2516ebb1d",
+        "css21-box.border-color-properties-clause-58ea50d1b4a9",
+        "css21-box.border-color-properties-clause-5c6b5d933cc1",
+        "css21-box.border-color-properties-clause-0bf984e2520d",
+        "css21-box.border-color-properties-clause-216de3ce295b",
+        "css21-box.border-color-properties-clause-d8233c786e2d",
+        "css21-box.border-color-properties-clause-a87789358a74",
+        "css21-box.border-color-properties-clause-ac3e43fd643d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.border-color-properties-clause-7f6bc0356549",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-color-properties"
+      ],
+      "behaviour": "Border color: 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', and 'border-color' — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color-properties",
+        "clause_index": 3,
+        "clause_sha256": "7f6bc03565495effec0b428dc3c90e2d5b8e1a2bca071e9c84b66acf1a9398fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-color-properties-clause-cca2516ebb1d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-color-properties"
+      ],
+      "behaviour": "Border color: 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', and 'border-color' — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color-properties",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-color-properties-clause-58ea50d1b4a9",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-color-properties"
+      ],
+      "behaviour": "Border color: 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', and 'border-color' — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color-properties",
+        "clause_index": 15,
+        "clause_sha256": "58ea50d1b4a9cff70ca7a131350ef728c3605232503de472fd2f5a001c119f24"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-color-properties-clause-5c6b5d933cc1",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-color-properties"
+      ],
+      "behaviour": "Border color: 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', and 'border-color' — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color-properties",
+        "clause_index": 17,
+        "clause_sha256": "5c6b5d933cc1a606e7d59634d68047cfbb1d516fe2581e403063d21f35f3e281"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-color-properties-clause-0bf984e2520d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-color-properties"
+      ],
+      "behaviour": "Border color: 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', and 'border-color' — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color-properties",
+        "clause_index": 19,
+        "clause_sha256": "0bf984e2520d14e840e0eacbcd6c2ce6f13c54d3601c3cbf2a8c3433b6ec94e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-color-properties-clause-216de3ce295b",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-color-properties"
+      ],
+      "behaviour": "Border color: 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', and 'border-color' — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color-properties",
+        "clause_index": 32,
+        "clause_sha256": "216de3ce295b8940ed638e572916b99a5b8c644eab4fdcf64765a381e2c101f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-color-properties-clause-d8233c786e2d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-color-properties"
+      ],
+      "behaviour": "Border color: 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', and 'border-color' — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color-properties",
+        "clause_index": 37,
+        "clause_sha256": "d8233c786e2d52c86b8ac82bdb52f6f9963a267174634661a59ae9561a30d72d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-color-properties-clause-a87789358a74",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-color-properties"
+      ],
+      "behaviour": "Border color: 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', and 'border-color' — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color-properties",
+        "clause_index": 41,
+        "clause_sha256": "a87789358a74dad2138cc6532ca169a924ef9f00d1e045e02f567805e751d118"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-color-properties-clause-ac3e43fd643d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-color-properties"
+      ],
+      "behaviour": "Border color: 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', and 'border-color' — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color-properties",
+        "clause_index": 42,
+        "clause_sha256": "ac3e43fd643d99f8c2bf16bb7cf001fea85f1893b74eb3aee0d8a0feb8baac19"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-style-properties",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-style-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style'.",
+      "locator": {
+        "section_id": "border-style-properties",
+        "text_sha256": "88af47d35c12b9d8a608ba3c61d83b29113ebc5c7caa4c9a71c228bdf39e78d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-box.border-style-properties-clause-8109a58458c2",
+        "css21-box.border-style-properties-clause-f256786455ae",
+        "css21-box.border-style-properties-clause-fec10058adec",
+        "css21-box.border-style-properties-clause-4f055adcb2a5",
+        "css21-box.border-style-properties-clause-cca2516ebb1d",
+        "css21-box.border-style-properties-clause-a6d8efc81140",
+        "css21-box.border-style-properties-clause-8e726d5f886d",
+        "css21-box.border-style-properties-clause-08eb4c87a960",
+        "css21-box.border-style-properties-clause-b3eb98b72e33",
+        "css21-box.border-style-properties-clause-244c4e0f5bf3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.border-style-properties-clause-8109a58458c2",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-style-properties"
+      ],
+      "behaviour": "Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style' — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style-properties",
+        "clause_index": 2,
+        "clause_sha256": "8109a58458c29598a5709988974ad81bd9d26735d86fba4d9d7baf9f440e071a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-style-properties-clause-f256786455ae",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-style-properties"
+      ],
+      "behaviour": "Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style' — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style-properties",
+        "clause_index": 20,
+        "clause_sha256": "f256786455ae370370c00242c338331d4f5a29a1910e90448b574d5817d48f88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-style-properties-clause-fec10058adec",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-style-properties"
+      ],
+      "behaviour": "Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style' — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style-properties",
+        "clause_index": 21,
+        "clause_sha256": "fec10058adecd5cd779315e843c5af94b3bf8a59f945fbbc3e44babd55223bb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-style-properties-clause-4f055adcb2a5",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-style-properties"
+      ],
+      "behaviour": "Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style' — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style-properties",
+        "clause_index": 24,
+        "clause_sha256": "4f055adcb2a5ab9d71093eec289f76e678698fee3c3595a8ec9a49b91941270e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-style-properties-clause-cca2516ebb1d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-style-properties"
+      ],
+      "behaviour": "Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style' — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style-properties",
+        "clause_index": 35,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-style-properties-clause-a6d8efc81140",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-style-properties"
+      ],
+      "behaviour": "Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style' — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style-properties",
+        "clause_index": 36,
+        "clause_sha256": "a6d8efc8114004037604161d57d9eaa247753237ac084859e3a5269a1c57be68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-style-properties-clause-8e726d5f886d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-style-properties"
+      ],
+      "behaviour": "Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style' — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style-properties",
+        "clause_index": 40,
+        "clause_sha256": "8e726d5f886d8355cb26fc2c28158c1d9184824717e713c13cce3fa3184ad9aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-style-properties-clause-08eb4c87a960",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-style-properties"
+      ],
+      "behaviour": "Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style' — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style-properties",
+        "clause_index": 56,
+        "clause_sha256": "08eb4c87a960c05adc77d3a348f38ab849dc08b61d0a046eddbdfea5de554b29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-style-properties-clause-b3eb98b72e33",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-style-properties"
+      ],
+      "behaviour": "Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style' — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style-properties",
+        "clause_index": 57,
+        "clause_sha256": "b3eb98b72e33306216a8c171cf751e264e60c887faebf19be5e934c8bca1f2c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-style-properties-clause-244c4e0f5bf3",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-style-properties"
+      ],
+      "behaviour": "Border style: 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', and 'border-style' — normative clause 59, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style-properties",
+        "clause_index": 58,
+        "clause_sha256": "244c4e0f5bf3af8eba9366046136795c8eac380972322ea1de7b1d488219693c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-shorthand-properties",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-shorthand-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Border shorthand properties: 'border-top', 'border-right', 'border-bottom', 'border-left', and 'border'.",
+      "locator": {
+        "section_id": "border-shorthand-properties",
+        "text_sha256": "af06c9a1a26c67f97b237b3ef02aab5c6d671b98b7c983958449c306585b51fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-box.border-shorthand-properties-clause-0778dd9f3c10",
+        "css21-box.border-shorthand-properties-clause-cca2516ebb1d",
+        "css21-box.border-shorthand-properties-clause-21c855a18ef2",
+        "css21-box.border-shorthand-properties-clause-797cf9df7409",
+        "css21-box.border-shorthand-properties-clause-ed20d5628b0d",
+        "css21-box.border-shorthand-properties-clause-dfbd2097979d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.border-shorthand-properties-clause-0778dd9f3c10",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-shorthand-properties"
+      ],
+      "behaviour": "Border shorthand properties: 'border-top', 'border-right', 'border-bottom', 'border-left', and 'border' — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-shorthand-properties",
+        "clause_index": 2,
+        "clause_sha256": "0778dd9f3c1044af989005705d333345a36f65775511b0630aa6f83f70be2c11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-shorthand-properties-clause-cca2516ebb1d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-shorthand-properties"
+      ],
+      "behaviour": "Border shorthand properties: 'border-top', 'border-right', 'border-bottom', 'border-left', and 'border' — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-shorthand-properties",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-shorthand-properties-clause-21c855a18ef2",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-shorthand-properties"
+      ],
+      "behaviour": "Border shorthand properties: 'border-top', 'border-right', 'border-bottom', 'border-left', and 'border' — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-shorthand-properties",
+        "clause_index": 19,
+        "clause_sha256": "21c855a18ef215901c1d356dcb694024a197ee78442a5c4a5bd35eb19ba7aa35"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-shorthand-properties-clause-797cf9df7409",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-shorthand-properties"
+      ],
+      "behaviour": "Border shorthand properties: 'border-top', 'border-right', 'border-bottom', 'border-left', and 'border' — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-shorthand-properties",
+        "clause_index": 35,
+        "clause_sha256": "797cf9df74097d95ad3ec5df67af1db1adb23479718a4d83b6f85fac54ae732a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-shorthand-properties-clause-ed20d5628b0d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-shorthand-properties"
+      ],
+      "behaviour": "Border shorthand properties: 'border-top', 'border-right', 'border-bottom', 'border-left', and 'border' — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-shorthand-properties",
+        "clause_index": 44,
+        "clause_sha256": "ed20d5628b0d0adc4e07dd7d938ed2b909048cef6468922a23c51a9c5292a47b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.border-shorthand-properties-clause-dfbd2097979d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "border-shorthand-properties"
+      ],
+      "behaviour": "Border shorthand properties: 'border-top', 'border-right', 'border-bottom', 'border-left', and 'border' — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-shorthand-properties",
+        "clause_index": 45,
+        "clause_sha256": "dfbd2097979d9f180c76e58faaa4285308bc8de3d1581fede6e399ac1f15299b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-box.bidi-box-model",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "bidi-box-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The box model for inline elements in bidirectional context.",
+      "locator": {
+        "section_id": "bidi-box-model",
+        "text_sha256": "b953dc0356be36d966827aff89e6d43650cbd7867df29d8d1f9f17ff95c2d511"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-box.bidi-box-model-clause-91f91f9b597d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-box.bidi-box-model-clause-91f91f9b597d",
+      "family": "css21-box",
+      "source_id": "css21-box",
+      "sections": [
+        "bidi-box-model"
+      ],
+      "behaviour": "The box model for inline elements in bidirectional context — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-box-model",
+        "clause_index": 0,
+        "clause_sha256": "91f91f9b597dd71be0642b1a9f75722f0f65c1ec4b856c2a91747d28012ffc07"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    }
+  ]
+}

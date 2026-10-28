@@ -1,0 +1,1169 @@
+{
+  "schema_version": 1,
+  "source_id": "css-backgrounds-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Backgrounds and Borders Module Level 3",
+      "level": 1,
+      "text_sha256": "93c79eac0476f25c8527f6d741f2001f703ff975f138a079c36f0d646dda3c80",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "c6da745f1dededce5544ec503c37fa30645468d424388368e2f07fe1d05441f1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "01754ade2e885cc8ca39caced2568f9e6eff9e43004d2ce7559055585c6e2e08",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "cebcffccd6ccf9314df54db4cf0014661c52c4578bfd62d97fd4692ae3de3aaf",
+      "clause_count": 77,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "61288e0f7c04c1694a603036ca5a9a449fa6ce9f3ad3d08955cccfcc1ac562d0",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.introduction"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "7de99a15449434e2c50521ceaa78de33697133355e4b448e1230fe55b0caec2a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.placement",
+          "css-backgrounds-3.placement-clause-743ae330ac1f"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "6a8c697e2e3e2b223e8f880f9c8524e873db319131cf7bb23b69c6ad7ae11130",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.values"
+        ]
+      }
+    },
+    {
+      "id": "backgrounds",
+      "title": "2. Backgrounds",
+      "level": 2,
+      "text_sha256": "760c783f7b14804279809bc1035015f33ed7f877b0449295cd3cc6b1d5d2d16f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.backgrounds"
+        ]
+      }
+    },
+    {
+      "id": "layering",
+      "title": "2.1. Layering Multiple Background Images",
+      "level": 3,
+      "text_sha256": "612f8d3dbf6d60b4110d463dd8ca81e5b48d9646f94424efeb9714928f784406",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.layering",
+          "css-backgrounds-3.layering-clause-d8ad6888d7d8"
+        ]
+      }
+    },
+    {
+      "id": "background-color",
+      "title": "2.2. Base Color: the background-color property",
+      "level": 3,
+      "text_sha256": "da9c2d36cdf70151e4f5b53fccd38ffa5a5c4ffc7474de261da8e0aa88f4997f",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.background-color",
+          "css-backgrounds-3.background-color-clause-cca2516ebb1d",
+          "css-backgrounds-3.background-color-clause-dee972826276",
+          "css-backgrounds-3.background-color-clause-61cfe0fe6729"
+        ]
+      }
+    },
+    {
+      "id": "background-image",
+      "title": "2.3. Image Sources: the background-image property",
+      "level": 3,
+      "text_sha256": "6ccfac4d89c92b40b0f47184b3e6bed1c45f1c054ac9ec62535c935a7b249677",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.background-image",
+          "css-backgrounds-3.background-image-clause-cca2516ebb1d",
+          "css-backgrounds-3.background-image-clause-1a8d2092da1b",
+          "css-backgrounds-3.background-image-clause-3576d8200f7a",
+          "css-backgrounds-3.background-image-clause-755f70c24191",
+          "css-backgrounds-3.background-image-clause-9518f7bfb303"
+        ]
+      }
+    },
+    {
+      "id": "background-repeat",
+      "title": "2.4. Tiling Images: the background-repeat property",
+      "level": 3,
+      "text_sha256": "ba0ecb6ee919fcba2185f47b74df032cad5e13b248a088a1ca9422ededf73600",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.background-repeat",
+          "css-backgrounds-3.background-repeat-clause-cca2516ebb1d",
+          "css-backgrounds-3.background-repeat-clause-f94a6b4a6adc",
+          "css-backgrounds-3.background-repeat-clause-c507e2cbbd52"
+        ]
+      }
+    },
+    {
+      "id": "background-attachment",
+      "title": "2.5. Affixing Images: the background-attachment property",
+      "level": 3,
+      "text_sha256": "6b8b464afcdbb248e1437117c6233311c25725435ec7e9245e0a3ad2b372086a",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.background-attachment",
+          "css-backgrounds-3.background-attachment-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "background-position",
+      "title": "2.6. Positioning Images: the background-position property",
+      "level": 3,
+      "text_sha256": "fd6f13672ff8a2d0ad9dd71fd07207050992ecd37f4bf4979db9841d61fdef10",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.background-position",
+          "css-backgrounds-3.background-position-clause-cca2516ebb1d",
+          "css-backgrounds-3.background-position-clause-6d0b031eb636",
+          "css-backgrounds-3.background-position-clause-281d35545631",
+          "css-backgrounds-3.background-position-clause-7d2e444c6cd5"
+        ]
+      }
+    },
+    {
+      "id": "bg-position-serialization",
+      "title": "2.6.1. Serialization of background-position values",
+      "level": 4,
+      "text_sha256": "d1181616c5f87d72bb78c59bdee05a963607d041ad551aa2f645b119f9b242ed",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.bg-position-serialization",
+          "css-backgrounds-3.bg-position-serialization-clause-d1181616c5f8"
+        ]
+      }
+    },
+    {
+      "id": "background-clip",
+      "title": "2.7. Painting Area: the background-clip property",
+      "level": 3,
+      "text_sha256": "f73d196a4f2c9a5a196e4eebf4bf42c56705f09a973623ef26727d67cae79142",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.background-clip",
+          "css-backgrounds-3.background-clip-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "background-origin",
+      "title": "2.8. Positioning Area: the background-origin property",
+      "level": 3,
+      "text_sha256": "b4f8737119cb8ea04094958eb2a65a36320c2173be02551b3c487996e7ca8883",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.background-origin",
+          "css-backgrounds-3.background-origin-clause-cca2516ebb1d",
+          "css-backgrounds-3.background-origin-clause-44b62515795e",
+          "css-backgrounds-3.background-origin-clause-b15e6c97fc76",
+          "css-backgrounds-3.background-origin-clause-e9d0e7f002e4"
+        ]
+      }
+    },
+    {
+      "id": "background-size",
+      "title": "2.9. Sizing Images: the background-size property",
+      "level": 3,
+      "text_sha256": "9effd823a057eb2ba7d7270eb73d8a10ab48ef12933fe5c2117756b62782fa30",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.background-size",
+          "css-backgrounds-3.background-size-clause-cca2516ebb1d",
+          "css-backgrounds-3.background-size-clause-569cff567c68",
+          "css-backgrounds-3.background-size-clause-c5a3c67d45c3",
+          "css-backgrounds-3.background-size-clause-fa274dcf6ce8",
+          "css-backgrounds-3.background-size-clause-16dbbce5ecef",
+          "css-backgrounds-3.background-size-clause-a1d1f1a7a0c6",
+          "css-backgrounds-3.background-size-clause-18b5d89ece74"
+        ]
+      }
+    },
+    {
+      "id": "background",
+      "title": "2.10. Backgrounds Shorthand: the background property",
+      "level": 3,
+      "text_sha256": "06fb96d563190269bde00d1f1c0cb86def9af2579bae20f3649ec7962cc4a09b",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.background",
+          "css-backgrounds-3.background-clause-cca2516ebb1d",
+          "css-backgrounds-3.background-clause-830336cadf3e",
+          "css-backgrounds-3.background-clause-25b8abec71a2"
+        ]
+      }
+    },
+    {
+      "id": "special-backgrounds",
+      "title": "2.11. Backgrounds of Special Elements",
+      "level": 3,
+      "text_sha256": "69c52c0594cf4fea7cc32bc55cd648d588f85c864da7cfb07d731dbf50421588",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.special-backgrounds"
+        ]
+      }
+    },
+    {
+      "id": "root-background",
+      "title": "2.11.1. The Canvas Background and the Root Element",
+      "level": 4,
+      "text_sha256": "f6b97ac1190deab86ed42d4571b7c049d9c4b0b352a8d2a254d97d4fc2b6b6ed",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.root-background"
+        ]
+      }
+    },
+    {
+      "id": "body-background",
+      "title": "2.11.2. The Canvas Background and the HTML <body> Element",
+      "level": 4,
+      "text_sha256": "4819c6cd22e89ca31a5fb6a9bbaff20fdf6040fcec5e4c7b74209dfffd4b2d2d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.body-background",
+          "css-backgrounds-3.body-background-clause-a4d1fdadc89d"
+        ]
+      }
+    },
+    {
+      "id": "first-line-background",
+      "title": "2.11.3. The ::first-line Pseudo-element‘s Background",
+      "level": 4,
+      "text_sha256": "cfb7435db36f4fb52edf15f3120e297dbfcfb4f015688805a36f016957a35364",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.first-line-background"
+        ]
+      }
+    },
+    {
+      "id": "borders",
+      "title": "3. Borders",
+      "level": 2,
+      "text_sha256": "875aace0a5fcb1be72506bb09b880de23bab81c0d526451390a9b7219ddf5405",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.borders"
+        ]
+      }
+    },
+    {
+      "id": "border-color",
+      "title": "3.1. Line Colors: the border-color properties",
+      "level": 3,
+      "text_sha256": "c9229f029b98560aac3cb65372e8e770af8e4bf3a38fe79ba5f1d19305fd1395",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-color",
+          "css-backgrounds-3.border-color-clause-cca2516ebb1d",
+          "css-backgrounds-3.border-color-clause-dee972826276",
+          "css-backgrounds-3.border-color-clause-674d5fa645b0"
+        ]
+      }
+    },
+    {
+      "id": "border-style",
+      "title": "3.2. Line Patterns: the border-style properties",
+      "level": 3,
+      "text_sha256": "557e2d5e2bd8bbddf42a1448d257818eb1873036b6131b206fc2dca1759ddbdc",
+      "clause_count": 68,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-style",
+          "css-backgrounds-3.border-style-clause-cca2516ebb1d",
+          "css-backgrounds-3.border-style-clause-c8c6dc71f503",
+          "css-backgrounds-3.border-style-clause-c06a53303cd5",
+          "css-backgrounds-3.border-style-clause-c576b195a886",
+          "css-backgrounds-3.border-style-clause-60719b8b32f9",
+          "css-backgrounds-3.border-style-clause-3c82f856fa16",
+          "css-backgrounds-3.border-style-clause-afb496565279"
+        ]
+      }
+    },
+    {
+      "id": "border-width",
+      "title": "3.3. Line Thickness: the border-width properties",
+      "level": 3,
+      "text_sha256": "5714c0dff1aa3d0683658419528e2e020a9e26d63f518a46afa02c803f1d4329",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-width",
+          "css-backgrounds-3.border-width-clause-cca2516ebb1d",
+          "css-backgrounds-3.border-width-clause-674d5fa645b0",
+          "css-backgrounds-3.border-width-clause-a17fbafaca42",
+          "css-backgrounds-3.border-width-clause-9a9f0d2fcf15"
+        ]
+      }
+    },
+    {
+      "id": "border-shorthands",
+      "title": "3.4. Border Shorthand Properties",
+      "level": 3,
+      "text_sha256": "ee38428c9afbbfa47f14fd11fc62b229c7c270049538f2a09d3ff2f02080586d",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-shorthands",
+          "css-backgrounds-3.border-shorthands-clause-cca2516ebb1d",
+          "css-backgrounds-3.border-shorthands-clause-e5db338f94c5",
+          "css-backgrounds-3.border-shorthands-clause-876fe498a4a6",
+          "css-backgrounds-3.border-shorthands-clause-85fb4a06dfd6"
+        ]
+      }
+    },
+    {
+      "id": "corners",
+      "title": "4. Rounded Corners",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.corners"
+        ]
+      }
+    },
+    {
+      "id": "border-radius",
+      "title": "4.1. Curve Radii: the border-radius properties",
+      "level": 3,
+      "text_sha256": "17d9b1e2ce50a4dcba09ce0820df80cbfcacc7d77bd41b16351330e3f4dc4c7f",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-radius",
+          "css-backgrounds-3.border-radius-clause-cca2516ebb1d",
+          "css-backgrounds-3.border-radius-clause-961589e5bfa3",
+          "css-backgrounds-3.border-radius-clause-674d5fa645b0",
+          "css-backgrounds-3.border-radius-clause-da27056ed9d2",
+          "css-backgrounds-3.border-radius-clause-9e8e9678be08"
+        ]
+      }
+    },
+    {
+      "id": "corner-shaping",
+      "title": "4.2. Corner Shaping",
+      "level": 3,
+      "text_sha256": "f0bfbaa5c1c655916c4ab18c716e49f178a567a47d649fab1625cac104389c69",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.corner-shaping"
+        ]
+      }
+    },
+    {
+      "id": "corner-clipping",
+      "title": "4.3. Corner Clipping",
+      "level": 3,
+      "text_sha256": "06c12e7b8b9d5cc06531eb1669769efb9b03861f44eb9a90993e9876682c8f24",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.corner-clipping",
+          "css-backgrounds-3.corner-clipping-clause-26c602a6d797",
+          "css-backgrounds-3.corner-clipping-clause-5f871ee9a3e0"
+        ]
+      }
+    },
+    {
+      "id": "corner-transitions",
+      "title": "4.4. Color and Style Transitions",
+      "level": 3,
+      "text_sha256": "0d30faa15d4cfcc5ad5d9d338b3060746fbbd6d50553e3dcc70715c1de6fcc66",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.corner-transitions",
+          "css-backgrounds-3.corner-transitions-clause-fdb31bc28a00"
+        ]
+      }
+    },
+    {
+      "id": "corner-overlap",
+      "title": "4.5. Overlapping Curves",
+      "level": 3,
+      "text_sha256": "4f9b9fc3524fbae3af1ded19df829b99e93af2e4f79a7634e9da57d0ee2764e1",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.corner-overlap",
+          "css-backgrounds-3.corner-overlap-clause-ebc60f3cde44",
+          "css-backgrounds-3.corner-overlap-clause-8db458735369"
+        ]
+      }
+    },
+    {
+      "id": "border-radius-tables",
+      "title": "4.6. Effect on Tables",
+      "level": 3,
+      "text_sha256": "15eb4349e7f1804c9771bd6651ef18ca54ba910eb7da3550c3b3f8e3d681bb0c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-radius-tables"
+        ]
+      }
+    },
+    {
+      "id": "border-images",
+      "title": "5. Border Images",
+      "level": 2,
+      "text_sha256": "f946455427667f52f8421b7491d7cd640dafbb3cee104246b4837fc8e0c15998",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-images",
+          "css-backgrounds-3.border-images-clause-2a1baec3bdae"
+        ]
+      }
+    },
+    {
+      "id": "border-image-source",
+      "title": "5.1. Image Source: the border-image-source property",
+      "level": 3,
+      "text_sha256": "533b198f838e809b39a112bdebd83527cab33c43e3d45e6fa0a2f671d6089047",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-image-source",
+          "css-backgrounds-3.border-image-source-clause-cca2516ebb1d",
+          "css-backgrounds-3.border-image-source-clause-e97bb8a9330d"
+        ]
+      }
+    },
+    {
+      "id": "border-image-slice",
+      "title": "5.2. Image Slicing: the border-image-slice property",
+      "level": 3,
+      "text_sha256": "20bbe4fe74a816d65b5f7c8d0bb80343e391bb984184453302b82b03a792b4f4",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-image-slice",
+          "css-backgrounds-3.border-image-slice-clause-cca2516ebb1d",
+          "css-backgrounds-3.border-image-slice-clause-37e2e6b0dffb",
+          "css-backgrounds-3.border-image-slice-clause-7a6033564f79",
+          "css-backgrounds-3.border-image-slice-clause-e0dfe5e5cbf4",
+          "css-backgrounds-3.border-image-slice-clause-22d5156337d3"
+        ]
+      }
+    },
+    {
+      "id": "border-image-width",
+      "title": "5.3. Drawing Areas: the border-image-width property",
+      "level": 3,
+      "text_sha256": "893909751bfe88fba73d90ea7e209d026e593324a2aa42c160306e4afb274439",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-image-width",
+          "css-backgrounds-3.border-image-width-clause-cca2516ebb1d",
+          "css-backgrounds-3.border-image-width-clause-d55a2cfbe976",
+          "css-backgrounds-3.border-image-width-clause-6d171549eb5d",
+          "css-backgrounds-3.border-image-width-clause-75c32b3428a2",
+          "css-backgrounds-3.border-image-width-clause-d7a6a34c66b7",
+          "css-backgrounds-3.border-image-width-clause-f3e77536e8fb"
+        ]
+      }
+    },
+    {
+      "id": "border-image-outset",
+      "title": "5.4. Edge Overhang: the border-image-outset property",
+      "level": 3,
+      "text_sha256": "21442d697ae5734a15bb46a7b8ffafad6a3cac114b413fe577ca6c831e28539d",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-image-outset",
+          "css-backgrounds-3.border-image-outset-clause-cca2516ebb1d",
+          "css-backgrounds-3.border-image-outset-clause-fa274dcf6ce8",
+          "css-backgrounds-3.border-image-outset-clause-0878f227347c",
+          "css-backgrounds-3.border-image-outset-clause-9f41dafc7747"
+        ]
+      }
+    },
+    {
+      "id": "border-image-repeat",
+      "title": "5.5. Image Tiling: the border-image-repeat property",
+      "level": 3,
+      "text_sha256": "0696c45b9401397446268cfa062812fb83764148bd7ed4d0c47d6c9d719594a4",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-image-repeat",
+          "css-backgrounds-3.border-image-repeat-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "border-image-process",
+      "title": "5.6. Drawing the Border Image",
+      "level": 3,
+      "text_sha256": "b680e746b7f9918c95cec9a509babd5483ba679735b8f777e526d7578737a490",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-image-process"
+        ]
+      }
+    },
+    {
+      "id": "border-image",
+      "title": "5.7. Border Image Shorthand: the border-image property",
+      "level": 3,
+      "text_sha256": "6579791108be02d4a2d24a2fc42909a453306913cecf7040e8061c56df10e625",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-image",
+          "css-backgrounds-3.border-image-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "border-image-tables",
+      "title": "5.8. Effect on Tables",
+      "level": 3,
+      "text_sha256": "13077f2ecfdf6c31c1a57da48168d697c50e46b316decf928591101cf3dff64a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.border-image-tables",
+          "css-backgrounds-3.border-image-tables-clause-c909e0aeb799"
+        ]
+      }
+    },
+    {
+      "id": "misc",
+      "title": "6. Miscellaneous Effects",
+      "level": 2,
+      "text_sha256": "f168eafc06c3e5ac8621d078e32b630cd9151ae3b9c50fe665f7deb92d1b424f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.misc"
+        ]
+      }
+    },
+    {
+      "id": "box-shadow",
+      "title": "6.1. Drop Shadows: the box-shadow property",
+      "level": 3,
+      "text_sha256": "3ccfa6bed7818d4d7b8085e460c28170e10586ba26dcba19576edf81e77bfcde",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.box-shadow",
+          "css-backgrounds-3.box-shadow-clause-cca2516ebb1d",
+          "css-backgrounds-3.box-shadow-clause-fca5391efa28",
+          "css-backgrounds-3.box-shadow-clause-5baee16d2dc3",
+          "css-backgrounds-3.box-shadow-clause-768c21e27c3e"
+        ]
+      }
+    },
+    {
+      "id": "shadow-shape",
+      "title": "6.1.1. Shadow Shape, Spread, and Knockout",
+      "level": 4,
+      "text_sha256": "5306525a5216802fba251fa0f2c72ffb3c7ce3582be3b78f2f838e4664077207",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.shadow-shape"
+        ]
+      }
+    },
+    {
+      "id": "shadow-blur",
+      "title": "6.1.2. Blurring Shadow Edges",
+      "level": 4,
+      "text_sha256": "cf378d865f0cc5cd627c5723fff74570d7edf241a1255ec06fdcaca778549f99",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.shadow-blur",
+          "css-backgrounds-3.shadow-blur-clause-7c72a10c1885"
+        ]
+      }
+    },
+    {
+      "id": "shadow-layers",
+      "title": "6.1.3. Layering, Layout, and Other Details",
+      "level": 4,
+      "text_sha256": "af12f8839b0ee5c970cbb3028a5af9cef457db9b66aee77b3cd1c7bcc8968e2a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.shadow-layers"
+        ]
+      }
+    },
+    {
+      "id": "levels",
+      "title": "7. Levels",
+      "level": 2,
+      "text_sha256": "8cbdb880bc206e48ddd07e0128fbb4b8dca6f88a400e6ed115404d673b33c4b2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.levels"
+        ]
+      }
+    },
+    {
+      "id": "level-1",
+      "title": "7.1. Level 1",
+      "level": 3,
+      "text_sha256": "8edd50b053ad4a7d89e414f068fd5d36298f16bcf16657ccf58190351fa4be06",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.level-1"
+        ]
+      }
+    },
+    {
+      "id": "level-2",
+      "title": "7.2. Level 2",
+      "level": 3,
+      "text_sha256": "4503f3444d620b0a4466db1db14359406095e7084aa2f9e81585260a0b176b6b",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.level-2"
+        ]
+      }
+    },
+    {
+      "id": "level-3",
+      "title": "7.3. Level 3",
+      "level": 3,
+      "text_sha256": "3dc9e718d75c3c2107940016d42932f244f6b2abe05c39c2dc4279fdf28a22bf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.level-3"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "8. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-2023-02",
+      "title": "8.1. Changes since the 14 February 2023 Candidate Recommendation Snapshot",
+      "level": 3,
+      "text_sha256": "78705d5f4aefe8ac4b88606aa4bd49115a0c329612f34739de0a10752b6cb410",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.changes-2023-02"
+        ]
+      }
+    },
+    {
+      "id": "changes-2020-12",
+      "title": "8.2. Changes since the 22 December 2020 Candidate Recommendation Snapshot",
+      "level": 3,
+      "text_sha256": "80216b99f77a44e8cce93f7351a880d5bcff89fa646de4460b144d50c0cd7b04",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.changes-2020-12"
+        ]
+      }
+    },
+    {
+      "id": "changes-2017-10",
+      "title": "8.3. Changes since the 17 October 2017 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "e85b6c1aab1886b2f11dd5dfb6893449fac486d9a7e77419cf144fb7db9b3423",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.changes-2017-10"
+        ]
+      }
+    },
+    {
+      "id": "changes-2014-09",
+      "title": "8.4. Changes since the 9 September 2014 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "f3bb6fd1a625ef091f561153a00f4dc4a7aee3f263f04006d1cfbf942fed538a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.changes-2014-09"
+        ]
+      }
+    },
+    {
+      "id": "changes-2014-02",
+      "title": "8.5. Changes since the 4 February 2014 Last Call Working Draft",
+      "level": 3,
+      "text_sha256": "22a74cdfa9f44733265417003ee3de59f2327cd1035f5e705952368b3d66f8a6",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.changes-2014-02"
+        ]
+      }
+    },
+    {
+      "id": "changes-2012-07",
+      "title": "8.6. Changes since the 24 July 2012 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "59e4db3da802d041c73ab46d9221a46891840a42bd05f6c826712c68b8145e79",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.changes-2012-07"
+        ]
+      }
+    },
+    {
+      "id": "changes-2012-04",
+      "title": "8.7. Changes since the 17 April 2012 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "12a21c2db16087c2077146e2f786c17b22ba19389c5363fb34b16bd191dfae97",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.changes-2012-04"
+        ]
+      }
+    },
+    {
+      "id": "changes-2012LC",
+      "title": "8.8. Changes since the 14 February 2012 “Last Call” Working Draft",
+      "level": 3,
+      "text_sha256": "15e54e0e6be190fad5db83a6c1322ab0a120c84c44e908d001d3381950ff14a2",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.changes-2012lc"
+        ]
+      }
+    },
+    {
+      "id": "changes-2011",
+      "title": "8.9. Changes Since the 15 February 2011 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "abfda81495822b304c74913e0aa403a6dddce18fc6f0904018989eca3da4dd2e",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.changes-2011"
+        ]
+      }
+    },
+    {
+      "id": "changes-2009",
+      "title": "8.10. Changes Since the 17 December 2009 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "0d77800046f87359bbd80cf0a09c0045bef7ee932c36a9bebba1bc75e81c897d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.changes-2009"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "9. Acknowledgments",
+      "level": 2,
+      "text_sha256": "4046b861f3acab2af67bf4c388f174f0647ee79f4a543319c602cf037338ac03",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "10. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "85b0bbcbc137ec4d540097af52b8b2bbdcc04575c1aed6ca81a878d6150d0b32",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "11. Security Considerations",
+      "level": 2,
+      "text_sha256": "7289157c42346d0cf51863e097d634af796b3f54eefe0fd72f7d5fb35b2fd504",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.security"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.w3c-conventions",
+          "css-backgrounds-3.w3c-conventions-clause-5c98c879f070",
+          "css-backgrounds-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.w3c-conformance-classes",
+          "css-backgrounds-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-backgrounds-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.w3c-partial",
+          "css-backgrounds-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.w3c-testing",
+          "css-backgrounds-3.w3c-testing-clause-1e0fff369221",
+          "css-backgrounds-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.w3c-cr-exit-criteria",
+          "css-backgrounds-3.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-backgrounds-3.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-backgrounds-3.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-backgrounds-3.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-backgrounds-3.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "854b04e9670cfef7130b93da39c3843a4be632ade32c5ec17cb0cef457917722",
+      "clause_count": 144,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "ee5c9b15345506ba26461d183b676678f617793d16c64cc905244329f315ca5f",
+      "clause_count": 100,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "5eb49caf34036da45f04a8e74ea910c9d35636cb31692ef75d6a545b502cb332",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "e755474ece677b74f92b7d6bebcaab2b0f612784b5ecee7a81a25afa2541eef3",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "a51c7a882b15c40fcc6488b9028f5fa976232100d5ef27550a1705eddd0414ce",
+      "clause_count": 395,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-backgrounds-3.property-index",
+          "css-backgrounds-3.property-index-clause-674d5fa645b0",
+          "css-backgrounds-3.property-index-clause-dee972826276",
+          "css-backgrounds-3.property-index-clause-6d0b031eb636",
+          "css-backgrounds-3.property-index-clause-569cff567c68",
+          "css-backgrounds-3.property-index-clause-961589e5bfa3",
+          "css-backgrounds-3.property-index-clause-e97bb8a9330d",
+          "css-backgrounds-3.property-index-clause-d55a2cfbe976",
+          "css-backgrounds-3.property-index-clause-d76e13e1e81f",
+          "css-backgrounds-3.property-index-clause-fca5391efa28"
+        ]
+      }
+    }
+  ]
+}

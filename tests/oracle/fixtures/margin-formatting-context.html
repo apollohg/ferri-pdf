@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>margin-formatting-context</title><style>@font-face { font-family: Spike; src: url('../assets/DejaVuSans.ttf'); }
+@page { size: 360pt 480pt; margin: 36pt; }
+html, body { margin: 0; padding: 0; }
+body { font-family: Spike; font-size: 12pt; line-height: 18pt; }
+p { margin: 0 0 12pt; widows: 2; orphans: 2; hyphens: none; }
+.new-page { break-before: page; }
+.keep { break-inside: avoid; }
+@page{size:360pt 160pt;margin:36pt}.fill{height:80pt;break-inside:avoid;background:#ddd}.f{break-before:page}.m{margin-top:20pt}table{border-collapse:collapse}td{padding:0;background:#fea}.hidden{overflow:hidden;background:#9cf}.flex{display:flex;background:#cfc}</style></head><body><div class="fill"></div><table><tr><td><div class="m">Cell after an unforced break</div></td></tr></table><table class="f"><tr><td><div class="m">Cell after a forced break</div></td></tr></table><div class="fill f"></div><div class="hidden"><div class="m">Overflow hidden</div></div><div class="fill f"></div><div class="flex"><div><div class="m">Flex item</div></div></div><div class="fill f"></div><div><div class="m">Plain block truncates</div></div><div class="fill f"></div><table class="m"><tr><td>Table margin truncates</td></tr></table></body></html>

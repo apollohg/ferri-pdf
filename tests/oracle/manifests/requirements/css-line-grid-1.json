@@ -1,0 +1,1227 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-line-grid-1.subtitle",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "subtitle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Working Draft, 16 September 2014.",
+      "locator": {
+        "section_id": "subtitle",
+        "text_sha256": "2bb7c09b7283ad124d35e4e701e4df380e1b03d9eb42da118094386154112e3f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.intro",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 1 Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.placement",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module Interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "36a489b73a88e12f12743c43aa75ff7f1da2818b2837b18bfe0edc4de716dc2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.values",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Values.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "b20c1385d47b3a9494cb554f3acb64ceb4c27b80a397b2974493262ecaf89f60"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-line-grid-1.values-clause-8e3334e16f0e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.values-clause-8e3334e16f0e",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "values",
+        "clause_index": 1,
+        "clause_sha256": "8e3334e16f0e7ab4c54b5d6fe50ca468fa28f7eecb5866f4ddbabfd8476cd0da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.line-grid",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "line-grid"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2 Defining a Line Grid: the line-grid property.",
+      "locator": {
+        "section_id": "line-grid",
+        "text_sha256": "974f49ab0bb7c241727d2e46b8cc17ff6479a2e928182dbad43640ab567aea5c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-line-grid-1.line-grid-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.line-grid-clause-cca2516ebb1d",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "line-grid"
+      ],
+      "behaviour": "2 Defining a Line Grid: the line-grid property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-grid",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.grid-snapping",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "grid-snapping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 3 Snapping to a Grid.",
+      "locator": {
+        "section_id": "grid-snapping",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.line-snap",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "line-snap"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Snapping Line Boxes: the line-snap property.",
+      "locator": {
+        "section_id": "line-snap",
+        "text_sha256": "b93419e58483e5e3cc35bfe7c00405d0308dbd9d5e8923ec94ec50d8176bb80b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-line-grid-1.line-snap-clause-cca2516ebb1d",
+        "css-line-grid-1.line-snap-clause-6e4785d8081b",
+        "css-line-grid-1.line-snap-clause-5ab51372f23a",
+        "css-line-grid-1.line-snap-clause-19890eb420f3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.line-snap-clause-cca2516ebb1d",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "line-snap"
+      ],
+      "behaviour": "Snapping Line Boxes: the line-snap property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-snap",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.line-snap-clause-6e4785d8081b",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "line-snap"
+      ],
+      "behaviour": "Snapping Line Boxes: the line-snap property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-snap",
+        "clause_index": 25,
+        "clause_sha256": "6e4785d8081b750baa644c364027eee5f248a8f52d285303f0768cc39156152c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.line-snap-clause-5ab51372f23a",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "line-snap"
+      ],
+      "behaviour": "Snapping Line Boxes: the line-snap property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-snap",
+        "clause_index": 35,
+        "clause_sha256": "5ab51372f23ae87d3d91f8f4ec998adfce2d63bf70e46d8a09ca53db71663afc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.line-snap-clause-19890eb420f3",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "line-snap"
+      ],
+      "behaviour": "Snapping Line Boxes: the line-snap property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-snap",
+        "clause_index": 36,
+        "clause_sha256": "19890eb420f3d4cd11b71691dac7eb83a711c7a06ac1c2d19e6b090633cdddc4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.box-snap",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "box-snap"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Snapping Block Boxes: the box-snap property.",
+      "locator": {
+        "section_id": "box-snap",
+        "text_sha256": "347e196a725feaf03737c5c517b1fc7687a4c13c69179fb0fa150df6300a5868"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-line-grid-1.box-snap-clause-cca2516ebb1d",
+        "css-line-grid-1.box-snap-clause-d00f57b202ef",
+        "css-line-grid-1.box-snap-clause-455e924e09dd",
+        "css-line-grid-1.box-snap-clause-46be7faeb542",
+        "css-line-grid-1.box-snap-clause-4508d932a69b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.box-snap-clause-cca2516ebb1d",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "box-snap"
+      ],
+      "behaviour": "Snapping Block Boxes: the box-snap property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-snap",
+        "clause_index": 15,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.box-snap-clause-d00f57b202ef",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "box-snap"
+      ],
+      "behaviour": "Snapping Block Boxes: the box-snap property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-snap",
+        "clause_index": 38,
+        "clause_sha256": "d00f57b202ef026eef9f3cbd54f1ba1824b08829c3257921448bf5359eb54576"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.box-snap-clause-455e924e09dd",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "box-snap"
+      ],
+      "behaviour": "Snapping Block Boxes: the box-snap property — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-snap",
+        "clause_index": 39,
+        "clause_sha256": "455e924e09dd8a7a16eb7d07402e83a504a7a5acfce5c4df3fbeabbaf8326ab0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.box-snap-clause-46be7faeb542",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "box-snap"
+      ],
+      "behaviour": "Snapping Block Boxes: the box-snap property — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-snap",
+        "clause_index": 41,
+        "clause_sha256": "46be7faeb5424c296ada341dc1121e92f096653f4543b97a3e1125b019794e23"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.box-snap-clause-4508d932a69b",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "box-snap"
+      ],
+      "behaviour": "Snapping Block Boxes: the box-snap property — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-snap",
+        "clause_index": 42,
+        "clause_sha256": "4508d932a69b9061ac2e0937acf7d3290990148f2f3b7ad1e2108c372bebcdb6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.20140403",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "20140403"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Since April 3rd 2014.",
+      "locator": {
+        "section_id": "20140403",
+        "text_sha256": "02f39ac598811b942bbdf122e2b80dbba36f10f8c9a3e3e02a70e1dac3172a0c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.conformance",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.conventions",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "conventions",
+        "text_sha256": "e1ee93bc8e4af9acf7083acfc75714b46c1c4685bdf761ebdfd63a4b9d6e8cad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-line-grid-1.conventions-clause-6abbe28898f0",
+        "css-line-grid-1.conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.conventions-clause-6abbe28898f0",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conventions",
+        "clause_index": 0,
+        "clause_sha256": "6abbe28898f04f06c3df34bdfedec00f0f19e823fcf139f5d2d79b1692543553"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.conventions-clause-33a5ed16a48d",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.conformance-classes",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-line-grid-1.conformance-classes-clause-ff408372426c",
+        "css-line-grid-1.conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.conformance-classes-clause-ff408372426c",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.conformance-classes-clause-d9976214330c",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.partial",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-line-grid-1.partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.partial-clause-ef40c4aab200",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.experimental",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "experimental"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Experimental implementations.",
+      "locator": {
+        "section_id": "experimental",
+        "text_sha256": "d65302001727731f480732eea29f70c56e93286eee5ffd392400e6a470f873c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.testing",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "testing",
+        "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-line-grid-1.testing-clause-1e0fff369221",
+        "css-line-grid-1.testing-clause-c7ed0d126be3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.testing-clause-1e0fff369221",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.testing-clause-c7ed0d126be3",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "testing",
+        "clause_index": 2,
+        "clause_sha256": "c7ed0d126be3854ca3a86569b068a6069b272f15531252ad1bf9883a45eb699a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.property-index",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "b085e47c762462f7c9f37705c60fec3694c91f26f79faf1707ee86afaa2d48e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-line-grid-1.property-index-clause-22edaa34f875"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.property-index-clause-22edaa34f875",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property index — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 8,
+        "clause_sha256": "22edaa34f8759ed3f8fac50d7189c775d864f00320b5d78025c41c6f5b4456d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-line-grid-1.issues-index",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "a72aef1194a4fd9449708a9bdfc6f19103e7bfce8851dc2d5a9bad9b6f2efb6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.title",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Line Grid Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.abstract",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "cb11dce96ba05a7f5dc9539c3fc21aef4f9854dfe99d9fc7558d2cbe08809a84"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.status",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "177d4e50d4abe627a9dd0093ca28cbd7e04411d3526e27718cc0a9bbcd0370ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.contents",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "0b05a4f44f6b649c75092b11b5796e646abf99894444f75315406959dd0901f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.context",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "context"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1 Background.",
+      "locator": {
+        "section_id": "context",
+        "text_sha256": "d6da55cf4413ce6876356403f981b3aa3d8a474207efa2c95357652612d2d8d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.acknowledgments",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "4b778edca58a38d73d0b125772f1654fd51b552dcc236358cda9b85ebc7ba645"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.change-log",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "change-log"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Change Log.",
+      "locator": {
+        "section_id": "change-log",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.references",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.normative",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "f780e9ea64448a1f4ea5e58f61e1bd46d375b7c22d0d51958676578135fa287e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.informative",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "43689ee30718e6c0610c019b99a5dd226f6c076159e5b01e979ffa58974e415b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-line-grid-1.index",
+      "family": "css-line-grid-1",
+      "source_id": "css-line-grid-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "defd578a11d4e0f9f9cc2d071a93f0b291041bd2ce3bf923ce24c3672a0a8b56"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

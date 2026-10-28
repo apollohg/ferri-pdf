@@ -1,0 +1,1425 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-round-display-1.heading-df63663ebd51",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "heading-df63663ebd51"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Round Display Level 1.",
+      "locator": {
+        "section_id": "heading-df63663ebd51",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.subtitle",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "subtitle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Working Draft, 22 December 2016.",
+      "locator": {
+        "section_id": "subtitle",
+        "text_sha256": "255c2cc8c9db93248cff8f83ede958006c496b2012850d13725003722ed5ee88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.introduction",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "aea694024eddf11cfc37cf8f772f4b59d088a455cf0244d49eee1ef289a276d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-round-display-1.introduction-clause-6ab4d5026ba3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.introduction-clause-6ab4d5026ba3",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Introduction — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "introduction",
+        "clause_index": 3,
+        "clause_sha256": "6ab4d5026ba3e7a008132cf9595b5c25bf59f6f9cb52e9c08e6e8bbd59810f5c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.terminology",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terminology",
+        "text_sha256": "d23ef6e011f6e92219de09ad5dfdcbdefac228ecc8da22d23ad0f5a5b24b1ad2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.extending-media-queries",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "extending-media-queries"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Detecting the shape of the display.",
+      "locator": {
+        "section_id": "extending-media-queries",
+        "text_sha256": "c80a7d2d1e893c6a0340c7ca7d7b6d2526d157ec14ac7ce6ff449a2d7fe5ef4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.shape-media-feature",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "shape-media-feature"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The shape media feature.",
+      "locator": {
+        "section_id": "shape-media-feature",
+        "text_sha256": "6948668f4c9af723e8036ddb884ad153c17f6616eaea46201bdd265222a67c33"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-round-display-1.shape-media-feature-clause-1e39f963a30a",
+        "css-round-display-1.shape-media-feature-clause-43f41d300cbd",
+        "css-round-display-1.shape-media-feature-clause-33ba1b237f44"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.shape-media-feature-clause-1e39f963a30a",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "shape-media-feature"
+      ],
+      "behaviour": "The shape media feature — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-media-feature",
+        "clause_index": 20,
+        "clause_sha256": "1e39f963a30a98510f6cc79282a2677aecf554722ec72c3444df1e60b524501c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.shape-media-feature-clause-43f41d300cbd",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "shape-media-feature"
+      ],
+      "behaviour": "The shape media feature — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-media-feature",
+        "clause_index": 22,
+        "clause_sha256": "43f41d300cbdaa6bd04af63a56ebe3ea42b5eb8ed7452c0d17341561b3626507"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.shape-media-feature-clause-33ba1b237f44",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "shape-media-feature"
+      ],
+      "behaviour": "The shape media feature — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-media-feature",
+        "clause_index": 23,
+        "clause_sha256": "33ba1b237f4469fd0ec8daae4d43166c738320384197e6bd86b73fde1d543166"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.extending-viewport-rule",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "extending-viewport-rule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extending the @viewport rule.",
+      "locator": {
+        "section_id": "extending-viewport-rule",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.viewport-fit-descriptor",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "viewport-fit-descriptor"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The viewport-fit descriptor.",
+      "locator": {
+        "section_id": "viewport-fit-descriptor",
+        "text_sha256": "a99a2a7b6fc4e91e20ea4e6e9bb5cd868b425aa64508894a733249a605c7af3f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-round-display-1.viewport-fit-descriptor-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.viewport-fit-descriptor-clause-cca2516ebb1d",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "viewport-fit-descriptor"
+      ],
+      "behaviour": "The viewport-fit descriptor — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "viewport-fit-descriptor",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.aligning-content",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "aligning-content"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Aligning content along the display border.",
+      "locator": {
+        "section_id": "aligning-content",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.shape-inside-property",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "shape-inside-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The shape-inside property.",
+      "locator": {
+        "section_id": "shape-inside-property",
+        "text_sha256": "46c80018a097484dc9a3b584b63a173ee693227b0cd379b57f50b9c62822dcc4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-round-display-1.shape-inside-property-clause-cca2516ebb1d",
+        "css-round-display-1.shape-inside-property-clause-7c94de9132f1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.shape-inside-property-clause-cca2516ebb1d",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "shape-inside-property"
+      ],
+      "behaviour": "The shape-inside property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-inside-property",
+        "clause_index": 15,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.shape-inside-property-clause-7c94de9132f1",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "shape-inside-property"
+      ],
+      "behaviour": "The shape-inside property — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-inside-property",
+        "clause_index": 16,
+        "clause_sha256": "7c94de9132f1678c097ec91a263cbdfadeaafad38222032ee988545a8e0409fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.drawing-borders",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "drawing-borders"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Drawing borders around the display border.",
+      "locator": {
+        "section_id": "drawing-borders",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.border-boundary-property",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "border-boundary-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The border-boundary property.",
+      "locator": {
+        "section_id": "border-boundary-property",
+        "text_sha256": "bdde3c188f1d7a4277b1fb47b1fddb8e635246f01fe24f0b019a4837cee027e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-round-display-1.border-boundary-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.border-boundary-property-clause-cca2516ebb1d",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "border-boundary-property"
+      ],
+      "behaviour": "The border-boundary property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-boundary-property",
+        "clause_index": 15,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.usecases",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "usecases"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Use Cases.",
+      "locator": {
+        "section_id": "usecases",
+        "text_sha256": "624943ec8e766249ae47f7c5c5be33699e5f1943bd427486721161ce79173680"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.security-considerations",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "security-considerations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security-considerations",
+        "text_sha256": "a730cf04f3085a21aee77d83511a4a769610473998a413943ae29344acc3ed84"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.privacy-considerations",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "privacy-considerations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy-considerations",
+        "text_sha256": "6274a3d99950e02de466a8b5d9a51d9c22505c00c3497c7bc4b4159d8a76ee64"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.conformance",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.document-conventions",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "document-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "document-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-round-display-1.document-conventions-clause-5c98c879f070",
+        "css-round-display-1.document-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.document-conventions-clause-5c98c879f070",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "document-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "document-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.document-conventions-clause-33a5ed16a48d",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "document-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "document-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.conform-classes",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "conform-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "conform-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-round-display-1.conform-classes-clause-ff408372426c",
+        "css-round-display-1.conform-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.conform-classes-clause-ff408372426c",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "conform-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.conform-classes-clause-d9976214330c",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "conform-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.conform-responsible",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "conform-responsible"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Requirements for Responsible Implementation of CSS.",
+      "locator": {
+        "section_id": "conform-responsible",
+        "text_sha256": "63e281f28ed2ebefafb560d6716cfc98d63caa0f55f4ae36a918cca31886f4b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.conform-partial",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "conform-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial Implementations.",
+      "locator": {
+        "section_id": "conform-partial",
+        "text_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-round-display-1.conform-partial-clause-db223ebb5aec"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.conform-partial-clause-db223ebb5aec",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "conform-partial"
+      ],
+      "behaviour": "Partial Implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-partial",
+        "clause_index": 0,
+        "clause_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.conform-future-proofing",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.conform-testing",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "conform-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of CR-level Features.",
+      "locator": {
+        "section_id": "conform-testing",
+        "text_sha256": "19da6a630f4622c83c6857c45f34c180f4a1c3f3acc63d1cbd9c295e91680224"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-round-display-1.conform-testing-clause-003938d8c19a",
+        "css-round-display-1.conform-testing-clause-c7ed0d126be3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.conform-testing-clause-003938d8c19a",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "conform-testing"
+      ],
+      "behaviour": "Implementations of CR-level Features — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-testing",
+        "clause_index": 0,
+        "clause_sha256": "003938d8c19a7542e7b704d552edf8474ca7c592719839b92ffb1c28c24763ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.conform-testing-clause-c7ed0d126be3",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "conform-testing"
+      ],
+      "behaviour": "Implementations of CR-level Features — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-testing",
+        "clause_index": 2,
+        "clause_sha256": "c7ed0d126be3854ca3a86569b068a6069b272f15531252ad1bf9883a45eb699a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.property-index",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "18dabba0d5c6453720eb18d9fe7ab2009e264cb6e1dcb02b2cd3948d32bcba5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-round-display-1.property-index-clause-7c94de9132f1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.property-index-clause-7c94de9132f1",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 20,
+        "clause_sha256": "7c94de9132f1678c097ec91a263cbdfadeaafad38222032ee988545a8e0409fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.media-descriptor-table",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "media-descriptor-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in @media Descriptors.",
+      "locator": {
+        "section_id": "media-descriptor-table",
+        "text_sha256": "285b903e1ba499377250a6b06ef441c222eacc9a866cdfe4d787303f1f647230"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.viewport-descriptor-table",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "viewport-descriptor-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in @viewport Descriptors.",
+      "locator": {
+        "section_id": "viewport-descriptor-table",
+        "text_sha256": "e799fdef9e5c47ab75519e6daa4a412b9fd9d278f539fe8769e89175317e8da6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-round-display-1.viewport-descriptor-table-clause-22edaa34f875"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.viewport-descriptor-table-clause-22edaa34f875",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "viewport-descriptor-table"
+      ],
+      "behaviour": "@viewport Descriptors — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "viewport-descriptor-table",
+        "clause_index": 3,
+        "clause_sha256": "22edaa34f8759ed3f8fac50d7189c775d864f00320b5d78025c41c6f5b4456d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-round-display-1.issues-index",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "762cea0622a919c7efe598c9e91929ab95592b67a529bcbd23af92ed8ebe2117"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.abstract",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "f0207b9f2ceb0c6c6e728628282c6cbbc6b91c12b97224a04c514ce2471e42b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.status",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "1ba3e7300fdb83d3282e4558c096b20fe4931afddf5b1b74ee595add0369b93c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.contents",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "d5ff096c2d0ca2fd83f2a124e2780eec0db336cae35800fe93b93f0c16cff683"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.changes",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.changes-from-march-01-2016",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "changes_from_March_01_2016"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.1. Changes from March 1th 2016 version.",
+      "locator": {
+        "section_id": "changes_from_March_01_2016",
+        "text_sha256": "20d3fc1a43740c08abd0da9e33533181e486ab56abd6b6a66d3ca0069d1df8ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.acks",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "acks"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11. Acknowledgements.",
+      "locator": {
+        "section_id": "acks",
+        "text_sha256": "a08d6d127bae4050a9aaadb763f99d7407eb7a13ad915897c0f7b447c288c012"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.index",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.index-defined-here",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "39b6a9315aa1201b5522c7feb72a3d5b4ba4398ea395646d7f390f912438560f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.index-defined-elsewhere",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "9ec307fbf88bd498ec62ac9874d903a788bb12104bd4fb2d96168ae1c8e12b35"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.references",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.normative",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "4d0542ed9b54409e8f6004dd817add72b7d23adda847604d98bf8101ba6e9424"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-round-display-1.informative",
+      "family": "css-round-display-1",
+      "source_id": "css-round-display-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "bb755310f9122191dbd4cd08a7880c1ae11f285a9c15474cdded4d90e075c987"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

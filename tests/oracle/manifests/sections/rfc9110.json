@@ -1,0 +1,4402 @@
+{
+  "schema_version": 1,
+  "source_id": "rfc9110",
+  "sections": [
+    {
+      "id": "rfcnum",
+      "title": "RFC 9110",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.rfcnum"
+        ]
+      }
+    },
+    {
+      "id": "title",
+      "title": "HTTP Semantics",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "72f0e8d09f7b5ada413bb3355c0637ca1923eb5b4ce038d0459121760100b2f2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.abstract"
+        ]
+      }
+    },
+    {
+      "id": "name-status-of-this-memo",
+      "title": "Status of This Memo",
+      "level": 2,
+      "text_sha256": "5875191503086698b2c41b3200c2dbe46a8205cc41446f571004c11f707e6497",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-status-of-this-memo"
+        ]
+      }
+    },
+    {
+      "id": "name-copyright-notice",
+      "title": "Copyright Notice",
+      "level": 2,
+      "text_sha256": "1b18495593b4a0f0ef28880ed806128cc61d7bbc15098e9d2dc3e0f9250cf7f9",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-copyright-notice",
+          "rfc9110.name-copyright-notice-clause-f2ae79166e8a"
+        ]
+      }
+    },
+    {
+      "id": "name-table-of-contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "82622fd4c2ec7e94cf83b7b86a7dbe56fb118e67f134c2830de8894c057ca00b",
+      "clause_count": 610,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-table-of-contents"
+        ]
+      }
+    },
+    {
+      "id": "name-introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-introduction"
+        ]
+      }
+    },
+    {
+      "id": "name-purpose",
+      "title": "1.1. Purpose",
+      "level": 3,
+      "text_sha256": "0074c6be61ac26c52c13061533d09ff0338ac856c439c9de1de85069f92c8853",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-purpose",
+          "rfc9110.name-purpose-clause-a8c98585f54a"
+        ]
+      }
+    },
+    {
+      "id": "name-history-and-evolution",
+      "title": "1.2. History and Evolution",
+      "level": 3,
+      "text_sha256": "e995ab1ef9a3907a0608726b7075d7a05a164fd7c9be8644c767f37f8daef58b",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-history-and-evolution",
+          "rfc9110.name-history-and-evolution-clause-e41dbfb7e5cd"
+        ]
+      }
+    },
+    {
+      "id": "name-core-semantics",
+      "title": "1.3. Core Semantics",
+      "level": 3,
+      "text_sha256": "092e133cab755b6244daba08133b56fb188244700131b0f4a113a65efe712d70",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-core-semantics"
+        ]
+      }
+    },
+    {
+      "id": "name-specifications-obsoleted-by",
+      "title": "1.4. Specifications Obsoleted by This Document",
+      "level": 3,
+      "text_sha256": "2178ece6d87ff630143aca72953a00a99e21c6b1d76593eecc5630ef3cb9acf1",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-specifications-obsoleted-by"
+        ]
+      }
+    },
+    {
+      "id": "name-conformance",
+      "title": "2. Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-conformance"
+        ]
+      }
+    },
+    {
+      "id": "name-syntax-notation",
+      "title": "2.1. Syntax Notation",
+      "level": 3,
+      "text_sha256": "2c8bd343b1b5e77812c35ecb740abf065d0692b05283a8d5639b39b540ac9788",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-syntax-notation"
+        ]
+      }
+    },
+    {
+      "id": "name-requirements-notation",
+      "title": "2.2. Requirements Notation",
+      "level": 3,
+      "text_sha256": "f380c90a7e8157397f03ac4697167a78ff6c92e037379d215e0fb56046081ca5",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-requirements-notation",
+          "rfc9110.name-requirements-notation-clause-8f1facba91cb",
+          "rfc9110.name-requirements-notation-clause-bb8b62b012c1",
+          "rfc9110.name-requirements-notation-clause-4a93c1dca118"
+        ]
+      }
+    },
+    {
+      "id": "name-length-requirements",
+      "title": "2.3. Length Requirements",
+      "level": 3,
+      "text_sha256": "4b488c5031749d1dee281af7d779b306820bb05f2e81827854124ffcffab7394",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-length-requirements",
+          "rfc9110.name-length-requirements-clause-141235b76977",
+          "rfc9110.name-length-requirements-clause-115845583f44",
+          "rfc9110.name-length-requirements-clause-1c960d6ec56d"
+        ]
+      }
+    },
+    {
+      "id": "name-error-handling",
+      "title": "2.4. Error Handling",
+      "level": 3,
+      "text_sha256": "e2212b1e7d0e98718c8893cc16af1b26a3a40a57aa33bdfdd01d416702167c1b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-error-handling",
+          "rfc9110.name-error-handling-clause-20481db220b5",
+          "rfc9110.name-error-handling-clause-dfdb24f18dd1"
+        ]
+      }
+    },
+    {
+      "id": "name-protocol-version",
+      "title": "2.5. Protocol Version",
+      "level": 3,
+      "text_sha256": "4c134104a487868a9669a4569d59bdb05c397bb66c57bb6fc0fa3c5f9221dee6",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-protocol-version"
+        ]
+      }
+    },
+    {
+      "id": "name-terminology-and-core-concep",
+      "title": "3. Terminology and Core Concepts",
+      "level": 2,
+      "text_sha256": "fdc418ca04203c5bc6ef0fb2ddbaa241f92eb31ec94a7d173ecca7537cad7b5c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-terminology-and-core-concep"
+        ]
+      }
+    },
+    {
+      "id": "name-resources",
+      "title": "3.1. Resources",
+      "level": 3,
+      "text_sha256": "dc33bea6eea77a3be29b244cb2765940e8e574b4ac32b1e5090858c09084af9d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-resources"
+        ]
+      }
+    },
+    {
+      "id": "name-representations",
+      "title": "3.2. Representations",
+      "level": 3,
+      "text_sha256": "c4994e8be8bf0ad9905dbe40bd0ee4a52c9648889a3e01512ac10753dee016c8",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-representations",
+          "rfc9110.name-representations-clause-6276f39b7a59"
+        ]
+      }
+    },
+    {
+      "id": "name-connections-clients-and-ser",
+      "title": "3.3. Connections, Clients, and Servers",
+      "level": 3,
+      "text_sha256": "e27b8dc369bc417c3544bc66b7076a5bc16a5025b9cbd96536923b7ca7621f8d",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-connections-clients-and-ser",
+          "rfc9110.name-connections-clients-and-ser-clause-7391feaeaae9"
+        ]
+      }
+    },
+    {
+      "id": "name-messages",
+      "title": "3.4. Messages",
+      "level": 3,
+      "text_sha256": "f88536474636d5d6c6f36db77c962ab7b458e0b2f1121fa92bbe1107ac99b35b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-messages"
+        ]
+      }
+    },
+    {
+      "id": "name-user-agents",
+      "title": "3.5. User Agents",
+      "level": 3,
+      "text_sha256": "c2fdb26ceab74056efe7d66b1c3ec907fb95aa7550a129b83d5224a2254879e3",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-user-agents"
+        ]
+      }
+    },
+    {
+      "id": "name-origin-server",
+      "title": "3.6. Origin Server",
+      "level": 3,
+      "text_sha256": "95292f83549e07a0bfa132f83ede3b4d61edd92fa2f1bcbe7aa373202c907e53",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-origin-server"
+        ]
+      }
+    },
+    {
+      "id": "name-intermediaries",
+      "title": "3.7. Intermediaries",
+      "level": 3,
+      "text_sha256": "b20120786ba102d8ef2b599be3152f4f9cd116130e5985b1e2c5adf9cfd4ddc4",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-intermediaries"
+        ]
+      }
+    },
+    {
+      "id": "name-caches",
+      "title": "3.8. Caches",
+      "level": 3,
+      "text_sha256": "09c32c0d952b4cd89ba79e859ae34e1aa6896bdbdd3da2597eff7c089e5197ef",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-caches"
+        ]
+      }
+    },
+    {
+      "id": "name-example-message-exchange",
+      "title": "3.9. Example Message Exchange",
+      "level": 3,
+      "text_sha256": "61be5af649f9352ab6e9adc560fa4ae294c0de57cc628b96180e91c5d95c904c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-example-message-exchange"
+        ]
+      }
+    },
+    {
+      "id": "name-identifiers-in-http",
+      "title": "4. Identifiers in HTTP",
+      "level": 2,
+      "text_sha256": "9a910af88d748c8548a8d26e11f3f41d95be0654dc817031628a9c7e1e1a89b8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-identifiers-in-http"
+        ]
+      }
+    },
+    {
+      "id": "name-uri-references",
+      "title": "4.1. URI References",
+      "level": 3,
+      "text_sha256": "ca3a66a904ac64fba40e2b4deab666e0a29071f920a7f17130faa41f9381dc0d",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-uri-references"
+        ]
+      }
+    },
+    {
+      "id": "name-http-related-uri-schemes",
+      "title": "4.2. HTTP-Related URI Schemes",
+      "level": 3,
+      "text_sha256": "d8539ca3d43e909e272ff01174379e51fe752e92372dafadb04f2a4d422c3d86",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-http-related-uri-schemes"
+        ]
+      }
+    },
+    {
+      "id": "name-http-uri-scheme",
+      "title": "4.2.1. http URI Scheme",
+      "level": 4,
+      "text_sha256": "a2d32442c8350bb8f09c73a10da6bed8315208d862fa6b441b6f47907a19fb89",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-http-uri-scheme",
+          "rfc9110.name-http-uri-scheme-clause-1d54837b5175"
+        ]
+      }
+    },
+    {
+      "id": "name-https-uri-scheme",
+      "title": "4.2.2. https URI Scheme",
+      "level": 4,
+      "text_sha256": "0c3fefd373968df3a50fde050048d5f8013ad5a51548a1f0d15cb6bba9853ef8",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-https-uri-scheme",
+          "rfc9110.name-https-uri-scheme-clause-78139dc0d27f",
+          "rfc9110.name-https-uri-scheme-clause-fcbb4872c2c1"
+        ]
+      }
+    },
+    {
+      "id": "name-https-normalization-and-com",
+      "title": "4.2.3. http(s) Normalization and Comparison",
+      "level": 4,
+      "text_sha256": "c6504ca48a1fdf0af092295e26a4bdb09121ca668a890426b55b96265d71aa82",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-https-normalization-and-com",
+          "rfc9110.name-https-normalization-and-com-clause-c1fde12e9d77"
+        ]
+      }
+    },
+    {
+      "id": "name-deprecation-of-userinfo-in-",
+      "title": "4.2.4. Deprecation of userinfo in http(s) URIs",
+      "level": 4,
+      "text_sha256": "41afac36f7a578d2fad2542065b36aa803783be8cc964826c31565603589e3e9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-deprecation-of-userinfo-in",
+          "rfc9110.name-deprecation-of-userinfo-in-clause-1ae3190e4bc1",
+          "rfc9110.name-deprecation-of-userinfo-in-clause-490daa6ccd89"
+        ]
+      }
+    },
+    {
+      "id": "name-https-references-with-fragm",
+      "title": "4.2.5. http(s) References with Fragment Identifiers",
+      "level": 4,
+      "text_sha256": "6f225e51b6765391d62b4e5cf6e5cdb55ed22639daf541adf6246d7bf858735d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-https-references-with-fragm"
+        ]
+      }
+    },
+    {
+      "id": "name-authoritative-access",
+      "title": "4.3. Authoritative Access",
+      "level": 3,
+      "text_sha256": "48d9d2825925f463d8b9959678707564c206b86052017b172bd7a5d974b8d1ce",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authoritative-access"
+        ]
+      }
+    },
+    {
+      "id": "name-uri-origin",
+      "title": "4.3.1. URI Origin",
+      "level": 4,
+      "text_sha256": "b2d62b0fe16493c4f773fba8e9bc4f6c930820917a5547760407dabae96eae82",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-uri-origin"
+        ]
+      }
+    },
+    {
+      "id": "name-http-origins",
+      "title": "4.3.2. http Origins",
+      "level": 4,
+      "text_sha256": "e22f6b4d8d5ee8eea0f6f47265db91800d9abbda44712a742b82569b633da030",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-http-origins"
+        ]
+      }
+    },
+    {
+      "id": "name-https-origins",
+      "title": "4.3.3. https Origins",
+      "level": 4,
+      "text_sha256": "2e9ac13a09672752616db63c15d43548fe762f93cdca17d6fb75634328597591",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-https-origins"
+        ]
+      }
+    },
+    {
+      "id": "name-https-certificate-verificat",
+      "title": "4.3.4. https Certificate Verification",
+      "level": 4,
+      "text_sha256": "38430ed62eebe37e04cee156fc32f262c922780b32ef65e83fab8dfab36eb293",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-https-certificate-verificat",
+          "rfc9110.name-https-certificate-verificat-clause-36df0f4aee10",
+          "rfc9110.name-https-certificate-verificat-clause-5ba80f7b61e2",
+          "rfc9110.name-https-certificate-verificat-clause-abf0caff0c5b",
+          "rfc9110.name-https-certificate-verificat-clause-883b0741080e",
+          "rfc9110.name-https-certificate-verificat-clause-f02bb651a708"
+        ]
+      }
+    },
+    {
+      "id": "name-ip-id-reference-identity",
+      "title": "4.3.5. IP-ID Reference Identity",
+      "level": 4,
+      "text_sha256": "ebc5d0ac56ec4ae351cce65fc5af9f96535cb2eeb279c0ae9c121c42624b9f00",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-ip-id-reference-identity"
+        ]
+      }
+    },
+    {
+      "id": "name-fields",
+      "title": "5. Fields",
+      "level": 2,
+      "text_sha256": "e784d6b68a9d58f56af0bca3ed5ec2ac7161f1be73840c89397ca892cb472789",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-fields"
+        ]
+      }
+    },
+    {
+      "id": "name-field-names",
+      "title": "5.1. Field Names",
+      "level": 3,
+      "text_sha256": "c5d110d06756405c076f018fbbf1080e607d433079c67fe2fc208e5b70797298",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-field-names",
+          "rfc9110.name-field-names-clause-8b6e6f5ccaf9",
+          "rfc9110.name-field-names-clause-4a9a00e4ce8b"
+        ]
+      }
+    },
+    {
+      "id": "name-field-lines-and-combined-fi",
+      "title": "5.2. Field Lines and Combined Field Value",
+      "level": 3,
+      "text_sha256": "f22a044f3080805c6efa2b93e9143f8fdf3f23ab3aaf120087ad1656e3b779d0",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-field-lines-and-combined-fi"
+        ]
+      }
+    },
+    {
+      "id": "name-field-order",
+      "title": "5.3. Field Order",
+      "level": 3,
+      "text_sha256": "bdaab96366f9344d4e880891999933ff2259eb28c22a27d2def4648a4de6528b",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-field-order",
+          "rfc9110.name-field-order-clause-600d67eb876d",
+          "rfc9110.name-field-order-clause-a90c5d336d8e",
+          "rfc9110.name-field-order-clause-b5ba7538e095"
+        ]
+      }
+    },
+    {
+      "id": "name-field-limits",
+      "title": "5.4. Field Limits",
+      "level": 3,
+      "text_sha256": "37b0a2795c803d963cad542497f9030d0f4cc51cda510f8585f86eb286b9b204",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-field-limits",
+          "rfc9110.name-field-limits-clause-6f832d641364",
+          "rfc9110.name-field-limits-clause-9ad6ae15bf3a"
+        ]
+      }
+    },
+    {
+      "id": "name-field-values",
+      "title": "5.5. Field Values",
+      "level": 3,
+      "text_sha256": "db177f4b6ffb7af22a99b4273af8a1dcb45f2f891cee69558464ae8747dd5290",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-field-values",
+          "rfc9110.name-field-values-clause-ea0f67236a23",
+          "rfc9110.name-field-values-clause-f7f4f83684e6",
+          "rfc9110.name-field-values-clause-888a15915bf3"
+        ]
+      }
+    },
+    {
+      "id": "name-common-rules-for-defining-f",
+      "title": "5.6. Common Rules for Defining Field Values",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-common-rules-for-defining-f"
+        ]
+      }
+    },
+    {
+      "id": "name-lists-rule-abnf-extension",
+      "title": "5.6.1. Lists (#rule ABNF Extension)",
+      "level": 4,
+      "text_sha256": "84dc4465d1007626e90d9beb24f266d00b54c3afdb05530d5d3fac5a61ef86d2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-lists-rule-abnf-extension"
+        ]
+      }
+    },
+    {
+      "id": "name-sender-requirements",
+      "title": "5.6.1.1. Sender Requirements",
+      "level": 5,
+      "text_sha256": "ce5bb5443e27adc88328237f77de2627eb5ec8e9f7851880ff0c649cb1d496d0",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-sender-requirements",
+          "rfc9110.name-sender-requirements-clause-8ac93ffeba07"
+        ]
+      }
+    },
+    {
+      "id": "name-recipient-requirements",
+      "title": "5.6.1.2. Recipient Requirements",
+      "level": 5,
+      "text_sha256": "f17a080e549aad071225b388ccf199524a97b63a8cced9e5d0a1d90d6e6fa4ed",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-recipient-requirements",
+          "rfc9110.name-recipient-requirements-clause-8e40040cb600",
+          "rfc9110.name-recipient-requirements-clause-b49f38149f2a"
+        ]
+      }
+    },
+    {
+      "id": "name-tokens",
+      "title": "5.6.2. Tokens",
+      "level": 4,
+      "text_sha256": "fd6cbf248e61b648890029385d4088b39c28ce6811a032b0268dffa5d5b42197",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-tokens"
+        ]
+      }
+    },
+    {
+      "id": "name-whitespace",
+      "title": "5.6.3. Whitespace",
+      "level": 4,
+      "text_sha256": "b3f47ff0f2da4c084d97e673577cabb9d82fb0ee1dd885a075282ed2cda6c87d",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-whitespace",
+          "rfc9110.name-whitespace-clause-634e5bb52372",
+          "rfc9110.name-whitespace-clause-18bfb4f22d7b",
+          "rfc9110.name-whitespace-clause-5e32a723a398",
+          "rfc9110.name-whitespace-clause-4565f0305da2",
+          "rfc9110.name-whitespace-clause-86032551fdfe"
+        ]
+      }
+    },
+    {
+      "id": "name-quoted-strings",
+      "title": "5.6.4. Quoted Strings",
+      "level": 4,
+      "text_sha256": "afbad441b25a32a53b70629e9839d3c3f4ab9102ef297f33b4cba097cb9988a6",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-quoted-strings",
+          "rfc9110.name-quoted-strings-clause-979b9500f91c",
+          "rfc9110.name-quoted-strings-clause-c8498ff64222"
+        ]
+      }
+    },
+    {
+      "id": "name-comments",
+      "title": "5.6.5. Comments",
+      "level": 4,
+      "text_sha256": "6d6931564eeef3d9490f9cfd96453850f8b18082425ea9a48ce7d7a2bf8af23e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-comments"
+        ]
+      }
+    },
+    {
+      "id": "name-parameters",
+      "title": "5.6.6. Parameters",
+      "level": 4,
+      "text_sha256": "87d28268eaf51588210182b15991d89fd3d11be6b06782b01400c6259666a4bb",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-parameters"
+        ]
+      }
+    },
+    {
+      "id": "name-date-time-formats",
+      "title": "5.6.7. Date/Time Formats",
+      "level": 4,
+      "text_sha256": "7e600fd30ce4e2eccb0617c406fbbf5b3922c73ccc68c0dfc00f763b37922728",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-date-time-formats",
+          "rfc9110.name-date-time-formats-clause-f6a9f8d4fb72",
+          "rfc9110.name-date-time-formats-clause-200f3e4c5ffb",
+          "rfc9110.name-date-time-formats-clause-8067c41af115",
+          "rfc9110.name-date-time-formats-clause-60a8314880a3"
+        ]
+      }
+    },
+    {
+      "id": "name-message-abstraction",
+      "title": "6. Message Abstraction",
+      "level": 2,
+      "text_sha256": "7e28d4136467cdd6affabdfd8456399d2611def4d5f73a0756f87ee1e63bfcb8",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-message-abstraction",
+          "rfc9110.name-message-abstraction-clause-3b7d8b66a5bb",
+          "rfc9110.name-message-abstraction-clause-7b36eaa16575"
+        ]
+      }
+    },
+    {
+      "id": "name-framing-and-completeness",
+      "title": "6.1. Framing and Completeness",
+      "level": 3,
+      "text_sha256": "73ea513c065b29cdd31d7dbc02fde0c28742c834285abce9851f753abe89e372",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-framing-and-completeness"
+        ]
+      }
+    },
+    {
+      "id": "name-control-data",
+      "title": "6.2. Control Data",
+      "level": 3,
+      "text_sha256": "c57add7c347b9395eefab05ecc30ba0a58d8e348515294647de5c4e2cec5e7cc",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-control-data",
+          "rfc9110.name-control-data-clause-4dc87d452ead",
+          "rfc9110.name-control-data-clause-f862710d80f9",
+          "rfc9110.name-control-data-clause-4ea46c9dd8d0"
+        ]
+      }
+    },
+    {
+      "id": "name-header-fields",
+      "title": "6.3. Header Fields",
+      "level": 3,
+      "text_sha256": "2b130fb21abb5d40ac8f2dd61f88eba8acc21cb72f41d8c404668c8c3b76804e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-header-fields"
+        ]
+      }
+    },
+    {
+      "id": "name-content",
+      "title": "6.4. Content",
+      "level": 3,
+      "text_sha256": "e8621aa2382d1446eb8028e21a3a1624d26a3da338465b33c3b9efa0517ae55c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content"
+        ]
+      }
+    },
+    {
+      "id": "name-content-semantics",
+      "title": "6.4.1. Content Semantics",
+      "level": 4,
+      "text_sha256": "14e2408b8930eb5c2efe972f40e5d95d5447fac3bc86429e614fa40edd2c3f75",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-semantics"
+        ]
+      }
+    },
+    {
+      "id": "name-identifying-content",
+      "title": "6.4.2. Identifying Content",
+      "level": 4,
+      "text_sha256": "381c5871f6426f8fa9934087f7bac49ab48fa42b7af4bb7779ee93804819ebe7",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-identifying-content",
+          "rfc9110.name-identifying-content-clause-c471434b9be0"
+        ]
+      }
+    },
+    {
+      "id": "name-trailer-fields",
+      "title": "6.5. Trailer Fields",
+      "level": 3,
+      "text_sha256": "05dd2713ae2c348e6079c2f7da9880615679435adba672d0ec8532d76c6095e1",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-trailer-fields"
+        ]
+      }
+    },
+    {
+      "id": "name-limitations-on-use-of-trail",
+      "title": "6.5.1. Limitations on Use of Trailers",
+      "level": 4,
+      "text_sha256": "905d1e62529c25977c6315127c643fe11eddf6b493becfdee73679cd808a6060",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-limitations-on-use-of-trail",
+          "rfc9110.name-limitations-on-use-of-trail-clause-0a421ba8bb42",
+          "rfc9110.name-limitations-on-use-of-trail-clause-ae78a653841d",
+          "rfc9110.name-limitations-on-use-of-trail-clause-3648f21565ef"
+        ]
+      }
+    },
+    {
+      "id": "name-processing-trailer-fields",
+      "title": "6.5.2. Processing Trailer Fields",
+      "level": 4,
+      "text_sha256": "f3f8d20b0a24358d35aa34f915f5d9e9a86548e776fcbfd5bf7e0f022068c7be",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-processing-trailer-fields",
+          "rfc9110.name-processing-trailer-fields-clause-59640f74b4c8",
+          "rfc9110.name-processing-trailer-fields-clause-be4da40b9084"
+        ]
+      }
+    },
+    {
+      "id": "name-message-metadata",
+      "title": "6.6. Message Metadata",
+      "level": 3,
+      "text_sha256": "92e08e7cfab57cedbc1985f258b45689408626b027ca4e1036367b687be832fb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-message-metadata"
+        ]
+      }
+    },
+    {
+      "id": "name-date",
+      "title": "6.6.1. Date",
+      "level": 4,
+      "text_sha256": "e8fb9b9d8347eb914d9f73305903f21deab39fb3d4d4b19e3e75246563f34b20",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-date",
+          "rfc9110.name-date-clause-580b6f67440e",
+          "rfc9110.name-date-clause-3bc39d711fd0",
+          "rfc9110.name-date-clause-5501cc824e46",
+          "rfc9110.name-date-clause-6116f2b207ea",
+          "rfc9110.name-date-clause-0d83480a1c2b",
+          "rfc9110.name-date-clause-d111968bcbda"
+        ]
+      }
+    },
+    {
+      "id": "name-trailer",
+      "title": "6.6.2. Trailer",
+      "level": 4,
+      "text_sha256": "6bae1c93040e8b3b3d95e3534aefc762f9f15ce4b08ce62a9022f44eb3cd4057",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-trailer",
+          "rfc9110.name-trailer-clause-be93474d6dc8",
+          "rfc9110.name-trailer-clause-1d01efcb891b"
+        ]
+      }
+    },
+    {
+      "id": "name-routing-http-messages",
+      "title": "7. Routing HTTP Messages",
+      "level": 2,
+      "text_sha256": "7dabef79632beccd2819477282881201fe284b2114eb2ac09b895219e8b47d9e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-routing-http-messages"
+        ]
+      }
+    },
+    {
+      "id": "name-determining-the-target-reso",
+      "title": "7.1. Determining the Target Resource",
+      "level": 3,
+      "text_sha256": "c47f437980671198ee2fd0708dfe22aa4f6437be4bc86b82d4fd03e480750c75",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-determining-the-target-reso",
+          "rfc9110.name-determining-the-target-reso-clause-a31df1a2153a"
+        ]
+      }
+    },
+    {
+      "id": "name-host-and-authority",
+      "title": "7.2. Host and :authority",
+      "level": 3,
+      "text_sha256": "38e95f7ed08aaa2616f88e86d7655fe4b2fe996360ec427e1b74166e6763d8d2",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-host-and-authority",
+          "rfc9110.name-host-and-authority-clause-234d03d089f5"
+        ]
+      }
+    },
+    {
+      "id": "name-routing-inbound-requests",
+      "title": "7.3. Routing Inbound Requests",
+      "level": 3,
+      "text_sha256": "3449337875b1dd6ab1e6d5bea25f4adbd2a490664ca923bd4b01b2bfb11a9091",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-routing-inbound-requests"
+        ]
+      }
+    },
+    {
+      "id": "name-to-a-cache",
+      "title": "7.3.1. To a Cache",
+      "level": 4,
+      "text_sha256": "62d878603b28e7e8135ca4d67cfcec71a88155291f494aa04a52efef06968bf4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-to-a-cache"
+        ]
+      }
+    },
+    {
+      "id": "name-to-a-proxy",
+      "title": "7.3.2. To a Proxy",
+      "level": 4,
+      "text_sha256": "53151668cecd3cf3b5f0e5e8dfd72bdf6788376f28febccf13148964814d7966",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-to-a-proxy"
+        ]
+      }
+    },
+    {
+      "id": "name-to-the-origin",
+      "title": "7.3.3. To the Origin",
+      "level": 4,
+      "text_sha256": "9b0b797a970158ca3fd2491ca0af28981ef0b4467aa45c99babf1d24412a3fc2",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-to-the-origin"
+        ]
+      }
+    },
+    {
+      "id": "name-rejecting-misdirected-reque",
+      "title": "7.4. Rejecting Misdirected Requests",
+      "level": 3,
+      "text_sha256": "28dcdadc33ff354f4f348f4cabd4ba45b62da0f9c2376cf548ef5a3f49d69cb9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-rejecting-misdirected-reque",
+          "rfc9110.name-rejecting-misdirected-reque-clause-babb85b3cb50",
+          "rfc9110.name-rejecting-misdirected-reque-clause-893614bf3f1d"
+        ]
+      }
+    },
+    {
+      "id": "name-response-correlation",
+      "title": "7.5. Response Correlation",
+      "level": 3,
+      "text_sha256": "a0712ae76f421c1fb9849c6323e5d4dd69e663cc43cc81f72222e5c0ac06d11d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-response-correlation",
+          "rfc9110.name-response-correlation-clause-2e1a2645ffec",
+          "rfc9110.name-response-correlation-clause-232a88dbbb18"
+        ]
+      }
+    },
+    {
+      "id": "name-message-forwarding",
+      "title": "7.6. Message Forwarding",
+      "level": 3,
+      "text_sha256": "ac822765d49d94ace202078150acb705aad8adbfda53e405c19270b4962c181c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-message-forwarding",
+          "rfc9110.name-message-forwarding-clause-233bc2931aab",
+          "rfc9110.name-message-forwarding-clause-c7a135648267",
+          "rfc9110.name-message-forwarding-clause-2e8a561ae773"
+        ]
+      }
+    },
+    {
+      "id": "name-connection",
+      "title": "7.6.1. Connection",
+      "level": 4,
+      "text_sha256": "f824dbe55a005f4687715747cff4f49d6bd82603d368da2491b175f3ba77076c",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-connection",
+          "rfc9110.name-connection-clause-39741a6a0785",
+          "rfc9110.name-connection-clause-c3a6046849b1",
+          "rfc9110.name-connection-clause-0adc1deea046",
+          "rfc9110.name-connection-clause-5eb61cae09c3",
+          "rfc9110.name-connection-clause-f71a06a3e5f2"
+        ]
+      }
+    },
+    {
+      "id": "name-max-forwards",
+      "title": "7.6.2. Max-Forwards",
+      "level": 4,
+      "text_sha256": "c1c432e26fbbae58d9d592e7c7ee1eae3251c7246f0f2fed1cdd73b84b0aab4e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-max-forwards",
+          "rfc9110.name-max-forwards-clause-38855090f6fd"
+        ]
+      }
+    },
+    {
+      "id": "name-via",
+      "title": "7.6.3. Via",
+      "level": 4,
+      "text_sha256": "1eeb0381fd3172407c22c7ec94e76e7d5e50895ce8dfd7dc360bfd4ee9fd29af",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-via",
+          "rfc9110.name-via-clause-503f16d690d7",
+          "rfc9110.name-via-clause-a89410ea40ed",
+          "rfc9110.name-via-clause-09c8e66c62fa"
+        ]
+      }
+    },
+    {
+      "id": "name-message-transformations",
+      "title": "7.7. Message Transformations",
+      "level": 3,
+      "text_sha256": "a9acf2a1be3d44bbe03a67c86acb1351b883c0c35bb9d80ac9e28d68fd0f8568",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-message-transformations",
+          "rfc9110.name-message-transformations-clause-9335e1ad9945",
+          "rfc9110.name-message-transformations-clause-5548058c6fe9",
+          "rfc9110.name-message-transformations-clause-fd37ef82f5b9",
+          "rfc9110.name-message-transformations-clause-8e4e89514627",
+          "rfc9110.name-message-transformations-clause-15bf991b407e"
+        ]
+      }
+    },
+    {
+      "id": "name-upgrade",
+      "title": "7.8. Upgrade",
+      "level": 3,
+      "text_sha256": "71fba73eaa322f2c40cf205d6a609b13f7521252aa95f77b68c46d2883cfe4da",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-upgrade",
+          "rfc9110.name-upgrade-clause-45c162929fea",
+          "rfc9110.name-upgrade-clause-dbbcd4f5a443",
+          "rfc9110.name-upgrade-clause-a8167b644331",
+          "rfc9110.name-upgrade-clause-04b2e230d31f",
+          "rfc9110.name-upgrade-clause-d4cb02d42ac6",
+          "rfc9110.name-upgrade-clause-f62eb0e325a7",
+          "rfc9110.name-upgrade-clause-26246bce3473"
+        ]
+      }
+    },
+    {
+      "id": "name-representation-data-and-met",
+      "title": "8. Representation Data and Metadata",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-representation-data-and-met"
+        ]
+      }
+    },
+    {
+      "id": "name-representation-data",
+      "title": "8.1. Representation Data",
+      "level": 3,
+      "text_sha256": "54c4edbcf4914bebacb5867e4a86f958b2bb1c01fbbeb825a247478df17f5c53",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-representation-data"
+        ]
+      }
+    },
+    {
+      "id": "name-representation-metadata",
+      "title": "8.2. Representation Metadata",
+      "level": 3,
+      "text_sha256": "9cddbdf05233cb2864f5e5f3c2477a4519fe0cff7d75a6b39f059be8ded1fc86",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-representation-metadata"
+        ]
+      }
+    },
+    {
+      "id": "name-content-type",
+      "title": "8.3. Content-Type",
+      "level": 3,
+      "text_sha256": "0b1032bbf8e370ee90804a3d2dcc86712f585bf569bd27623f4c1ebb6d3d0e2d",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-type",
+          "rfc9110.name-content-type-clause-5355965c9a31"
+        ]
+      }
+    },
+    {
+      "id": "name-media-type",
+      "title": "8.3.1. Media Type",
+      "level": 4,
+      "text_sha256": "a13981b7aa7fa869f83c0e6134521a690cfb0544295ed7894f34bae1d302296a",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-media-type"
+        ]
+      }
+    },
+    {
+      "id": "name-charset",
+      "title": "8.3.2. Charset",
+      "level": 4,
+      "text_sha256": "6da2b4592493fb632ed95c10f23fe3410fa4e68ce2f627f09672f2b0040997d1",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-charset"
+        ]
+      }
+    },
+    {
+      "id": "name-multipart-types",
+      "title": "8.3.3. Multipart Types",
+      "level": 4,
+      "text_sha256": "6e3d44d45b0ef7695bf1fa3522dd703ce3378b7039f6e14b8384ea403a9d339b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-multipart-types",
+          "rfc9110.name-multipart-types-clause-3c7d746dd628"
+        ]
+      }
+    },
+    {
+      "id": "name-content-encoding",
+      "title": "8.4. Content-Encoding",
+      "level": 3,
+      "text_sha256": "907d8ec3f0f736bf006bf7fedf39397096c5b1d4ea74f8fc14b6f75a4cc06f7f",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-encoding",
+          "rfc9110.name-content-encoding-clause-4da980e3f939",
+          "rfc9110.name-content-encoding-clause-8c1c2048c3d1"
+        ]
+      }
+    },
+    {
+      "id": "name-content-codings",
+      "title": "8.4.1. Content Codings",
+      "level": 4,
+      "text_sha256": "159ac34324831a6d854057f3e51e6c69f0ed12eeaf8fed09152481af4b95891c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-codings"
+        ]
+      }
+    },
+    {
+      "id": "name-compress-coding",
+      "title": "8.4.1.1. Compress Coding",
+      "level": 5,
+      "text_sha256": "fc6506f2dc171cd4f29234af715b7fed9a779e1e77639cb6462c1c6a8406c183",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-compress-coding",
+          "rfc9110.name-compress-coding-clause-fc6506f2dc17"
+        ]
+      }
+    },
+    {
+      "id": "name-deflate-coding",
+      "title": "8.4.1.2. Deflate Coding",
+      "level": 5,
+      "text_sha256": "6ff981b6784098dd69b038a73f6745c70aa07383a032371cee844eef3d3f71a7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-deflate-coding",
+          "rfc9110.name-deflate-coding-clause-60ccf2da0d8f"
+        ]
+      }
+    },
+    {
+      "id": "name-gzip-coding",
+      "title": "8.4.1.3. Gzip Coding",
+      "level": 5,
+      "text_sha256": "69613d922e3ab956bdc539090215bce3d0cceb6815dd6ab52bde2ac71b44d478",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-gzip-coding",
+          "rfc9110.name-gzip-coding-clause-69613d922e3a"
+        ]
+      }
+    },
+    {
+      "id": "name-content-language",
+      "title": "8.5. Content-Language",
+      "level": 3,
+      "text_sha256": "0873a71d6b1c0e9074aa3f4ae8b3633f34cb9e4198f3f1d45d775f4eda47b4c9",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-language"
+        ]
+      }
+    },
+    {
+      "id": "name-language-tags",
+      "title": "8.5.1. Language Tags",
+      "level": 4,
+      "text_sha256": "4e5eb8fd22deb50f4055bb3974b13749d99288f7c2bc4c47f3e912bbff45135f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-language-tags"
+        ]
+      }
+    },
+    {
+      "id": "name-content-length",
+      "title": "8.6. Content-Length",
+      "level": 3,
+      "text_sha256": "ab81697022b3b71b70c4bfe6667960fcb64d2a57cc17fb8a2e78b45f5e6cefde",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-length",
+          "rfc9110.name-content-length-clause-41cf8a009746",
+          "rfc9110.name-content-length-clause-c4eb3ddca587",
+          "rfc9110.name-content-length-clause-8de260e87789",
+          "rfc9110.name-content-length-clause-203494b34a8a",
+          "rfc9110.name-content-length-clause-47d97d6d7e0c",
+          "rfc9110.name-content-length-clause-7e9a7ec1de8f",
+          "rfc9110.name-content-length-clause-3f0a6c24b113",
+          "rfc9110.name-content-length-clause-0bcb566d4749"
+        ]
+      }
+    },
+    {
+      "id": "name-content-location",
+      "title": "8.7. Content-Location",
+      "level": 3,
+      "text_sha256": "b29b48de2af1fe88ed87a4dd0d934cc161e9ac4cc5ab84ba8c26ddef69657c2d",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-location",
+          "rfc9110.name-content-location-clause-2303680beafd",
+          "rfc9110.name-content-location-clause-c0c1a7774d9d"
+        ]
+      }
+    },
+    {
+      "id": "name-validator-fields",
+      "title": "8.8. Validator Fields",
+      "level": 3,
+      "text_sha256": "80f39b596d571fc485b2a53bc4f187d2385f5860073abe9e710d7e8186c49306",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-validator-fields"
+        ]
+      }
+    },
+    {
+      "id": "name-weak-versus-strong",
+      "title": "8.8.1. Weak versus Strong",
+      "level": 4,
+      "text_sha256": "24e695ce12afcc5e3bb5c85579271714abb809c4054f0c57db6f7d9aaaf19e03",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-weak-versus-strong",
+          "rfc9110.name-weak-versus-strong-clause-c2d1a634e972"
+        ]
+      }
+    },
+    {
+      "id": "name-last-modified",
+      "title": "8.8.2. Last-Modified",
+      "level": 4,
+      "text_sha256": "2e6c7ccd443050eac78ac388f113acd7b06bc64c8abf55fb96aae23fb4166d87",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-last-modified"
+        ]
+      }
+    },
+    {
+      "id": "name-generation",
+      "title": "8.8.2.1. Generation",
+      "level": 5,
+      "text_sha256": "c2986619e6b9b7cb658f488aa3705adc3d730abbe536f3eb6144fd2257f16405",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-generation",
+          "rfc9110.name-generation-clause-3abc0a24b914",
+          "rfc9110.name-generation-clause-c1e544003b35",
+          "rfc9110.name-generation-clause-f2bd0462eacc",
+          "rfc9110.name-generation-clause-1efe5418cfe2"
+        ]
+      }
+    },
+    {
+      "id": "name-comparison",
+      "title": "8.8.2.2. Comparison",
+      "level": 5,
+      "text_sha256": "51001113fa108b5d428600ebc281c6af8af24f040f4c41eaf2327d540cb01fc2",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-comparison"
+        ]
+      }
+    },
+    {
+      "id": "name-etag",
+      "title": "8.8.3. ETag",
+      "level": 4,
+      "text_sha256": "482b5f35f98303bfb559e8589174c2e2c039d5aa90e54bc0085676f595eddb5c",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-etag",
+          "rfc9110.name-etag-clause-c3671429e993",
+          "rfc9110.name-etag-clause-57dbfb72616a"
+        ]
+      }
+    },
+    {
+      "id": "name-generation-2",
+      "title": "8.8.3.1. Generation",
+      "level": 5,
+      "text_sha256": "30fb09fef0b337cb21510a85463b9832249684559d222d9d67dff83eda1f174c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-generation-2",
+          "rfc9110.name-generation-2-clause-c3d7ef7c22dd"
+        ]
+      }
+    },
+    {
+      "id": "name-comparison-2",
+      "title": "8.8.3.2. Comparison",
+      "level": 5,
+      "text_sha256": "0b3180a7fbc9dea5a6ed3cbde5877c78e1e4f4666da9ec86c2ae12b125db4e71",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-comparison-2"
+        ]
+      }
+    },
+    {
+      "id": "name-example-entity-tags-varying",
+      "title": "8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources",
+      "level": 5,
+      "text_sha256": "47dc793e572e104e2f35c6fc20e6bfc7e0ca8076eeb790dd073e3ed9724020cd",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-example-entity-tags-varying"
+        ]
+      }
+    },
+    {
+      "id": "name-methods",
+      "title": "9. Methods",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-methods"
+        ]
+      }
+    },
+    {
+      "id": "name-overview",
+      "title": "9.1. Overview",
+      "level": 3,
+      "text_sha256": "86ea5e044ea663121905219b5e5b37ae4589f4e775013390089fd7a9f282659f",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-overview",
+          "rfc9110.name-overview-clause-7b4df4f67009",
+          "rfc9110.name-overview-clause-a3cfdc62dacc",
+          "rfc9110.name-overview-clause-e6103df87a94"
+        ]
+      }
+    },
+    {
+      "id": "name-common-method-properties",
+      "title": "9.2. Common Method Properties",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-common-method-properties"
+        ]
+      }
+    },
+    {
+      "id": "name-safe-methods",
+      "title": "9.2.1. Safe Methods",
+      "level": 4,
+      "text_sha256": "e9a304e78889336eb536b5ae99b0ef49571f630744506840d2427036cafdadcb",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-safe-methods",
+          "rfc9110.name-safe-methods-clause-4e31bf5ef800",
+          "rfc9110.name-safe-methods-clause-185accb8735e",
+          "rfc9110.name-safe-methods-clause-252dc17dfe54"
+        ]
+      }
+    },
+    {
+      "id": "name-idempotent-methods",
+      "title": "9.2.2. Idempotent Methods",
+      "level": 4,
+      "text_sha256": "d7d5fdeac1e2f101166e80970ee65c21fab447f2e1c30478c6fa3ef7b965b0db",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-idempotent-methods",
+          "rfc9110.name-idempotent-methods-clause-6d202781a62c",
+          "rfc9110.name-idempotent-methods-clause-dcc26aa2a89d"
+        ]
+      }
+    },
+    {
+      "id": "name-methods-and-caching",
+      "title": "9.2.3. Methods and Caching",
+      "level": 4,
+      "text_sha256": "e8a88003251081dd6b670e1a84a2ee5aa741e7f84a9e1b7b3e33ac3ac8eb5a34",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-methods-and-caching"
+        ]
+      }
+    },
+    {
+      "id": "name-method-definitions",
+      "title": "9.3. Method Definitions",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-method-definitions"
+        ]
+      }
+    },
+    {
+      "id": "name-get",
+      "title": "9.3.1. GET",
+      "level": 4,
+      "text_sha256": "98248769d51de2f7248f00a6e52577e5a93ce8f9206b99132eeb3a5a7a0eb675",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-get",
+          "rfc9110.name-get-clause-058f5d5ccc92"
+        ]
+      }
+    },
+    {
+      "id": "name-head",
+      "title": "9.3.2. HEAD",
+      "level": 4,
+      "text_sha256": "4219fc7787670e5087f8acb5b23434a0193af642d8d25051fbec23d4eb581ef9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-head",
+          "rfc9110.name-head-clause-a9f2602f6fd9",
+          "rfc9110.name-head-clause-35123f2d59c0",
+          "rfc9110.name-head-clause-544edf2e2732"
+        ]
+      }
+    },
+    {
+      "id": "name-post",
+      "title": "9.3.3. POST",
+      "level": 4,
+      "text_sha256": "0d3bb07e4564c79f40eba2710721f294a03e18e1c57c51d98ec9800e00ff19ef",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-post",
+          "rfc9110.name-post-clause-8cbbab7ef84a"
+        ]
+      }
+    },
+    {
+      "id": "name-put",
+      "title": "9.3.4. PUT",
+      "level": 4,
+      "text_sha256": "cc6da6c2c712592846a06e74bc64370e77772af0bcda6db4c20ac441b905c72d",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-put",
+          "rfc9110.name-put-clause-468056cc6f30",
+          "rfc9110.name-put-clause-5ab6cc3ccdea",
+          "rfc9110.name-put-clause-21285048821a",
+          "rfc9110.name-put-clause-813c4077dc15",
+          "rfc9110.name-put-clause-28f74566021b"
+        ]
+      }
+    },
+    {
+      "id": "name-delete",
+      "title": "9.3.5. DELETE",
+      "level": 4,
+      "text_sha256": "869cbd64bc5b0835347b1979d6f6eb3bac642182f2f575070629c341ccd5b2b6",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-delete",
+          "rfc9110.name-delete-clause-4c216b0f7686",
+          "rfc9110.name-delete-clause-6a7d4ba136c3"
+        ]
+      }
+    },
+    {
+      "id": "name-connect",
+      "title": "9.3.6. CONNECT",
+      "level": 4,
+      "text_sha256": "21ef33137bbc6250d67b30438ae713e89e70d94d8868f381a45fbb2424643821",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-connect",
+          "rfc9110.name-connect-clause-abf4e7f4c0de",
+          "rfc9110.name-connect-clause-61e3c8454024",
+          "rfc9110.name-connect-clause-b7cd6382678a",
+          "rfc9110.name-connect-clause-d4737c36c327",
+          "rfc9110.name-connect-clause-85ef29292598"
+        ]
+      }
+    },
+    {
+      "id": "name-options",
+      "title": "9.3.7. OPTIONS",
+      "level": 4,
+      "text_sha256": "889ed733c98705ad044325ae54e9630b05757fed7e08e17db04f2bac0ca79cad",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-options",
+          "rfc9110.name-options-clause-c9aacdb88beb",
+          "rfc9110.name-options-clause-254f0c5c565b",
+          "rfc9110.name-options-clause-376e11d2dad2"
+        ]
+      }
+    },
+    {
+      "id": "name-trace",
+      "title": "9.3.8. TRACE",
+      "level": 4,
+      "text_sha256": "f256eb5c98644da6705ed74a1843e89876ff2b5b42a63a8e5f880846040f420c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-trace",
+          "rfc9110.name-trace-clause-53c230ecbd5f",
+          "rfc9110.name-trace-clause-8972a7d8c7b3",
+          "rfc9110.name-trace-clause-69e2d3ac90bc"
+        ]
+      }
+    },
+    {
+      "id": "name-message-context",
+      "title": "10. Message Context",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-message-context"
+        ]
+      }
+    },
+    {
+      "id": "name-request-context-fields",
+      "title": "10.1. Request Context Fields",
+      "level": 3,
+      "text_sha256": "8ab5a151bb14fad45799f85cce37153a3d71e9e183f5dc0456259af8c5a5247f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-request-context-fields"
+        ]
+      }
+    },
+    {
+      "id": "name-expect",
+      "title": "10.1.1. Expect",
+      "level": 4,
+      "text_sha256": "f1fec680a18c84041ed8db4f1bcb6a57dbaa8bbaf717f332d77e70cd80c49d94",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-expect",
+          "rfc9110.name-expect-clause-ec34f709c653",
+          "rfc9110.name-expect-clause-4bd1b30650d7",
+          "rfc9110.name-expect-clause-9dd3421f7ee4",
+          "rfc9110.name-expect-clause-f631e4782bb1",
+          "rfc9110.name-expect-clause-98f4f9a8cd2a",
+          "rfc9110.name-expect-clause-676cc85fc4d3",
+          "rfc9110.name-expect-clause-4954ced93a7d",
+          "rfc9110.name-expect-clause-404609167391",
+          "rfc9110.name-expect-clause-d5933a45bce0",
+          "rfc9110.name-expect-clause-ebb4007d9f50"
+        ]
+      }
+    },
+    {
+      "id": "name-from",
+      "title": "10.1.2. From",
+      "level": 4,
+      "text_sha256": "e7387a2335308efc7efe51ee7cbdfb05075f0a93e0d9a813c06b3fbf4c0aa2dc",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-from",
+          "rfc9110.name-from-clause-d076a8765dea",
+          "rfc9110.name-from-clause-726b2b4ac8e1",
+          "rfc9110.name-from-clause-00131bb3cd9f"
+        ]
+      }
+    },
+    {
+      "id": "name-referer",
+      "title": "10.1.3. Referer",
+      "level": 4,
+      "text_sha256": "a34e6935755962d922db926115159714aa5f4b1f7cf38497f0aa88d00abef44a",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-referer",
+          "rfc9110.name-referer-clause-22a3dc6abc21",
+          "rfc9110.name-referer-clause-c86ead636bce",
+          "rfc9110.name-referer-clause-692cfca890e3",
+          "rfc9110.name-referer-clause-b4961c603fb4"
+        ]
+      }
+    },
+    {
+      "id": "name-te",
+      "title": "10.1.4. TE",
+      "level": 4,
+      "text_sha256": "24f2aac18b679e6abd44139561d58c83a0ee26071ae47a2d905a48963b71daa1",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-te",
+          "rfc9110.name-te-clause-b7891263d898"
+        ]
+      }
+    },
+    {
+      "id": "name-user-agent",
+      "title": "10.1.5. User-Agent",
+      "level": 4,
+      "text_sha256": "5950114174703e53fc307402b10e8f17b35a1a03121b52f510fcf5a1cdd30518",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-user-agent",
+          "rfc9110.name-user-agent-clause-0629aa93d384",
+          "rfc9110.name-user-agent-clause-63c2786a6a06",
+          "rfc9110.name-user-agent-clause-1a058d104874"
+        ]
+      }
+    },
+    {
+      "id": "name-response-context-fields",
+      "title": "10.2. Response Context Fields",
+      "level": 3,
+      "text_sha256": "adf3b5173e3ec0690eddcaa6b2cc1312a2c2b7d62c6dd382b287d71e3f68cb3f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-response-context-fields"
+        ]
+      }
+    },
+    {
+      "id": "name-allow",
+      "title": "10.2.1. Allow",
+      "level": 4,
+      "text_sha256": "89f00f49eeceba0056dfcdd56070a6660a7ba9228d98ce90f93ec7b15fa007d0",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-allow",
+          "rfc9110.name-allow-clause-4eee22030bbf",
+          "rfc9110.name-allow-clause-a642029111ef"
+        ]
+      }
+    },
+    {
+      "id": "name-location",
+      "title": "10.2.2. Location",
+      "level": 4,
+      "text_sha256": "fe6a257e84e179f76bdbd09d54e2d815a62b444b73707bec402564f1c110bbb0",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-location",
+          "rfc9110.name-location-clause-aeb5533c9465",
+          "rfc9110.name-location-clause-a2d33b2025c2",
+          "rfc9110.name-location-clause-bb2e55b9fd8f"
+        ]
+      }
+    },
+    {
+      "id": "name-retry-after",
+      "title": "10.2.3. Retry-After",
+      "level": 4,
+      "text_sha256": "87f4f0ef77a901275f4902269fc26cf8cfe9ea411254c795cf710ee4831b2dc0",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-retry-after",
+          "rfc9110.name-retry-after-clause-6117cb5320f5"
+        ]
+      }
+    },
+    {
+      "id": "name-server",
+      "title": "10.2.4. Server",
+      "level": 4,
+      "text_sha256": "dba433e970a35e8e4407adaf39ad25a1a42d411d0c9a769b066d5abfe95d3377",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-server",
+          "rfc9110.name-server-clause-6f4374cba165"
+        ]
+      }
+    },
+    {
+      "id": "name-http-authentication",
+      "title": "11. HTTP Authentication",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-http-authentication"
+        ]
+      }
+    },
+    {
+      "id": "name-authentication-scheme",
+      "title": "11.1. Authentication Scheme",
+      "level": 3,
+      "text_sha256": "b64d46bc25619e8ae225ce009b1c62a24497b12845364142fb6e0de72bb74ccc",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authentication-scheme"
+        ]
+      }
+    },
+    {
+      "id": "name-authentication-parameters",
+      "title": "11.2. Authentication Parameters",
+      "level": 3,
+      "text_sha256": "d32a775c91cc45b0a16065e2883eaa9b731a2f5096339084ddfa217d145dd2cf",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authentication-parameters",
+          "rfc9110.name-authentication-parameters-clause-2724152903b6"
+        ]
+      }
+    },
+    {
+      "id": "name-challenge-and-response",
+      "title": "11.3. Challenge and Response",
+      "level": 3,
+      "text_sha256": "805fd18431580f61d9f18c2786f66ec5e69af75eeb972a3cb3e0e8cd4ba79ea4",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-challenge-and-response",
+          "rfc9110.name-challenge-and-response-clause-a77dbcd2034e",
+          "rfc9110.name-challenge-and-response-clause-49e8ab62a96a"
+        ]
+      }
+    },
+    {
+      "id": "name-credentials",
+      "title": "11.4. Credentials",
+      "level": 3,
+      "text_sha256": "bab23bc23b422858c62b50f455f21f4846e08f61227d15ccabfa71d7cf76f518",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-credentials",
+          "rfc9110.name-credentials-clause-4a6a73b51c4d",
+          "rfc9110.name-credentials-clause-8a9ac5caad05"
+        ]
+      }
+    },
+    {
+      "id": "name-establishing-a-protection-s",
+      "title": "11.5. Establishing a Protection Space (Realm)",
+      "level": 3,
+      "text_sha256": "8b1c323d0561a209f8e2cd6c3b506eb13fa7b963efe97c61fba8271f82daa4b4",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-establishing-a-protection-s",
+          "rfc9110.name-establishing-a-protection-s-clause-1c4a5d98f595"
+        ]
+      }
+    },
+    {
+      "id": "name-authenticating-users-to-ori",
+      "title": "11.6. Authenticating Users to Origin Servers",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authenticating-users-to-ori"
+        ]
+      }
+    },
+    {
+      "id": "name-www-authenticate",
+      "title": "11.6.1. WWW-Authenticate",
+      "level": 4,
+      "text_sha256": "b3bbc763a24a668a173af4bc592d73aff147e7c96991d50aec7a5afc75186017",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-www-authenticate",
+          "rfc9110.name-www-authenticate-clause-d629296904e8",
+          "rfc9110.name-www-authenticate-clause-7f7ea767eb71"
+        ]
+      }
+    },
+    {
+      "id": "name-authorization",
+      "title": "11.6.2. Authorization",
+      "level": 4,
+      "text_sha256": "942a88a71b29af701a3b0c0b6bfa15d8b650230ef8e108e1f3c99eb46c5d3c0c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authorization",
+          "rfc9110.name-authorization-clause-78f293d61e46"
+        ]
+      }
+    },
+    {
+      "id": "name-authentication-info",
+      "title": "11.6.3. Authentication-Info",
+      "level": 4,
+      "text_sha256": "3f4fde1bcb9789de8a1597f1d7f2a1d207fdf84d613fba917c7b5c474729e0e8",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authentication-info"
+        ]
+      }
+    },
+    {
+      "id": "name-authenticating-clients-to-p",
+      "title": "11.7. Authenticating Clients to Proxies",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authenticating-clients-to-p"
+        ]
+      }
+    },
+    {
+      "id": "name-proxy-authenticate",
+      "title": "11.7.1. Proxy-Authenticate",
+      "level": 4,
+      "text_sha256": "d36ace8ae530958b6575e26fc5fc2224a66924534d560f5618a6388b0f5eda17",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-proxy-authenticate",
+          "rfc9110.name-proxy-authenticate-clause-7c0b0da5154d"
+        ]
+      }
+    },
+    {
+      "id": "name-proxy-authorization",
+      "title": "11.7.2. Proxy-Authorization",
+      "level": 4,
+      "text_sha256": "a109a694ae9c7a46b08646809af18dd02f399c87131e4a5cf059870708a26add",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-proxy-authorization"
+        ]
+      }
+    },
+    {
+      "id": "name-proxy-authentication-info",
+      "title": "11.7.3. Proxy-Authentication-Info",
+      "level": 4,
+      "text_sha256": "59f94713397b0f828adbffa4a12226e582b264bef1bdf24d4086e27d3d9e60e9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-proxy-authentication-info"
+        ]
+      }
+    },
+    {
+      "id": "name-content-negotiation",
+      "title": "12. Content Negotiation",
+      "level": 2,
+      "text_sha256": "294541970535ea8e5f4aed430d050236dfd278e70bf70d298f146f61ef278072",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-negotiation",
+          "rfc9110.name-content-negotiation-clause-b5b6e0938a75"
+        ]
+      }
+    },
+    {
+      "id": "name-proactive-negotiation",
+      "title": "12.1. Proactive Negotiation",
+      "level": 3,
+      "text_sha256": "fc237d371ed7194238421096fcce225b1b9c65c85d19e353b258079e21bacc04",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-proactive-negotiation",
+          "rfc9110.name-proactive-negotiation-clause-f89e52f0f477",
+          "rfc9110.name-proactive-negotiation-clause-812d6279cee1",
+          "rfc9110.name-proactive-negotiation-clause-2c150f36c047"
+        ]
+      }
+    },
+    {
+      "id": "name-reactive-negotiation",
+      "title": "12.2. Reactive Negotiation",
+      "level": 3,
+      "text_sha256": "6cfa69444f53a6dd800b50f69cbff3bd06277f3d0c0d9ecc7fdc725d3e7f39b1",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-reactive-negotiation"
+        ]
+      }
+    },
+    {
+      "id": "name-request-content-negotiation",
+      "title": "12.3. Request Content Negotiation",
+      "level": 3,
+      "text_sha256": "6daf94367dee4aa6c3fb93ba1bdcd68ba0a76b9c931b31ea31a8702904f837f3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-request-content-negotiation"
+        ]
+      }
+    },
+    {
+      "id": "name-content-negotiation-field-f",
+      "title": "12.4. Content Negotiation Field Features",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-negotiation-field-f"
+        ]
+      }
+    },
+    {
+      "id": "name-absence",
+      "title": "12.4.1. Absence",
+      "level": 4,
+      "text_sha256": "871ebbfac71311dc4c19900a7996f7ab0350f3d87f9908c0c09e582a98cf7f51",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-absence"
+        ]
+      }
+    },
+    {
+      "id": "name-quality-values",
+      "title": "12.4.2. Quality Values",
+      "level": 4,
+      "text_sha256": "537546bf4c8e8d8f12e3a772dde0a3dd189a586c77b3e6e5ac5282816049cdd6",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-quality-values",
+          "rfc9110.name-quality-values-clause-5662a331b3be"
+        ]
+      }
+    },
+    {
+      "id": "name-wildcard-values",
+      "title": "12.4.3. Wildcard Values",
+      "level": 4,
+      "text_sha256": "8b7fe191a1f4db02a2f3ae39e53081af08a4bd3bae43da2eb98ec35b954262ab",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-wildcard-values"
+        ]
+      }
+    },
+    {
+      "id": "name-content-negotiation-fields",
+      "title": "12.5. Content Negotiation Fields",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-negotiation-fields"
+        ]
+      }
+    },
+    {
+      "id": "name-accept",
+      "title": "12.5.1. Accept",
+      "level": 4,
+      "text_sha256": "e33423a81caff39bae0829dd4ccd99bf3bb4bf3e424d98ea60db98cf9ff86cf6",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-accept",
+          "rfc9110.name-accept-clause-3730a5870d9e"
+        ]
+      }
+    },
+    {
+      "id": "name-accept-charset",
+      "title": "12.5.2. Accept-Charset",
+      "level": 4,
+      "text_sha256": "dd891524130c79eacbd1d967c74b8c39cb3a8423f20a4b9a72b89797a25fb952",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-accept-charset"
+        ]
+      }
+    },
+    {
+      "id": "name-accept-encoding",
+      "title": "12.5.3. Accept-Encoding",
+      "level": 4,
+      "text_sha256": "ccd7c7b3e0aa9cfd01a8d731d328bdfee4d5f5cdedd04311dcfaecb2cabe0434",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-accept-encoding",
+          "rfc9110.name-accept-encoding-clause-57934e77e574",
+          "rfc9110.name-accept-encoding-clause-da06bca870f7"
+        ]
+      }
+    },
+    {
+      "id": "name-accept-language",
+      "title": "12.5.4. Accept-Language",
+      "level": 4,
+      "text_sha256": "bd4b2eeddd816e34555c1abf9b709dc927cc80891809e7ae739f251365b009f4",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-accept-language",
+          "rfc9110.name-accept-language-clause-2414f973c915"
+        ]
+      }
+    },
+    {
+      "id": "name-vary",
+      "title": "12.5.5. Vary",
+      "level": 4,
+      "text_sha256": "f861d3dfbde340310959e0741b9e1f0cde4e5a14546d555aedd5811e0432bae3",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-vary",
+          "rfc9110.name-vary-clause-5b5e7068a463",
+          "rfc9110.name-vary-clause-b3718ffebd1e",
+          "rfc9110.name-vary-clause-b40e62c240bd"
+        ]
+      }
+    },
+    {
+      "id": "name-conditional-requests",
+      "title": "13. Conditional Requests",
+      "level": 2,
+      "text_sha256": "d8f2328ee6822b2917c572d409dd901f2c44fb29cd53403011600089b45e9d6d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-conditional-requests"
+        ]
+      }
+    },
+    {
+      "id": "name-preconditions",
+      "title": "13.1. Preconditions",
+      "level": 3,
+      "text_sha256": "cb981cf863646764e309552df9056656c3f9bd31cc9647b1cca2e675f31749ef",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-preconditions",
+          "rfc9110.name-preconditions-clause-d0fadb5a3fae"
+        ]
+      }
+    },
+    {
+      "id": "name-if-match",
+      "title": "13.1.1. If-Match",
+      "level": 4,
+      "text_sha256": "495269ab69b8cf71f1654df42f025effaf6ee61ebf90c3b25703471ebc40de56",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-if-match",
+          "rfc9110.name-if-match-clause-7b6c1a95aa4e",
+          "rfc9110.name-if-match-clause-ae9af91606e1",
+          "rfc9110.name-if-match-clause-3e321ab4c820",
+          "rfc9110.name-if-match-clause-2e9048541eb3"
+        ]
+      }
+    },
+    {
+      "id": "name-if-none-match",
+      "title": "13.1.2. If-None-Match",
+      "level": 4,
+      "text_sha256": "d5d4bbb65c2362414b206f634c4406f1ef6ce84169ce726b98b54da4fdb6daa4",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-if-none-match",
+          "rfc9110.name-if-none-match-clause-ebce2120b0bb",
+          "rfc9110.name-if-none-match-clause-52f2f9ace6d6",
+          "rfc9110.name-if-none-match-clause-86789255134f",
+          "rfc9110.name-if-none-match-clause-d7c8e4042fb4",
+          "rfc9110.name-if-none-match-clause-223e0dcafd8a"
+        ]
+      }
+    },
+    {
+      "id": "name-if-modified-since",
+      "title": "13.1.3. If-Modified-Since",
+      "level": 4,
+      "text_sha256": "7bc2bfc79f60f97b88ec38fb62184dd8c4383f6be735c6ba32f0790d3373a3e9",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-if-modified-since",
+          "rfc9110.name-if-modified-since-clause-25bf94fb21f9",
+          "rfc9110.name-if-modified-since-clause-3e54284666e1",
+          "rfc9110.name-if-modified-since-clause-08c4262547bc",
+          "rfc9110.name-if-modified-since-clause-663727462117",
+          "rfc9110.name-if-modified-since-clause-d17cae27be6e",
+          "rfc9110.name-if-modified-since-clause-e0e365fdc43a"
+        ]
+      }
+    },
+    {
+      "id": "name-if-unmodified-since",
+      "title": "13.1.4. If-Unmodified-Since",
+      "level": 4,
+      "text_sha256": "8fb2c859a9f95748f025f5ca330db9900afb69bad13846f9762d1591af9f5ab5",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-if-unmodified-since",
+          "rfc9110.name-if-unmodified-since-clause-a9cf5c9bb475",
+          "rfc9110.name-if-unmodified-since-clause-eddb6964de13",
+          "rfc9110.name-if-unmodified-since-clause-69f785bed2c7",
+          "rfc9110.name-if-unmodified-since-clause-7ce344c2aa34",
+          "rfc9110.name-if-unmodified-since-clause-5e85fb85e79e",
+          "rfc9110.name-if-unmodified-since-clause-4f4cd1cf825d"
+        ]
+      }
+    },
+    {
+      "id": "name-if-range",
+      "title": "13.1.5. If-Range",
+      "level": 4,
+      "text_sha256": "2261a2bb58875142062ffcb9a796eed134272cc3f1d23f8d7c653327dcb8d278",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-if-range",
+          "rfc9110.name-if-range-clause-29f39cf1cad0",
+          "rfc9110.name-if-range-clause-be4a5a614745",
+          "rfc9110.name-if-range-clause-512065b3884d",
+          "rfc9110.name-if-range-clause-a559f2174c0b"
+        ]
+      }
+    },
+    {
+      "id": "name-evaluation-of-preconditions",
+      "title": "13.2. Evaluation of Preconditions",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-evaluation-of-preconditions"
+        ]
+      }
+    },
+    {
+      "id": "name-when-to-evaluate",
+      "title": "13.2.1. When to Evaluate",
+      "level": 4,
+      "text_sha256": "cda4444d4f852d6a05b24ae25b75851733d644bcbc09d62d2cbac1b2360cd89a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-when-to-evaluate",
+          "rfc9110.name-when-to-evaluate-clause-9a2aebaf5fd5",
+          "rfc9110.name-when-to-evaluate-clause-2a7413e85c54"
+        ]
+      }
+    },
+    {
+      "id": "name-precedence-of-preconditions",
+      "title": "13.2.2. Precedence of Preconditions",
+      "level": 4,
+      "text_sha256": "fe50bda9a502b1de71e025c376849e82a0812a25d85b505b46eb75879d7354c0",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-precedence-of-preconditions",
+          "rfc9110.name-precedence-of-preconditions-clause-3ca8620dd1fa"
+        ]
+      }
+    },
+    {
+      "id": "name-range-requests",
+      "title": "14. Range Requests",
+      "level": 2,
+      "text_sha256": "1c787d0c2dda22463a04e612664bc6fa3a3a6e3718531a8eb44ec6ab9bc0f912",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-range-requests"
+        ]
+      }
+    },
+    {
+      "id": "name-range-units",
+      "title": "14.1. Range Units",
+      "level": 3,
+      "text_sha256": "0aacfe70b7b9267d8f33c799a340e6a2963c94d61149a4af1bab5f80893413d8",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-range-units"
+        ]
+      }
+    },
+    {
+      "id": "name-range-specifiers",
+      "title": "14.1.1. Range Specifiers",
+      "level": 4,
+      "text_sha256": "4557878e6df81645ae6101cb605e40a8c3e5abaf1d5a0200e0965bceb0151997",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-range-specifiers",
+          "rfc9110.name-range-specifiers-clause-19381bb2f4e9",
+          "rfc9110.name-range-specifiers-clause-b7eb82144c5e",
+          "rfc9110.name-range-specifiers-clause-5b8c25527805"
+        ]
+      }
+    },
+    {
+      "id": "name-byte-ranges",
+      "title": "14.1.2. Byte Ranges",
+      "level": 4,
+      "text_sha256": "5a3d930e5bb02c93f7e7506819b24b108e2e86861e8375305c1a83f672739be2",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-byte-ranges",
+          "rfc9110.name-byte-ranges-clause-334c1269565e"
+        ]
+      }
+    },
+    {
+      "id": "name-range",
+      "title": "14.2. Range",
+      "level": 3,
+      "text_sha256": "96e7041a238487013ce9e235269e4b2ce3dd0fd948d6399ee8830e642e61fa68",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-range",
+          "rfc9110.name-range-clause-b69d1d28465b",
+          "rfc9110.name-range-clause-a788362f691e",
+          "rfc9110.name-range-clause-24cf20ffb158",
+          "rfc9110.name-range-clause-00b2982e69f8",
+          "rfc9110.name-range-clause-4f5f52713694",
+          "rfc9110.name-range-clause-4461ee314cd4",
+          "rfc9110.name-range-clause-8155572680b3"
+        ]
+      }
+    },
+    {
+      "id": "name-accept-ranges",
+      "title": "14.3. Accept-Ranges",
+      "level": 3,
+      "text_sha256": "3ceb926513dbcc9940c33dc7b9d1af1a9107b218cc54093f867827ca3b06a2aa",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-accept-ranges",
+          "rfc9110.name-accept-ranges-clause-9a8e1c1a77cd"
+        ]
+      }
+    },
+    {
+      "id": "name-content-range",
+      "title": "14.4. Content-Range",
+      "level": 3,
+      "text_sha256": "d8425f7a2f676d6f779502df2ac1f19645ad5712b791301e4e36554a06f90ca3",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-range",
+          "rfc9110.name-content-range-clause-4381e6186cd6",
+          "rfc9110.name-content-range-clause-10a480ddd4bd",
+          "rfc9110.name-content-range-clause-1db11e804a09",
+          "rfc9110.name-content-range-clause-7b7ea84aa629",
+          "rfc9110.name-content-range-clause-b79fcc6d4196"
+        ]
+      }
+    },
+    {
+      "id": "name-partial-put",
+      "title": "14.5. Partial PUT",
+      "level": 3,
+      "text_sha256": "aa462bd0b12a431dfee678c8279b9c50314880f3540c0762e308f2ef01bd3dde",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-partial-put",
+          "rfc9110.name-partial-put-clause-fe247d95ea1f"
+        ]
+      }
+    },
+    {
+      "id": "name-media-type-multipart-bytera",
+      "title": "14.6. Media Type multipart/byteranges",
+      "level": 3,
+      "text_sha256": "607166c232ea07f2aee81224c07543ecfc94df6fed57ecde00d8bfdbedd1b73a",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-media-type-multipart-bytera",
+          "rfc9110.name-media-type-multipart-bytera-clause-46a709c6ed0f",
+          "rfc9110.name-media-type-multipart-bytera-clause-8076ca292115"
+        ]
+      }
+    },
+    {
+      "id": "name-status-codes",
+      "title": "15. Status Codes",
+      "level": 2,
+      "text_sha256": "ab3c2df5fdca3825d90d4a76ff79131c87d93b940804e3c38a6c862f8a0de742",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-status-codes",
+          "rfc9110.name-status-codes-clause-455fbc3f08ca",
+          "rfc9110.name-status-codes-clause-f3fc80e9c7db"
+        ]
+      }
+    },
+    {
+      "id": "name-overview-of-status-codes",
+      "title": "15.1. Overview of Status Codes",
+      "level": 3,
+      "text_sha256": "83bca4da1c11e9f89041ef8d20b9d0f117499eb309bd95e733de391946a18247",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-overview-of-status-codes"
+        ]
+      }
+    },
+    {
+      "id": "name-informational-1xx",
+      "title": "15.2. Informational 1xx",
+      "level": 3,
+      "text_sha256": "9a50aec2247e473539709c6055c9913bca9b82402e7a491875f9a566bd93e0b4",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-informational-1xx",
+          "rfc9110.name-informational-1xx-clause-7909a708dbdd",
+          "rfc9110.name-informational-1xx-clause-6c95d06ab8dd",
+          "rfc9110.name-informational-1xx-clause-9ebff6b8098b"
+        ]
+      }
+    },
+    {
+      "id": "name-100-continue",
+      "title": "15.2.1. 100 Continue",
+      "level": 4,
+      "text_sha256": "3d56bcb59bc015df6907757fac5443a3d300a81d07802f02471d825e8d7130e7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-100-continue"
+        ]
+      }
+    },
+    {
+      "id": "name-101-switching-protocols",
+      "title": "15.2.2. 101 Switching Protocols",
+      "level": 4,
+      "text_sha256": "34bc7fda0d62a86af4011adf0906790c10fbea5dd3396e8f33fe8280124f94e2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-101-switching-protocols",
+          "rfc9110.name-101-switching-protocols-clause-d70c0247d540"
+        ]
+      }
+    },
+    {
+      "id": "name-successful-2xx",
+      "title": "15.3. Successful 2xx",
+      "level": 3,
+      "text_sha256": "5f7556f26dbb2cc45137ac4e767d84197c7deee5b3583a37cf1305ed26f54a2d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-successful-2xx"
+        ]
+      }
+    },
+    {
+      "id": "name-200-ok",
+      "title": "15.3.1. 200 OK",
+      "level": 4,
+      "text_sha256": "b8a7b2461d8bb83e8a3d57270f7dd4b77d5ddbdb83ef8e38c57e6a92252a7d28",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-200-ok",
+          "rfc9110.name-200-ok-clause-07fd00a17c48",
+          "rfc9110.name-200-ok-clause-b3d16da3a693"
+        ]
+      }
+    },
+    {
+      "id": "name-201-created",
+      "title": "15.3.2. 201 Created",
+      "level": 4,
+      "text_sha256": "849f5334d2b6a431ad203c62caaa4959fb41ae5844874485a8840cd97801d8ae",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-201-created"
+        ]
+      }
+    },
+    {
+      "id": "name-202-accepted",
+      "title": "15.3.3. 202 Accepted",
+      "level": 4,
+      "text_sha256": "940c1f185fb97c728263b61bc2754e22828ab0c0f2aa9328a5d27bcd2ac99cd8",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-202-accepted"
+        ]
+      }
+    },
+    {
+      "id": "name-203-non-authoritative-infor",
+      "title": "15.3.4. 203 Non-Authoritative Information",
+      "level": 4,
+      "text_sha256": "10a83e4f593d6c7997243a931aceebf4cdfb356ea0ec0057ab002a2011ded97a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-203-non-authoritative-infor"
+        ]
+      }
+    },
+    {
+      "id": "name-204-no-content",
+      "title": "15.3.5. 204 No Content",
+      "level": 4,
+      "text_sha256": "8eb64257c4418973a01afcf1fbd4cd117a2c87851a866352033d078a911b8193",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-204-no-content"
+        ]
+      }
+    },
+    {
+      "id": "name-205-reset-content",
+      "title": "15.3.6. 205 Reset Content",
+      "level": 4,
+      "text_sha256": "4dce67e71b39908bf8ba28ed6454a83be03aa2db59dad8f22b8f3f2d6d3bf2d5",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-205-reset-content",
+          "rfc9110.name-205-reset-content-clause-2582bf175d50"
+        ]
+      }
+    },
+    {
+      "id": "name-206-partial-content",
+      "title": "15.3.7. 206 Partial Content",
+      "level": 4,
+      "text_sha256": "647b72e083efc3279fa75c772df0aebd57ff65d2c0fbf897fa1d18741924e45d",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-206-partial-content",
+          "rfc9110.name-206-partial-content-clause-22bf5b9731e3",
+          "rfc9110.name-206-partial-content-clause-32e27584ae7b",
+          "rfc9110.name-206-partial-content-clause-dd15e16875c1"
+        ]
+      }
+    },
+    {
+      "id": "name-single-part",
+      "title": "15.3.7.1. Single Part",
+      "level": 5,
+      "text_sha256": "63da47d3cec11b73ac940884bc52f82c38684af5dbf87f33321a8dad00707f49",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-single-part",
+          "rfc9110.name-single-part-clause-62efcf905228"
+        ]
+      }
+    },
+    {
+      "id": "name-multiple-parts",
+      "title": "15.3.7.2. Multiple Parts",
+      "level": 5,
+      "text_sha256": "d4cf5a5158e57e84a718fdac75e443697097c724bcf2c62a90f987a468e4d7d4",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-multiple-parts",
+          "rfc9110.name-multiple-parts-clause-5e2409e34519",
+          "rfc9110.name-multiple-parts-clause-7267ca71c8b8",
+          "rfc9110.name-multiple-parts-clause-de590a9d3663",
+          "rfc9110.name-multiple-parts-clause-4461033a6e8a"
+        ]
+      }
+    },
+    {
+      "id": "name-combining-parts",
+      "title": "15.3.7.3. Combining Parts",
+      "level": 5,
+      "text_sha256": "9e5fd187c6fc41ecd192ecf85ac7807e9dc659f1c14a552b8e12a834470398fd",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-combining-parts",
+          "rfc9110.name-combining-parts-clause-c9cd9343c4e0",
+          "rfc9110.name-combining-parts-clause-8745c399df32"
+        ]
+      }
+    },
+    {
+      "id": "name-redirection-3xx",
+      "title": "15.4. Redirection 3xx",
+      "level": 3,
+      "text_sha256": "e9ab8406f1561f7a532aeeb72092a370ede64d871deeec064286710090434913",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-redirection-3xx",
+          "rfc9110.name-redirection-3xx-clause-33d250908dd5",
+          "rfc9110.name-redirection-3xx-clause-ecf103e4bc99"
+        ]
+      }
+    },
+    {
+      "id": "name-300-multiple-choices",
+      "title": "15.4.1. 300 Multiple Choices",
+      "level": 4,
+      "text_sha256": "a21213b354fee3ca20e01d9bbd667abf070a2fc7f320dacc1e5ec53914ce9421",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-300-multiple-choices",
+          "rfc9110.name-300-multiple-choices-clause-f62be23a8299",
+          "rfc9110.name-300-multiple-choices-clause-f678edcba688"
+        ]
+      }
+    },
+    {
+      "id": "name-301-moved-permanently",
+      "title": "15.4.2. 301 Moved Permanently",
+      "level": 4,
+      "text_sha256": "2884e6c1f87a548b8663f6e3e4a25a699d563ec3b1e0efe8496c431b9aee68cc",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-301-moved-permanently",
+          "rfc9110.name-301-moved-permanently-clause-f740277e2f5f",
+          "rfc9110.name-301-moved-permanently-clause-234e8895b921"
+        ]
+      }
+    },
+    {
+      "id": "name-302-found",
+      "title": "15.4.3. 302 Found",
+      "level": 4,
+      "text_sha256": "a3be9072c46270bfdf460679ae6543972ee0864f695359ef60b262a517f147d9",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-302-found",
+          "rfc9110.name-302-found-clause-3976c3b21a68"
+        ]
+      }
+    },
+    {
+      "id": "name-303-see-other",
+      "title": "15.4.4. 303 See Other",
+      "level": 4,
+      "text_sha256": "a5c5ca8631b4136d92afab83c19963c5857a10cb72933ddcd627a017a16322c1",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-303-see-other"
+        ]
+      }
+    },
+    {
+      "id": "name-304-not-modified",
+      "title": "15.4.5. 304 Not Modified",
+      "level": 4,
+      "text_sha256": "7f4d27bbf25c5d485d83f03fdbbe7f7d584ed297678503ca4753a191b609c2c9",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-304-not-modified",
+          "rfc9110.name-304-not-modified-clause-ef8b56af2456",
+          "rfc9110.name-304-not-modified-clause-473865ee4066",
+          "rfc9110.name-304-not-modified-clause-1e4eea260d24"
+        ]
+      }
+    },
+    {
+      "id": "name-305-use-proxy",
+      "title": "15.4.6. 305 Use Proxy",
+      "level": 4,
+      "text_sha256": "3d627eb468808f5554b246884078ab0d9ad18e323bc227e55899b714a585e2eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-305-use-proxy"
+        ]
+      }
+    },
+    {
+      "id": "name-306-unused",
+      "title": "15.4.7. 306 (Unused)",
+      "level": 4,
+      "text_sha256": "551cddbefac25d0fc40b3afe70bb7db26406a18c99fd717556626769720eb4b8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-306-unused"
+        ]
+      }
+    },
+    {
+      "id": "name-307-temporary-redirect",
+      "title": "15.4.8. 307 Temporary Redirect",
+      "level": 4,
+      "text_sha256": "2fd763df9267a9e7d0caf6870ccd1fee90b8bfad5684b8aee1e35f347d0e9aa9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-307-temporary-redirect",
+          "rfc9110.name-307-temporary-redirect-clause-2f9246b18317",
+          "rfc9110.name-307-temporary-redirect-clause-3976c3b21a68"
+        ]
+      }
+    },
+    {
+      "id": "name-308-permanent-redirect",
+      "title": "15.4.9. 308 Permanent Redirect",
+      "level": 4,
+      "text_sha256": "3d2329c7e915e45b93b3331d50391f9a4b33261c01a61f03bf714f506ba8e183",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-308-permanent-redirect",
+          "rfc9110.name-308-permanent-redirect-clause-01715844dedf",
+          "rfc9110.name-308-permanent-redirect-clause-234e8895b921"
+        ]
+      }
+    },
+    {
+      "id": "name-client-error-4xx",
+      "title": "15.5. Client Error 4xx",
+      "level": 3,
+      "text_sha256": "76f04b1cbc0895a3729927080005f0052918db83b5822fb22e7d288bf2ed777a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-client-error-4xx",
+          "rfc9110.name-client-error-4xx-clause-76f04b1cbc08"
+        ]
+      }
+    },
+    {
+      "id": "name-400-bad-request",
+      "title": "15.5.1. 400 Bad Request",
+      "level": 4,
+      "text_sha256": "eef714930f63b931244da9bbe86f055c3402169523cfe5c6671698302627641b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-400-bad-request",
+          "rfc9110.name-400-bad-request-clause-eef714930f63"
+        ]
+      }
+    },
+    {
+      "id": "name-401-unauthorized",
+      "title": "15.5.2. 401 Unauthorized",
+      "level": 4,
+      "text_sha256": "a6095b5362c89725b51e75094e5a9601d0568f1a1e4e4e4a3c08332f8976ce0e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-401-unauthorized",
+          "rfc9110.name-401-unauthorized-clause-1fe8dc3ccd15",
+          "rfc9110.name-401-unauthorized-clause-add079ec9a7f"
+        ]
+      }
+    },
+    {
+      "id": "name-402-payment-required",
+      "title": "15.5.3. 402 Payment Required",
+      "level": 4,
+      "text_sha256": "3d67d3c7314948c5859fbd0ab938554082360ca34dffed8301e68d3205670c5d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-402-payment-required",
+          "rfc9110.name-402-payment-required-clause-3d67d3c73149"
+        ]
+      }
+    },
+    {
+      "id": "name-403-forbidden",
+      "title": "15.5.4. 403 Forbidden",
+      "level": 4,
+      "text_sha256": "13bb2d08361aa3c27f8d4ac1af2a09704a73ed0709efc718d2ba0d64abcf8d82",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-403-forbidden",
+          "rfc9110.name-403-forbidden-clause-2682613b5079"
+        ]
+      }
+    },
+    {
+      "id": "name-404-not-found",
+      "title": "15.5.5. 404 Not Found",
+      "level": 4,
+      "text_sha256": "e3f4c8763996bce9b8dcb23bf2e95833c0d07ce9faa7fb9e457da53853e7aa25",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-404-not-found"
+        ]
+      }
+    },
+    {
+      "id": "name-405-method-not-allowed",
+      "title": "15.5.6. 405 Method Not Allowed",
+      "level": 4,
+      "text_sha256": "39374e872fcaee7f2663fcf175d2aa8a451758230192871f4c2b96d04ff9927c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-405-method-not-allowed",
+          "rfc9110.name-405-method-not-allowed-clause-c602a6e58bc7"
+        ]
+      }
+    },
+    {
+      "id": "name-406-not-acceptable",
+      "title": "15.5.7. 406 Not Acceptable",
+      "level": 4,
+      "text_sha256": "01b1768ff379e2a758cc99663d808220fd004bebde56cb8a6573e09b646a692e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-406-not-acceptable",
+          "rfc9110.name-406-not-acceptable-clause-fd4e31f176e2"
+        ]
+      }
+    },
+    {
+      "id": "name-407-proxy-authentication-re",
+      "title": "15.5.8. 407 Proxy Authentication Required",
+      "level": 4,
+      "text_sha256": "6fb29b54101ca67b3119b5c96af058568a36c8dc20462c1e3a1d0d3476933cfa",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-407-proxy-authentication-re",
+          "rfc9110.name-407-proxy-authentication-re-clause-6fb29b54101c"
+        ]
+      }
+    },
+    {
+      "id": "name-408-request-timeout",
+      "title": "15.5.9. 408 Request Timeout",
+      "level": 4,
+      "text_sha256": "9d24f6340c733a2f9b81434f806084c6cc67289734d5bdd9c7b434fd899b48f8",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-408-request-timeout"
+        ]
+      }
+    },
+    {
+      "id": "name-409-conflict",
+      "title": "15.5.10. 409 Conflict",
+      "level": 4,
+      "text_sha256": "3db1850437f7ea0c888d4fb0e201df0d457c9204b9ef39a2bd620fb00d0d6fae",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-409-conflict",
+          "rfc9110.name-409-conflict-clause-a4bc440bbe8f"
+        ]
+      }
+    },
+    {
+      "id": "name-410-gone",
+      "title": "15.5.11. 410 Gone",
+      "level": 4,
+      "text_sha256": "9d3e65582192b830122bb80d062c2fc07d2c2ce2f14b49a72e649e3907aaaf00",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-410-gone"
+        ]
+      }
+    },
+    {
+      "id": "name-411-length-required",
+      "title": "15.5.12. 411 Length Required",
+      "level": 4,
+      "text_sha256": "72951a84dda1b098d7837680443049804387286f23900ef9f1e835fb2f2a51d3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-411-length-required",
+          "rfc9110.name-411-length-required-clause-72951a84dda1"
+        ]
+      }
+    },
+    {
+      "id": "name-412-precondition-failed",
+      "title": "15.5.13. 412 Precondition Failed",
+      "level": 4,
+      "text_sha256": "6a2d94368365e34bb1ce5cb0a6b7db9ccb7564d6fc5c628047e9d17353db6650",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-412-precondition-failed"
+        ]
+      }
+    },
+    {
+      "id": "name-413-content-too-large",
+      "title": "15.5.14. 413 Content Too Large",
+      "level": 4,
+      "text_sha256": "fde1f5466ecd7304a8baa3fafed96ffe67b761581ac341e365bcb6293153e6db",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-413-content-too-large",
+          "rfc9110.name-413-content-too-large-clause-513c509af6d6"
+        ]
+      }
+    },
+    {
+      "id": "name-414-uri-too-long",
+      "title": "15.5.15. 414 URI Too Long",
+      "level": 4,
+      "text_sha256": "274fbefc414a3ae43cb55c460b72f7e0fa2ba539c532363507a6fe6a730bcf99",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-414-uri-too-long"
+        ]
+      }
+    },
+    {
+      "id": "name-415-unsupported-media-type",
+      "title": "15.5.16. 415 Unsupported Media Type",
+      "level": 4,
+      "text_sha256": "5df820fe1e69a6f2808b70b129b752d663a919ab0b177b16b75fed311ab3f98a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-415-unsupported-media-type"
+        ]
+      }
+    },
+    {
+      "id": "name-416-range-not-satisfiable",
+      "title": "15.5.17. 416 Range Not Satisfiable",
+      "level": 4,
+      "text_sha256": "5710cbb2b711ad56652a4aeea817b0030fdebd3579a1268490b0a3ca1e3cbe10",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-416-range-not-satisfiable",
+          "rfc9110.name-416-range-not-satisfiable-clause-0fc8385786ed",
+          "rfc9110.name-416-range-not-satisfiable-clause-d07f0733527d",
+          "rfc9110.name-416-range-not-satisfiable-clause-38ed27cd59e4"
+        ]
+      }
+    },
+    {
+      "id": "name-417-expectation-failed",
+      "title": "15.5.18. 417 Expectation Failed",
+      "level": 4,
+      "text_sha256": "9f43300f90f08ef1e74b2d080500839c4458391a189a01a83b9b088183a3b4db",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-417-expectation-failed"
+        ]
+      }
+    },
+    {
+      "id": "name-418-unused",
+      "title": "15.5.19. 418 (Unused)",
+      "level": 4,
+      "text_sha256": "1a6a3366ee875ba13d162c044f0073f4e984efe971663f8ffd5ffe1a29a79a36",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-418-unused"
+        ]
+      }
+    },
+    {
+      "id": "name-421-misdirected-request",
+      "title": "15.5.20. 421 Misdirected Request",
+      "level": 4,
+      "text_sha256": "f7db07aab33a21d8a7eea2f3fabccb28156c6c2de6e4e960d722016d2a5e4fb6",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-421-misdirected-request",
+          "rfc9110.name-421-misdirected-request-clause-3867685682d9"
+        ]
+      }
+    },
+    {
+      "id": "name-422-unprocessable-content",
+      "title": "15.5.21. 422 Unprocessable Content",
+      "level": 4,
+      "text_sha256": "9cc271bd3ca9f12c092c945da531fc460c83190d79475a76e391835860218e85",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-422-unprocessable-content"
+        ]
+      }
+    },
+    {
+      "id": "name-426-upgrade-required",
+      "title": "15.5.22. 426 Upgrade Required",
+      "level": 4,
+      "text_sha256": "69771fb1f18d8b88cac8992fb0de50d82f0d1d7bce92b39ef3b2eaf0254f9b2d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-426-upgrade-required",
+          "rfc9110.name-426-upgrade-required-clause-d69fd2f9ca27",
+          "rfc9110.name-426-upgrade-required-clause-5fadb3fcdcfe"
+        ]
+      }
+    },
+    {
+      "id": "name-server-error-5xx",
+      "title": "15.6. Server Error 5xx",
+      "level": 3,
+      "text_sha256": "c0e27e540979ed644bcf0ae6833cd6b08588505034c1dae7dc9794599a44cb3f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-server-error-5xx",
+          "rfc9110.name-server-error-5xx-clause-c0e27e540979"
+        ]
+      }
+    },
+    {
+      "id": "name-500-internal-server-error",
+      "title": "15.6.1. 500 Internal Server Error",
+      "level": 4,
+      "text_sha256": "f285ee3b362354ce20915cb439fd634e58203fe36dd7f0bc352d548d1f84fb74",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-500-internal-server-error"
+        ]
+      }
+    },
+    {
+      "id": "name-501-not-implemented",
+      "title": "15.6.2. 501 Not Implemented",
+      "level": 4,
+      "text_sha256": "f75df315d86fe83ba4f0b7dc5587b93f121b3cc9023c77f28a106b750ffb23ef",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-501-not-implemented",
+          "rfc9110.name-501-not-implemented-clause-7bcfbda83fbd"
+        ]
+      }
+    },
+    {
+      "id": "name-502-bad-gateway",
+      "title": "15.6.3. 502 Bad Gateway",
+      "level": 4,
+      "text_sha256": "05bd460446dc72e967f49b459110dc86898527b71507670aa58edefafdab1e45",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-502-bad-gateway",
+          "rfc9110.name-502-bad-gateway-clause-05bd460446dc"
+        ]
+      }
+    },
+    {
+      "id": "name-503-service-unavailable",
+      "title": "15.6.4. 503 Service Unavailable",
+      "level": 4,
+      "text_sha256": "3f0bea21345d9356cffe9ed3b63081cb1e5c883558dfaad33086a6b1a544e3f9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-503-service-unavailable"
+        ]
+      }
+    },
+    {
+      "id": "name-504-gateway-timeout",
+      "title": "15.6.5. 504 Gateway Timeout",
+      "level": 4,
+      "text_sha256": "b8f88f4859fb91a92843f88099515239c3f10af7bada683ff83cb9225dfd89fb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-504-gateway-timeout"
+        ]
+      }
+    },
+    {
+      "id": "name-505-http-version-not-suppor",
+      "title": "15.6.6. 505 HTTP Version Not Supported",
+      "level": 4,
+      "text_sha256": "af633251b4c436d765e103e91f945ac2f8338f7d4ca399d03b030a97a0bddc0a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-505-http-version-not-suppor",
+          "rfc9110.name-505-http-version-not-suppor-clause-af633251b4c4"
+        ]
+      }
+    },
+    {
+      "id": "name-extending-http",
+      "title": "16. Extending HTTP",
+      "level": 2,
+      "text_sha256": "83734e4cc4b82e03fd85e99528d33d6361683e6190d76d13e73d4311941f4ba3",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-extending-http"
+        ]
+      }
+    },
+    {
+      "id": "name-method-extensibility",
+      "title": "16.1. Method Extensibility",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-method-extensibility"
+        ]
+      }
+    },
+    {
+      "id": "name-method-registry",
+      "title": "16.1.1. Method Registry",
+      "level": 4,
+      "text_sha256": "8a3bd0fe19f1816ef5100a249d3b8bdf0c2bc895e3b6ab58447ad3731f1a4019",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-method-registry",
+          "rfc9110.name-method-registry-clause-5b9c4c5ea272"
+        ]
+      }
+    },
+    {
+      "id": "name-considerations-for-new-meth",
+      "title": "16.1.2. Considerations for New Methods",
+      "level": 4,
+      "text_sha256": "a96938fab0a81cc6e70920ac06c106e8daab9071194cf3cbf37e36bc33ccaa05",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-considerations-for-new-meth",
+          "rfc9110.name-considerations-for-new-meth-clause-3503745cf1fd"
+        ]
+      }
+    },
+    {
+      "id": "name-status-code-extensibility",
+      "title": "16.2. Status Code Extensibility",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-status-code-extensibility"
+        ]
+      }
+    },
+    {
+      "id": "name-status-code-registry",
+      "title": "16.2.1. Status Code Registry",
+      "level": 4,
+      "text_sha256": "b7dbc8dcbb0a90d11ec688290798a0be8e27efd52410eda3f352c46ca1d76b60",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-status-code-registry",
+          "rfc9110.name-status-code-registry-clause-9c4913e6b85f"
+        ]
+      }
+    },
+    {
+      "id": "name-considerations-for-new-stat",
+      "title": "16.2.2. Considerations for New Status Codes",
+      "level": 4,
+      "text_sha256": "b43fb888c9b02c2d65894b7d4099a3bdc8898c1191a282302498cfd7477e93d1",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-considerations-for-new-stat",
+          "rfc9110.name-considerations-for-new-stat-clause-f646b45a7227",
+          "rfc9110.name-considerations-for-new-stat-clause-4212373b984c",
+          "rfc9110.name-considerations-for-new-stat-clause-eb7620f821fd",
+          "rfc9110.name-considerations-for-new-stat-clause-a16ea60cee14"
+        ]
+      }
+    },
+    {
+      "id": "name-field-extensibility",
+      "title": "16.3. Field Extensibility",
+      "level": 3,
+      "text_sha256": "c41cdd19dfe1f8d17bf35a6408df109e3f748b009f4584b0cf5ee3f82c1308d9",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-field-extensibility"
+        ]
+      }
+    },
+    {
+      "id": "name-field-name-registry",
+      "title": "16.3.1. Field Name Registry",
+      "level": 4,
+      "text_sha256": "0f84229c7cdb86322aa0035197aac36207fe35ea1fa4d38542656e289af41afe",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-field-name-registry",
+          "rfc9110.name-field-name-registry-clause-931bc1a2cf4e",
+          "rfc9110.name-field-name-registry-clause-3dd27620fdbe",
+          "rfc9110.name-field-name-registry-clause-6bdf6bedecb9",
+          "rfc9110.name-field-name-registry-clause-27f290955f70"
+        ]
+      }
+    },
+    {
+      "id": "name-considerations-for-new-fiel",
+      "title": "16.3.2. Considerations for New Fields",
+      "level": 4,
+      "text_sha256": "4bdecb0239af1d987aa7b4410bb7bc4b021d9a6f5240cbd2cf2fbbe6a34d6c17",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-considerations-for-new-fiel",
+          "rfc9110.name-considerations-for-new-fiel-clause-8ed7153f912b",
+          "rfc9110.name-considerations-for-new-fiel-clause-afcf245d2f2f"
+        ]
+      }
+    },
+    {
+      "id": "name-considerations-for-new-field",
+      "title": "16.3.2.1. Considerations for New Field Names",
+      "level": 5,
+      "text_sha256": "6d495e227c18182c33f834ba92087bfc879994b0d6bb649c903c535acf91af73",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-considerations-for-new-field",
+          "rfc9110.name-considerations-for-new-field-clause-53326c628c34"
+        ]
+      }
+    },
+    {
+      "id": "name-considerations-for-new-field-",
+      "title": "16.3.2.2. Considerations for New Field Values",
+      "level": 5,
+      "text_sha256": "51c908c314cd110e9c905f18c2ac6ae05212c952ae663e597146d3e283dd556a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-considerations-for-new-field-52408bc437",
+          "rfc9110.name-considerations-for-new-field-52408bc437-clause-97ff7b20f38e",
+          "rfc9110.name-considerations-for-new-field-52408bc437-clause-f016faf229d3",
+          "rfc9110.name-considerations-for-new-field-52408bc437-clause-5da5848d6840"
+        ]
+      }
+    },
+    {
+      "id": "name-authentication-scheme-exten",
+      "title": "16.4. Authentication Scheme Extensibility",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authentication-scheme-exten"
+        ]
+      }
+    },
+    {
+      "id": "name-authentication-scheme-regis",
+      "title": "16.4.1. Authentication Scheme Registry",
+      "level": 4,
+      "text_sha256": "3488f203d8dee0f80016f13604f0255d14ef24ef8d5af443ab805a3e573adf41",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authentication-scheme-regis",
+          "rfc9110.name-authentication-scheme-regis-clause-673d7ca0b24c"
+        ]
+      }
+    },
+    {
+      "id": "name-considerations-for-new-auth",
+      "title": "16.4.2. Considerations for New Authentication Schemes",
+      "level": 4,
+      "text_sha256": "418ed2386091c5a1021f796ca299503ad58a67d78e8c5ab041c8f687db623b69",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-considerations-for-new-auth",
+          "rfc9110.name-considerations-for-new-auth-clause-0061d8aa0cba",
+          "rfc9110.name-considerations-for-new-auth-clause-5070277bb1f4",
+          "rfc9110.name-considerations-for-new-auth-clause-d89258238083"
+        ]
+      }
+    },
+    {
+      "id": "name-range-unit-extensibility",
+      "title": "16.5. Range Unit Extensibility",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-range-unit-extensibility"
+        ]
+      }
+    },
+    {
+      "id": "name-range-unit-registry",
+      "title": "16.5.1. Range Unit Registry",
+      "level": 4,
+      "text_sha256": "e935c5b4d60309d3b36c1b3165115b274f5b282cdc2ff5fb9f3dc66cba219978",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-range-unit-registry",
+          "rfc9110.name-range-unit-registry-clause-48e094f61055"
+        ]
+      }
+    },
+    {
+      "id": "name-considerations-for-new-rang",
+      "title": "16.5.2. Considerations for New Range Units",
+      "level": 4,
+      "text_sha256": "87a46d029dc13e65fe658ebe5996b12b22c49f8595e932dddc40a3ff78e0d018",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-considerations-for-new-rang"
+        ]
+      }
+    },
+    {
+      "id": "name-content-coding-extensibilit",
+      "title": "16.6. Content Coding Extensibility",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-coding-extensibilit"
+        ]
+      }
+    },
+    {
+      "id": "name-content-coding-registry",
+      "title": "16.6.1. Content Coding Registry",
+      "level": 4,
+      "text_sha256": "cdc9c01aa3b2ca0625d0e8497df7df1d3db9fccc11d418f6a6ec1cfd5837f191",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-coding-registry",
+          "rfc9110.name-content-coding-registry-clause-45f8c271d665",
+          "rfc9110.name-content-coding-registry-clause-2a6cc3150e0c",
+          "rfc9110.name-content-coding-registry-clause-242e5fc7e861"
+        ]
+      }
+    },
+    {
+      "id": "name-considerations-for-new-cont",
+      "title": "16.6.2. Considerations for New Content Codings",
+      "level": 4,
+      "text_sha256": "896604385919a25d2bc0d343d5dfc009709493fd49a32876b73b30d18f17810c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-considerations-for-new-cont"
+        ]
+      }
+    },
+    {
+      "id": "name-upgrade-token-registry",
+      "title": "16.7. Upgrade Token Registry",
+      "level": 3,
+      "text_sha256": "517f0176b14a2341b249c7086048d5f2a35f57f870eb523d34bb8c3c828041f8",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-upgrade-token-registry",
+          "rfc9110.name-upgrade-token-registry-clause-f93106234c54",
+          "rfc9110.name-upgrade-token-registry-clause-80c550e04ed7",
+          "rfc9110.name-upgrade-token-registry-clause-8ea99f7b9334"
+        ]
+      }
+    },
+    {
+      "id": "name-security-considerations",
+      "title": "17. Security Considerations",
+      "level": 2,
+      "text_sha256": "63d466e0b58dcc6a94e2e88dfec7e388ac7117254805ea14a040c171787d8263",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-security-considerations"
+        ]
+      }
+    },
+    {
+      "id": "name-establishing-authority",
+      "title": "17.1. Establishing Authority",
+      "level": 3,
+      "text_sha256": "ce36f3f6d963d3ab7b8e373582b2727d4113dcf4cc5499e09986f5d4f53f37e2",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-establishing-authority"
+        ]
+      }
+    },
+    {
+      "id": "name-risks-of-intermediaries",
+      "title": "17.2. Risks of Intermediaries",
+      "level": 3,
+      "text_sha256": "81fc271fa5ef713c97d9f184158feff4be030e72d41d5b0a2d316a640fe0c47a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-risks-of-intermediaries"
+        ]
+      }
+    },
+    {
+      "id": "name-attacks-based-on-file-and-p",
+      "title": "17.3. Attacks Based on File and Path Names",
+      "level": 3,
+      "text_sha256": "f375cd357a5428fdb613f20838921fae410475a18134442107d01db2a5a95128",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-attacks-based-on-file-and-p",
+          "rfc9110.name-attacks-based-on-file-and-p-clause-c7b2de16f6bf"
+        ]
+      }
+    },
+    {
+      "id": "name-attacks-based-on-command-co",
+      "title": "17.4. Attacks Based on Command, Code, or Query Injection",
+      "level": 3,
+      "text_sha256": "6bfe32a708251d957d8cd8e8f3c4c6ae2c2940267a1ddab71a2ab7f630cce3ef",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-attacks-based-on-command-co"
+        ]
+      }
+    },
+    {
+      "id": "name-attacks-via-protocol-elemen",
+      "title": "17.5. Attacks via Protocol Element Length",
+      "level": 3,
+      "text_sha256": "bfa036b4dc2f58bee3427d00096206f1215b2b468a2a2fb2256c711ecf7bb9ff",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-attacks-via-protocol-elemen",
+          "rfc9110.name-attacks-via-protocol-elemen-clause-7da8dac3893c"
+        ]
+      }
+    },
+    {
+      "id": "name-attacks-using-shared-dictio",
+      "title": "17.6. Attacks Using Shared-Dictionary Compression",
+      "level": 3,
+      "text_sha256": "a5b69e049fe9374dadad1af27ef00cca88851a53e1b367c6290ccdc16f38af52",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-attacks-using-shared-dictio",
+          "rfc9110.name-attacks-using-shared-dictio-clause-bd814c38085b"
+        ]
+      }
+    },
+    {
+      "id": "name-disclosure-of-personal-info",
+      "title": "17.7. Disclosure of Personal Information",
+      "level": 3,
+      "text_sha256": "4d5a5d5038b8ad2d22992d0cf2ce58890dc73ab8b5d5baa534082c1b8363c78e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-disclosure-of-personal-info"
+        ]
+      }
+    },
+    {
+      "id": "name-privacy-of-server-log-infor",
+      "title": "17.8. Privacy of Server Log Information",
+      "level": 3,
+      "text_sha256": "2b14c7f894ac19ef97c808c3bf6bfe9aa5712f095b3b0fdbe65e0ecea16bd55a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-privacy-of-server-log-infor"
+        ]
+      }
+    },
+    {
+      "id": "name-disclosure-of-sensitive-inf",
+      "title": "17.9. Disclosure of Sensitive Information in URIs",
+      "level": 3,
+      "text_sha256": "24c9552247c1ebba7a26dca1db0793a13c8192748b0afd03b07178790cb77541",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-disclosure-of-sensitive-inf"
+        ]
+      }
+    },
+    {
+      "id": "name-application-handling-of-fie",
+      "title": "17.10. Application Handling of Field Names",
+      "level": 3,
+      "text_sha256": "388a1ca6277beff2c8822ccdf54d74b4a4fdf9b6e97b6927ea6c541815376720",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-application-handling-of-fie"
+        ]
+      }
+    },
+    {
+      "id": "name-disclosure-of-fragment-afte",
+      "title": "17.11. Disclosure of Fragment after Redirects",
+      "level": 3,
+      "text_sha256": "954e27275f10cc4f313a029af83d4fcd9183f2f446352dcce27cf1ac830a1310",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-disclosure-of-fragment-afte"
+        ]
+      }
+    },
+    {
+      "id": "name-disclosure-of-product-infor",
+      "title": "17.12. Disclosure of Product Information",
+      "level": 3,
+      "text_sha256": "8996eb8836ebf6a8f3cdf06696b5193bed8facd256bd183b6c26138b9a00e385",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-disclosure-of-product-infor"
+        ]
+      }
+    },
+    {
+      "id": "name-browser-fingerprinting",
+      "title": "17.13. Browser Fingerprinting",
+      "level": 3,
+      "text_sha256": "062c17812c24ae3a3078fb5ed157b6cee1d2709b359aa4ffab08126cc66905ab",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-browser-fingerprinting",
+          "rfc9110.name-browser-fingerprinting-clause-975704d12e2b",
+          "rfc9110.name-browser-fingerprinting-clause-9ef1671cd0e5"
+        ]
+      }
+    },
+    {
+      "id": "name-validator-retention",
+      "title": "17.14. Validator Retention",
+      "level": 3,
+      "text_sha256": "5d0e507ae55cb93ed14826df62b7aae7266a829770af9697aaedbaf49dd5df3e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-validator-retention",
+          "rfc9110.name-validator-retention-clause-43de6ed2871d"
+        ]
+      }
+    },
+    {
+      "id": "name-denial-of-service-attacks-u",
+      "title": "17.15. Denial-of-Service Attacks Using Range",
+      "level": 3,
+      "text_sha256": "01183ae7da24ecf6a9d1741363e52e62c388b3c5c2339a68998acca5e7a6fb3f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-denial-of-service-attacks-u",
+          "rfc9110.name-denial-of-service-attacks-u-clause-01183ae7da24"
+        ]
+      }
+    },
+    {
+      "id": "name-authentication-consideratio",
+      "title": "17.16. Authentication Considerations",
+      "level": 3,
+      "text_sha256": "f2decf43b7e92837742c7d9d6337d97e2f61bed1dc068a1468727e9f51ac73b8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authentication-consideratio"
+        ]
+      }
+    },
+    {
+      "id": "name-confidentiality-of-credenti",
+      "title": "17.16.1. Confidentiality of Credentials",
+      "level": 4,
+      "text_sha256": "92629f8b4f1585e788529d92a9cff20d16dfafe1bbfe0d727d1f3665949ee27d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-confidentiality-of-credenti"
+        ]
+      }
+    },
+    {
+      "id": "name-credentials-and-idle-client",
+      "title": "17.16.2. Credentials and Idle Clients",
+      "level": 4,
+      "text_sha256": "70a1844ee70f34333e0c2d0ff92b00297508f6e7d8ecb227a9014129cea6f3b1",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-credentials-and-idle-client"
+        ]
+      }
+    },
+    {
+      "id": "name-protection-spaces",
+      "title": "17.16.3. Protection Spaces",
+      "level": 4,
+      "text_sha256": "bacea8d08800b83fb9eb47ba2d06ff892933f344ad1af10c84bd527d1cb8f27f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-protection-spaces"
+        ]
+      }
+    },
+    {
+      "id": "name-additional-response-fields",
+      "title": "17.16.4. Additional Response Fields",
+      "level": 4,
+      "text_sha256": "4772643a4f999c8533d1139fac85f0d17eb5ed2d3b05b227c1fb3eb78a85a0a0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-additional-response-fields"
+        ]
+      }
+    },
+    {
+      "id": "name-iana-considerations",
+      "title": "18. IANA Considerations",
+      "level": 2,
+      "text_sha256": "2cd0d55114db7430dfe3582620372082be46dc4b3ea7d0a38949b5aa32a11d68",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-iana-considerations"
+        ]
+      }
+    },
+    {
+      "id": "name-uri-scheme-registration",
+      "title": "18.1. URI Scheme Registration",
+      "level": 3,
+      "text_sha256": "30c9d6e82646f9cfc278fcb88fb0f6edc506820fb948068c469b28c2cf21f377",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-uri-scheme-registration"
+        ]
+      }
+    },
+    {
+      "id": "name-method-registration",
+      "title": "18.2. Method Registration",
+      "level": 3,
+      "text_sha256": "134fef6428f6b28411ad94eae848a8a7b80d4a035c1dac237a8bab8830c0831c",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-method-registration"
+        ]
+      }
+    },
+    {
+      "id": "name-status-code-registration",
+      "title": "18.3. Status Code Registration",
+      "level": 3,
+      "text_sha256": "5209491770939b3a4989b42dcf4961bb037f3158ec0cb5bfb8a2958011b7358f",
+      "clause_count": 142,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-status-code-registration",
+          "rfc9110.name-status-code-registration-clause-a117c80bcb9c",
+          "rfc9110.name-status-code-registration-clause-92b1d9205623",
+          "rfc9110.name-status-code-registration-clause-29e418c432ee",
+          "rfc9110.name-status-code-registration-clause-16487236d4ed"
+        ]
+      }
+    },
+    {
+      "id": "name-field-name-registration",
+      "title": "18.4. Field Name Registration",
+      "level": 3,
+      "text_sha256": "5044cc79bd1a99eaf1fde825374fb1fa73c75193ca4044626e641aac3e110621",
+      "clause_count": 147,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-field-name-registration"
+        ]
+      }
+    },
+    {
+      "id": "name-authentication-scheme-regist",
+      "title": "18.5. Authentication Scheme Registration",
+      "level": 3,
+      "text_sha256": "49557d67fb1e2d41de5cb85643c92079e50b340d6490068096e537836fbbc6aa",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authentication-scheme-regist"
+        ]
+      }
+    },
+    {
+      "id": "name-content-coding-registration",
+      "title": "18.6. Content Coding Registration",
+      "level": 3,
+      "text_sha256": "f42822f94d0a69091b1b3add59e516b1fa89b82fcb124fffc9a7d041a6a6e117",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-content-coding-registration"
+        ]
+      }
+    },
+    {
+      "id": "name-range-unit-registration",
+      "title": "18.7. Range Unit Registration",
+      "level": 3,
+      "text_sha256": "e0f26e7028cf4a4b5cfa6e6e0e9a950a66f421c8c5decb5a95d385629509b040",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-range-unit-registration"
+        ]
+      }
+    },
+    {
+      "id": "name-media-type-registration",
+      "title": "18.8. Media Type Registration",
+      "level": 3,
+      "text_sha256": "51c4a3c4c3837dc09f7ab28ad91be804ab35b4fb390e884458d29afc87f73d38",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-media-type-registration"
+        ]
+      }
+    },
+    {
+      "id": "name-port-registration",
+      "title": "18.9. Port Registration",
+      "level": 3,
+      "text_sha256": "ba8862c0cce49a079fe2da107394438f424dae564c2b0b0495863a81fd45cb1a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-port-registration"
+        ]
+      }
+    },
+    {
+      "id": "name-upgrade-token-registration",
+      "title": "18.10. Upgrade Token Registration",
+      "level": 3,
+      "text_sha256": "e041f4134b47cad65e0157932f4523fbf672752003ab824a5c755800ff9aafa4",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-upgrade-token-registration",
+          "rfc9110.name-upgrade-token-registration-clause-8a8e23bba768"
+        ]
+      }
+    },
+    {
+      "id": "name-references",
+      "title": "19. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-references"
+        ]
+      }
+    },
+    {
+      "id": "name-normative-references",
+      "title": "19.1. Normative References",
+      "level": 3,
+      "text_sha256": "8880e0b37250c1ce9922f40cba947fae79d0efd5fbf4003028d0e96fbdf2808d",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-normative-references"
+        ]
+      }
+    },
+    {
+      "id": "name-informative-references",
+      "title": "19.2. Informative References",
+      "level": 3,
+      "text_sha256": "b1ef0a8f8d06e04436bb4a0660e8a158fdaee8c5da41beefe1e84a9d1b7afe10",
+      "clause_count": 124,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-informative-references"
+        ]
+      }
+    },
+    {
+      "id": "name-collected-abnf",
+      "title": "Appendix A. Collected ABNF",
+      "level": 2,
+      "text_sha256": "5ba801fd2bededef595148fed58f5ab3414c3c53d9219fa6d682de7c0dddaa60",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-collected-abnf"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-previous-rfcs",
+      "title": "Appendix B. Changes from Previous RFCs",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-changes-from-previous-rfcs"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-rfc-2818",
+      "title": "B.1. Changes from RFC 2818",
+      "level": 3,
+      "text_sha256": "3a18adcfcefbababfba876e2d29941acd6e595f9c6ad03fd03307f61f4b52b32",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-changes-from-rfc-2818"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-rfc-7230",
+      "title": "B.2. Changes from RFC 7230",
+      "level": 3,
+      "text_sha256": "fdf7a7df282d43d9168d74d67aec62192262e04af13e472bc97b7a7fc674494a",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-changes-from-rfc-7230"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-rfc-7231",
+      "title": "B.3. Changes from RFC 7231",
+      "level": 3,
+      "text_sha256": "fb5d990f25c78b9b6d13f03b6aa65f69b51d75439f03e69a8617a361797a2262",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-changes-from-rfc-7231"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-rfc-7232",
+      "title": "B.4. Changes from RFC 7232",
+      "level": 3,
+      "text_sha256": "8be1c3ed708e1998e8884ecab5cd7825228d69b6ae7984a70f7133f99da94edc",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-changes-from-rfc-7232",
+          "rfc9110.name-changes-from-rfc-7232-clause-bceea8400e4f"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-rfc-7233",
+      "title": "B.5. Changes from RFC 7233",
+      "level": 3,
+      "text_sha256": "4b11c029754137b336b7adcf47862fec9286ddebafdad741d550895b718434e5",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-changes-from-rfc-7233"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-rfc-7235",
+      "title": "B.6. Changes from RFC 7235",
+      "level": 3,
+      "text_sha256": "3a18adcfcefbababfba876e2d29941acd6e595f9c6ad03fd03307f61f4b52b32",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-changes-from-rfc-7235"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-rfc-7538",
+      "title": "B.7. Changes from RFC 7538",
+      "level": 3,
+      "text_sha256": "3a18adcfcefbababfba876e2d29941acd6e595f9c6ad03fd03307f61f4b52b32",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-changes-from-rfc-7538"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-rfc-7615",
+      "title": "B.8. Changes from RFC 7615",
+      "level": 3,
+      "text_sha256": "3a18adcfcefbababfba876e2d29941acd6e595f9c6ad03fd03307f61f4b52b32",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-changes-from-rfc-7615"
+        ]
+      }
+    },
+    {
+      "id": "name-changes-from-rfc-7694",
+      "title": "B.9. Changes from RFC 7694",
+      "level": 3,
+      "text_sha256": "1bc2c0fbfc86cf70c46b2c6d326f10b099b73e1f03dc14be608c61934f61021d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-changes-from-rfc-7694"
+        ]
+      }
+    },
+    {
+      "id": "name-acknowledgements",
+      "title": "Acknowledgements",
+      "level": 2,
+      "text_sha256": "3892ef22f18414d7ac773df8341f2aed089ba6238fb8890e7af8160d116f346a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "name-index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "397074ebecc2656fdc25ff2492a4b7ed04b6c59e94dc3d5536bff02fd34589f0",
+      "clause_count": 1431,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-index",
+          "rfc9110.name-index-clause-2eaa7db95be2",
+          "rfc9110.name-index-clause-5b31aa59b457",
+          "rfc9110.name-index-clause-d71eb8c035a0",
+          "rfc9110.name-index-clause-f8922b09f8fd",
+          "rfc9110.name-index-clause-c768c2eef9bd"
+        ]
+      }
+    },
+    {
+      "id": "name-authors-addresses",
+      "title": "Authors' Addresses",
+      "level": 2,
+      "text_sha256": "1ed1eb45e20a73fa0ff8e0221cc91b2c84fad2f52671c142253b51b75b304abf",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc9110.name-authors-addresses"
+        ]
+      }
+    }
+  ]
+}

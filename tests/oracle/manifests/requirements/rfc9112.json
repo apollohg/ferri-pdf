@@ -1,0 +1,4870 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "rfc9112.rfcnum",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "rfcnum"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in RFC 9112.",
+      "locator": {
+        "section_id": "rfcnum",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-status-of-this-memo",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-status-of-this-memo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Status of This Memo.",
+      "locator": {
+        "section_id": "name-status-of-this-memo",
+        "text_sha256": "a583f938f10fe16915037ad521f8910a4bc92b784644d6511d8d1dc858dc137a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-copyright-notice",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-copyright-notice"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Copyright Notice.",
+      "locator": {
+        "section_id": "name-copyright-notice",
+        "text_sha256": "1b18495593b4a0f0ef28880ed806128cc61d7bbc15098e9d2dc3e0f9250cf7f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-copyright-notice-clause-f2ae79166e8a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-copyright-notice-clause-f2ae79166e8a",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-copyright-notice"
+      ],
+      "behaviour": "Copyright Notice — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-copyright-notice",
+        "clause_index": 1,
+        "clause_sha256": "f2ae79166e8a89e9803d0fec619277f6e1309836663eeb85f0a4765ef2bd3b42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-introduction",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "name-introduction",
+        "text_sha256": "2301b6b1b0836a539761e92d60aba6cba1c65f8af479f97603f8fd19774ff476"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-requirements-notation",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-requirements-notation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Requirements Notation.",
+      "locator": {
+        "section_id": "name-requirements-notation",
+        "text_sha256": "8e7ee8dcb94693f5c6cc8bb8fdd7e96b6f434dce4238be7fc036bb970a9b8c76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-requirements-notation-clause-8f1facba91cb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-requirements-notation-clause-8f1facba91cb",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-requirements-notation"
+      ],
+      "behaviour": "Requirements Notation — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-requirements-notation",
+        "clause_index": 0,
+        "clause_sha256": "8f1facba91cb7feae0bf81558fe9965d2eee0687c597b30fa75a774611472fb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-syntax-notation",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-syntax-notation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Syntax Notation.",
+      "locator": {
+        "section_id": "name-syntax-notation",
+        "text_sha256": "0b2f7e51f095dc6c4706116c53f1c9f7ce649de29953dc97078d09cae3eeb9b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-message",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Message.",
+      "locator": {
+        "section_id": "name-message",
+        "text_sha256": "39d51b4adaa5cb35398f03f2e11731a27f1fd553331e153cd7d743666b3134b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-message-format",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-format"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Message Format.",
+      "locator": {
+        "section_id": "name-message-format",
+        "text_sha256": "12c739dee671af42d23fce47786f46eea7c2e2fe0f7dc107ca6f5126550ca260"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-message-format-clause-c7c87eb2e517",
+        "rfc9112.name-message-format-clause-67d322092ceb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-message-format-clause-c7c87eb2e517",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-format"
+      ],
+      "behaviour": "Message Format — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-format",
+        "clause_index": 2,
+        "clause_sha256": "c7c87eb2e517c56b1f2f9fc6c487c0421af34a18c3359dc66bdeff2faf5b7520"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-format-clause-67d322092ceb",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-format"
+      ],
+      "behaviour": "Message Format — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-format",
+        "clause_index": 4,
+        "clause_sha256": "67d322092cebac511eca3141a046794cf573fa1ddb009ef3e1527c4b8e013520"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-parsing",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-parsing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Message Parsing.",
+      "locator": {
+        "section_id": "name-message-parsing",
+        "text_sha256": "235e484449d37fee977829f92508b7e17f6abaa4def9169c1e7fa4ed29738cde"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-message-parsing-clause-99bbfba2d90e",
+        "rfc9112.name-message-parsing-clause-39f79c2178b7",
+        "rfc9112.name-message-parsing-clause-4880c3d5371a",
+        "rfc9112.name-message-parsing-clause-c01a8e4db5af",
+        "rfc9112.name-message-parsing-clause-ebfe6c9f2928",
+        "rfc9112.name-message-parsing-clause-ebf358958ea2",
+        "rfc9112.name-message-parsing-clause-bb18f0ba3dcc",
+        "rfc9112.name-message-parsing-clause-923996360b8f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-message-parsing-clause-99bbfba2d90e",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-parsing"
+      ],
+      "behaviour": "Message Parsing — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-parsing",
+        "clause_index": 0,
+        "clause_sha256": "99bbfba2d90e5ec9838f99391b6b0cec24643c5a3141517e10a2dd4ade110c4e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-parsing-clause-39f79c2178b7",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-parsing"
+      ],
+      "behaviour": "Message Parsing — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-parsing",
+        "clause_index": 1,
+        "clause_sha256": "39f79c2178b7d6da28f5257184a8377690819c7e898db5438cbb277e359a8abb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-parsing-clause-4880c3d5371a",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-parsing"
+      ],
+      "behaviour": "Message Parsing — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-parsing",
+        "clause_index": 3,
+        "clause_sha256": "4880c3d5371a9a9b92dbbb264df8d99e46b99757ddb5103db1b3446700c5e912"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-parsing-clause-c01a8e4db5af",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-parsing"
+      ],
+      "behaviour": "Message Parsing — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-parsing",
+        "clause_index": 4,
+        "clause_sha256": "c01a8e4db5af57b86a76160b27859aff387e9a6f4fb6e99ca17bc3a246645d30"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-parsing-clause-ebfe6c9f2928",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-parsing"
+      ],
+      "behaviour": "Message Parsing — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-parsing",
+        "clause_index": 5,
+        "clause_sha256": "ebfe6c9f2928e6617cf72793b1cb1e78f07789240dcddf14dc7e388256559bfe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-parsing-clause-ebf358958ea2",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-parsing"
+      ],
+      "behaviour": "Message Parsing — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-parsing",
+        "clause_index": 6,
+        "clause_sha256": "ebf358958ea22dd08cf46db44cbea871b9a631d2f5d2ba64bca32fd37a8fffdf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-parsing-clause-bb18f0ba3dcc",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-parsing"
+      ],
+      "behaviour": "Message Parsing — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-parsing",
+        "clause_index": 7,
+        "clause_sha256": "bb18f0ba3dcc6d2c10295c32d551fd9524d81ea61d015287af0a2232f88a95dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-parsing-clause-923996360b8f",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-parsing"
+      ],
+      "behaviour": "Message Parsing — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-parsing",
+        "clause_index": 8,
+        "clause_sha256": "923996360b8f872bfa31963347b3191a112d94fb2625d8ebd8ca9e01d624fa8d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-http-version",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-http-version"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in HTTP Version.",
+      "locator": {
+        "section_id": "name-http-version",
+        "text_sha256": "04f380b9690b554c21390bc949cb1108e757071c8a464071225134ddc0e8f31c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-http-version-clause-07a6ee06dabe",
+        "rfc9112.name-http-version-clause-10095660f3ec",
+        "rfc9112.name-http-version-clause-14d8d5f49fa1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-http-version-clause-07a6ee06dabe",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-http-version"
+      ],
+      "behaviour": "HTTP Version — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-http-version",
+        "clause_index": 3,
+        "clause_sha256": "07a6ee06dabeb0919477858bee228d6324d678ad0f5d586c6fe1a0dbdccd8efe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-http-version-clause-10095660f3ec",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-http-version"
+      ],
+      "behaviour": "HTTP Version — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-http-version",
+        "clause_index": 4,
+        "clause_sha256": "10095660f3ecea5cbe2b399d06be7851a151a54b92cd4d5fc8bca92d39c3fd69"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-http-version-clause-14d8d5f49fa1",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-http-version"
+      ],
+      "behaviour": "HTTP Version — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-http-version",
+        "clause_index": 5,
+        "clause_sha256": "14d8d5f49fa18c91e12024466a24563155584a4c5d58de086ede938ee05f15c1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-request-line",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-request-line"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Request Line.",
+      "locator": {
+        "section_id": "name-request-line",
+        "text_sha256": "5f132bcfb559bc5b4552e67ee36e35644df46ab86d9658780d2e7accc34a722c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-request-line-clause-4b201dee01ff"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-request-line-clause-4b201dee01ff",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-request-line"
+      ],
+      "behaviour": "Request Line — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-request-line",
+        "clause_index": 3,
+        "clause_sha256": "4b201dee01ff17a4406f92f773d9781e532fb5fca480167dfbab116dabbdc8c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-method",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-method"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Method.",
+      "locator": {
+        "section_id": "name-method",
+        "text_sha256": "86355c91a2612a0452f87a2185df6e357ff1932c97db57af2f1c10a2a6973b80"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-request-target",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-request-target"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Request Target.",
+      "locator": {
+        "section_id": "name-request-target",
+        "text_sha256": "da1939ed9795e492f0ebcf7e14437e53e0c9a60792437ea919ae8b1ed3e97e41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-request-target-clause-1bd0652a4cab",
+        "rfc9112.name-request-target-clause-999473f14d30",
+        "rfc9112.name-request-target-clause-46fd28e91ff0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-request-target-clause-1bd0652a4cab",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-request-target"
+      ],
+      "behaviour": "Request Target — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-request-target",
+        "clause_index": 3,
+        "clause_sha256": "1bd0652a4cab50a2a856484f186337bf0d2892dcabe2f3cf2dd1db695b52758f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-request-target-clause-999473f14d30",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-request-target"
+      ],
+      "behaviour": "Request Target — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-request-target",
+        "clause_index": 4,
+        "clause_sha256": "999473f14d307dca6e0e190b4d5983a86f3a4dd1680a5bf30810d5db09d921b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-request-target-clause-46fd28e91ff0",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-request-target"
+      ],
+      "behaviour": "Request Target — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-request-target",
+        "clause_index": 5,
+        "clause_sha256": "46fd28e91ff05c1e08f428d8339a0180be0d7038c20b2d93e03f66a6156b3e28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-origin-form",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-origin-form"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in origin-form.",
+      "locator": {
+        "section_id": "name-origin-form",
+        "text_sha256": "929930e25a940926256f271c628a19641066895fb0f6da8b6892ecc0f4455b22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-origin-form-clause-e0d7ce75200b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-origin-form-clause-e0d7ce75200b",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-origin-form"
+      ],
+      "behaviour": "origin-form — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-origin-form",
+        "clause_index": 2,
+        "clause_sha256": "e0d7ce75200bc000e461a85d13d5e734f3f4e48aa36034a1d88df56c072235a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-absolute-form",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-absolute-form"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in absolute-form.",
+      "locator": {
+        "section_id": "name-absolute-form",
+        "text_sha256": "05cef29e1becd853f64e7d643adc2c66271aad8ba9484586f6c50d0ddd3746e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-absolute-form-clause-041919540950",
+        "rfc9112.name-absolute-form-clause-8b9c4615f6ea",
+        "rfc9112.name-absolute-form-clause-1dad33992014",
+        "rfc9112.name-absolute-form-clause-30559a95ee51",
+        "rfc9112.name-absolute-form-clause-40625dc0be52"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-absolute-form-clause-041919540950",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-absolute-form"
+      ],
+      "behaviour": "absolute-form — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-absolute-form",
+        "clause_index": 0,
+        "clause_sha256": "041919540950710125273136499441d2bfe3df9402d2b7fdc5eb5dc1b00ffe59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-absolute-form-clause-8b9c4615f6ea",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-absolute-form"
+      ],
+      "behaviour": "absolute-form — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-absolute-form",
+        "clause_index": 5,
+        "clause_sha256": "8b9c4615f6eaffc8dc4eee45f119bcef4a83a3fd61893f6dee61c19d1102a0b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-absolute-form-clause-1dad33992014",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-absolute-form"
+      ],
+      "behaviour": "absolute-form — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-absolute-form",
+        "clause_index": 6,
+        "clause_sha256": "1dad33992014811b2b909b2459a02a36841198d2e0eae16711d3e416a5f7159c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-absolute-form-clause-30559a95ee51",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-absolute-form"
+      ],
+      "behaviour": "absolute-form — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-absolute-form",
+        "clause_index": 7,
+        "clause_sha256": "30559a95ee5110620771ff6c36b2acd876d3a5637b6c60775d6896460d60d8fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-absolute-form-clause-40625dc0be52",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-absolute-form"
+      ],
+      "behaviour": "absolute-form — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-absolute-form",
+        "clause_index": 8,
+        "clause_sha256": "40625dc0be5268e1255d963efc2863555065d59d936b3e7489bdf82505368438"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-authority-form",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-authority-form"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in authority-form.",
+      "locator": {
+        "section_id": "name-authority-form",
+        "text_sha256": "d7653bdd90e4a7749691d061e031a9a09ef62eedc4e4b5d85cb447da1dc92a89"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-authority-form-clause-209b8b65af77"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-authority-form-clause-209b8b65af77",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-authority-form"
+      ],
+      "behaviour": "authority-form — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-authority-form",
+        "clause_index": 2,
+        "clause_sha256": "209b8b65af77c214373a1c87dafefdb8217f6dc29d0899cbbf75afa8e754ff7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-asterisk-form",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-asterisk-form"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in asterisk-form.",
+      "locator": {
+        "section_id": "name-asterisk-form",
+        "text_sha256": "1f2fc4a980360f624f158792dd119e409e3cbae751bd70f112a3f087dcf4c69e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-asterisk-form-clause-98cbe8354e5b",
+        "rfc9112.name-asterisk-form-clause-9662b9066331"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-asterisk-form-clause-98cbe8354e5b",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-asterisk-form"
+      ],
+      "behaviour": "asterisk-form — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-asterisk-form",
+        "clause_index": 2,
+        "clause_sha256": "98cbe8354e5b305378245274ca7e8bdb010b00f2c1a738946a3c7a02ada5300c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-asterisk-form-clause-9662b9066331",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-asterisk-form"
+      ],
+      "behaviour": "asterisk-form — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-asterisk-form",
+        "clause_index": 4,
+        "clause_sha256": "9662b9066331ff5ef759132999e47263c318f291156e6b77ea7b0cb6b8d2f247"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-reconstructing-the-target-u",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-reconstructing-the-target-u"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Reconstructing the Target URI.",
+      "locator": {
+        "section_id": "name-reconstructing-the-target-u",
+        "text_sha256": "ee62fa540d9e4b7d74e94068f1d4f333835622f65ff529f9bdae627f7ea60726"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-reconstructing-the-target-u-clause-a6d27ae3652b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-reconstructing-the-target-u-clause-a6d27ae3652b",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-reconstructing-the-target-u"
+      ],
+      "behaviour": "Reconstructing the Target URI — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-reconstructing-the-target-u",
+        "clause_index": 3,
+        "clause_sha256": "a6d27ae3652b6f24c1ef425babe6cf0e97781002e80510057742d29c3cda5c47"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-status-line",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-status-line"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Status Line.",
+      "locator": {
+        "section_id": "name-status-line",
+        "text_sha256": "c1f4f41100a97f1b79851ff42b822a95bd6831739a7724e3c03d31f961735510"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-status-line-clause-16f3f9fb1a79"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-status-line-clause-16f3f9fb1a79",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-status-line"
+      ],
+      "behaviour": "Status Line — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-status-line",
+        "clause_index": 8,
+        "clause_sha256": "16f3f9fb1a791f9d387fdde67e021df9d83ed40edb9bc456469a2e8a9bb9a92d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-field-syntax",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-field-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Field Syntax.",
+      "locator": {
+        "section_id": "name-field-syntax",
+        "text_sha256": "4bdccf9fdc72db4f7899eeaa938c3f11947775cc7446aa3bab59c179b8c39b9c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-field-line-parsing",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-field-line-parsing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Field Line Parsing.",
+      "locator": {
+        "section_id": "name-field-line-parsing",
+        "text_sha256": "689cba21a6ac3c0fd5cb23fc85e086deaffec3393edd8778607c3dc16ff5ff14"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-field-line-parsing-clause-d2adf38d8fc3",
+        "rfc9112.name-field-line-parsing-clause-7cb7a05813b2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-field-line-parsing-clause-d2adf38d8fc3",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-field-line-parsing"
+      ],
+      "behaviour": "Field Line Parsing — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-field-line-parsing",
+        "clause_index": 0,
+        "clause_sha256": "d2adf38d8fc3cda7b75aeea04ff847fb826b3635053b571cfc442d7de17eb1fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-field-line-parsing-clause-7cb7a05813b2",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-field-line-parsing"
+      ],
+      "behaviour": "Field Line Parsing — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-field-line-parsing",
+        "clause_index": 1,
+        "clause_sha256": "7cb7a05813b2a5611cbb52883194407cd65f6430f1b4ef96a451ab8963d47192"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-obsolete-line-folding",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-obsolete-line-folding"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Obsolete Line Folding.",
+      "locator": {
+        "section_id": "name-obsolete-line-folding",
+        "text_sha256": "c494f813f6b6b712710fb8481da093f6d8978a0819556e6c66b84e07bdd5d443"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-obsolete-line-folding-clause-7fc643820a6b",
+        "rfc9112.name-obsolete-line-folding-clause-05e98b8c4658",
+        "rfc9112.name-obsolete-line-folding-clause-91c1114b48da",
+        "rfc9112.name-obsolete-line-folding-clause-3137b63bf427"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-obsolete-line-folding-clause-7fc643820a6b",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-obsolete-line-folding"
+      ],
+      "behaviour": "Obsolete Line Folding — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-obsolete-line-folding",
+        "clause_index": 2,
+        "clause_sha256": "7fc643820a6b4bcf26816e84b9af4f335273cb35248317ece4591a3020520077"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-obsolete-line-folding-clause-05e98b8c4658",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-obsolete-line-folding"
+      ],
+      "behaviour": "Obsolete Line Folding — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-obsolete-line-folding",
+        "clause_index": 3,
+        "clause_sha256": "05e98b8c465836392e8f299ae5ee68d5d09a3b6bc94ab797bdc807c1d1654af7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-obsolete-line-folding-clause-91c1114b48da",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-obsolete-line-folding"
+      ],
+      "behaviour": "Obsolete Line Folding — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-obsolete-line-folding",
+        "clause_index": 4,
+        "clause_sha256": "91c1114b48dada274cc73ecd48927efc85404483d8d1db76b9a38b702600d2a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-obsolete-line-folding-clause-3137b63bf427",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-obsolete-line-folding"
+      ],
+      "behaviour": "Obsolete Line Folding — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-obsolete-line-folding",
+        "clause_index": 5,
+        "clause_sha256": "3137b63bf4274231510949a46c5f44473b341ce981a1d91946db4aa1bdeeb91e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Message Body.",
+      "locator": {
+        "section_id": "name-message-body",
+        "text_sha256": "fe04f9c3c1f8614418ada5822a34f5cbd5eb75744a9620b7d2f90617fc787652"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-transfer-encoding",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-encoding"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Transfer-Encoding.",
+      "locator": {
+        "section_id": "name-transfer-encoding",
+        "text_sha256": "714c3512cad436fd3ba573301813d92e90af59d78eb09b7df4d79c2288ed8ae3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-transfer-encoding-clause-5aeffe7ac731",
+        "rfc9112.name-transfer-encoding-clause-59c3a6ef2a99",
+        "rfc9112.name-transfer-encoding-clause-78bb3a5fc4be",
+        "rfc9112.name-transfer-encoding-clause-1c60fa33d373",
+        "rfc9112.name-transfer-encoding-clause-e3de5504b03c",
+        "rfc9112.name-transfer-encoding-clause-577e4a01eb4d",
+        "rfc9112.name-transfer-encoding-clause-4368e03050be"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-transfer-encoding-clause-5aeffe7ac731",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-encoding"
+      ],
+      "behaviour": "Transfer-Encoding — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-encoding",
+        "clause_index": 3,
+        "clause_sha256": "5aeffe7ac7313bf56aca71b226d6736df1c0bc4856e0839e6bbe2239060af757"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-encoding-clause-59c3a6ef2a99",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-encoding"
+      ],
+      "behaviour": "Transfer-Encoding — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-encoding",
+        "clause_index": 8,
+        "clause_sha256": "59c3a6ef2a996ac3358170e6061f256544032877401009ade3f632c4b9da74bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-encoding-clause-78bb3a5fc4be",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-encoding"
+      ],
+      "behaviour": "Transfer-Encoding — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-encoding",
+        "clause_index": 9,
+        "clause_sha256": "78bb3a5fc4be5a2ad7a780661469dbb0797c50c9ecde11bc66a954e971913b15"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-encoding-clause-1c60fa33d373",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-encoding"
+      ],
+      "behaviour": "Transfer-Encoding — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-encoding",
+        "clause_index": 10,
+        "clause_sha256": "1c60fa33d3739c37cd0525266930c3818da944599295385ec11a4cdbb0f0f0bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-encoding-clause-e3de5504b03c",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-encoding"
+      ],
+      "behaviour": "Transfer-Encoding — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-encoding",
+        "clause_index": 12,
+        "clause_sha256": "e3de5504b03c2111c3a4a3770fde720ca12b51a83fd49a5cbe04f3f6105c2260"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-encoding-clause-577e4a01eb4d",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-encoding"
+      ],
+      "behaviour": "Transfer-Encoding — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-encoding",
+        "clause_index": 14,
+        "clause_sha256": "577e4a01eb4de30e51b4ff94bb00d4cb41948087bf96d943aa3a165575bf0062"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-encoding-clause-4368e03050be",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-encoding"
+      ],
+      "behaviour": "Transfer-Encoding — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-encoding",
+        "clause_index": 15,
+        "clause_sha256": "4368e03050bedddfa800c750f9076b50fc5b71ea9cb74b78e3cc8819c708cfd8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-content-length",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-content-length"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Content-Length.",
+      "locator": {
+        "section_id": "name-content-length",
+        "text_sha256": "4d0a3b4c57cba3838542772f66600efe75d112c9fa1605eb9abf630c09935377"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-content-length-clause-e76d53e87f1b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-content-length-clause-e76d53e87f1b",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-content-length"
+      ],
+      "behaviour": "Content-Length — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-content-length",
+        "clause_index": 1,
+        "clause_sha256": "e76d53e87f1bb158fc601af128be8a2a43d952fc1c5915b0df09be837c01ed37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body-length",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Message Body Length.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "text_sha256": "6e59317ecdfb017dd07e01d70739dc52c269b4ae03f524e0ee6c2ecd0903aa4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-message-body-length-clause-7ce6fcff1861",
+        "rfc9112.name-message-body-length-clause-1fe0712ed979",
+        "rfc9112.name-message-body-length-clause-0e31fb93dcb9",
+        "rfc9112.name-message-body-length-clause-d4bf5d4789ce",
+        "rfc9112.name-message-body-length-clause-d44f6aba1bad",
+        "rfc9112.name-message-body-length-clause-bb1a47d12d36",
+        "rfc9112.name-message-body-length-clause-fdc21c68a169",
+        "rfc9112.name-message-body-length-clause-d4e78d915a5f",
+        "rfc9112.name-message-body-length-clause-68e96a9cad92",
+        "rfc9112.name-message-body-length-clause-39c16f98b5e2",
+        "rfc9112.name-message-body-length-clause-303ada38813c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-message-body-length-clause-7ce6fcff1861",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Message Body Length — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "clause_index": 2,
+        "clause_sha256": "7ce6fcff186181f743527e92258f4689bef3250971317e66f47ba9c64ae3c176"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body-length-clause-1fe0712ed979",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Message Body Length — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "clause_index": 3,
+        "clause_sha256": "1fe0712ed9798a93acba4f658bd479119ec4242f40aa4eca37084534de7b1a8d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body-length-clause-0e31fb93dcb9",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Message Body Length — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "clause_index": 6,
+        "clause_sha256": "0e31fb93dcb9c16334a3c9f55b4187739f753d7622a674f4e6eed49c59f36e7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body-length-clause-d4bf5d4789ce",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Message Body Length — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "clause_index": 7,
+        "clause_sha256": "d4bf5d4789ce870a40b1171fe1f4545cb44695e3101a2f475c18dd30a0fb93ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body-length-clause-d44f6aba1bad",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Message Body Length — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "clause_index": 8,
+        "clause_sha256": "d44f6aba1bad717021f9ac20f2df49347c6de6439faea59cda3cdcdaf46caf7b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body-length-clause-bb1a47d12d36",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Message Body Length — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "clause_index": 9,
+        "clause_sha256": "bb1a47d12d368685c96046a31fdd268a286ac06eff89713eacabed7a032c011c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body-length-clause-fdc21c68a169",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Message Body Length — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "clause_index": 12,
+        "clause_sha256": "fdc21c68a1696fdd616c7d0f02e20509e5c1040ec8107d2bc7eda0700ea4e0ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body-length-clause-d4e78d915a5f",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Message Body Length — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "clause_index": 14,
+        "clause_sha256": "d4e78d915a5fe5239d59697276461d04ec66422a2ac22081ab9383b0e57d7d8d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body-length-clause-68e96a9cad92",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Message Body Length — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "clause_index": 15,
+        "clause_sha256": "68e96a9cad928a11d77b54b12c8adfa162c6adc45af6a117651327fa24039f39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body-length-clause-39c16f98b5e2",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Message Body Length — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "clause_index": 16,
+        "clause_sha256": "39c16f98b5e210aee8dc677a000e3b4ad3c1233c3d33effccf20d50e3191ac73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-message-body-length-clause-303ada38813c",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-body-length"
+      ],
+      "behaviour": "Message Body Length — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-message-body-length",
+        "clause_index": 17,
+        "clause_sha256": "303ada38813c694f21c0814712e0e3d4162cc4ffa521f1a958f7962f6423fa86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-codings",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-codings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Transfer Codings.",
+      "locator": {
+        "section_id": "name-transfer-codings",
+        "text_sha256": "36fa8a3599229229c59749cf7852667306c5c58b896c3c47d55e3f6192c4304a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-chunked-transfer-coding",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-chunked-transfer-coding"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Chunked Transfer Coding.",
+      "locator": {
+        "section_id": "name-chunked-transfer-coding",
+        "text_sha256": "7ba91b7b8a10eae6a6215cf855b9cdcbf84ef550e7204c8a97c4668b8635c122"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-chunked-transfer-coding-clause-dc6e4d5985f5",
+        "rfc9112.name-chunked-transfer-coding-clause-fef7cd4ca17d",
+        "rfc9112.name-chunked-transfer-coding-clause-587f996bea8d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-chunked-transfer-coding-clause-dc6e4d5985f5",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-chunked-transfer-coding"
+      ],
+      "behaviour": "Chunked Transfer Coding — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-chunked-transfer-coding",
+        "clause_index": 3,
+        "clause_sha256": "dc6e4d5985f527656c62ebec17f979abd88501e8d13d53c82042843fc28bda74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-chunked-transfer-coding-clause-fef7cd4ca17d",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-chunked-transfer-coding"
+      ],
+      "behaviour": "Chunked Transfer Coding — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-chunked-transfer-coding",
+        "clause_index": 4,
+        "clause_sha256": "fef7cd4ca17dcac7146cdd9a1c51c21addce7ad959815f055f269aed26c2acac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-chunked-transfer-coding-clause-587f996bea8d",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-chunked-transfer-coding"
+      ],
+      "behaviour": "Chunked Transfer Coding — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-chunked-transfer-coding",
+        "clause_index": 5,
+        "clause_sha256": "587f996bea8d71fb79dc1ee0b57b10d1414646f2420ff5a5fbddbedd9ea1c743"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-chunk-extensions",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-chunk-extensions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Chunk Extensions.",
+      "locator": {
+        "section_id": "name-chunk-extensions",
+        "text_sha256": "e92c4446b0e48b0d88d3393575b8cf57a9143eceb40321dd232ac70a0acf6df7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-chunk-extensions-clause-05a3ebc570a3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-chunk-extensions-clause-05a3ebc570a3",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-chunk-extensions"
+      ],
+      "behaviour": "Chunk Extensions — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-chunk-extensions",
+        "clause_index": 3,
+        "clause_sha256": "05a3ebc570a35958e512ae45d0961a633d75d8e20bb93a5b75f8b91a9bbc0f7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-chunked-trailer-section",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-chunked-trailer-section"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Chunked Trailer Section.",
+      "locator": {
+        "section_id": "name-chunked-trailer-section",
+        "text_sha256": "7f0a0ac119dde1394da20b92266f9817d177b38d096c728aa25fc801389c7eae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-chunked-trailer-section-clause-c13a90bc54b3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-chunked-trailer-section-clause-c13a90bc54b3",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-chunked-trailer-section"
+      ],
+      "behaviour": "Chunked Trailer Section — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-chunked-trailer-section",
+        "clause_index": 2,
+        "clause_sha256": "c13a90bc54b383f710da915aa653e749b6da35c878735aa38351fb3fc170338b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-decoding-chunked",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-decoding-chunked"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Decoding Chunked.",
+      "locator": {
+        "section_id": "name-decoding-chunked",
+        "text_sha256": "20b47d6f4a62df665db09f85b46e855d6637b194bfd679ff551ee5d4dfb95ab4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-transfer-codings-for-compre",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-codings-for-compre"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Transfer Codings for Compression.",
+      "locator": {
+        "section_id": "name-transfer-codings-for-compre",
+        "text_sha256": "c748b9eaf717f1fcee489ccd9d96a82b3766022c79e98d39c85f3aa3dcf0e442"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-transfer-codings-for-compre-clause-2141b1e12a94",
+        "rfc9112.name-transfer-codings-for-compre-clause-0392ad571681"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-transfer-codings-for-compre-clause-2141b1e12a94",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-codings-for-compre"
+      ],
+      "behaviour": "Transfer Codings for Compression — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-codings-for-compre",
+        "clause_index": 0,
+        "clause_sha256": "2141b1e12a9470a594c553cd402404f598d6847d43c6e7daee145c361f1c5655"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-codings-for-compre-clause-0392ad571681",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-codings-for-compre"
+      ],
+      "behaviour": "Transfer Codings for Compression — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-codings-for-compre",
+        "clause_index": 7,
+        "clause_sha256": "0392ad57168147bb86ec9ebe29fc7de9d6fe9294fd064092734209001d4cfb88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-coding-registry",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-coding-registry"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Transfer Coding Registry.",
+      "locator": {
+        "section_id": "name-transfer-coding-registry",
+        "text_sha256": "92c931da78a17f692e4b114ed708cad386d3fb5f5e757fe12c41da7a07d3731d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-transfer-coding-registry-clause-673d7ca0b24c",
+        "rfc9112.name-transfer-coding-registry-clause-811c89650d86",
+        "rfc9112.name-transfer-coding-registry-clause-36a359ff8c11",
+        "rfc9112.name-transfer-coding-registry-clause-0dafcadbe70e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-transfer-coding-registry-clause-673d7ca0b24c",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-coding-registry"
+      ],
+      "behaviour": "Transfer Coding Registry — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-coding-registry",
+        "clause_index": 1,
+        "clause_sha256": "673d7ca0b24c613d284f0dc1e8892c1d83184834e292751b1626a8411db0a7e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-coding-registry-clause-811c89650d86",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-coding-registry"
+      ],
+      "behaviour": "Transfer Coding Registry — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-coding-registry",
+        "clause_index": 5,
+        "clause_sha256": "811c89650d86585158a11b336eda5ce3590819c0dd9c53845a366f7ed87a16dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-coding-registry-clause-36a359ff8c11",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-coding-registry"
+      ],
+      "behaviour": "Transfer Coding Registry — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-coding-registry",
+        "clause_index": 6,
+        "clause_sha256": "36a359ff8c116ceb578c086175e0c57f27ff34652b2afa5cb5d0961b2a96db1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-transfer-coding-registry-clause-0dafcadbe70e",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-coding-registry"
+      ],
+      "behaviour": "Transfer Coding Registry — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-transfer-coding-registry",
+        "clause_index": 7,
+        "clause_sha256": "0dafcadbe70e69112699cba1d2bc930380f842ceaa915b5b55e2f928e5eecdac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-negotiating-transfer-coding",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-negotiating-transfer-coding"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Negotiating Transfer Codings.",
+      "locator": {
+        "section_id": "name-negotiating-transfer-coding",
+        "text_sha256": "52fe47a29895ffb0e76a3365babf77495b108a80789ea30a05d3e5ea7c5a1325"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-negotiating-transfer-coding-clause-d42ec158ef01",
+        "rfc9112.name-negotiating-transfer-coding-clause-26fbc8eda134"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-negotiating-transfer-coding-clause-d42ec158ef01",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-negotiating-transfer-coding"
+      ],
+      "behaviour": "Negotiating Transfer Codings — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-negotiating-transfer-coding",
+        "clause_index": 1,
+        "clause_sha256": "d42ec158ef01caa684707f959883abfc3ecf6ad6c46862f1ebaf55ad58bd89d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-negotiating-transfer-coding-clause-26fbc8eda134",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-negotiating-transfer-coding"
+      ],
+      "behaviour": "Negotiating Transfer Codings — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-negotiating-transfer-coding",
+        "clause_index": 7,
+        "clause_sha256": "26fbc8eda1347f38ff3cd36c5059e2242ab950123d0234bcf57564164c0e0b43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-handling-incomplete-message",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-handling-incomplete-message"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Handling Incomplete Messages.",
+      "locator": {
+        "section_id": "name-handling-incomplete-message",
+        "text_sha256": "d028d42ccb0b8a56350444a840baa0a552f1739e277ffa06f779a965f9522495"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-handling-incomplete-message-clause-fdda12f11041"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-handling-incomplete-message-clause-fdda12f11041",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-handling-incomplete-message"
+      ],
+      "behaviour": "Handling Incomplete Messages — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-handling-incomplete-message",
+        "clause_index": 1,
+        "clause_sha256": "fdda12f110416310bb88f280011745d07533d01c0625913a186c2b1531851af9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-connection-management",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-connection-management"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Connection Management.",
+      "locator": {
+        "section_id": "name-connection-management",
+        "text_sha256": "6e558069c1a4a5a1ad7fbe7a85ce96b94bedab21b3a4a9b26257b97b41d9be65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-connection-management-clause-38ac8c42da6e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-connection-management-clause-38ac8c42da6e",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-connection-management"
+      ],
+      "behaviour": "Connection Management — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-connection-management",
+        "clause_index": 2,
+        "clause_sha256": "38ac8c42da6e0b5170658742c04e1fa43929623e3ea2448995c085d22b797bd7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-establishment",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-establishment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Establishment.",
+      "locator": {
+        "section_id": "name-establishment",
+        "text_sha256": "5db9279cfc5a1d6735493c83562ce31e2e217e9f68ffb6f7a888883a715d1e28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-associating-a-response-to-a",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-associating-a-response-to-a"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Associating a Response to a Request.",
+      "locator": {
+        "section_id": "name-associating-a-response-to-a",
+        "text_sha256": "45ad7c78367cbfa34b909b859fcb0f56eff78efc1447f117a3d4ef1d7734badf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-associating-a-response-to-a-clause-e2a1a295ee8d",
+        "rfc9112.name-associating-a-response-to-a-clause-45980ca76793"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-associating-a-response-to-a-clause-e2a1a295ee8d",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-associating-a-response-to-a"
+      ],
+      "behaviour": "Associating a Response to a Request — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-associating-a-response-to-a",
+        "clause_index": 1,
+        "clause_sha256": "e2a1a295ee8d1de74311b3784256617bc7ce985abd5f7e4943bd91b89b3d8bab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-associating-a-response-to-a-clause-45980ca76793",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-associating-a-response-to-a"
+      ],
+      "behaviour": "Associating a Response to a Request — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-associating-a-response-to-a",
+        "clause_index": 2,
+        "clause_sha256": "45980ca76793aebff02a84ad12a712738a95356bb5e56f809447c255fef9f63e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-persistence",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-persistence"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Persistence.",
+      "locator": {
+        "section_id": "name-persistence",
+        "text_sha256": "b023199e76bfc2fa9a80ef66b97cf33e3b58f92b5da58ed311ebe2aab00280e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-persistence-clause-782425674b2d",
+        "rfc9112.name-persistence-clause-f9be327d152d",
+        "rfc9112.name-persistence-clause-322c05fd5db1",
+        "rfc9112.name-persistence-clause-0d463858c77e",
+        "rfc9112.name-persistence-clause-7602a89bbbb6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-persistence-clause-782425674b2d",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-persistence"
+      ],
+      "behaviour": "Persistence — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-persistence",
+        "clause_index": 0,
+        "clause_sha256": "782425674b2da0def30e2d18f3ce67edff2f2876c5bb3065369d93b02a3d4c45"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-persistence-clause-f9be327d152d",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-persistence"
+      ],
+      "behaviour": "Persistence — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-persistence",
+        "clause_index": 6,
+        "clause_sha256": "f9be327d152d8aeb86f190425730e0504c2e1450b7e9b2fd7fd26e76dda253e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-persistence-clause-322c05fd5db1",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-persistence"
+      ],
+      "behaviour": "Persistence — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-persistence",
+        "clause_index": 7,
+        "clause_sha256": "322c05fd5db17948867edc29ced989819b1b462630c785733c7dec58bec15d20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-persistence-clause-0d463858c77e",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-persistence"
+      ],
+      "behaviour": "Persistence — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-persistence",
+        "clause_index": 9,
+        "clause_sha256": "0d463858c77e2260661ec70c14ac7534010a20fa27443915ef8f4f6d9d73532a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-persistence-clause-7602a89bbbb6",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-persistence"
+      ],
+      "behaviour": "Persistence — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-persistence",
+        "clause_index": 10,
+        "clause_sha256": "7602a89bbbb65333f653048561d38f494e496e0f331fc908133e949ac29556ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-retrying-requests",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-retrying-requests"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Retrying Requests.",
+      "locator": {
+        "section_id": "name-retrying-requests",
+        "text_sha256": "390a51eb7755bbd3ff446c8935a193aeb6a85988eec3fd7cf98236e65f049223"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-pipelining",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-pipelining"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pipelining.",
+      "locator": {
+        "section_id": "name-pipelining",
+        "text_sha256": "d1ab23401ed86e614508e0e64409de454cab5630473791e9562e99fafde4d565"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-pipelining-clause-a6a0342893ca",
+        "rfc9112.name-pipelining-clause-0ed4ade09f92",
+        "rfc9112.name-pipelining-clause-d9d61b1e3d62",
+        "rfc9112.name-pipelining-clause-9d8e13096c63"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-pipelining-clause-a6a0342893ca",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-pipelining"
+      ],
+      "behaviour": "Pipelining — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-pipelining",
+        "clause_index": 0,
+        "clause_sha256": "a6a0342893ca2eabac5a32f0edca92f68855e5fbdcb3edc37fdd3579d4771559"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-pipelining-clause-0ed4ade09f92",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-pipelining"
+      ],
+      "behaviour": "Pipelining — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-pipelining",
+        "clause_index": 1,
+        "clause_sha256": "0ed4ade09f92222b1364968e9ac39ea781c9da800dce8a66094c810949812a2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-pipelining-clause-d9d61b1e3d62",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-pipelining"
+      ],
+      "behaviour": "Pipelining — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-pipelining",
+        "clause_index": 2,
+        "clause_sha256": "d9d61b1e3d629b271289ba087863cbc3ab047c3e40790c11b59d2da36c6ad92a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-pipelining-clause-9d8e13096c63",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-pipelining"
+      ],
+      "behaviour": "Pipelining — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-pipelining",
+        "clause_index": 3,
+        "clause_sha256": "9d8e13096c63d7da79b205c466138db7e515cb6fe2ad584db35b6f297ac13524"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-concurrency",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-concurrency"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Concurrency.",
+      "locator": {
+        "section_id": "name-concurrency",
+        "text_sha256": "1c63a1450f149c914d5db5b526dc6a06e287fda1502e03a6ae7518be322f4a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-failures-and-timeouts",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-failures-and-timeouts"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Failures and Timeouts.",
+      "locator": {
+        "section_id": "name-failures-and-timeouts",
+        "text_sha256": "a834fc0f071f653d3bf198182b30ed53090d574b4c5e0bf8cc67e36a62ea63d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-failures-and-timeouts-clause-86bd98fbb432",
+        "rfc9112.name-failures-and-timeouts-clause-1513277a5574",
+        "rfc9112.name-failures-and-timeouts-clause-6e24a09b1563"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-failures-and-timeouts-clause-86bd98fbb432",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-failures-and-timeouts"
+      ],
+      "behaviour": "Failures and Timeouts — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-failures-and-timeouts",
+        "clause_index": 1,
+        "clause_sha256": "86bd98fbb432073d41c0bc6eed47ec6ad183255446b46d4b580cc6cdbffdb4c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-failures-and-timeouts-clause-1513277a5574",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-failures-and-timeouts"
+      ],
+      "behaviour": "Failures and Timeouts — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-failures-and-timeouts",
+        "clause_index": 3,
+        "clause_sha256": "1513277a55742349a7db5a61c902eba1ea95bd7f5a570caf9de3fa70cb002f5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-failures-and-timeouts-clause-6e24a09b1563",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-failures-and-timeouts"
+      ],
+      "behaviour": "Failures and Timeouts — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-failures-and-timeouts",
+        "clause_index": 4,
+        "clause_sha256": "6e24a09b1563dd4982c21e1b6798381a66b70b7198334cb95cb7029d9ca6e0e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-tear-down",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tear-down"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tear-down.",
+      "locator": {
+        "section_id": "name-tear-down",
+        "text_sha256": "4e6ee2b7f1eddb4652ec5d482b0066b11b5c1790e01a5a281c5cb6e436be7d87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-tear-down-clause-fc65df4c701e",
+        "rfc9112.name-tear-down-clause-1fc22a8057d6",
+        "rfc9112.name-tear-down-clause-dd1ffa1a594b",
+        "rfc9112.name-tear-down-clause-30f21d00c042",
+        "rfc9112.name-tear-down-clause-f9bc8b1d6774"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-tear-down-clause-fc65df4c701e",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tear-down"
+      ],
+      "behaviour": "Tear-down — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-tear-down",
+        "clause_index": 0,
+        "clause_sha256": "fc65df4c701e33d856fe53e257ab4e4c1166723b599616af6189dcfe63fac4d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-tear-down-clause-1fc22a8057d6",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tear-down"
+      ],
+      "behaviour": "Tear-down — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-tear-down",
+        "clause_index": 4,
+        "clause_sha256": "1fc22a8057d6a45c7033e79f020f6643064351f612c6493828623cf4d9f3dcaf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-tear-down-clause-dd1ffa1a594b",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tear-down"
+      ],
+      "behaviour": "Tear-down — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-tear-down",
+        "clause_index": 5,
+        "clause_sha256": "dd1ffa1a594be215697a619d194cd9dde52dfe342020ceab6edc9b714317674d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-tear-down-clause-30f21d00c042",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tear-down"
+      ],
+      "behaviour": "Tear-down — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-tear-down",
+        "clause_index": 6,
+        "clause_sha256": "30f21d00c0423e97e336d445f2bdf2f5449d9b14ba070154a3448658612180e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-tear-down-clause-f9bc8b1d6774",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tear-down"
+      ],
+      "behaviour": "Tear-down — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-tear-down",
+        "clause_index": 7,
+        "clause_sha256": "f9bc8b1d677408cda7c0f6ff70a7ff49ef437a50ffa7b51d6a15cd7998f57d42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-tls-connection-initiation",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tls-connection-initiation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in TLS Connection Initiation.",
+      "locator": {
+        "section_id": "name-tls-connection-initiation",
+        "text_sha256": "9989ce2c1bcb2edf6ea46ba1dd3a19b495d3f580801ff3b1fb6ae0a5f860816c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-tls-connection-initiation-clause-2b6eb0cce642"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-tls-connection-initiation-clause-2b6eb0cce642",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tls-connection-initiation"
+      ],
+      "behaviour": "TLS Connection Initiation — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-tls-connection-initiation",
+        "clause_index": 1,
+        "clause_sha256": "2b6eb0cce6426ad2dd6958e6b29d6aa0800bcce73acbfaabf36c163fa1f82d8a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-tls-connection-closure",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tls-connection-closure"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in TLS Connection Closure.",
+      "locator": {
+        "section_id": "name-tls-connection-closure",
+        "text_sha256": "34a5ba4cd93d06a302afb92dcad46e49ed7eb7c6df2c3929a2aa309f72c08e10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-tls-connection-closure-clause-69e14f17b375",
+        "rfc9112.name-tls-connection-closure-clause-a5e3d13e803e",
+        "rfc9112.name-tls-connection-closure-clause-e51c8e53d0b4",
+        "rfc9112.name-tls-connection-closure-clause-7b810ff1087d",
+        "rfc9112.name-tls-connection-closure-clause-6c25216648d6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-tls-connection-closure-clause-69e14f17b375",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tls-connection-closure"
+      ],
+      "behaviour": "TLS Connection Closure — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-tls-connection-closure",
+        "clause_index": 3,
+        "clause_sha256": "69e14f17b375a01e6fdf11a64221603a62ef28862cc20b287a52c1a6ae300906"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-tls-connection-closure-clause-a5e3d13e803e",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tls-connection-closure"
+      ],
+      "behaviour": "TLS Connection Closure — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-tls-connection-closure",
+        "clause_index": 7,
+        "clause_sha256": "a5e3d13e803ef0ac26b2bd51dbe422c13771331671c8aa100d0c3a3f9748f657"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-tls-connection-closure-clause-e51c8e53d0b4",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tls-connection-closure"
+      ],
+      "behaviour": "TLS Connection Closure — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-tls-connection-closure",
+        "clause_index": 8,
+        "clause_sha256": "e51c8e53d0b47cac40a96ae40facbf000499600e7c8cd13aea321e7da77c47b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-tls-connection-closure-clause-7b810ff1087d",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tls-connection-closure"
+      ],
+      "behaviour": "TLS Connection Closure — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-tls-connection-closure",
+        "clause_index": 9,
+        "clause_sha256": "7b810ff1087d1fcd9d7caa4081e93e1cba553c62b7946870daec230e7e00394f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-tls-connection-closure-clause-6c25216648d6",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-tls-connection-closure"
+      ],
+      "behaviour": "TLS Connection Closure — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-tls-connection-closure",
+        "clause_index": 10,
+        "clause_sha256": "6c25216648d6253205b991ea0f018228ca68aed411a680a510f2ebe1313cb2df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-enclosing-messages-as-data",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-enclosing-messages-as-data"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Enclosing Messages as Data.",
+      "locator": {
+        "section_id": "name-enclosing-messages-as-data",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-media-type-message-http",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-media-type-message-http"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Type message/http.",
+      "locator": {
+        "section_id": "name-media-type-message-http",
+        "text_sha256": "4269af4a1b71d3bb832be2941613b56bb372d39f53252c9a6ee653b46d9f35b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-media-type-message-http-clause-e1be9f50ef31",
+        "rfc9112.name-media-type-message-http-clause-8076ca292115"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-media-type-message-http-clause-e1be9f50ef31",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-media-type-message-http"
+      ],
+      "behaviour": "Media Type message/http — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-media-type-message-http",
+        "clause_index": 0,
+        "clause_sha256": "e1be9f50ef319b3655c712abc2f741f9202344800e09b9279968a36b9a165d10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-media-type-message-http-clause-8076ca292115",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-media-type-message-http"
+      ],
+      "behaviour": "Media Type message/http — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-media-type-message-http",
+        "clause_index": 5,
+        "clause_sha256": "8076ca2921151821a45e047a462a2f34207437d5ae227976293f391e55bbf935"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-media-type-application-http",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-media-type-application-http"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Type application/http.",
+      "locator": {
+        "section_id": "name-media-type-application-http",
+        "text_sha256": "269ba1bf9b5415e830f433420838bd7ae04074bf7bf8ff63b8022515487a8c9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-media-type-application-http-clause-8076ca292115",
+        "rfc9112.name-media-type-application-http-clause-4cbfd1a5fcbc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-media-type-application-http-clause-8076ca292115",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-media-type-application-http"
+      ],
+      "behaviour": "Media Type application/http — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-media-type-application-http",
+        "clause_index": 5,
+        "clause_sha256": "8076ca2921151821a45e047a462a2f34207437d5ae227976293f391e55bbf935"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-media-type-application-http-clause-4cbfd1a5fcbc",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-media-type-application-http"
+      ],
+      "behaviour": "Media Type application/http — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-media-type-application-http",
+        "clause_index": 15,
+        "clause_sha256": "4cbfd1a5fcbcc8d6db93a3aaba90ca6ebd5cf4bfb21cae0e42088dd8acdde109"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-security-considerations",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-security-considerations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "name-security-considerations",
+        "text_sha256": "22b316f78ac511ef7b819496b2e120c3e7d8add19eeb0f26b1e924bcac8c1c7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-response-splitting",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-response-splitting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Response Splitting.",
+      "locator": {
+        "section_id": "name-response-splitting",
+        "text_sha256": "447f820a65bb0671d81a286bf59ea55b361e42bc50bedf9c8b932c7e42d02fc0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-request-smuggling",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-request-smuggling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Request Smuggling.",
+      "locator": {
+        "section_id": "name-request-smuggling",
+        "text_sha256": "174daf288a42466cef2c29d99a9b5e1a23cfe9b8764675a8ca898539e17d6f7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-message-integrity",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-integrity"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Message Integrity.",
+      "locator": {
+        "section_id": "name-message-integrity",
+        "text_sha256": "4f33137a1054662817a0ce9f53dc4775dc3c52c0930085365b98db838da79f59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-message-confidentiality",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-message-confidentiality"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Message Confidentiality.",
+      "locator": {
+        "section_id": "name-message-confidentiality",
+        "text_sha256": "cd3a8b307be55d72d1765b6f352afc32add31d4ee7d6a9ed831f9fba6a8870eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-iana-considerations",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-iana-considerations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IANA Considerations.",
+      "locator": {
+        "section_id": "name-iana-considerations",
+        "text_sha256": "2cd0d55114db7430dfe3582620372082be46dc4b3ea7d0a38949b5aa32a11d68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-field-name-registration",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-field-name-registration"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Field Name Registration.",
+      "locator": {
+        "section_id": "name-field-name-registration",
+        "text_sha256": "2185b922f809cf33ce2e29153bcf433c85f5645aa01e805dcfe26fed2e34fb96"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-media-type-registration",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-media-type-registration"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Type Registration.",
+      "locator": {
+        "section_id": "name-media-type-registration",
+        "text_sha256": "953b134551aa57a9218434864f100b19ee62294bc1ddf8d11c67ccc5e3756f0c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-transfer-coding-registratio",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-transfer-coding-registratio"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Transfer Coding Registration.",
+      "locator": {
+        "section_id": "name-transfer-coding-registratio",
+        "text_sha256": "2ab9d869dd3158af8e48f52cff3bdf02e12fe4b75fd52c753a4b83cad4a42b7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-alpn-protocol-id-registrati",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-alpn-protocol-id-registrati"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ALPN Protocol ID Registration.",
+      "locator": {
+        "section_id": "name-alpn-protocol-id-registrati",
+        "text_sha256": "0f56781e8c09c3f3eb8f806dd1cb2a9937a75f0dc5f286480594bded8bc5cef7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-collected-abnf",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-collected-abnf"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix A. Collected ABNF.",
+      "locator": {
+        "section_id": "name-collected-abnf",
+        "text_sha256": "d04222b1525df5113e89b773bfa16da1f47b28259ab94c738d5c9a593716f42d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-differences-between-http-an",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-differences-between-http-an"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix B. Differences between HTTP and MIME.",
+      "locator": {
+        "section_id": "name-differences-between-http-an",
+        "text_sha256": "f7ca3c7ab4db68a0bb7230c3ecd6cd0094791f14fc7feac7c542d02bf6dee806"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-mime-version",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-mime-version"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in MIME-Version.",
+      "locator": {
+        "section_id": "name-mime-version",
+        "text_sha256": "02ea9f760b2e58fe4e6874557194c85382ded121efbddb2751fd02f5326955b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-conversion-to-canonical-for",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-conversion-to-canonical-for"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conversion to Canonical Form.",
+      "locator": {
+        "section_id": "name-conversion-to-canonical-for",
+        "text_sha256": "875ce403ba6c33aa4fc7cde7ed6ee3567cae36f7759f4deee57704d6786601bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-conversion-of-date-formats",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-conversion-of-date-formats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conversion of Date Formats.",
+      "locator": {
+        "section_id": "name-conversion-of-date-formats",
+        "text_sha256": "05eca6352348bcc45e12dd3cb74e91a631a9d4a1d58acf19f8a0cfcd3ab05d87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-conversion-of-content-encod",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-conversion-of-content-encod"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conversion of Content-Encoding.",
+      "locator": {
+        "section_id": "name-conversion-of-content-encod",
+        "text_sha256": "dc1f27d6a8563208df7d3bb7f69296faa8c14d7a83dcab3c11cf5124db2dec79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-conversion-of-content-trans",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-conversion-of-content-trans"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conversion of Content-Transfer-Encoding.",
+      "locator": {
+        "section_id": "name-conversion-of-content-trans",
+        "text_sha256": "a436adc4529f63d959bb40b9616d0806b39bd1d85704e1199cb61ac905513133"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-mhtml-and-line-length-limit",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-mhtml-and-line-length-limit"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in MHTML and Line Length Limitations.",
+      "locator": {
+        "section_id": "name-mhtml-and-line-length-limit",
+        "text_sha256": "f8c956b568505992b67b5afaba2b50302683f8d5d7cb815216f82ae3dce8c388"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-changes-from-previous-rfcs",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-changes-from-previous-rfcs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix C. Changes from Previous RFCs.",
+      "locator": {
+        "section_id": "name-changes-from-previous-rfcs",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-changes-from-http-09",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-changes-from-http-09"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Changes from HTTP/0.9.",
+      "locator": {
+        "section_id": "name-changes-from-http-09",
+        "text_sha256": "a7adbe21ded6bb2b067874c82aea0c759647f6f3eec2c695d2c8b5e173822750"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-changes-from-http-10",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-changes-from-http-10"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Changes from HTTP/1.0.",
+      "locator": {
+        "section_id": "name-changes-from-http-10",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-multihomed-web-servers",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-multihomed-web-servers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Multihomed Web Servers.",
+      "locator": {
+        "section_id": "name-multihomed-web-servers",
+        "text_sha256": "64f1987e8bcb84e01b4dcd0ac0b9971c22925446271289f18609f42685dce566"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-keep-alive-connections",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-keep-alive-connections"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Keep-Alive Connections.",
+      "locator": {
+        "section_id": "name-keep-alive-connections",
+        "text_sha256": "9b64c69d623aee2a55c50997a2ccd50b865fb97cfd9e7cbdf2b711c266096ca3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-introduction-of-transfer-en",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-introduction-of-transfer-en"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction of Transfer-Encoding.",
+      "locator": {
+        "section_id": "name-introduction-of-transfer-en",
+        "text_sha256": "ccda6eae7be3805f120c2555798e44727a51f0d00e5e682374114a53039d5437"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-changes-from-rfc-7230",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-changes-from-rfc-7230"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Changes from RFC 7230.",
+      "locator": {
+        "section_id": "name-changes-from-rfc-7230",
+        "text_sha256": "b9798bb1417c612bc1466b8c1cdcf64903367c2e95abe80b0f63a3a0697fbeaf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "rfc9112.name-changes-from-rfc-7230-clause-18f396589b70",
+        "rfc9112.name-changes-from-rfc-7230-clause-84f60964de17",
+        "rfc9112.name-changes-from-rfc-7230-clause-e16e15df8c9f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-changes-from-rfc-7230-clause-18f396589b70",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-changes-from-rfc-7230"
+      ],
+      "behaviour": "Changes from RFC 7230 — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-changes-from-rfc-7230",
+        "clause_index": 2,
+        "clause_sha256": "18f396589b706eb26a2ce7d61481e1f63ef516c977cc69d8f1d6fd54ac1800d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-changes-from-rfc-7230-clause-84f60964de17",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-changes-from-rfc-7230"
+      ],
+      "behaviour": "Changes from RFC 7230 — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-changes-from-rfc-7230",
+        "clause_index": 3,
+        "clause_sha256": "84f60964de1782bf6df1150f4c2c0111200ad4c8ebed8484b115fa364303606b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-changes-from-rfc-7230-clause-e16e15df8c9f",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-changes-from-rfc-7230"
+      ],
+      "behaviour": "Changes from RFC 7230 — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "name-changes-from-rfc-7230",
+        "clause_index": 5,
+        "clause_sha256": "e16e15df8c9fae6ae7f3e72817076a3fe8202b9ac28e524fd433d33b66cace34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "rfc9112.name-index",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Index.",
+      "locator": {
+        "section_id": "name-index",
+        "text_sha256": "73daa84d9f5ba4aa9255a31086bb2048d0f67e61d71099e9b20099979e6e20d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-authors-addresses",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-authors-addresses"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Authors' Addresses.",
+      "locator": {
+        "section_id": "name-authors-addresses",
+        "text_sha256": "1ed1eb45e20a73fa0ff8e0221cc91b2c84fad2f52671c142253b51b75b304abf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.title",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in HTTP/1.1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.abstract",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "fa491d89f7a095f5212bc612c45cbb8dfd0514b44b18db3e7527b253356bbce4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-table-of-contents",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-table-of-contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "name-table-of-contents",
+        "text_sha256": "05903b1eed47d606d523299bcc5bfa588560a9ee3f0dc1abfd61ff2ee8f4153e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-references",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 13. References.",
+      "locator": {
+        "section_id": "name-references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-normative-references",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-normative-references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 13.1. Normative References.",
+      "locator": {
+        "section_id": "name-normative-references",
+        "text_sha256": "6ca542a00986179065bef1d4714c7941187368de3c016dee67d88104e1aafef9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-informative-references",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-informative-references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 13.2. Informative References.",
+      "locator": {
+        "section_id": "name-informative-references",
+        "text_sha256": "1f5b8e57c395acb3f3f61cd36ead2e4482cd6334781450fc7187c1be3bf374cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "rfc9112.name-acknowledgements",
+      "family": "rfc9112",
+      "source_id": "rfc9112",
+      "sections": [
+        "name-acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgements.",
+      "locator": {
+        "section_id": "name-acknowledgements",
+        "text_sha256": "3e4607843ab0f11ee39c5e89ccc5252574538b348a699020638b5ea4ec6afc48"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

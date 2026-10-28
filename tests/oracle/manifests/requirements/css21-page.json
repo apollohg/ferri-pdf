@@ -1,0 +1,1122 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-page.the-page",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "the-page"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 13 Paged media.",
+      "locator": {
+        "section_id": "the-page",
+        "text_sha256": "b83572f5b8070dc1b045c330a2ac6abfce6aa41e4d290b1ab812e9e540a73b62"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.page-intro",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction to paged media.",
+      "locator": {
+        "section_id": "page-intro",
+        "text_sha256": "b0df16bd2eff88338af0096c1d70a8d37637f213ca7223f7dbc6ce4f6bc6fbb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.page-box",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-box"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page boxes: the @page rule.",
+      "locator": {
+        "section_id": "page-box",
+        "text_sha256": "c29549cc80865d437722476c3a943f9681d9ddbc097a616fe103c7587c1c89eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-page.page-box-clause-0343b1edb2bb",
+        "css21-page.page-box-clause-29a2959e3f4e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.page-box-clause-0343b1edb2bb",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-box"
+      ],
+      "behaviour": "Page boxes: the @page rule — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-box",
+        "clause_index": 5,
+        "clause_sha256": "0343b1edb2bb1c2fa1ea8f92c4e23db68cb307932da194a990fc6574a9d53d0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-box-clause-29a2959e3f4e",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-box"
+      ],
+      "behaviour": "Page boxes: the @page rule — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-box",
+        "clause_index": 7,
+        "clause_sha256": "29a2959e3f4ef7b37feb76433c96ffba383982798f55aa939e2080726c7077e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-margins",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-margins"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page margins.",
+      "locator": {
+        "section_id": "page-margins",
+        "text_sha256": "8462918ac825c42276ce2e9eb3625437e4781b9afa9fe814175630513d8b9cfa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.page-selectors",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page selectors: selecting left, right, and first pages.",
+      "locator": {
+        "section_id": "page-selectors",
+        "text_sha256": "a7a0abb0a56ade6cb91215abc2b1b517cefbe15ad9c994bdcd59ae077b02c7ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-page.page-selectors-clause-c34197bfe31c",
+        "css21-page.page-selectors-clause-ed9167466d6d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.page-selectors-clause-c34197bfe31c",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-selectors"
+      ],
+      "behaviour": "Page selectors: selecting left, right, and first pages — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-selectors",
+        "clause_index": 4,
+        "clause_sha256": "c34197bfe31c299d246415ae9fdbbc98e3727dffd85fc735fdc5eca631c4a80e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-selectors-clause-ed9167466d6d",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-selectors"
+      ],
+      "behaviour": "Page selectors: selecting left, right, and first pages — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-selectors",
+        "clause_index": 10,
+        "clause_sha256": "ed9167466d6d4e9cd3a78b82e0737856e9683c7ab8f62ac3a35954e7dd771029"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.outside-page-box",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "outside-page-box"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Content outside the page box.",
+      "locator": {
+        "section_id": "outside-page-box",
+        "text_sha256": "af9e22e26d7478f23fea257cd7c0e0029aea20373d5fe824291f87fc79f68e61"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-page.outside-page-box-clause-0d248c08d39a",
+        "css21-page.outside-page-box-clause-647d70386c58",
+        "css21-page.outside-page-box-clause-b9116b4bfb5c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.outside-page-box-clause-0d248c08d39a",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "outside-page-box"
+      ],
+      "behaviour": "Content outside the page box — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "outside-page-box",
+        "clause_index": 2,
+        "clause_sha256": "0d248c08d39a2793d31d705af8b1ec263183b1608ec65d766bdf7108c62b44e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.outside-page-box-clause-647d70386c58",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "outside-page-box"
+      ],
+      "behaviour": "Content outside the page box — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "outside-page-box",
+        "clause_index": 3,
+        "clause_sha256": "647d70386c5883d6c6091ae323e59bc1e51771d57405de3f1e916406222838e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.outside-page-box-clause-b9116b4bfb5c",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "outside-page-box"
+      ],
+      "behaviour": "Content outside the page box — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "outside-page-box",
+        "clause_index": 4,
+        "clause_sha256": "b9116b4bfb5c41e54ea51d50bb32717663ae456a28c2958bd76546e3598fef4e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-breaks",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-breaks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page breaks.",
+      "locator": {
+        "section_id": "page-breaks",
+        "text_sha256": "612375808295e8cce8b756465ce37a2a0600b6d7699fbdaffe9d9db1482420d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-page.page-breaks-clause-612375808295"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.page-breaks-clause-612375808295",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-breaks"
+      ],
+      "behaviour": "Page breaks — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-breaks",
+        "clause_index": 0,
+        "clause_sha256": "612375808295e8cce8b756465ce37a2a0600b6d7699fbdaffe9d9db1482420d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-break-props",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-break-props"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page break properties: 'page-break-before', 'page-break-after', 'page-break-inside'.",
+      "locator": {
+        "section_id": "page-break-props",
+        "text_sha256": "a834a477950a3eeb2998353a12d65b2043129700993388da929f4fff72bb0938"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-page.page-break-props-clause-d1eab19bf286",
+        "css21-page.page-break-props-clause-cca2516ebb1d",
+        "css21-page.page-break-props-clause-a3d274a8d224",
+        "css21-page.page-break-props-clause-ecaad4b2f157",
+        "css21-page.page-break-props-clause-c726a6fc633a",
+        "css21-page.page-break-props-clause-574f689b13ea",
+        "css21-page.page-break-props-clause-4de3ced532a6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.page-break-props-clause-d1eab19bf286",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-break-props"
+      ],
+      "behaviour": "Page break properties: 'page-break-before', 'page-break-after', 'page-break-inside' — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-break-props",
+        "clause_index": 2,
+        "clause_sha256": "d1eab19bf286e2562f99542abe4eebe29ab9c79519adcfed2a88271463fe8469"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-break-props-clause-cca2516ebb1d",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-break-props"
+      ],
+      "behaviour": "Page break properties: 'page-break-before', 'page-break-after', 'page-break-inside' — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-break-props",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-break-props-clause-a3d274a8d224",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-break-props"
+      ],
+      "behaviour": "Page break properties: 'page-break-before', 'page-break-after', 'page-break-inside' — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-break-props",
+        "clause_index": 14,
+        "clause_sha256": "a3d274a8d22497f054f10422f6caf9a778a18ffb39777f9331a0c70eec42b1cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-break-props-clause-ecaad4b2f157",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-break-props"
+      ],
+      "behaviour": "Page break properties: 'page-break-before', 'page-break-after', 'page-break-inside' — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-break-props",
+        "clause_index": 34,
+        "clause_sha256": "ecaad4b2f1578a3eded15d768b17c05d3d30a563809258a17f7d2238ee834cf4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-break-props-clause-c726a6fc633a",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-break-props"
+      ],
+      "behaviour": "Page break properties: 'page-break-before', 'page-break-after', 'page-break-inside' — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-break-props",
+        "clause_index": 47,
+        "clause_sha256": "c726a6fc633a6b9c45739d43f3a51f0f4dd0fdad8cc8e20103b2416f55c5c3c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-break-props-clause-574f689b13ea",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-break-props"
+      ],
+      "behaviour": "Page break properties: 'page-break-before', 'page-break-after', 'page-break-inside' — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-break-props",
+        "clause_index": 60,
+        "clause_sha256": "574f689b13ead38d640edc06e2eb6b590d68aa95653aaf8b8e68fd8bc24a6659"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-break-props-clause-4de3ced532a6",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-break-props"
+      ],
+      "behaviour": "Page break properties: 'page-break-before', 'page-break-after', 'page-break-inside' — normative clause 63, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-break-props",
+        "clause_index": 62,
+        "clause_sha256": "4de3ced532a61acbcbd6126ad394912a884313d3a6e0e8249cf96bfe3955039f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.break-inside",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "break-inside"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Breaks inside elements: 'orphans', 'widows'.",
+      "locator": {
+        "section_id": "break-inside",
+        "text_sha256": "7e1ad5c0f1e9b0dbc7f5bf52254df82985eaae4fca46a2b5398b47355686f177"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-page.break-inside-clause-d30807ebe502",
+        "css21-page.break-inside-clause-cca2516ebb1d",
+        "css21-page.break-inside-clause-8a638828ece5",
+        "css21-page.break-inside-clause-9d7a9f3c6e7a",
+        "css21-page.break-inside-clause-6650e707295b",
+        "css21-page.break-inside-clause-76e9fc12b85d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.break-inside-clause-d30807ebe502",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "break-inside"
+      ],
+      "behaviour": "Breaks inside elements: 'orphans', 'widows' — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-inside",
+        "clause_index": 2,
+        "clause_sha256": "d30807ebe5024dc4cb2368011a23156c27ffdf75a8894618b5cfc8a000dc9a79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.break-inside-clause-cca2516ebb1d",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "break-inside"
+      ],
+      "behaviour": "Breaks inside elements: 'orphans', 'widows' — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-inside",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.break-inside-clause-8a638828ece5",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "break-inside"
+      ],
+      "behaviour": "Breaks inside elements: 'orphans', 'widows' — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-inside",
+        "clause_index": 14,
+        "clause_sha256": "8a638828ece5d46000e473234e2360db3cc833a8ab4d1724405e96423f0bcf6c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.break-inside-clause-9d7a9f3c6e7a",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "break-inside"
+      ],
+      "behaviour": "Breaks inside elements: 'orphans', 'widows' — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-inside",
+        "clause_index": 30,
+        "clause_sha256": "9d7a9f3c6e7ad3019411a0ac2c4bf046b5d19680d94fa52924c7d2ec407bdf04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.break-inside-clause-6650e707295b",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "break-inside"
+      ],
+      "behaviour": "Breaks inside elements: 'orphans', 'widows' — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-inside",
+        "clause_index": 33,
+        "clause_sha256": "6650e707295b9d167d3e08eca84f4fa0c8cd42f016cda25945efee5c32d6f549"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.break-inside-clause-76e9fc12b85d",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "break-inside"
+      ],
+      "behaviour": "Breaks inside elements: 'orphans', 'widows' — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-inside",
+        "clause_index": 34,
+        "clause_sha256": "76e9fc12b85dec13148efbd1586fb166462d7de349cbc6c37313b7b47cf9eec6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.allowed-page-breaks",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "allowed-page-breaks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Allowed page breaks.",
+      "locator": {
+        "section_id": "allowed-page-breaks",
+        "text_sha256": "72701a26a04d395315345e3f127ab181bf265b23414b542f0417ae98c9d12008"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-page.allowed-page-breaks-clause-4bca97eac93e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.allowed-page-breaks-clause-4bca97eac93e",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "allowed-page-breaks"
+      ],
+      "behaviour": "Allowed page breaks — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "allowed-page-breaks",
+        "clause_index": 4,
+        "clause_sha256": "4bca97eac93e2a31460bcb9e37edd00affdfad88ed20096b16c310ea86f7bc67"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.forced",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "forced"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Forced page breaks.",
+      "locator": {
+        "section_id": "forced",
+        "text_sha256": "d5208e75ab37ddf42be92e7b11ac49755f60f1bf473c63f811fb79671f7791f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-page.forced-clause-d5208e75ab37"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.forced-clause-d5208e75ab37",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "forced"
+      ],
+      "behaviour": "Forced page breaks — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced",
+        "clause_index": 0,
+        "clause_sha256": "d5208e75ab37ddf42be92e7b11ac49755f60f1bf473c63f811fb79671f7791f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.best-page-breaks",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "best-page-breaks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in \"Best\" page breaks.",
+      "locator": {
+        "section_id": "best-page-breaks",
+        "text_sha256": "c248cf60fa66f6494347c46652ca816a3fa90be1977a2377b4d6da070ad5744a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-page.best-page-breaks-clause-75d5e2adbf32",
+        "css21-page.best-page-breaks-clause-598111ecd344",
+        "css21-page.best-page-breaks-clause-5416e2c9ed20",
+        "css21-page.best-page-breaks-clause-b8e68ba82125",
+        "css21-page.best-page-breaks-clause-e7a0844954e5",
+        "css21-page.best-page-breaks-clause-b22b4983c48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-page.best-page-breaks-clause-75d5e2adbf32",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "best-page-breaks"
+      ],
+      "behaviour": "\"Best\" page breaks — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-page-breaks",
+        "clause_index": 0,
+        "clause_sha256": "75d5e2adbf32d3ce68038fe8ca57e3689721edcde348cfc1ed5da0844b44f5bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.best-page-breaks-clause-598111ecd344",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "best-page-breaks"
+      ],
+      "behaviour": "\"Best\" page breaks — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-page-breaks",
+        "clause_index": 6,
+        "clause_sha256": "598111ecd34493b977c1e65bfb59c4abc506422c87b6274612270dc117c386b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.best-page-breaks-clause-5416e2c9ed20",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "best-page-breaks"
+      ],
+      "behaviour": "\"Best\" page breaks — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-page-breaks",
+        "clause_index": 7,
+        "clause_sha256": "5416e2c9ed20b82bea9de4d9a00a72c289cf65cb8195a395cf8a05a3097ef3d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.best-page-breaks-clause-b8e68ba82125",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "best-page-breaks"
+      ],
+      "behaviour": "\"Best\" page breaks — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-page-breaks",
+        "clause_index": 8,
+        "clause_sha256": "b8e68ba821252b8c001789579d7fde609d75d75942ac109b0dc55f71155d517a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.best-page-breaks-clause-e7a0844954e5",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "best-page-breaks"
+      ],
+      "behaviour": "\"Best\" page breaks — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-page-breaks",
+        "clause_index": 10,
+        "clause_sha256": "e7a0844954e54c13c6f4461e616694b84d886fa7a7ba8ac307232fdaf3836402"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.best-page-breaks-clause-b22b4983c48d",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "best-page-breaks"
+      ],
+      "behaviour": "\"Best\" page breaks — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-page-breaks",
+        "clause_index": 11,
+        "clause_sha256": "b22b4983c48da610afd5c0e42682d876ce3eda96cef2229c3665893fb37769ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-page.page-cascade",
+      "family": "css21-page",
+      "source_id": "css21-page",
+      "sections": [
+        "page-cascade"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascading in the page context.",
+      "locator": {
+        "section_id": "page-cascade",
+        "text_sha256": "dbebd3e035670abb21f7c0af29d097ef6ac584e574eeb9944ec71859f25d5524"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

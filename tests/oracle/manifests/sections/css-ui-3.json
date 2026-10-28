@@ -1,0 +1,780 @@
+{
+  "schema_version": 1,
+  "source_id": "css-ui-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Basic User Interface Module Level 3 (CSS3 UI)",
+      "level": 1,
+      "text_sha256": "446d564daf1c25fd790870928c014bc24b9579c28ac3a49e584ba63740a2430f",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "4c9809504c86795b30ff67f59b8aa958e78271d7139fd0442905a89bb104fc71",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "c55fc696745c2ff9e3a08041b89a7d0d952405978501b14184d53c405d8995fb",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "6c15eb07b3f1380b27440888c70f3c8f4d85b258685f3216fd9b6865b524d316",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "56e6a92240e4d5acac476b881d54bfb3466463c80cd47ababbbd33be48e04c47",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "purpose",
+      "title": "1.1. Purpose",
+      "level": 3,
+      "text_sha256": "2491a813c4161824e352feefe3540994995e81fa141f4759c5b326fb41983060",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.purpose"
+        ]
+      }
+    },
+    {
+      "id": "interaction",
+      "title": "2. Module Interactions",
+      "level": 2,
+      "text_sha256": "1d807bedda3c2104411b9dd0b16ef81a6256af4a9c5fcaf2943361d62debee7a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.interaction"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "2.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "1e771f7cfeaceaa57ac6ece5b5434b6103c6f59efceb92f03f64c96141e3de1a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.values"
+        ]
+      }
+    },
+    {
+      "id": "box-model",
+      "title": "3. Box Model addition",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.box-model"
+        ]
+      }
+    },
+    {
+      "id": "box-sizing",
+      "title": "3.1. Changing the Box Model: the box-sizing property",
+      "level": 3,
+      "text_sha256": "d266b3bf3565d0b9568f10d26b0655499bf30eebc545076c28e3f967dd07750c",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "superseded",
+        "reason": "Sizing Level 3 section 1.1 explicitly supersedes the CSS UI Level 3 box-sizing definition.",
+        "controlling": {
+          "source_id": "css-sizing-3",
+          "section_id": "box-sizing"
+        },
+        "basis": {
+          "source_id": "css-sizing-3",
+          "section_id": "placement",
+          "sha256": "ca0f1db3d5ad0c9799bf9dc04b9c30b4d9adf8d4d6f222787e4759ed81a6bbad"
+        }
+      }
+    },
+    {
+      "id": "box-sizing-example",
+      "title": "Using box-sizing to evenly share space",
+      "level": 4,
+      "text_sha256": "c9ed827ec8176482ea3e84474b3f09dc3ad3500d48d89955e5929660247ad85a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.box-sizing-example"
+        ]
+      }
+    },
+    {
+      "id": "outline-props",
+      "title": "4. Outline properties",
+      "level": 2,
+      "text_sha256": "88de9d8fdecb006ffdce3b6284e2c0854feb4b0f667cd3dfdb0f275b627aa485",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.outline-props",
+          "css-ui-3.outline-props-clause-703e72b92c61"
+        ]
+      }
+    },
+    {
+      "id": "outline",
+      "title": "4.1. Outlines Shorthand: the outline property",
+      "level": 3,
+      "text_sha256": "f8e9096d3c9e7ca15fa13e50bf7459e316d6ac267333bdb8ff681df3d910bfc2",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.outline",
+          "css-ui-3.outline-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "outline-width",
+      "title": "4.2. Outline Thickness: the outline-width property",
+      "level": 3,
+      "text_sha256": "e805060f91e3d3dd62c78736ac307fac61d864e945ca3279322ebec08c70a6e9",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.outline-width",
+          "css-ui-3.outline-width-clause-cca2516ebb1d",
+          "css-ui-3.outline-width-clause-f21850a6cc00"
+        ]
+      }
+    },
+    {
+      "id": "outline-style",
+      "title": "4.3. Outline Patterns: the outline-style property",
+      "level": 3,
+      "text_sha256": "66014e686fb5e50bc107a0a9550647ea361fb5789de72377b29765e8fbb52f62",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.outline-style",
+          "css-ui-3.outline-style-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "outline-color",
+      "title": "4.4. Outline Colors: the outline-color property",
+      "level": 3,
+      "text_sha256": "b84be7e6eaaa7e6874a4996862723ccbe489e6cbafdda65ddc9a2d5b30af7038",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.outline-color",
+          "css-ui-3.outline-color-clause-cca2516ebb1d",
+          "css-ui-3.outline-color-clause-0f4dbea853c6",
+          "css-ui-3.outline-color-clause-7d75b2489bc6",
+          "css-ui-3.outline-color-clause-025f316eea44",
+          "css-ui-3.outline-color-clause-72b9db541499",
+          "css-ui-3.outline-color-clause-e22ab671e28f",
+          "css-ui-3.outline-color-clause-32f69d1e9559",
+          "css-ui-3.outline-color-clause-c2c1852a26fb",
+          "css-ui-3.outline-color-clause-a7dbc225afd5",
+          "css-ui-3.outline-color-clause-98bae92c020c"
+        ]
+      }
+    },
+    {
+      "id": "outline-offset",
+      "title": "4.5. Offsetting the Outline: the outline-offset property",
+      "level": 3,
+      "text_sha256": "66d681d1ecb26881afc826d8b04f5f02b4f469ae4446027af35a2b883f4d4d7c",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.outline-offset",
+          "css-ui-3.outline-offset-clause-cca2516ebb1d",
+          "css-ui-3.outline-offset-clause-67b349fd63cb",
+          "css-ui-3.outline-offset-clause-7217a9ac9f1c",
+          "css-ui-3.outline-offset-clause-b4eff796d70a"
+        ]
+      }
+    },
+    {
+      "id": "resizing-and-overflow",
+      "title": "5. Resizing & Overflow",
+      "level": 2,
+      "text_sha256": "6c4d93785f9d8f7a2cb35bc72ff9fd102a53ad3e401a594612fe56828712cd67",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.resizing-and-overflow"
+        ]
+      }
+    },
+    {
+      "id": "resize",
+      "title": "5.1. Resizing Boxes: the resize property",
+      "level": 3,
+      "text_sha256": "e9c2866ec989c8b18a5cd34e0b14fd1ab651059226394a8d086e52aac567119b",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.resize",
+          "css-ui-3.resize-clause-cca2516ebb1d",
+          "css-ui-3.resize-clause-b31141d8f9c2",
+          "css-ui-3.resize-clause-047455a200e1",
+          "css-ui-3.resize-clause-076d71173ac2",
+          "css-ui-3.resize-clause-d5caadf738b5",
+          "css-ui-3.resize-clause-25b00bec56ec",
+          "css-ui-3.resize-clause-aec6e48c3051",
+          "css-ui-3.resize-clause-73a39959f9e8",
+          "css-ui-3.resize-clause-d6d92f0b98a7"
+        ]
+      }
+    },
+    {
+      "id": "text-overflow",
+      "title": "5.2. Overflow Ellipsis: the text-overflow property",
+      "level": 3,
+      "text_sha256": "3e677eb2d68a6e28b327e3c468132bf94681937504b92a5fb46cde597e8bffbd",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.text-overflow",
+          "css-ui-3.text-overflow-clause-cca2516ebb1d",
+          "css-ui-3.text-overflow-clause-57928ea2ab51",
+          "css-ui-3.text-overflow-clause-5c069a62a139",
+          "css-ui-3.text-overflow-clause-7ebd5286818b"
+        ]
+      }
+    },
+    {
+      "id": "bidi-ellipsis",
+      "title": "Bidi ellipsis examples",
+      "level": 4,
+      "text_sha256": "5c678bdd0099720cf856a4085da7168c7146e771e51ca7477c85e3057cf17a4a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.bidi-ellipsis"
+        ]
+      }
+    },
+    {
+      "id": "ellipsing-details",
+      "title": "ellipsing details",
+      "level": 4,
+      "text_sha256": "346030ac36497f1994819d41d83c65e4582d4bd290c0a4e33def323fb4050b59",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.ellipsing-details",
+          "css-ui-3.ellipsing-details-clause-6b926cc7c84f"
+        ]
+      }
+    },
+    {
+      "id": "ellipsis-interaction",
+      "title": "user interaction with ellipsis",
+      "level": 4,
+      "text_sha256": "e103b3af3a20baede4f705519f4b4efe777564b46eeb6328789c559b8e45971c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.ellipsis-interaction",
+          "css-ui-3.ellipsis-interaction-clause-6644383eef72"
+        ]
+      }
+    },
+    {
+      "id": "text-overflow-examples",
+      "title": "text-overflow examples",
+      "level": 4,
+      "text_sha256": "ae22f23bbaefd30c7f384be1c0cad5a29d37c3b45d3fc96d7cfff323f0fb842e",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.text-overflow-examples"
+        ]
+      }
+    },
+    {
+      "id": "ellipsis-scrolling",
+      "title": "ellipsis interaction with scrolling interfaces",
+      "level": 4,
+      "text_sha256": "0717a165e4526021c4bf36062b4df719db4374605fc2d7fa34a50a57d61a1132",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.ellipsis-scrolling",
+          "css-ui-3.ellipsis-scrolling-clause-a7cb4b7c8c8d"
+        ]
+      }
+    },
+    {
+      "id": "pointing-keyboard",
+      "title": "6. Pointing Devices and Keyboards",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.pointing-keyboard"
+        ]
+      }
+    },
+    {
+      "id": "pointer-interaction",
+      "title": "6.1. Pointer interaction",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.pointer-interaction"
+        ]
+      }
+    },
+    {
+      "id": "cursor",
+      "title": "6.1.1. Styling the Cursor: the cursor property",
+      "level": 4,
+      "text_sha256": "edff2c54899f0eff64df768cfa13b562a744abf3543186f9e539ff3ee2b0f44c",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.cursor",
+          "css-ui-3.cursor-clause-cca2516ebb1d",
+          "css-ui-3.cursor-clause-0169a0f5e6a7",
+          "css-ui-3.cursor-clause-9287c317bdb0",
+          "css-ui-3.cursor-clause-9a7a2294bc28",
+          "css-ui-3.cursor-clause-50419894d5eb",
+          "css-ui-3.cursor-clause-a337ec84f8f2",
+          "css-ui-3.cursor-clause-47790b4f5954",
+          "css-ui-3.cursor-clause-4bd80bf6f89c"
+        ]
+      }
+    },
+    {
+      "id": "predefined-cursors",
+      "title": "6.1.1.1. Predefined Cursors",
+      "level": 5,
+      "text_sha256": "50e523d5e2cb5afd896271c90d5bee479d1647bd1cbe59d05204e6d0efa642f7",
+      "clause_count": 70,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.predefined-cursors",
+          "css-ui-3.predefined-cursors-clause-76092990cfac"
+        ]
+      }
+    },
+    {
+      "id": "canvas_cursor",
+      "title": "6.1.1.2. Cursor of the canvas",
+      "level": 5,
+      "text_sha256": "8e74cb2d75b6eaa431d6c0c218a3bd4541e686d2e8ab4de89753aa4e93642f6d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.canvas-cursor"
+        ]
+      }
+    },
+    {
+      "id": "insertion-caret",
+      "title": "6.2. Insertion caret",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.insertion-caret"
+        ]
+      }
+    },
+    {
+      "id": "caret-color",
+      "title": "6.2.1. Coloring the Insertion Caret: the caret-color property",
+      "level": 4,
+      "text_sha256": "208ff1700455f6536f8d2c9979109bcc754cf1f8f5d309e66a2acd9867cc0396",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.caret-color",
+          "css-ui-3.caret-color-clause-cca2516ebb1d",
+          "css-ui-3.caret-color-clause-e9f1c41e8170",
+          "css-ui-3.caret-color-clause-f15040fdb19c",
+          "css-ui-3.caret-color-clause-2c127b8a2124"
+        ]
+      }
+    },
+    {
+      "id": "keyboard",
+      "title": "6.3. Keyboard control",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.keyboard"
+        ]
+      }
+    },
+    {
+      "id": "input-method-editor",
+      "title": "6.3.1. Obsolete: the ime-mode property",
+      "level": 4,
+      "text_sha256": "eca22ef3029f2b135852697a9212814420a60dcdba352e98720b8a9415ae9254",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.input-method-editor",
+          "css-ui-3.input-method-editor-clause-96776927543d",
+          "css-ui-3.input-method-editor-clause-d0e75e1ef9a5"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Appendix A: Acknowledgments",
+      "level": 2,
+      "text_sha256": "94afbdb4ff6bf17200d34062bab6042c2a3cd11bb80ce92cb1b921f3b146a53d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Appendix B: Changes",
+      "level": 2,
+      "text_sha256": "9a2def4ee299e63f63fcc9dc6132e0c04cecb9b09c90fd45d2abca30a78f068b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-2018-06-21",
+      "title": "Changes from the 21 June 2018 Recommendation (REC)",
+      "level": 3,
+      "text_sha256": "c01ad45a927a83358995d9d84f8798f0a5c851c9ad8c564e3248b3b288514afd",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.changes-2018-06-21"
+        ]
+      }
+    },
+    {
+      "id": "changes-2021-03-16",
+      "title": "Changes from the 2 March 2017 Candidate Recommendation (CR)",
+      "level": 3,
+      "text_sha256": "59486d018ae2688432546e2ecad21521e0a7ce22b35ecdfef935436a8fe09dfd",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.changes-2021-03-16"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Appendix C: Privacy Considerations",
+      "level": 2,
+      "text_sha256": "1522f8f079c643e084cc5a62b711df6e70586d650ded33e42bf881fee4f97e2e",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.privacy",
+          "css-ui-3.privacy-clause-0839afd76325"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Appendix D: Security Considerations",
+      "level": 2,
+      "text_sha256": "aafac48b655e3665c6f9b355e52fc0678b9b2cb28b767c1410ca36c10a08ec50",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.security",
+          "css-ui-3.security-clause-b421a9e5bd38",
+          "css-ui-3.security-clause-755eba4f6c47"
+        ]
+      }
+    },
+    {
+      "id": "default-style-sheet",
+      "title": "Appendix E: Default style sheet additions for HTML",
+      "level": 2,
+      "text_sha256": "ba27f14022020c403acc0f1b495ec3c03efb3ff3fcc9a6cab71c52f1d4af25b2",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.default-style-sheet",
+          "css-ui-3.default-style-sheet-clause-8b246943e29e"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.w3c-conventions",
+          "css-ui-3.w3c-conventions-clause-5c98c879f070",
+          "css-ui-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.w3c-conformance-classes",
+          "css-ui-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-ui-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.w3c-partial",
+          "css-ui-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.w3c-testing",
+          "css-ui-3.w3c-testing-clause-1e0fff369221",
+          "css-ui-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "c76b5470e2fcf8aedda37528d7aaba4cc47bb7c7b05e5d3d0deaf7a06e8d5c72",
+      "clause_count": 61,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "12d74f94b232de480f12d88991bc02fe16894e03b39b9e75aa913a6b222498aa",
+      "clause_count": 85,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "a8ae6d0f7444d2c38be42e2fdb49a156ebe4353e24ac24f2e4c28e6d0fe03b8c",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "d076b71bd03cfdce06bcdf9f99dc7c4fc8b47dfb0fbbd397c55323373bdbfec2",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "fe274a9ee0956570910d9c434e940598a6dc963f81f36ce66b191e3cbff49cc6",
+      "clause_count": 99,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-ui-3.property-index",
+          "css-ui-3.property-index-clause-fb8163367949",
+          "css-ui-3.property-index-clause-e9f1c41e8170",
+          "css-ui-3.property-index-clause-0f4dbea853c6",
+          "css-ui-3.property-index-clause-e0206ce6f533"
+        ]
+      }
+    }
+  ]
+}

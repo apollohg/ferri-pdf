@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-sample",
+  "sections": [
+    {
+      "id": "q22.0",
+      "title": "Appendix D. Default style sheet for HTML 4",
+      "level": 1,
+      "text_sha256": "5b3f23f4ee57ef59e64f782dc1d2e6676734503392343af3bf7ee0d8d54af632",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-sample.q22-0",
+          "css21-sample.q22-0-clause-4c09753e1ffd",
+          "css21-sample.q22-0-clause-c953fb401995"
+        ]
+      }
+    }
+  ]
+}

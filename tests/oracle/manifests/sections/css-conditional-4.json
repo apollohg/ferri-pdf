@@ -1,0 +1,390 @@
+{
+  "schema_version": 1,
+  "source_id": "css-conditional-4",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Conditional Rules Module Level 4",
+      "level": 1,
+      "text_sha256": "265949d46f21a8dcef9bb96217c46752f594846e3433e7a1356e193002bf0533",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "58744685169a79cb8d2ba6f5c33c73d8980efa1e4d8c0a9a5a9a366458041bc2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "7b41ebb7ec8986812ef5f56197dae79acde122398a4aac572a5ef4f4b27c4171",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "dedc01c727999bc171c17a6f2d51b1f727658956879be8d4cda7f25e36208d5a",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "9fc40aaee5359f91ad2639c2cd1d5cfd428246c76ec1d2d07f504d7a3546da68",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.introduction"
+        ]
+      }
+    },
+    {
+      "id": "at-supports-ext",
+      "title": "2. Extensions to the @supports rule",
+      "level": 2,
+      "text_sha256": "bb5f7cafebbf8ae0e7d687882c9787d3825661c85be8a31612107933f902d13f",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.at-supports-ext",
+          "css-conditional-4.at-supports-ext-clause-3591f85ac751",
+          "css-conditional-4.at-supports-ext-clause-86d102713098",
+          "css-conditional-4.at-supports-ext-clause-82d8be599033",
+          "css-conditional-4.at-supports-ext-clause-8b7de37757dc",
+          "css-conditional-4.foundation-selector-support"
+        ]
+      }
+    },
+    {
+      "id": "support-definition-ext",
+      "title": "2.1. Extensions to the definition of support",
+      "level": 3,
+      "text_sha256": "1e1ad36a932b0783982bc90fe4790d1c47c0e06060ea523e3428eef9c254c41d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.support-definition-ext",
+          "css-conditional-4.support-definition-ext-clause-f4fcebb7ccca",
+          "css-conditional-4.support-definition-ext-clause-b7d2d2af1d1d",
+          "css-conditional-4.foundation-selector-support"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "6e1a1cd28d238545b78407ff145026933caa88e2493625a79185cd6adf66079e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.security"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "44f38376acc375d744529442577daa5a881ba8af210196a7b93361caaa390329",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.privacy"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "f2a2708a40da3d1edb7ef41368ee2f746543500187fdef2880165f647df2c602",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-2022-02-17",
+      "title": "Changes since the Candidate Recommendation Snapshot of 17 February 2022",
+      "level": 3,
+      "text_sha256": "ab8a747755130a9c5c0afa26b4649e5b26be5b711b3c209b37b7e26731e286a4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.changes-from-2022-02-17"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20200303",
+      "title": "Changes since the First Public Working Draft of 3 March 2020",
+      "level": 3,
+      "text_sha256": "805e6ee1e9e68065a95ebad373f562909736c24cc794ea481e70cb97a20a3c0b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.changes-from-20200303"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-L3",
+      "title": "Additions since Level 3",
+      "level": 3,
+      "text_sha256": "bd39b93172148b765891c9aaf4d1181c2fc811b4ca49848e570cc50167dfbd81",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.changes-from-l3"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.w3c-conventions",
+          "css-conditional-4.w3c-conventions-clause-5c98c879f070",
+          "css-conditional-4.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.w3c-conformance-classes",
+          "css-conditional-4.w3c-conformance-classes-clause-ff408372426c",
+          "css-conditional-4.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.w3c-partial",
+          "css-conditional-4.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.w3c-testing",
+          "css-conditional-4.w3c-testing-clause-1e0fff369221",
+          "css-conditional-4.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.w3c-cr-exit-criteria",
+          "css-conditional-4.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-conditional-4.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-conditional-4.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-conditional-4.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-conditional-4.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "5ab04f270e9daf570b9a23f33cdf44154b78099db69cff42c70c8cabd3060980",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "ee601b879605c86d0b7992799e9c699d072c4ea6eebdd4c8773dede69be4ce05",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "a3b0ae916ea80ad6ff311a2307186cf57854263efabc02479bebdfc99e73335c",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "29370a779dffd39a365b409f3970900fe1c9de69cf51131a39ef0279f892c18c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.informative"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "2d15c2c1411991b0a39c53bc8e931d364439329471ebb9a48a201e45218f831e",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-4.issues-index"
+        ]
+      }
+    }
+  ]
+}

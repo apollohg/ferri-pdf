@@ -1,0 +1,444 @@
+{
+  "schema_version": 1,
+  "source_id": "rec-xml-names-20091208",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Namespaces in XML 1.0 (Third Edition)",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.title"
+        ]
+      }
+    },
+    {
+      "id": "w3c-doctype",
+      "title": "W3C Recommendation 8 December 2009",
+      "level": 2,
+      "text_sha256": "a2d22fe5775ea7dfd6dadcaf3cf02ade834105e37f856f6ec24af0bc950bbe41",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.w3c-doctype"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "068f83bc6caa0cd86b4900e4c9a65b9ff04d3be950d01fce50eaafb709101856",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this Document",
+      "level": 2,
+      "text_sha256": "81163b0db9af8fa1efeaff670132e67ca26af4db22fd8ddc89b6520fd5513000",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "2d9c2c05206130adbd92d3c31ea95a5e2379f1737a72ad865b04a0de66e822bb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.contents"
+        ]
+      }
+    },
+    {
+      "id": "appendices",
+      "title": "Appendices",
+      "level": 3,
+      "text_sha256": "4c4bc9a6ff864d228f03aecdd0a9b5fdfe52c2009cc2acd46fadea4957b5ea81",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.appendices"
+        ]
+      }
+    },
+    {
+      "id": "sec-intro",
+      "title": "1 Motivation and Summary",
+      "level": 2,
+      "text_sha256": "2c9d306fa5e6ece421d1f38b14f5eb80f55009c70d53b71b8312bda239260f9d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.sec-intro",
+          "rec-xml-names-20091208.sec-intro-clause-299ec6d21d62"
+        ]
+      }
+    },
+    {
+      "id": "notation",
+      "title": "1.1 A Note on Notation and Usage",
+      "level": 3,
+      "text_sha256": "7baf330a3f8074488b897acd408cc24ba1b3e80c850e8e090aac452a828ceec6",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.notation",
+          "rec-xml-names-20091208.notation-clause-821134a3d4f3",
+          "rec-xml-names-20091208.notation-clause-cf5530a73ad6"
+        ]
+      }
+    },
+    {
+      "id": "sec-namespaces",
+      "title": "2 XML Namespaces",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.sec-namespaces"
+        ]
+      }
+    },
+    {
+      "id": "concepts",
+      "title": "2.1 Basic Concepts",
+      "level": 3,
+      "text_sha256": "255b55ce6167739bd92ca7ab51b1906cc07583c79b96e4810b0ed41b1cf7a8e6",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.concepts",
+          "rec-xml-names-20091208.concepts-clause-e7dce78dc6ca"
+        ]
+      }
+    },
+    {
+      "id": "iri-use",
+      "title": "2.2 Use of URIs as Namespace Names",
+      "level": 3,
+      "text_sha256": "20a3d88ef2197788da2cb7b320945d38960d1dfa1f9d290c3e20a82eff38809e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.iri-use"
+        ]
+      }
+    },
+    {
+      "id": "NSNameComparison",
+      "title": "2.3 Comparing URI References",
+      "level": 3,
+      "text_sha256": "93cecae04f0c4f11505ef9af7f67b0d9cf8114adcfd74a21022524c7287cef25",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.nsnamecomparison",
+          "rec-xml-names-20091208.nsnamecomparison-clause-97c2413f6d98"
+        ]
+      }
+    },
+    {
+      "id": "ns-decl",
+      "title": "3 Declaring Namespaces",
+      "level": 2,
+      "text_sha256": "41ec103c620eb163cbbc2d45f82bd7ddf54d9e022fc194b838a1cda3ccf09ab8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.ns-decl",
+          "rec-xml-names-20091208.ns-decl-clause-41ec103c620e"
+        ]
+      }
+    },
+    {
+      "id": "A785",
+      "title": "Attribute Names for Namespace Declaration",
+      "level": 5,
+      "text_sha256": "ae01b0eaf019c67807e90b9821033090d0cdf703f12d62becad8999797634b82",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.a785",
+          "rec-xml-names-20091208.a785-clause-42a0373309de",
+          "rec-xml-names-20091208.a785-clause-a8ae600760ac",
+          "rec-xml-names-20091208.a785-clause-eead1a266a67",
+          "rec-xml-names-20091208.a785-clause-47d395665979",
+          "rec-xml-names-20091208.a785-clause-3732c7b517bd"
+        ]
+      }
+    },
+    {
+      "id": "ns-qualnames",
+      "title": "4 Qualified Names",
+      "level": 2,
+      "text_sha256": "6b4fb4754c6d6b374a2085229b9b894825b2c30c1b2e2b3d2a5d35971945744b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.ns-qualnames",
+          "rec-xml-names-20091208.ns-qualnames-clause-6b4fb4754c6d"
+        ]
+      }
+    },
+    {
+      "id": "A1153",
+      "title": "Qualified Name",
+      "level": 5,
+      "text_sha256": "a1d960f1ea87bf38953ecb5788c229a2f2dbf5c420b71b01acff1a96c7ed820c",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.a1153",
+          "rec-xml-names-20091208.a1153-clause-8d4c1b2f8395",
+          "rec-xml-names-20091208.a1153-clause-bc95d55de67e"
+        ]
+      }
+    },
+    {
+      "id": "ns-using",
+      "title": "5 Using Qualified Names",
+      "level": 2,
+      "text_sha256": "122e8517d1a3c1953132d0e83eccf2edc8e99c366724ffc079e8cc751f9af5f6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.ns-using"
+        ]
+      }
+    },
+    {
+      "id": "A1329",
+      "title": "Element Names",
+      "level": 5,
+      "text_sha256": "6a81bc6ed1c8d5b164a78157592846a3be7f02291b276fc70fc8ea40f89a35f3",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.a1329"
+        ]
+      }
+    },
+    {
+      "id": "A1472",
+      "title": "Attribute",
+      "level": 5,
+      "text_sha256": "b2045258acb118d79db5084c8699697ad2948695a56aa85527f95c364aa42b2d",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.a1472",
+          "rec-xml-names-20091208.a1472-clause-ecf75f37ec21",
+          "rec-xml-names-20091208.a1472-clause-c395212faf4f",
+          "rec-xml-names-20091208.a1472-clause-a30831b05b54"
+        ]
+      }
+    },
+    {
+      "id": "A1686",
+      "title": "Qualified Names in Declarations",
+      "level": 5,
+      "text_sha256": "8d0757c727ef37500b2d6304f7cc3a556fba1b14283f1b6af690eddd228093ab",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.a1686",
+          "rec-xml-names-20091208.a1686-clause-2b78287b7ad5"
+        ]
+      }
+    },
+    {
+      "id": "scoping-defaulting",
+      "title": "6 Applying Namespaces to Elements and Attributes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.scoping-defaulting"
+        ]
+      }
+    },
+    {
+      "id": "scoping",
+      "title": "6.1 Namespace Scoping",
+      "level": 3,
+      "text_sha256": "45212ecdfe8a65c3d8125783095abb3e5314f4e45a7b96d3bcd2636d59f6e121",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.scoping"
+        ]
+      }
+    },
+    {
+      "id": "defaulting",
+      "title": "6.2 Namespace Defaulting",
+      "level": 3,
+      "text_sha256": "e835c8c6abd431259aa62d09d53017b6daa5fbce28185941e7970cc099e741c8",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.defaulting"
+        ]
+      }
+    },
+    {
+      "id": "uniqAttrs",
+      "title": "6.3 Uniqueness of Attributes",
+      "level": 3,
+      "text_sha256": "aaab06938bdd8bcfd6431e23dfdcd24240ddb9c62bb1e92d95b2a047ae0f21c9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.uniqattrs"
+        ]
+      }
+    },
+    {
+      "id": "Conformance",
+      "title": "7 Conformance of Documents",
+      "level": 2,
+      "text_sha256": "66fe7c0c294eb07025f494259fe335fc9ff0ff52e6041bbdd6e48725a824d984",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.conformance",
+          "rec-xml-names-20091208.conformance-clause-3625f21097ad",
+          "rec-xml-names-20091208.conformance-clause-173d98af8dd2",
+          "rec-xml-names-20091208.conformance-clause-501b22fb9aa2"
+        ]
+      }
+    },
+    {
+      "id": "ProcessorConformance",
+      "title": "8 Conformance of Processors",
+      "level": 2,
+      "text_sha256": "21c69613f219f1f26f0c504516e109a0af285da77127e49b56be4c97a9062f52",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.processorconformance",
+          "rec-xml-names-20091208.processorconformance-clause-da43acfd6b6d"
+        ]
+      }
+    },
+    {
+      "id": "refs",
+      "title": "A Normative References",
+      "level": 2,
+      "text_sha256": "68719dae3c739952b4b495c8eaee3db56e1c4a9dd19274af7a780cee7c5fe595",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.refs"
+        ]
+      }
+    },
+    {
+      "id": "nrefs",
+      "title": "B Other references (Non-Normative)",
+      "level": 2,
+      "text_sha256": "565b0c3aafc7622a157d9764666a2b131b9c6cd28a8ae08fbf3396a59391e983",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.nrefs"
+        ]
+      }
+    },
+    {
+      "id": "Philosophy",
+      "title": "C The Internal Structure of XML Namespaces (Non-Normative)",
+      "level": 2,
+      "text_sha256": "ab6170db34c96084998f29d36776f64b0df6b1337bfbfb839beb094c51104590",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.philosophy"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "D Changes since version 1.0 (Non-Normative)",
+      "level": 2,
+      "text_sha256": "e7a012583d6dc68c5fe68003542c61ad90afaa64a7bae0eabccb0ab15a475911",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.changes"
+        ]
+      }
+    },
+    {
+      "id": "sec-xml-and-sgml",
+      "title": "E Acknowledgements (Non-Normative)",
+      "level": 2,
+      "text_sha256": "a0e69fcdd930e2504dfbb4316e25b73778e5962816c302b8d908b49db4680817",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.sec-xml-and-sgml"
+        ]
+      }
+    },
+    {
+      "id": "orphans",
+      "title": "F Orphaned Productions (Non-Normative)",
+      "level": 2,
+      "text_sha256": "acf68f4f108c04df335853d58282c8b1a27ecdc02b358fe81b470837cf5532f5",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rec-xml-names-20091208.orphans"
+        ]
+      }
+    }
+  ]
+}

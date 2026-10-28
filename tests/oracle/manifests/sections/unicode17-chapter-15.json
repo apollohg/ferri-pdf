@@ -1,0 +1,545 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-15",
+  "sections": [
+    {
+      "id": "G71814",
+      "title": "South and Central Asia-IV",
+      "level": 1,
+      "text_sha256": "c46927462ee33587d2acfeafe0272d79361ad29cc65a3574d96d6137445ddf55",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.g71814"
+        ]
+      }
+    },
+    {
+      "id": "heading-3eae66bfb3ad",
+      "title": "15.1 Syloti Nagri",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-3eae66bfb3ad"
+        ]
+      }
+    },
+    {
+      "id": "heading-3bcd25c99e96",
+      "title": "15.1.1 Syloti Nagri: U+A800–U+A82F",
+      "level": 3,
+      "text_sha256": "eda809412ccaff803b170c49ab42b5e0306d7b14390126ef9e05b334c8bff13d",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-3bcd25c99e96",
+          "unicode17-chapter-15.heading-3bcd25c99e96-clause-a996a76efdac",
+          "unicode17-chapter-15.heading-3bcd25c99e96-clause-8011656292bb"
+        ]
+      }
+    },
+    {
+      "id": "heading-a159f174934c",
+      "title": "15.2 Kaithi",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-a159f174934c"
+        ]
+      }
+    },
+    {
+      "id": "heading-9b1a379a2829",
+      "title": "15.2.1 Kaithi: U+11080–U+110CF",
+      "level": 3,
+      "text_sha256": "fa020d3b2e2a81e4d1a7bb16315f4a76b9fca8660dc22571245a3c8ff1bb43cd",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-9b1a379a2829",
+          "unicode17-chapter-15.heading-9b1a379a2829-clause-ceaf9afb408b",
+          "unicode17-chapter-15.heading-9b1a379a2829-clause-5cb24079b137",
+          "unicode17-chapter-15.heading-9b1a379a2829-clause-13bea6d3d123"
+        ]
+      }
+    },
+    {
+      "id": "heading-47809973c21d",
+      "title": "15.3 Sharada",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-47809973c21d"
+        ]
+      }
+    },
+    {
+      "id": "heading-b338ace3f23c",
+      "title": "15.3.1 Sharada: U+11180–U+111DF",
+      "level": 3,
+      "text_sha256": "b75ceff67e50d8e8694446e10f0f8df17f6413bd21565488482f4fa19a154880",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-b338ace3f23c",
+          "unicode17-chapter-15.heading-b338ace3f23c-clause-3c8da49b1c83",
+          "unicode17-chapter-15.heading-b338ace3f23c-clause-02a23b1cf8e3"
+        ]
+      }
+    },
+    {
+      "id": "heading-b44d8bea4875",
+      "title": "15.3.2 Sharada Supplement: U+11B60–U+11B7F",
+      "level": 3,
+      "text_sha256": "7b868503f24f4497c009486d729b05283eb8d70b0b13d927249a64243bc6218b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-b44d8bea4875"
+        ]
+      }
+    },
+    {
+      "id": "heading-72ac8b5f5c8a",
+      "title": "15.4 Takri",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-72ac8b5f5c8a"
+        ]
+      }
+    },
+    {
+      "id": "heading-bbfce83c0b98",
+      "title": "15.4.1 Takri: U+11680–U+116CF",
+      "level": 3,
+      "text_sha256": "ffbcc50188f9e1afcaa70a0d3d5184c98930a2add34ac010009c3549bb7cd9b4",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-bbfce83c0b98",
+          "unicode17-chapter-15.heading-bbfce83c0b98-clause-01f1fa6b3fcd",
+          "unicode17-chapter-15.heading-bbfce83c0b98-clause-e8883bf904cc"
+        ]
+      }
+    },
+    {
+      "id": "heading-3bdc62c6a4e9",
+      "title": "15.5 Siddham",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-3bdc62c6a4e9"
+        ]
+      }
+    },
+    {
+      "id": "heading-a67e2d7ca922",
+      "title": "15.5.1 Siddham: U+11580–U+115FF",
+      "level": 3,
+      "text_sha256": "9a725028c60257a95440c9728743c8cac56fd6986e6b3f3051db408612dc23c1",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-a67e2d7ca922",
+          "unicode17-chapter-15.heading-a67e2d7ca922-clause-20f0b5097448"
+        ]
+      }
+    },
+    {
+      "id": "heading-43fe353f8091",
+      "title": "15.6 Mahajani",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-43fe353f8091"
+        ]
+      }
+    },
+    {
+      "id": "heading-4af55d3d758b",
+      "title": "15.6.1 Mahajani: U+11150–U+1117F",
+      "level": 3,
+      "text_sha256": "8ae352d3cff30bc1e9281de2f6d7797dc3d156cbe7a4fe70b8b93a697c95a479",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-4af55d3d758b",
+          "unicode17-chapter-15.heading-4af55d3d758b-clause-7755ee2df888",
+          "unicode17-chapter-15.heading-4af55d3d758b-clause-16d9208e71d4",
+          "unicode17-chapter-15.heading-4af55d3d758b-clause-f47558909b17",
+          "unicode17-chapter-15.heading-4af55d3d758b-clause-4ecf6de9ab33"
+        ]
+      }
+    },
+    {
+      "id": "heading-54fa17ac57cd",
+      "title": "15.7 Khojki",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-54fa17ac57cd"
+        ]
+      }
+    },
+    {
+      "id": "heading-6dd7843ad5e5",
+      "title": "15.7.1 Khojki: U+11200–U+1124F",
+      "level": 3,
+      "text_sha256": "23b7fd29ebdadaeb4e3116cb89680f122460eb38c67a2eb8fe3c2ab53aab3519",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-6dd7843ad5e5",
+          "unicode17-chapter-15.heading-6dd7843ad5e5-clause-32d2810a21b4",
+          "unicode17-chapter-15.heading-6dd7843ad5e5-clause-96a36a54acc1"
+        ]
+      }
+    },
+    {
+      "id": "heading-040054ff05f3",
+      "title": "15.8 Dogra",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-040054ff05f3"
+        ]
+      }
+    },
+    {
+      "id": "heading-4acefeae6be0",
+      "title": "15.8.1 Dogra: U+11800–U+1184F",
+      "level": 3,
+      "text_sha256": "47afae3d372fe59f2c33aa17c1c5c9059bb2e261deb05c15db4ac988f5b44701",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-4acefeae6be0",
+          "unicode17-chapter-15.heading-4acefeae6be0-clause-95b717ec7731"
+        ]
+      }
+    },
+    {
+      "id": "heading-fbbb771254da",
+      "title": "15.9 Khudawadi",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-fbbb771254da"
+        ]
+      }
+    },
+    {
+      "id": "heading-5c5809a9df6c",
+      "title": "15.9.1 Khudawadi: U+112B0–U+112FF",
+      "level": 3,
+      "text_sha256": "74dc6f91716d5f353ef5c85acb3cc1e4792537e88b53b33446a6d7a777ad0810",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-5c5809a9df6c",
+          "unicode17-chapter-15.heading-5c5809a9df6c-clause-f9ad25cf277c"
+        ]
+      }
+    },
+    {
+      "id": "heading-fc10f1a58df9",
+      "title": "15.10 Multani",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-fc10f1a58df9"
+        ]
+      }
+    },
+    {
+      "id": "heading-140510e4c891",
+      "title": "15.10.1 Multani: U+11280–U+112AF",
+      "level": 3,
+      "text_sha256": "23785d28384ca34bf4c6f70fe0330fe6ae93ee071233b815b28f081c4d93fde2",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-140510e4c891",
+          "unicode17-chapter-15.heading-140510e4c891-clause-470d74abdde3",
+          "unicode17-chapter-15.heading-140510e4c891-clause-3d1f5e09fc84",
+          "unicode17-chapter-15.heading-140510e4c891-clause-9f0cf358a8d4"
+        ]
+      }
+    },
+    {
+      "id": "heading-e0b00c542514",
+      "title": "15.11 Tirhuta",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-e0b00c542514"
+        ]
+      }
+    },
+    {
+      "id": "heading-9cba4400d66f",
+      "title": "15.11.1 Tirhuta: U+11480–U+114DF",
+      "level": 3,
+      "text_sha256": "50d2a3fe591cbdf7780138c0303d3a34b5d18baf3ce68f6bb669d52a513ad306",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-9cba4400d66f",
+          "unicode17-chapter-15.heading-9cba4400d66f-clause-3c1bfc287527",
+          "unicode17-chapter-15.heading-9cba4400d66f-clause-b11b56b65bb8"
+        ]
+      }
+    },
+    {
+      "id": "heading-e11690dbb0e7",
+      "title": "15.12 Modi",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-e11690dbb0e7"
+        ]
+      }
+    },
+    {
+      "id": "heading-fe4fc22e6305",
+      "title": "15.12.1 Modi: U+11600–U+1165F",
+      "level": 3,
+      "text_sha256": "49cd79855caa43382b23f0c3cd0ab0351e086cf2d2af3e9be1b8b639412c4d02",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-fe4fc22e6305",
+          "unicode17-chapter-15.heading-fe4fc22e6305-clause-be48c834b745",
+          "unicode17-chapter-15.heading-fe4fc22e6305-clause-eef48c657efb"
+        ]
+      }
+    },
+    {
+      "id": "heading-cda84d6543ca",
+      "title": "15.13 Nandinagari",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-cda84d6543ca"
+        ]
+      }
+    },
+    {
+      "id": "heading-92440d798f81",
+      "title": "15.13.1 Nandinagari: U+119A0–U+119FF",
+      "level": 3,
+      "text_sha256": "96bb7c7fa33430fbd52fe7c83ac39be2197c3b69e3f7f76b3e4faf66f833105e",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-92440d798f81"
+        ]
+      }
+    },
+    {
+      "id": "heading-dfa244a1ab75",
+      "title": "15.14 Grantha",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-dfa244a1ab75"
+        ]
+      }
+    },
+    {
+      "id": "heading-8d390b66a8ab",
+      "title": "15.14.1 Grantha: U+11300–U+1137F",
+      "level": 3,
+      "text_sha256": "4409cc79a44b4aa54276ef0c775e58344b293febbfdc4f0563fa95badee7124a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-8d390b66a8ab"
+        ]
+      }
+    },
+    {
+      "id": "heading-69a32cd27379",
+      "title": "15.14.2 Rendering Grantha",
+      "level": 3,
+      "text_sha256": "45a91dc2eafa47ad9ba3b6acf37fbf884ad1552169dff5299911c822cf4bb337",
+      "clause_count": 101,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-69a32cd27379",
+          "unicode17-chapter-15.heading-69a32cd27379-clause-50ace72977ef",
+          "unicode17-chapter-15.heading-69a32cd27379-clause-bd19fd63a375"
+        ]
+      }
+    },
+    {
+      "id": "heading-505c37e2a3ce",
+      "title": "15.15 Dives Akuru",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-505c37e2a3ce"
+        ]
+      }
+    },
+    {
+      "id": "heading-307a796e8dcf",
+      "title": "15.15.1 Dives Akuru: U+11900–U+1195F",
+      "level": 3,
+      "text_sha256": "067684135ebbc4083fc0141487462c3eea04ef5b01e0e2fd5b49e6a968a54997",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-307a796e8dcf",
+          "unicode17-chapter-15.heading-307a796e8dcf-clause-020d18a38dcf",
+          "unicode17-chapter-15.heading-307a796e8dcf-clause-0c985459856c"
+        ]
+      }
+    },
+    {
+      "id": "heading-873b00105b6b",
+      "title": "15.16 Ahom",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-873b00105b6b"
+        ]
+      }
+    },
+    {
+      "id": "heading-68f42a33f524",
+      "title": "15.16.1 Ahom: U+11700–U+1174F",
+      "level": 3,
+      "text_sha256": "a404a1770b6be6adfabaac72924056be9dcdb536f5b044f272ab5c84e94bcab9",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-68f42a33f524"
+        ]
+      }
+    },
+    {
+      "id": "heading-ab0afa1b13f7",
+      "title": "15.17 Sora Sompeng",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-ab0afa1b13f7"
+        ]
+      }
+    },
+    {
+      "id": "heading-e179943a2baa",
+      "title": "15.17.1 Sora Sompeng: U+110D0–U+110FF",
+      "level": 3,
+      "text_sha256": "a3fc5b7895eba448eeea2cc5cb35bfcfa1321e0a4b3beeb45f64b6638b6a0408",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-e179943a2baa",
+          "unicode17-chapter-15.heading-e179943a2baa-clause-f6a205fbb11d"
+        ]
+      }
+    },
+    {
+      "id": "heading-53f71f0d9e26",
+      "title": "15.18 Tulu-Tigalari",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-53f71f0d9e26"
+        ]
+      }
+    },
+    {
+      "id": "heading-63299cb527bd",
+      "title": "15.18.1 Tulu-Tigalari: U+11380–U+113FF",
+      "level": 3,
+      "text_sha256": "939401841371905cfaf906a69fa54e419625807caa50b3c5dc7ca18bdabc0958",
+      "clause_count": 219,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-15.heading-63299cb527bd",
+          "unicode17-chapter-15.heading-63299cb527bd-clause-32a94af9a2f9",
+          "unicode17-chapter-15.heading-63299cb527bd-clause-99ef38860875"
+        ]
+      }
+    }
+  ]
+}

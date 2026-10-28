@@ -1,0 +1,743 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-13",
+  "sections": [
+    {
+      "id": "G26312",
+      "title": "South and Central Asia-II",
+      "level": 1,
+      "text_sha256": "ebd3ada7410d6ce1f52653b2bb78161f6ad2ca028731c743718d0c206d24d0e6",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.g26312"
+        ]
+      }
+    },
+    {
+      "id": "heading-6f2ff95261e8",
+      "title": "13.1 Thaana",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-6f2ff95261e8"
+        ]
+      }
+    },
+    {
+      "id": "heading-a4e53ed03d19",
+      "title": "13.1.1 Thaana: U+0780–U+07BF",
+      "level": 3,
+      "text_sha256": "ceb714684fe16e71d4ee77129f22133e2ce073337e14d25226dd2e15f0674ae9",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-a4e53ed03d19",
+          "unicode17-chapter-13.heading-a4e53ed03d19-clause-0b36c627d77f"
+        ]
+      }
+    },
+    {
+      "id": "heading-893bbcd307fe",
+      "title": "13.2 Sinhala",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-893bbcd307fe"
+        ]
+      }
+    },
+    {
+      "id": "heading-9d4584c5d910",
+      "title": "13.2.1 Sinhala: U+0D80–U+0DFF",
+      "level": 3,
+      "text_sha256": "e1db836d9e051dfc3ce41089d71eb9c8c3f8bff3f6af5690cefc16097952aaac",
+      "clause_count": 150,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-9d4584c5d910",
+          "unicode17-chapter-13.heading-9d4584c5d910-clause-10368a98156d",
+          "unicode17-chapter-13.heading-9d4584c5d910-clause-2fde43608049",
+          "unicode17-chapter-13.heading-9d4584c5d910-clause-71cf792ce95f",
+          "unicode17-chapter-13.heading-9d4584c5d910-clause-ec532863b5a3"
+        ]
+      }
+    },
+    {
+      "id": "heading-abb9861ad5d7",
+      "title": "13.2.2 Sinhala Archaic Numbers: U+111E0–U+111FF",
+      "level": 3,
+      "text_sha256": "4937322b37152cb2c7f7f9077e8428f07e0cd34768a8d683e84e2dfa72c23775",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-abb9861ad5d7"
+        ]
+      }
+    },
+    {
+      "id": "heading-1d10788e8a9d",
+      "title": "13.3 Newa",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-1d10788e8a9d"
+        ]
+      }
+    },
+    {
+      "id": "heading-813e67a212b6",
+      "title": "13.3.1 Newa: U+11400–U+1147F",
+      "level": 3,
+      "text_sha256": "177f7e48b8c144e0f4d9820f047e98a5fbc9fc431b66e758b5148e3ed7dde1fe",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-813e67a212b6",
+          "unicode17-chapter-13.heading-813e67a212b6-clause-5f0a5796567b"
+        ]
+      }
+    },
+    {
+      "id": "heading-d8bcc4802486",
+      "title": "13.4 Tibetan",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-d8bcc4802486"
+        ]
+      }
+    },
+    {
+      "id": "heading-b9257d1136fe",
+      "title": "13.4.1 Tibetan: U+0F00–U+0FFF",
+      "level": 3,
+      "text_sha256": "bdc44fead8d674340a0615c11b85cf5082674d6c19b1b4ac56e941871583cdfc",
+      "clause_count": 85,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-b9257d1136fe",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-e22241c17be7",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-e5954cc18bee",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-8ead7d40be20",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-b589c1da98e6",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-c7d5324890cf",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-2dac544f64c8",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-067031425d02",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-f37b112f4890",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-216a9bd32527",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-326d875792e6",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-27488f498302",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-54a789bc445a",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-620abc4b95d2",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-00d17d47d79d",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-34b941070ff4",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-65d49ef54ec5",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-88ffdb4c6b51",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-1c6924a2ba1e",
+          "unicode17-chapter-13.heading-b9257d1136fe-clause-6acaebd74502"
+        ]
+      }
+    },
+    {
+      "id": "heading-d40b3ad1be46",
+      "title": "13.5 Mongolian",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-d40b3ad1be46"
+        ]
+      }
+    },
+    {
+      "id": "heading-847d678cb92c",
+      "title": "13.5.1 Mongolian: U+1800–U+18AF",
+      "level": 3,
+      "text_sha256": "6c8d131b0876e4ebe69d92c4f7a6330d83f188ab713883e43b9aae9d427255cc",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-847d678cb92c",
+          "unicode17-chapter-13.heading-847d678cb92c-clause-cd5a0eac97f3",
+          "unicode17-chapter-13.heading-847d678cb92c-clause-08ca0adc517d",
+          "unicode17-chapter-13.heading-847d678cb92c-clause-75a6f194533e",
+          "unicode17-chapter-13.heading-847d678cb92c-clause-c8d482941bcc",
+          "unicode17-chapter-13.heading-847d678cb92c-clause-02c9161cb861"
+        ]
+      }
+    },
+    {
+      "id": "heading-567e8105de4a",
+      "title": "Warning",
+      "level": 1,
+      "text_sha256": "2eceec36c3df44b475c48151f7527408cf946e8bcf7dd9774c23bd657d8251e9",
+      "clause_count": 67,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-567e8105de4a",
+          "unicode17-chapter-13.heading-567e8105de4a-clause-9bd579242842",
+          "unicode17-chapter-13.heading-567e8105de4a-clause-fd0ed3e327cd",
+          "unicode17-chapter-13.heading-567e8105de4a-clause-78ffcc4f6cb8",
+          "unicode17-chapter-13.heading-567e8105de4a-clause-df7ccfa16cdd",
+          "unicode17-chapter-13.heading-567e8105de4a-clause-e439f21e6aec",
+          "unicode17-chapter-13.heading-567e8105de4a-clause-475d98656b25",
+          "unicode17-chapter-13.heading-567e8105de4a-clause-6ce6bc7054e6"
+        ]
+      }
+    },
+    {
+      "id": "heading-f8a71be2804d",
+      "title": "13.5.2 Mongolian Supplement: U+11660–U+1167F",
+      "level": 3,
+      "text_sha256": "1c31f5092a23038307646d8108822a2d9a71fbce6df49fe3375ddad98548103d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-f8a71be2804d"
+        ]
+      }
+    },
+    {
+      "id": "heading-70eb5e29df8a",
+      "title": "13.6 Limbu",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-70eb5e29df8a"
+        ]
+      }
+    },
+    {
+      "id": "heading-81e54cb4ed12",
+      "title": "13.6.1 Limbu: U+1900–U+194F",
+      "level": 3,
+      "text_sha256": "7d774963dd450fc3fca7b649bedb7cdccf14ef2dcf4b8a1f21ef63dc350fe8b2",
+      "clause_count": 89,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-81e54cb4ed12",
+          "unicode17-chapter-13.heading-81e54cb4ed12-clause-ae693f4bcd73"
+        ]
+      }
+    },
+    {
+      "id": "heading-d648afc8508c",
+      "title": "13.7 Meetei Mayek",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-d648afc8508c"
+        ]
+      }
+    },
+    {
+      "id": "heading-ffa524bd1f37",
+      "title": "13.7.1 Meetei Mayek: U+ABC0–U+ABFF",
+      "level": 3,
+      "text_sha256": "4e9f4dc53be89153a49bb1a2153bc3e5e10d10194aff84c5048a7d13f9bce409",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-ffa524bd1f37",
+          "unicode17-chapter-13.heading-ffa524bd1f37-clause-90c58366acf2"
+        ]
+      }
+    },
+    {
+      "id": "heading-6bde8420869a",
+      "title": "13.7.2 Meetei Mayek Extensions: U+AAE0–U+AAFF",
+      "level": 3,
+      "text_sha256": "35293c54d1dafd9583c7858916e244fa603ae6f9cc8b155a06d2d196e3819ce3",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-6bde8420869a",
+          "unicode17-chapter-13.heading-6bde8420869a-clause-b6482b628974"
+        ]
+      }
+    },
+    {
+      "id": "heading-e9e15ec9d83a",
+      "title": "13.8 Mro",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-e9e15ec9d83a"
+        ]
+      }
+    },
+    {
+      "id": "heading-5ed586b6678e",
+      "title": "13.8.1 Mro: U+16A40–U+16A6F",
+      "level": 3,
+      "text_sha256": "b12e5f40f9823cb5a50b0dffe4a017d75e0fc728fdeee0f6169feaf2bf375f8e",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-5ed586b6678e"
+        ]
+      }
+    },
+    {
+      "id": "heading-5ce0b13baf8e",
+      "title": "13.9 Warang Citi",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-5ce0b13baf8e"
+        ]
+      }
+    },
+    {
+      "id": "heading-3df57e571bc9",
+      "title": "13.9.1 Warang Citi: U+118A0–U+118FF",
+      "level": 3,
+      "text_sha256": "aea5c6563ac9904d504e6e3d7641006447670a6a2db36d134e948d0b76284861",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-3df57e571bc9"
+        ]
+      }
+    },
+    {
+      "id": "heading-ce2de72199fc",
+      "title": "13.10 Ol Chiki",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-ce2de72199fc"
+        ]
+      }
+    },
+    {
+      "id": "heading-f8e3a92b0dd6",
+      "title": "13.10.1 Ol Chiki: U+1C50–U+1C7F",
+      "level": 3,
+      "text_sha256": "a46fd88576c62544395ed53d62dd33c38f1b39f97a0ce461e1df17ab0daaedfd",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-f8e3a92b0dd6"
+        ]
+      }
+    },
+    {
+      "id": "heading-6f11d4e5771f",
+      "title": "13.11 Ol Onal",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-6f11d4e5771f"
+        ]
+      }
+    },
+    {
+      "id": "heading-67431e9e4530",
+      "title": "13.11.1 Ol Onal: U+1E5D0–U+1E5FF",
+      "level": 3,
+      "text_sha256": "c44be4fd5fdbce38e87b79db493280f05b06c0a81e5e99a3975119d8e3a70021",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-67431e9e4530"
+        ]
+      }
+    },
+    {
+      "id": "heading-98144f012bf7",
+      "title": "13.12 Nag Mundari",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-98144f012bf7"
+        ]
+      }
+    },
+    {
+      "id": "heading-4a8dcc83ff48",
+      "title": "13.12.1 Nag Mundari: U+1E4D0–U+1E4FF",
+      "level": 3,
+      "text_sha256": "de57907fdce21e49d6c92c2adb8464b9af3971427e563058b3cc558bdbe3ba8e",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-4a8dcc83ff48",
+          "unicode17-chapter-13.heading-4a8dcc83ff48-clause-b946f6862f0e"
+        ]
+      }
+    },
+    {
+      "id": "heading-0c34808b2d73",
+      "title": "13.13 Chakma",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-0c34808b2d73"
+        ]
+      }
+    },
+    {
+      "id": "heading-143327dab343",
+      "title": "13.13.1 Chakma: U+11100–U+1114F",
+      "level": 3,
+      "text_sha256": "afd24948c0336d8b96c1c07df0adc263575f8078e9ba91ff1a8aab01d1e8e8a9",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-143327dab343",
+          "unicode17-chapter-13.heading-143327dab343-clause-3770b2e3d94c",
+          "unicode17-chapter-13.heading-143327dab343-clause-66e11d1139c0"
+        ]
+      }
+    },
+    {
+      "id": "heading-14abf8f37dbe",
+      "title": "13.14 Lepcha",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-14abf8f37dbe"
+        ]
+      }
+    },
+    {
+      "id": "heading-2249f832210d",
+      "title": "13.14.1 Lepcha: U+1C00–U+1C4F",
+      "level": 3,
+      "text_sha256": "968b3f25f1069c3709b672aadb536840f037696d92d9ec02f84907a65cc37a00",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-2249f832210d"
+        ]
+      }
+    },
+    {
+      "id": "heading-e036cc1e77f2",
+      "title": "13.15 Saurashtra",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-e036cc1e77f2"
+        ]
+      }
+    },
+    {
+      "id": "heading-a2c640326780",
+      "title": "13.15.1 Saurashtra: U+A880–U+A8DF",
+      "level": 3,
+      "text_sha256": "90b01d457655c13adac574a8ca6dbd2fbbc58b489daf4ec97349afe2afc3aa73",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-a2c640326780"
+        ]
+      }
+    },
+    {
+      "id": "heading-3127d06ba609",
+      "title": "13.16 Masaram Gondi",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-3127d06ba609"
+        ]
+      }
+    },
+    {
+      "id": "heading-644cbb095c41",
+      "title": "13.16.1 Masaram Gondi: U+11D00–U+11D5F",
+      "level": 3,
+      "text_sha256": "d4fef23a3c8c7979934668449d6ff4fa478ced0a812ea905e09ef982ae3d00c1",
+      "clause_count": 66,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-644cbb095c41"
+        ]
+      }
+    },
+    {
+      "id": "heading-361457bc6fd3",
+      "title": "13.17 Gunjala Gondi",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-361457bc6fd3"
+        ]
+      }
+    },
+    {
+      "id": "heading-09411858686e",
+      "title": "13.17.1 Gunjala Gondi: U+11D60–U+11DAF",
+      "level": 3,
+      "text_sha256": "19ccad338eac5e75c0bc02413e6518ab7872f348df590fafd7bb02367ec5f7de",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-09411858686e"
+        ]
+      }
+    },
+    {
+      "id": "heading-a457de40dd78",
+      "title": "13.18 Wancho",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-a457de40dd78"
+        ]
+      }
+    },
+    {
+      "id": "heading-7dc4387426df",
+      "title": "13.18.1 Wancho: U+1E2C0–U+1E2FF",
+      "level": 3,
+      "text_sha256": "39104aa11ea1e37bdcc33894e513e4bdc1bc8bf1e8f36b873a38e4428336aa29",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-7dc4387426df"
+        ]
+      }
+    },
+    {
+      "id": "heading-6d6e4a3cf019",
+      "title": "13.19 Toto",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-6d6e4a3cf019"
+        ]
+      }
+    },
+    {
+      "id": "heading-94fecc6c4674",
+      "title": "13.19.1 Toto: U+1E290–U+1E2BF",
+      "level": 3,
+      "text_sha256": "ba0524ac4ab5af4a97447fa8602f09b584392de44841abc80cadde54fa791b08",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-94fecc6c4674"
+        ]
+      }
+    },
+    {
+      "id": "heading-e61b4e2233eb",
+      "title": "13.20 Tangsa",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-e61b4e2233eb"
+        ]
+      }
+    },
+    {
+      "id": "heading-55e20f1240b9",
+      "title": "13.20.1 Tangsa: U+16A70–U+16ACF",
+      "level": 3,
+      "text_sha256": "91be616ce6b1c4296441656b6bceee9eb592ec9bcf1a9b5a3cad28005c93a74b",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-55e20f1240b9"
+        ]
+      }
+    },
+    {
+      "id": "heading-8e6b6618cb6f",
+      "title": "13.21 Sunuwar",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-8e6b6618cb6f"
+        ]
+      }
+    },
+    {
+      "id": "heading-20564380167c",
+      "title": "13.21.1 Sunuwar: U+11BC0–U+11BFF",
+      "level": 3,
+      "text_sha256": "d9086bafc1c2f6b6f398585021f069223b366f2d18be1ba35d02ca7eefc74f24",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-20564380167c",
+          "unicode17-chapter-13.heading-20564380167c-clause-d74b839cb8d3"
+        ]
+      }
+    },
+    {
+      "id": "heading-4782f46bdd3a",
+      "title": "13.22 Gurung Khema",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-4782f46bdd3a"
+        ]
+      }
+    },
+    {
+      "id": "heading-56ae4826795c",
+      "title": "13.22.1 Gurung Khema: U+16100–U+1613F",
+      "level": 3,
+      "text_sha256": "3935481b1fe1169e7f521af4c7da051f888c28ee816988e50b39eb66c6a8f47e",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-56ae4826795c",
+          "unicode17-chapter-13.heading-56ae4826795c-clause-6a61aba6fb54"
+        ]
+      }
+    },
+    {
+      "id": "heading-3cae6f2d80c4",
+      "title": "13.23 Kirat Rai",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-3cae6f2d80c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-1815ac0ba3d1",
+      "title": "13.23.1 Kirat Rai: U+16D40–U+16D7F",
+      "level": 3,
+      "text_sha256": "688b1b3a3affb4f71d5e8cb111f66f9bd04f2c5235afe542278a4639382d1318",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-1815ac0ba3d1",
+          "unicode17-chapter-13.heading-1815ac0ba3d1-clause-788a7c3d79e2",
+          "unicode17-chapter-13.heading-1815ac0ba3d1-clause-33a127b6a7b5",
+          "unicode17-chapter-13.heading-1815ac0ba3d1-clause-e3b46dde268f"
+        ]
+      }
+    },
+    {
+      "id": "heading-fa609cb75c40",
+      "title": "13.24 Tolong Siki",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-fa609cb75c40"
+        ]
+      }
+    },
+    {
+      "id": "heading-f21caa257062",
+      "title": "13.24.1 Tolong Siki: U+11DB0–U+11DEF",
+      "level": 3,
+      "text_sha256": "625db8c9019f9d8dd063d3378505d5af978e9cf4ee7de584e371f78f9da216d9",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-13.heading-f21caa257062"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,3692 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "mimesniff.introduction",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "e884e0ba1260414d36679d815fce515e8840fe977a880ee6997f8ebc52335175"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.introduction-clause-af7252ea23ce"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.introduction-clause-af7252ea23ce",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Introduction — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "introduction",
+        "clause_index": 3,
+        "clause_sha256": "af7252ea23ce98dbad68c06b41a132a608b4ea8ed5263c6463cecac0c2ee5873"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.conformance-requirements",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "conformance-requirements"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance requirements.",
+      "locator": {
+        "section_id": "conformance-requirements",
+        "text_sha256": "3d1810e2b769cb2e7e984c38dc358e0f50d88d8392fe002dd1736555a31e964b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.conformance-requirements-clause-50a8763235c3",
+        "mimesniff.conformance-requirements-clause-b8046db42d97"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.conformance-requirements-clause-50a8763235c3",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "conformance-requirements"
+      ],
+      "behaviour": "Conformance requirements — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-requirements",
+        "clause_index": 0,
+        "clause_sha256": "50a8763235c30453a300e7d554cd000350092ca0469db0c096db02c755c618ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.conformance-requirements-clause-b8046db42d97",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "conformance-requirements"
+      ],
+      "behaviour": "Conformance requirements — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-requirements",
+        "clause_index": 1,
+        "clause_sha256": "b8046db42d97ab7544055556b1216df2d24ca69fb476f1fba0e728a359ffb7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.terminology",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terminology",
+        "text_sha256": "cdb35123d8b65c29bf3aa6135de3be987a5a8796454fc0a4d71c137002b8a3bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.understanding-mime-types",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "understanding-mime-types"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in MIME types.",
+      "locator": {
+        "section_id": "understanding-mime-types",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.mime-type-representation",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "mime-type-representation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in MIME type representation.",
+      "locator": {
+        "section_id": "mime-type-representation",
+        "text_sha256": "bc8094bd30760905529685e48a96b9076506aeb138565fd0fac5f39e4968acdb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.mime-type-miscellaneous",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "mime-type-miscellaneous"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in MIME type miscellaneous.",
+      "locator": {
+        "section_id": "mime-type-miscellaneous",
+        "text_sha256": "0cfae3c87bd5f7d0a1b9393b95a170cca807e50e22284b1fb1c5a7ab1f4ae2c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.mime-type-miscellaneous-clause-768f80f7282e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.mime-type-miscellaneous-clause-768f80f7282e",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "mime-type-miscellaneous"
+      ],
+      "behaviour": "MIME type miscellaneous — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "mime-type-miscellaneous",
+        "clause_index": 17,
+        "clause_sha256": "768f80f7282eda169c2792a77263439ece24d6e274320d418fee374fb80cfb41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.mime-type-writing",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "mime-type-writing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in MIME type writing.",
+      "locator": {
+        "section_id": "mime-type-writing",
+        "text_sha256": "f120cac9636ba92c96e2c28d0b559f065a0d9f95c13332606fa842cac05f695b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.parsing-a-mime-type",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "parsing-a-mime-type"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Parsing a MIME type.",
+      "locator": {
+        "section_id": "parsing-a-mime-type",
+        "text_sha256": "0fef6e4a09d830836f1ecc752df376171d2e8c89a9a259b230e4e8f3a22f75e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.serializing-a-mime-type",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "serializing-a-mime-type"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serializing a MIME type.",
+      "locator": {
+        "section_id": "serializing-a-mime-type",
+        "text_sha256": "d416a74c0f1e74d264d87040adff98dd2195d6485b6cb9006557a20e07382cfd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.mime-type-groups",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "mime-type-groups"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in MIME type groups.",
+      "locator": {
+        "section_id": "mime-type-groups",
+        "text_sha256": "3be977861f8ff4a2f88f90a0f3696126252c7a1475765a389e14fd8922c9729c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.handling-a-resource",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "handling-a-resource"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Handling a resource.",
+      "locator": {
+        "section_id": "handling-a-resource",
+        "text_sha256": "698043bb81ade8aa24d80686caf8c0115d46191b183ce102ec4d5fbb4a5c6fc9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.handling-a-resource-clause-b7e943cffaf5",
+        "mimesniff.handling-a-resource-clause-1ad3fb4a3378",
+        "mimesniff.handling-a-resource-clause-d1736066d423",
+        "mimesniff.handling-a-resource-clause-14b7657128a4",
+        "mimesniff.handling-a-resource-clause-050b12e09228"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.handling-a-resource-clause-b7e943cffaf5",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "handling-a-resource"
+      ],
+      "behaviour": "Handling a resource — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "handling-a-resource",
+        "clause_index": 1,
+        "clause_sha256": "b7e943cffaf5396bf5ac5be9a55e762e8dbf6b899018a161e9105bd9e65e3104"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.handling-a-resource-clause-1ad3fb4a3378",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "handling-a-resource"
+      ],
+      "behaviour": "Handling a resource — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "handling-a-resource",
+        "clause_index": 2,
+        "clause_sha256": "1ad3fb4a3378a08834e525ce4d88d169e6bcc8ad38e94cce702f8c43cbbdd919"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.handling-a-resource-clause-d1736066d423",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "handling-a-resource"
+      ],
+      "behaviour": "Handling a resource — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "handling-a-resource",
+        "clause_index": 4,
+        "clause_sha256": "d1736066d42320d83919421e6a64f4871841eb03b1ed187586a6bd24c6786a99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.handling-a-resource-clause-14b7657128a4",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "handling-a-resource"
+      ],
+      "behaviour": "Handling a resource — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "handling-a-resource",
+        "clause_index": 5,
+        "clause_sha256": "14b7657128a4ac18f94371ed10a501d031f42d4a7705716bc5d2635b8957ab80"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.handling-a-resource-clause-050b12e09228",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "handling-a-resource"
+      ],
+      "behaviour": "Handling a resource — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "handling-a-resource",
+        "clause_index": 6,
+        "clause_sha256": "050b12e0922834f6ba7e31a4694400b70edcb2d6727bc9791ca16e9359d0e0f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.interpreting-the-resource-metadata",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "interpreting-the-resource-metadata"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interpreting the resource metadata.",
+      "locator": {
+        "section_id": "interpreting-the-resource-metadata",
+        "text_sha256": "8f7ce8b9b26d720e26f9243ea33e71d04d0ea5ac2f57ca2c83fa6bfed72bd374"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.interpreting-the-resource-metadata-clause-5b5e38d6bc43",
+        "mimesniff.interpreting-the-resource-metadata-clause-332830f21f17",
+        "mimesniff.interpreting-the-resource-metadata-clause-c673292b97cc",
+        "mimesniff.interpreting-the-resource-metadata-clause-227cbef08baa",
+        "mimesniff.interpreting-the-resource-metadata-clause-c0f5c953cec0",
+        "mimesniff.interpreting-the-resource-metadata-clause-b3af3152b06f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.interpreting-the-resource-metadata-clause-5b5e38d6bc43",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "interpreting-the-resource-metadata"
+      ],
+      "behaviour": "Interpreting the resource metadata — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpreting-the-resource-metadata",
+        "clause_index": 1,
+        "clause_sha256": "5b5e38d6bc43e8669bdea52727820c7f44eb3ce9024913f9d797a11b9a502ff3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.interpreting-the-resource-metadata-clause-332830f21f17",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "interpreting-the-resource-metadata"
+      ],
+      "behaviour": "Interpreting the resource metadata — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpreting-the-resource-metadata",
+        "clause_index": 3,
+        "clause_sha256": "332830f21f1743665cff5e8bd7f4834962a1ffc668eae16f000a7a6f3ac97b00"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.interpreting-the-resource-metadata-clause-c673292b97cc",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "interpreting-the-resource-metadata"
+      ],
+      "behaviour": "Interpreting the resource metadata — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpreting-the-resource-metadata",
+        "clause_index": 4,
+        "clause_sha256": "c673292b97cc27950dac0dfb19b4b882f76cd532a1576d693287ea989fbfcd74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.interpreting-the-resource-metadata-clause-227cbef08baa",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "interpreting-the-resource-metadata"
+      ],
+      "behaviour": "Interpreting the resource metadata — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpreting-the-resource-metadata",
+        "clause_index": 16,
+        "clause_sha256": "227cbef08baaf89e97224400a2ac01f801e1768f1a20cb9ccd52fd892bf7200e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.interpreting-the-resource-metadata-clause-c0f5c953cec0",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "interpreting-the-resource-metadata"
+      ],
+      "behaviour": "Interpreting the resource metadata — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpreting-the-resource-metadata",
+        "clause_index": 17,
+        "clause_sha256": "c0f5c953cec08e46a1d5a288d8cdc351b90f79f21c18772ffe4e067b97289e21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.interpreting-the-resource-metadata-clause-b3af3152b06f",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "interpreting-the-resource-metadata"
+      ],
+      "behaviour": "Interpreting the resource metadata — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpreting-the-resource-metadata",
+        "clause_index": 25,
+        "clause_sha256": "b3af3152b06fd7a1b09762acd5b3ac8b0885b0b514dc00acc1e30fc8a8525326"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.reading-the-resource-header",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "reading-the-resource-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Reading the resource header.",
+      "locator": {
+        "section_id": "reading-the-resource-header",
+        "text_sha256": "a9dda87e4ab2567b1507eaacc3968c9f15d9e605f6b478ea99576d4e3f4c9ce8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.reading-the-resource-header-clause-ec27783420b9",
+        "mimesniff.reading-the-resource-header-clause-67024bfa37b1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.reading-the-resource-header-clause-ec27783420b9",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "reading-the-resource-header"
+      ],
+      "behaviour": "Reading the resource header — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "reading-the-resource-header",
+        "clause_index": 1,
+        "clause_sha256": "ec27783420b925aaeadec85714c0274cca25989709b285a1ef4ffe06d0765742"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.reading-the-resource-header-clause-67024bfa37b1",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "reading-the-resource-header"
+      ],
+      "behaviour": "Reading the resource header — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "reading-the-resource-header",
+        "clause_index": 7,
+        "clause_sha256": "67024bfa37b1bb109bd5e89fb2a8dce9273fedb505145879d9f9ee011e1559be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-a-mime-type-pattern",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-a-mime-type-pattern"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Matching a MIME type pattern.",
+      "locator": {
+        "section_id": "matching-a-mime-type-pattern",
+        "text_sha256": "83ecb055ec82f37e8f320f352e8b889b5113bc85b06bd4c5be657c26b546c5a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.matching-a-mime-type-pattern-clause-2e70654e9ba9",
+        "mimesniff.matching-a-mime-type-pattern-clause-967aa6be2762",
+        "mimesniff.matching-a-mime-type-pattern-clause-9451b59065e0",
+        "mimesniff.matching-a-mime-type-pattern-clause-6d85d845c179"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.matching-a-mime-type-pattern-clause-2e70654e9ba9",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-a-mime-type-pattern"
+      ],
+      "behaviour": "Matching a MIME type pattern — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-a-mime-type-pattern",
+        "clause_index": 0,
+        "clause_sha256": "2e70654e9ba9ec5b707083faf9d9c4b2ffebdfec0f3ebbda5782fc48e224f20a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-a-mime-type-pattern-clause-967aa6be2762",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-a-mime-type-pattern"
+      ],
+      "behaviour": "Matching a MIME type pattern — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-a-mime-type-pattern",
+        "clause_index": 1,
+        "clause_sha256": "967aa6be2762645b7474000776ccea00987d5b6b2316575b05b5189384b0501e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-a-mime-type-pattern-clause-9451b59065e0",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-a-mime-type-pattern"
+      ],
+      "behaviour": "Matching a MIME type pattern — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-a-mime-type-pattern",
+        "clause_index": 3,
+        "clause_sha256": "9451b59065e083376af2cc9f22d63453205f316bae23d182a5262e10d594d6b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-a-mime-type-pattern-clause-6d85d845c179",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-a-mime-type-pattern"
+      ],
+      "behaviour": "Matching a MIME type pattern — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-a-mime-type-pattern",
+        "clause_index": 12,
+        "clause_sha256": "6d85d845c179e8f35e6c35e675076f6423adfb1c6ffa0e80a5f310351edfb8c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-image-type-pattern",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-image-type-pattern"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Matching an image type pattern.",
+      "locator": {
+        "section_id": "matching-an-image-type-pattern",
+        "text_sha256": "84c1e1286f42ad25351407032e7b11cef365ea3d80967690f34eb429f19c1bc9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.matching-an-image-type-pattern-clause-bd803a1eed97",
+        "mimesniff.matching-an-image-type-pattern-clause-c81f77499f5b",
+        "mimesniff.matching-an-image-type-pattern-clause-271cbfe00955",
+        "mimesniff.matching-an-image-type-pattern-clause-5a60e7ab64b5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.matching-an-image-type-pattern-clause-bd803a1eed97",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-image-type-pattern"
+      ],
+      "behaviour": "Matching an image type pattern — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-image-type-pattern",
+        "clause_index": 0,
+        "clause_sha256": "bd803a1eed979f85a0ed860986965889d3ead39918f380e647ee1aa17bb65dbd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-image-type-pattern-clause-c81f77499f5b",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-image-type-pattern"
+      ],
+      "behaviour": "Matching an image type pattern — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-image-type-pattern",
+        "clause_index": 1,
+        "clause_sha256": "c81f77499f5b556d3dcb425d35bc2abbe0c67a71d8e496a4be532a2a9f5f2b49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-image-type-pattern-clause-271cbfe00955",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-image-type-pattern"
+      ],
+      "behaviour": "Matching an image type pattern — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-image-type-pattern",
+        "clause_index": 3,
+        "clause_sha256": "271cbfe009558ebfcaf1bab7533959f4be27820bb30488d3b5fee56471990ca1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-image-type-pattern-clause-5a60e7ab64b5",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-image-type-pattern"
+      ],
+      "behaviour": "Matching an image type pattern — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-image-type-pattern",
+        "clause_index": 9,
+        "clause_sha256": "5a60e7ab64b56cf2b0e171e584c4047ba7e2f59e3f7a5bea931338f231edc0d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-audio-or-video-type-pattern",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-audio-or-video-type-pattern"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Matching an audio or video type pattern.",
+      "locator": {
+        "section_id": "matching-an-audio-or-video-type-pattern",
+        "text_sha256": "3aa0719a8d0edc45c28b684c620f1ddd337c7692f4b3403e2b40416024e7a3ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.matching-an-audio-or-video-type-pattern-clause-ec7dc3d2b491",
+        "mimesniff.matching-an-audio-or-video-type-pattern-clause-c81f77499f5b",
+        "mimesniff.matching-an-audio-or-video-type-pattern-clause-271cbfe00955",
+        "mimesniff.matching-an-audio-or-video-type-pattern-clause-5a60e7ab64b5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.matching-an-audio-or-video-type-pattern-clause-ec7dc3d2b491",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-audio-or-video-type-pattern"
+      ],
+      "behaviour": "Matching an audio or video type pattern — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-audio-or-video-type-pattern",
+        "clause_index": 0,
+        "clause_sha256": "ec7dc3d2b4918be31e8517459cf302d023c1ce99d96f9a542203cd88f8fa48eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-audio-or-video-type-pattern-clause-c81f77499f5b",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-audio-or-video-type-pattern"
+      ],
+      "behaviour": "Matching an audio or video type pattern — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-audio-or-video-type-pattern",
+        "clause_index": 1,
+        "clause_sha256": "c81f77499f5b556d3dcb425d35bc2abbe0c67a71d8e496a4be532a2a9f5f2b49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-audio-or-video-type-pattern-clause-271cbfe00955",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-audio-or-video-type-pattern"
+      ],
+      "behaviour": "Matching an audio or video type pattern — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-audio-or-video-type-pattern",
+        "clause_index": 3,
+        "clause_sha256": "271cbfe009558ebfcaf1bab7533959f4be27820bb30488d3b5fee56471990ca1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-audio-or-video-type-pattern-clause-5a60e7ab64b5",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-audio-or-video-type-pattern"
+      ],
+      "behaviour": "Matching an audio or video type pattern — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-audio-or-video-type-pattern",
+        "clause_index": 9,
+        "clause_sha256": "5a60e7ab64b56cf2b0e171e584c4047ba7e2f59e3f7a5bea931338f231edc0d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.signature-for-mp4",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "signature-for-mp4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Signature for MP4.",
+      "locator": {
+        "section_id": "signature-for-mp4",
+        "text_sha256": "12d0d574fe98fb0d44293bf12975e0035cfd982ea01de0b275ca3ad7b738b756"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.signature-for-mp4-clause-b3fa7880a7bd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.signature-for-mp4-clause-b3fa7880a7bd",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "signature-for-mp4"
+      ],
+      "behaviour": "Signature for MP4 — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "signature-for-mp4",
+        "clause_index": 0,
+        "clause_sha256": "b3fa7880a7bddff331e438215cf177d0d6475bc1707d34152770cdf84a5b1ea2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.signature-for-webm",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "signature-for-webm"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Signature for WebM.",
+      "locator": {
+        "section_id": "signature-for-webm",
+        "text_sha256": "947e6bb962466f4edb9b18f355cd61a523bf338091dd77e92aec62874b429531"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.signature-for-webm-clause-9bb0a0b1027e",
+        "mimesniff.signature-for-webm-clause-a6052bcb6d7a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.signature-for-webm-clause-9bb0a0b1027e",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "signature-for-webm"
+      ],
+      "behaviour": "Signature for WebM — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "signature-for-webm",
+        "clause_index": 0,
+        "clause_sha256": "9bb0a0b1027e28773b8b1487acdb4762f0584cc22a4baf0c009a951d8c0e16a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.signature-for-webm-clause-a6052bcb6d7a",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "signature-for-webm"
+      ],
+      "behaviour": "Signature for WebM — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "signature-for-webm",
+        "clause_index": 17,
+        "clause_sha256": "a6052bcb6d7a7f17ccd4de558502cc76fc876deaeb5aac0655ee2490f24aaf63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.signature-for-mp3-without-id3",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "signature-for-mp3-without-id3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Signature for MP3 without ID3.",
+      "locator": {
+        "section_id": "signature-for-mp3-without-id3",
+        "text_sha256": "bf23015895d1d4af24434b3a494941e3c28616f3373d69252cf5d9f778f1c148"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.signature-for-mp3-without-id3-clause-b6e39149dab8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.signature-for-mp3-without-id3-clause-b6e39149dab8",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "signature-for-mp3-without-id3"
+      ],
+      "behaviour": "Signature for MP3 without ID3 — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "signature-for-mp3-without-id3",
+        "clause_index": 0,
+        "clause_sha256": "b6e39149dab80ea11abe120034a0fd1e64548a61af502edfa2224c14c1506e5c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-a-font-type-pattern",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-a-font-type-pattern"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Matching a font type pattern.",
+      "locator": {
+        "section_id": "matching-a-font-type-pattern",
+        "text_sha256": "44af18ebf074119dd615d78375f0d3ac66159983310e4a92414bb4bb89aa91b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.matching-a-font-type-pattern-clause-b10e338ac443",
+        "mimesniff.matching-a-font-type-pattern-clause-c81f77499f5b",
+        "mimesniff.matching-a-font-type-pattern-clause-271cbfe00955",
+        "mimesniff.matching-a-font-type-pattern-clause-5a60e7ab64b5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.matching-a-font-type-pattern-clause-b10e338ac443",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-a-font-type-pattern"
+      ],
+      "behaviour": "Matching a font type pattern — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-a-font-type-pattern",
+        "clause_index": 0,
+        "clause_sha256": "b10e338ac443b74ed1cc67ea576d7a62be4583d9d7d3d505f8ac150ad21a8396"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-a-font-type-pattern-clause-c81f77499f5b",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-a-font-type-pattern"
+      ],
+      "behaviour": "Matching a font type pattern — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-a-font-type-pattern",
+        "clause_index": 1,
+        "clause_sha256": "c81f77499f5b556d3dcb425d35bc2abbe0c67a71d8e496a4be532a2a9f5f2b49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-a-font-type-pattern-clause-271cbfe00955",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-a-font-type-pattern"
+      ],
+      "behaviour": "Matching a font type pattern — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-a-font-type-pattern",
+        "clause_index": 3,
+        "clause_sha256": "271cbfe009558ebfcaf1bab7533959f4be27820bb30488d3b5fee56471990ca1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-a-font-type-pattern-clause-5a60e7ab64b5",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-a-font-type-pattern"
+      ],
+      "behaviour": "Matching a font type pattern — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-a-font-type-pattern",
+        "clause_index": 9,
+        "clause_sha256": "5a60e7ab64b56cf2b0e171e584c4047ba7e2f59e3f7a5bea931338f231edc0d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-archive-type-pattern",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-archive-type-pattern"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Matching an archive type pattern.",
+      "locator": {
+        "section_id": "matching-an-archive-type-pattern",
+        "text_sha256": "a13e844187050ff345cc78bc6521f8e188039e8506a903777258fa0aeb3b0e63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.matching-an-archive-type-pattern-clause-5953ed2af86f",
+        "mimesniff.matching-an-archive-type-pattern-clause-c81f77499f5b",
+        "mimesniff.matching-an-archive-type-pattern-clause-271cbfe00955",
+        "mimesniff.matching-an-archive-type-pattern-clause-5a60e7ab64b5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.matching-an-archive-type-pattern-clause-5953ed2af86f",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-archive-type-pattern"
+      ],
+      "behaviour": "Matching an archive type pattern — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-archive-type-pattern",
+        "clause_index": 0,
+        "clause_sha256": "5953ed2af86ff07dacd7aa8d8e18fe1b8db4eba6964244599968043474f01e92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-archive-type-pattern-clause-c81f77499f5b",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-archive-type-pattern"
+      ],
+      "behaviour": "Matching an archive type pattern — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-archive-type-pattern",
+        "clause_index": 1,
+        "clause_sha256": "c81f77499f5b556d3dcb425d35bc2abbe0c67a71d8e496a4be532a2a9f5f2b49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-archive-type-pattern-clause-271cbfe00955",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-archive-type-pattern"
+      ],
+      "behaviour": "Matching an archive type pattern — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-archive-type-pattern",
+        "clause_index": 3,
+        "clause_sha256": "271cbfe009558ebfcaf1bab7533959f4be27820bb30488d3b5fee56471990ca1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.matching-an-archive-type-pattern-clause-5a60e7ab64b5",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "matching-an-archive-type-pattern"
+      ],
+      "behaviour": "Matching an archive type pattern — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-an-archive-type-pattern",
+        "clause_index": 9,
+        "clause_sha256": "5a60e7ab64b56cf2b0e171e584c4047ba7e2f59e3f7a5bea931338f231edc0d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.determining-the-computed-mime-type-of-a-resource",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "determining-the-computed-mime-type-of-a-resource"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Determining the computed MIME type of a resource.",
+      "locator": {
+        "section_id": "determining-the-computed-mime-type-of-a-resource",
+        "text_sha256": "018ccfc7b3b1e9dd0708232caa3ece6972e86bf4d0ab487302cf34eb1c10515d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-c2c0cd475e34",
+        "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-3d00978ad352",
+        "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-dba57c1a360d",
+        "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-fbb003ea2321",
+        "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-0a1bcde85afd",
+        "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-1e4eafa280c1",
+        "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-fb5540c888e3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-c2c0cd475e34",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "determining-the-computed-mime-type-of-a-resource"
+      ],
+      "behaviour": "Determining the computed MIME type of a resource — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "determining-the-computed-mime-type-of-a-resource",
+        "clause_index": 0,
+        "clause_sha256": "c2c0cd475e3431df33787c16c6e1144832edf7e817761b59944220a000b9e39f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-3d00978ad352",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "determining-the-computed-mime-type-of-a-resource"
+      ],
+      "behaviour": "Determining the computed MIME type of a resource — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "determining-the-computed-mime-type-of-a-resource",
+        "clause_index": 2,
+        "clause_sha256": "3d00978ad35216fdd1437a6ce44c6117e509724c33cba75c53a17c655030f41e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-dba57c1a360d",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "determining-the-computed-mime-type-of-a-resource"
+      ],
+      "behaviour": "Determining the computed MIME type of a resource — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "determining-the-computed-mime-type-of-a-resource",
+        "clause_index": 5,
+        "clause_sha256": "dba57c1a360dc43edc09dff33935f864fdb3bc136968ecfab99025cc326191f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-fbb003ea2321",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "determining-the-computed-mime-type-of-a-resource"
+      ],
+      "behaviour": "Determining the computed MIME type of a resource — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "determining-the-computed-mime-type-of-a-resource",
+        "clause_index": 7,
+        "clause_sha256": "fbb003ea23219a4886f0c52d20e9508cae36fc5751e8f0a2c6aa87b7299bbe88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-0a1bcde85afd",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "determining-the-computed-mime-type-of-a-resource"
+      ],
+      "behaviour": "Determining the computed MIME type of a resource — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "determining-the-computed-mime-type-of-a-resource",
+        "clause_index": 9,
+        "clause_sha256": "0a1bcde85afd6045d45fa6c00d9c517548660042f342245d32399443e8c3b1e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-1e4eafa280c1",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "determining-the-computed-mime-type-of-a-resource"
+      ],
+      "behaviour": "Determining the computed MIME type of a resource — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "determining-the-computed-mime-type-of-a-resource",
+        "clause_index": 10,
+        "clause_sha256": "1e4eafa280c159d437e5722bfb7d07fea59d4e54e812da02dd9732e670aa3d22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-fb5540c888e3",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "determining-the-computed-mime-type-of-a-resource"
+      ],
+      "behaviour": "Determining the computed MIME type of a resource — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "determining-the-computed-mime-type-of-a-resource",
+        "clause_index": 13,
+        "clause_sha256": "fb5540c888e3c9ee3fcc67e4ee4d9451c18651238677fab608a43f7b5f7e458d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Identifying a resource with an unknown MIME type.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "text_sha256": "e5b25b211c5e332c76cf4c76c630a16690b646e825d7e06cb394f17176d0e151"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-4655895c2e5a",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-62da10b38d4b",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-47ca08e2d453",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-971a1a165f31",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-5a60e7ab64b5",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-c1a08a10bdc7",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-c81f77499f5b",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-a24cf9429e36",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-37949429375d",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-f6a1ead7ff57",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-993b4246804f",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-ceb3849037af",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-7f563ff97bc1",
+        "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-b99f0cfadeaf"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-4655895c2e5a",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 1,
+        "clause_sha256": "4655895c2e5a822b37b6ebfde55837b71f3e37d281152289e56a9c86d0eaaf54"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-62da10b38d4b",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 2,
+        "clause_sha256": "62da10b38d4b8f6d658cef24ebd545dd601c382c493fa9e5ec8e9f37d986ddfa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-47ca08e2d453",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 3,
+        "clause_sha256": "47ca08e2d453a7855d63328d24a3452e6827c5b3ac675189761542d339f62f7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-971a1a165f31",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 5,
+        "clause_sha256": "971a1a165f31da4b786fbe4a320e9a7cabddb18051767bddfc1733e5b92bca8d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-5a60e7ab64b5",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 11,
+        "clause_sha256": "5a60e7ab64b56cf2b0e171e584c4047ba7e2f59e3f7a5bea931338f231edc0d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-c1a08a10bdc7",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 12,
+        "clause_sha256": "c1a08a10bdc783efa4bfa23fbc8369963eb1d3bf08c2123c104040e6002c5d90"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-c81f77499f5b",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 109, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 108,
+        "clause_sha256": "c81f77499f5b556d3dcb425d35bc2abbe0c67a71d8e496a4be532a2a9f5f2b49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-a24cf9429e36",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 115, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 114,
+        "clause_sha256": "a24cf9429e361ee3752e9f132f552bb232fe0f93ed4954167bec0d6d262ab304"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-37949429375d",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 141, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 140,
+        "clause_sha256": "37949429375de2d718e7bbadfd43bfeebf87b051f189405447ce3a026b980ab2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-f6a1ead7ff57",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 142, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 141,
+        "clause_sha256": "f6a1ead7ff57739cbbe1ce541f947b2a9d94e58b7f2ffd1a5bcb60b94625a2d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-993b4246804f",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 143, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 142,
+        "clause_sha256": "993b4246804f1ae665acdd5e625c5cef68a15a8421f6db2f3679f7e203e0f896"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-ceb3849037af",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 147, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 146,
+        "clause_sha256": "ceb3849037af235112e05231173e0005b3c4e2284abc3226be64d7aa47d3233e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-7f563ff97bc1",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 151, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 150,
+        "clause_sha256": "7f563ff97bc189060cf44bdba8359e9d8c00bc54d45c8afb9b1d0f1717b0d1e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-b99f0cfadeaf",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "identifying-a-resource-with-an-unknown-mime-type"
+      ],
+      "behaviour": "Identifying a resource with an unknown MIME type — normative clause 159, located by its exact source hash.",
+      "locator": {
+        "section_id": "identifying-a-resource-with-an-unknown-mime-type",
+        "clause_index": 158,
+        "clause_sha256": "b99f0cfadeafd7c09741a6d67c93fbd18aeadcf4c291bc053803f903381462c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-a-mislabeled-binary-resource",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-a-mislabeled-binary-resource"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sniffing a mislabeled binary resource.",
+      "locator": {
+        "section_id": "sniffing-a-mislabeled-binary-resource",
+        "text_sha256": "b3dba96c3f18cffe341f6e5f217ab14a2d893ed96ab621559cbeb27354eb4816"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.sniffing-a-mislabeled-binary-resource-clause-11d767e9c989",
+        "mimesniff.sniffing-a-mislabeled-binary-resource-clause-097973a0de90",
+        "mimesniff.sniffing-a-mislabeled-binary-resource-clause-a4a0363fa4b3",
+        "mimesniff.sniffing-a-mislabeled-binary-resource-clause-d75d0e68b66a",
+        "mimesniff.sniffing-a-mislabeled-binary-resource-clause-ad0f1a19d4a0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.sniffing-a-mislabeled-binary-resource-clause-11d767e9c989",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-a-mislabeled-binary-resource"
+      ],
+      "behaviour": "Sniffing a mislabeled binary resource — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-a-mislabeled-binary-resource",
+        "clause_index": 3,
+        "clause_sha256": "11d767e9c98933362e3e25b72ec5bcaabb1a3bc95945891d45e5c6834713bc04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-a-mislabeled-binary-resource-clause-097973a0de90",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-a-mislabeled-binary-resource"
+      ],
+      "behaviour": "Sniffing a mislabeled binary resource — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-a-mislabeled-binary-resource",
+        "clause_index": 5,
+        "clause_sha256": "097973a0de90e45a40d94295509497b236621c1f01bc513a6d129370751ed90f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-a-mislabeled-binary-resource-clause-a4a0363fa4b3",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-a-mislabeled-binary-resource"
+      ],
+      "behaviour": "Sniffing a mislabeled binary resource — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-a-mislabeled-binary-resource",
+        "clause_index": 7,
+        "clause_sha256": "a4a0363fa4b32f219292bf503ab7d267f3cd798b356a91c92f0912ef65a31cc5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-a-mislabeled-binary-resource-clause-d75d0e68b66a",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-a-mislabeled-binary-resource"
+      ],
+      "behaviour": "Sniffing a mislabeled binary resource — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-a-mislabeled-binary-resource",
+        "clause_index": 8,
+        "clause_sha256": "d75d0e68b66a42e72839baca0c66f3219dd214da475ce96380150dfe8acd8df5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-a-mislabeled-binary-resource-clause-ad0f1a19d4a0",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-a-mislabeled-binary-resource"
+      ],
+      "behaviour": "Sniffing a mislabeled binary resource — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-a-mislabeled-binary-resource",
+        "clause_index": 9,
+        "clause_sha256": "ad0f1a19d4a0810e7d6340d3de2d7d10d77a0aa9a787826e7d3126c762e3bbdc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.context-specific-sniffing",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "context-specific-sniffing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Context-specific sniffing.",
+      "locator": {
+        "section_id": "context-specific-sniffing",
+        "text_sha256": "5829073c3fb985ac54567ef17e0c71f731ab999f3762a5f975b03bf0371854db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.context-specific-sniffing-clause-d13ec8917945",
+        "mimesniff.context-specific-sniffing-clause-359b46c90790"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.context-specific-sniffing-clause-d13ec8917945",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "context-specific-sniffing"
+      ],
+      "behaviour": "Context-specific sniffing — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "context-specific-sniffing",
+        "clause_index": 2,
+        "clause_sha256": "d13ec8917945039c042d7ed4c4e3ef1577e091d00a310cc415e2851710268566"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.context-specific-sniffing-clause-359b46c90790",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "context-specific-sniffing"
+      ],
+      "behaviour": "Context-specific sniffing — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "context-specific-sniffing",
+        "clause_index": 3,
+        "clause_sha256": "359b46c9079060866d7d6a2087d76eef91af903db0fdcd01a0677091e21b9d5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-browsing-context",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-browsing-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sniffing in a browsing context.",
+      "locator": {
+        "section_id": "sniffing-in-a-browsing-context",
+        "text_sha256": "b1cb1d6472d6342504582a34d216101a4b0e8bf21469563077e3ac50450717ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.sniffing-in-a-browsing-context-clause-b1cb1d6472d6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-browsing-context-clause-b1cb1d6472d6",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-browsing-context"
+      ],
+      "behaviour": "Sniffing in a browsing context — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-browsing-context",
+        "clause_index": 0,
+        "clause_sha256": "b1cb1d6472d6342504582a34d216101a4b0e8bf21469563077e3ac50450717ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-image-context",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-image-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sniffing in an image context.",
+      "locator": {
+        "section_id": "sniffing-in-an-image-context",
+        "text_sha256": "3d4b54ff87a4f8ad9f76d63695b0283b499cc29ae7816239a8daf53a2cc45443"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.sniffing-in-an-image-context-clause-210caa63dc6b",
+        "mimesniff.sniffing-in-an-image-context-clause-377ed23db648",
+        "mimesniff.sniffing-in-an-image-context-clause-3048107d9796",
+        "mimesniff.sniffing-in-an-image-context-clause-b0150e84cf97",
+        "mimesniff.sniffing-in-an-image-context-clause-fb5540c888e3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-image-context-clause-210caa63dc6b",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-image-context"
+      ],
+      "behaviour": "Sniffing in an image context — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-an-image-context",
+        "clause_index": 0,
+        "clause_sha256": "210caa63dc6b059dbfe88f2dc1b952ccaaf498d26f588374b0120f2565291bc3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-image-context-clause-377ed23db648",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-image-context"
+      ],
+      "behaviour": "Sniffing in an image context — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-an-image-context",
+        "clause_index": 2,
+        "clause_sha256": "377ed23db64835cd5c68d37fedf4aaafe8e08075b3fda619d9d5128f9aa45058"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-image-context-clause-3048107d9796",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-image-context"
+      ],
+      "behaviour": "Sniffing in an image context — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-an-image-context",
+        "clause_index": 3,
+        "clause_sha256": "3048107d9796eaf425b1ba4f802c7f2e3c81bad6b5368951570986c8b9682a54"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-image-context-clause-b0150e84cf97",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-image-context"
+      ],
+      "behaviour": "Sniffing in an image context — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-an-image-context",
+        "clause_index": 5,
+        "clause_sha256": "b0150e84cf97535add769a0551d55d8990ce1887f14083152f8402fc27ce2981"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-image-context-clause-fb5540c888e3",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-image-context"
+      ],
+      "behaviour": "Sniffing in an image context — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-an-image-context",
+        "clause_index": 6,
+        "clause_sha256": "fb5540c888e3c9ee3fcc67e4ee4d9451c18651238677fab608a43f7b5f7e458d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-audio-or-video-context",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-audio-or-video-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sniffing in an audio or video context.",
+      "locator": {
+        "section_id": "sniffing-in-an-audio-or-video-context",
+        "text_sha256": "5398a3b822680eb797ab43d3a136e89eb7881112a88dcdcaeffb362593afb6d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.sniffing-in-an-audio-or-video-context-clause-b602560d8799",
+        "mimesniff.sniffing-in-an-audio-or-video-context-clause-377ed23db648",
+        "mimesniff.sniffing-in-an-audio-or-video-context-clause-1422d2e2e6e3",
+        "mimesniff.sniffing-in-an-audio-or-video-context-clause-a918306969fe",
+        "mimesniff.sniffing-in-an-audio-or-video-context-clause-fb5540c888e3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-audio-or-video-context-clause-b602560d8799",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-audio-or-video-context"
+      ],
+      "behaviour": "Sniffing in an audio or video context — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-an-audio-or-video-context",
+        "clause_index": 0,
+        "clause_sha256": "b602560d8799393f2928c6195da22627b8b0e149ce3607e9420d81090d2adc12"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-audio-or-video-context-clause-377ed23db648",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-audio-or-video-context"
+      ],
+      "behaviour": "Sniffing in an audio or video context — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-an-audio-or-video-context",
+        "clause_index": 2,
+        "clause_sha256": "377ed23db64835cd5c68d37fedf4aaafe8e08075b3fda619d9d5128f9aa45058"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-audio-or-video-context-clause-1422d2e2e6e3",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-audio-or-video-context"
+      ],
+      "behaviour": "Sniffing in an audio or video context — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-an-audio-or-video-context",
+        "clause_index": 3,
+        "clause_sha256": "1422d2e2e6e351d965be40c786d4fd127d5d5c274fc67877de7ca2ff676b7fab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-audio-or-video-context-clause-a918306969fe",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-audio-or-video-context"
+      ],
+      "behaviour": "Sniffing in an audio or video context — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-an-audio-or-video-context",
+        "clause_index": 5,
+        "clause_sha256": "a918306969fe28fca5fb86c1e272bc64f40bf4acedb7b9dada52a5f13f3096c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-an-audio-or-video-context-clause-fb5540c888e3",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-an-audio-or-video-context"
+      ],
+      "behaviour": "Sniffing in an audio or video context — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-an-audio-or-video-context",
+        "clause_index": 6,
+        "clause_sha256": "fb5540c888e3c9ee3fcc67e4ee4d9451c18651238677fab608a43f7b5f7e458d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-plugin-context",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-plugin-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sniffing in a plugin context.",
+      "locator": {
+        "section_id": "sniffing-in-a-plugin-context",
+        "text_sha256": "4824b6bfe5621abe670d4e07dcf6638e66345f36527a4d6b61b1f90271a48304"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.sniffing-in-a-plugin-context-clause-ae459ac1d551",
+        "mimesniff.sniffing-in-a-plugin-context-clause-25beb3262edb",
+        "mimesniff.sniffing-in-a-plugin-context-clause-fb5540c888e3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-plugin-context-clause-ae459ac1d551",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-plugin-context"
+      ],
+      "behaviour": "Sniffing in a plugin context — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-plugin-context",
+        "clause_index": 0,
+        "clause_sha256": "ae459ac1d551cc1fd5d35ab3ec709f0a044263a78a1d18140b1b65fb2a4051d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-plugin-context-clause-25beb3262edb",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-plugin-context"
+      ],
+      "behaviour": "Sniffing in a plugin context — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-plugin-context",
+        "clause_index": 1,
+        "clause_sha256": "25beb3262edb2b0e2cbe8d6697f652b16a3158a186a0ca36e76bbe469795c593"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-plugin-context-clause-fb5540c888e3",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-plugin-context"
+      ],
+      "behaviour": "Sniffing in a plugin context — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-plugin-context",
+        "clause_index": 2,
+        "clause_sha256": "fb5540c888e3c9ee3fcc67e4ee4d9451c18651238677fab608a43f7b5f7e458d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-style-context",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-style-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sniffing in a style context.",
+      "locator": {
+        "section_id": "sniffing-in-a-style-context",
+        "text_sha256": "813a127a4725d3082d000757799d7d80cf3a0af5261112585bfb8b1dabdd8215"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.sniffing-in-a-style-context-clause-c728157c5d86",
+        "mimesniff.sniffing-in-a-style-context-clause-fb5540c888e3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-style-context-clause-c728157c5d86",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-style-context"
+      ],
+      "behaviour": "Sniffing in a style context — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-style-context",
+        "clause_index": 0,
+        "clause_sha256": "c728157c5d868672a1fcfe8a21604133c9a1ee2e064e28c8ee1f79ae48668d21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-style-context-clause-fb5540c888e3",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-style-context"
+      ],
+      "behaviour": "Sniffing in a style context — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-style-context",
+        "clause_index": 2,
+        "clause_sha256": "fb5540c888e3c9ee3fcc67e4ee4d9451c18651238677fab608a43f7b5f7e458d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-script-context",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-script-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sniffing in a script context.",
+      "locator": {
+        "section_id": "sniffing-in-a-script-context",
+        "text_sha256": "40a4b6b61fc001dc4142cbd1c9443afed2618fafcd76344bdbec88478ed27afe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.sniffing-in-a-script-context-clause-82790875db61",
+        "mimesniff.sniffing-in-a-script-context-clause-fb5540c888e3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-script-context-clause-82790875db61",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-script-context"
+      ],
+      "behaviour": "Sniffing in a script context — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-script-context",
+        "clause_index": 0,
+        "clause_sha256": "82790875db61354fae3fab6ec0b6acce93b5435a5ffbdfa9108db49338ded625"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-script-context-clause-fb5540c888e3",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-script-context"
+      ],
+      "behaviour": "Sniffing in a script context — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-script-context",
+        "clause_index": 2,
+        "clause_sha256": "fb5540c888e3c9ee3fcc67e4ee4d9451c18651238677fab608a43f7b5f7e458d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-font-context",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-font-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sniffing in a font context.",
+      "locator": {
+        "section_id": "sniffing-in-a-font-context",
+        "text_sha256": "45842203c4f674f9518d016f0588916b556835fe290fe6018cf13eb4edb8dd00"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.sniffing-in-a-font-context-clause-049db749849e",
+        "mimesniff.sniffing-in-a-font-context-clause-377ed23db648",
+        "mimesniff.sniffing-in-a-font-context-clause-6c088d6f568f",
+        "mimesniff.sniffing-in-a-font-context-clause-9734093781ef",
+        "mimesniff.sniffing-in-a-font-context-clause-fb5540c888e3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-font-context-clause-049db749849e",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-font-context"
+      ],
+      "behaviour": "Sniffing in a font context — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-font-context",
+        "clause_index": 0,
+        "clause_sha256": "049db749849ea5de70d16b01c70c776510976aa0f62eafb9dfa6df060db90f8f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-font-context-clause-377ed23db648",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-font-context"
+      ],
+      "behaviour": "Sniffing in a font context — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-font-context",
+        "clause_index": 2,
+        "clause_sha256": "377ed23db64835cd5c68d37fedf4aaafe8e08075b3fda619d9d5128f9aa45058"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-font-context-clause-6c088d6f568f",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-font-context"
+      ],
+      "behaviour": "Sniffing in a font context — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-font-context",
+        "clause_index": 3,
+        "clause_sha256": "6c088d6f568fd4dcff699768175764a3ba008e03ca4dd680996387ff989ff039"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-font-context-clause-9734093781ef",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-font-context"
+      ],
+      "behaviour": "Sniffing in a font context — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-font-context",
+        "clause_index": 5,
+        "clause_sha256": "9734093781ef1c4dc23fc2478a0102ad881136902c29521afbb4675124e6cc2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-font-context-clause-fb5540c888e3",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-font-context"
+      ],
+      "behaviour": "Sniffing in a font context — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-font-context",
+        "clause_index": 6,
+        "clause_sha256": "fb5540c888e3c9ee3fcc67e4ee4d9451c18651238677fab608a43f7b5f7e458d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-text-track-context",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-text-track-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sniffing in a text track context.",
+      "locator": {
+        "section_id": "sniffing-in-a-text-track-context",
+        "text_sha256": "9e70818bd49933457b2beabdab77e3d18a7d414ce9a3525c31046656bca887be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.sniffing-in-a-text-track-context-clause-9e70818bd499"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-text-track-context-clause-9e70818bd499",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-text-track-context"
+      ],
+      "behaviour": "Sniffing in a text track context — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-text-track-context",
+        "clause_index": 0,
+        "clause_sha256": "9e70818bd49933457b2beabdab77e3d18a7d414ce9a3525c31046656bca887be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-cache-manifest-context",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-cache-manifest-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sniffing in a cache manifest context.",
+      "locator": {
+        "section_id": "sniffing-in-a-cache-manifest-context",
+        "text_sha256": "e557f9415ebb95baf5f38ec648dd3e83683043b0aa5b8adaf001554dff28ae39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mimesniff.sniffing-in-a-cache-manifest-context-clause-e557f9415ebb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.sniffing-in-a-cache-manifest-context-clause-e557f9415ebb",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "sniffing-in-a-cache-manifest-context"
+      ],
+      "behaviour": "Sniffing in a cache manifest context — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sniffing-in-a-cache-manifest-context",
+        "clause_index": 0,
+        "clause_sha256": "e557f9415ebb95baf5f38ec648dd3e83683043b0aa5b8adaf001554dff28ae39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mimesniff.import-ed9aa80cc32c",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.rfc-editor.org/info/rfc2046/.",
+      "unresolved_reference": "https://www.rfc-editor.org/info/rfc2046/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "mimesniff.title",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in MIME Sniffing (Commit ba4b3c385b9765ddfe4a994e2bb89e0ab96068e2).",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "0e9da06201129072f20eaf10f8c5341a63c735db3c31870130f14d86e49ef71a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.abstract",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "24687d47aec5466b61ebd7ef2b47cbc54bae9bc8b2c60f48a453160b48861d31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.contents",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "b4d73be3db187400412e3b0afbe084172391adef750e1556ace95a2e6e4a63b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.acknowledgements",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgements",
+        "text_sha256": "959f52f571d897437e1ccf22a74969f3aca52d6775e2d9ba40fc7952713e84ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.ipr",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "ipr"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Intellectual property rights.",
+      "locator": {
+        "section_id": "ipr",
+        "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.index",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.index-defined-here",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "6b6699d2b8701de6cf5fce773bd67ec649819ba5f85b9590d8004f8e026c44d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.index-defined-elsewhere",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "837e9ee42662146ea7f0c8e522957f74b32a86d727378d0ad343e6dd2582403e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.references",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mimesniff.informative",
+      "family": "mimesniff",
+      "source_id": "mimesniff",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "cdcd6d7e2beaccf5dbf0950506c86693b3919aa264e22948f6817b072a66d170"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

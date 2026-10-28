@@ -1,0 +1,833 @@
+{
+  "schema_version": 1,
+  "source_id": "rfc5646",
+  "sections": [
+    {
+      "id": "heading-20d1caff9ac5",
+      "title": "Tags for Identifying Languages",
+      "level": 1,
+      "text_sha256": "7ca3ec19bfd61ba209bfd5ab3abb9dba156fcce57e4642c5cbe06009339d0da1",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.heading-20d1caff9ac5"
+        ]
+      }
+    },
+    {
+      "id": "section-1",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "46f53cf4637c378aea6c435ea799f2fb67a525484cb480795dd2a8d505cdb897",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-1",
+          "rfc5646.section-1-clause-fec5095a3ea9"
+        ]
+      }
+    },
+    {
+      "id": "section-2",
+      "title": "2. The Language Tag",
+      "level": 2,
+      "text_sha256": "9ba5b2d5fdf20099e1d270120ed20f4bcf2c08755d01d85e1a8988bdde101a0a",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2"
+        ]
+      }
+    },
+    {
+      "id": "section-2.1",
+      "title": "2.1. Syntax",
+      "level": 3,
+      "text_sha256": "c83dfb2452cca42e9549268b394f2f2b63a5a858d494473fc65c72ed65bab6c5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-1"
+        ]
+      }
+    },
+    {
+      "id": "section-2.1.1",
+      "title": "2.1.1. Formatting of Language Tags",
+      "level": 4,
+      "text_sha256": "83de95cd1e96a22b4eafdf974d430c3b35f7ad6ca757f5c16da8b688e7117997",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-1-1",
+          "rfc5646.section-2-1-1-clause-660090157577"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2",
+      "title": "2.2. Language Subtag Sources and Interpretation",
+      "level": 3,
+      "text_sha256": "5d697a415c54dd640bd0f0efe69fa703e4fcd6bceb4cd0ab68099bb4015db6d2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-2"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2.1",
+      "title": "2.2.1. Primary Language Subtag",
+      "level": 4,
+      "text_sha256": "fac7462febd29f2b6cd93705f395eeadb332d8646151b5bae65b6f7cdfd6770a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-2-1",
+          "rfc5646.section-2-2-1-clause-b09b6d9bc068",
+          "rfc5646.section-2-2-1-clause-631be3c5e21e"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2.2",
+      "title": "2.2.2. Extended Language Subtags",
+      "level": 4,
+      "text_sha256": "bd2b11e2ddf150191dc0001a73b49f3f756f8d2931569d74673ac59e59383c32",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-2-2",
+          "rfc5646.section-2-2-2-clause-b500b6a589b9"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2.3",
+      "title": "2.2.3. Script Subtag",
+      "level": 4,
+      "text_sha256": "827aea775ba7eddd7e63d4e1bf0d6cb3893fc13472954f78f78e0d5a668f6ce1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-2-3",
+          "rfc5646.section-2-2-3-clause-46bfbf4da1db"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2.4",
+      "title": "2.2.4. Region Subtag",
+      "level": 4,
+      "text_sha256": "11a6c70424b106afee5beb29da9b45a2399f86d2e2b95abb0355bb01f38efd5f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-2-4",
+          "rfc5646.section-2-2-4-clause-977f2949198e",
+          "rfc5646.section-2-2-4-clause-71a411b643c4"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2.5",
+      "title": "2.2.5. Variant Subtags",
+      "level": 4,
+      "text_sha256": "815dfdd26653a99299ae090e8c6672c09062d295f17bc04b40ea7faed99d1647",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-2-5",
+          "rfc5646.section-2-2-5-clause-10c7bbe34640"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2.6",
+      "title": "2.2.6. Extension Subtags",
+      "level": 4,
+      "text_sha256": "2eff5baca38a756e0ab52c80a36dfc5a923834475b68719f963018a5a4c998d2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-2-6",
+          "rfc5646.section-2-2-6-clause-9017a3e4019d"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2.7",
+      "title": "2.2.7. Private Use Subtags",
+      "level": 4,
+      "text_sha256": "837487f9050e5cee0f5d1bba23e1b5d8a36057f0f5a6bff5869e1e17354240a3",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-2-7"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2.8",
+      "title": "2.2.8. Grandfathered and Redundant Registrations",
+      "level": 4,
+      "text_sha256": "36d6b93fb75304d181657b2560df282811d700af8619dd4237ed0f52aed3edf6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-2-8",
+          "rfc5646.section-2-2-8-clause-027988adb9c4"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2.9",
+      "title": "2.2.9. Classes of Conformance",
+      "level": 4,
+      "text_sha256": "8cfdfac65443724013d652c8104e4071f994cc0761ef3db380ed0c6976205af2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-2-2-9",
+          "rfc5646.section-2-2-9-clause-82d49f040ecc"
+        ]
+      }
+    },
+    {
+      "id": "section-3",
+      "title": "3. Registry Format and Maintenance",
+      "level": 2,
+      "text_sha256": "2290d4cc113673feb30b8d12ee9407e15d81be4c949580ccfdf5f08d1c58ab34",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1",
+      "title": "3.1. Format of the IANA Language Subtag Registry",
+      "level": 3,
+      "text_sha256": "04a416229549264d31455222c48965e0248bb1c69fe4c3285be0b120347628be",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.1",
+      "title": "3.1.1. File Format",
+      "level": 4,
+      "text_sha256": "87f802178c7a7a6702215ae3c4e0c119c5507c3d8d0d134c2b782a3da803f4c3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-1",
+          "rfc5646.section-3-1-1-clause-a06122711a43"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.2",
+      "title": "3.1.2. Record and Field Definitions",
+      "level": 4,
+      "text_sha256": "cd2929c47cb615b4940aabac99f927d9bc9e193186f6b41270dc1eb1c93ed271",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-2",
+          "rfc5646.section-3-1-2-clause-ff3821833b57"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.3",
+      "title": "3.1.3. Type Field",
+      "level": 4,
+      "text_sha256": "941a2c06437c618a4d00afbd5d919bd2470cd4d302ef9242a4331cb938d5bd86",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-3"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.4",
+      "title": "3.1.4. Subtag and Tag Fields",
+      "level": 4,
+      "text_sha256": "2614965cb95f776fb269d3ba6f103a68b29731aec9fe37848786568f4e293031",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-4"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.5",
+      "title": "3.1.5. Description Field",
+      "level": 4,
+      "text_sha256": "6647955f4e6ea71cdc0402f58414d89631f8e9d0e172e78d76bdca1a7ac8071b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-5",
+          "rfc5646.section-3-1-5-clause-bfbb57ab7b4b"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.6",
+      "title": "3.1.6. Deprecated Field",
+      "level": 4,
+      "text_sha256": "60130e708715348a0fda67ea7c6de2a9dc73f547c11f0e2dbba1c294d4c4d185",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-6"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.7",
+      "title": "3.1.7. Preferred-Value Field",
+      "level": 4,
+      "text_sha256": "b974be231a746c39162866d39f5fe4007bfcc719fd8b78ac11e336b7ed37f3c1",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-7",
+          "rfc5646.section-3-1-7-clause-d9cf4d039fe4",
+          "rfc5646.section-3-1-7-clause-59184af27422"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.8",
+      "title": "3.1.8. Prefix Field",
+      "level": 4,
+      "text_sha256": "7fb6780573a4647d36c987aacdbf9db51c0dbdc96c1b186d28505413c7e68e6d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-8",
+          "rfc5646.section-3-1-8-clause-b3fdd594f63f"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.9",
+      "title": "3.1.9. Suppress-Script Field",
+      "level": 4,
+      "text_sha256": "c2ff075cf4d14995d6c30d54bb7b6108856e8ec2cafffb200f339f9344d6c78c",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-9"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.10",
+      "title": "3.1.10. Macrolanguage Field",
+      "level": 4,
+      "text_sha256": "6e8eb3a92be9367732d90b2cdb2787dd99954c0c874bbe6fe4f5905e6a998156",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-10"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.11",
+      "title": "3.1.11. Scope Field",
+      "level": 4,
+      "text_sha256": "19e25b1b1c324035258d4fd63101af6f9431cc0d2e9889ef6d352f88532bfd44",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-11",
+          "rfc5646.section-3-1-11-clause-d63d78761b21"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1.12",
+      "title": "3.1.12. Comments Field",
+      "level": 4,
+      "text_sha256": "e508c55624906887ab086d6bbbc98758b0f8ad96f5f24428a25eefcc4c2721e2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-1-12"
+        ]
+      }
+    },
+    {
+      "id": "section-3.2",
+      "title": "3.2. Language Subtag Reviewer",
+      "level": 3,
+      "text_sha256": "5d9acd1ed8343ccfc92f2013af160471c4189f80bdcb0afff698c9a946718f29",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-2"
+        ]
+      }
+    },
+    {
+      "id": "section-3.3",
+      "title": "3.3. Maintenance of the Registry",
+      "level": 3,
+      "text_sha256": "453af30b39d41141029e2978d31db0370f13e7422a837fa81b24846a2fe56682",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-3",
+          "rfc5646.section-3-3-clause-890c996b056f"
+        ]
+      }
+    },
+    {
+      "id": "section-3.4",
+      "title": "3.4. Stability of IANA Registry Entries",
+      "level": 3,
+      "text_sha256": "2eb95fc6b5eda0c38a8e433d99fda6740dd71ed992a28283b4dd5621d7e128fd",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-4",
+          "rfc5646.section-3-4-clause-328c91435f71",
+          "rfc5646.section-3-4-clause-771098b9cecb",
+          "rfc5646.section-3-4-clause-41a8e2cf1d42",
+          "rfc5646.section-3-4-clause-8d13b7b834c3",
+          "rfc5646.section-3-4-clause-128f3d17067f"
+        ]
+      }
+    },
+    {
+      "id": "section-3.5",
+      "title": "3.5. Registration Procedure for Subtags",
+      "level": 3,
+      "text_sha256": "340233916a8601b20b578b25350989602919d2386b30be5f7171fb4af6d49929",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-5",
+          "rfc5646.section-3-5-clause-21b5ae139c0c",
+          "rfc5646.section-3-5-clause-55075644ff76",
+          "rfc5646.section-3-5-clause-fdb7fc8495ba",
+          "rfc5646.section-3-5-clause-a87ebb0322fd",
+          "rfc5646.section-3-5-clause-77e00dedb268"
+        ]
+      }
+    },
+    {
+      "id": "section-3.6",
+      "title": "3.6. Possibilities for Registration",
+      "level": 3,
+      "text_sha256": "9793b7dae03f6dbb63e3079b1b1034626e4516e4bd84034d2c769e154d46d3f1",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-6",
+          "rfc5646.section-3-6-clause-d36a2ff27120"
+        ]
+      }
+    },
+    {
+      "id": "section-3.7",
+      "title": "3.7. Extensions and the Extensions Registry",
+      "level": 3,
+      "text_sha256": "5e894db28637b94c124e57f378f2ddae3a0464f464b9f14eb3365b3335823222",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-7",
+          "rfc5646.section-3-7-clause-e1761e832cca",
+          "rfc5646.section-3-7-clause-476dd7f9ea83",
+          "rfc5646.section-3-7-clause-fdfe500feecc"
+        ]
+      }
+    },
+    {
+      "id": "section-3.8",
+      "title": "3.8. Update of the Language Subtag Registry",
+      "level": 3,
+      "text_sha256": "7f1e721a094cffa66409586755d69bc29556214b6c50dc6fa8de9a8ef82db76d",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-8"
+        ]
+      }
+    },
+    {
+      "id": "section-3.9",
+      "title": "3.9. Applicability of the Subtag Registry",
+      "level": 3,
+      "text_sha256": "33f1f75e118f08af92c08503efa272600660ec8a76391c16c4367f7c9f87a3c3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-3-9"
+        ]
+      }
+    },
+    {
+      "id": "section-4",
+      "title": "4. Formation and Processing of Language Tags",
+      "level": 2,
+      "text_sha256": "e86857c7c4754695588213f2360f05506671accb630e12aedfd810321c4f29d7",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-4"
+        ]
+      }
+    },
+    {
+      "id": "section-4.1",
+      "title": "4.1. Choice of Language Tag",
+      "level": 3,
+      "text_sha256": "dc0ac84770938470434433b21e0b573f87f5c8ed1dc8aa7fe71dfdd50adec8a6",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-4-1",
+          "rfc5646.section-4-1-clause-8b1230cf0ea7",
+          "rfc5646.section-4-1-clause-7a8567dd46e4",
+          "rfc5646.section-4-1-clause-1f77829cdd0e",
+          "rfc5646.section-4-1-clause-9ba5791973f9",
+          "rfc5646.section-4-1-clause-19ba00dd02c0"
+        ]
+      }
+    },
+    {
+      "id": "section-4.1.1",
+      "title": "4.1.1. Tagging Encompassed Languages",
+      "level": 4,
+      "text_sha256": "472f9de0a8d80cb79f350b48839a09fd8d9a837ab4a5b6d1e5ab024493aeeab4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-4-1-1"
+        ]
+      }
+    },
+    {
+      "id": "section-4.1.2",
+      "title": "4.1.2. Using Extended Language Subtags",
+      "level": 4,
+      "text_sha256": "5de73945cf8505469b9909303180e415ee46fda901f42b971aac63e2103d148b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-4-1-2"
+        ]
+      }
+    },
+    {
+      "id": "section-4.2",
+      "title": "4.2. Meaning of the Language Tag",
+      "level": 3,
+      "text_sha256": "b09144321ef75e8f7d8d2ee62d15e15a49c2469f970fdf380494fe9ddf4aac63",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-4-2"
+        ]
+      }
+    },
+    {
+      "id": "section-4.3",
+      "title": "4.3. Lists of Languages",
+      "level": 3,
+      "text_sha256": "949dd948823c3d140dcbba1892b33cc7f1ff3b8364088498fc883e2a11e1ad2a",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-4-3"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4",
+      "title": "4.4. Length Considerations",
+      "level": 3,
+      "text_sha256": "b12cba5ec5e8fba2a8103d003c40927a013e09a70dffa0d6b754f1c128a278aa",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-4-4"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4.1",
+      "title": "4.4.1. Working with Limited Buffer Sizes",
+      "level": 4,
+      "text_sha256": "4b88fca0e6ad54cc3e89ee71927da9794fa2dd1060957168b31ecf0e856dc0af",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-4-4-1"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4.2",
+      "title": "4.4.2. Truncation of Language Tags",
+      "level": 4,
+      "text_sha256": "d11e0f000e0e5e568f89c7ff84d3c5fa3b1b1914283d1f3ed96cdea38759da92",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-4-4-2"
+        ]
+      }
+    },
+    {
+      "id": "section-4.5",
+      "title": "4.5. Canonicalization of Language Tags",
+      "level": 3,
+      "text_sha256": "a1313f4eae1f50863b6e9fcf1a615fc5535e4f480396d6b49ac20b6e55647a87",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-4-5",
+          "rfc5646.section-4-5-clause-8c92997bd29d",
+          "rfc5646.section-4-5-clause-99a34a52258a"
+        ]
+      }
+    },
+    {
+      "id": "section-4.6",
+      "title": "4.6. Considerations for Private Use Subtags",
+      "level": 3,
+      "text_sha256": "80a7efc029d0f2a558c80f313a97beac929f3285cf1447e6432d5d0d3f2315e7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-4-6"
+        ]
+      }
+    },
+    {
+      "id": "section-5",
+      "title": "5. IANA Considerations",
+      "level": 2,
+      "text_sha256": "0c1d26856082b6eb1497e680ad1607b522cc13e6dfe2e1fb3e286e56846f3b58",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-5"
+        ]
+      }
+    },
+    {
+      "id": "section-5.1",
+      "title": "5.1. Language Subtag Registry",
+      "level": 3,
+      "text_sha256": "0561f4a2c6a7cc87c4de781b6493a50725dbce23d6ed14e191698c67d202a344",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-5-1",
+          "rfc5646.section-5-1-clause-8a006730ad4f"
+        ]
+      }
+    },
+    {
+      "id": "section-5.2",
+      "title": "5.2. Extensions Registry",
+      "level": 3,
+      "text_sha256": "ef8a8eb9f1b7c70fb5050275fcd838080bd9f200244da4fdc0a3f6e0d78709ed",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-5-2"
+        ]
+      }
+    },
+    {
+      "id": "section-6",
+      "title": "6. Security Considerations",
+      "level": 2,
+      "text_sha256": "0697754c40adcac9f904fbbc76ce6b98964b6c4d53dab5b95e7db06ee8191d60",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-6",
+          "rfc5646.section-6-clause-30b1128acce2"
+        ]
+      }
+    },
+    {
+      "id": "section-7",
+      "title": "7. Character Set Considerations",
+      "level": 2,
+      "text_sha256": "f899fbb6b46ed5a4b9feeea4305dfa2a6d47b6a46d288c0e4431674c17387806",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-7"
+        ]
+      }
+    },
+    {
+      "id": "section-8",
+      "title": "8. Changes from RFC 4646",
+      "level": 2,
+      "text_sha256": "c11bbbd11539d3d2be1615bdb6229277525b25d244c2d0dd7a13d89eab35b17d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-8",
+          "rfc5646.section-8-clause-6e3a74aede89",
+          "rfc5646.section-8-clause-4226d4e03542"
+        ]
+      }
+    },
+    {
+      "id": "section-9",
+      "title": "9. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-9"
+        ]
+      }
+    },
+    {
+      "id": "section-9.1",
+      "title": "9.1. Normative References",
+      "level": 3,
+      "text_sha256": "ae40e93dacb7c1167c2cf432c4a8f4e18d527c2beb0de5211a54df5f473c2fab",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-9-1"
+        ]
+      }
+    },
+    {
+      "id": "section-9.2",
+      "title": "9.2. Informative References",
+      "level": 3,
+      "text_sha256": "ebb9e9002bc13821abe8853d468f834496016b9fdfc5265124d79d95b91fcf69",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.section-9-2"
+        ]
+      }
+    },
+    {
+      "id": "appendix-A",
+      "title": "Appendix A. Examples of Language Tags (Informative)",
+      "level": 2,
+      "text_sha256": "2d77c4cc20f363e2c8274fb75d7f3f3ff4107a9c2f4ebfaa9462156a117f39da",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.appendix-a",
+          "rfc5646.appendix-a-clause-266fa7e42165"
+        ]
+      }
+    },
+    {
+      "id": "appendix-B",
+      "title": "Appendix B. Examples of Registration Forms",
+      "level": 2,
+      "text_sha256": "5dbdffe1470f26a365ed3fad22e0220df47d003daeb4a38df0e7be19913504e5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.appendix-b"
+        ]
+      }
+    },
+    {
+      "id": "appendix-C",
+      "title": "Appendix C. Acknowledgements",
+      "level": 2,
+      "text_sha256": "0726b137d227102e36ec841ad450ac51e978fe7ab765cb318b5f2cf1e7e9382a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc5646.appendix-c",
+          "rfc5646.appendix-c-clause-21455f385c70"
+        ]
+      }
+    }
+  ]
+}

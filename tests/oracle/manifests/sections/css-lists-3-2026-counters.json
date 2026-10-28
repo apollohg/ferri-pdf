@@ -1,0 +1,422 @@
+{
+  "schema_version": 1,
+  "source_id": "css-lists-3-2026-counters",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Introduction",
+      "level": 2,
+      "text_sha256": "f2ae4655636330f4d9f4d4525f716694eda19b789684b3b2458e6c23a529c4a0",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.intro"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "Value Definitions",
+      "level": 3,
+      "text_sha256": "c12d4a311f89b2c8ec631b2069b0fb52744402f82f936324dd21baa15a51524c",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.values"
+        ]
+      }
+    },
+    {
+      "id": "declaring-a-list-item",
+      "title": "Declaring a List Item",
+      "level": 2,
+      "text_sha256": "b4e889f51b5596d241a331bcf555d7dfdfed73480e88e68f2866f88b501707bc",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.declaring-a-list-item"
+        ]
+      }
+    },
+    {
+      "id": "markers",
+      "title": "Markers",
+      "level": 2,
+      "text_sha256": "8604d98b646e36287dd3e350ac6475b8ba41b38c81de7224ddb3fce1084cb458",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.markers"
+        ]
+      }
+    },
+    {
+      "id": "marker-pseudo",
+      "title": "The ''::marker'' Pseudo-Element",
+      "level": 3,
+      "text_sha256": "1ae424412c67de58936936abfb9cb5873206c3697ccc67128f73b9828df3353f",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.marker-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "marker-properties",
+      "title": "Properties Applying to ''::marker''",
+      "level": 4,
+      "text_sha256": "4bae7c53fbb69175563fcd3c400a80d5576f1f6a8380ea7afd203c5797a62c07",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.marker-properties"
+        ]
+      }
+    },
+    {
+      "id": "content-property",
+      "title": "Generating Marker Contents",
+      "level": 3,
+      "text_sha256": "0b4917948bc808cb7e2f267daa358cd92444bf5f6266e4115ba8e337c376273c",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.content-property"
+        ]
+      }
+    },
+    {
+      "id": "image-markers",
+      "title": "Image Markers: the 'list-style-image' property",
+      "level": 3,
+      "text_sha256": "272b6ceb43de7e34ee4f8f636bef4466cde07cf21cdc120f1e40beb045857246",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.image-markers"
+        ]
+      }
+    },
+    {
+      "id": "text-markers",
+      "title": "Text-based Markers: the 'list-style-type' property",
+      "level": 3,
+      "text_sha256": "3bf53be75d5acd19c37d0e636cb8cd650ef5095ab4a65536e1303809f057db20",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.text-markers"
+        ]
+      }
+    },
+    {
+      "id": "list-style-position-property",
+      "title": "Positioning Markers: The 'list-style-position' property",
+      "level": 3,
+      "text_sha256": "b8105992d5f7be99c3e23358030618ce5e26406027f04da6ff3506baac4fabc4",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.list-style-position-property"
+        ]
+      }
+    },
+    {
+      "id": "list-style-property",
+      "title": "Styling Markers: the 'list-style' shorthand property",
+      "level": 3,
+      "text_sha256": "f038f502cadf5827b608c8e3d0773754e0e5685303cd649973abca880ae6bb1d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.list-style-property"
+        ]
+      }
+    },
+    {
+      "id": "marker-side",
+      "title": "The 'marker-side' property",
+      "level": 3,
+      "text_sha256": "e7c09c695e539775d945701d99434fef527dbe8589ed7c69c7acd1fd965098a9",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.marker-side"
+        ]
+      }
+    },
+    {
+      "id": "auto-numbering",
+      "title": "Automatic Numbering With Counters",
+      "level": 2,
+      "text_sha256": "5c5f73a2181838c1c8caa6d7714a2271723decc76d21b12884ab818cef4b85bc",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.auto-numbering"
+        ]
+      }
+    },
+    {
+      "id": "counter-reset",
+      "title": "Creating Counters: the 'counter-reset' property",
+      "level": 3,
+      "text_sha256": "541ecbe080d21ba1403eb9942afd23a01d86a5483da1ddb9438930b4cbcf1bf2",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.counter-reset"
+        ]
+      }
+    },
+    {
+      "id": "increment-set",
+      "title": "Manipulating Counter Values: the 'counter-increment' and 'counter-set' properties",
+      "level": 3,
+      "text_sha256": "01db632be78e488b706120fdddb35e955b979fc09093aa4dab01a4b81c869ef8",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.increment-set"
+        ]
+      }
+    },
+    {
+      "id": "nested-counters",
+      "title": "Nested Counters and Scope",
+      "level": 3,
+      "text_sha256": "3663e75804c28997c66800e162af8c531ca0757445e18ebcfd3847172c7d1af6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.nested-counters"
+        ]
+      }
+    },
+    {
+      "id": "creating-counters",
+      "title": "Creating and Inheriting Counters",
+      "level": 3,
+      "text_sha256": "549c975dbcc42b4a0da63a2757400a9da0b9e84623c1c7f5bcf948c1e3b4b7ae",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.creating-counters"
+        ]
+      }
+    },
+    {
+      "id": "inheriting-counters",
+      "title": "Inheriting Counters",
+      "level": 4,
+      "text_sha256": "98e5ce71572863d5662d2ada5410189013b120c90cacca7515142ede526ddcf4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.inheriting-counters"
+        ]
+      }
+    },
+    {
+      "id": "instantiating-counters",
+      "title": "Instantiating Counters",
+      "level": 4,
+      "text_sha256": "e706c7c4f80f8fe50f9896892395ef16059615803af28cc73f878a386c27356d",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.instantiating-counters"
+        ]
+      }
+    },
+    {
+      "id": "counters-without-boxes",
+      "title": "Counters in elements that do not generate boxes",
+      "level": 3,
+      "text_sha256": "1907e291241e504415edbb5f8521ee07f332f7a3bad150d5321958e3ec502dcb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.counters-without-boxes"
+        ]
+      }
+    },
+    {
+      "id": "list-item-counter",
+      "title": "The Implicit ''list-item'' Counter",
+      "level": 3,
+      "text_sha256": "fa4e7e105831b5e928000042ce8e485fb9fc57dde7c8942969f4e6c2a3abb764",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.list-item-counter"
+        ]
+      }
+    },
+    {
+      "id": "counter-functions",
+      "title": "Outputting Counters: the ''counter()'' and ''counters()'' functions",
+      "level": 3,
+      "text_sha256": "3942f96c5c257743459d4650abe3e7dcac48620dcd666ef4cabd0677a9c84b6f",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.counter-functions"
+        ]
+      }
+    },
+    {
+      "id": "ua-stylesheet",
+      "title": "Appendix A: Sample Style Sheet For HTML",
+      "level": 2,
+      "text_sha256": "44b460b243c4a6771e178b0c419652503918968ac7e9c47b26ef2735e15be9cf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.ua-stylesheet"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "083291431e11b805e7da774de5c4041aca90fafb068b80b761175f686e0a7c46",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e251ce7e8e99ca49cf86f446d7380b6d347a5f60e4322e370c8066d790088a97",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20200709",
+      "title": "Changes since the 9 July 2020 WD",
+      "level": 3,
+      "text_sha256": "3c5f9bcab846b04155357dd71fd7a668667c68368a1a51c2f51b0fbdd065d566",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.changes-20200709"
+        ]
+      }
+    },
+    {
+      "id": "changes-20190817",
+      "title": "Changes since the 17 August 2019 WD",
+      "level": 3,
+      "text_sha256": "cb17f41d83297cc1577e2c10bdf63567bbb6145e8fae17483df5a0d7d11cb3ef",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.changes-20190817"
+        ]
+      }
+    },
+    {
+      "id": "changes-20190425",
+      "title": "Changes since the 25 April 2019 WD",
+      "level": 3,
+      "text_sha256": "58d3e76d9438711daf5393a0754d08e4a4fe267985ebecd36387fe0a35fd8ab7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.changes-20190425"
+        ]
+      }
+    },
+    {
+      "id": "changes-20140320",
+      "title": "Changes since the 20 March 2014 WD",
+      "level": 3,
+      "text_sha256": "6f0d66a7dabd9deb994d594fc6c9e896a6daead32f4ebb5409ff9056e6dae957",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.changes-20140320"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-css2",
+      "title": "Changes From CSS Level 2",
+      "level": 3,
+      "text_sha256": "5f467f5f8850d34c0b5dfce084c226fe7d3f88d1a7fe13bb6389573505c3ba1c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.changes-from-css2"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-lists-3-2026-counters.security"
+        ]
+      }
+    }
+  ]
+}

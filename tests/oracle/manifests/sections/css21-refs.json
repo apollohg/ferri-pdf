@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-refs",
+  "sections": [
+    {
+      "id": "q20.0",
+      "title": "Appendix B. Bibliography",
+      "level": 1,
+      "text_sha256": "ff5a7e6be1119fed17f3463ea89177d6af3208b0c1edfe3c934299c1ee6bd54e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-refs.q20-0"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "B.1 Normative references",
+      "level": 2,
+      "text_sha256": "8f5a86b30918fee2616f108e338f28ff2c6489045dda391647cf23d2634ffa29",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-refs.import-2f01cd25cb19",
+          "css21-refs.import-b85f5ec2caa9",
+          "css21-refs.import-218d99f0a05a",
+          "css21-refs.import-763bfc802abe",
+          "css21-refs.import-75ae632cf8b1",
+          "css21-refs.import-0ef0e4186d70",
+          "css21-refs.import-ed6dc6acb807",
+          "css21-refs.import-9fe9dfeb5316",
+          "css21-refs.import-55642eec8900",
+          "css21-refs.import-06485696de41"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "B.2 Informative references",
+      "level": 2,
+      "text_sha256": "b4114bb72ae499291840f56577b74252142a21687a4a5c32b82ab85284677af3",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-refs.informative"
+        ]
+      }
+    }
+  ]
+}

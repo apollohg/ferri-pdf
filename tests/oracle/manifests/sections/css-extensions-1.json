@@ -1,0 +1,330 @@
+{
+  "schema_version": 1,
+  "source_id": "css-extensions-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Extensions Module Level 1",
+      "level": 1,
+      "text_sha256": "c94fbd6da92bca3858d8c7d379644ca257ae91b049b08b6981b26c440cb7f7e6",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "0a61aa7f9b82c5b72692119cd547c17b42bd5be2c52eddcb8e99b6528d83ea91",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "bc63808176b0b3f13fce7b3204f05bafbb88d49f0540079d31238ade78db1118",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "0cf279276ff42bb5d15b60c9286cb4692de98b967186b1b070dfb15be8d45007",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "8c724d95eb0b98c25b2be7a8d8b5b51b71f0a015b913bf87875d4f63eadc95b9",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "extension-name",
+      "title": "2. Extension Names",
+      "level": 2,
+      "text_sha256": "a9f339ddc39f791bb366f335f0103e8031f0e99b2727e51f1794de101c22a391",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.extension-name"
+        ]
+      }
+    },
+    {
+      "id": "custom-selectors",
+      "title": "3. Custom Selectors",
+      "level": 2,
+      "text_sha256": "18c0611c8c2d0bde003aa4db151b97a0dc02b7409f49c5103210a95a15125f6f",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.custom-selectors"
+        ]
+      }
+    },
+    {
+      "id": "script-custom-selectors",
+      "title": "3.1. Script-based Custom Selectors",
+      "level": 3,
+      "text_sha256": "9778aaf34211009eb3941a2eed9f0ff0eb68e5a9f902e1d0958873f62af8eda3",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.script-custom-selectors"
+        ]
+      }
+    },
+    {
+      "id": "custom-selectors-cssom",
+      "title": "3.2. CSSOM",
+      "level": 3,
+      "text_sha256": "1b235dce2c1c7503b201fb7402c4d705a8749296ce581892e19d6cecbc06ac00",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.custom-selectors-cssom"
+        ]
+      }
+    },
+    {
+      "id": "custom-property",
+      "title": "4. Custom Properties",
+      "level": 2,
+      "text_sha256": "ae3ada4882b13738dea359413b1f99860d8a974a36976574db64763dcec10bc0",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.custom-property"
+        ]
+      }
+    },
+    {
+      "id": "custom-functions",
+      "title": "5. Custom Functions",
+      "level": 2,
+      "text_sha256": "7bc69a772cae7eaf62d3abe20c6fcf006e2cd1d9239d0de3f9a107754b4179b5",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.custom-functions"
+        ]
+      }
+    },
+    {
+      "id": "custom-combinators",
+      "title": "6. Custom Selector Combinators",
+      "level": 2,
+      "text_sha256": "a1315bb8c3ef83ad43700ab58682268651a1c9870f9274661e545f11d9f49e55",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.custom-combinators"
+        ]
+      }
+    },
+    {
+      "id": "custom-atrules",
+      "title": "7. Custom At-Rules",
+      "level": 2,
+      "text_sha256": "4999534c7ac0ad36705a29348747c217362ffd11cebc8191f3ddd643f9fef57a",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.custom-atrules"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.security"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.w3c-conventions"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.w3c-conformance-classes"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.w3c-partial"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.w3c-testing"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "d12c5f8de998edffb7dded2709040f48b8eb7fd66e8b3195ce2f11613f1a34c5",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "9343be5402382005e26e21c3fa02efeafe180d808aa16bdcb1ece2e64180a445",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "4ea1689ba1f5d092efcbe46f940aa2ecf16a60ca71f7389643f0dd93d3a63307",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "cdc03789ca36e838f2e4490f260a6008f50806df2bb7c9a3a1f89bd15ecbd763",
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-extensions-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

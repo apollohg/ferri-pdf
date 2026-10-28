@@ -1,0 +1,825 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-2",
+  "sections": [
+    {
+      "id": "G78",
+      "title": "General Structure",
+      "level": 1,
+      "text_sha256": "4797bf06aa3f0265e4cdde36066f12b5d2d7f1a3b31ea282c9cac0ed2f46eaa3",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.g78"
+        ]
+      }
+    },
+    {
+      "id": "heading-ec07f5a57579",
+      "title": "2.1 Architectural Context",
+      "level": 2,
+      "text_sha256": "8872c5ca534eb5526cb7156deca5a469275626bc6124aea12548e72ecead45a2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-ec07f5a57579"
+        ]
+      }
+    },
+    {
+      "id": "heading-ffda87cbd7f1",
+      "title": "2.1.1 Basic Text Processes",
+      "level": 3,
+      "text_sha256": "133c211ba90e9bd89ff659f314984f612b3f3227ddadea061d581f29493fbd12",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-ffda87cbd7f1"
+        ]
+      }
+    },
+    {
+      "id": "heading-e6e007203f68",
+      "title": "2.1.2 Text Elements, Characters, and Text Processes",
+      "level": 3,
+      "text_sha256": "d47e10c20acc28a48088828dba49b457cc6ca91c9bb1729067e2c20a9b8727fc",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-e6e007203f68",
+          "unicode17-chapter-2.heading-e6e007203f68-clause-4445e40665f2"
+        ]
+      }
+    },
+    {
+      "id": "heading-5b7aa320c607",
+      "title": "2.1.3 Text Processes and Encoding",
+      "level": 3,
+      "text_sha256": "948ed3a09d49e14f6bc66565e5b82a9724bd16db836c69c0663d31ead67d710d",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-5b7aa320c607",
+          "unicode17-chapter-2.heading-5b7aa320c607-clause-050b87354d0e",
+          "unicode17-chapter-2.heading-5b7aa320c607-clause-2a97823bbeb8",
+          "unicode17-chapter-2.heading-5b7aa320c607-clause-7857f20ea86a"
+        ]
+      }
+    },
+    {
+      "id": "heading-a791caff3877",
+      "title": "2.2 Unicode Design Principles",
+      "level": 2,
+      "text_sha256": "536af6801c43b6504f7e0203222283be0ddf0bb70c98ab4a9f2e4405cba98fc6",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-a791caff3877"
+        ]
+      }
+    },
+    {
+      "id": "heading-7b4ab3feb033",
+      "title": "2.2.1 Universality",
+      "level": 3,
+      "text_sha256": "bb36e1e7eb2089ea24665e6f053d4eab86f3e2f40a1bbea0fc22642a422b26c0",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-7b4ab3feb033"
+        ]
+      }
+    },
+    {
+      "id": "heading-0296931c28bc",
+      "title": "2.2.2 Efficiency",
+      "level": 3,
+      "text_sha256": "66474b3cdb0b4e9a9eff0ad3ab45635ff960723f7859d693d7c3fcdc4bf25668",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-0296931c28bc"
+        ]
+      }
+    },
+    {
+      "id": "heading-bf0b0308eb1a",
+      "title": "2.2.3 Characters, Not Glyphs",
+      "level": 3,
+      "text_sha256": "c4af0299987a89ab086e1fa04f644268cf513f6ee7a124a40a173885cbdbb423",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-bf0b0308eb1a"
+        ]
+      }
+    },
+    {
+      "id": "heading-50037badbefe",
+      "title": "2.2.4 Semantics",
+      "level": 3,
+      "text_sha256": "0d01ebe64f478e03716a60e57342a42b69be87d1cd16347709ab093f6eb4365f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-50037badbefe",
+          "unicode17-chapter-2.heading-50037badbefe-clause-c14d45a6fd0d"
+        ]
+      }
+    },
+    {
+      "id": "heading-b90b242bd95b",
+      "title": "2.2.5 Plain Text",
+      "level": 3,
+      "text_sha256": "fbbd76171af9aa1c05d9d1d8fc7772b6d560f2c6355b97dc9ce07f7655627815",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-b90b242bd95b",
+          "unicode17-chapter-2.heading-b90b242bd95b-clause-f02526b09d80",
+          "unicode17-chapter-2.heading-b90b242bd95b-clause-1f532b09d558"
+        ]
+      }
+    },
+    {
+      "id": "heading-0955e949d60b",
+      "title": "2.2.6 Logical Order",
+      "level": 3,
+      "text_sha256": "595ce08a4162c2f495708a61d5bb24c70f9472c0b4da11539ea4ad54fcbf1410",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-0955e949d60b",
+          "unicode17-chapter-2.heading-0955e949d60b-clause-5bb6230dcc36",
+          "unicode17-chapter-2.heading-0955e949d60b-clause-7f4fdefeebc1"
+        ]
+      }
+    },
+    {
+      "id": "heading-5bbb74afcba8",
+      "title": "2.2.7 Unification",
+      "level": 3,
+      "text_sha256": "365f8074f3a73f5ad1008e3868599d3307b911fcb5c2a3bfd8b8b2ff1a2a8f59",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-5bbb74afcba8"
+        ]
+      }
+    },
+    {
+      "id": "heading-3a676747bd2b",
+      "title": "2.2.8 Dynamic Composition",
+      "level": 3,
+      "text_sha256": "8ab211092ddf875073e4225bc48da2b3654fcd05a257fffb2e1fa2feaf92cb97",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-3a676747bd2b"
+        ]
+      }
+    },
+    {
+      "id": "heading-aefc54387f7f",
+      "title": "2.2.9 Stability",
+      "level": 3,
+      "text_sha256": "cdec8d15a91cb68d0c49387aa5017d78e1e10d78274ad107b51ea3cfb403e87a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-aefc54387f7f",
+          "unicode17-chapter-2.heading-aefc54387f7f-clause-b0960b3e842e",
+          "unicode17-chapter-2.heading-aefc54387f7f-clause-c6e8ff0a8d26"
+        ]
+      }
+    },
+    {
+      "id": "heading-608acd829391",
+      "title": "2.2.10 Convertibility",
+      "level": 3,
+      "text_sha256": "91e9b405a0585d05650aa368cdb1f5dde9d6ed74b04d2e1bd241d4cb802fafbc",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-608acd829391",
+          "unicode17-chapter-2.heading-608acd829391-clause-47817bda3d41"
+        ]
+      }
+    },
+    {
+      "id": "heading-82e77c69b463",
+      "title": "2.3 Compatibility Characters",
+      "level": 2,
+      "text_sha256": "188f7eb2ecf461c97292aa92cae2429710d99d8bf57028bc4a1aa0f27a4b39bf",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-82e77c69b463",
+          "unicode17-chapter-2.heading-82e77c69b463-clause-62986ce05313",
+          "unicode17-chapter-2.heading-82e77c69b463-clause-d8eb2cc388bb"
+        ]
+      }
+    },
+    {
+      "id": "heading-ca13247a1e4b",
+      "title": "2.3.1 Compatibility Variants",
+      "level": 3,
+      "text_sha256": "46d3a6817c8521f48342ffb2d9560dcd62177fe0b08f556389b1f8e7af073e3d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-ca13247a1e4b"
+        ]
+      }
+    },
+    {
+      "id": "heading-c69c68f0b0d2",
+      "title": "2.3.2 Compatibility Decomposable Characters",
+      "level": 3,
+      "text_sha256": "8306018973e8598eaee740116695c2039d1f44130b1d25f9b92dd07efbd9cf5e",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-c69c68f0b0d2",
+          "unicode17-chapter-2.heading-c69c68f0b0d2-clause-02748eb35ebb"
+        ]
+      }
+    },
+    {
+      "id": "heading-1230c083e445",
+      "title": "2.4 Code Points and Characters",
+      "level": 2,
+      "text_sha256": "71a1c0c049ccba1cef33a36970320a00dbe60b2b5761443628638b9e6c095c7a",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-1230c083e445"
+        ]
+      }
+    },
+    {
+      "id": "heading-a248d85037ff",
+      "title": "2.4.1 Types of Code Points",
+      "level": 3,
+      "text_sha256": "7c62a3cf5afa33f8f30ba2f4f2d15009ae23616495e09acb653f0bd8a2315e12",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-a248d85037ff"
+        ]
+      }
+    },
+    {
+      "id": "heading-1950814ed817",
+      "title": "2.5 Encoding Forms",
+      "level": 2,
+      "text_sha256": "7bfaff902aa038efd296573f157dd9a040b29e629833dfe7a5e4c2eef3aa8502",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-1950814ed817",
+          "unicode17-chapter-2.heading-1950814ed817-clause-0c9cd793ce53",
+          "unicode17-chapter-2.heading-1950814ed817-clause-aa74dafb904f",
+          "unicode17-chapter-2.heading-1950814ed817-clause-209da4af9b83"
+        ]
+      }
+    },
+    {
+      "id": "heading-ec85f3e908eb",
+      "title": "2.5.1 UTF-32",
+      "level": 3,
+      "text_sha256": "78914287c4a444217d307a3b62a4374d229de86a7c536b43adb841a4a941cb67",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-ec85f3e908eb"
+        ]
+      }
+    },
+    {
+      "id": "heading-88b985d6232b",
+      "title": "2.5.2 UTF-16",
+      "level": 3,
+      "text_sha256": "94bf140dba3dd4fbf427b4c06c0836dbed43f94ba0c1327f020dd7f935c1a7ff",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-88b985d6232b"
+        ]
+      }
+    },
+    {
+      "id": "heading-8bf42f9ab0a1",
+      "title": "2.5.3 UTF-8",
+      "level": 3,
+      "text_sha256": "675e9feead1b6dd5eac07c5fe4dee8b8dc2bbb843dcbf0f4f51fd1cc3250174d",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-8bf42f9ab0a1",
+          "unicode17-chapter-2.heading-8bf42f9ab0a1-clause-b36c54bf8014",
+          "unicode17-chapter-2.heading-8bf42f9ab0a1-clause-c789d2aadecf",
+          "unicode17-chapter-2.heading-8bf42f9ab0a1-clause-dc6ae36596f1"
+        ]
+      }
+    },
+    {
+      "id": "heading-00ef1a603bd2",
+      "title": "2.6 Encoding Schemes",
+      "level": 2,
+      "text_sha256": "07e31c7470078a8d49b5cfbe8e000dec5fefd86f70ec9876ebf1204ead5b151b",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-00ef1a603bd2",
+          "unicode17-chapter-2.heading-00ef1a603bd2-clause-03dde4b5e498",
+          "unicode17-chapter-2.heading-00ef1a603bd2-clause-e9a3f5e8913f",
+          "unicode17-chapter-2.heading-00ef1a603bd2-clause-ebf90955d30a",
+          "unicode17-chapter-2.heading-00ef1a603bd2-clause-fff77524ec7d",
+          "unicode17-chapter-2.heading-00ef1a603bd2-clause-7481b41cb0d2"
+        ]
+      }
+    },
+    {
+      "id": "heading-cc668fc24543",
+      "title": "2.7 Unicode Strings",
+      "level": 2,
+      "text_sha256": "af1b579c0d5ceb9c94a9c2cb367bf02c76d275b7f98a3a9e4c839fe16fd26940",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-cc668fc24543",
+          "unicode17-chapter-2.heading-cc668fc24543-clause-f5767c9a04f2",
+          "unicode17-chapter-2.heading-cc668fc24543-clause-e1d0c7bd69d8"
+        ]
+      }
+    },
+    {
+      "id": "heading-c3eb45597f50",
+      "title": "2.8 Unicode Allocation",
+      "level": 2,
+      "text_sha256": "b49d883df375921957a2c78f03744448fce7795cd617ed5a8dfc4f0b2e7ee00b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-c3eb45597f50"
+        ]
+      }
+    },
+    {
+      "id": "heading-1cfcefafecfb",
+      "title": "2.8.1 Planes",
+      "level": 3,
+      "text_sha256": "e9a4d9c1dacb854799d0c3091cd9d23269d493b7cdb96bf1d5a22567a793c677",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-1cfcefafecfb"
+        ]
+      }
+    },
+    {
+      "id": "heading-dc376dade1d7",
+      "title": "2.8.2 Allocation Areas and Blocks",
+      "level": 3,
+      "text_sha256": "62b774c06c71b8a8dd76515fb1e68033a4fb5d75c54423feabff0339b97e0244",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-dc376dade1d7",
+          "unicode17-chapter-2.heading-dc376dade1d7-clause-c2c4b310059b",
+          "unicode17-chapter-2.heading-dc376dade1d7-clause-8c8a1ddd9c33",
+          "unicode17-chapter-2.heading-dc376dade1d7-clause-86e287d9445b"
+        ]
+      }
+    },
+    {
+      "id": "heading-46ec613f8561",
+      "title": "2.8.3 Assignment of Code Points",
+      "level": 3,
+      "text_sha256": "7fd4d82f7728ace7eeb5a4b71c99d4928a60e9317ebd19403ca633f5778bf4be",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-46ec613f8561",
+          "unicode17-chapter-2.heading-46ec613f8561-clause-188ab7edd261"
+        ]
+      }
+    },
+    {
+      "id": "heading-923bb4f1ca81",
+      "title": "2.9 Details of Allocation",
+      "level": 2,
+      "text_sha256": "38f38efd119b852ab34ac7bc1353e9538ea51ad7175900b1769d2cc030248db2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-923bb4f1ca81"
+        ]
+      }
+    },
+    {
+      "id": "heading-7f02308070ea",
+      "title": "2.9.1 Plane 0 (BMP)",
+      "level": 3,
+      "text_sha256": "e2be5f3214e1cb78f65873f6dc14fda32296b08fef26c226f20caf3230d30794",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-7f02308070ea"
+        ]
+      }
+    },
+    {
+      "id": "heading-84aa4465680f",
+      "title": "2.9.2 Plane 1 (SMP)",
+      "level": 3,
+      "text_sha256": "2454cfb7175340400b91d264abf050f20d7a39f970cdc81fb515f07cadb83dfd",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-84aa4465680f"
+        ]
+      }
+    },
+    {
+      "id": "heading-74f6035f3108",
+      "title": "2.9.3 Plane 2 (SIP)",
+      "level": 3,
+      "text_sha256": "1f5b628acb3c9e1e1344c59eb132550d27baac1fd1b79120a84d6cbe783abb36",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-74f6035f3108",
+          "unicode17-chapter-2.heading-74f6035f3108-clause-1f5b628acb3c"
+        ]
+      }
+    },
+    {
+      "id": "heading-8af11ca9f219",
+      "title": "2.9.4 Plane 3 (TIP)",
+      "level": 3,
+      "text_sha256": "5b85d53c6bd7430cb2304aad71f1561d9a6f2d14f750fcaaf573af721256d733",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-8af11ca9f219"
+        ]
+      }
+    },
+    {
+      "id": "heading-16d7ecc6f581",
+      "title": "2.9.5 Other Planes",
+      "level": 3,
+      "text_sha256": "482ec5902cd2b7404a6c362fc7cb8ebdadf65a769827b2af64109620bd555789",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-16d7ecc6f581"
+        ]
+      }
+    },
+    {
+      "id": "heading-05bc3936fce0",
+      "title": "2.10 Writing Direction",
+      "level": 2,
+      "text_sha256": "d26b687f3f45f14df816f5b7119d415ea24ee1ea88c6cea4e12ae016a70c4aca",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-05bc3936fce0",
+          "unicode17-chapter-2.heading-05bc3936fce0-clause-c9d55ea3ab40"
+        ]
+      }
+    },
+    {
+      "id": "heading-ce8b24e3054a",
+      "title": "2.11 Combining Characters",
+      "level": 2,
+      "text_sha256": "39715c7dcafe9d79a9252f525d924a810974425c1ad7b022948b11ca307a6881",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-ce8b24e3054a"
+        ]
+      }
+    },
+    {
+      "id": "heading-c60d895be463",
+      "title": "2.11.1 Sequence of Base Characters and Combining Characters",
+      "level": 3,
+      "text_sha256": "e675d2e758e22435d4e19be5bc7a9826546d26dd171b8a3f838d9ebf08b47c3a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-c60d895be463"
+        ]
+      }
+    },
+    {
+      "id": "heading-0630c6453ee8",
+      "title": "2.11.2 Multiple Combining Characters",
+      "level": 3,
+      "text_sha256": "ab582a89d613497201779b627c85dcf01b1d2bedfb30d3e6706f479ca2733644",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-0630c6453ee8",
+          "unicode17-chapter-2.heading-0630c6453ee8-clause-2514062aee88",
+          "unicode17-chapter-2.heading-0630c6453ee8-clause-c2782fa1276d",
+          "unicode17-chapter-2.heading-0630c6453ee8-clause-32659fb19d1a"
+        ]
+      }
+    },
+    {
+      "id": "heading-5eef4c453a78",
+      "title": "2.11.3 Ligated Multiple Base Characters",
+      "level": 3,
+      "text_sha256": "e9d645fda0e8fce45fa3bd4f78ab465773e93ff821cf7a167e365c571ad1fd57",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-5eef4c453a78",
+          "unicode17-chapter-2.heading-5eef4c453a78-clause-14c5ad69ec5f"
+        ]
+      }
+    },
+    {
+      "id": "heading-21645abee434",
+      "title": "2.11.4 Exhibiting Nonspacing Marks in Isolation",
+      "level": 3,
+      "text_sha256": "c79751c9bb5c8d09a3bfc488c206979103fbaec9705f9ecfa6b12b704a74e86a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-21645abee434"
+        ]
+      }
+    },
+    {
+      "id": "heading-b15f6b3d8ec3",
+      "title": "2.11.5 “Characters” and Grapheme Clusters",
+      "level": 3,
+      "text_sha256": "d404261a4fd6949af0d817ece6c6e08fd8fb4b9cfef7ed92c227923037089fd9",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-b15f6b3d8ec3",
+          "unicode17-chapter-2.heading-b15f6b3d8ec3-clause-0f062005d343"
+        ]
+      }
+    },
+    {
+      "id": "heading-615b61e26dc0",
+      "title": "2.12 Equivalent Sequences",
+      "level": 2,
+      "text_sha256": "8dacb52f6235b5aab2852cdd1c9504f42090685d737466bfec1f04a00e0b787a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-615b61e26dc0",
+          "unicode17-chapter-2.heading-615b61e26dc0-clause-3dcc77012ab1",
+          "unicode17-chapter-2.heading-615b61e26dc0-clause-c508200a8f69"
+        ]
+      }
+    },
+    {
+      "id": "heading-a7f1e1f50832",
+      "title": "2.12.1 Normalization",
+      "level": 3,
+      "text_sha256": "61f98110a663cecbbfcb059003ab6de0b06ff1bba935f55d99563496b82afc5d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-a7f1e1f50832",
+          "unicode17-chapter-2.heading-a7f1e1f50832-clause-8a1578460143"
+        ]
+      }
+    },
+    {
+      "id": "heading-80c6672e2184",
+      "title": "2.12.2 Decompositions",
+      "level": 3,
+      "text_sha256": "44876182aba9d654f2d5dd34f381dda6ec5934e9c55dae677a3f1f37eedaa567",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-80c6672e2184",
+          "unicode17-chapter-2.heading-80c6672e2184-clause-2c433259fada",
+          "unicode17-chapter-2.heading-80c6672e2184-clause-97b06d7f904c"
+        ]
+      }
+    },
+    {
+      "id": "heading-f62bb2ef4cd7",
+      "title": "2.12.3 Non-decomposition of Certain Diacritics",
+      "level": 3,
+      "text_sha256": "d4084607000754418a87425d3609ba11360f0d2408cc40d81aedb4e1fb1dff5e",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-f62bb2ef4cd7",
+          "unicode17-chapter-2.heading-f62bb2ef4cd7-clause-128d87c4d276"
+        ]
+      }
+    },
+    {
+      "id": "heading-1487c93581cf",
+      "title": "2.13 Special Characters",
+      "level": 2,
+      "text_sha256": "4a0d0fd91a07e16089883b92265ed2e7a30d82a99719039217533dfc3f5bcab3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-1487c93581cf"
+        ]
+      }
+    },
+    {
+      "id": "heading-cc758f4c36e2",
+      "title": "2.13.1 Special Noncharacter Code Points",
+      "level": 3,
+      "text_sha256": "b8fb462eda67f6ae1191a852ccc79ca9f52b5d644b45e252efa466f08c3c97f4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-cc758f4c36e2"
+        ]
+      }
+    },
+    {
+      "id": "heading-f199bfabf638",
+      "title": "2.13.2 Byte Order Mark (BOM)",
+      "level": 3,
+      "text_sha256": "b0b367d55189c3e03902ab74f91a785493b282b2bd67f2abd0a6932d610640cc",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-f199bfabf638"
+        ]
+      }
+    },
+    {
+      "id": "heading-39d47bd06136",
+      "title": "2.13.3 Layout and Format Control Characters",
+      "level": 3,
+      "text_sha256": "0b9f360cf36c8feea8848a169c4c0bb54325cf9df8c4d325cb27bf6a0d13707b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-39d47bd06136"
+        ]
+      }
+    },
+    {
+      "id": "heading-aaeb31dd20ca",
+      "title": "2.13.4 The Replacement Character",
+      "level": 3,
+      "text_sha256": "9b9ecd435cb4b412a6d98a6e5fd74fd1bd96c9d4c02b10fc170cdc8fe6217175",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-aaeb31dd20ca"
+        ]
+      }
+    },
+    {
+      "id": "heading-70a62fe64f0b",
+      "title": "2.13.5 Control Codes",
+      "level": 3,
+      "text_sha256": "b086cd6dc4fea6c63b6f162139e744a4eadc92f0ea398e82fffa104af368d168",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-70a62fe64f0b",
+          "unicode17-chapter-2.heading-70a62fe64f0b-clause-b086cd6dc4fe"
+        ]
+      }
+    },
+    {
+      "id": "heading-a92842c5d9d4",
+      "title": "2.14 Conforming to the Unicode Standard",
+      "level": 2,
+      "text_sha256": "a39ced2dba0573d0c56c62a48109a080456677ca44d6d9e92565ea72ea3cb841",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-a92842c5d9d4",
+          "unicode17-chapter-2.heading-a92842c5d9d4-clause-eee3de48105b"
+        ]
+      }
+    },
+    {
+      "id": "heading-acb08419af7e",
+      "title": "2.14.1 Characteristics of Conformant Implementations",
+      "level": 3,
+      "text_sha256": "1772d73d512d4892f425de2015ba7aa5e130c193c8de0d86bb2f6af0775acca6",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-acb08419af7e",
+          "unicode17-chapter-2.heading-acb08419af7e-clause-a6061ca47dc6"
+        ]
+      }
+    },
+    {
+      "id": "heading-075ed49878f3",
+      "title": "2.14.2 Unacceptable Behavior",
+      "level": 3,
+      "text_sha256": "e06005efbe65f24aa10ceb0dcbbcf4d3668c058ca85fd49217f7fd66fc34efba",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-075ed49878f3",
+          "unicode17-chapter-2.heading-075ed49878f3-clause-d09b06506a23",
+          "unicode17-chapter-2.heading-075ed49878f3-clause-9eb7cbe6a681"
+        ]
+      }
+    },
+    {
+      "id": "heading-a303eb46a665",
+      "title": "2.14.3 Acceptable Behavior",
+      "level": 3,
+      "text_sha256": "f240b8e026e2fee53469b975c2e0f037f489290ee2c38894b0da76ab673d47c0",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-a303eb46a665",
+          "unicode17-chapter-2.heading-a303eb46a665-clause-df5e6d3cec6c",
+          "unicode17-chapter-2.heading-a303eb46a665-clause-168f2009f65a"
+        ]
+      }
+    },
+    {
+      "id": "heading-aa43ccc00373",
+      "title": "2.14.4 Supported Subsets",
+      "level": 3,
+      "text_sha256": "fa9b6303293b068de829efbfa82a58d5c894bb277b32eb69f55702114a2c37ec",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-2.heading-aa43ccc00373"
+        ]
+      }
+    }
+  ]
+}

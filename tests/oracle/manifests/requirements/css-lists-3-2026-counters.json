@@ -1,0 +1,805 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-lists-3-2026-counters.intro",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "f2ae4655636330f4d9f4d4525f716694eda19b789684b3b2458e6c23a529c4a0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.values",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "c12d4a311f89b2c8ec631b2069b0fb52744402f82f936324dd21baa15a51524c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.declaring-a-list-item",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "declaring-a-list-item"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Declaring a List Item.",
+      "locator": {
+        "section_id": "declaring-a-list-item",
+        "text_sha256": "b4e889f51b5596d241a331bcf555d7dfdfed73480e88e68f2866f88b501707bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.markers",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "markers"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Markers.",
+      "locator": {
+        "section_id": "markers",
+        "text_sha256": "8604d98b646e36287dd3e350ac6475b8ba41b38c81de7224ddb3fce1084cb458"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.marker-pseudo",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "marker-pseudo"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in The ''::marker'' Pseudo-Element.",
+      "locator": {
+        "section_id": "marker-pseudo",
+        "text_sha256": "1ae424412c67de58936936abfb9cb5873206c3697ccc67128f73b9828df3353f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.marker-properties",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "marker-properties"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Properties Applying to ''::marker''.",
+      "locator": {
+        "section_id": "marker-properties",
+        "text_sha256": "4bae7c53fbb69175563fcd3c400a80d5576f1f6a8380ea7afd203c5797a62c07"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.content-property",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "content-property"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Generating Marker Contents.",
+      "locator": {
+        "section_id": "content-property",
+        "text_sha256": "0b4917948bc808cb7e2f267daa358cd92444bf5f6266e4115ba8e337c376273c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.image-markers",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "image-markers"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Image Markers: the 'list-style-image' property.",
+      "locator": {
+        "section_id": "image-markers",
+        "text_sha256": "272b6ceb43de7e34ee4f8f636bef4466cde07cf21cdc120f1e40beb045857246"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.text-markers",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "text-markers"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Text-based Markers: the 'list-style-type' property.",
+      "locator": {
+        "section_id": "text-markers",
+        "text_sha256": "3bf53be75d5acd19c37d0e636cb8cd650ef5095ab4a65536e1303809f057db20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.list-style-position-property",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "list-style-position-property"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Positioning Markers: The 'list-style-position' property.",
+      "locator": {
+        "section_id": "list-style-position-property",
+        "text_sha256": "b8105992d5f7be99c3e23358030618ce5e26406027f04da6ff3506baac4fabc4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.list-style-property",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "list-style-property"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Styling Markers: the 'list-style' shorthand property.",
+      "locator": {
+        "section_id": "list-style-property",
+        "text_sha256": "f038f502cadf5827b608c8e3d0773754e0e5685303cd649973abca880ae6bb1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.marker-side",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "marker-side"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in The 'marker-side' property.",
+      "locator": {
+        "section_id": "marker-side",
+        "text_sha256": "e7c09c695e539775d945701d99434fef527dbe8589ed7c69c7acd1fd965098a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.auto-numbering",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "auto-numbering"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Automatic Numbering With Counters.",
+      "locator": {
+        "section_id": "auto-numbering",
+        "text_sha256": "5c5f73a2181838c1c8caa6d7714a2271723decc76d21b12884ab818cef4b85bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.counter-reset",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "counter-reset"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Creating Counters: the 'counter-reset' property.",
+      "locator": {
+        "section_id": "counter-reset",
+        "text_sha256": "541ecbe080d21ba1403eb9942afd23a01d86a5483da1ddb9438930b4cbcf1bf2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.increment-set",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "increment-set"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Manipulating Counter Values: the 'counter-increment' and 'counter-set' properties.",
+      "locator": {
+        "section_id": "increment-set",
+        "text_sha256": "01db632be78e488b706120fdddb35e955b979fc09093aa4dab01a4b81c869ef8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.nested-counters",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "nested-counters"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Nested Counters and Scope.",
+      "locator": {
+        "section_id": "nested-counters",
+        "text_sha256": "3663e75804c28997c66800e162af8c531ca0757445e18ebcfd3847172c7d1af6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.creating-counters",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "creating-counters"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Creating and Inheriting Counters.",
+      "locator": {
+        "section_id": "creating-counters",
+        "text_sha256": "549c975dbcc42b4a0da63a2757400a9da0b9e84623c1c7f5bcf948c1e3b4b7ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.inheriting-counters",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "inheriting-counters"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Inheriting Counters.",
+      "locator": {
+        "section_id": "inheriting-counters",
+        "text_sha256": "98e5ce71572863d5662d2ada5410189013b120c90cacca7515142ede526ddcf4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.instantiating-counters",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "instantiating-counters"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Instantiating Counters.",
+      "locator": {
+        "section_id": "instantiating-counters",
+        "text_sha256": "e706c7c4f80f8fe50f9896892395ef16059615803af28cc73f878a386c27356d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.counters-without-boxes",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "counters-without-boxes"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Counters in elements that do not generate boxes.",
+      "locator": {
+        "section_id": "counters-without-boxes",
+        "text_sha256": "1907e291241e504415edbb5f8521ee07f332f7a3bad150d5321958e3ec502dcb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.list-item-counter",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "list-item-counter"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in The Implicit ''list-item'' Counter.",
+      "locator": {
+        "section_id": "list-item-counter",
+        "text_sha256": "fa4e7e105831b5e928000042ce8e485fb9fc57dde7c8942969f4e6c2a3abb764"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.counter-functions",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "counter-functions"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Outputting Counters: the ''counter()'' and ''counters()'' functions.",
+      "locator": {
+        "section_id": "counter-functions",
+        "text_sha256": "3942f96c5c257743459d4650abe3e7dcac48620dcd666ef4cabd0677a9c84b6f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.ua-stylesheet",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "ua-stylesheet"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Appendix A: Sample Style Sheet For HTML.",
+      "locator": {
+        "section_id": "ua-stylesheet",
+        "text_sha256": "44b460b243c4a6771e178b0c419652503918968ac7e9c47b26ef2735e15be9cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.acknowledgments",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "083291431e11b805e7da774de5c4041aca90fafb068b80b761175f686e0a7c46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.changes",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e251ce7e8e99ca49cf86f446d7380b6d347a5f60e4322e370c8066d790088a97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.changes-20200709",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "changes-20200709"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Changes since the 9 July 2020 WD.",
+      "locator": {
+        "section_id": "changes-20200709",
+        "text_sha256": "3c5f9bcab846b04155357dd71fd7a668667c68368a1a51c2f51b0fbdd065d566"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.changes-20190817",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "changes-20190817"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Changes since the 17 August 2019 WD.",
+      "locator": {
+        "section_id": "changes-20190817",
+        "text_sha256": "cb17f41d83297cc1577e2c10bdf63567bbb6145e8fae17483df5a0d7d11cb3ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.changes-20190425",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "changes-20190425"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Changes since the 25 April 2019 WD.",
+      "locator": {
+        "section_id": "changes-20190425",
+        "text_sha256": "58d3e76d9438711daf5393a0754d08e4a4fe267985ebecd36387fe0a35fd8ab7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.changes-20140320",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "changes-20140320"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Changes since the 20 March 2014 WD.",
+      "locator": {
+        "section_id": "changes-20140320",
+        "text_sha256": "6f0d66a7dabd9deb994d594fc6c9e896a6daead32f4ebb5409ff9056e6dae957"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.changes-from-css2",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "changes-from-css2"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Changes From CSS Level 2.",
+      "locator": {
+        "section_id": "changes-from-css2",
+        "text_sha256": "5f467f5f8850d34c0b5dfce084c226fe7d3f88d1a7fe13bb6389573505c3ba1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.privacy",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-lists-3-2026-counters.security",
+      "family": "css-lists-3",
+      "source_id": "css-lists-3-2026-counters",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the static-rendering definitions and algorithms in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Pinned updated source; unreviewed obligations remain mandatory rather than excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

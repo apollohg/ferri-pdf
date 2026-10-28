@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-generate",
+  "sections": [
+    {
+      "id": "x1",
+      "title": "12 Generated content, automatic numbering, and lists",
+      "level": 1,
+      "text_sha256": "f5aed9fee002b50198ad5acf5c83e8f0d36a6690fb66e76dd9b4ede3ab78c6e0",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.x1",
+          "css21-generate.x1-clause-5b4abe286b45"
+        ]
+      }
+    },
+    {
+      "id": "x5",
+      "title": "12.1 The :before and :after pseudo-elements",
+      "level": 2,
+      "text_sha256": "81d6c5529c759d051540d9053f6dd9c10e63086274542071f67e26cfd13f4224",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.x5",
+          "css21-generate.x5-clause-972f7aeda5d2",
+          "css21-generate.x5-clause-817a37477f2f"
+        ]
+      }
+    },
+    {
+      "id": "content",
+      "title": "12.2 The 'content' property",
+      "level": 2,
+      "text_sha256": "d77f78175c40aee03b5c6effe9bae50b5d4772e47b352d0768236c81b7bf80f1",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.content",
+          "css21-generate.content-clause-9db0d2b0b6ca",
+          "css21-generate.content-clause-cca2516ebb1d",
+          "css21-generate.content-clause-cf29e4ca1228",
+          "css21-generate.content-clause-b289ed5e8be7",
+          "css21-generate.content-clause-33e13bc71223",
+          "css21-generate.content-clause-75dba8f0c733"
+        ]
+      }
+    },
+    {
+      "id": "quotes",
+      "title": "12.3 Quotation marks",
+      "level": 2,
+      "text_sha256": "ff7059effc1ee0af7f42a985904213d55fb917eab4dc42009ba60563251dabd9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.quotes",
+          "css21-generate.quotes-clause-ff7059effc1e"
+        ]
+      }
+    },
+    {
+      "id": "quotes-specify",
+      "title": "12.3.1 Specifying quotes with the 'quotes' property",
+      "level": 3,
+      "text_sha256": "dac7180919234cd40909f1920613c13b4f0a9a1d4780dbfcb22bbac17dc80ec7",
+      "clause_count": 81,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.quotes-specify",
+          "css21-generate.quotes-specify-clause-631b2f286d13",
+          "css21-generate.quotes-specify-clause-cca2516ebb1d",
+          "css21-generate.quotes-specify-clause-138a04418cf8",
+          "css21-generate.quotes-specify-clause-5a2630ad3ca9",
+          "css21-generate.quotes-specify-clause-c6f18e4846fe"
+        ]
+      }
+    },
+    {
+      "id": "quotes-insert",
+      "title": "12.3.2 Inserting quotes with the 'content' property",
+      "level": 3,
+      "text_sha256": "b23fa6893447cf5000f83b16a5b9f19a2367e7e110995ec03ae64e7b949e4796",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.quotes-insert",
+          "css21-generate.quotes-insert-clause-959e8c921cef"
+        ]
+      }
+    },
+    {
+      "id": "counters",
+      "title": "12.4 Automatic counters and numbering",
+      "level": 2,
+      "text_sha256": "a0cba478554c43c4a9d662e7515705b078b15cf0a34590e512f4624b4cf9b2cc",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.counters",
+          "css21-generate.counters-clause-23872c683c1b",
+          "css21-generate.counters-clause-cca2516ebb1d",
+          "css21-generate.counters-clause-f950980611ae",
+          "css21-generate.counters-clause-b7ea3fa2a644",
+          "css21-generate.counters-clause-41fda12124dd",
+          "css21-generate.counters-clause-48da59c34493"
+        ]
+      }
+    },
+    {
+      "id": "scope",
+      "title": "12.4.1 Nested counters and scope",
+      "level": 3,
+      "text_sha256": "b63b4f377a76f96d406f8f9294fa7a6534af1d27824be99132ed7f5e60ae703a",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.scope",
+          "css21-generate.scope-clause-0fdd7f2612aa"
+        ]
+      }
+    },
+    {
+      "id": "counter-styles",
+      "title": "12.4.2 Counter styles",
+      "level": 3,
+      "text_sha256": "e92487b35904963ffb8c7c7266d5fb663d2bc03839e3426b6a811f9fe40bcdcd",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.counter-styles"
+        ]
+      }
+    },
+    {
+      "id": "undisplayed-counters",
+      "title": "12.4.3 Counters in elements with 'display: none'",
+      "level": 3,
+      "text_sha256": "10a34d867bc7f8176c635ac5fc7b103090f672378b26b6135481e0f4e9acffef",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.undisplayed-counters"
+        ]
+      }
+    },
+    {
+      "id": "lists",
+      "title": "12.5 Lists",
+      "level": 2,
+      "text_sha256": "4eb77d2ad94906b45e5d9dc62c439b2108f04e4744dc9285ed176961b3befc03",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.lists"
+        ]
+      }
+    },
+    {
+      "id": "list-style",
+      "title": "12.5.1 Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties",
+      "level": 3,
+      "text_sha256": "e1453cd639b0b878df2a08fa0667199d3226820c8c3c3329750673980aebc659",
+      "clause_count": 134,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-generate.list-style",
+          "css21-generate.list-style-clause-d030794c7c81",
+          "css21-generate.list-style-clause-cca2516ebb1d",
+          "css21-generate.list-style-clause-f4dec12b9a83",
+          "css21-generate.list-style-clause-72365641e6d2",
+          "css21-generate.list-style-clause-ca093cb17e17",
+          "css21-generate.list-style-clause-9613584439b5",
+          "css21-generate.list-style-clause-fd49d69af837",
+          "css21-generate.list-style-clause-9d5ae3a381a9",
+          "css21-generate.list-style-clause-c6ab495399ca",
+          "css21-generate.list-style-clause-721a24a20a01",
+          "css21-generate.list-style-clause-2df139a43297",
+          "css21-generate.list-style-clause-ca6d76615d9e",
+          "css21-generate.list-style-clause-e0f8c024dc4a",
+          "css21-generate.list-style-clause-264d68edad36",
+          "css21-generate.list-style-clause-fac2c1c8f04c",
+          "css21-generate.list-style-clause-cf5c727db9ea",
+          "css21-generate.list-style-clause-f3893cbc2c39"
+        ]
+      }
+    }
+  ]
+}

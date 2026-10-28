@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-otvaroverview",
+  "sections": [
+    {
+      "id": "opentype-font-variations-overview",
+      "title": "OpenType Font Variations Overview",
+      "level": 1,
+      "text_sha256": "d4e9eccdadfe9ceade06b7d53e4ae5cc2ae457ecb89b86b6a5d90278c9262ea6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.opentype-font-variations-overview"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "Introduction",
+      "level": 2,
+      "text_sha256": "2759335f3b74bb7c091268be1dc99ddb10b3db7a00b0deca0982df6c7bc00be1",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.introduction",
+          "opentype-otvaroverview.introduction-clause-f821c4c7da10",
+          "opentype-otvaroverview.introduction-clause-f73710ec8c1f",
+          "opentype-otvaroverview.introduction-clause-e0ed388a836a",
+          "opentype-otvaroverview.introduction-clause-aeeba5984f02"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "Terminology",
+      "level": 2,
+      "text_sha256": "36e0a85d4306ac825cc3035c52ccac10643fa65752295e946b7b3a161efde30c",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.terminology",
+          "opentype-otvaroverview.terminology-clause-da9f27e5ab86"
+        ]
+      }
+    },
+    {
+      "id": "variation-space-default-instances-and-adjustment-deltas",
+      "title": "Variation Space, Default Instances and Adjustment Deltas",
+      "level": 2,
+      "text_sha256": "1d4a923c2b29893e033180f2d5a783a1c6459c4f73a2ba25d64c1b5e537b7648",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.variation-space-default-instances-and-adjustment-deltas",
+          "opentype-otvaroverview.variation-space-default-instances-and-adjustment-deltas-clause-1da03f29cee3",
+          "opentype-otvaroverview.variation-space-default-instances-and-adjustment-deltas-clause-1ab40b351bd7"
+        ]
+      }
+    },
+    {
+      "id": "coordinate-scales-and-normalization",
+      "title": "Coordinate Scales and Normalization",
+      "level": 2,
+      "text_sha256": "c7d46506d305a6f6d3a372e8e950a22028caef2bf9a1661803e957ac9fa755c5",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.coordinate-scales-and-normalization",
+          "opentype-otvaroverview.coordinate-scales-and-normalization-clause-ec30b08654eb",
+          "opentype-otvaroverview.coordinate-scales-and-normalization-clause-3a3e85695dec",
+          "opentype-otvaroverview.coordinate-scales-and-normalization-clause-4f2f616c4639",
+          "opentype-otvaroverview.coordinate-scales-and-normalization-clause-d7e1b28d2365",
+          "opentype-otvaroverview.coordinate-scales-and-normalization-clause-448971ca7e84",
+          "opentype-otvaroverview.coordinate-scales-and-normalization-clause-0e0a00307fe2",
+          "opentype-otvaroverview.coordinate-scales-and-normalization-clause-00f1a2b1774e",
+          "opentype-otvaroverview.coordinate-scales-and-normalization-clause-2011f15cdb1b",
+          "opentype-otvaroverview.coordinate-scales-and-normalization-clause-da38b9ba8d48",
+          "opentype-otvaroverview.coordinate-scales-and-normalization-clause-b37e8f249628"
+        ]
+      }
+    },
+    {
+      "id": "avar-normalization-example",
+      "title": "'avar' normalization example",
+      "level": 3,
+      "text_sha256": "fca537391606762454e84213de8725ef4bd11eb37b821d78d267d2f2b6a1f897",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.avar-normalization-example",
+          "opentype-otvaroverview.avar-normalization-example-clause-cc641eb5a08f",
+          "opentype-otvaroverview.avar-normalization-example-clause-6e0cac28ccdb"
+        ]
+      }
+    },
+    {
+      "id": "variation-data",
+      "title": "Variation Data",
+      "level": 2,
+      "text_sha256": "ddfb061cc11e2171f84753a5b0a8fa9c26448477e6ec8080dbfcfb2818e65b60",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.variation-data",
+          "opentype-otvaroverview.variation-data-clause-c7491819baa6",
+          "opentype-otvaroverview.variation-data-clause-57b30688fc1e",
+          "opentype-otvaroverview.variation-data-clause-96669a3c9fed",
+          "opentype-otvaroverview.variation-data-clause-172810d13739"
+        ]
+      }
+    },
+    {
+      "id": "variation-data-tables-and-miscellaneous-requirements",
+      "title": "Variation Data Tables and Miscellaneous Requirements",
+      "level": 2,
+      "text_sha256": "a9ef1887b736932640be07e56e63c26bbcb021f6a885022233686670c9bd1fb2",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements",
+          "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-969f619225fb",
+          "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-b99ee8222e19",
+          "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-0c9f0289e312",
+          "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-511ae3ba115c",
+          "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-3c9772bad7cd",
+          "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-775be760c614",
+          "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-72650fc56b99",
+          "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-47b6e4ff1391",
+          "opentype-otvaroverview.variation-data-tables-and-miscellaneous-requirements-clause-4a481abff8d7"
+        ]
+      }
+    },
+    {
+      "id": "algorithm-for-interpolation-of-instance-values",
+      "title": "Algorithm for Interpolation of Instance Values",
+      "level": 2,
+      "text_sha256": "b6797dc6acb62655fb2d68ec7fd32da8b220c285df90ceb2679766d553b75a98",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values",
+          "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-890208dea216",
+          "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-cb5e262f3e60",
+          "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-657b4b649556",
+          "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-280133921505",
+          "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-724a0627acad",
+          "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-0813a0c345fd",
+          "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-755ceb187720",
+          "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-5c2d463b1334",
+          "opentype-otvaroverview.algorithm-for-interpolation-of-instance-values-clause-7106047d9578"
+        ]
+      }
+    },
+    {
+      "id": "interpolation-example",
+      "title": "Interpolation Example",
+      "level": 2,
+      "text_sha256": "5b535c64701950db418f5d8988877097eca1d19a210b7d4229edd4492b59bffe",
+      "clause_count": 108,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.interpolation-example",
+          "opentype-otvaroverview.interpolation-example-clause-a02446359947"
+        ]
+      }
+    },
+    {
+      "id": "dynamic-generation-of-static-instance-fonts",
+      "title": "Dynamic Generation of Static Instance Fonts",
+      "level": 2,
+      "text_sha256": "73e9c9bade08a3fce27e218d819a1b0b928160a1ef093e95b88d00dcbdbbd2b8",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.dynamic-generation-of-static-instance-fonts",
+          "opentype-otvaroverview.dynamic-generation-of-static-instance-fonts-clause-a5f2761ecc25",
+          "opentype-otvaroverview.dynamic-generation-of-static-instance-fonts-clause-4c52ea5cb4b5",
+          "opentype-otvaroverview.dynamic-generation-of-static-instance-fonts-clause-fc03bccbf9b7"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "43e7cf8f51a2b5e93dfb8d7b5645db755d4582be9ca7244d88582d984252c045",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-otvaroverview.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

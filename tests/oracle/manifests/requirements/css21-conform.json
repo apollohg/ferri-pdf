@@ -1,0 +1,726 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-conform.q3-0",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "q3.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 3 Conformance: Requirements and Recommendations.",
+      "locator": {
+        "section_id": "q3.0",
+        "text_sha256": "599bcf5249830f62d9d2aad7a5573d8f643a04faeb2e9aa9a17d8b8e94abf0fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-conform.defs",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "defs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Definitions.",
+      "locator": {
+        "section_id": "defs",
+        "text_sha256": "b833b2dcb50d82d5689225e63960ea4022a1381cd0f8e33b515e4f1fb94bd8bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-conform.defs-clause-b54003d3609d",
+        "css21-conform.defs-clause-7bcf75d593a8",
+        "css21-conform.defs-clause-5e2c9e16464f",
+        "css21-conform.defs-clause-3eaab11b1506",
+        "css21-conform.defs-clause-c4569b26d27a",
+        "css21-conform.defs-clause-7150b6a1b2c5",
+        "css21-conform.defs-clause-3e089c95a1ac",
+        "css21-conform.defs-clause-1464d39d09c8",
+        "css21-conform.defs-clause-186e9886fbed",
+        "css21-conform.defs-clause-8bfba142d8e0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-conform.defs-clause-b54003d3609d",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "defs"
+      ],
+      "behaviour": "Definitions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "defs",
+        "clause_index": 0,
+        "clause_sha256": "b54003d3609d55822de9eac1d61c71c5ebc7f4b492b3ce9ce750508f30ee01d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.defs-clause-7bcf75d593a8",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "defs"
+      ],
+      "behaviour": "Definitions — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "defs",
+        "clause_index": 2,
+        "clause_sha256": "7bcf75d593a878f16c64c56e45af2c14625bfbc259f905c97ac4f140eae02a9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.defs-clause-5e2c9e16464f",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "defs"
+      ],
+      "behaviour": "Definitions — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "defs",
+        "clause_index": 13,
+        "clause_sha256": "5e2c9e16464fa91b6703ab45980159ea530d23504119d89eb2a05f764f48a915"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.defs-clause-3eaab11b1506",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "defs"
+      ],
+      "behaviour": "Definitions — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "defs",
+        "clause_index": 19,
+        "clause_sha256": "3eaab11b150690a6da7c44174adf4512f8ce09f948d7f6c6efacc7b900c5e5e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.defs-clause-c4569b26d27a",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "defs"
+      ],
+      "behaviour": "Definitions — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "defs",
+        "clause_index": 21,
+        "clause_sha256": "c4569b26d27a32ac59dfb8631ed881b70417f34ca8ac94226733abfb1b843523"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.defs-clause-7150b6a1b2c5",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "defs"
+      ],
+      "behaviour": "Definitions — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "defs",
+        "clause_index": 26,
+        "clause_sha256": "7150b6a1b2c55e05990a540025a254d00cdda77f0bd657d41f9c6fc79cc99c8a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.defs-clause-3e089c95a1ac",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "defs"
+      ],
+      "behaviour": "Definitions — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "defs",
+        "clause_index": 32,
+        "clause_sha256": "3e089c95a1ac5a0b5a2e08e99baffb44ab77b96b88f1eadb2f6628dbfea6eb4c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.defs-clause-1464d39d09c8",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "defs"
+      ],
+      "behaviour": "Definitions — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "defs",
+        "clause_index": 57,
+        "clause_sha256": "1464d39d09c85d6d4d2714e9d1a9a04fac4612e2463b8e987c2dd693ada8d685"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.defs-clause-186e9886fbed",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "defs"
+      ],
+      "behaviour": "Definitions — normative clause 64, located by its exact source hash.",
+      "locator": {
+        "section_id": "defs",
+        "clause_index": 63,
+        "clause_sha256": "186e9886fbed490da6c3b3af72d8a0e697610b4440fc82c043f02eb820a178db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.defs-clause-8bfba142d8e0",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "defs"
+      ],
+      "behaviour": "Definitions — normative clause 65, located by its exact source hash.",
+      "locator": {
+        "section_id": "defs",
+        "clause_index": 64,
+        "clause_sha256": "8bfba142d8e056588bf01a68e755fe4cca2532331888e421e43d947b55e40df6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UA Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "d115303edbdc74bb6342795f2af9ac25114e536351736a69a26a2a426d3c9c21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-conform.conformance-clause-f7d91e69c121",
+        "css21-conform.conformance-clause-2ac203b7d79b",
+        "css21-conform.conformance-clause-d9d2985c8bcb",
+        "css21-conform.conformance-clause-2cd40d775111",
+        "css21-conform.conformance-clause-fea9eda23fb1",
+        "css21-conform.conformance-clause-bb5545bbf0f8",
+        "css21-conform.conformance-clause-e0ca22b86a8a",
+        "css21-conform.conformance-clause-7074e3ebec20",
+        "css21-conform.conformance-clause-ff011b42f281",
+        "css21-conform.conformance-clause-65a6041b86f6",
+        "css21-conform.conformance-clause-c85317db1db8",
+        "css21-conform.conformance-clause-c6bdac2fdb73"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-conform.conformance-clause-f7d91e69c121",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 1,
+        "clause_sha256": "f7d91e69c121a25dff3c713d8ee776c5dcbbb4a4020db9594c5f146bcd26200d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance-clause-2ac203b7d79b",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 2,
+        "clause_sha256": "2ac203b7d79b4ada3d3a1dce83648579f9b7cda7b3f4c161f70140acf3e954f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance-clause-d9d2985c8bcb",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 3,
+        "clause_sha256": "d9d2985c8bcb8cbe8a38fd6d0d690655e38825db28e183c6ef0c5cbe7a63f4a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance-clause-2cd40d775111",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 4,
+        "clause_sha256": "2cd40d775111778d42eb4031efacd654803ce049b860d67409ccf53deb223464"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance-clause-fea9eda23fb1",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 5,
+        "clause_sha256": "fea9eda23fb1f7c3d33e4a2caaac84c1e5d7afbb3f63db297b223a578836b6e5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance-clause-bb5545bbf0f8",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 6,
+        "clause_sha256": "bb5545bbf0f815e381a58e58aecbc8ff8ce64b67090fbec7793ec7820420c699"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance-clause-e0ca22b86a8a",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 7,
+        "clause_sha256": "e0ca22b86a8a148bdd663a00f63bd392f480053104436f8806b324b17cea84c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance-clause-7074e3ebec20",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 8,
+        "clause_sha256": "7074e3ebec20c02ac3c82113d52db3b4c5a3476d8430a137a0a3c27007be2637"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance-clause-ff011b42f281",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 9,
+        "clause_sha256": "ff011b42f28193fe1cf85a8418d78d7dbc2baa0d236562eee592436ac7bd784b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance-clause-65a6041b86f6",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 10,
+        "clause_sha256": "65a6041b86f67243c536a0dfd3817fb8cf075b4cc55b44688aacdc196e329652"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance-clause-c85317db1db8",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 11,
+        "clause_sha256": "c85317db1db88f4608d85e2ac687e8f8e09aa3cbb22f1c38742a153639f5c06b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.conformance-clause-c6bdac2fdb73",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "UA Conformance — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 13,
+        "clause_sha256": "c6bdac2fdb73df8d9b4a547b292cecc785eefce9c866b7bf847a0911762cd30a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-conform.errors",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "errors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Error conditions.",
+      "locator": {
+        "section_id": "errors",
+        "text_sha256": "29a6d9d3b5d2a2a4c2c645efd9c06062197f274a8bb968e8d803c2f93ae5be0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-conform.text-css",
+      "family": "css21-conform",
+      "source_id": "css21-conform",
+      "sections": [
+        "text-css"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The text/css content type.",
+      "locator": {
+        "section_id": "text-css",
+        "text_sha256": "ead10248fdcd94463e42ffdb76d616a0cef512273a635416878a0c85348b4f67"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

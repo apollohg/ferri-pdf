@@ -1,0 +1,289 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode-tr50-tr50-33",
+  "sections": [
+    {
+      "id": "heading-e3919b348ded",
+      "title": "Unicode® Standard Annex #50",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.heading-e3919b348ded"
+        ]
+      }
+    },
+    {
+      "id": "heading-8295a4f49b64",
+      "title": "Unicode Vertical Text Layout",
+      "level": 1,
+      "text_sha256": "07100477cb50a52cce836a0e2d26e989c7133206f42c86ef50e2630900bbb31b",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.heading-8295a4f49b64"
+        ]
+      }
+    },
+    {
+      "id": "heading-562e5643bfd0",
+      "title": "Summary",
+      "level": 4,
+      "text_sha256": "b94856917f8713be0999e12fca8a6e4b47e79b9af3871c9de36a221a96dc2eac",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.heading-562e5643bfd0"
+        ]
+      }
+    },
+    {
+      "id": "heading-b67e4e63a5c4",
+      "title": "Status",
+      "level": 4,
+      "text_sha256": "969770954d10eb10c58c417e62f0aeb8ceca31b93e33871538ad4b7096754f2f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.heading-b67e4e63a5c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-35d8550f521f",
+      "title": "Contents",
+      "level": 4,
+      "text_sha256": "6c0e96554970a0658e1c78c831b101d3876e869bc5b4d74008c1abe6b1b55923",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.heading-35d8550f521f"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "1 Overview and Scope",
+      "level": 2,
+      "text_sha256": "0bf7d3cd51754bc5821800a591b6450a055cfb236fe77e9492a2b262ad610d5b",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.overview",
+          "unicode-tr50-tr50-33.overview-clause-61bb690c2b88",
+          "unicode-tr50-tr50-33.overview-clause-2451fe3762b5",
+          "unicode-tr50-tr50-33.overview-clause-48ea4257abab"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "2 Conformance",
+      "level": 2,
+      "text_sha256": "66f4c4926bbee37f92541dd1420cd09d3839f473c6d48f9d2480ba29434f18ed",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.conformance"
+        ]
+      }
+    },
+    {
+      "id": "vo",
+      "title": "3 The Vertical_Orientation Property (vo)",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.vo"
+        ]
+      }
+    },
+    {
+      "id": "vo_values",
+      "title": "3.1 Property Values",
+      "level": 3,
+      "text_sha256": "d9e4b8dfd61c6fe78d360fdbd3076cf1b81ab34f72e28ee5b5a53739339c87fa",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.vo-values"
+        ]
+      }
+    },
+    {
+      "id": "property_scope",
+      "title": "3.2 Scope of the Property",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.property-scope"
+        ]
+      }
+    },
+    {
+      "id": "grapheme_clusters",
+      "title": "3.2.1 Grapheme Clusters",
+      "level": 4,
+      "text_sha256": "0e0a36a26c1528af0425008cd1b83fe1f9f7a999f57fd05f67b507914fd67f72",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.grapheme-clusters",
+          "unicode-tr50-tr50-33.grapheme-clusters-clause-96f4bc8dcff6"
+        ]
+      }
+    },
+    {
+      "id": "squared_words",
+      "title": "3.2.2 Squared Katakana and Ideographic Words",
+      "level": 4,
+      "text_sha256": "650b457dd9f05bc9eaed5e3b5ea019e027d4f180bf801fc0ed70278558d3ece6",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.squared-words"
+        ]
+      }
+    },
+    {
+      "id": "rtl",
+      "title": "3.2.3 Right-to-Left Scripts",
+      "level": 4,
+      "text_sha256": "5caea25eb073001720fc9c94d564f797d5e107a7f667640bcab7692c3c35bd2c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.rtl"
+        ]
+      }
+    },
+    {
+      "id": "quotes",
+      "title": "3.2.4 Quotation Marks",
+      "level": 4,
+      "text_sha256": "fc11f0fd721241037a39749e587bac81ef33fe108e6b0d3c25001185d1c8451f",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.quotes",
+          "unicode-tr50-tr50-33.quotes-clause-641bc1d5e977"
+        ]
+      }
+    },
+    {
+      "id": "code_charts",
+      "title": "3.3 Vertical Glyphs in the Code Charts",
+      "level": 3,
+      "text_sha256": "86b8965b371e2aebc6d76b758b88c3ea865431e7b8fa462873cd82330fb0fcbe",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.code-charts",
+          "unicode-tr50-tr50-33.code-charts-clause-02ce3dbf84b1",
+          "unicode-tr50-tr50-33.code-charts-clause-7c2dd5093ad9"
+        ]
+      }
+    },
+    {
+      "id": "vertical_alternates",
+      "title": "4 Glyphs Changes for Vertical Orientation",
+      "level": 2,
+      "text_sha256": "c8d271bf3dca105ecc65cc6f6b88a5d6daaee96ccd3c2a4145c490a0da50965b",
+      "clause_count": 220,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.vertical-alternates",
+          "unicode-tr50-tr50-33.vertical-alternates-clause-4e277724f31e",
+          "unicode-tr50-tr50-33.vertical-alternates-clause-27296ad981fe"
+        ]
+      }
+    },
+    {
+      "id": "data",
+      "title": "5 Data File",
+      "level": 2,
+      "text_sha256": "a9311a0c8bed01cbc927ed3b9eadd1267fc91fe112da9709fb87e5e045749e06",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.data"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "80161c3d60cb2a49e51ce613336da8523a593318783b452cec590cb351e59d1a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "References",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "8e262b530dd9dea23efac0eca37ae00f8a40d4b1be2872783d65ad768734b47a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.references"
+        ]
+      }
+    },
+    {
+      "id": "Modifications",
+      "title": "Modifications",
+      "level": 2,
+      "text_sha256": "59e3df51f7ce304c784883667c2d217742b34321fb1f2df960fe04f0090a7b10",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.modifications"
+        ]
+      }
+    },
+    {
+      "id": "heading-2621c87b0963",
+      "title": "Revision 33",
+      "level": 3,
+      "text_sha256": "c161016e609181638d46e319304216a55e691c17ecc9aed68a1286325c618bed",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-33.heading-2621c87b0963",
+          "unicode-tr50-tr50-33.heading-2621c87b0963-clause-542cd721bd79"
+        ]
+      }
+    }
+  ]
+}

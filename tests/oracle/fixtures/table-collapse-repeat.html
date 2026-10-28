@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>table-collapse-repeat</title><style>@font-face { font-family: Spike; src: url('../assets/DejaVuSans.ttf'); }
+@page { size: 360pt 480pt; margin: 36pt; }
+html, body { margin: 0; padding: 0; }
+body { font-family: Spike; font-size: 12pt; line-height: 18pt; }
+p { margin: 0 0 12pt; widows: 2; orphans: 2; hyphens: none; }
+.new-page { break-before: page; }
+.keep { break-inside: avoid; }
+@page{size:360pt 240pt;margin:36pt}table{border-collapse:collapse;border:4pt solid blue}td{border:2pt solid red;padding:4pt}tfoot td{border-top:3pt solid green}</style></head><body><p>Before</p><table><thead><tr><td>Head</td></tr></thead><tfoot><tr><td>Foot</td></tr></tfoot><tbody><tr><td>Row 0</td></tr><tr><td>Row 1</td></tr><tr><td>Row 2</td></tr><tr><td>Row 3</td></tr><tr><td>Row 4</td></tr><tr><td>Row 5</td></tr><tr><td>Row 6</td></tr><tr><td>Row 7</td></tr><tr><td>Row 8</td></tr><tr><td>Row 9</td></tr><tr><td>Row 10</td></tr><tr><td>Row 11</td></tr><tr><td>Row 12</td></tr><tr><td>Row 13</td></tr></tbody></table><p>After</p></body></html>

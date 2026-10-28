@@ -1,0 +1,1552 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-highlight-api-1.interaction",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "interaction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module Interactions.",
+      "locator": {
+        "section_id": "interaction",
+        "text_sha256": "1e54f2a2375a4453df6fbd65f70555f0e21813209af2c659c8ebf752f9420390"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.highlights-set-up",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "highlights-set-up"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Setting up Custom Highlights.",
+      "locator": {
+        "section_id": "highlights-set-up",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.creation",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "creation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Creating Custom Highlights.",
+      "locator": {
+        "section_id": "creation",
+        "text_sha256": "2a1dd6b5a43bde4e531c20ad4c2aba3a9bf511f5591f11a7dccd1919adcd6536"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.registration",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "registration"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Registering Custom Highlights.",
+      "locator": {
+        "section_id": "registration",
+        "text_sha256": "aa4cabdc58f200829c38538916375a7583bf66d5e78c59a2c41fe0437967b11e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.styling-highlights",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "styling-highlights"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Styling Custom Highlights.",
+      "locator": {
+        "section_id": "styling-highlights",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.custom-highlight-pseudo",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "custom-highlight-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Custom Highlight Pseudo-element: ::highlight().",
+      "locator": {
+        "section_id": "custom-highlight-pseudo",
+        "text_sha256": "e93890f8132e142784ff7e9e979dfde08c3b49498d964dc04f71c66e33747296"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-highlight-api-1.custom-highlight-pseudo-clause-e93890f8132e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.custom-highlight-pseudo-clause-e93890f8132e",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "custom-highlight-pseudo"
+      ],
+      "behaviour": "The Custom Highlight Pseudo-element: ::highlight() — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "custom-highlight-pseudo",
+        "clause_index": 0,
+        "clause_sha256": "e93890f8132e142784ff7e9e979dfde08c3b49498d964dc04f71c66e33747296"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.processing-model",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "processing-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Processing Model.",
+      "locator": {
+        "section_id": "processing-model",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.applicable-properties",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "applicable-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Applicable Properties.",
+      "locator": {
+        "section_id": "applicable-properties",
+        "text_sha256": "de29d1f191df6290d93723f6a522434ad9cda62c7838b205b2712b87a18442a0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.default-styles",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "default-styles"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default Styles.",
+      "locator": {
+        "section_id": "default-styles",
+        "text_sha256": "dc188d3b6b410d3fa93898819a1a72af4fa8ae6e03c52bd3fbee012c193b3173"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-highlight-api-1.default-styles-clause-dc188d3b6b41"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.default-styles-clause-dc188d3b6b41",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "default-styles"
+      ],
+      "behaviour": "Default Styles — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "default-styles",
+        "clause_index": 0,
+        "clause_sha256": "dc188d3b6b410d3fa93898819a1a72af4fa8ae6e03c52bd3fbee012c193b3173"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.c-and-h",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "c-and-h"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascading and Inheritance.",
+      "locator": {
+        "section_id": "c-and-h",
+        "text_sha256": "7fb8fd34b1b4c2157c000899f13c8535cd46786eaf1559a6d2a17eda0d561a93"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.painting",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "painting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Painting.",
+      "locator": {
+        "section_id": "painting",
+        "text_sha256": "79391ffd8cf25a655e2518683cef21b9e6dab073551de38e647536aaa2b4ef78"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.priorities",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "priorities"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Priority of Overlapping Highlights.",
+      "locator": {
+        "section_id": "priorities",
+        "text_sha256": "d8b32c3ffdd196b0455ca274e1ecb377e72032a282e55f3732016202df5553cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.highlight-types",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "highlight-types"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Highlight types.",
+      "locator": {
+        "section_id": "highlight-types",
+        "text_sha256": "a7256796137fccc721b669516255e3ca10aeecb6a48d7d25f9b40bedaff5e22c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-highlight-api-1.highlight-types-clause-b45a1b31d938",
+        "css-highlight-api-1.highlight-types-clause-5b1037f94534",
+        "css-highlight-api-1.highlight-types-clause-42774c8e5a90"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.highlight-types-clause-b45a1b31d938",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "highlight-types"
+      ],
+      "behaviour": "Highlight types — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-types",
+        "clause_index": 3,
+        "clause_sha256": "b45a1b31d938fccf695da871ccaf82a958f645006decd89151af8693c5824625"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.highlight-types-clause-5b1037f94534",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "highlight-types"
+      ],
+      "behaviour": "Highlight types — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-types",
+        "clause_index": 4,
+        "clause_sha256": "5b1037f94534ba5f4eae8d27d9ad57ab95cc2e134a652355e425531c06645135"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.highlight-types-clause-42774c8e5a90",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "highlight-types"
+      ],
+      "behaviour": "Highlight types — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "highlight-types",
+        "clause_index": 5,
+        "clause_sha256": "42774c8e5a90c259829bdf7a036260c71af68a6abe2384c8be5c67a02c006f36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.responding-to-changes",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "responding-to-changes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Responding to Changes.",
+      "locator": {
+        "section_id": "responding-to-changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.repaint",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "repaint"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Repaints.",
+      "locator": {
+        "section_id": "repaint",
+        "text_sha256": "e1947642cfc937839eba9622dd52add26656893c7a1da2b0bfa1f6ca9633ef19"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-highlight-api-1.repaint-clause-ca73e07d3f7e",
+        "css-highlight-api-1.repaint-clause-4a3bee3fab4b",
+        "css-highlight-api-1.repaint-clause-dfdd1107cee8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.repaint-clause-ca73e07d3f7e",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "repaint"
+      ],
+      "behaviour": "Repaints — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "repaint",
+        "clause_index": 0,
+        "clause_sha256": "ca73e07d3f7e66ff2595b4f3c781618c68bf92dd72d7dd2cd95a4cb653b8a107"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.repaint-clause-4a3bee3fab4b",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "repaint"
+      ],
+      "behaviour": "Repaints — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "repaint",
+        "clause_index": 1,
+        "clause_sha256": "4a3bee3fab4bb8439562d27a10a1101a8c5c8330cac0ed35c91df2a90df2709b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.repaint-clause-dfdd1107cee8",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "repaint"
+      ],
+      "behaviour": "Repaints — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "repaint",
+        "clause_index": 2,
+        "clause_sha256": "dfdd1107cee81c94390882af24d587670bd78fea9d01c1b53aced3876597b1ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.range-invalidation",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "range-invalidation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Range Updating and Invalidation.",
+      "locator": {
+        "section_id": "range-invalidation",
+        "text_sha256": "c1c4b0a99d87e582e1d87429708c79660a4f1bba01ec5a90a7fe0c06a7253de3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-highlight-api-1.range-invalidation-clause-941ae79d24fa",
+        "css-highlight-api-1.range-invalidation-clause-79376431d944",
+        "css-highlight-api-1.range-invalidation-clause-56fb07b86cdf",
+        "css-highlight-api-1.range-invalidation-clause-beb2736c35ea"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.range-invalidation-clause-941ae79d24fa",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "range-invalidation"
+      ],
+      "behaviour": "Range Updating and Invalidation — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "range-invalidation",
+        "clause_index": 3,
+        "clause_sha256": "941ae79d24fae258323a9f647e94f28c46fa4458ad72796e8ad6f15a0bb60608"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.range-invalidation-clause-79376431d944",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "range-invalidation"
+      ],
+      "behaviour": "Range Updating and Invalidation — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "range-invalidation",
+        "clause_index": 4,
+        "clause_sha256": "79376431d944eeecfb7193520ce2c927518830fa96809eafc30187e5251f9ef6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.range-invalidation-clause-56fb07b86cdf",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "range-invalidation"
+      ],
+      "behaviour": "Range Updating and Invalidation — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "range-invalidation",
+        "clause_index": 5,
+        "clause_sha256": "56fb07b86cdf37aecea7a4efcb1de74d4899b1ac7c2574b34dfdc32b3c28ca9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.range-invalidation-clause-beb2736c35ea",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "range-invalidation"
+      ],
+      "behaviour": "Range Updating and Invalidation — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "range-invalidation",
+        "clause_index": 6,
+        "clause_sha256": "beb2736c35eafc167288ffd95e52a4985c853fbf9870d8bea67ad28df9d9f689"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.events",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "events"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Event Handling.",
+      "locator": {
+        "section_id": "events",
+        "text_sha256": "55ebbd433278a989e7b9ed030a1531134528744e08a4f79ee6051d0f14d978af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-highlight-api-1.events-clause-c7f7d9ab7110"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.events-clause-c7f7d9ab7110",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "events"
+      ],
+      "behaviour": "Event Handling — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "events",
+        "clause_index": 1,
+        "clause_sha256": "c7f7d9ab71105516febed0d4f742c5d994ae8929b52a4c717d2e61fdb5367d3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-conformance",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-conventions",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-highlight-api-1.w3c-conventions-clause-5c98c879f070",
+        "css-highlight-api-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-conformance-classes",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-highlight-api-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-highlight-api-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-partial",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-highlight-api-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-conform-future-proofing",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-testing",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-highlight-api-1.w3c-testing-clause-1e0fff369221",
+        "css-highlight-api-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-highlight-api-1.idl-index",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "e5abf1535dcd98eefc58b2fef5d4592d93649e1242e4aedce5b5d12098c1918d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.issues-index",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "aeb33bae0309fb13f2557c8a1d8e02a22ddb80a6f26609be773ec58ff1f89e6c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.import-8cac7d115c27",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-highlight-api-1.title",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Custom Highlight API Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "0ca7e2dc5fe52f75cf7829259d8bd1e3734fe2ec72fd73f1de586d513f7e5df2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.abstract",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "5565d1172b99eac1eabee28da888e47d74667b476402529d51a88f6ff5bce914"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.sotd",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "9f9dffc7aea4efed71d245b32da6b8f41db8658d249cbd03f72fc2c2af401f09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.contents",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "0767e4c868ace670c31bba93fa346b89d9dd7c1fb840471ab83eb429cb61acfb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.intro",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "17f2ce2f2a4fa84c29fa6af2f867ef3287fbc48eeb5372a52eb9d5a76093f93c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.priv-sec",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix A. Privacy and Security Considerations.",
+      "locator": {
+        "section_id": "priv-sec",
+        "text_sha256": "54abd8aef0906e6334508e9799e9605d66538daa0c96de4d4a96109bb21f0a5c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.credits",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "credits"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix B. Acknowledgements.",
+      "locator": {
+        "section_id": "credits",
+        "text_sha256": "6f83bb6c9f10f14d2f46d91fb0ed5baecf89fad09dc4e0c0f5819686950e5e79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.changes",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix C. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "97d320f2eee844df69c85c9249cc9fea216900af7cc7b720ff4fb5839131637f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.changes-since-20201208",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "changes-since-20201208"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 8 December 2020 Working Draft.",
+      "locator": {
+        "section_id": "changes-since-20201208",
+        "text_sha256": "a41e4a864171cf670bc1c0013ac2e47e2bb220e419dca2f4a1771c20475072d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.changes-since-20201022",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "changes-since-20201022"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 22 October 2020 Working Draft.",
+      "locator": {
+        "section_id": "changes-since-20201022",
+        "text_sha256": "0fb5bcbd08c81bee1acdfcf2d2cd5562cef9ef8ed1b47ff67cc8452ae35083b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.index",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.index-defined-here",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "b0e48c744021de20089295e9f3251f72d555b8e486e7a8186648e4fa7bb94d49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.index-defined-elsewhere",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "3e78e4720cc1022ede7b03f67fefc27fc6782b9ca90a2db38a860e2cbd47e68a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-highlight-api-1.references",
+      "family": "css-highlight-api-1",
+      "source_id": "css-highlight-api-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-refs.q20-0",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "q20.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix B. Bibliography.",
+      "locator": {
+        "section_id": "q20.0",
+        "text_sha256": "ff5a7e6be1119fed17f3463ea89177d6af3208b0c1edfe3c934299c1ee6bd54e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-refs.import-2f01cd25cb19",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.cie.co.at/publ/abst/15-2004.html.",
+      "unresolved_reference": "http://www.cie.co.at/publ/abst/15-2004.html",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css21-refs.import-b85f5ec2caa9",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.color.org/icc_specs2.html.",
+      "unresolved_reference": "http://www.color.org/icc_specs2.html",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css21-refs.import-218d99f0a05a",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.unicode.org/roadmaps/.",
+      "unresolved_reference": "http://www.unicode.org/roadmaps/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css21-refs.import-763bfc802abe",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.ietf.org/rfc/rfc2045.txt.",
+      "unresolved_reference": "http://www.ietf.org/rfc/rfc2045.txt",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css21-refs.import-75ae632cf8b1",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.ietf.org/rfc/rfc2616.txt.",
+      "unresolved_reference": "http://www.ietf.org/rfc/rfc2616.txt",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css21-refs.import-0ef0e4186d70",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.ietf.org/rfc/rfc2318.txt.",
+      "unresolved_reference": "http://www.ietf.org/rfc/rfc2318.txt",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css21-refs.import-ed6dc6acb807",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://domino.iec.ch/webstore/webstore.nsf/artnum/025408.",
+      "unresolved_reference": "http://domino.iec.ch/webstore/webstore.nsf/artnum/025408",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css21-refs.import-9fe9dfeb5316",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.w3.org/TR/2002/REC-UAAG10-20021217/.",
+      "unresolved_reference": "https://www.w3.org/TR/2002/REC-UAAG10-20021217/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css21-refs.import-55642eec8900",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.unicode.org/unicode/standard/versions/.",
+      "unresolved_reference": "http://www.unicode.org/unicode/standard/versions/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css21-refs.import-06485696de41",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.unicode.org/versions/Unicode6.0.0/.",
+      "unresolved_reference": "http://www.unicode.org/versions/Unicode6.0.0/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css21-refs.informative",
+      "family": "css21-refs",
+      "source_id": "css21-refs",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in B.2 Informative references.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "b4114bb72ae499291840f56577b74252142a21687a4a5c32b82ab85284677af3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

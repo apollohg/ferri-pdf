@@ -1,0 +1,305 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "unicode17-chapter-20.g26398",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "G26398"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Americas.",
+      "locator": {
+        "section_id": "G26398",
+        "text_sha256": "24d60db318617b2a00acaacdefff8a259a06bee39258be7c2c019095d3657fdc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-20.heading-67fc68195695",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "heading-67fc68195695"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cherokee.",
+      "locator": {
+        "section_id": "heading-67fc68195695",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-20.heading-2be024d9c335",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "heading-2be024d9c335"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cherokee: U+13A0–U+13FF.",
+      "locator": {
+        "section_id": "heading-2be024d9c335",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-20.heading-47392ae40e95",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "heading-47392ae40e95"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cherokee Supplement: U+AB70–U+ABBF.",
+      "locator": {
+        "section_id": "heading-47392ae40e95",
+        "text_sha256": "b3e8e176ae123e9179cb629b90143d4a81a0edee5df88eed04790d3d9dc3ae76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-20.heading-b1035f1c521c",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "heading-b1035f1c521c"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Canadian Aboriginal Syllabics.",
+      "locator": {
+        "section_id": "heading-b1035f1c521c",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-20.heading-4363f36db112",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "heading-4363f36db112"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unified Canadian Aboriginal Syllabics: U+1400–U+167F.",
+      "locator": {
+        "section_id": "heading-4363f36db112",
+        "text_sha256": "85575c0946a2f6b3c8a5f5fb4b086558ecaf95c43e52af4a31d77d10c7d53c6e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-20.heading-6098b9590fa5",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "heading-6098b9590fa5"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unified Canadian Aboriginal Syllabics Extended: U+18B0–U+18FF.",
+      "locator": {
+        "section_id": "heading-6098b9590fa5",
+        "text_sha256": "e96e4e374db14a2c6c50d624f8d05f3021d4bb15055f9c3fb470808e7c89d25c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-20.heading-7bfcdb9b3b06",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "heading-7bfcdb9b3b06"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unified Canadian Aboriginal Syllabics Extended-A: U+11AB0–U+11ABF.",
+      "locator": {
+        "section_id": "heading-7bfcdb9b3b06",
+        "text_sha256": "16a92b1e6712a3b39a3d9fe04377333a74bef45a213d16ff314a94d3616ad5b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-20.heading-e8051af20a49",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "heading-e8051af20a49"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Osage.",
+      "locator": {
+        "section_id": "heading-e8051af20a49",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-20.heading-754412fa7990",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "heading-754412fa7990"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Osage: U+104B0–U+104FF.",
+      "locator": {
+        "section_id": "heading-754412fa7990",
+        "text_sha256": "ad48ec4798c0a103b94f0f006d58b7e708af11e91e953d4bbce015be950d68d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-20.heading-438061172b8f",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "heading-438061172b8f"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Deseret.",
+      "locator": {
+        "section_id": "heading-438061172b8f",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-20.heading-f21af828c6dc",
+      "family": "unicode17-chapter-20",
+      "source_id": "unicode17-chapter-20",
+      "sections": [
+        "heading-f21af828c6dc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Deseret: U+10400–U+1044F.",
+      "locator": {
+        "section_id": "heading-f21af828c6dc",
+        "text_sha256": "b6082e75fb8b7dddc54af1091eaa6987324d5ca0946f038ec0361c8551ec1d86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

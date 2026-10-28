@@ -1,0 +1,2716 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "media-frags.w3c-doctype",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "w3c-doctype"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Recommendation 25 September 2012.",
+      "locator": {
+        "section_id": "w3c-doctype",
+        "text_sha256": "e0bf82a2834711ae76206527c65cbb017e5737f14396ebd13d1a4317246a42a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.appendices",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "appendices"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendices.",
+      "locator": {
+        "section_id": "appendices",
+        "text_sha256": "72119caa2fc5dc0c79724b7e3ece7fb221ac03482470c669613c6d482ce92f8d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.introduction",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 1 Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "6c4601186b0c43ca3a01949d3d9d6cb9d1b8e01d17fe151910a6582c66f1eba3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.introduction-clause-3a45e9f5f10b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.introduction-clause-3a45e9f5f10b",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "1 Introduction — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "introduction",
+        "clause_index": 0,
+        "clause_sha256": "3a45e9f5f10b670d87bcc7eb42c83ae1078534274220a9ee28408bfebd3bd2c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.standardisation",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "standardisation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2 Standardisation Issues.",
+      "locator": {
+        "section_id": "standardisation",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.standardisation-terminology",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "standardisation-terminology"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "standardisation-terminology",
+        "text_sha256": "4dafd84f564b4192a13855231832232fcd3c7d6eaa73b118a41f70a20a7d97e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.standardisation-terminology-clause-7ae41d0fba4a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.standardisation-terminology-clause-7ae41d0fba4a",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "standardisation-terminology"
+      ],
+      "behaviour": "Terminology — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "standardisation-terminology",
+        "clause_index": 0,
+        "clause_sha256": "7ae41d0fba4a6db9b0c7d8f9cf1a69ac324b91cced4f467615592a19ebce3c0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.standardisation-approach",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "standardisation-approach"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Fragments Standardisation.",
+      "locator": {
+        "section_id": "standardisation-approach",
+        "text_sha256": "f9673703cab5b482ffdc638f8cac678ce17e6d444f9dcd7acbb1435b75253e87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.standardisation-uri-fragments",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "standardisation-URI-fragments"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URI Fragments.",
+      "locator": {
+        "section_id": "standardisation-URI-fragments",
+        "text_sha256": "db19e3ae4cc23bdfecc2f698f462985e475519ff37ecde23b3b9813012c3f58b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.standardisation-uri-fragments-clause-64bf9043cf48"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.standardisation-uri-fragments-clause-64bf9043cf48",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "standardisation-URI-fragments"
+      ],
+      "behaviour": "URI Fragments — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "standardisation-URI-fragments",
+        "clause_index": 3,
+        "clause_sha256": "64bf9043cf48def76e04afa0f7badba5f7f7319319a460d5780637d8bbc4c25d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.standardisation-uri-queries",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "standardisation-URI-queries"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URI Queries.",
+      "locator": {
+        "section_id": "standardisation-URI-queries",
+        "text_sha256": "772017ad31d9eedb2783188a636694f1f7b717564f4345c553e162eb12d6e91b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.fragment-query",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "fragment-query"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 3 URI fragment and URI query.",
+      "locator": {
+        "section_id": "fragment-query",
+        "text_sha256": "3121d9021d0dac46d529355cf841cc9f83a35800f64c276da068b5c6586209e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.uriquery-vs-fragments",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIquery-vs-fragments"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in When to choose URI fragments? When to choose URI queries?.",
+      "locator": {
+        "section_id": "URIquery-vs-fragments",
+        "text_sha256": "377d11de4140d959045cf94926605e548a16d0a17177bb66d1cd232fce9de104"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.uriquery-vs-fragments-clause-e6c0eb75bfff",
+        "media-frags.uriquery-vs-fragments-clause-ab541cab3371"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.uriquery-vs-fragments-clause-e6c0eb75bfff",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIquery-vs-fragments"
+      ],
+      "behaviour": "When to choose URI fragments? When to choose URI queries? — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "URIquery-vs-fragments",
+        "clause_index": 0,
+        "clause_sha256": "e6c0eb75bfff530216fa5499dc88cbc7bf5de63b4c62f860deed54b992f206cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.uriquery-vs-fragments-clause-ab541cab3371",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIquery-vs-fragments"
+      ],
+      "behaviour": "When to choose URI fragments? When to choose URI queries? — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "URIquery-vs-fragments",
+        "clause_index": 1,
+        "clause_sha256": "ab541cab33715749e4a4d4af583f4da22aee7102a09cb3f3a0b1bbca9ca01921"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.urifragment-user-agent",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIfragment-user-agent"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resolving URI fragments within the user agent.",
+      "locator": {
+        "section_id": "URIfragment-user-agent",
+        "text_sha256": "3135935862651fe498987598ef53943b48e32cd34c83b5cbf0dd5a378bbc693b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.urifragment-user-agent-clause-d3656bddf286",
+        "media-frags.urifragment-user-agent-clause-19a551881dbe",
+        "media-frags.urifragment-user-agent-clause-4f342befc920",
+        "media-frags.urifragment-user-agent-clause-07fcdceeecdb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.urifragment-user-agent-clause-d3656bddf286",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIfragment-user-agent"
+      ],
+      "behaviour": "Resolving URI fragments within the user agent — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "URIfragment-user-agent",
+        "clause_index": 0,
+        "clause_sha256": "d3656bddf2865b9b8becac08770bb39e3785eecc54f19c55a5354980c30668f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.urifragment-user-agent-clause-19a551881dbe",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIfragment-user-agent"
+      ],
+      "behaviour": "Resolving URI fragments within the user agent — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "URIfragment-user-agent",
+        "clause_index": 1,
+        "clause_sha256": "19a551881dbec36776ca975ec6d0d6f13d5b3a0ad3580efb5937190dbdf30d31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.urifragment-user-agent-clause-4f342befc920",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIfragment-user-agent"
+      ],
+      "behaviour": "Resolving URI fragments within the user agent — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "URIfragment-user-agent",
+        "clause_index": 3,
+        "clause_sha256": "4f342befc92082e60f0681889140932f61661efaf10a53303eefbc133275155c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.urifragment-user-agent-clause-07fcdceeecdb",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIfragment-user-agent"
+      ],
+      "behaviour": "Resolving URI fragments within the user agent — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "URIfragment-user-agent",
+        "clause_index": 4,
+        "clause_sha256": "07fcdceeecdb01dfae3c80548d1ba18ca53173615742dbfe5e00d3d6bcfa1592"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.uriquery-media-fragments",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIquery-media-fragments"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resolving URI queries.",
+      "locator": {
+        "section_id": "URIquery-media-fragments",
+        "text_sha256": "1f0cfc60753c0a153fd4a3922fbdb172561cca7acea3197cb5f49d4bd832ba1b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.uriquery-media-fragments-clause-2446838c0c64",
+        "media-frags.uriquery-media-fragments-clause-b12f239130f6",
+        "media-frags.uriquery-media-fragments-clause-dc209ad2fe44"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.uriquery-media-fragments-clause-2446838c0c64",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIquery-media-fragments"
+      ],
+      "behaviour": "Resolving URI queries — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "URIquery-media-fragments",
+        "clause_index": 0,
+        "clause_sha256": "2446838c0c64ad533c42ecec79846c60ea00508708b6ec11727f03462c34e1d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.uriquery-media-fragments-clause-b12f239130f6",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIquery-media-fragments"
+      ],
+      "behaviour": "Resolving URI queries — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "URIquery-media-fragments",
+        "clause_index": 5,
+        "clause_sha256": "b12f239130f631ab2caecb7a9a4d1f580a4ba4c7cb4f444d32d0cbd5649ebabf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.uriquery-media-fragments-clause-dc209ad2fe44",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIquery-media-fragments"
+      ],
+      "behaviour": "Resolving URI queries — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "URIquery-media-fragments",
+        "clause_index": 7,
+        "clause_sha256": "dc209ad2fe44644435b9b240fc7928a949ded0de2eddfd6cef6e149bc7920afd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.uriquery-urifragment",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "URIquery-URIfragment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Combining URI fragments and URI queries.",
+      "locator": {
+        "section_id": "URIquery-URIfragment",
+        "text_sha256": "b412aaa78ff8d9b89eca7b824aaedbda1e48dea46ffed191b295c70ed2995855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.media-fragment-syntax",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 4 Media Fragments Syntax.",
+      "locator": {
+        "section_id": "media-fragment-syntax",
+        "text_sha256": "0e37a6576afef0f6c22141698b605bc318689823150919c6bfd59f24e0facdff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.media-fragment-syntax-clause-9339f34c5077",
+        "media-frags.media-fragment-syntax-clause-b08eb6908327",
+        "media-frags.media-fragment-syntax-clause-69026c56a216",
+        "media-frags.media-fragment-syntax-clause-e53c1da99152",
+        "media-frags.media-fragment-syntax-clause-fed87b2d9ea3",
+        "media-frags.media-fragment-syntax-clause-c5c92bb68ba4",
+        "media-frags.media-fragment-syntax-clause-91688232c1f5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.media-fragment-syntax-clause-9339f34c5077",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-syntax"
+      ],
+      "behaviour": "4 Media Fragments Syntax — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-syntax",
+        "clause_index": 0,
+        "clause_sha256": "9339f34c50772cd13411d4d76bc548235d105b84534962a9ace011bf0eb40468"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-syntax-clause-b08eb6908327",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-syntax"
+      ],
+      "behaviour": "4 Media Fragments Syntax — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-syntax",
+        "clause_index": 1,
+        "clause_sha256": "b08eb69083273cde8022d20c3251e27f77b3159994266c29fb99d7b4a8117b67"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-syntax-clause-69026c56a216",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-syntax"
+      ],
+      "behaviour": "4 Media Fragments Syntax — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-syntax",
+        "clause_index": 2,
+        "clause_sha256": "69026c56a2163177a57746caf410f63098f280b79f55bf754a36f57872d4c784"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-syntax-clause-e53c1da99152",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-syntax"
+      ],
+      "behaviour": "4 Media Fragments Syntax — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-syntax",
+        "clause_index": 3,
+        "clause_sha256": "e53c1da991521b8499baa96178bdee6177efbc0393f9ad4e32ee03cb2922f86d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-syntax-clause-fed87b2d9ea3",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-syntax"
+      ],
+      "behaviour": "4 Media Fragments Syntax — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-syntax",
+        "clause_index": 4,
+        "clause_sha256": "fed87b2d9ea3fcf305d2336593a7c3d941721f3f047473b4288b95e10e275324"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-syntax-clause-c5c92bb68ba4",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-syntax"
+      ],
+      "behaviour": "4 Media Fragments Syntax — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-syntax",
+        "clause_index": 5,
+        "clause_sha256": "c5c92bb68ba47c0192837ad7e953e679ff5e68cf7250f44b8ff06f87b63c99bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-syntax-clause-91688232c1f5",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-syntax"
+      ],
+      "behaviour": "4 Media Fragments Syntax — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-syntax",
+        "clause_index": 6,
+        "clause_sha256": "91688232c1f53fb090ed6aec7b7a801e96128eb0f587009a27f78a0bf5de349a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.general-structure",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "general-structure"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in General Structure.",
+      "locator": {
+        "section_id": "general-structure",
+        "text_sha256": "72198e59d4580840df17601fe3694f8fc0255721d2065386916fd00d32391135"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.fragment-dimensions",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "fragment-dimensions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fragment Dimensions.",
+      "locator": {
+        "section_id": "fragment-dimensions",
+        "text_sha256": "13437763d41367de651a0a02979cd60a948f35f5d1cbb6f6a2c21cdb0851fc33"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.naming-time",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "naming-time"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Temporal Dimension.",
+      "locator": {
+        "section_id": "naming-time",
+        "text_sha256": "5b5b1ebed8ac0b46ab0972abd6ee69133961064d7086f55ef7d6f90ee9856b9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.naming-time-clause-57b8354ab74d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.naming-time-clause-57b8354ab74d",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "naming-time"
+      ],
+      "behaviour": "Temporal Dimension — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "naming-time",
+        "clause_index": 5,
+        "clause_sha256": "57b8354ab74d77055a1c6ec5ecabc2b6caa8516beabc65217c7089a778f6e2e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.naming-space",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "naming-space"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Spatial Dimension.",
+      "locator": {
+        "section_id": "naming-space",
+        "text_sha256": "9cdc7a33bda177e4e099d1af8fb227d446c360770db041c1bd23b6ee7f037255"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.naming-space-clause-11c1a9ecf11c",
+        "media-frags.naming-space-clause-75adeba6ff30"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.naming-space-clause-11c1a9ecf11c",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "naming-space"
+      ],
+      "behaviour": "Spatial Dimension — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "naming-space",
+        "clause_index": 1,
+        "clause_sha256": "11c1a9ecf11ca57a9cff341a112a06107c35c5b29018916f88e5afe9218096f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.naming-space-clause-75adeba6ff30",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "naming-space"
+      ],
+      "behaviour": "Spatial Dimension — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "naming-space",
+        "clause_index": 6,
+        "clause_sha256": "75adeba6ff30a8e74204c6949ab2d23915ed427b69174fe8cb174db214c85a68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-processing",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-processing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 5 Media Fragments Processing.",
+      "locator": {
+        "section_id": "media-fragment-processing",
+        "text_sha256": "2f68a0f3ebcb7d6e85a84a6f53ee6f799bc56625c442badfea662c9e28ea42be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.media-fragment-processing-clause-e542a52e7f21"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.media-fragment-processing-clause-e542a52e7f21",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-processing"
+      ],
+      "behaviour": "5 Media Fragments Processing — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-processing",
+        "clause_index": 1,
+        "clause_sha256": "e542a52e7f21b9be2c198a249de2cce21ed1523c1156e0a1f6532fbf2ede72f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.processing-media-fragment-uri",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-media-fragment-uri"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Processing Media Fragment URI.",
+      "locator": {
+        "section_id": "processing-media-fragment-uri",
+        "text_sha256": "e70f01352e67e1a44012034c689172544ac77eae7cdfb97d53bad5c57b3d021e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.processing-name-value-components",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-name-value-components"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Processing name-value components.",
+      "locator": {
+        "section_id": "processing-name-value-components",
+        "text_sha256": "e441ea00a074926cc9cf1b8fecebfcbaaadb4f9eef13baebcc49e812717d9ab0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.processing-name-value-components-clause-5168cf4a9980",
+        "media-frags.processing-name-value-components-clause-3bff6ed7b4f1",
+        "media-frags.processing-name-value-components-clause-05ac6afa7002",
+        "media-frags.processing-name-value-components-clause-d791dbf9e8f4",
+        "media-frags.processing-name-value-components-clause-461269c1ab46",
+        "media-frags.processing-name-value-components-clause-c611bd37e706",
+        "media-frags.processing-name-value-components-clause-ac6328d774a6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.processing-name-value-components-clause-5168cf4a9980",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-name-value-components"
+      ],
+      "behaviour": "Processing name-value components — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-name-value-components",
+        "clause_index": 1,
+        "clause_sha256": "5168cf4a99809363d41e60b1b5f8a1448b600baa555a3b5a22d26187a522894a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.processing-name-value-components-clause-3bff6ed7b4f1",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-name-value-components"
+      ],
+      "behaviour": "Processing name-value components — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-name-value-components",
+        "clause_index": 31,
+        "clause_sha256": "3bff6ed7b4f1df9820ed852c318ad38316ab7e2baf89c7c2186a230cd782e881"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.processing-name-value-components-clause-05ac6afa7002",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-name-value-components"
+      ],
+      "behaviour": "Processing name-value components — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-name-value-components",
+        "clause_index": 34,
+        "clause_sha256": "05ac6afa7002bdb0625ed29fa4fe531f3e3ebe5182aa81a9e35534f1c78d8271"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.processing-name-value-components-clause-d791dbf9e8f4",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-name-value-components"
+      ],
+      "behaviour": "Processing name-value components — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-name-value-components",
+        "clause_index": 35,
+        "clause_sha256": "d791dbf9e8f4b754fe46e8375e46891ab27f60fc9114e91f4d3aae95991b0c11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.processing-name-value-components-clause-461269c1ab46",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-name-value-components"
+      ],
+      "behaviour": "Processing name-value components — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-name-value-components",
+        "clause_index": 38,
+        "clause_sha256": "461269c1ab46b41f5cd2f25415a7168de228c776821d8a26962a293c546b9064"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.processing-name-value-components-clause-c611bd37e706",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-name-value-components"
+      ],
+      "behaviour": "Processing name-value components — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-name-value-components",
+        "clause_index": 40,
+        "clause_sha256": "c611bd37e7063176c2d65b5b4920c14ca7bb5e3993c6eec1506cfc3a08ba9baf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.processing-name-value-components-clause-ac6328d774a6",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-name-value-components"
+      ],
+      "behaviour": "Processing name-value components — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-name-value-components",
+        "clause_index": 42,
+        "clause_sha256": "ac6328d774a686213398c0098ae1aaedd70a664885d1c2760a638efae0ba94a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.processing-name-value-lists",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-name-value-lists"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Processing name-value lists.",
+      "locator": {
+        "section_id": "processing-name-value-lists",
+        "text_sha256": "dda1a5267db6467b4098b208d28bba1633d90deb4f2630c7ac4b8f44d6071442"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.processing-name-value-lists-clause-47d00035de30"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.processing-name-value-lists-clause-47d00035de30",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-name-value-lists"
+      ],
+      "behaviour": "Processing name-value lists — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-name-value-lists",
+        "clause_index": 18,
+        "clause_sha256": "47d00035de307fde56ea780f51a67b3b1503e642041015fd5c8ef1a52de73a1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.processing-protocol-frag",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-protocol-frag"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Protocol for URI fragment and query resolution in HTTP.",
+      "locator": {
+        "section_id": "processing-protocol-frag",
+        "text_sha256": "36edf5b3031afe53f8282b9f2081243dafd742f5efed88e1013345b9ba03faa6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.processing-protocol-frag-clause-36edf5b3031a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.processing-protocol-frag-clause-36edf5b3031a",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "processing-protocol-frag"
+      ],
+      "behaviour": "Protocol for URI fragment and query resolution in HTTP — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "processing-protocol-frag",
+        "clause_index": 0,
+        "clause_sha256": "36edf5b3031afe53f8282b9f2081243dafd742f5efed88e1013345b9ba03faa6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-semantics",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-semantics"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 6 Media Fragments Semantics.",
+      "locator": {
+        "section_id": "media-fragment-semantics",
+        "text_sha256": "344e4136c9bf75c4a1fe91dc4d9456a49ffa7823c5ea336eadca2025108d8903"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.media-fragment-semantics-clause-344e4136c9bf"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.media-fragment-semantics-clause-344e4136c9bf",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-semantics"
+      ],
+      "behaviour": "6 Media Fragments Semantics — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-semantics",
+        "clause_index": 0,
+        "clause_sha256": "344e4136c9bf75c4a1fe91dc4d9456a49ffa7823c5ea336eadca2025108d8903"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.valid-uri",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "valid-uri"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Valid Media Fragment URIs.",
+      "locator": {
+        "section_id": "valid-uri",
+        "text_sha256": "3fff16bddfc9ff461bad6934556e595e023a2068c02c611f6c7523a8a3524b59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.valid-uri-temporal",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "valid-uri-temporal"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Valid temporal dimension.",
+      "locator": {
+        "section_id": "valid-uri-temporal",
+        "text_sha256": "331e48c24cdb22bb899555e406665a4ff1145292ad779f460e83ba4247192b57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.valid-uri-temporal-clause-5c365e56e28f",
+        "media-frags.valid-uri-temporal-clause-7e774cca3b67",
+        "media-frags.valid-uri-temporal-clause-a8694ea6989d",
+        "media-frags.valid-uri-temporal-clause-913fcf72ffbf",
+        "media-frags.valid-uri-temporal-clause-c6067a4dcb8e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.valid-uri-temporal-clause-5c365e56e28f",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "valid-uri-temporal"
+      ],
+      "behaviour": "Valid temporal dimension — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "valid-uri-temporal",
+        "clause_index": 13,
+        "clause_sha256": "5c365e56e28f14ad5b820da2fc41a1676079c0b0d4136ad2b602bc4d19fe7bba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.valid-uri-temporal-clause-7e774cca3b67",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "valid-uri-temporal"
+      ],
+      "behaviour": "Valid temporal dimension — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "valid-uri-temporal",
+        "clause_index": 14,
+        "clause_sha256": "7e774cca3b67468ed80c6ad807faf63170735ca3fa2f36790e593700734674c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.valid-uri-temporal-clause-a8694ea6989d",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "valid-uri-temporal"
+      ],
+      "behaviour": "Valid temporal dimension — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "valid-uri-temporal",
+        "clause_index": 15,
+        "clause_sha256": "a8694ea6989dec57d9273887034eab772a5c296c3a332f72b98a74453976ea79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.valid-uri-temporal-clause-913fcf72ffbf",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "valid-uri-temporal"
+      ],
+      "behaviour": "Valid temporal dimension — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "valid-uri-temporal",
+        "clause_index": 16,
+        "clause_sha256": "913fcf72ffbfe27fc2c41e2a9fad2c5bfa615f33886ff16daf2b5999e6b86fdf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.valid-uri-temporal-clause-c6067a4dcb8e",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "valid-uri-temporal"
+      ],
+      "behaviour": "Valid temporal dimension — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "valid-uri-temporal",
+        "clause_index": 17,
+        "clause_sha256": "c6067a4dcb8ef4fa53cfd8a41a437189385b296c86d4b55791fd20e384e72ae7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.valid-uri-spatial",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "valid-uri-spatial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Valid spatial dimension.",
+      "locator": {
+        "section_id": "valid-uri-spatial",
+        "text_sha256": "da2a79280acf60f6aa0b98c628aa49bfa7002ae1e5dc3e486891c6675d218f37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.error-uri",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-uri"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Errors detectable based on the URI syntax.",
+      "locator": {
+        "section_id": "error-uri",
+        "text_sha256": "e423e72f8c950ce45baec664af0dadf1cbe64480a752f8f3c20c4408cbb4f594"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.error-uri-clause-e423e72f8c95"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.error-uri-clause-e423e72f8c95",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-uri"
+      ],
+      "behaviour": "Errors detectable based on the URI syntax — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-uri",
+        "clause_index": 0,
+        "clause_sha256": "e423e72f8c950ce45baec664af0dadf1cbe64480a752f8f3c20c4408cbb4f594"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.error-uri-general",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-uri-general"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Errors on the general URI level.",
+      "locator": {
+        "section_id": "error-uri-general",
+        "text_sha256": "1829a8c6c8aa8a5723f8d3b072772650257dbc6edf4f051e9c8d240982d124a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.error-uri-general-clause-d45abc0e4970",
+        "media-frags.error-uri-general-clause-2fd866c803a8",
+        "media-frags.error-uri-general-clause-fb398ebd5631"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.error-uri-general-clause-d45abc0e4970",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-uri-general"
+      ],
+      "behaviour": "Errors on the general URI level — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-uri-general",
+        "clause_index": 0,
+        "clause_sha256": "d45abc0e497057ca5ed2f2bc33e500b8db4299845c42c9e93b121981212bb213"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.error-uri-general-clause-2fd866c803a8",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-uri-general"
+      ],
+      "behaviour": "Errors on the general URI level — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-uri-general",
+        "clause_index": 1,
+        "clause_sha256": "2fd866c803a852044939a606af626cfc813dfb9c5b86900e9b83285cf3f8b17f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.error-uri-general-clause-fb398ebd5631",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-uri-general"
+      ],
+      "behaviour": "Errors on the general URI level — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-uri-general",
+        "clause_index": 2,
+        "clause_sha256": "fb398ebd56314a19590cb9427f3a478278a099c3168238ce453eb962fb0f4e29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.error-uri-temporal",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-uri-temporal"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Errors on the temporal dimension.",
+      "locator": {
+        "section_id": "error-uri-temporal",
+        "text_sha256": "6f07e5ba7394ca9aa38a99a2aff2b9522e8b2be1db0231958860793ddb329a48"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.error-uri-temporal-clause-829448ac6d43",
+        "media-frags.error-uri-temporal-clause-42de12992770"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.error-uri-temporal-clause-829448ac6d43",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-uri-temporal"
+      ],
+      "behaviour": "Errors on the temporal dimension — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-uri-temporal",
+        "clause_index": 0,
+        "clause_sha256": "829448ac6d4392cc3799db7e19a1a12687f45b053e7c9227165c6ac65c8bb0af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.error-uri-temporal-clause-42de12992770",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-uri-temporal"
+      ],
+      "behaviour": "Errors on the temporal dimension — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-uri-temporal",
+        "clause_index": 11,
+        "clause_sha256": "42de1299277022c91ab054a9fa40ee9cdbae8aab672456436138a4238d153f9b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.error-uri-spatial",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-uri-spatial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Errors on the spatial dimension.",
+      "locator": {
+        "section_id": "error-uri-spatial",
+        "text_sha256": "881f6ce3d9e44d2832eb9da126b61dece6a578d6a9516f3498413a4de0dc63e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.error-uri-spatial-clause-c1fe0e6826cd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.error-uri-spatial-clause-c1fe0e6826cd",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-uri-spatial"
+      ],
+      "behaviour": "Errors on the spatial dimension — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-uri-spatial",
+        "clause_index": 0,
+        "clause_sha256": "c1fe0e6826cd6c18ba81b8c74f516505e6cc33e03aa8d11156bf96124c3574af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.error-media",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-media"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Errors detectable based on information of the source media.",
+      "locator": {
+        "section_id": "error-media",
+        "text_sha256": "da5f9db03d2335a2fa4b5076ac1467408aeda225b6374e818312745ae45ea296"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.error-media-general",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-media-general"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Errors on the general level.",
+      "locator": {
+        "section_id": "error-media-general",
+        "text_sha256": "bf60454690c10afd3906c9597f612759aaca4548d34b6d458289304c4f01a3ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.error-media-general-clause-08e6f139828f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.error-media-general-clause-08e6f139828f",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-media-general"
+      ],
+      "behaviour": "Errors on the general level — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-media-general",
+        "clause_index": 1,
+        "clause_sha256": "08e6f139828fc9d212c598747a9d8e43681b945f5f12d0a30c61100faa45412c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.error-media-temporal",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-media-temporal"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Errors on the temporal dimension.",
+      "locator": {
+        "section_id": "error-media-temporal",
+        "text_sha256": "dc0fc97fc70297e2c06fb7cb5cde45edf502cf8e6cef5622859a4f74a885f802"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.error-media-spatial",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-media-spatial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Errors on the spatial dimension.",
+      "locator": {
+        "section_id": "error-media-spatial",
+        "text_sha256": "f48a98d36ae9384d3cf3d403ecfac959a2b96ef7ad5771fc0b12057e7c82e13a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.error-media-spatial-clause-ee9bfc05a334"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.error-media-spatial-clause-ee9bfc05a334",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "error-media-spatial"
+      ],
+      "behaviour": "Errors on the spatial dimension — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-media-spatial",
+        "clause_index": 1,
+        "clause_sha256": "ee9bfc05a334653db8398d7df7fd3d3219b5240bcd932291b70565c92cf2adbf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.implementor-notes",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "implementor-notes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 7 Notes to Implementors (non-normative).",
+      "locator": {
+        "section_id": "implementor-notes",
+        "text_sha256": "74e8c5129b8ef5a0f5c50abde343bb026b43d281e751ebf160e586121b28184e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.implementor-notes-clause-a6cd709b825a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.implementor-notes-clause-a6cd709b825a",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "implementor-notes"
+      ],
+      "behaviour": "7 Notes to Implementors (non-normative) — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "implementor-notes",
+        "clause_index": 1,
+        "clause_sha256": "a6cd709b825a31956646a510b188b0314eb47c9f1c1123eded25bee4046656a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-browser",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-browser"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Browsers Rendering Media Fragments.",
+      "locator": {
+        "section_id": "media-fragment-browser",
+        "text_sha256": "fde58e98025251ca43b2dee8b60b75bdd420d5d9e14ed23d1a7f794c57326e65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.media-fragment-browser-clause-fde58e980252"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.media-fragment-browser-clause-fde58e980252",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-browser"
+      ],
+      "behaviour": "Browsers Rendering Media Fragments — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-browser",
+        "clause_index": 0,
+        "clause_sha256": "fde58e98025251ca43b2dee8b60b75bdd420d5d9e14ed23d1a7f794c57326e65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-display",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-display"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Clients Displaying Media Fragments.",
+      "locator": {
+        "section_id": "media-fragment-display",
+        "text_sha256": "e1c356021d08e5cf0a975c2bf24c777d0e083bfc9037f84680f496de0cda1458"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.media-fragment-display-clause-bee343c3ca18"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.media-fragment-display-clause-bee343c3ca18",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-display"
+      ],
+      "behaviour": "Clients Displaying Media Fragments — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-display",
+        "clause_index": 3,
+        "clause_sha256": "bee343c3ca18c14dc791dc4a223d03e85e4b53982258273f30cde3fa3f57b27a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-clients",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-clients"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in All Media Fragment Clients.",
+      "locator": {
+        "section_id": "media-fragment-clients",
+        "text_sha256": "c56a2ccf6609e50a475edfe3382551e6c78090d2e6e1692cfac6017db8a08490"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.media-fragment-clients-clause-3926adf06b5e",
+        "media-frags.media-fragment-clients-clause-86ab506c4457"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.media-fragment-clients-clause-3926adf06b5e",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-clients"
+      ],
+      "behaviour": "All Media Fragment Clients — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-clients",
+        "clause_index": 0,
+        "clause_sha256": "3926adf06b5e13d35645066ebe2377b1bd57287e0ac80f267bfa8a7be67588a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-clients-clause-86ab506c4457",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-clients"
+      ],
+      "behaviour": "All Media Fragment Clients — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-clients",
+        "clause_index": 2,
+        "clause_sha256": "86ab506c4457875bfce89ed59c685654bd0d1c4999740bfe94f9f9946dec7dc2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-servers",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-servers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Fragment Servers.",
+      "locator": {
+        "section_id": "media-fragment-servers",
+        "text_sha256": "370e268385fa172ba729157888651335b24dc911d7ca1b558c13cf00fe4654c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "media-frags.media-fragment-servers-clause-6631e5ddae82",
+        "media-frags.media-fragment-servers-clause-3d391afc6638",
+        "media-frags.media-fragment-servers-clause-9c8a795d8cf0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.media-fragment-servers-clause-6631e5ddae82",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-servers"
+      ],
+      "behaviour": "Media Fragment Servers — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-servers",
+        "clause_index": 1,
+        "clause_sha256": "6631e5ddae82523aefe467387d9d2954b53bfbae89fe8d37bb79f51d2c60ad85"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-servers-clause-3d391afc6638",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-servers"
+      ],
+      "behaviour": "Media Fragment Servers — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-servers",
+        "clause_index": 2,
+        "clause_sha256": "3d391afc6638f9fce4b0ba63cb19e9a0dbdc9f42755f5f0447a89bf5b30f1984"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-servers-clause-9c8a795d8cf0",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-servers"
+      ],
+      "behaviour": "Media Fragment Servers — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-fragment-servers",
+        "clause_index": 3,
+        "clause_sha256": "9c8a795d8cf08a65b67817f46f4fb2542ef596907610368686ca855b84e7f49b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "media-frags.media-fragment-webapps",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "media-fragment-webapps"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Fragment Web Applications.",
+      "locator": {
+        "section_id": "media-fragment-webapps",
+        "text_sha256": "f3cd2707b87616bb2bff7ff12827fcdef25dab5c9376bbbfc520eec3d55343e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.collected-syntax-uri",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "collected-syntax-uri"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in B Collected ABNF Syntax for URI (Non-Normative).",
+      "locator": {
+        "section_id": "collected-syntax-uri",
+        "text_sha256": "2467f4e7ab241a555d856ca17789e05edd12f6c56f6c1f242ccfb5dbfb6d31d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.title",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Media Fragments URI 1.0 (basic).",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.abstract",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "1c9ca667f63b6ff91608dfd57dc455dfbc97c0bc1aa3c77d641bcae831a83ac7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.status",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this Document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "feb91e0c4ea3278f67eb856873c13b984bda95001484c8fc0795978b4afc0f2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.contents",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "a59e9357cd04fa8030421f957b22e29b566d57b7c37f6d2466fd11b394917003"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.references-normative",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "references-normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in A References.",
+      "locator": {
+        "section_id": "references-normative",
+        "text_sha256": "f33f97e722288de911feed26302bbe584e255c6fb1e6eec264d50e867ba36ef7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "media-frags.acknowledgments",
+      "family": "media-frags",
+      "source_id": "media-frags",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in C Acknowledgements (Non-Normative).",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "475c1aa2b31fa77377770c6aa53ad84a2407a92c317f55ee393abf5f9fbe5ce0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

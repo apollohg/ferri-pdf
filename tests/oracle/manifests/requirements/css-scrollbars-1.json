@@ -1,0 +1,1646 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-scrollbars-1.scrollbar-color",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scrollbar Colors: the scrollbar-color property.",
+      "locator": {
+        "section_id": "scrollbar-color",
+        "text_sha256": "aa41a0136c38b3524bff9b50521265d5075608dcc552f7ba85ba140dfd2c2654"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scrollbars-1.scrollbar-color-clause-cca2516ebb1d",
+        "css-scrollbars-1.scrollbar-color-clause-73273ad0f997",
+        "css-scrollbars-1.scrollbar-color-clause-58b4694dc453",
+        "css-scrollbars-1.scrollbar-color-clause-640cb63c07e9",
+        "css-scrollbars-1.scrollbar-color-clause-6f51bece850d",
+        "css-scrollbars-1.scrollbar-color-clause-d346ff7f2946",
+        "css-scrollbars-1.scrollbar-color-clause-3f36f71c9c9c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-color-clause-cca2516ebb1d",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-color"
+      ],
+      "behaviour": "Scrollbar Colors: the scrollbar-color property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-color",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-color-clause-73273ad0f997",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-color"
+      ],
+      "behaviour": "Scrollbar Colors: the scrollbar-color property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-color",
+        "clause_index": 13,
+        "clause_sha256": "73273ad0f9977c70d312f5117f301ac9839f26421f6b0a0eec8ab9ba20b7d635"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-color-clause-58b4694dc453",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-color"
+      ],
+      "behaviour": "Scrollbar Colors: the scrollbar-color property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-color",
+        "clause_index": 18,
+        "clause_sha256": "58b4694dc45311d127486174841ce2ecc2b3ed3ed28ba78dc2fcbfce7c9e9cfa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-color-clause-640cb63c07e9",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-color"
+      ],
+      "behaviour": "Scrollbar Colors: the scrollbar-color property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-color",
+        "clause_index": 21,
+        "clause_sha256": "640cb63c07e9c8c42050cb0be8995ae409894bffe1d0398fef493d2baac6e32c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-color-clause-6f51bece850d",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-color"
+      ],
+      "behaviour": "Scrollbar Colors: the scrollbar-color property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-color",
+        "clause_index": 31,
+        "clause_sha256": "6f51bece850d7fc8e3e77d2abb8806e46c5982a9f8d9288bf7a4a9376dd47fa1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-color-clause-d346ff7f2946",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-color"
+      ],
+      "behaviour": "Scrollbar Colors: the scrollbar-color property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-color",
+        "clause_index": 36,
+        "clause_sha256": "d346ff7f294680f54f98906b4a002997508e4e3affe9fa50ae21d554967168cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-color-clause-3f36f71c9c9c",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-color"
+      ],
+      "behaviour": "Scrollbar Colors: the scrollbar-color property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-color",
+        "clause_index": 37,
+        "clause_sha256": "3f36f71c9c9c01268390439c31c997939f5cfbd28161dbedcc71e8ca1c5ed595"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-width",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scrollbar Thickness: the scrollbar-width property.",
+      "locator": {
+        "section_id": "scrollbar-width",
+        "text_sha256": "d32a765af8b4c3e6029a7f8a1edf1cda5d4d9ef5704e87f159324497b07b2c64"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scrollbars-1.scrollbar-width-clause-cca2516ebb1d",
+        "css-scrollbars-1.scrollbar-width-clause-e28cd4ae1141",
+        "css-scrollbars-1.scrollbar-width-clause-17741fa4e637",
+        "css-scrollbars-1.scrollbar-width-clause-f7ecdc783b6a",
+        "css-scrollbars-1.scrollbar-width-clause-b0d72479979e",
+        "css-scrollbars-1.scrollbar-width-clause-afdfb1297bcd",
+        "css-scrollbars-1.scrollbar-width-clause-107abfd94a32",
+        "css-scrollbars-1.scrollbar-width-clause-574ce7b8cdc0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-width-clause-cca2516ebb1d",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-width"
+      ],
+      "behaviour": "Scrollbar Thickness: the scrollbar-width property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-width",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-width-clause-e28cd4ae1141",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-width"
+      ],
+      "behaviour": "Scrollbar Thickness: the scrollbar-width property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-width",
+        "clause_index": 19,
+        "clause_sha256": "e28cd4ae1141782942573d92525dff9197ee103f9d95d2ca3292b4fe704ad932"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-width-clause-17741fa4e637",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-width"
+      ],
+      "behaviour": "Scrollbar Thickness: the scrollbar-width property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-width",
+        "clause_index": 22,
+        "clause_sha256": "17741fa4e637d15a10b905799420328ed57abc922a43bf7a3244dcae62c6f5d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-width-clause-f7ecdc783b6a",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-width"
+      ],
+      "behaviour": "Scrollbar Thickness: the scrollbar-width property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-width",
+        "clause_index": 27,
+        "clause_sha256": "f7ecdc783b6a2bfd62bf79b0fbf933ab7293a3622951a1fa5f6d129ff9039d84"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-width-clause-b0d72479979e",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-width"
+      ],
+      "behaviour": "Scrollbar Thickness: the scrollbar-width property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-width",
+        "clause_index": 29,
+        "clause_sha256": "b0d72479979e3b9fbc89b99d1cb33d8655319ba3ac4873a9a959c076db6ffbb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-width-clause-afdfb1297bcd",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-width"
+      ],
+      "behaviour": "Scrollbar Thickness: the scrollbar-width property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-width",
+        "clause_index": 32,
+        "clause_sha256": "afdfb1297bcdf1e0caf826f238c0dff2d2a7466d06e49a13fa9afa6f20661667"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-width-clause-107abfd94a32",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-width"
+      ],
+      "behaviour": "Scrollbar Thickness: the scrollbar-width property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-width",
+        "clause_index": 35,
+        "clause_sha256": "107abfd94a322bddec903c6f98c3a7864c72a4cf40f4bd44690575291486c370"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.scrollbar-width-clause-574ce7b8cdc0",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scrollbar-width"
+      ],
+      "behaviour": "Scrollbar Thickness: the scrollbar-width property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-width",
+        "clause_index": 36,
+        "clause_sha256": "574ce7b8cdc0ed974c533c1849d217cf0f8bf20f0cb942ffe172c6b7d1f31a10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-conformance",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-conventions",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scrollbars-1.w3c-conventions-clause-5c98c879f070",
+        "css-scrollbars-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-conformance-classes",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scrollbars-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-scrollbars-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-partial",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scrollbars-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-conform-future-proofing",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-testing",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scrollbars-1.w3c-testing-clause-1e0fff369221",
+        "css-scrollbars-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-cr-exit-criteria",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scrollbars-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+        "css-scrollbars-1.w3c-cr-exit-criteria-clause-ea752775913a",
+        "css-scrollbars-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+        "css-scrollbars-1.w3c-cr-exit-criteria-clause-b67129724911",
+        "css-scrollbars-1.w3c-cr-exit-criteria-clause-833729d43f23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-cr-exit-criteria-clause-ea752775913a",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-cr-exit-criteria-clause-b67129724911",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.w3c-cr-exit-criteria-clause-833729d43f23",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 10,
+        "clause_sha256": "833729d43f239b3deb57bcaaf1c29d2f077e86aad8b396f8458fa182e4db8d99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.property-index",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "715f3ee4005a55925869dd7c43c5273bd2b51a8a205346381ee026817a6827bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-scrollbars-1.property-index-clause-674d5fa645b0",
+        "css-scrollbars-1.property-index-clause-73273ad0f997"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.property-index-clause-674d5fa645b0",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 15,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.property-index-clause-73273ad0f997",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 17,
+        "clause_sha256": "73273ad0f9977c70d312f5117f301ac9839f26421f6b0a0eec8ab9ba20b7d635"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-scrollbars-1.title",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Scrollbars Styling Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "6d98fe2337c14d1d1073c01140d5260de5237b325096fe3ce0ff0571d0abdeb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.abstract",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "f2a68746ad5c5a16a6b8c95c1f9d9e86b575354eb2204e1a7047813bf5bd9789"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.status",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "5c690198e77eba276d9c23fcefb73f5925b5b5732d8c77482f68bac8338e3b7d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.contents",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "d67c5b88fe07375876ab5032a07227d17cbee060215f2b5858aa579ffa08b715"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.intro",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "587e69c446245848a3a9fca0f6fe7f682cb1c11d38885daf48ac5750e6a2edcf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.scope",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "scope"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Scope.",
+      "locator": {
+        "section_id": "scope",
+        "text_sha256": "09b127d4b30643877fb8630a3c97e0c815fef11301f8e43132652faede6ef33f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.out-of-scope",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "out-of-scope"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1.1. Out Of Scope.",
+      "locator": {
+        "section_id": "out-of-scope",
+        "text_sha256": "0c55079aeecc8bcaf8766635f27f0291895cf6548a68bdcf54e4100bc1e241da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.values",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.2. Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.acknowledgments",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix A. Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "35751a23b80c39ae541dc02ee8294e53920012bb4e572aab094699e44f77174b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.changes",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix B. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "a519e6832178d039a0e49fbae4b7670d4e0c7f3173854503affad7f65022158f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.changes-since-2021-12-02",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "changes-since-2021-12-02"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 2021-12-02 Working Draft.",
+      "locator": {
+        "section_id": "changes-since-2021-12-02",
+        "text_sha256": "c52b2abf44355a2338ee8f915198d0aea15a2735c99ac7747e0070abc34c9d57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.changes-since-2021-08-05",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "changes-since-2021-08-05"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes from the 2021-08-05 Working Draft.",
+      "locator": {
+        "section_id": "changes-since-2021-08-05",
+        "text_sha256": "1a34982628503bfc7f3ae9d2e4b0ace3214ab2f6790352054c2758400529874b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.changes-since-2018-09-25",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "changes-since-2018-09-25"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes from the 2018-09-25 First Public Working Draft.",
+      "locator": {
+        "section_id": "changes-since-2018-09-25",
+        "text_sha256": "c68f14f1c60274f93d57971ed3ae4f87f7e7464953bd2765aa5447db6b6b78ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.security-privacy-considerations",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "security-privacy-considerations"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix C. Considerations for Security and Privacy.",
+      "locator": {
+        "section_id": "security-privacy-considerations",
+        "text_sha256": "a519e6832178d039a0e49fbae4b7670d4e0c7f3173854503affad7f65022158f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.security-considerations",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "security-considerations"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Considerations for Security.",
+      "locator": {
+        "section_id": "security-considerations",
+        "text_sha256": "fe549a6b467b9c645ade062c0b909798588124160e23ce112430748b775e0e9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.privacy-considerations",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "privacy-considerations"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Considerations for Privacy.",
+      "locator": {
+        "section_id": "privacy-considerations",
+        "text_sha256": "f796c767ad09cfe4fae5e389881116918f23a1cd3a01fd9997114954a1845b20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.security-privacy-self-review",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "security-privacy-self-review"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Self-review questionaire.",
+      "locator": {
+        "section_id": "security-privacy-self-review",
+        "text_sha256": "e2e226f64e0c03c9d8721cfdf5185f16b1addff592bff248f205858a7b7d2566"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.accessibility-considerations",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "accessibility-considerations"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix D. Considerations for accessibility.",
+      "locator": {
+        "section_id": "accessibility-considerations",
+        "text_sha256": "bbc14dbb7dc764b224686d332c91b19912eaf203765934b4e2f5377abbdca41c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.index",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.index-defined-here",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "0acf989fb5a0249c9862585fd99c63b8f9a3071cfec265702e2e000638f2dbbd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.index-defined-elsewhere",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "7051af8185ba8386d328d1fcecf630d4f4cf6709e312eb089126ea983eaa7f3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.references",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.normative",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "57365df7a20200fbd8ab55f727ecdd950ff65ab8dea4f14f4c18a818bc9fe360"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-scrollbars-1.informative",
+      "family": "css-scrollbars-1",
+      "source_id": "css-scrollbars-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "6ea7fa0a95dc264233b4c6c00ba50a2fba8ea2860eedc463367df02c14300059"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

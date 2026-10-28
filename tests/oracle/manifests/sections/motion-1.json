@@ -1,0 +1,584 @@
+{
+  "schema_version": 1,
+  "source_id": "motion-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Motion Path Module Level 1",
+      "level": 1,
+      "text_sha256": "431d144a4be9907885e4fde550f85b85a9badbf0d08de1ee8bdc1db6bb6735aa",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "fe86ec94ab90367a09d6def3af29e90b3b5ed09090f4919b8bcb1e39564fd654",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "4ac48878a67fbf52fa33dd4186673c86bbbe675f3476794b95a7de07795fea17",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "1ad1ddef379a20015d09c68442990b335a23b9c2d8d7527d2a4cd58987aff42b",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "acb47ae01bdd90521b99bd5a539a4cf51f999c53db21bd25207222edd2de9da4",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module interactions",
+      "level": 3,
+      "text_sha256": "c29165a4816a53c04cda820390a3cdae7001de4203f914711e1023d461d82f32",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.placement"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Values",
+      "level": 3,
+      "text_sha256": "c618d7cb269130ba4221f7726ba158f7d2ef459a5bab8caf43a7bf7a79fc32ac",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.values"
+        ]
+      }
+    },
+    {
+      "id": "motion-paths-overview",
+      "title": "2. Motion Paths",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.motion-paths-overview"
+        ]
+      }
+    },
+    {
+      "id": "offset-path-property",
+      "title": "2.1. Defining A Path: the offset-path property",
+      "level": 3,
+      "text_sha256": "7a929bb824a7ca9fea198ac7b829e17948634dbc9c496ffaa1bcbcaad5c6cd2b",
+      "clause_count": 146,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.offset-path-property",
+          "motion-1.offset-path-property-clause-cca2516ebb1d",
+          "motion-1.offset-path-property-clause-674d5fa645b0",
+          "motion-1.offset-path-property-clause-1cf6a89b324f",
+          "motion-1.offset-path-property-clause-e52f528b2f5d",
+          "motion-1.offset-path-property-clause-1ec5d09a7863",
+          "motion-1.offset-path-property-clause-36c00cfea0bc",
+          "motion-1.offset-path-property-clause-88609667703a",
+          "motion-1.offset-path-property-clause-c24b7a9ef239",
+          "motion-1.offset-path-property-clause-48400b8bd74a"
+        ]
+      }
+    },
+    {
+      "id": "ray-function",
+      "title": "2.1.1. The ray() Function",
+      "level": 4,
+      "text_sha256": "fdbd856be0c5800a555e19748f69c3df64357857d723ad076f8727a44612d269",
+      "clause_count": 78,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.ray-function"
+        ]
+      }
+    },
+    {
+      "id": "example-shape",
+      "title": "2.1.2. Examples Of <basic-shape> Positioning",
+      "level": 4,
+      "text_sha256": "ff3db8c6314702e292bf85c8a184894ec5ac155f4331d70e7f11c8997ef8a0e5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.example-shape"
+        ]
+      }
+    },
+    {
+      "id": "example-coord",
+      "title": "2.1.3. Examples of <coord-box> Positioning",
+      "level": 4,
+      "text_sha256": "c6b10e7f631783a08d756292044f8ee2e02f1ddae55e42bafd32f5710cbf6276",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.example-coord"
+        ]
+      }
+    },
+    {
+      "id": "offset-distance-property",
+      "title": "2.2. Position On The Path: the offset-distance property",
+      "level": 3,
+      "text_sha256": "42eb218aa54f26569efddee38b7aa6a3886f71312a8507397e4a189d9b77f9f4",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.offset-distance-property",
+          "motion-1.offset-distance-property-clause-cca2516ebb1d",
+          "motion-1.offset-distance-property-clause-986b7b70ef39",
+          "motion-1.offset-distance-property-clause-674d5fa645b0",
+          "motion-1.offset-distance-property-clause-897628a10cb3",
+          "motion-1.offset-distance-property-clause-febaca200a93",
+          "motion-1.offset-distance-property-clause-39324c0eb5c7",
+          "motion-1.offset-distance-property-clause-0a6ba9f3aaa3",
+          "motion-1.offset-distance-property-clause-4384bcb7313d"
+        ]
+      }
+    },
+    {
+      "id": "path-distance",
+      "title": "2.2.1. Calculating the computed distance along a path",
+      "level": 4,
+      "text_sha256": "4789edce9dd1f78e39de07f1f5981bd0d637fd2eda9ca47f82702094bd6029ef",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.path-distance"
+        ]
+      }
+    },
+    {
+      "id": "offset-position-property",
+      "title": "2.3. Starting Point Of The Path: the offset-position property",
+      "level": 3,
+      "text_sha256": "1c7cd3acd1fa1a1e42c5aa10288b756a03abc32c706005dc7df6e0509ff67490",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.offset-position-property",
+          "motion-1.offset-position-property-clause-cca2516ebb1d",
+          "motion-1.offset-position-property-clause-ca448d8b09a0",
+          "motion-1.offset-position-property-clause-674d5fa645b0",
+          "motion-1.offset-position-property-clause-c6445f2148bd",
+          "motion-1.offset-position-property-clause-53240acbcb23",
+          "motion-1.offset-position-property-clause-8a103eb2b85f",
+          "motion-1.offset-position-property-clause-d852a42ad406",
+          "motion-1.offset-position-property-clause-ad1d89ba3032"
+        ]
+      }
+    },
+    {
+      "id": "offset-anchor-property",
+      "title": "2.4. The Element’s Anchor Point: the offset-anchor property",
+      "level": 3,
+      "text_sha256": "9f6e9f5cabe0bf4522edfecf9fcf7b582cec82ae7064f38edcf32761699d5477",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.offset-anchor-property",
+          "motion-1.offset-anchor-property-clause-cca2516ebb1d",
+          "motion-1.offset-anchor-property-clause-d45a284cde2e",
+          "motion-1.offset-anchor-property-clause-674d5fa645b0",
+          "motion-1.offset-anchor-property-clause-a9ae1969c825",
+          "motion-1.offset-anchor-property-clause-e70170274b80",
+          "motion-1.offset-anchor-property-clause-b74e916bc00d",
+          "motion-1.offset-anchor-property-clause-8ea11c816780",
+          "motion-1.offset-anchor-property-clause-eeb5a6e85d8f",
+          "motion-1.offset-anchor-property-clause-7f645ce2f7a9"
+        ]
+      }
+    },
+    {
+      "id": "offset-rotate-property",
+      "title": "2.5. Rotating To Match The Path: the offset-rotate property",
+      "level": 3,
+      "text_sha256": "6f824e7fdf7629b2e506ba7a8434ab9fc20819b58fd51722a2fecb499b0d37b2",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.offset-rotate-property",
+          "motion-1.offset-rotate-property-clause-cca2516ebb1d",
+          "motion-1.offset-rotate-property-clause-9b3c498dc1d9",
+          "motion-1.offset-rotate-property-clause-674d5fa645b0",
+          "motion-1.offset-rotate-property-clause-567bab25ef0a",
+          "motion-1.offset-rotate-property-clause-1d1d2dd3bee2",
+          "motion-1.offset-rotate-property-clause-0d807e23647a",
+          "motion-1.offset-rotate-property-clause-e6e4071726b3"
+        ]
+      }
+    },
+    {
+      "id": "offset-shorthand",
+      "title": "2.6. The offset Shorthand",
+      "level": 3,
+      "text_sha256": "d2c58914a563212041311e0d49bc0b3494456baf286a294c26b5c81ee7be2bf6",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.offset-shorthand",
+          "motion-1.offset-shorthand-clause-cca2516ebb1d",
+          "motion-1.offset-shorthand-clause-562553809907",
+          "motion-1.offset-shorthand-clause-b241cfc25dfe"
+        ]
+      }
+    },
+    {
+      "id": "transform",
+      "title": "2.7. Calculating The Offset Transform",
+      "level": 3,
+      "text_sha256": "cb74cf648b372301ca02f9fcc11169c8f3f97bd4eb717a4724dd587985e33a34",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.transform"
+        ]
+      }
+    },
+    {
+      "id": "paths",
+      "title": "3. Equivalent Paths For <basic-shape>",
+      "level": 2,
+      "text_sha256": "d1633c172f01fbd0c86567b7794fa88b8afc0cf84d56f545f196d8d9100ee58c",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.paths",
+          "motion-1.paths-clause-a727952068bc",
+          "motion-1.paths-clause-4bfb8e5adb0b"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "4. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "85b0bbcbc137ec4d540097af52b8b2bbdcc04575c1aed6ca81a878d6150d0b32",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "5. Security Considerations",
+      "level": 2,
+      "text_sha256": "7289157c42346d0cf51863e097d634af796b3f54eefe0fd72f7d5fb35b2fd504",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.security"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "97d320f2eee844df69c85c9249cc9fea216900af7cc7b720ff4fb5839131637f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20181218",
+      "title": "Changes since the 18 December 2018 Working Draft",
+      "level": 3,
+      "text_sha256": "2febd2d1dda5ef70e3847848b37b29f571ed8621b7a995e1b2e878cf8b094b07",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.changes-20181218"
+        ]
+      }
+    },
+    {
+      "id": "changes-20150409",
+      "title": "Changes since the 9 April 2015 First Public Working Draft",
+      "level": 3,
+      "text_sha256": "e8c9ae82d85531f7b755aba60697cab1ba70c789fb0144e68b9bc5b0618ee8e0",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.changes-20150409"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "d5eb6d8732e5c1c72713822b479d08f55a8002b3ed6c05cf43ef1f30bd940f10",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.w3c-conventions",
+          "motion-1.w3c-conventions-clause-5c98c879f070",
+          "motion-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.w3c-conformance-classes",
+          "motion-1.w3c-conformance-classes-clause-ff408372426c",
+          "motion-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.w3c-partial",
+          "motion-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.w3c-testing",
+          "motion-1.w3c-testing-clause-1e0fff369221",
+          "motion-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "1292d72bbb6623042fe1ac3b6f5cf97bf53fb24320be21cf5d8189dd1c3793b5",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "5299c2e30d7802edbf2cd94f96be16ad51633715c7390cffd12e012cbd3fa548",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "1df594ff2261f1dd2494e0fc0d2162333bd271b9a33e9e4859382d25d3d79154",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.import-637bec456d3e"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "6bd4525178d1c71c462f8b7da685c221900585083051d6882078da6425f82ff6",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "2676dc2444789a43b9c52056521265bca6977a28d981ce232e45d8306739a8a7",
+      "clause_count": 69,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.property-index",
+          "motion-1.property-index-clause-674d5fa645b0",
+          "motion-1.property-index-clause-d45a284cde2e",
+          "motion-1.property-index-clause-986b7b70ef39",
+          "motion-1.property-index-clause-ca448d8b09a0",
+          "motion-1.property-index-clause-9b3c498dc1d9"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "2599dc184af1566baadadc9a2fd373884b61d1fd280b28e87df61d28fccda285",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "motion-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

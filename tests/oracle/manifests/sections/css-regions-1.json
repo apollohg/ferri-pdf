@@ -1,0 +1,877 @@
+{
+  "schema_version": 1,
+  "source_id": "css-regions-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Regions Module Level 1",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.title"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C Working Draft, 9 October 2014",
+      "level": 2,
+      "text_sha256": "da941fef37b218c7df70b7a6694b62c109628247ee0eaf17086e7f6ca05f188e",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.subtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "3d773691a64c34358d4109fffba1f3dc453fe5d0de6c0621eab09ddd81192b0e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "1d8a132fd55a27feff63ee599f7c0678f08523ca88f441b1e8aa496fe38e246a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "b3b72e719d296b906f77b33513698a1bacd43324970a4d4630eafaee03feb3d6",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "55e22f11ffbad6362873815e7f117f564eba65fb8d57f72e1bc6f1dfc748b75f",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.introduction"
+        ]
+      }
+    },
+    {
+      "id": "css-regions-concepts",
+      "title": "2. CSS Regions concepts",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.css-regions-concepts"
+        ]
+      }
+    },
+    {
+      "id": "regions",
+      "title": "2.1. Regions",
+      "level": 3,
+      "text_sha256": "23f125afb6384af8e11e299c9691b3888030e9f7f2b9d5fbf90ef5709091768c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.regions"
+        ]
+      }
+    },
+    {
+      "id": "region-chain-section",
+      "title": "2.2. Region chain",
+      "level": 3,
+      "text_sha256": "71449360391056a74bba2296e3889407011252d2ed73b7ce7ca841a9bdba3fa8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.region-chain-section"
+        ]
+      }
+    },
+    {
+      "id": "named-flow-section",
+      "title": "2.3. Named flows",
+      "level": 3,
+      "text_sha256": "1f90401c140faa5e7d3acac6cc28ea03a6928c866a3ec0a7564032df941f0b6e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.named-flow-section"
+        ]
+      }
+    },
+    {
+      "id": "regions-flow-breaking-rules",
+      "title": "2.4. Regions flow breaking rules",
+      "level": 3,
+      "text_sha256": "aa1d63be5db8666a1704a983a0d0f58fa2b172eb39fa1940fecc3d61bb82ab57",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.regions-flow-breaking-rules"
+        ]
+      }
+    },
+    {
+      "id": "properties",
+      "title": "3. Properties",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.properties"
+        ]
+      }
+    },
+    {
+      "id": "the-flow-into-property",
+      "title": "3.1. The flow-into property",
+      "level": 3,
+      "text_sha256": "f03104caccf59657b698ac27cfebd35b8b7cf6f2910e2f4e83c1d12eb32a934e",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.the-flow-into-property",
+          "css-regions-1.the-flow-into-property-clause-cca2516ebb1d",
+          "css-regions-1.the-flow-into-property-clause-5e91a307fca0",
+          "css-regions-1.the-flow-into-property-clause-f7df513c144d",
+          "css-regions-1.the-flow-into-property-clause-d978a14bfee8",
+          "css-regions-1.the-flow-into-property-clause-b9c482a2dd0f",
+          "css-regions-1.the-flow-into-property-clause-fa5657a6192e",
+          "css-regions-1.the-flow-into-property-clause-0cf96a2eb950"
+        ]
+      }
+    },
+    {
+      "id": "flow-from",
+      "title": "3.2. The flow-from property",
+      "level": 3,
+      "text_sha256": "4a30d84ac0f59dfcc4b3a35fac078ed3d0b73aa0295ae6457a278c3af4058997",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.flow-from",
+          "css-regions-1.flow-from-clause-56bb7ef5f147",
+          "css-regions-1.flow-from-clause-cca2516ebb1d",
+          "css-regions-1.flow-from-clause-2ec2f2963922",
+          "css-regions-1.flow-from-clause-ce4dcd506b92"
+        ]
+      }
+    },
+    {
+      "id": "circular-dependencies",
+      "title": "3.2.1. Cycle Detection",
+      "level": 4,
+      "text_sha256": "4240170be20269f6c991100d4a7db8efd56ebae1a8d1a371b0b38942c4122263",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.circular-dependencies"
+        ]
+      }
+    },
+    {
+      "id": "fragmenting-regions",
+      "title": "3.2.2. Nested fragmentation contexts",
+      "level": 4,
+      "text_sha256": "3bde34ccacf47657b40b2301d81b8301f3664d28b2afb219c14f65c1e29ff7f7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.fragmenting-regions",
+          "css-regions-1.fragmenting-regions-clause-a3fd5395eec0"
+        ]
+      }
+    },
+    {
+      "id": "region-flow-break",
+      "title": "3.3. Region flow break properties: break-before, break-after, break-inside",
+      "level": 3,
+      "text_sha256": "ccca6996230c5946df2d3953360b7d9026928bd634ae4c50e8f2e8a4248ae6b7",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.region-flow-break",
+          "css-regions-1.region-flow-break-clause-818ef70d54b7",
+          "css-regions-1.region-flow-break-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "the-region-fragment-property",
+      "title": "3.4. The region-fragment property",
+      "level": 3,
+      "text_sha256": "c7a265e1feac5d13b8e3ea9133a3ae8b0aaaf0153ce80e78e8acda399536498f",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.the-region-fragment-property",
+          "css-regions-1.the-region-fragment-property-clause-cca2516ebb1d",
+          "css-regions-1.the-region-fragment-property-clause-77830640eaa5",
+          "css-regions-1.the-region-fragment-property-clause-9913113a4ff3"
+        ]
+      }
+    },
+    {
+      "id": "cssom_view_and_css_regions",
+      "title": "4. CSSOM",
+      "level": 2,
+      "text_sha256": "1a2090c7c28708658d492f9238058406b5af9fab7b1749412782cc68a7f5290b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.cssom-view-and-css-regions",
+          "css-regions-1.cssom-view-and-css-regions-clause-1a2090c7c287"
+        ]
+      }
+    },
+    {
+      "id": "the-namedflow-interface",
+      "title": "4.1. The NamedFlow interface",
+      "level": 3,
+      "text_sha256": "72821204ef252a14c442be0dd6a2a0c30347b7c2d4656d178af92434946a4357",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.the-namedflow-interface",
+          "css-regions-1.the-namedflow-interface-clause-88972c09a8d0"
+        ]
+      }
+    },
+    {
+      "id": "the-region-interface",
+      "title": "4.2. The Region interface",
+      "level": 3,
+      "text_sha256": "3c6be640ffee11c43404c0b073fd71d644d795ba8c87f36ed111b94e9b09e884",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.the-region-interface",
+          "css-regions-1.the-region-interface-clause-fad90b8f0fb1",
+          "css-regions-1.the-region-interface-clause-3062dd93210f"
+        ]
+      }
+    },
+    {
+      "id": "named-flow-events",
+      "title": "4.3. Named flow events",
+      "level": 3,
+      "text_sha256": "af18fdf472c6f16544bc3ebe5194d0a2a6348ebef2daf06d0759f6c5d003b290",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.named-flow-events"
+        ]
+      }
+    },
+    {
+      "id": "cssomview-and-regions",
+      "title": "4.4. Clarifications on pre-existing APIs",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.cssomview-and-regions"
+        ]
+      }
+    },
+    {
+      "id": "cssomview-getclientrects-and-getboundingclientrect",
+      "title": "4.4.1. getClientRects() and getBoundingClientRect()",
+      "level": 4,
+      "text_sha256": "20f334055c317309fe1f4862a7203c073f817b88ee895e61658035ff063f0e89",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.cssomview-getclientrects-and-getboundingclientrect",
+          "css-regions-1.cssomview-getclientrects-and-getboundingclientrect-clause-2904e94494ef"
+        ]
+      }
+    },
+    {
+      "id": "cssomview-offset-attributes",
+      "title": "4.4.2. offsetTop, offsetLeft, offsetWidth, offsetHeight and offsetParent",
+      "level": 4,
+      "text_sha256": "1bf1c2ceba9ce466564e5cda5cc601725201181dd7da841d55f53efcd688f67d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.cssomview-offset-attributes",
+          "css-regions-1.cssomview-offset-attributes-clause-1bf1c2ceba9c"
+        ]
+      }
+    },
+    {
+      "id": "multi-column-regions",
+      "title": "5. Multi-column regions",
+      "level": 2,
+      "text_sha256": "043a7374440c68df798ab78c60021524555583d02ea671e638e88d29d3514e91",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.multi-column-regions",
+          "css-regions-1.multi-column-regions-clause-498ef550e83e"
+        ]
+      }
+    },
+    {
+      "id": "pseudo_elements",
+      "title": "6. Pseudo-elements",
+      "level": 2,
+      "text_sha256": "ddf8a791b41a9a5123eb9ce1ef5189bced6cc0b5725ef7180a68b4cd306cf40f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.pseudo-elements"
+        ]
+      }
+    },
+    {
+      "id": "regions-visual-formatting-details",
+      "title": "7. Regions visual formatting details",
+      "level": 2,
+      "text_sha256": "0fd3d6ac3790265666d2e373fb3881b114064a1bbb9bbc3f367d761774fa330f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.regions-visual-formatting-details"
+        ]
+      }
+    },
+    {
+      "id": "processing-model",
+      "title": "7.1. Processing model",
+      "level": 3,
+      "text_sha256": "375af64bf344f4c6220b557f5569731061c733f5b4c98c18a6aee98587895d9d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.processing-model"
+        ]
+      }
+    },
+    {
+      "id": "regions-flow-content-box",
+      "title": "7.2. The Region Flow Content Box (RFCB)",
+      "level": 3,
+      "text_sha256": "8e268c82815440f26749049525f4bb5ea5f61d619df01c5f441162a49c98a31f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.regions-flow-content-box",
+          "css-regions-1.regions-flow-content-box-clause-c6cdc6fba141"
+        ]
+      }
+    },
+    {
+      "id": "rfcb-width-resolution",
+      "title": "7.2.1. RFCB width resolution",
+      "level": 4,
+      "text_sha256": "535518d9548631615f3e1ceed9d06a177bfc68e58eaaa7fe9a50b44df5fd4458",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.rfcb-width-resolution"
+        ]
+      }
+    },
+    {
+      "id": "regions-visual-formatting-steps",
+      "title": "7.3. Regions visual formatting steps",
+      "level": 3,
+      "text_sha256": "1b8dd438cad58d5ff69e638f024e9dccfc6aa9659cf6f39985cb4ab90253b4c4",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.regions-visual-formatting-steps"
+        ]
+      }
+    },
+    {
+      "id": "rfcb-flow-fragment-height-resolution",
+      "title": "7.3.1. Step 1: RFCB flow fragment height resolution",
+      "level": 4,
+      "text_sha256": "bc23e9c6e504eebe3fe0b1251ca7f48698fbc20470722ac97ff8f3502542fe7a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.rfcb-flow-fragment-height-resolution"
+        ]
+      }
+    },
+    {
+      "id": "rfcb-flow-fragment-height-resolution-phase-1",
+      "title": "7.3.1.1. RFCB flow fragment height resolution, Phase 1",
+      "level": 5,
+      "text_sha256": "bcfb15492d09666453786b3fd77d1be3fe44f745d20850e67f75789a66bef21c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.rfcb-flow-fragment-height-resolution-phase-1"
+        ]
+      }
+    },
+    {
+      "id": "rfcb-flow-fragment-height-resolution-phase-2",
+      "title": "7.3.1.2. RFCB flow fragment height resolution, Phase 2",
+      "level": 5,
+      "text_sha256": "1cd64a570d7a3147bead55a3e6c24682012b65263511f2b0fb4f3c0b5be7bfa0",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.rfcb-flow-fragment-height-resolution-phase-2",
+          "css-regions-1.rfcb-flow-fragment-height-resolution-phase-2-clause-13957619eef9"
+        ]
+      }
+    },
+    {
+      "id": "regions-boxes-layout",
+      "title": "7.3.2. Step 2: region boxes layout",
+      "level": 4,
+      "text_sha256": "6e5d117d5a3862d9ee3416896c713e528d6aa941237dc4747a66f01e44f112d4",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.regions-boxes-layout",
+          "css-regions-1.regions-boxes-layout-clause-60a976de0ecd",
+          "css-regions-1.regions-boxes-layout-clause-335463fc3621"
+        ]
+      }
+    },
+    {
+      "id": "named-flows-layout",
+      "title": "7.3.3. Step 3: named flows layout",
+      "level": 4,
+      "text_sha256": "17af0182c1c287d9dfd6cf42874345150639b8d3dd5ed31a8ddd24f8bf659d0a",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.named-flows-layout"
+        ]
+      }
+    },
+    {
+      "id": "regions-visual-formatting-implementation-note",
+      "title": "7.4. Regions visual formatting: implementation note",
+      "level": 3,
+      "text_sha256": "1233c8d5ff3152e718c9bf068c58d1be715fbe13515235c6fa53f2f45f354f2d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.regions-visual-formatting-implementation-note",
+          "css-regions-1.regions-visual-formatting-implementation-note-clause-1233c8d5ff31"
+        ]
+      }
+    },
+    {
+      "id": "regions-visual-formatting-examples",
+      "title": "7.5. Regions visual formatting example",
+      "level": 3,
+      "text_sha256": "02edd04117c1c0c14fef8963bc4e41f28771aff0ad521362ecd4cc420adc9e1c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.regions-visual-formatting-examples"
+        ]
+      }
+    },
+    {
+      "id": "step1-phase1-example",
+      "title": "7.5.1. Step 1 - Phase 1: Laying out RFCBs with used height of zero",
+      "level": 4,
+      "text_sha256": "903ac419e4d59541889f839b200572e519dc5bb5587bb3646e2e83d05dfbb6a0",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.step1-phase1-example"
+        ]
+      }
+    },
+    {
+      "id": "step1-phase2-example",
+      "title": "7.5.2. Step 1 - Phase 2: Layout flow to compute the RFCBs' flow fragments heights",
+      "level": 4,
+      "text_sha256": "0dde579a7faee211989acfb16ed7b81d397f35fe5787207787729393da6d7ee4",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.step1-phase2-example"
+        ]
+      }
+    },
+    {
+      "id": "step2-example",
+      "title": "7.5.3. Step 2: Layout document and regions without named flows",
+      "level": 4,
+      "text_sha256": "1db40340d9691a1e5ee165b156db28590c041b73752060dce07dec665d8ff8f6",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.step2-example"
+        ]
+      }
+    },
+    {
+      "id": "step3-example",
+      "title": "7.5.4. Step 3: named flows layout",
+      "level": 4,
+      "text_sha256": "4e3db6c574effdf4f594ef9ecf261727f8d3a48ce409905e8a01b5185a25f3b8",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.step3-example"
+        ]
+      }
+    },
+    {
+      "id": "relation-to-document-events",
+      "title": "8. Relation to document events",
+      "level": 2,
+      "text_sha256": "a5299670116674c2a1625c0445e3e75087ca02625351bf92c1ff12fd9332df89",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.relation-to-document-events"
+        ]
+      }
+    },
+    {
+      "id": "relation-to-other-specifications",
+      "title": "9. Relation to other specifications",
+      "level": 2,
+      "text_sha256": "8efc1958324415b76cc783944c353c6dab12601e4af9181d363f018b5f67a0d7",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.relation-to-other-specifications",
+          "css-regions-1.relation-to-other-specifications-clause-6fa438fbfb32"
+        ]
+      }
+    },
+    {
+      "id": "usecases",
+      "title": "10. Use Cases",
+      "level": 2,
+      "text_sha256": "b9d28e7d05da30a17cab245af37f2a866f719216acefb048b9cd8368224592b6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.usecases"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "11. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes_from_Feb_18_2014",
+      "title": "11.1. Changes from February 18th 2014 version",
+      "level": 3,
+      "text_sha256": "3fd115960337768e6910f7c1765add2597a77e8ac287d59aaa42c08ea49705e6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.changes-from-feb-18-2014"
+        ]
+      }
+    },
+    {
+      "id": "changes_from_May_28_2013",
+      "title": "11.2. Changes from May 28th 2013 version",
+      "level": 3,
+      "text_sha256": "d3d7ed9b5372835199f950978683bcd26f7a8627a533353342a12fa50dbf544a",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.changes-from-may-28-2013"
+        ]
+      }
+    },
+    {
+      "id": "changes_from_Aug_28_2012",
+      "title": "11.3. Changes from August 28th 2012 version",
+      "level": 3,
+      "text_sha256": "0f7cdb0569282d0b402b45b19546eef954f7262443b082e5c851f6aa6ad22971",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.changes-from-aug-28-2012"
+        ]
+      }
+    },
+    {
+      "id": "changes_from_May_03_2012",
+      "title": "11.4. Changes from May 3rd 2012 version",
+      "level": 3,
+      "text_sha256": "cd8099db93a5074681e14132302a1fdb1bad4c5f2bc73e33db33e949d7ba6443",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.changes-from-may-03-2012"
+        ]
+      }
+    },
+    {
+      "id": "older_changes",
+      "title": "11.5. Older Changes",
+      "level": 3,
+      "text_sha256": "12bcca6b10d5bab45c6aa79bd4605336af3359b883eb60232cdea6fd7ffc5058",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.older-changes"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "7b4606c56e02614dff442ef43a97c09924f2ef539ace79d23a72f6a22d4646c8",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.conformance"
+        ]
+      }
+    },
+    {
+      "id": "conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e1ee93bc8e4af9acf7083acfc75714b46c1c4685bdf761ebdfd63a4b9d6e8cad",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.conventions",
+          "css-regions-1.conventions-clause-6abbe28898f0",
+          "css-regions-1.conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.conformance-classes",
+          "css-regions-1.conformance-classes-clause-ff408372426c",
+          "css-regions-1.conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.partial",
+          "css-regions-1.partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "experimental",
+      "title": "Experimental implementations",
+      "level": 3,
+      "text_sha256": "d65302001727731f480732eea29f70c56e93286eee5ffd392400e6a470f873c7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.experimental"
+        ]
+      }
+    },
+    {
+      "id": "testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.testing",
+          "css-regions-1.testing-clause-1e0fff369221",
+          "css-regions-1.testing-clause-c7ed0d126be3"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "dfb0bf575ca7e249bc6cdbcd638c96d8ce7e5eefed6631af0eaf3d9f16ef1972",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.import-8195a7ebd6e3"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "2a969ab9fa53f5ab72c96b5c0dd17426a7b8f3bc9bee878f56402aa42cd0f2b6",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "cc31fe36aa4d5a96a74829c633c9f91c38e85d2d3fa625402d2f026b5e5a59cb",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.index"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "69b99b1d2a2f649acbe1027d77228720e2e8d2675567d532c6d1d59f062c834e",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-regions-1.property-index",
+          "css-regions-1.property-index-clause-22edaa34f875",
+          "css-regions-1.property-index-clause-56bb7ef5f147"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "source_id": "i18n-glossary",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Internationalization Glossary",
+      "level": 1,
+      "text_sha256": "22d60d93c7652004fba91f51f0d6a56ac64b4712f375d1f7799e06abc31c19ff",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "5bd904305bf5d5b927e9a99d75b484a78d904a659b7ec404ce89fea3b7f106a4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of This Document",
+      "level": 2,
+      "text_sha256": "9b6512cfc40da6d011987ab59c355edd91d5baed5b5837ff75cc5be2d802634d",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.sotd"
+        ]
+      }
+    },
+    {
+      "id": "table-of-contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "3c2f2685ce1cf11d0062e255597f6b1e7b33ad373afd7ca2c92c4b8b3971784c",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.table-of-contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "56d52541d6c3355c421de4e912cdd8951529e6d17737786890b7e7b58582a931",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.introduction"
+        ]
+      }
+    },
+    {
+      "id": "links",
+      "title": "2. Alphabetical links",
+      "level": 2,
+      "text_sha256": "73cf1f91025118c48f33835017564ed553da410348314e581cf634655dadd980",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.links"
+        ]
+      }
+    },
+    {
+      "id": "x3-glossary",
+      "title": "3. Glossary",
+      "level": 2,
+      "text_sha256": "d85651db51e1ced0ad54ce71130abcbbef8a9f71322076b0fb6af6764da7367b",
+      "clause_count": 149,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.x3-glossary",
+          "i18n-glossary.x3-glossary-clause-c382a182ffaa",
+          "i18n-glossary.x3-glossary-clause-9bddf43e32db",
+          "i18n-glossary.x3-glossary-clause-0bbdfdbe1884",
+          "i18n-glossary.x3-glossary-clause-cb497082e725",
+          "i18n-glossary.x3-glossary-clause-aca6e5d8f68e",
+          "i18n-glossary.x3-glossary-clause-30cf7b7544d9",
+          "i18n-glossary.x3-glossary-clause-d58f463c3290",
+          "i18n-glossary.x3-glossary-clause-bd5b9d2a4ddb",
+          "i18n-glossary.x3-glossary-clause-314917d3d2b0",
+          "i18n-glossary.x3-glossary-clause-05a753a110a6",
+          "i18n-glossary.x3-glossary-clause-54377e3c3862",
+          "i18n-glossary.x3-glossary-clause-c16406957e17",
+          "i18n-glossary.x3-glossary-clause-078eb538a873",
+          "i18n-glossary.x3-glossary-clause-7f41f4d25d53",
+          "i18n-glossary.x3-glossary-clause-4ae0c46cbcfa",
+          "i18n-glossary.x3-glossary-clause-74ec6060e3b5"
+        ]
+      }
+    },
+    {
+      "id": "howto",
+      "title": "A. How to use this glossary",
+      "level": 2,
+      "text_sha256": "b3ad871ebb00feba4e8f37b69aace7db4128679b24bc621f9408810670cde298",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.howto",
+          "i18n-glossary.howto-clause-04692ce63436"
+        ]
+      }
+    },
+    {
+      "id": "a-1-relationship-to-the-infra-standard",
+      "title": "A.1 Relationship to the Infra Standard",
+      "level": 3,
+      "text_sha256": "967f5e1ee0e408db6104fc3daa31a3e06a7ffee090f77b242e18be88dd2e5357",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.a-1-relationship-to-the-infra-standard",
+          "i18n-glossary.a-1-relationship-to-the-infra-standard-clause-3a1fa12ddc73"
+        ]
+      }
+    },
+    {
+      "id": "a-2-respec",
+      "title": "A.2 ReSpec",
+      "level": 3,
+      "text_sha256": "b687f2ef90314f17f8319e5337a62a2512d7cac597604d3be1226c9687202d54",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.a-2-respec"
+        ]
+      }
+    },
+    {
+      "id": "a-3-bikeshed",
+      "title": "A.3 Bikeshed",
+      "level": 3,
+      "text_sha256": "6b4b0c9d11e3660d05a4d88e91d6c55b19d4a0baf592b4ee250e81a00b566b08",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.a-3-bikeshed",
+          "i18n-glossary.a-3-bikeshed-clause-27ed09098768"
+        ]
+      }
+    },
+    {
+      "id": "b-references",
+      "title": "B. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.b-references"
+        ]
+      }
+    },
+    {
+      "id": "b-1-informative-references",
+      "title": "B.1 Informative references",
+      "level": 3,
+      "text_sha256": "1b8f1ed54c81874cc1f28e8596ef7a795b459cfefdf1926275cb4fc9c90239b7",
+      "clause_count": 334,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "i18n-glossary.b-1-informative-references"
+        ]
+      }
+    }
+  ]
+}

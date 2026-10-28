@@ -1,0 +1,990 @@
+{
+  "schema_version": 1,
+  "source_id": "css-page-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Paged Media Module Level 3",
+      "level": 1,
+      "text_sha256": "495310f0d3cf8a3d4566bc878dabc40220d88515e25abaae36a0690329e94fab",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "bc00d404ee1a81b33a4ab76de41f989769aa1dfb2b4689634a34582cdaf7e335",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "468302788e0c3518cc8c5ab0e73994d97d993f5587dcc1690e659aad6a4dc8ce",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "cf29f1d09159e2240868465e7dd4a8e976a569fa073e4fdeb7ee7b66b47ac961",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "6757f6999dc0f5e370958d63a3014a2df68afc511294a114e5d1f4f6d54f40f1",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.values"
+        ]
+      }
+    },
+    {
+      "id": "page-terms",
+      "title": "2. Page Terminology",
+      "level": 2,
+      "text_sha256": "c465d6f50aa4410ac09459f29b214aadf740eafcabfce225ba6c00ddb8740646",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-terms",
+          "css-page-3.page-terms-clause-c92c0883d89e",
+          "css-page-3.page-terms-clause-2d5aaf3650b0"
+        ]
+      }
+    },
+    {
+      "id": "page-model",
+      "title": "3. The Page Model",
+      "level": 2,
+      "text_sha256": "43a1d9ed8d747857b04c67caa333fff7a720f58340c6c1df604556df4dba968a",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-model",
+          "css-page-3.page-model-clause-c6aa7d20ec14",
+          "css-page-3.page-model-clause-8dc5ada3a528",
+          "css-page-3.foundation-page-size-environment"
+        ]
+      }
+    },
+    {
+      "id": "painting",
+      "title": "3.1. Page Backgrounds and Painting Order",
+      "level": 3,
+      "text_sha256": "f352b3456234d44c0e3d2c92ad946d5b11fedb7906fd142c3db2f27ecca2d5dd",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.painting",
+          "css-page-3.painting-clause-e73213a3b9df"
+        ]
+      }
+    },
+    {
+      "id": "content-outside-box",
+      "title": "3.2. Content outside the page box",
+      "level": 3,
+      "text_sha256": "231fe00c6af1031730721b0afe0ec08230bb1dfb47840ecb9416bc1ae0fcacd8",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.content-outside-box",
+          "css-page-3.content-outside-box-clause-0d248c08d39a",
+          "css-page-3.content-outside-box-clause-75e4f2a0b01d",
+          "css-page-3.content-outside-box-clause-ecaa7dfd2e79"
+        ]
+      }
+    },
+    {
+      "id": "progression",
+      "title": "3.3. Page Progression",
+      "level": 3,
+      "text_sha256": "0b63a9b218fb82174ce5179d2a8ad72be173cc905dd4baeedb2909f11dcac632",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.progression",
+          "css-page-3.progression-clause-32d10e3bb23d",
+          "css-page-3.progression-clause-5a2c59e8d306"
+        ]
+      }
+    },
+    {
+      "id": "page-selector-and-context",
+      "title": "4. Page Selectors and the Page Context",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-selector-and-context"
+        ]
+      }
+    },
+    {
+      "id": "at-page-rule",
+      "title": "4.1. The @page Rule",
+      "level": 3,
+      "text_sha256": "cee3247116b9e05a1b08d0f577a724c01aee1d114aa196ba99a014c7c9d43341",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.at-page-rule"
+        ]
+      }
+    },
+    {
+      "id": "page-selectors",
+      "title": "4.2. Page selectors",
+      "level": 3,
+      "text_sha256": "fe25d7e2dcd182acafada2306d7470b878e9844af34efc0c7511a2300fcb59f2",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-selectors",
+          "css-page-3.page-selectors-clause-6080b5205311"
+        ]
+      }
+    },
+    {
+      "id": "spread-pseudos",
+      "title": "4.2.1. Spread pseudo-classes: :left, :right",
+      "level": 4,
+      "text_sha256": "b1c185302859aac57f7fe775d9a97cd7b2e23cb5fa6b1de8ecabe9d078a40ccb",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.spread-pseudos",
+          "css-page-3.spread-pseudos-clause-f543f8257dcc"
+        ]
+      }
+    },
+    {
+      "id": "first-pseudo",
+      "title": "4.2.2. First-page pseudo-class: :first",
+      "level": 4,
+      "text_sha256": "ea34605a0581fd184d1e6fada9edce5f4762f8186e9165747849377a564ee528",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.first-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "blank-pseudo",
+      "title": "4.2.3. Blank-page pseudo-class: :blank",
+      "level": 4,
+      "text_sha256": "530247147aeac436cdcf286330062dd683292c79c846c4c2a773111500259d85",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.blank-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "syntax-page-selector",
+      "title": "4.3. @page rule grammar",
+      "level": 3,
+      "text_sha256": "765a1ddfd61be185af9e62c55dad4e572d9d234c8c2c442042de80c0ddd83c4a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.syntax-page-selector"
+        ]
+      }
+    },
+    {
+      "id": "cascading-and-page-context",
+      "title": "4.4. Cascading in the page context",
+      "level": 3,
+      "text_sha256": "42d2ae204eb712d7e0fb2835ecc59fc429fd22427796d708b6370d0d0a7e8a9e",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.cascading-and-page-context",
+          "css-page-3.cascading-and-page-context-clause-2a4580477aa2",
+          "css-page-3.cascading-and-page-context-clause-d9a88e3715f5"
+        ]
+      }
+    },
+    {
+      "id": "margin-boxes",
+      "title": "5. Page-Margin Boxes",
+      "level": 2,
+      "text_sha256": "8baf6c37f4c2c72147ab903e0de720fe95aa12df7af9e56514559c33608ce87d",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.margin-boxes"
+        ]
+      }
+    },
+    {
+      "id": "margin-at-rules",
+      "title": "5.1. At-rules for page-margin boxes",
+      "level": 3,
+      "text_sha256": "2a5f3ba697490964020f05f1679fdf9decc172206003ed5a65660c84b5610845",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.margin-at-rules",
+          "css-page-3.margin-at-rules-clause-2e6cfbb1e12d"
+        ]
+      }
+    },
+    {
+      "id": "populating-margin-boxes",
+      "title": "5.2. Populating page-margin boxes",
+      "level": 3,
+      "text_sha256": "20defec750aff99c962a5d73d4a291f0ad29181a2d6265e3ee406d5ea6d0c6cc",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.populating-margin-boxes",
+          "css-page-3.populating-margin-boxes-clause-6e2adf5dc66d"
+        ]
+      }
+    },
+    {
+      "id": "margin-dimension",
+      "title": "5.3. Computing Page-margin Box Dimensions",
+      "level": 3,
+      "text_sha256": "a3df70cb954b9b0f423ec7d8a48e394f333cbb618ed795f93318d2bb7e9dcdc3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.margin-dimension",
+          "css-page-3.margin-dimension-clause-1106d3d5f0af"
+        ]
+      }
+    },
+    {
+      "id": "margin-box-terms",
+      "title": "5.3.1. Page-Margin Box Layout Terminology",
+      "level": 4,
+      "text_sha256": "6105935a6717cf8a0c388e68b6c6d73f468cf5e65b47d6650ee168b0dbda302c",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.margin-box-terms",
+          "css-page-3.margin-box-terms-clause-434c85253512",
+          "css-page-3.margin-box-terms-clause-c028659638c6"
+        ]
+      }
+    },
+    {
+      "id": "variable-sizing",
+      "title": "5.3.2. Page-Margin Box Variable Dimension Computation Rules",
+      "level": 4,
+      "text_sha256": "73cd53bb4d8385486b4470aba053802281f4c4652c74b280441e1fa952b4385f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.variable-sizing"
+        ]
+      }
+    },
+    {
+      "id": "variable-auto-margins",
+      "title": "5.3.2.1. Margins",
+      "level": 5,
+      "text_sha256": "1d226953532b20d4f7941832fa5d2e8e5f115070769171765a81afa8d0a82d50",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.variable-auto-margins"
+        ]
+      }
+    },
+    {
+      "id": "variable-auto-sizing",
+      "title": "5.3.2.2. Resolving auto widths",
+      "level": 5,
+      "text_sha256": "d189b9ba86a326e373f40f7819a741c81cee1aaf8e7b846df9f18ce86560d499",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.variable-auto-sizing",
+          "css-page-3.variable-auto-sizing-clause-df66881deb22",
+          "css-page-3.variable-auto-sizing-clause-6461e131b9a6",
+          "css-page-3.variable-auto-sizing-clause-9c3b26dcbb79"
+        ]
+      }
+    },
+    {
+      "id": "variable-minmax",
+      "title": "5.3.2.3. Handling min-width and max-width",
+      "level": 5,
+      "text_sha256": "bf10e425fbf355ad590c767a449113dcad9511d91072100cc685d0b3a40c2fd3",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.variable-minmax",
+          "css-page-3.variable-minmax-clause-7086684e547f",
+          "css-page-3.variable-minmax-clause-617d17c8e679"
+        ]
+      }
+    },
+    {
+      "id": "variable-position",
+      "title": "5.3.2.4. Positioning",
+      "level": 5,
+      "text_sha256": "d991eaf781f2e0465827d2f29f04e29e4802c94d8a4e4b861ad17c862f2907b8",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.variable-position"
+        ]
+      }
+    },
+    {
+      "id": "variable-mapping",
+      "title": "5.3.2.5. Boxes on other sides",
+      "level": 5,
+      "text_sha256": "0b34c98bcb0ff587dbd344d9d043d9011a35af72c1972e5ec0bf6eb6e6aac672",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.variable-mapping"
+        ]
+      }
+    },
+    {
+      "id": "fixed-sizing",
+      "title": "5.3.3. Page-Margin Box Fixed Dimension Computation Rules",
+      "level": 4,
+      "text_sha256": "0bb969d55144882ec748a77c7517b1263d0e8101f6ae32c9e50e371a73527b59",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.fixed-sizing",
+          "css-page-3.fixed-sizing-clause-41a75474eacc",
+          "css-page-3.fixed-sizing-clause-a5e65978624f",
+          "css-page-3.fixed-sizing-clause-335f6f54f814",
+          "css-page-3.fixed-sizing-clause-a3397dc158cb"
+        ]
+      }
+    },
+    {
+      "id": "margin-box-ex",
+      "title": "5.4. Page-margin box examples",
+      "level": 3,
+      "text_sha256": "47c9673fb08b091d7b395261f1020c102c5489662703865f5a0533596b3a1215",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.margin-box-ex"
+        ]
+      }
+    },
+    {
+      "id": "page-properties",
+      "title": "6. Page Properties",
+      "level": 2,
+      "text_sha256": "38bf3a3e66a97200800d88daadfb04f5490a7d2c3da66d7334d5d52f7d6e7666",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-properties",
+          "css-page-3.page-properties-clause-e3fa9dc6f10d",
+          "css-page-3.page-properties-clause-a1a25e74e01b",
+          "css-page-3.page-properties-clause-d38539813484",
+          "css-page-3.page-properties-clause-dd160170ae7f",
+          "css-page-3.page-properties-clause-9bbd06bff567",
+          "css-page-3.page-properties-clause-6f7373ce191d",
+          "css-page-3.page-properties-clause-e07666f5f1d7"
+        ]
+      }
+    },
+    {
+      "id": "page-based-counters",
+      "title": "6.1. Page-based counters",
+      "level": 3,
+      "text_sha256": "6c3cabbbeb0c6a388f44840faec995fc21934f1a0692501fa8e081761f457bb4",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-based-counters"
+        ]
+      }
+    },
+    {
+      "id": "margin-text-alignment",
+      "title": "6.2. Page-margin boxes and default values",
+      "level": 3,
+      "text_sha256": "ec1d87df70cab0d4e1262e9a32a944b82bfc8261a9b0455df5ae7935f193ed82",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.margin-text-alignment",
+          "css-page-3.margin-text-alignment-clause-9802e61fccd2"
+        ]
+      }
+    },
+    {
+      "id": "page-size",
+      "title": "7. Page Size",
+      "level": 2,
+      "text_sha256": "968fd3afd22c8f161e8a1c92baa3647f78eade25fa78f1d20b3c6f09f34ed003",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-size",
+          "css-page-3.page-size-clause-fb6740ee1d39",
+          "css-page-3.page-size-clause-51d6ce91a3fa"
+        ]
+      }
+    },
+    {
+      "id": "page-size-prop",
+      "title": "7.1. Page size: the size property",
+      "level": 3,
+      "text_sha256": "c45c1293042a8b1f4fe6ffa292063b63e043bbd6aad49efa7e2af01dbeebc8ae",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-size-prop",
+          "css-page-3.page-size-prop-clause-cca2516ebb1d",
+          "css-page-3.page-size-prop-clause-1373a42596e9",
+          "css-page-3.page-size-prop-clause-a951cd858765",
+          "css-page-3.page-size-prop-clause-1a4d3214e9f6",
+          "css-page-3.page-size-prop-clause-387c4e8b62ba",
+          "css-page-3.page-size-prop-clause-32cb0cbe070c",
+          "css-page-3.page-size-prop-clause-d0a3a44da11e",
+          "css-page-3.page-size-prop-clause-ce711f40b2d4",
+          "css-page-3.page-size-prop-clause-3566b0532bf9",
+          "css-page-3.explicit-fixture-page-size",
+          "benchmark-output.bench-invoices-small.page-box",
+          "benchmark-output.bench-invoices-medium.page-box",
+          "benchmark-output.bench-invoices-large.page-box",
+          "benchmark-output.bench-reports-small.page-box",
+          "benchmark-output.bench-reports-medium.page-box",
+          "benchmark-output.bench-reports-large.page-box",
+          "benchmark-output.bench-books-small.page-box",
+          "benchmark-output.bench-books-medium.page-box",
+          "benchmark-output.bench-books-large.page-box",
+          "benchmark-output.bench-multilingual-small.page-box",
+          "benchmark-output.bench-multilingual-medium.page-box",
+          "benchmark-output.bench-multilingual-large.page-box",
+          "benchmark-output.bench-tables-small.page-box",
+          "benchmark-output.bench-tables-medium.page-box",
+          "benchmark-output.bench-tables-large.page-box",
+          "benchmark-output.bench-images-small.page-box",
+          "benchmark-output.bench-images-medium.page-box",
+          "benchmark-output.bench-images-large.page-box",
+          "css-page-3.foundation-page-size-environment"
+        ]
+      }
+    },
+    {
+      "id": "page-size-media-query",
+      "title": "7.1.1. Media Queries",
+      "level": 4,
+      "text_sha256": "f11f50172542b9f7226182f577cef94676bfdf26cd7a2ded02334d539fcae78c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-size-media-query",
+          "css-page-3.foundation-page-size-environment"
+        ]
+      }
+    },
+    {
+      "id": "page-orientation-prop",
+      "title": "7.1.2. Rotating The Printed Page: the page-orientation property",
+      "level": 4,
+      "text_sha256": "0ec0fcde13a64fb959d44021abd2588419d40edd5c68b46276f1c4e0d07aae7f",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-orientation-prop",
+          "css-page-3.page-orientation-prop-clause-cca2516ebb1d",
+          "css-page-3.page-orientation-prop-clause-04029adcd617",
+          "css-page-3.page-orientation-prop-clause-b8d1882f2f51",
+          "css-page-3.page-orientation-prop-clause-8af884d71356",
+          "css-page-3.page-orientation-prop-clause-96b26f0f0fd4",
+          "css-page-3.page-orientation-prop-clause-2f588d1c8998"
+        ]
+      }
+    },
+    {
+      "id": "marks",
+      "title": "7.2. Crop and Registration Marks: the marks property",
+      "level": 3,
+      "text_sha256": "68554252782e8e1a8a0a0bcc98ccdbb218c8cf68e2821d372bed271f2f050167",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.marks",
+          "css-page-3.marks-clause-cca2516ebb1d",
+          "css-page-3.marks-clause-76261bd97d2a",
+          "css-page-3.marks-clause-b91073c9dbfa",
+          "css-page-3.marks-clause-9d81ad21a50d",
+          "css-page-3.marks-clause-08dcaace3a5b"
+        ]
+      }
+    },
+    {
+      "id": "bleed",
+      "title": "7.3. Bleed Area: the bleed property",
+      "level": 3,
+      "text_sha256": "e2fafb58dffc730b3a14740f10f68c31745d0f3fa36dd7284168fa8b074aa74e",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.bleed",
+          "css-page-3.bleed-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "renderingpages",
+      "title": "7.4. Rendering page boxes that do not fit a page sheet",
+      "level": 3,
+      "text_sha256": "dd1d3072c7ef0e0ccd34cf82c57b81040bd1ba602216e5f034e057105a1dbd60",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.renderingpages",
+          "css-page-3.renderingpages-clause-d891ee229841",
+          "css-page-3.renderingpages-clause-e9dc20bec068"
+        ]
+      }
+    },
+    {
+      "id": "positioning-page-box",
+      "title": "7.5. Positioning the page box on the sheet",
+      "level": 3,
+      "text_sha256": "a1dac63794af75a79c13bfa9c5dab712d3adb2019ffd2a7ef9d4cdae2edcb87a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.positioning-page-box",
+          "css-page-3.positioning-page-box-clause-91c721fa6287"
+        ]
+      }
+    },
+    {
+      "id": "page-breaks",
+      "title": "8. Page Breaks",
+      "level": 2,
+      "text_sha256": "6b0ba25b5d65c9323a0cd8b77d45dafa8d181f7f1a99b49a9ff27bb66563a9ed",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-breaks",
+          "css-page-3.page-breaks-clause-6b0ba25b5d65"
+        ]
+      }
+    },
+    {
+      "id": "using-named-pages",
+      "title": "8.1. Using named pages: page",
+      "level": 3,
+      "text_sha256": "2ac7ef80c04a1961f1ade7a6b155670e603ce0954acef35de4923c8ab72efad9",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.using-named-pages",
+          "css-page-3.using-named-pages-clause-cca2516ebb1d",
+          "css-page-3.using-named-pages-clause-714d1e71aa75",
+          "css-page-3.using-named-pages-clause-829c08c68bc4",
+          "css-page-3.using-named-pages-clause-4df9899374b1",
+          "css-page-3.using-named-pages-clause-af9fb04bbb12"
+        ]
+      }
+    },
+    {
+      "id": "image-properties",
+      "title": "9. Image Properties",
+      "level": 2,
+      "text_sha256": "957399178c10b4d2c9eedd6bb43dbeed56afa94f62715c1da3520e4525ec46e0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.image-properties"
+        ]
+      }
+    },
+    {
+      "id": "properties-list",
+      "title": "Appendix A: Applicable CSS2.1 Properties",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.properties-list"
+        ]
+      }
+    },
+    {
+      "id": "page-property-list",
+      "title": "CSS 2.1 Properties that apply within the page context",
+      "level": 3,
+      "text_sha256": "d9730b0431be2a73f861f88e36adbc6b8555a7080d797c04df6d66619c5274d9",
+      "clause_count": 78,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-property-list",
+          "css-page-3.foundation-page-size-environment"
+        ]
+      }
+    },
+    {
+      "id": "margin-property-list",
+      "title": "CSS 2.1 properties that apply within the margin contexts",
+      "level": 3,
+      "text_sha256": "3f60ac6a084bb9ae57d29f0323bacf1a2834d20576425ef11b9e485252b5cd06",
+      "clause_count": 83,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.margin-property-list",
+          "css-page-3.foundation-page-size-environment"
+        ]
+      }
+    },
+    {
+      "id": "transfer-possibilities",
+      "title": "Appendix B: Transfer Possibilities",
+      "level": 2,
+      "text_sha256": "492752ffb37d3812bac5870d35e639e80df3db010b7ca4fb20d508f249d0f014",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.transfer-possibilities"
+        ]
+      }
+    },
+    {
+      "id": "priv-sec",
+      "title": "Privacy and Security Considerations",
+      "level": 2,
+      "text_sha256": "508211c345cc46d3344bf3460ffcde7c9eef7b952e529c627c53a5123db53ee3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.priv-sec"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "013f076de2fe4208fb2141198e287ee1cab1b901cf07532c68a417cf5d96feda",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "Acknowledgements",
+      "level": 2,
+      "text_sha256": "f4b131115d3f374fb882863450d5782d8d283daeaf1d192a76dcbe7766298923",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.w3c-conventions",
+          "css-page-3.w3c-conventions-clause-5c98c879f070",
+          "css-page-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.w3c-conformance-classes",
+          "css-page-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-page-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.w3c-partial",
+          "css-page-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.w3c-testing",
+          "css-page-3.w3c-testing-clause-1e0fff369221",
+          "css-page-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "0893a80d3c218ebfc6559c85806fab83fb0c111c77348e970876cf5dafc3d154",
+      "clause_count": 101,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "a7a1eeacbb042a714410d9ecf65b5b7b059a8e7746af718e14eca4f14727608d",
+      "clause_count": 109,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "a67ed18112385f7e31f49c0ab1d297efad18009611b9057021ea9b6f927ae25e",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "9abf06853cc6fecf7a3f6518a6f49e5ed5b8232a35e2bd232d36ec0a6952cdd4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "bf3262807b4ed138689ea427dce7396b0f3b2e2b3d25fa614f9f7285caeef54f",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.property-index"
+        ]
+      }
+    },
+    {
+      "id": "page-descriptor-table",
+      "title": "@page Descriptors",
+      "level": 3,
+      "text_sha256": "91da288e155d2a14fb58e6ef42e2a5b6bc153fda0727b0582db40beabf897480",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.page-descriptor-table",
+          "css-page-3.page-descriptor-table-clause-22edaa34f875"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "5de16ea6954330b9ea74aab03c8858828ece4e6110f1438c791c915940021ac3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-3.issues-index"
+        ]
+      }
+    }
+  ]
+}

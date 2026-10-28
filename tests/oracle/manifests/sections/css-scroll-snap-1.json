@@ -1,0 +1,659 @@
+{
+  "schema_version": 1,
+  "source_id": "css-scroll-snap-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Scroll Snap Module Level 1",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.title"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C Candidate Recommendation Snapshot, 11 March 2021",
+      "level": 2,
+      "text_sha256": "a6fe13d7a9c1c94e3b3c632aea10970c06260f7f0170cf0f4bd5ca3606f474c8",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "d584956f50b20564c97dde59b5d3f334edf3ab1eb82fb9f99bb79900a92d03b0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "cef23b4ebf21113e016d1a8bcf2d6dcf161f0121761551f59afe8a2759c75345",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "9af6e2ee8dddc763a5e9a39314154f2d0fa2cf87bb1465b2dae74010d9670843",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "cb288486992ba1e99ccce4fd9a5fd0ada83f3be1308378cdf80746449f9435f1",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module interactions",
+      "level": 3,
+      "text_sha256": "60708686466435abbb02465b744f369b2f4f0a43c71cafb9c20198c7b255b019",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "examples",
+      "title": "2. Motivating Examples",
+      "level": 2,
+      "text_sha256": "e327602ac4d44ae977f12cbd33e61fa0eeaaf4a24aba8d570e86ec3cf2ff42f3",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "overview",
+      "title": "3. Scroll Snap Model",
+      "level": 2,
+      "text_sha256": "cfdf859106c21336e56013ef1f96b5f30a8b81d6541f280edba8473f9c5a401e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "properties-on-the-scroll-container",
+      "title": "4. Capturing Scroll Snap Areas: Properties on the scroll container",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "scroll-snap-type",
+      "title": "4.1. Scroll Snapping Rules: the scroll-snap-type property",
+      "level": 3,
+      "text_sha256": "f158e4f74fbf522ca2ac5046d679ee8f72086400ee41246c07220e59f84ac30e",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "snap-axis",
+      "title": "4.1.1. Scroll Snap Axis: the x, y, block, inline, and both values",
+      "level": 4,
+      "text_sha256": "c71bb1f58852127a3eea9d23c405655d5c413bc67e1c2ca29cc8771380ac335f",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "snap-strictness",
+      "title": "4.1.2. Scroll Snap Strictness: the none, proximity, and mandatory values",
+      "level": 4,
+      "text_sha256": "2708c4a13a324d8eee34adcf29747572034066ece0f9bf49695d24be58a60f3a",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "re-snap",
+      "title": "4.1.3. Re-snapping After Layout Changes",
+      "level": 4,
+      "text_sha256": "f3ef42a08b127149dcfbf3b06cce9ebd9c8d4adaf8b5bf54e284a7a8f1077ac9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "scroll-padding",
+      "title": "4.2. Scroll Snapport: the scroll-padding property",
+      "level": 3,
+      "text_sha256": "256683c4b014e1249b15d8728bcd6967afd045d25a0e34af5a072b390a1c0d9d",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "properties-on-the-elements",
+      "title": "5. Aligning Scroll Snap Areas: Properties on the elements",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "scroll-margin",
+      "title": "5.1. Scroll Snapping Area: the scroll-margin property",
+      "level": 3,
+      "text_sha256": "ddb837d9f67ff4e2836ee970fae861ab7aaa686fbbe04967526ac0c9f83509a3",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "scroll-snap-align",
+      "title": "5.2. Scroll Snapping Alignment: the scroll-snap-align property",
+      "level": 3,
+      "text_sha256": "13dfc179b86fc983cfdf5dc858d558333389a6e892abce5d4ab349002fdc6125",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "snap-scope",
+      "title": "5.2.1. Scoping Valid Snap Positions to Visible Boxes",
+      "level": 4,
+      "text_sha256": "cd6f7621520528771c585c75f2e24e83292a7e5cfc28918e283cc40e6df79a6b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "snap-overflow",
+      "title": "5.2.2. Snapping Boxes that Overflow the Scrollport",
+      "level": 4,
+      "text_sha256": "f2e32eba88d3b818e15f02f3464fde98eb93e99155a5add911c8e6fc351dbcaf",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "unreachable",
+      "title": "5.2.3. Unreachable Snap Positions",
+      "level": 4,
+      "text_sha256": "12a693cd77c14204544876fa7f0eada61080ff5694bc33221e2f045899bd9fb0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "scroll-snap-stop",
+      "title": "5.3. Scroll Snap Limits: the scroll-snap-stop property",
+      "level": 3,
+      "text_sha256": "660b5835d9792ce7cea39d72962fb6bfa2adf86f4ba9ba205ee106657298798d",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "snap-concepts",
+      "title": "6. Snapping Mechanics",
+      "level": 2,
+      "text_sha256": "5220ba02f2bbd0517cc00b63de8326f6a13a42f851e1deaa5c75638972c5aae3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "scroll-types",
+      "title": "6.1. Types of Scrolling Methods",
+      "level": 3,
+      "text_sha256": "0832b6745d370d0855f1f6181290c45cba46b84585209bdc748e0ace7092ac7e",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "choosing",
+      "title": "6.2. Choosing Snap Positions",
+      "level": 3,
+      "text_sha256": "87f41cc34100f59fe44508613a54782109e8147d9e3cb65f22fc21515c7d7271",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "longhands",
+      "title": "Appendix A: Longhands",
+      "level": 2,
+      "text_sha256": "3449737394505e4b691463bbbd639abbb418fd31787faa9841cd1afdf7de6f55",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "padding-longhands-physical",
+      "title": "Physical Longhands for scroll-padding",
+      "level": 3,
+      "text_sha256": "3b37bb157047de237be4d11804058acad00b48f06426c09443b231bddf7c9bf2",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "padding-longhands-logical",
+      "title": "Flow-relative Longhands for scroll-padding",
+      "level": 3,
+      "text_sha256": "cf17ff91bc40cee87a5a4f32dbf375b0964dd61781a14813933cfce2d8248add",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "margin-longhands-physical",
+      "title": "Physical Longhands for scroll-margin",
+      "level": 3,
+      "text_sha256": "e029d74f01ea8f69564eb4f9c5c30815e91ae8938f3ef6fbec7be53b62abfd79",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "margin-longhands-logical",
+      "title": "Flow-relative Longhands for scroll-margin",
+      "level": 3,
+      "text_sha256": "efce99b1c276b3eb32153b63dc8c31eb99f449d666184aef4c7413db6ccbf3c6",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "priv-sec",
+      "title": "7. Privacy and Security Considerations",
+      "level": 2,
+      "text_sha256": "0cdc2ba3dbf6a7633305cf25ea8d4e78d10ef7bb025afd898e514557f127a524",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "8. Acknowledgements",
+      "level": 2,
+      "text_sha256": "6dfa7256db4c96e21ebbc9ceb5c897d8fabb4cf6c3e9c2af04151b3a8053a1c4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "9. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20190319",
+      "title": "9.1. Changes Since 19 March 2019 CR",
+      "level": 3,
+      "text_sha256": "95fd3011da17cbf0d5857e26f5cba75e8afc093e73720432c924b0f6ab1bc885",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.changes-20190319"
+        ]
+      }
+    },
+    {
+      "id": "changes-20190131",
+      "title": "9.2. Changes Since 31 January 2019 CR",
+      "level": 3,
+      "text_sha256": "f4ce7a65937ca9c427cede7ef472aedfbf38521e0810dcef98b878ad99d8482d",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.changes-20190131"
+        ]
+      }
+    },
+    {
+      "id": "changes-20180814",
+      "title": "9.3. Changes Since 14 August 2018 CR",
+      "level": 3,
+      "text_sha256": "31ae84b0ee5580b7fbc1b0b049f6cc948357267b50e048f0cad5bc6715647404",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.changes-20180814"
+        ]
+      }
+    },
+    {
+      "id": "changes-20171214",
+      "title": "9.4. Changes Since 14 December 2017 CR",
+      "level": 3,
+      "text_sha256": "16b1d80b1bd29b0ce3f446625c0a3bc868b353fe9b241de88a4dff96e5f3653f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.changes-20171214"
+        ]
+      }
+    },
+    {
+      "id": "changes-20170824",
+      "title": "9.5. Changes Since 24 August 2017 CR",
+      "level": 3,
+      "text_sha256": "7674203594e9325e619fa6a6273d43825df7789a3fb8cbb3702e9bb78de34f3f",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.changes-20170824"
+        ]
+      }
+    },
+    {
+      "id": "changes-20161020",
+      "title": "9.6. Changes Since 20 October 2016 CR",
+      "level": 3,
+      "text_sha256": "b164ab13300f114e0bd00c3c4e2db6610ac1c3820fecfcddb9c05c8bed603ac8",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.changes-20161020"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "c0905cdb3122081ee38ce898c58877a2cb57b27009295c80e90da0967b3ac4a9",
+      "clause_count": 166,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "ea39801b66552ca936a95cd54c085f766e8eb5b6f12323d03f5014b860faf287",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "a864a76c59e77a6de1be1d735a452e79b09e83eaa1659562f2110db9e0213bc7",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scroll-snap-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "b3e71353bc20889d11505d48e8866b1deb860e7d1205b57b2d66fa9c5ca4edd7",
+      "clause_count": 366,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    }
+  ]
+}

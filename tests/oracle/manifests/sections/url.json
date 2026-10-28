@@ -1,0 +1,713 @@
+{
+  "schema_version": 1,
+  "source_id": "url",
+  "sections": [
+    {
+      "id": "title",
+      "title": "URL (Commit 845bafca22fb0c5a42c4bf384a9bdea525a2f10d)",
+      "level": 1,
+      "text_sha256": "9187f20b87fb7dfd320e9c91190ad3175c7ceea96d5fe9f19de361828141d2f2",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "cb7fd7cbbdc9f16508dbf8a2f80080f466fcc56a70745a84fad82c99b215c438",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.abstract"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "594320b869d3f6e506a373483cb74639f1f5fc816fa64a66d733df1883f7511b",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.contents"
+        ]
+      }
+    },
+    {
+      "id": "goals",
+      "title": "Goals",
+      "level": 2,
+      "text_sha256": "4fd42fec39994014634d234bf5cadbc9fd1023b14deaaa310c16e6db9834fd47",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.goals",
+          "url.goals-clause-055d69400e38"
+        ]
+      }
+    },
+    {
+      "id": "infrastructure",
+      "title": "1. Infrastructure",
+      "level": 2,
+      "text_sha256": "8269082a457324d1933746f975ded2afe2ceb361ebc4dab32d23b7d6eb0fe334",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.infrastructure"
+        ]
+      }
+    },
+    {
+      "id": "writing",
+      "title": "1.1. Writing",
+      "level": 3,
+      "text_sha256": "b753600b4eb84fe938f857d7af6b09dd52972fcc9aaeecd366f358e859217984",
+      "clause_count": 185,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.writing",
+          "url.writing-clause-db60c1e08dcd",
+          "url.writing-clause-7cf14b2ad56e",
+          "url.writing-clause-943440acef0d",
+          "url.writing-clause-a2fb8cf35241",
+          "url.writing-clause-75a9f8561c25",
+          "url.writing-clause-83ad8bf6ed7e",
+          "url.writing-clause-9c83f8ba4a9d",
+          "url.writing-clause-a8a624d0821c",
+          "url.writing-clause-60490085fc51",
+          "url.writing-clause-b113236a0272",
+          "url.writing-clause-9ea55208202d",
+          "url.writing-clause-923fd6284187"
+        ]
+      }
+    },
+    {
+      "id": "parsers",
+      "title": "1.2. Parsers",
+      "level": 3,
+      "text_sha256": "2e02b693a4b7399004ab4b92764a4d1d2fab6c2843a2093ae4951d0d7c616100",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.parsers"
+        ]
+      }
+    },
+    {
+      "id": "percent-encoded-bytes",
+      "title": "1.3. Percent-encoded bytes",
+      "level": 3,
+      "text_sha256": "2d1af1de14abce4bc10a843b086f9e9a41e3a820039a69ffa6bba7f3dd3df7ea",
+      "clause_count": 117,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.percent-encoded-bytes"
+        ]
+      }
+    },
+    {
+      "id": "security-considerations",
+      "title": "2. Security considerations",
+      "level": 2,
+      "text_sha256": "dfe759ecc6eada374cf4bf0942276555c7fdce13889c75d210ac26e6012b7a3d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.security-considerations",
+          "url.security-considerations-clause-bd1d4bbf08e5"
+        ]
+      }
+    },
+    {
+      "id": "hosts-(domains-and-ip-addresses)",
+      "title": "3. Hosts (domains and IP addresses)",
+      "level": 2,
+      "text_sha256": "511d600243b46328fe853606626f2ea6a27faa44261b53363b4b23f62f78088c",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.hosts-domains-and-ip-addresses"
+        ]
+      }
+    },
+    {
+      "id": "host-representation",
+      "title": "3.1. Host representation",
+      "level": 3,
+      "text_sha256": "ed797dcb49b2e87746cf6dfa684e96b5babf5fb949ba13cd1d96b224bc189da3",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.host-representation"
+        ]
+      }
+    },
+    {
+      "id": "host-miscellaneous",
+      "title": "3.2. Host miscellaneous",
+      "level": 3,
+      "text_sha256": "0fb45a327c68bd2493edbc2628f3ef800f041ec6479cb0db74ba5f63c62df161",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.host-miscellaneous",
+          "url.host-miscellaneous-clause-58ab67cf16a4",
+          "url.host-miscellaneous-clause-d3d8d9acb51e",
+          "url.host-miscellaneous-clause-8dd6c5947f94",
+          "url.host-miscellaneous-clause-57b4bac1e577"
+        ]
+      }
+    },
+    {
+      "id": "idna",
+      "title": "3.3. IDNA",
+      "level": 3,
+      "text_sha256": "5f1442b9db432dae81a802b1a3ba16b6633339cbbc5e4ad9af9e8070260a2190",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.idna",
+          "url.idna-clause-dffe90e95bac",
+          "url.idna-clause-4445425ceb05",
+          "url.idna-clause-8110dcdeb499",
+          "url.idna-clause-b4efa829a42b",
+          "url.idna-clause-d952e852c351"
+        ]
+      }
+    },
+    {
+      "id": "host-writing",
+      "title": "3.4. Host writing",
+      "level": 3,
+      "text_sha256": "431599c7c8ea79b19f4c38609e26188104e913b464cdc55e5dbd850e5777b208",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.host-writing",
+          "url.host-writing-clause-1129e2a1f56f",
+          "url.host-writing-clause-bd14bda5afda",
+          "url.host-writing-clause-e575a7c688a9",
+          "url.host-writing-clause-773cdf9f2c23",
+          "url.host-writing-clause-984defa58455"
+        ]
+      }
+    },
+    {
+      "id": "host-parsing",
+      "title": "3.5. Host parsing",
+      "level": 3,
+      "text_sha256": "bbcd3fc88d6a90d7a6878e5123749a859c88d6251d198ebaca38b423c0bc9241",
+      "clause_count": 233,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.host-parsing",
+          "url.host-parsing-clause-6c4927a70996",
+          "url.host-parsing-clause-c65cbc4c71c4",
+          "url.host-parsing-clause-a3119b963b10",
+          "url.host-parsing-clause-38a45f90a385",
+          "url.host-parsing-clause-6edf8225e822",
+          "url.host-parsing-clause-55edbaace7f9",
+          "url.host-parsing-clause-107b9d3857ed",
+          "url.host-parsing-clause-ac49570bf3d8",
+          "url.host-parsing-clause-bf071ae46d83",
+          "url.host-parsing-clause-5d33ecfbadd6"
+        ]
+      }
+    },
+    {
+      "id": "host-serializing",
+      "title": "3.6. Host serializing",
+      "level": 3,
+      "text_sha256": "d8af02b6ee1082d87909fd15c41703c1a8fd67235726c975f2fe42163100998c",
+      "clause_count": 78,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.host-serializing",
+          "url.host-serializing-clause-bc0eeae499b0"
+        ]
+      }
+    },
+    {
+      "id": "host-equivalence",
+      "title": "3.7. Host equivalence",
+      "level": 3,
+      "text_sha256": "3dfd71ca01c68af1780df63742da6263046a0ed85e0a288aca9675385db136ba",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.host-equivalence"
+        ]
+      }
+    },
+    {
+      "id": "urls",
+      "title": "4. URLs",
+      "level": 2,
+      "text_sha256": "95c4ef3bd5512582b7e0e95410c55605603d6391ffbb9b84facfee7478bb4f3c",
+      "clause_count": 85,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.urls"
+        ]
+      }
+    },
+    {
+      "id": "url-representation",
+      "title": "4.1. URL representation",
+      "level": 3,
+      "text_sha256": "2bc578937d188e29bbfddecdf9d6775116740281b1a5f32707a4f33f3850e46b",
+      "clause_count": 84,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-representation"
+        ]
+      }
+    },
+    {
+      "id": "url-miscellaneous",
+      "title": "4.2. URL miscellaneous",
+      "level": 3,
+      "text_sha256": "adb46f0d97bc803ebc76335c028d3027dc361fee6b6a60528cb9c71f61dee078",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-miscellaneous"
+        ]
+      }
+    },
+    {
+      "id": "url-writing",
+      "title": "4.3. URL writing",
+      "level": 3,
+      "text_sha256": "3237a5f26edae2948abadf64f2b0c00a73c3f5c7b76f24096dd06cf03334edda",
+      "clause_count": 66,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-writing",
+          "url.url-writing-clause-f8244c6798db",
+          "url.url-writing-clause-d5847d5e067b",
+          "url.url-writing-clause-938a8bd85ffa",
+          "url.url-writing-clause-5347a27a32af",
+          "url.url-writing-clause-718539742766",
+          "url.url-writing-clause-147dc66b7c19",
+          "url.url-writing-clause-3e84e40f1d53",
+          "url.url-writing-clause-604edc89c87d",
+          "url.url-writing-clause-3ffb760f8f49",
+          "url.url-writing-clause-b7afbabbd97b",
+          "url.url-writing-clause-f95b88fc3896",
+          "url.url-writing-clause-3dc422112623",
+          "url.url-writing-clause-c72bdcb9c64d",
+          "url.url-writing-clause-51a76721dc4c",
+          "url.url-writing-clause-a28499466311",
+          "url.url-writing-clause-1e55a1070c76",
+          "url.url-writing-clause-75ba3fdb08c5",
+          "url.url-writing-clause-504830b50ee2",
+          "url.url-writing-clause-dc7adfea4e73",
+          "url.url-writing-clause-3b2a0b0bf6ca"
+        ]
+      }
+    },
+    {
+      "id": "url-parsing",
+      "title": "4.4. URL parsing",
+      "level": 3,
+      "text_sha256": "b30fb70ae87a5217b1bd676e7a8528795c9d099cd030deb9ba4828846bd24473",
+      "clause_count": 501,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-parsing",
+          "url.url-parsing-clause-2040ac1609c7",
+          "url.url-parsing-clause-52c75fcc1077",
+          "url.url-parsing-clause-2c448f2be5f1",
+          "url.url-parsing-clause-14a2d177e749",
+          "url.url-parsing-clause-407ca2768463",
+          "url.url-parsing-clause-8d9d02817317",
+          "url.url-parsing-clause-69c34f01bfa7",
+          "url.url-parsing-clause-9db4cbcd6e1e",
+          "url.url-parsing-clause-d47cb6ce4829",
+          "url.url-parsing-clause-e16308912f5e",
+          "url.url-parsing-clause-128a36d6db88",
+          "url.url-parsing-clause-2ea994869bc4",
+          "url.url-parsing-clause-e871190448b8",
+          "url.url-parsing-clause-1a00b5d86a71",
+          "url.url-parsing-clause-62db22f464bf",
+          "url.url-parsing-clause-5cb971744a07",
+          "url.url-parsing-clause-739f3a2ff37e",
+          "url.url-parsing-clause-6229d8bc1807",
+          "url.url-parsing-clause-292b02296b08",
+          "url.url-parsing-clause-69c756fbabe7",
+          "url.url-parsing-clause-6b947f510f84",
+          "url.url-parsing-clause-73e88a3e43c9",
+          "url.url-parsing-clause-d9e35249eff9",
+          "url.url-parsing-clause-c3f5238c8b44",
+          "url.url-parsing-clause-c50c9f9dce68",
+          "url.url-parsing-clause-6ae7207948f8",
+          "url.foundation-resource-url-resolution"
+        ]
+      }
+    },
+    {
+      "id": "url-serializing",
+      "title": "4.5. URL serializing",
+      "level": 3,
+      "text_sha256": "2f0dec303c4f15a929c410d104eefe7b1b2c0855487e581a6063cbcbe1949c2a",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-serializing",
+          "url.foundation-resource-url-resolution"
+        ]
+      }
+    },
+    {
+      "id": "url-equivalence",
+      "title": "4.6. URL equivalence",
+      "level": 3,
+      "text_sha256": "bd261402a3ddb9d269124a4e972087f0fe5275a7a567a99f25d9ffa992f22a72",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-equivalence",
+          "url.url-equivalence-clause-0af0d58e3415",
+          "url.foundation-resource-url-resolution"
+        ]
+      }
+    },
+    {
+      "id": "origin",
+      "title": "4.7. Origin",
+      "level": 3,
+      "text_sha256": "eca80279f5724643689f83affefb39e73471ab7680d89d85219cd83f30bcf2e6",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.origin"
+        ]
+      }
+    },
+    {
+      "id": "url-rendering",
+      "title": "4.8. URL rendering",
+      "level": 3,
+      "text_sha256": "3705a9479afab746bc7fc49c44dbc8c984f19b26266fcc6cc680622ecd3aaaf0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-rendering",
+          "url.url-rendering-clause-3705a9479afa"
+        ]
+      }
+    },
+    {
+      "id": "url-rendering-simplification",
+      "title": "4.8.1. Simplify non-human-readable or irrelevant components",
+      "level": 4,
+      "text_sha256": "87f4a5b4fae7614331017d4405ae985a1968bedf7c3e12becf8b348278da77b3",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-rendering-simplification",
+          "url.url-rendering-simplification-clause-87cc9efe40cb"
+        ]
+      }
+    },
+    {
+      "id": "url-rendering-elision",
+      "title": "4.8.2. Elision",
+      "level": 4,
+      "text_sha256": "d6abca20976e289b90c0257b186c37a23cafee3c9eac4ad7a7debd4594c9048c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-rendering-elision",
+          "url.url-rendering-elision-clause-0cded10b5505",
+          "url.url-rendering-elision-clause-0fc7f3963df0",
+          "url.url-rendering-elision-clause-7f2dedf1200b"
+        ]
+      }
+    },
+    {
+      "id": "url-rendering-i18n",
+      "title": "4.8.3. Internationalization and special characters",
+      "level": 4,
+      "text_sha256": "8be59a108c13f1a30cc6e8cab1dac715f0fb7325139b1984e9e44baf454c1451",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-rendering-i18n",
+          "url.url-rendering-i18n-clause-dfa40955b221",
+          "url.url-rendering-i18n-clause-18c24b75b6b9",
+          "url.url-rendering-i18n-clause-bdf3da8095e8",
+          "url.url-rendering-i18n-clause-f7bd55e02a18",
+          "url.url-rendering-i18n-clause-d5befb52a2dd",
+          "url.url-rendering-i18n-clause-12b0ef803c9d",
+          "url.url-rendering-i18n-clause-8627a2f678b2"
+        ]
+      }
+    },
+    {
+      "id": "application/x-www-form-urlencoded",
+      "title": "5. application/x-www-form-urlencoded",
+      "level": 2,
+      "text_sha256": "653271c2c3ab3844623fedaa6d1c93e3d75275c28b3f7959a8e1b3a6ffe70e7d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.application-x-www-form-urlencoded"
+        ]
+      }
+    },
+    {
+      "id": "urlencoded-parsing",
+      "title": "5.1. application/x-www-form-urlencoded parsing",
+      "level": 3,
+      "text_sha256": "b7dbd057835af152add2de110800d07e82b532a0b2c6d07d3b5ed7e08403dd36",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.urlencoded-parsing"
+        ]
+      }
+    },
+    {
+      "id": "urlencoded-serializing",
+      "title": "5.2. application/x-www-form-urlencoded serializing",
+      "level": 3,
+      "text_sha256": "fd6f4b532cc9f75a975a283595b3c3f395e28255925de27a2069e5289c31699b",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.urlencoded-serializing"
+        ]
+      }
+    },
+    {
+      "id": "urlencoded-hooks",
+      "title": "5.3. Hooks",
+      "level": 3,
+      "text_sha256": "d188590c36027b1c08ed4ad9d1ef377faf3ec73d5f9a6920c21586c79ef7c1ef",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.urlencoded-hooks"
+        ]
+      }
+    },
+    {
+      "id": "api",
+      "title": "6. API",
+      "level": 2,
+      "text_sha256": "08e2b0204f2609556c1d842de8422250de3fda5f8816e51c1c4596f10cba1e7e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.api",
+          "url.api-clause-08e2b0204f26"
+        ]
+      }
+    },
+    {
+      "id": "url-class",
+      "title": "6.1. URL class",
+      "level": 3,
+      "text_sha256": "4e266d718158d7c8024fbc7235a1f8a03bddc88fcabd9639e608dd0a75098ec1",
+      "clause_count": 167,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-class"
+        ]
+      }
+    },
+    {
+      "id": "interface-urlsearchparams",
+      "title": "6.2. URLSearchParams class",
+      "level": 3,
+      "text_sha256": "a062e3aa5e81b9c8ab63e2ff130f543238c62e4e95840e83c73631dc13a13e0b",
+      "clause_count": 80,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.interface-urlsearchparams"
+        ]
+      }
+    },
+    {
+      "id": "url-apis-elsewhere",
+      "title": "6.3. URL APIs elsewhere",
+      "level": 3,
+      "text_sha256": "fbaf8d952579c9617502293b6f907270e4c782488144fab8bc35796f5612f644",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.url-apis-elsewhere",
+          "url.url-apis-elsewhere-clause-846d43d3268e",
+          "url.url-apis-elsewhere-clause-e7da62005efb"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "eb1c99a98597d40fee4e3484533337270e05bfbeedb69eded8837cadfe482521",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "ipr",
+      "title": "Intellectual property rights",
+      "level": 2,
+      "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.ipr"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "3d75d24cdcfeaa34ef3b71d76b8ffc526ea14b65f551e0cd533b0d200e2bea0d",
+      "clause_count": 241,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "a884863997398f1653243cbbbe915fe435abb530ca2e94959647080581e0e842",
+      "clause_count": 108,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "e9236fded4202d92a5197a244f7da8f798085ac3fbf2a82a2d5659aba5f21bc8",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.import-c9c163a7318f",
+          "url.import-ee77cba07bb3",
+          "url.import-7cb8d2b7ea12",
+          "url.import-5ee8ae6e949b",
+          "url.import-90b8baad5d60",
+          "url.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "635dd948148c56d4f9a8dc46b3a425ed00cde090617a3723fbd65514009e95c3",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.informative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "6d551df2c727e200f81327b8f0aa7f53e30a8d04d79b2c9107b020d17d133bdb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "url.idl-index"
+        ]
+      }
+    }
+  ]
+}

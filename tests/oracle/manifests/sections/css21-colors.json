@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-colors",
+  "sections": [
+    {
+      "id": "q14.0",
+      "title": "14 Colors and Backgrounds",
+      "level": 1,
+      "text_sha256": "2a25f541abe5855fdb69f05859ec840883dfcd66febd7d12901c574993efc2ab",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-colors.q14-0",
+          "css21-colors.q14-0-clause-9bd42b003230"
+        ]
+      }
+    },
+    {
+      "id": "colors",
+      "title": "14.1 Foreground color: the 'color' property",
+      "level": 2,
+      "text_sha256": "fd5f8cb1cdefeebf8479d8b3604a1bc2f0ee638d496f62006663fd1da3fade0b",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-colors.colors",
+          "css21-colors.colors-clause-6d9ab515958a",
+          "css21-colors.colors-clause-cca2516ebb1d",
+          "css21-colors.colors-clause-71dcb4506842"
+        ]
+      }
+    },
+    {
+      "id": "background",
+      "title": "14.2 The background",
+      "level": 2,
+      "text_sha256": "3fe17dee4577766f9a820260bb60bb457e2ca493ebfa86713f14e81ba861e846",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-colors.background",
+          "css21-colors.background-clause-1a917f0be2f8"
+        ]
+      }
+    },
+    {
+      "id": "background-properties",
+      "title": "14.2.1 Background properties: 'background-color', 'background-image', 'background-repeat', 'background-attachment', 'background-position', and 'background'",
+      "level": 3,
+      "text_sha256": "06a4c80aee7496d07c232158af6e005973741d291dcbb5ec888562cf11ce6835",
+      "clause_count": 162,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-colors.background-properties",
+          "css21-colors.background-properties-clause-7f6bc0356549",
+          "css21-colors.background-properties-clause-cca2516ebb1d",
+          "css21-colors.background-properties-clause-230a5ab334dc",
+          "css21-colors.background-properties-clause-fd49d69af837",
+          "css21-colors.background-properties-clause-4a128a7cbc14",
+          "css21-colors.background-properties-clause-978701179844",
+          "css21-colors.background-properties-clause-dc088e821707",
+          "css21-colors.background-properties-clause-648f371f5d53",
+          "css21-colors.background-properties-clause-8b3a5262d63e",
+          "css21-colors.background-properties-clause-0ab9475c6001",
+          "css21-colors.background-properties-clause-5a8d760f1d5a",
+          "css21-colors.background-properties-clause-2a3a4deb59db",
+          "css21-colors.background-properties-clause-22f848391508",
+          "css21-colors.background-properties-clause-814f74e1a0d1",
+          "css21-colors.background-properties-clause-572d20dbca27",
+          "css21-colors.background-properties-clause-a54455c724d2",
+          "css21-colors.background-properties-clause-d7df2e657767",
+          "css21-colors.background-properties-clause-e0325be1bb6d",
+          "css21-colors.background-properties-clause-66cfc867d85f",
+          "css21-colors.background-properties-clause-cc4e23b3bb55",
+          "css21-colors.background-properties-clause-947b91ff5c90",
+          "css21-colors.background-properties-clause-9e4e6e3e9405"
+        ]
+      }
+    }
+  ]
+}

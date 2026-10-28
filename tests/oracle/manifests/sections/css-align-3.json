@@ -1,0 +1,989 @@
+{
+  "schema_version": 1,
+  "source_id": "css-align-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Box Alignment Module Level 3",
+      "level": 1,
+      "text_sha256": "c969d141ee66c960ccb723f9a273504f7a3b6dde921f4934bda2f33e8df33ae0",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "125673aa422094837114300cb2847a098aaffae20d62f1f6dfec16cfb11cbd03",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "3dffe7c8acfd85ed34281d5bceda631b832ab51b272e28a38343eacfc192d216",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "a51c2b02f81e88531d41ce673431ce805757992736b88bed33eb36b008541f48",
+      "clause_count": 68,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "b69e6604bc2e31958b49952a78acdc796cc66805a3e23586ebbbbb0dc584d187",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "f304549dc598e26c364babce9e86cd83e0a874d1bedebd68b307adb621ea54e7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.placement"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.values"
+        ]
+      }
+    },
+    {
+      "id": "partial",
+      "title": "1.3. Partial Implementations",
+      "level": 3,
+      "text_sha256": "2982f2e8ca7b0ea7b3dbbe7735f6c3d0c5125d3648ae7d47aaf1f95b6a5eca52",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.partial",
+          "css-align-3.partial-clause-ef3a4834eca6",
+          "css-align-3.partial-clause-c237f685c0b5"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "2. Overview of Alignment Properties",
+      "level": 2,
+      "text_sha256": "226d3175babf29580baa4b1afa978b6319d4e0c5705c8b89bdf9b92467edc7ac",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.overview"
+        ]
+      }
+    },
+    {
+      "id": "terms",
+      "title": "3. Alignment Terminology",
+      "level": 2,
+      "text_sha256": "a217cc27a3e5d93ee0d59c79a902e3c0ad044aa25b79f4845d9d51accad7611b",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.terms"
+        ]
+      }
+    },
+    {
+      "id": "alignment-values",
+      "title": "4. Alignment Keywords",
+      "level": 2,
+      "text_sha256": "329859aa7a68bb755aef69643b36f8ff7a464c67bc460d934e7ecda278ba2cd9",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.alignment-values"
+        ]
+      }
+    },
+    {
+      "id": "positional-values",
+      "title": "4.1. Positional Alignment: the center, start, end, self-start, self-end, flex-start, flex-end, left, and right keywords",
+      "level": 3,
+      "text_sha256": "9a4a22d891e55a8dff5517601aedeab4d3b3fded33a46913f946b66e77faf2a5",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.positional-values"
+        ]
+      }
+    },
+    {
+      "id": "baseline-values",
+      "title": "4.2. Baseline Alignment: the baseline keyword and first/last modifiers",
+      "level": 3,
+      "text_sha256": "0419f0582c0ea69f8e7339e1e9f5d0331b1b19742dfe5cc177f08904b7cf042d",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.baseline-values"
+        ]
+      }
+    },
+    {
+      "id": "distribution-values",
+      "title": "4.3. Distributed Alignment: the stretch, space-between, space-around, and space-evenly keywords",
+      "level": 3,
+      "text_sha256": "d82e5b0d3ca7521d089de9d634dad0e8552987ce213dacc71cc2ce9c2450571c",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.distribution-values"
+        ]
+      }
+    },
+    {
+      "id": "overflow-values",
+      "title": "4.4. Overflow Alignment: the safe and unsafe keywords and scroll safety limits",
+      "level": 3,
+      "text_sha256": "33d150dec04c58bd7c671518cc5beb9631edab0783893f177d1f8ae52b6cafff",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.overflow-values"
+        ]
+      }
+    },
+    {
+      "id": "auto-safety",
+      "title": "4.4.1. Automatic Overflow Alignment Safety",
+      "level": 4,
+      "text_sha256": "a591c281b5ca9a8b580ee8a51b47377e97cc407d0983019e76b78e64ae79e608",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.auto-safety"
+        ]
+      }
+    },
+    {
+      "id": "auto-safety-scroll",
+      "title": "4.4.1.1. Content Distribution for Scroll Containers",
+      "level": 5,
+      "text_sha256": "ce0dae587eda3e1261929c6e04f4e46345a6c3ba7ba36b73903f50416144ea3a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.auto-safety-scroll"
+        ]
+      }
+    },
+    {
+      "id": "auto-safety-position",
+      "title": "4.4.1.2. Self-Alignment for Absolutely Positioned Boxes",
+      "level": 5,
+      "text_sha256": "c1b8b624dcd726afe49a654e3d1e79f574657edc3da0b4a701787b258aaa47fb",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.auto-safety-position"
+        ]
+      }
+    },
+    {
+      "id": "auto-safety-default",
+      "title": "4.4.1.3. All Other Alignment",
+      "level": 5,
+      "text_sha256": "fd4fca4bd2b6a29655108086875a9fd755744f7b1902472528245b89017bfd5a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.auto-safety-default",
+          "css-align-3.auto-safety-default-clause-3f6519538be8"
+        ]
+      }
+    },
+    {
+      "id": "content-distribution",
+      "title": "5. Content Distribution: Aligning a Box’s Contents Within Itself",
+      "level": 2,
+      "text_sha256": "be78bf213dd3da87be233e77f79c40558a30f31b5f323d63444898ea27edb132",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.content-distribution"
+        ]
+      }
+    },
+    {
+      "id": "align-justify-content",
+      "title": "5.1. The justify-content and align-content Properties",
+      "level": 3,
+      "text_sha256": "480b1988173e02a89f294498a1b7c3303efb89ce745f4ba22170e3b021142565",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.align-justify-content",
+          "css-align-3.align-justify-content-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "distribution-block",
+      "title": "5.1.1. Block Containers (Including Table Cells)",
+      "level": 4,
+      "text_sha256": "fb9fc7e0754bf28cc1b3ee2af9a52807f5ea6d78758822b196b2044452e2fa02",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.distribution-block",
+          "css-align-3.distribution-block-clause-df5d27fc32f2",
+          "css-align-3.distribution-block-clause-e0f3d4948041"
+        ]
+      }
+    },
+    {
+      "id": "distribution-multicol",
+      "title": "5.1.2. Multicol Containers",
+      "level": 4,
+      "text_sha256": "e4a20c5780ee29dae12c9805385317174f9d216a133f0b2e1bfb47170166cebf",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.distribution-multicol"
+        ]
+      }
+    },
+    {
+      "id": "distribution-flex",
+      "title": "5.1.3. Flex Containers",
+      "level": 4,
+      "text_sha256": "62d64175ec50c8e4f1f668571f84e4bdce60a184924c3542b7ecbcfceee2a596",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.distribution-flex"
+        ]
+      }
+    },
+    {
+      "id": "distribution-grid",
+      "title": "5.1.4. Grid Containers",
+      "level": 4,
+      "text_sha256": "231d8064e4803a56435214935d3cdaf06b26411d2b44ddff2c6f3a8f2e1c0c3d",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.distribution-grid"
+        ]
+      }
+    },
+    {
+      "id": "place-content",
+      "title": "5.2. Content-Distribution Shorthand: the place-content property",
+      "level": 3,
+      "text_sha256": "0d2f894649ae66380baa40a212985554b6977187fde0f9bf33ac7bfc24eb68a6",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.place-content",
+          "css-align-3.place-content-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "overflow-scroll-position",
+      "title": "5.3. Alignment Overflow and Scroll Containers",
+      "level": 3,
+      "text_sha256": "a669f6c80f645125a76357fab46136d2e30a57bb7a041f12abdedbf277988be5",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.overflow-scroll-position"
+        ]
+      }
+    },
+    {
+      "id": "baseline-align-content",
+      "title": "5.4. Baseline Content-Alignment",
+      "level": 3,
+      "text_sha256": "78e6f3d1b1eb5c5563c39ccfcfad4526f149a02e9639a7fc20d78aa18203498d",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.baseline-align-content",
+          "css-align-3.baseline-align-content-clause-c8cfb57b778d",
+          "css-align-3.baseline-align-content-clause-3c079b2d1fdf",
+          "css-align-3.baseline-align-content-clause-11b8f9f55a2e",
+          "css-align-3.baseline-align-content-clause-8a386729708e",
+          "css-align-3.baseline-align-content-clause-5e32d1aee5ce"
+        ]
+      }
+    },
+    {
+      "id": "self-alignment",
+      "title": "6. Self-Alignment: Aligning the Box Within Its Parent",
+      "level": 2,
+      "text_sha256": "278bf36ba3fc9992af22719f1787aaf303642d0bb8dc4af4e447bdd51c72aa6d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.self-alignment"
+        ]
+      }
+    },
+    {
+      "id": "justify-self-property",
+      "title": "6.1. Inline-Axis (or Main-Axis) Self-Alignment: the justify-self property",
+      "level": 3,
+      "text_sha256": "7c38498f2d182bf5dbec48c271e6d5eb500361db4d2c17adad3176771f9c1a01",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.justify-self-property",
+          "css-align-3.justify-self-property-clause-cca2516ebb1d",
+          "css-align-3.justify-self-property-clause-0c82acab8608",
+          "css-align-3.justify-self-property-clause-b2f3a57c3c19",
+          "css-align-3.justify-self-property-clause-175ea4ead781",
+          "css-align-3.justify-self-property-clause-a8302debc730"
+        ]
+      }
+    },
+    {
+      "id": "justify-block",
+      "title": "6.1.1. Block-Level Boxes",
+      "level": 4,
+      "text_sha256": "704a8642025e3f3fe7b8ce3f7c7d1e06230947e6e71ad25537ce4b3a55150ff4",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.justify-block",
+          "css-align-3.justify-block-clause-9096846a5086"
+        ]
+      }
+    },
+    {
+      "id": "justify-abspos",
+      "title": "6.1.2. Absolutely-Positioned Boxes",
+      "level": 4,
+      "text_sha256": "539ab23a1225f99a4cfd0c2b5ab7c0eaf41f18902f7b63f2b8af076e743395ce",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.justify-abspos",
+          "css-align-3.justify-abspos-clause-bf421f1712d9"
+        ]
+      }
+    },
+    {
+      "id": "justify-cell",
+      "title": "6.1.3. Table Cells",
+      "level": 4,
+      "text_sha256": "11e16d1723d5c63cc3465685da2366041b4269c67e979ef2a9130ef197cc4c51",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.justify-cell"
+        ]
+      }
+    },
+    {
+      "id": "justify-flex",
+      "title": "6.1.4. Flex Items",
+      "level": 4,
+      "text_sha256": "096b6a2f29b64ac5e3eb5c1cf91960951693b05afef015916a83e9f7153185a4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.justify-flex"
+        ]
+      }
+    },
+    {
+      "id": "justify-grid",
+      "title": "6.1.5. Grid Items",
+      "level": 4,
+      "text_sha256": "859e417d647ed66096c11c76623015e8553194d20980a4e57d937fc6d5ccf1e6",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.justify-grid"
+        ]
+      }
+    },
+    {
+      "id": "align-self-property",
+      "title": "6.2. Block-Axis (or Cross-Axis) Self-Alignment: the align-self property",
+      "level": 3,
+      "text_sha256": "860db5e724b9dbd25222a871a61fecde215b2baa89ca919097ff9b394d32edcc",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.align-self-property",
+          "css-align-3.align-self-property-clause-cca2516ebb1d",
+          "css-align-3.align-self-property-clause-cb9bb80e040e",
+          "css-align-3.align-self-property-clause-24a4d5b82b44"
+        ]
+      }
+    },
+    {
+      "id": "align-block",
+      "title": "6.2.1. Block-Level Boxes",
+      "level": 4,
+      "text_sha256": "71626aa4f6c788442fe9a3db0d244bd68672669cab6c24b0bcdcf4a53677f3d9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.align-block"
+        ]
+      }
+    },
+    {
+      "id": "align-abspos",
+      "title": "6.2.2. Absolutely-Positioned Boxes",
+      "level": 4,
+      "text_sha256": "b718571360425239dfcd46d40e854f358ff4983ace58c4b8781eb36534992c2f",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.align-abspos",
+          "css-align-3.align-abspos-clause-a9b2d7dc2fa6"
+        ]
+      }
+    },
+    {
+      "id": "align-cell",
+      "title": "6.2.3. Table Cells",
+      "level": 4,
+      "text_sha256": "11e16d1723d5c63cc3465685da2366041b4269c67e979ef2a9130ef197cc4c51",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.align-cell"
+        ]
+      }
+    },
+    {
+      "id": "align-flex",
+      "title": "6.2.4. Flex Items",
+      "level": 4,
+      "text_sha256": "0fd58201519ad470152ec9edfeacac56cb732419ebb7259f0c67153ae64fc151",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.align-flex"
+        ]
+      }
+    },
+    {
+      "id": "align-grid",
+      "title": "6.2.5. Grid Items",
+      "level": 4,
+      "text_sha256": "d415a3480a0f4a16f02cc2fd00274d05c21d1d2dbfdc4f32e392a207b7622c46",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.align-grid"
+        ]
+      }
+    },
+    {
+      "id": "place-self-property",
+      "title": "6.3. Self-Alignment Shorthand: the place-self property",
+      "level": 3,
+      "text_sha256": "f9498c4b9c3432de2c81f5f236c91f3937e9f978c48e120b8116d72e8a7fd0a7",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.place-self-property",
+          "css-align-3.place-self-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "baseline-align-self",
+      "title": "6.4. Baseline Self-Alignment",
+      "level": 3,
+      "text_sha256": "0485fc6d115735b744302cba1e9e1efd2434c6a528e5ae5b3ef5d2a17688c4ac",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.baseline-align-self",
+          "css-align-3.baseline-align-self-clause-978981339c73"
+        ]
+      }
+    },
+    {
+      "id": "abspos-sizing",
+      "title": "6.5. Effects on Sizing of Absolutely Positioned Boxes with Static-Position Insets",
+      "level": 3,
+      "text_sha256": "7fb0ed6c8e72fcd81905a29bc94dd543b6239b40e6be5d1c0bc9c74e47586b1c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.abspos-sizing"
+        ]
+      }
+    },
+    {
+      "id": "default-alignment",
+      "title": "7. Default Alignment",
+      "level": 2,
+      "text_sha256": "bc68b9d59233e09c8382984b7f7976d70a20621aa306907f04c74b2ac7675135",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.default-alignment"
+        ]
+      }
+    },
+    {
+      "id": "justify-items-property",
+      "title": "7.1. Inline-Axis (or Main-Axis) Default Alignment: the justify-items property",
+      "level": 3,
+      "text_sha256": "7e42662106f75beb665691d2efb0d3e76e4d469eaa565ed190bd311798a3371a",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.justify-items-property",
+          "css-align-3.justify-items-property-clause-cca2516ebb1d",
+          "css-align-3.justify-items-property-clause-ef2b42a4f037",
+          "css-align-3.justify-items-property-clause-a852506f3c91"
+        ]
+      }
+    },
+    {
+      "id": "align-items-property",
+      "title": "7.2. Block-Axis (or Cross-Axis) Default Alignment: the align-items property",
+      "level": 3,
+      "text_sha256": "2d3dfa0890e967a01dc5df4b16300a0e310778944af47856084b54e6ec49c624",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.align-items-property",
+          "css-align-3.align-items-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "place-items-property",
+      "title": "7.3. Default Alignment Shorthand: the place-items property",
+      "level": 3,
+      "text_sha256": "e36ada09051cdd800b85fb204af73e7af9bedf49e5cb9fc55c27f3d15fc33098",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.place-items-property",
+          "css-align-3.place-items-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "gaps",
+      "title": "8. Gaps Between Boxes",
+      "level": 2,
+      "text_sha256": "cfc7900abd9e66af556bdb2267d7bb6f663411e8cd807cb64896f4b5fcc8ffae",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.gaps"
+        ]
+      }
+    },
+    {
+      "id": "baseline-rules",
+      "title": "9. Baseline Alignment Details",
+      "level": 2,
+      "text_sha256": "ab62b44c85ea6d1f53729c2dbf2e179ed286913afa4ab399c44c7202abdb7405",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.baseline-rules"
+        ]
+      }
+    },
+    {
+      "id": "baseline-export",
+      "title": "9.1. Determining the Baselines of a Box",
+      "level": 3,
+      "text_sha256": "ffddbeadbcee40924b5132fc6b4b9990b83650fda3859cda0f17612247786db9",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.baseline-export",
+          "css-align-3.baseline-export-clause-00cc3622b914",
+          "css-align-3.baseline-export-clause-143712117f2f",
+          "css-align-3.baseline-export-clause-c3ace852086b",
+          "css-align-3.baseline-export-clause-68fe3b1659e7",
+          "css-align-3.baseline-export-clause-41e2995d28de",
+          "css-align-3.baseline-export-clause-550091750526",
+          "css-align-3.baseline-export-clause-b7de21742482",
+          "css-align-3.baseline-export-clause-bf24454448bf",
+          "css-align-3.baseline-export-clause-b35e88604950"
+        ]
+      }
+    },
+    {
+      "id": "baseline-terms",
+      "title": "9.2. Baseline Alignment Grouping",
+      "level": 3,
+      "text_sha256": "c8f9a00b6579ec9bcafbf0b3ec1adf83939533720e6ccec7ea04c25831186be7",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.baseline-terms"
+        ]
+      }
+    },
+    {
+      "id": "align-by-baseline",
+      "title": "9.3. Aligning Boxes by Baseline",
+      "level": 3,
+      "text_sha256": "efd4a847500aa7055f4355979cf91e5362ea4812872df3bd996e94db140fcfa0",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.align-by-baseline"
+        ]
+      }
+    },
+    {
+      "id": "staticpos-rect",
+      "title": "Appendix A: Static Position Terminology",
+      "level": 2,
+      "text_sha256": "55907ed7b972909d892bd5f2031b92b1998af7a54fe5fd8cea6964fe850852d4",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.staticpos-rect",
+          "css-align-3.staticpos-rect-clause-55b7b19a0362"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "10. Changes",
+      "level": 2,
+      "text_sha256": "324372e831e02e95929cd53ec318cfe6bd2d57d7d5fe800054e31285a7ac3778",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "11. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "1ce3f2e66544ad97de45ba0126b53981a8508c1e6d13230bbccfe1accda2add5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "12. Security Considerations",
+      "level": 2,
+      "text_sha256": "e33ed430a346baf9e591b33e74586e08357b40d5f42919c4344f647d1664a92b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.security"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "c1d459c8049481ed3a90b957a11a49033df02ff4cb96516f1112064323bacbd7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.w3c-conventions",
+          "css-align-3.w3c-conventions-clause-5c98c879f070",
+          "css-align-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.w3c-conformance-classes",
+          "css-align-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-align-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.w3c-partial",
+          "css-align-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.w3c-testing",
+          "css-align-3.w3c-testing-clause-1e0fff369221",
+          "css-align-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "c0497709a87e57e12cace7906040ba4da01b6fd3af93d4211b3a5811c54ba55a",
+      "clause_count": 87,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "c0f9c95d43febba919ce77dae8f4053fc75ecc26194870f3177298b96c993ed6",
+      "clause_count": 165,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "2f3ac41fca5855885a99877b454d8421ad2de4485c504fdfa5e6c4b2122f66ef",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.import-22ca1a8f637f"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "2c86ef7e7422a30ba43043392c2b84437ef258ddda596e32513498345303e16f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "59c146e78a76618b28c4e8b12353e993730214a3493cd7e346acc140a17c9f88",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.property-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "800a0604cc2bce2da2471eaad3168ee632fe4cc131af935c947f91a0e48b9c42",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-align-3.issues-index"
+        ]
+      }
+    }
+  ]
+}

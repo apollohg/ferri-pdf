@@ -1,0 +1,406 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-syndata",
+  "sections": [
+    {
+      "id": "q4.0",
+      "title": "4 Syntax and basic data types",
+      "level": 1,
+      "text_sha256": "b1ec4b5dace25aa63668397a64a40f26b9a55aa9a4c4c96dcf7c4fa35b3da1c0",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.q4-0"
+        ]
+      }
+    },
+    {
+      "id": "syntax",
+      "title": "4.1 Syntax",
+      "level": 2,
+      "text_sha256": "03b2ae9a63407348b156aec91254e79637692b46e2ccc0f4ad55e5e029ee27bc",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.syntax"
+        ]
+      }
+    },
+    {
+      "id": "tokenization",
+      "title": "4.1.1 Tokenization",
+      "level": 3,
+      "text_sha256": "2fa21fbebc27b1fed5a80cdae283e11c7a3b571e592e911bebd86a8e9782585c",
+      "clause_count": 117,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.tokenization",
+          "css21-syndata.tokenization-clause-c84c027052c1"
+        ]
+      }
+    },
+    {
+      "id": "keywords",
+      "title": "4.1.2 Keywords",
+      "level": 3,
+      "text_sha256": "97629f3a3fc8b8f1b2e9c8852a7e2adca0e42a7ea76e191367267e10de9dd6b8",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.keywords",
+          "css21-syndata.keywords-clause-e94fcb58c027"
+        ]
+      }
+    },
+    {
+      "id": "vendor-keywords",
+      "title": "4.1.2.1 Vendor-specific extensions",
+      "level": 4,
+      "text_sha256": "6f919eb63b4597b6f83f4ce88a07c2311eff533d454a9b1a3c5b4742899cff4f",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.vendor-keywords",
+          "css21-syndata.vendor-keywords-clause-7e95795793bb",
+          "css21-syndata.vendor-keywords-clause-8769fa08cf96",
+          "css21-syndata.vendor-keywords-clause-29d845d5ccce"
+        ]
+      }
+    },
+    {
+      "id": "vendor-keyword-history",
+      "title": "4.1.2.2 Informative Historical Notes",
+      "level": 4,
+      "text_sha256": "7a7fd6ec73627ea5e8f71a39c6cc36fbe7da52795bef2efdd95d2f531384f961",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.vendor-keyword-history"
+        ]
+      }
+    },
+    {
+      "id": "characters",
+      "title": "4.1.3 Characters and case",
+      "level": 3,
+      "text_sha256": "7db7032bb67a4329b0183fc3c481026af80a539b7dd3a72e3338ba022bd20aee",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.characters",
+          "css21-syndata.characters-clause-2d4dea1e8dbd",
+          "css21-syndata.characters-clause-9057a2d53f5b",
+          "css21-syndata.characters-clause-65d55e40bdba",
+          "css21-syndata.characters-clause-58a8e6ebab23",
+          "css21-syndata.characters-clause-bdfd283fb0e0",
+          "css21-syndata.characters-clause-fc95be9ab8f5",
+          "css21-syndata.characters-clause-72e6123c32ac"
+        ]
+      }
+    },
+    {
+      "id": "statements",
+      "title": "4.1.4 Statements",
+      "level": 3,
+      "text_sha256": "aa159897813f019515c78067562f81caa3b3ea617723085215b61e2b548f73d5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.statements"
+        ]
+      }
+    },
+    {
+      "id": "at-rules",
+      "title": "4.1.5 At-rules",
+      "level": 3,
+      "text_sha256": "129d76e40cb421f6b7babc047fd85f7f8d76a6ee70c30c9a53abfe75a5dcd2c5",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.at-rules",
+          "css21-syndata.at-rules-clause-b52a815d94e4",
+          "css21-syndata.at-rules-clause-22797bec8e93"
+        ]
+      }
+    },
+    {
+      "id": "block",
+      "title": "4.1.6 Blocks",
+      "level": 3,
+      "text_sha256": "05d93cf88faba408cf7dcf17a592f44b645c5812a906bd5257053496ec25b43b",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.block",
+          "css21-syndata.block-clause-35052ed7a4cc"
+        ]
+      }
+    },
+    {
+      "id": "rule-sets",
+      "title": "4.1.7 Rule sets, declaration blocks, and selectors",
+      "level": 3,
+      "text_sha256": "6f6bc76c64dae8f519635987b7ab2f992a10bb5ff3fd88dccd31a929cc6d99b0",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.rule-sets",
+          "css21-syndata.rule-sets-clause-b222f9bd18a0",
+          "css21-syndata.rule-sets-clause-d6ef466ee2f1",
+          "css21-syndata.rule-sets-clause-9675f4cadd81",
+          "css21-syndata.rule-sets-clause-a97e465dd892"
+        ]
+      }
+    },
+    {
+      "id": "properties",
+      "title": "4.1.8 Declarations and properties",
+      "level": 3,
+      "text_sha256": "b1c574965c8ddff164364d0b0bd24536f1952e261aef99d95cf69176583a031b",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.properties",
+          "css21-syndata.properties-clause-67d95ef1e150",
+          "css21-syndata.properties-clause-6e195c8c8bad",
+          "css21-syndata.properties-clause-07f517a5cd14",
+          "css21-syndata.properties-clause-7f6dc031dd03"
+        ]
+      }
+    },
+    {
+      "id": "comments",
+      "title": "4.1.9 Comments",
+      "level": 3,
+      "text_sha256": "3741150b6e2f93f669f8aaaf2d6807cd825955c64f43e8658416502ed3a751f4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.comments"
+        ]
+      }
+    },
+    {
+      "id": "parsing-errors",
+      "title": "4.2 Rules for handling parsing errors",
+      "level": 2,
+      "text_sha256": "e43aff6acbca21d8039e042b76e218bbd345ec6d678c05d62a398a8f26b83503",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.parsing-errors",
+          "css21-syndata.parsing-errors-clause-208976f565f8",
+          "css21-syndata.parsing-errors-clause-16dc7f5f9c66",
+          "css21-syndata.parsing-errors-clause-2ef25cc71288",
+          "css21-syndata.parsing-errors-clause-1268f689ffa0",
+          "css21-syndata.parsing-errors-clause-e4a1073515be",
+          "css21-syndata.parsing-errors-clause-4a3ae89db034",
+          "css21-syndata.parsing-errors-clause-64ddd599538d",
+          "css21-syndata.parsing-errors-clause-a1d53a21e953",
+          "css21-syndata.parsing-errors-clause-8078955f0a06",
+          "css21-syndata.parsing-errors-clause-14a7fdb07dc1",
+          "css21-syndata.parsing-errors-clause-1a2cce28bc1f",
+          "css21-syndata.parsing-errors-clause-96c845946619",
+          "css21-syndata.parsing-errors-clause-ebfc50dc4c80",
+          "css21-syndata.parsing-errors-clause-1487e8530768",
+          "css21-syndata.parsing-errors-clause-005607f1a187",
+          "css21-syndata.parsing-errors-clause-ea0793641e35"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "4.3 Values",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.values"
+        ]
+      }
+    },
+    {
+      "id": "numbers",
+      "title": "4.3.1 Integers and real numbers",
+      "level": 3,
+      "text_sha256": "171518dd1bd811ecaa35358de92fcafd39ea10512f251c05105fc5a7523dca59",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.numbers"
+        ]
+      }
+    },
+    {
+      "id": "length-units",
+      "title": "4.3.2 Lengths",
+      "level": 3,
+      "text_sha256": "912d85401dc7c6f84b8b5ec3783dc71a20b1aaf15faa9b4c97eefcf3cfffa130",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.length-units",
+          "css21-syndata.length-units-clause-60a2f3d3434e",
+          "css21-syndata.length-units-clause-d625434ad0d4",
+          "css21-syndata.length-units-clause-ee5f01bc9121",
+          "css21-syndata.length-units-clause-dc0721149024",
+          "css21-syndata.length-units-clause-f70d66d82a8f",
+          "css21-syndata.length-units-clause-7c2a1857038c",
+          "css21-syndata.length-units-clause-c4c4dcd1b892",
+          "css21-syndata.length-units-clause-19e0b64209f6",
+          "css21-syndata.length-units-clause-e3eeac3c2381"
+        ]
+      }
+    },
+    {
+      "id": "percentage-units",
+      "title": "4.3.3 Percentages",
+      "level": 3,
+      "text_sha256": "58eca2f49f5457ef854551f1e9923ac922c1acd11e52673a5dfdeefddd48fb6e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.percentage-units",
+          "css21-syndata.percentage-units-clause-7f7656d599e3",
+          "css21-syndata.percentage-units-clause-1e97e8014348"
+        ]
+      }
+    },
+    {
+      "id": "uri",
+      "title": "4.3.4 URLs and URIs",
+      "level": 3,
+      "text_sha256": "d7aa880636fa284f105ba74288d514351d5871b39e7d1b25c6fec827dad83693",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.uri",
+          "css21-syndata.uri-clause-6cebdf3149a0",
+          "css21-syndata.uri-clause-e07014bf0b52",
+          "css21-syndata.uri-clause-a32aaa8dcbd5",
+          "css21-syndata.uri-clause-db2d2ced5f77"
+        ]
+      }
+    },
+    {
+      "id": "counter",
+      "title": "4.3.5 Counters",
+      "level": 3,
+      "text_sha256": "fa10bda2e840ef6c4628821e153ce020c601ef899dd6e39356359d957fd34b42",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.counter",
+          "css21-syndata.counter-clause-f40e40242419"
+        ]
+      }
+    },
+    {
+      "id": "color-units",
+      "title": "4.3.6 Colors",
+      "level": 3,
+      "text_sha256": "124c3373312a6c3e8149e1e0db7b847ed668ec8f8c6b21c321607fa91f97880a",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.color-units",
+          "css21-syndata.color-units-clause-5f2702cdac6b",
+          "css21-syndata.color-units-clause-facd854fc571",
+          "css21-syndata.color-units-clause-5fb72c43ab88",
+          "css21-syndata.color-units-clause-1900e35f4d86"
+        ]
+      }
+    },
+    {
+      "id": "strings",
+      "title": "4.3.7 Strings",
+      "level": 3,
+      "text_sha256": "663a3e2714025a2e9f5311b65680c190b2e43555951d90559d6f349c553b9523",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.strings"
+        ]
+      }
+    },
+    {
+      "id": "unsupported-values",
+      "title": "4.3.8 Unsupported Values",
+      "level": 3,
+      "text_sha256": "b97b3ab0f07f877f2621f8d03fb044df6cc4029c34502db4614809eeec38d0eb",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.unsupported-values",
+          "css21-syndata.unsupported-values-clause-66a9ea36b09b"
+        ]
+      }
+    },
+    {
+      "id": "charset",
+      "title": "4.4 CSS style sheet representation",
+      "level": 2,
+      "text_sha256": "df7269a85922e2306f64fa099c3d6c0ccaa0d6ba9d9c7fd996f02648396e422c",
+      "clause_count": 74,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.charset",
+          "css21-syndata.charset-clause-04cca5bff14c",
+          "css21-syndata.charset-clause-c4146937bc97",
+          "css21-syndata.charset-clause-4ae7a03f6e27",
+          "css21-syndata.charset-clause-908600abe5b6",
+          "css21-syndata.charset-clause-a7c7d220a2e2",
+          "css21-syndata.charset-clause-d8e706dc2cb4",
+          "css21-syndata.charset-clause-9f3f9a716eeb",
+          "css21-syndata.charset-clause-0b5965e7c862",
+          "css21-syndata.charset-clause-d16b5fc9601a",
+          "css21-syndata.charset-clause-bb03ef95d397",
+          "css21-syndata.charset-clause-a732771533ea"
+        ]
+      }
+    },
+    {
+      "id": "escaping",
+      "title": "4.4.1 Referring to characters not represented in a character encoding",
+      "level": 3,
+      "text_sha256": "77091859d3d4cc84bee3a4224f3ad79c61fd5372ffc511d5e058915f9a011f34",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-syndata.escaping",
+          "css21-syndata.escaping-clause-a8c357f166b9",
+          "css21-syndata.escaping-clause-3040874a75b3",
+          "css21-syndata.escaping-clause-ee81558db1f3",
+          "css21-syndata.escaping-clause-c3a5660d1583"
+        ]
+      }
+    }
+  ]
+}

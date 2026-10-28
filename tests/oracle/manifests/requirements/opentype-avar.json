@@ -1,0 +1,369 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-avar.avar-axis-variations-table",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "avar--axis-variations-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in avar — Axis Variations Table.",
+      "locator": {
+        "section_id": "avar--axis-variations-table",
+        "text_sha256": "35f1792417b4a3faef123da6709222b38c9804631e6a213da967873b16df1073"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-avar.overview",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overview.",
+      "locator": {
+        "section_id": "overview",
+        "text_sha256": "545e723eb97f2c91d9516f362f9a069b34b678de5c210e616c557fa0cbe22599"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-avar.overview-clause-5a85fb14af5e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-avar.overview-clause-5a85fb14af5e",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Overview — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "overview",
+        "clause_index": 0,
+        "clause_sha256": "5a85fb14af5ea7f877bac28024f3ff0d1af9e2963e44f59582c751e401d4544c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-avar.table-formats",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "table-formats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Table formats.",
+      "locator": {
+        "section_id": "table-formats",
+        "text_sha256": "fdb8bfa83f4bed54c07ce137bc88eb5ad8f3c334017ec608edb465a1401b1a4d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-avar.table-formats-clause-b80e7f653c59",
+        "opentype-avar.table-formats-clause-2c29083e2bdf",
+        "opentype-avar.table-formats-clause-fdea9d584519",
+        "opentype-avar.table-formats-clause-afd20fc7c5d4",
+        "opentype-avar.table-formats-clause-98e9cbaf1cac"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-avar.table-formats-clause-b80e7f653c59",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "table-formats"
+      ],
+      "behaviour": "Table formats — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-formats",
+        "clause_index": 16,
+        "clause_sha256": "b80e7f653c59db479056d12e89b6a3b51103cbe1c5b8df3184797dad161c56d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-avar.table-formats-clause-2c29083e2bdf",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "table-formats"
+      ],
+      "behaviour": "Table formats — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-formats",
+        "clause_index": 20,
+        "clause_sha256": "2c29083e2bdf09cb19870c0213a48d0391f292befdc058965b550aad7a725fb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-avar.table-formats-clause-fdea9d584519",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "table-formats"
+      ],
+      "behaviour": "Table formats — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-formats",
+        "clause_index": 42,
+        "clause_sha256": "fdea9d584519105ceb6c2caf09f9735ad5c9417baaf1ab132901a76ff8565ff3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-avar.table-formats-clause-afd20fc7c5d4",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "table-formats"
+      ],
+      "behaviour": "Table formats — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-formats",
+        "clause_index": 43,
+        "clause_sha256": "afd20fc7c5d421172423a833e238bfc9c5a02573609c353a1b8db54fd564ad86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-avar.table-formats-clause-98e9cbaf1cac",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "table-formats"
+      ],
+      "behaviour": "Table formats — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-formats",
+        "clause_index": 44,
+        "clause_sha256": "98e9cbaf1cac8fd28fe2169d1011a7c89b60832509a439772411f4a1c9fb5246"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-avar.processing",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "processing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Processing.",
+      "locator": {
+        "section_id": "processing",
+        "text_sha256": "5f1f66ed1dba54945797015f2d39812685e7bb736c581373bf99af1036e0bc2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-avar.ms-in-this-article",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-avar.ms-feedback",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-avar.ms-additional-resources-mobile-heading",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "4e2297f79525355aa3dc07756ae4ae6ba350dc012790f96133dc9fdbf48db6d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-avar.side-doc-outline",
+      "family": "opentype-avar",
+      "source_id": "opentype-avar",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

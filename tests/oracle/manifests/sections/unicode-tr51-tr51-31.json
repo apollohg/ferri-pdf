@@ -1,0 +1,954 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode-tr51-tr51-31",
+  "sections": [
+    {
+      "id": "heading-133aa068de27",
+      "title": "Unicode® Technical Standard #51",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.heading-133aa068de27"
+        ]
+      }
+    },
+    {
+      "id": "heading-0dd93ba3dfe5",
+      "title": "Unicode Emoji",
+      "level": 1,
+      "text_sha256": "e482d81abf6a62b22a0a4ea8964ce0a767daf4fd8baae9cead6ff1503ddc5b8e",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.heading-0dd93ba3dfe5"
+        ]
+      }
+    },
+    {
+      "id": "heading-562e5643bfd0",
+      "title": "Summary",
+      "level": 3,
+      "text_sha256": "f3ff066a1eec0333786991b3c2d179f5ec5cbe61feb41c6cee35206c8a6e8d52",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.heading-562e5643bfd0",
+          "unicode-tr51-tr51-31.heading-562e5643bfd0-clause-935ca2ec92f1"
+        ]
+      }
+    },
+    {
+      "id": "heading-b67e4e63a5c4",
+      "title": "Status",
+      "level": 3,
+      "text_sha256": "bb56c530fcb3a97dfd25bc6b4ae42dfb89e04c7ab8deaf0e7ed51acd8f8051d3",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.heading-b67e4e63a5c4"
+        ]
+      }
+    },
+    {
+      "id": "Contents",
+      "title": "Contents",
+      "level": 3,
+      "text_sha256": "0dbdda060026897123da83bb2ba80e72f0219a6a7c9eed5256981cc06f666c3f",
+      "clause_count": 86,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.contents"
+        ]
+      }
+    },
+    {
+      "id": "Introduction",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "2ff8d4b657777d21c9e9ebb7e9e0a4b2f3b7dc2898fda39419a7898591ec927f",
+      "clause_count": 99,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.introduction",
+          "unicode-tr51-tr51-31.introduction-clause-cf5fbc6084b0",
+          "unicode-tr51-tr51-31.introduction-clause-facfba4114aa"
+        ]
+      }
+    },
+    {
+      "id": "Emoticons",
+      "title": "1.1 Emoticons and Emoji",
+      "level": 3,
+      "text_sha256": "807d48f08132b4e5f34970d32a186ce6e24d57eb750fb33c766802caf807acad",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoticons"
+        ]
+      }
+    },
+    {
+      "id": "Encoding",
+      "title": "1.2 Encoding Considerations",
+      "level": 3,
+      "text_sha256": "1e7d49af003c5bcc05bec6c20071cb09c9f113b70e189a53919e309e1370e359",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.encoding",
+          "unicode-tr51-tr51-31.encoding-clause-9dbcb0bba7fd"
+        ]
+      }
+    },
+    {
+      "id": "Goals",
+      "title": "1.3 Goals",
+      "level": 3,
+      "text_sha256": "a5b85d60224ed68fabaae3fa928e5c19831240526091d0325fe1ce5982caf799",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.goals",
+          "unicode-tr51-tr51-31.goals-clause-beff6a50765d"
+        ]
+      }
+    },
+    {
+      "id": "Definitions",
+      "title": "1.4 Definitions",
+      "level": 3,
+      "text_sha256": "d92c79a31bb0ed199b5520f4a60de574b249ccfa6a3561f93bdc90496bdcd810",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.definitions"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Characters",
+      "title": "1.4.1 Emoji Characters",
+      "level": 4,
+      "text_sha256": "34dcbe8c5715bfda1b42cf3c35cf82c6f6efe5fa0cd0dfbb325c0b1ee1556133",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-characters"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Presentation",
+      "title": "1.4.2 Emoji Presentation",
+      "level": 4,
+      "text_sha256": "145bc6012d742b42824cc666871d8f61465979a847919cfb8606ad95afca136b",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-presentation",
+          "unicode-tr51-tr51-31.emoji-presentation-clause-d3e8ce421754",
+          "unicode-tr51-tr51-31.emoji-presentation-clause-d8135775f8e9"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Variation_Sequences",
+      "title": "1.4.3 Emoji and Text Presentation Sequences",
+      "level": 4,
+      "text_sha256": "8a12235d1d40f7599ffb12376d5c69c5984b9bf0ff9afbe36bde0254110c2561",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-variation-sequences"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Modifiers",
+      "title": "1.4.4 Emoji Modifiers",
+      "level": 4,
+      "text_sha256": "eb5f98bc104ac6e370b12f4faa5a3e3677a16eaa025e67bbd7233bfc4e55da2a",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-modifiers"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Sequences",
+      "title": "1.4.5 Emoji Sequences",
+      "level": 4,
+      "text_sha256": "25cc4ad1def55afd0c0ff6924162157db99e79648c1e161e533b75047617279e",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-sequences",
+          "unicode-tr51-tr51-31.emoji-sequences-clause-57c01c890151",
+          "unicode-tr51-tr51-31.emoji-sequences-clause-82a3757cc88f"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Sets",
+      "title": "1.4.6 Emoji Sets",
+      "level": 4,
+      "text_sha256": "06f2cd7b64faca9b6413f68dd67fed3a7a2fc886336e345aea03490fa26f5b71",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-sets",
+          "unicode-tr51-tr51-31.emoji-sets-clause-5f5706491746",
+          "unicode-tr51-tr51-31.emoji-sets-clause-3b0c45138db5",
+          "unicode-tr51-tr51-31.emoji-sets-clause-1c9e2431de53"
+        ]
+      }
+    },
+    {
+      "id": "Notation",
+      "title": "1.4.7 Notation",
+      "level": 4,
+      "text_sha256": "38555ec604b51dd48c1474f99216028a55fdca4d23959550d390cf91077791ca",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.notation"
+        ]
+      }
+    },
+    {
+      "id": "Property_Stability",
+      "title": "1.4.8 Property Stability",
+      "level": 4,
+      "text_sha256": "6a77485280312b5b02ac720f70da8022d42a6c39bf2df376b676ec6d358e30b1",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.property-stability",
+          "unicode-tr51-tr51-31.property-stability-clause-07f71bbd4f2a",
+          "unicode-tr51-tr51-31.property-stability-clause-a2cce5926366"
+        ]
+      }
+    },
+    {
+      "id": "EBNF_and_Regex",
+      "title": "1.4.9 EBNF and Regex",
+      "level": 4,
+      "text_sha256": "686b5641abf1a89621dee5dbfa3629ec44156e09b427782a589173b0bcb7a348",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.ebnf-and-regex"
+        ]
+      }
+    },
+    {
+      "id": "Conformance",
+      "title": "1.5 Conformance",
+      "level": 3,
+      "text_sha256": "743ebe9cabca97d6d1d7acf1a65bea6e6cfa91df94e37bc1fb7258e9cfc5bd73",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.conformance",
+          "unicode-tr51-tr51-31.conformance-clause-461f2284134d",
+          "unicode-tr51-tr51-31.conformance-clause-50928d9aeb94",
+          "unicode-tr51-tr51-31.conformance-clause-99ac4e78aa44",
+          "unicode-tr51-tr51-31.conformance-clause-0416ae7e755d"
+        ]
+      }
+    },
+    {
+      "id": "Collation_Conformance",
+      "title": "1.5.1 Collation Conformance",
+      "level": 4,
+      "text_sha256": "c65c6848e32d5eea796d3eaa8fcbe14860ea8aa22f85f5b714c3b273ec73b22c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.collation-conformance"
+        ]
+      }
+    },
+    {
+      "id": "Versioning",
+      "title": "1.5.2 Versioning",
+      "level": 4,
+      "text_sha256": "d93ad671979fa8f514108cd60a42be14bdafedc7cf23edc611ca43a3084cbfdf",
+      "clause_count": 94,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.versioning"
+        ]
+      }
+    },
+    {
+      "id": "Design_Guidelines",
+      "title": "2 Design Guidelines",
+      "level": 2,
+      "text_sha256": "68141b486b1c0a5c3b7e7822b1bb319be6bf4b0a700d33b345af29b5cda5ab07",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.design-guidelines",
+          "unicode-tr51-tr51-31.design-guidelines-clause-b8018034f73a",
+          "unicode-tr51-tr51-31.design-guidelines-clause-9cb24671a33c",
+          "unicode-tr51-tr51-31.design-guidelines-clause-3e78f9681549"
+        ]
+      }
+    },
+    {
+      "id": "Names",
+      "title": "2.1 Names",
+      "level": 3,
+      "text_sha256": "7f5bfc57420428999242e9db27db6d63af7922f0133f5cf58cd5a3e50a0f7884",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.names",
+          "unicode-tr51-tr51-31.names-clause-ede3f4bd5669",
+          "unicode-tr51-tr51-31.names-clause-ffa73c73168c",
+          "unicode-tr51-tr51-31.names-clause-09da8ef9aa9f",
+          "unicode-tr51-tr51-31.names-clause-4aaa929d95e3",
+          "unicode-tr51-tr51-31.names-clause-4b4891ffd79c"
+        ]
+      }
+    },
+    {
+      "id": "Display",
+      "title": "2.2 Display",
+      "level": 3,
+      "text_sha256": "654d46735ba895824245c30976dfe613eabf7894b2cd2d61b77b9008930564b1",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.display",
+          "unicode-tr51-tr51-31.display-clause-68b0f0267a46"
+        ]
+      }
+    },
+    {
+      "id": "Gender",
+      "title": "2.3 Gender",
+      "level": 3,
+      "text_sha256": "01709566bea976f0bd57965bf4c75c5ef7cccfdfecb1825fba6e6c7b4f7ded14",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.gender"
+        ]
+      }
+    },
+    {
+      "id": "gender-neutral",
+      "title": "2.3.1 Gender-Neutral Emoji",
+      "level": 4,
+      "text_sha256": "e5f1d8c86638f75afed7cadb1b2e7897a980df7e19c47a13b740d440b521a5a6",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.gender-neutral",
+          "unicode-tr51-tr51-31.gender-neutral-clause-ee5f816c3335",
+          "unicode-tr51-tr51-31.gender-neutral-clause-950018474786"
+        ]
+      }
+    },
+    {
+      "id": "marking-gender-in-input",
+      "title": "2.3.2 Marking Gender in Emoji Input",
+      "level": 4,
+      "text_sha256": "900bbf30f5e0c455358edcd801723a866033f7a425f8330d6119fb4e827ae8e1",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.marking-gender-in-input",
+          "unicode-tr51-tr51-31.marking-gender-in-input-clause-287520c1c490",
+          "unicode-tr51-tr51-31.marking-gender-in-input-clause-34aae43f9d5d"
+        ]
+      }
+    },
+    {
+      "id": "Diversity",
+      "title": "2.4 Diversity",
+      "level": 3,
+      "text_sha256": "4be22264f939ada80464cf762270134b646c39d0743b10d2ae3dbd4588b8b8ab",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.diversity",
+          "unicode-tr51-tr51-31.diversity-clause-ea4583731e7b",
+          "unicode-tr51-tr51-31.diversity-clause-5a52ddf2ab3f",
+          "unicode-tr51-tr51-31.diversity-clause-91d1c469a8c7",
+          "unicode-tr51-tr51-31.diversity-clause-2c0e77f4dd52"
+        ]
+      }
+    },
+    {
+      "id": "Diversity_Implementations",
+      "title": "2.4.1 Implementations",
+      "level": 4,
+      "text_sha256": "8d18785bf065bb7a82f52ee8f816bcf0a465f26273c61cf2acd30d13c7cd7a23",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.diversity-implementations",
+          "unicode-tr51-tr51-31.diversity-implementations-clause-6229dfc9309c",
+          "unicode-tr51-tr51-31.diversity-implementations-clause-3cc99abb2e02",
+          "unicode-tr51-tr51-31.diversity-implementations-clause-cc7cd08fc5ce"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Modifiers_in_Text",
+      "title": "2.4.2 Emoji Modifiers in Text",
+      "level": 4,
+      "text_sha256": "cc49248ffa7afeb2af0de684008649bac8e11ff3ed0d2be051b9eebe39716196",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-modifiers-in-text"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_ZWJ_Sequences",
+      "title": "2.5 Emoji ZWJ Sequences",
+      "level": 3,
+      "text_sha256": "b9a28a27d4b91c12990cbf38916dbaa8ff757befdeff7048cafea240c4f6357e",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-zwj-sequences",
+          "unicode-tr51-tr51-31.emoji-zwj-sequences-clause-9b22bb0e6d52",
+          "unicode-tr51-tr51-31.emoji-zwj-sequences-clause-6433a35f2fcb",
+          "unicode-tr51-tr51-31.emoji-zwj-sequences-clause-d4855ffca82e"
+        ]
+      }
+    },
+    {
+      "id": "Multi_Person_Groupings",
+      "title": "2.6 Multi-Person Groupings",
+      "level": 3,
+      "text_sha256": "8f0d270bdc5f658ffd237521b6f1c62f471277ca5607f3f4115a09b31f5abdeb",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.multi-person-groupings",
+          "unicode-tr51-tr51-31.multi-person-groupings-clause-5213ba40d945",
+          "unicode-tr51-tr51-31.multi-person-groupings-clause-84cf2884869c",
+          "unicode-tr51-tr51-31.multi-person-groupings-clause-6a4120129182"
+        ]
+      }
+    },
+    {
+      "id": "multiperson_gender",
+      "title": "2.6.1 Multi-Person Gender",
+      "level": 4,
+      "text_sha256": "bf967f4c1e5c0dfcf4f6696c38272a29f5d82c13a850991798fc35cad3032d49",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.multiperson-gender",
+          "unicode-tr51-tr51-31.multiperson-gender-clause-70337cf039f3"
+        ]
+      }
+    },
+    {
+      "id": "multiperson_skintones",
+      "title": "2.6.2 Multi-Person Skin Tones",
+      "level": 4,
+      "text_sha256": "cda4b011d19114b614f3bb56efdde1c00edccbbacfdd93eabad488050f54c35d",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.multiperson-skintones",
+          "unicode-tr51-tr51-31.multiperson-skintones-clause-2530a9268499",
+          "unicode-tr51-tr51-31.multiperson-skintones-clause-d06c90d1dcb6"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Implementation_Notes",
+      "title": "2.7 Emoji Implementation Notes",
+      "level": 3,
+      "text_sha256": "91a483f4fcc3a8570708bbaaef9ebed7fb2b67d3021ec892715eed90677bf62b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-implementation-notes"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Variation_Selector_Notes",
+      "title": "2.7.1 Emoji and Text Presentation Selectors",
+      "level": 4,
+      "text_sha256": "8a550752b42349a618ab27642ff07b3c439908b4d1a548cd100cdf0f963894ae",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-variation-selector-notes",
+          "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-46ff882dbc6d",
+          "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-868f7c70a8ad",
+          "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-e20165b9e3d4",
+          "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-5f435b78e7fd",
+          "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-315d0ffda29a",
+          "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-e4d1cd7040f8"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_With_Tags_Notes",
+      "title": "2.7.2 Handling Tag Characters",
+      "level": 4,
+      "text_sha256": "15d0ba038b1e6486900b1c7fb5900c54ad48724e1e5bb61c6d44f71227107260",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-with-tags-notes"
+        ]
+      }
+    },
+    {
+      "id": "hair_components",
+      "title": "2.8 Hair Components",
+      "level": 3,
+      "text_sha256": "c469d3e010194b7ca381dd757a014a3b5be86d9db847ff3a8a12a9d6821cd652",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.hair-components"
+        ]
+      }
+    },
+    {
+      "id": "color",
+      "title": "2.9 Color",
+      "level": 3,
+      "text_sha256": "835839ea6fdc8a4047b26d7b4d550124bab21b662c32470ad303b5d3e994067e",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.color",
+          "unicode-tr51-tr51-31.color-clause-c2176f3f4bd0",
+          "unicode-tr51-tr51-31.color-clause-1619904982aa"
+        ]
+      }
+    },
+    {
+      "id": "Direction",
+      "title": "2.10 Emoji Glyph Facing Direction",
+      "level": 3,
+      "text_sha256": "e93ffaf4ff7ef62b9c5c58f687e59edf835fd16b5bd0086b82c005adf26a7031",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.direction",
+          "unicode-tr51-tr51-31.direction-clause-9a1d115aacde"
+        ]
+      }
+    },
+    {
+      "id": "composing_zwj_seq",
+      "title": "2.11 Order of Emoji ZWJ Sequences",
+      "level": 3,
+      "text_sha256": "1cb02636f6d2ce21ae0b3911fb10e0a28e104b3c5f571486eed27fef70fa7579",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.composing-zwj-seq",
+          "unicode-tr51-tr51-31.composing-zwj-seq-clause-6a91ba657ab7"
+        ]
+      }
+    },
+    {
+      "id": "Identification",
+      "title": "3 Which Characters are Emoji",
+      "level": 2,
+      "text_sha256": "2dcc1c4ada74029005d2249c503ab257df3350b080638b9f996fde3c75e465d0",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.identification",
+          "unicode-tr51-tr51-31.identification-clause-ed0fec3a27a1"
+        ]
+      }
+    },
+    {
+      "id": "Presentation_Style",
+      "title": "4 Presentation Style",
+      "level": 2,
+      "text_sha256": "ddadb946904cddf6565414d5e13c969e1afb770aa4d94e8d70dbaa6f5299b173",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.presentation-style",
+          "unicode-tr51-tr51-31.presentation-style-clause-5e81bc41fe6e",
+          "unicode-tr51-tr51-31.presentation-style-clause-2e72093b07c5",
+          "unicode-tr51-tr51-31.presentation-style-clause-90da069151a6",
+          "unicode-tr51-tr51-31.presentation-style-clause-34f601f587e2",
+          "unicode-tr51-tr51-31.presentation-style-clause-edd1fcd7a1bf",
+          "unicode-tr51-tr51-31.presentation-style-clause-02316be86d49"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Variation_Selectors",
+      "title": "4.1 Emoji and Text Presentation Selectors",
+      "level": 3,
+      "text_sha256": "1d56e7f41043154504dc7978ce7436874c20d84625c8c10fb7c75dcb20c07116",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-variation-selectors"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Locale_Extension",
+      "title": "4.2 Emoji Locale Extension",
+      "level": 3,
+      "text_sha256": "8cf490e223fc9b80ac87242f9828b1333273193d033a1f7378615febb1fce91b",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-locale-extension"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Script",
+      "title": "4.3 Emoji Script Codes",
+      "level": 3,
+      "text_sha256": "6e9929fa3e58729f7dea6a4158f0f02076657baff6d9ac54a15ca6811c7c9b11",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-script"
+        ]
+      }
+    },
+    {
+      "id": "Other_Emoji_Presentation_Approaches",
+      "title": "4.4 Other Approaches for Control of Emoji Presentation",
+      "level": 3,
+      "text_sha256": "0675f32b73478c5c43435d8854055a68f4a87c3e84f92dcfd38812edf8607195",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.other-emoji-presentation-approaches"
+        ]
+      }
+    },
+    {
+      "id": "Sorting",
+      "title": "5 Ordering and Grouping",
+      "level": 2,
+      "text_sha256": "a515e0243e3ba7d774b3a6addfc492b4c7f9d2497e75dd8234a01145d51bde47",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.sorting",
+          "unicode-tr51-tr51-31.sorting-clause-b185c754da4e",
+          "unicode-tr51-tr51-31.sorting-clause-3e668a189beb"
+        ]
+      }
+    },
+    {
+      "id": "Input",
+      "title": "6 Input",
+      "level": 2,
+      "text_sha256": "f793c7cf264b9956e2745197c88eaadc73e6a596b3feb66aa9dddc5f1cd0d3cd",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.input",
+          "unicode-tr51-tr51-31.input-clause-85684169c4df",
+          "unicode-tr51-tr51-31.input-clause-8e3134fc3c19"
+        ]
+      }
+    },
+    {
+      "id": "Searching",
+      "title": "7 Searching",
+      "level": 2,
+      "text_sha256": "80828bf6a3878c42820c701b5d3d016880ab1aa120f71804b95a3d5612f060ac",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.searching",
+          "unicode-tr51-tr51-31.searching-clause-084b510a8ac3",
+          "unicode-tr51-tr51-31.searching-clause-fd2c6e3d2fac"
+        ]
+      }
+    },
+    {
+      "id": "Longer_Term",
+      "title": "8 Longer Term Solutions",
+      "level": 2,
+      "text_sha256": "0794155758d88b48cce929b99cb3676d77e3130ceff89d6fcedfebd6dbace0bd",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.longer-term",
+          "unicode-tr51-tr51-31.longer-term-clause-bc825bc2251b",
+          "unicode-tr51-tr51-31.longer-term-clause-d97530d3bf50"
+        ]
+      }
+    },
+    {
+      "id": "Emoji_Properties_and_Data_Files",
+      "title": "Annex A: Emoji Properties and Data Files",
+      "level": 2,
+      "text_sha256": "0f9b56448a965d0e45ccaee96139c02fde958a2b789725e2619bd26bc6fa4598",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.emoji-properties-and-data-files",
+          "unicode-tr51-tr51-31.emoji-properties-and-data-files-clause-50d2087496e0"
+        ]
+      }
+    },
+    {
+      "id": "Data_Files",
+      "title": "A.1 Data Files",
+      "level": 3,
+      "text_sha256": "67175a21b496f3667143c51efa787a77a8e2cfb047ea983512f574581e8340e6",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.data-files"
+        ]
+      }
+    },
+    {
+      "id": "Flags",
+      "title": "Annex B: Valid Emoji Flag Sequences",
+      "level": 2,
+      "text_sha256": "24a39ae05dbac818b07fa860c0fd342075325025314dadb1369d302ad7e553fa",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.flags",
+          "unicode-tr51-tr51-31.flags-clause-748c2ffe3b13"
+        ]
+      }
+    },
+    {
+      "id": "Flag_Presentation",
+      "title": "B.1 Presentation",
+      "level": 3,
+      "text_sha256": "6be4453c5227b4aa427a51c2440e7bffe7bafec613d0f969c6fa6f99d0cba83c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.flag-presentation",
+          "unicode-tr51-tr51-31.flag-presentation-clause-37beaf60d4f9"
+        ]
+      }
+    },
+    {
+      "id": "Flag_Ordering",
+      "title": "B.2 Ordering",
+      "level": 3,
+      "text_sha256": "5aee59f9b116d8cd125b50f1022f21199c561083b543305edf5f14cd6941c7ef",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.flag-ordering"
+        ]
+      }
+    },
+    {
+      "id": "valid-emoji-tag-sequences",
+      "title": "Annex C: Valid Emoji Tag Sequences",
+      "level": 2,
+      "text_sha256": "5b28b26dfb9bd055c7cc4ddef0a425411d4521d95c52a997b193635465ae81a6",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.valid-emoji-tag-sequences",
+          "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-b53154893b2f",
+          "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-56f76e692f2c",
+          "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-848a13d68642",
+          "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-df55c96650c2"
+        ]
+      }
+    },
+    {
+      "id": "flag-emoji-tag-sequences",
+      "title": "C.1 Flag Emoji Tag Sequences",
+      "level": 3,
+      "text_sha256": "ff7a3989733af996ad46257189cb99d0946710bd2e2e076bb9bbd75b5104f862",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.flag-emoji-tag-sequences",
+          "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-f17c40c4aa81",
+          "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-90c3a4714707",
+          "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-2034ad04cb1c",
+          "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-e65e4b0eef11"
+        ]
+      }
+    },
+    {
+      "id": "Sample_Valid_Emoji_Tag_Sequences",
+      "title": "C.1.1 Sample Valid Emoji Tag Sequences",
+      "level": 4,
+      "text_sha256": "106eac79bd1143977c39858779193ab96c192b5a7b0029521227259c58bf6c69",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.sample-valid-emoji-tag-sequences",
+          "unicode-tr51-tr51-31.sample-valid-emoji-tag-sequences-clause-6c0e2a21911a"
+        ]
+      }
+    },
+    {
+      "id": "Sample_Invalid_Emoji_Tag_Sequences",
+      "title": "C.1.2 Sample Invalid Emoji Tag Sequences",
+      "level": 4,
+      "text_sha256": "a0328939841eb3d722a0edcd727cd200fde09ad8cde3902eb785b1c11143dcc2",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences",
+          "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-26bb08a86976",
+          "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-53466d5cc0f9",
+          "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-c523399651a5",
+          "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-0dd31b8ee229"
+        ]
+      }
+    },
+    {
+      "id": "Sample_Ill_formed_Emoji_Tag_Sequences",
+      "title": "C.1.3 Sample Ill-formed Emoji Tag Sequences",
+      "level": 4,
+      "text_sha256": "84b591ce44dfa6f6c4bc477ab986d3aeb875cfc4eb37cbcdd1f6fc68829ff9bb",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.sample-ill-formed-emoji-tag-sequences",
+          "unicode-tr51-tr51-31.sample-ill-formed-emoji-tag-sequences-clause-dffe0a397495"
+        ]
+      }
+    },
+    {
+      "id": "Acknowledgements",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "e6b109caba9bc0609c85e661d820fbb514c9cc4b51c52ac20ff7fc6b427169ee",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "Rights_to_Emoji_Images",
+      "title": "Rights to Emoji Images",
+      "level": 2,
+      "text_sha256": "81988912b97da6bc28ddbe8528bba64666a33455bede39dc6d074273b7ce78d3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.rights-to-emoji-images"
+        ]
+      }
+    },
+    {
+      "id": "References",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "921241508c18e6e6ecaff100937ae50a32f0dcc2d625781d6e5d3905533fa332",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.references"
+        ]
+      }
+    },
+    {
+      "id": "Modifications",
+      "title": "Modifications",
+      "level": 2,
+      "text_sha256": "a204601cb434d04e8d89d48a2013ee475c10ba2cf523eb68ce49f6d3c2a87cce",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr51-tr51-31.modifications",
+          "unicode-tr51-tr51-31.modifications-clause-fa769f06ae3d"
+        ]
+      }
+    }
+  ]
+}

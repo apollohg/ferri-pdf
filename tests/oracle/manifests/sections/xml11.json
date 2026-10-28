@@ -1,0 +1,1584 @@
+{
+  "schema_version": 1,
+  "source_id": "xml11",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Extensible Markup Language (XML) 1.1",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.title"
+        ]
+      }
+    },
+    {
+      "id": "w3c-doctype",
+      "title": "W3C Recommendation 04 February 2004, edited in place 15 April 2004",
+      "level": 2,
+      "text_sha256": "309b4b47d1149083a97cff70ccb7f448c3e9643398a75688c6f388cb717790b6",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.w3c-doctype"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "39fb4863340dc8c20c4224e814f46024e1e0176db04e057df73d385907690bd3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this Document",
+      "level": 2,
+      "text_sha256": "e28af4f5e7d1ab026498717ad54d06196b5f2d6ba24ebaa99b2ed0019099ef3b",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "102abf8f0ee4becdcbdde8ae9d2a61ad00711620b6a1a131737452647322204f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.contents"
+        ]
+      }
+    },
+    {
+      "id": "appendices",
+      "title": "Appendices",
+      "level": 3,
+      "text_sha256": "43681ca60ce2b3839a657250af2c4c4310c5e6ac8531fd9d2c9500d12b46a226",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.appendices"
+        ]
+      }
+    },
+    {
+      "id": "sec-intro",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "b72faaadea7e74c9eb6cc540840845c88581c393a620b880418815cfcac88c27",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-intro",
+          "xml11.sec-intro-clause-d6cbf0653266"
+        ]
+      }
+    },
+    {
+      "id": "sec-origin-goals",
+      "title": "1.1 Origin and Goals",
+      "level": 3,
+      "text_sha256": "ec02096ce9dacbd514f4aa7efbd6f0971c5ca63d230e309779d34d4cc711482b",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-origin-goals",
+          "xml11.sec-origin-goals-clause-7b23b1e961f1",
+          "xml11.sec-origin-goals-clause-f76ab2ef5a8e",
+          "xml11.sec-origin-goals-clause-2d10b2a74a37",
+          "xml11.sec-origin-goals-clause-29617aff3ed0",
+          "xml11.sec-origin-goals-clause-4f338f04f466",
+          "xml11.sec-origin-goals-clause-88929f461b92",
+          "xml11.sec-origin-goals-clause-6ff2b90b5af7",
+          "xml11.sec-origin-goals-clause-a65f94947990"
+        ]
+      }
+    },
+    {
+      "id": "sec-terminology",
+      "title": "1.2 Terminology",
+      "level": 3,
+      "text_sha256": "380e54295ec5b3398eead71eca5e87a2ffc4140a6a1139c2ec56049a6a4dcda2",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-terminology",
+          "xml11.sec-terminology-clause-dd767a9305be",
+          "xml11.sec-terminology-clause-688e09b37218",
+          "xml11.sec-terminology-clause-4ec737dc89b0",
+          "xml11.sec-terminology-clause-b2acd2eec716",
+          "xml11.sec-terminology-clause-9adf48ef3992",
+          "xml11.sec-terminology-clause-de1f4c5f5d7e"
+        ]
+      }
+    },
+    {
+      "id": "sec-xml11",
+      "title": "1.3 Rationale and list of changes for XML 1.1",
+      "level": 3,
+      "text_sha256": "ecfc1d4905e156583b62ea0db9a786de7be2c7684d8fd9b6bfffb135396f456a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-xml11",
+          "xml11.sec-xml11-clause-3d910a4bdde2",
+          "xml11.sec-xml11-clause-143bd4867baf",
+          "xml11.sec-xml11-clause-3687a0c0335f",
+          "xml11.sec-xml11-clause-dfa9bbba5a2a",
+          "xml11.sec-xml11-clause-59237924773d"
+        ]
+      }
+    },
+    {
+      "id": "sec-documents",
+      "title": "2 Documents",
+      "level": 2,
+      "text_sha256": "ae635106ab5c56b0d221eacf6551f0853b63d4e70360ba3f9a3649822feb85d7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-documents",
+          "xml11.sec-documents-clause-6d0e9a425bd2"
+        ]
+      }
+    },
+    {
+      "id": "sec-well-formed",
+      "title": "2.1 Well-Formed XML Documents",
+      "level": 3,
+      "text_sha256": "04a8b986cc281b02f22fa8d16b7805cc95a0c46e54be075490edf3646c43f7e2",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-well-formed"
+        ]
+      }
+    },
+    {
+      "id": "document",
+      "title": "Document",
+      "level": 5,
+      "text_sha256": "891a4a47ead26b12386142ead604009a1d389dcf0711fbaaf7959adac88fc608",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.document"
+        ]
+      }
+    },
+    {
+      "id": "charsets",
+      "title": "2.2 Characters",
+      "level": 3,
+      "text_sha256": "2943a73bb6155fd0d79b8efde552ed7d40c05d10d761594210460882e9a2c650",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.charsets",
+          "xml11.charsets-clause-2943a73bb615"
+        ]
+      }
+    },
+    {
+      "id": "char32",
+      "title": "Character Range",
+      "level": 5,
+      "text_sha256": "4e2966e0f218f59e6276b2ce0572bcf13ead3d3a40812c26098c1bbf0c52c8fd",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.char32",
+          "xml11.char32-clause-74f62882ced6"
+        ]
+      }
+    },
+    {
+      "id": "sec-common-syn",
+      "title": "2.3 Common Syntactic Constructs",
+      "level": 3,
+      "text_sha256": "06922169dd1d7d010b509a3f9e94f5f1afcf4be239767d83be103919a7770f7b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-common-syn"
+        ]
+      }
+    },
+    {
+      "id": "white",
+      "title": "White Space",
+      "level": 5,
+      "text_sha256": "23983beedea50b31aaca300a3e1814fc8f0f4b677dc016bd0522d91b913ce178",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.white",
+          "xml11.white-clause-8a22ffb06982",
+          "xml11.white-clause-3d88ba443602"
+        ]
+      }
+    },
+    {
+      "id": "IDABN1S",
+      "title": "Names and Tokens",
+      "level": 5,
+      "text_sha256": "ccb827d8cb4175325ebb314b2fd45667b181641b59d6f0dac2d8e45e3399fdfc",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idabn1s"
+        ]
+      }
+    },
+    {
+      "id": "IDAFR1S",
+      "title": "Literals",
+      "level": 5,
+      "text_sha256": "4d6155913aeae51b847d5a4afba356d1e97c80c30e49c4a888b11db476d4f7d2",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idafr1s"
+        ]
+      }
+    },
+    {
+      "id": "syntax",
+      "title": "2.4 Character Data and Markup",
+      "level": 3,
+      "text_sha256": "7497c49664be762b45e7e4b92ea00ea1461b3917c4544f6418e9f2744adb99de",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.syntax",
+          "xml11.syntax-clause-6c908ecfb24d"
+        ]
+      }
+    },
+    {
+      "id": "IDASZ1S",
+      "title": "Character Data",
+      "level": 5,
+      "text_sha256": "068a9e670d2639aed63256819c37cb228868560352f6cde9444ca787a97cbae9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idasz1s"
+        ]
+      }
+    },
+    {
+      "id": "sec-comments",
+      "title": "2.5 Comments",
+      "level": 3,
+      "text_sha256": "7335c22d934cbd56bd96538ba27b4ddaa824db510f8cfccf8e1a10e6538cf4c3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-comments",
+          "xml11.sec-comments-clause-7335c22d934c"
+        ]
+      }
+    },
+    {
+      "id": "IDAL11S",
+      "title": "Comments",
+      "level": 5,
+      "text_sha256": "8d05f2b337e41d582dbd69edab729542eb02791fd3991e50eb789cc6da9eb4d9",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idal11s"
+        ]
+      }
+    },
+    {
+      "id": "sec-pi",
+      "title": "2.6 Processing Instructions",
+      "level": 3,
+      "text_sha256": "2fa498f4ac7cfd68b60bae8856334674d2c4d4f30fafbe8795a97ff2eb7bfb5a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-pi"
+        ]
+      }
+    },
+    {
+      "id": "IDAD31S",
+      "title": "Processing Instructions",
+      "level": 5,
+      "text_sha256": "cd051d6be38f5554544506f81e8ae7c31dabd88f75ca01e7e1fe7eebca87c5d0",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idad31s",
+          "xml11.idad31s-clause-ba391965192d"
+        ]
+      }
+    },
+    {
+      "id": "sec-cdata-sect",
+      "title": "2.7 CDATA Sections",
+      "level": 3,
+      "text_sha256": "cad36c19e7da1aadce1b37db3d56e2c2c8fd8a9bfefcf3680a126a3a218bff7a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-cdata-sect"
+        ]
+      }
+    },
+    {
+      "id": "IDAOA2S",
+      "title": "CDATA Sections",
+      "level": 5,
+      "text_sha256": "dce124ddedf6b4684ec1d917997258f317726571737af6e5c7fd497416b5f57c",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idaoa2s"
+        ]
+      }
+    },
+    {
+      "id": "sec-prolog-dtd",
+      "title": "2.8 Prolog and Document Type Declaration",
+      "level": 3,
+      "text_sha256": "19f71f5ce2eadabcf19bd578a350f0b280e757792e2116065ae898efcb28027e",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-prolog-dtd",
+          "xml11.sec-prolog-dtd-clause-f0e0c8ef86bd",
+          "xml11.sec-prolog-dtd-clause-99400535ade4"
+        ]
+      }
+    },
+    {
+      "id": "xmldoc",
+      "title": "Prolog",
+      "level": 5,
+      "text_sha256": "c1d7e00b6a88db65aabdca0ff5edf242a40150d049a3645731c1728ca79c78be",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.xmldoc"
+        ]
+      }
+    },
+    {
+      "id": "dtd",
+      "title": "Document Type Definition",
+      "level": 5,
+      "text_sha256": "33a56daa712b42d69c1a6069ab9066b7a4fe355e6d997ca7be851d9156b6c4c1",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.dtd",
+          "xml11.dtd-clause-5e6535730fb9",
+          "xml11.dtd-clause-c841e9e75000",
+          "xml11.dtd-clause-51d4a5c36562",
+          "xml11.dtd-clause-870775c64056",
+          "xml11.dtd-clause-cbd7fb2ac29c",
+          "xml11.dtd-clause-99bd60a22e39",
+          "xml11.dtd-clause-03d4ec207122"
+        ]
+      }
+    },
+    {
+      "id": "ext-Subset",
+      "title": "External Subset",
+      "level": 5,
+      "text_sha256": "2f1b6cb76b1ca2ef02ec3d5b3c82105f237cf7d677a536402560204d4b7759f9",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.ext-subset",
+          "xml11.ext-subset-clause-e881877b4bca",
+          "xml11.ext-subset-clause-a9a383b6265c"
+        ]
+      }
+    },
+    {
+      "id": "sec-rmd",
+      "title": "2.9 Standalone Document Declaration",
+      "level": 3,
+      "text_sha256": "3a8e9dd38d93e376fef647292a30ce7626dd7c537b7ae9e168c85946ad50466d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-rmd",
+          "xml11.sec-rmd-clause-3a8e9dd38d93"
+        ]
+      }
+    },
+    {
+      "id": "fulldtd",
+      "title": "Standalone Document Declaration",
+      "level": 5,
+      "text_sha256": "29718682c478b40f474bb17ea1748c7f90dc2b55559c1146d3c261913f8ff79d",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.fulldtd",
+          "xml11.fulldtd-clause-5daadc4134c4"
+        ]
+      }
+    },
+    {
+      "id": "sec-white-space",
+      "title": "2.10 White Space Handling",
+      "level": 3,
+      "text_sha256": "c8878ceeb15f2fbd6783a755a991d769ce005cfb8343fbc48981259a46219a57",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-white-space",
+          "xml11.sec-white-space-clause-37425b9db029",
+          "xml11.sec-white-space-clause-c82274d0e758",
+          "xml11.sec-white-space-clause-6169fecd93f9"
+        ]
+      }
+    },
+    {
+      "id": "sec-line-ends",
+      "title": "2.11 End-of-Line Handling",
+      "level": 3,
+      "text_sha256": "ca402972bc7b0222a44691da1c665f9b15f18de7ee4d72b1022f487d70a8273d",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-line-ends",
+          "xml11.sec-line-ends-clause-58ed30bfcc56"
+        ]
+      }
+    },
+    {
+      "id": "sec-lang-tag",
+      "title": "2.12 Language Identification",
+      "level": 3,
+      "text_sha256": "dbc58aa60c40338c9856ae6216724ad607e22ca7b6e5bc447e7974e6b09668cd",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-lang-tag",
+          "xml11.sec-lang-tag-clause-68916298e1e8",
+          "xml11.sec-lang-tag-clause-758a66cd90e1"
+        ]
+      }
+    },
+    {
+      "id": "sec-normalization-checking",
+      "title": "2.13 Normalization Checking",
+      "level": 3,
+      "text_sha256": "2b5e4636672cfde5ede051efbd9be68ffdc0e08d7b9a4ff487d792febf164035",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-normalization-checking",
+          "xml11.sec-normalization-checking-clause-d16421424a4b",
+          "xml11.sec-normalization-checking-clause-ba2a252188a5",
+          "xml11.sec-normalization-checking-clause-e874ddc0b758",
+          "xml11.sec-normalization-checking-clause-f8ebb2201409",
+          "xml11.sec-normalization-checking-clause-d48f800d3f04",
+          "xml11.sec-normalization-checking-clause-68ee00db4081"
+        ]
+      }
+    },
+    {
+      "id": "sec-logical-struct",
+      "title": "3 Logical Structures",
+      "level": 2,
+      "text_sha256": "9b6d18e43b350ce5b71870e7487c76fb9c4664c308833afb286f7cc6fb2c0c30",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-logical-struct"
+        ]
+      }
+    },
+    {
+      "id": "IDATJ3S",
+      "title": "Element",
+      "level": 5,
+      "text_sha256": "69a67cedd179b130989a0fbee58843c175a1f1831e1d632d614711a40c7e409a",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idatj3s",
+          "xml11.idatj3s-clause-24e5dcec7c0d"
+        ]
+      }
+    },
+    {
+      "id": "sec-starttags",
+      "title": "3.1 Start-Tags, End-Tags, and Empty-Element Tags",
+      "level": 3,
+      "text_sha256": "c6a68c490a99f1a87d8e4e9bea2b1e552ba7dadb0b0b952c599f0829d50114b3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-starttags"
+        ]
+      }
+    },
+    {
+      "id": "IDA3O3S",
+      "title": "Start-tag",
+      "level": 5,
+      "text_sha256": "f78824c37a2b37c4322c205b8313b81c152c9f74a4a17e20d9bd182ac1f3642a",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.ida3o3s",
+          "xml11.ida3o3s-clause-c1ab9222dbc0",
+          "xml11.ida3o3s-clause-9173ca21d7e8",
+          "xml11.ida3o3s-clause-2fd29c01db00",
+          "xml11.ida3o3s-clause-2cce19121003",
+          "xml11.ida3o3s-clause-0d52b62c3e71"
+        ]
+      }
+    },
+    {
+      "id": "IDA3U3S",
+      "title": "End-tag",
+      "level": 5,
+      "text_sha256": "155168f7c2fbf62ad242986966dc404d61e43843c63fd423d90ed449c5ec7b8a",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.ida3u3s"
+        ]
+      }
+    },
+    {
+      "id": "IDAKW3S",
+      "title": "Content of Elements",
+      "level": 5,
+      "text_sha256": "073753b00095406e3944f32f23c61127af93cadcb2af8d4ec7de45337c91b4f1",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idakw3s"
+        ]
+      }
+    },
+    {
+      "id": "IDARY3S",
+      "title": "Tags for Empty Elements",
+      "level": 5,
+      "text_sha256": "06f01077f84aa8f0018f16299edf43a17f5ce5c55cef7b563c89e1c77598ad8c",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idary3s",
+          "xml11.idary3s-clause-d606c638d4be"
+        ]
+      }
+    },
+    {
+      "id": "elemdecls",
+      "title": "3.2 Element Type Declarations",
+      "level": 3,
+      "text_sha256": "06b0005834b8b68478b9ddc6d749845ed6507758e6fc1f7e1181cee2447e3c6a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.elemdecls"
+        ]
+      }
+    },
+    {
+      "id": "IDAV13S",
+      "title": "Element Type Declaration",
+      "level": 5,
+      "text_sha256": "70c71bcb3060a5f99e928f9dd1d90f92ac7e773a1dcda0243fd7542333169437",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idav13s",
+          "xml11.idav13s-clause-b6d8bc353e53"
+        ]
+      }
+    },
+    {
+      "id": "sec-element-content",
+      "title": "3.2.1 Element Content",
+      "level": 4,
+      "text_sha256": "90e83c6a8df352c1ca70cc76b8ff3869ad6cd65795119b333f401006c9e4276d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-element-content",
+          "xml11.sec-element-content-clause-90e83c6a8df3"
+        ]
+      }
+    },
+    {
+      "id": "IDAP53S",
+      "title": "Element-content Models",
+      "level": 5,
+      "text_sha256": "9052e0a15d9964775dc2e0d0f6e1743568850f064cb6fb682bb73696c9740151",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idap53s",
+          "xml11.idap53s-clause-fd10fe44d79d",
+          "xml11.idap53s-clause-5fae225c3c12",
+          "xml11.idap53s-clause-2756831f3701"
+        ]
+      }
+    },
+    {
+      "id": "sec-mixed-content",
+      "title": "3.2.2 Mixed Content",
+      "level": 4,
+      "text_sha256": "b54e27dd655ec138bb18901ce94bae5c3e65dd5ff70b4b18cbb67fb3acf5df4d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-mixed-content"
+        ]
+      }
+    },
+    {
+      "id": "IDAUHCU",
+      "title": "Mixed-content Declaration",
+      "level": 5,
+      "text_sha256": "fbb8226cc553f1eb81173ff7c52a24c9b6cf809b4ba0bb27ad2a7799e20a9f31",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idauhcu",
+          "xml11.idauhcu-clause-2624dd5de4cb"
+        ]
+      }
+    },
+    {
+      "id": "attdecls",
+      "title": "3.3 Attribute-List Declarations",
+      "level": 3,
+      "text_sha256": "b0786f4c11f799ceb9eef5859f481d879a0a4470a8d3d7de059eb5b76e852565",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.attdecls",
+          "xml11.attdecls-clause-020ee90000b5"
+        ]
+      }
+    },
+    {
+      "id": "IDADMCU",
+      "title": "Attribute-list Declaration",
+      "level": 5,
+      "text_sha256": "e58da0115c718246e0c3b5eca3cd08388f0b11e70443dad0c3361f34524249c2",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idadmcu",
+          "xml11.idadmcu-clause-ee1ff48bfb32"
+        ]
+      }
+    },
+    {
+      "id": "sec-attribute-types",
+      "title": "3.3.1 Attribute Types",
+      "level": 4,
+      "text_sha256": "42126f78a8a8d4e964a14b312063f0651680870d7899c7c428c5ed0ddec06598",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-attribute-types"
+        ]
+      }
+    },
+    {
+      "id": "IDAPPCU",
+      "title": "Attribute Types",
+      "level": 5,
+      "text_sha256": "330a39539fa75ed95752e46d9dd4993b6cfa09a6cc334eb408ddaa2c19d256e6",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idappcu",
+          "xml11.idappcu-clause-a47666619bdf",
+          "xml11.idappcu-clause-2ca34ecf8111",
+          "xml11.idappcu-clause-efa62848474f",
+          "xml11.idappcu-clause-525578b9281c",
+          "xml11.idappcu-clause-80d9aa065350",
+          "xml11.idappcu-clause-b6f865f848a4",
+          "xml11.idappcu-clause-83221c7a3539"
+        ]
+      }
+    },
+    {
+      "id": "IDAHXCU",
+      "title": "Enumerated Attribute Types",
+      "level": 5,
+      "text_sha256": "508efab492d2c6e42dc01695f839377ba34c8938cb1dc892a11aba4b2231af52",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idahxcu",
+          "xml11.idahxcu-clause-b04c97b4c4e9",
+          "xml11.idahxcu-clause-8f370534e8e2",
+          "xml11.idahxcu-clause-d53c33be51fe",
+          "xml11.idahxcu-clause-816ae299ab1d",
+          "xml11.idahxcu-clause-c0604ba60864",
+          "xml11.idahxcu-clause-bba69ca780b9"
+        ]
+      }
+    },
+    {
+      "id": "sec-attr-defaults",
+      "title": "3.3.2 Attribute Defaults",
+      "level": 4,
+      "text_sha256": "c182e18e1dbf6c3413553d9a404aaa2699a1061d1a25e3300e0987991f49b5d2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-attr-defaults",
+          "xml11.sec-attr-defaults-clause-c182e18e1dbf"
+        ]
+      }
+    },
+    {
+      "id": "IDAR4CU",
+      "title": "Attribute Defaults",
+      "level": 5,
+      "text_sha256": "8c44c1537e450879a33bae943f202e81475e73ce406eea45db5f89213dafc1fd",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idar4cu",
+          "xml11.idar4cu-clause-44e2c6f6b6b6",
+          "xml11.idar4cu-clause-b747534270d7",
+          "xml11.idar4cu-clause-5991e9e4e4f8",
+          "xml11.idar4cu-clause-55f653a1df94",
+          "xml11.idar4cu-clause-973a9704cbd6",
+          "xml11.idar4cu-clause-cc7ad3259909",
+          "xml11.idar4cu-clause-e8cb6a875944",
+          "xml11.idar4cu-clause-6e06302aa852",
+          "xml11.idar4cu-clause-c75f8aea4805"
+        ]
+      }
+    },
+    {
+      "id": "AVNormalize",
+      "title": "3.3.3 Attribute-Value Normalization",
+      "level": 4,
+      "text_sha256": "8652396d1cbca615d5a5dacbf8b6f6b9393a0f59e7de65208d10c2201fa64b83",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.avnormalize",
+          "xml11.avnormalize-clause-7eeffd66ee11",
+          "xml11.avnormalize-clause-623ab1f840ae",
+          "xml11.avnormalize-clause-3483e90f8818",
+          "xml11.avnormalize-clause-87b3b29434d8",
+          "xml11.avnormalize-clause-ec5ac17b62d9",
+          "xml11.avnormalize-clause-d9577c33a6fe"
+        ]
+      }
+    },
+    {
+      "id": "sec-condition-sect",
+      "title": "3.4 Conditional Sections",
+      "level": 3,
+      "text_sha256": "e1e0449b9f5600930b81c6f9da890189abffd35b89c092b0046b91e5ea837493",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-condition-sect"
+        ]
+      }
+    },
+    {
+      "id": "IDAMHDU",
+      "title": "Conditional Section",
+      "level": 5,
+      "text_sha256": "1082bd78180a1d05e0561e99ccd37dc09cf080d7428cf9896afd2734b74eb57d",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idamhdu",
+          "xml11.idamhdu-clause-3d1853fc0ac6",
+          "xml11.idamhdu-clause-1faa5abe2791",
+          "xml11.idamhdu-clause-8e63de1dfad0"
+        ]
+      }
+    },
+    {
+      "id": "sec-physical-struct",
+      "title": "4 Physical Structures",
+      "level": 2,
+      "text_sha256": "a33ba0674680867c95de5ace830eb6f210db3824e870b11fac7935ddfcadf14e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-physical-struct"
+        ]
+      }
+    },
+    {
+      "id": "sec-references",
+      "title": "4.1 Character and Entity References",
+      "level": 3,
+      "text_sha256": "19a32d03a259a734260cbfe67355a2f0afd606b83336d8315e4aa2d46203fa17",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-references"
+        ]
+      }
+    },
+    {
+      "id": "IDAFYDU",
+      "title": "Character Reference",
+      "level": 5,
+      "text_sha256": "a641362170970c7ab2960fba9d9cf4405908028343cc82120e67fcae6569b3b1",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idafydu",
+          "xml11.idafydu-clause-612166e914ed"
+        ]
+      }
+    },
+    {
+      "id": "IDAS0DU",
+      "title": "Entity Reference",
+      "level": 5,
+      "text_sha256": "f6c904f645d6e8c4466b9caf99be260e89de3a5e470bb6489e9f856985b16086",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idas0du",
+          "xml11.idas0du-clause-ed54b5582b5d",
+          "xml11.idas0du-clause-9f173cca1626",
+          "xml11.idas0du-clause-61a6dd585730",
+          "xml11.idas0du-clause-50f54a05bff0",
+          "xml11.idas0du-clause-e9c7a33b3524",
+          "xml11.idas0du-clause-da29b8341f3b"
+        ]
+      }
+    },
+    {
+      "id": "sec-entity-decl",
+      "title": "4.2 Entity Declarations",
+      "level": 3,
+      "text_sha256": "f2d3bd7c8a51f1a6de346029b40c84603b0025a599cf254458e594bbcce7aac4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-entity-decl"
+        ]
+      }
+    },
+    {
+      "id": "IDAECEU",
+      "title": "Entity Declaration",
+      "level": 5,
+      "text_sha256": "32a160fcb112cc9054abcfe099a920bdb4c94c5b4316bf82cf62d41b9a37e95b",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idaeceu"
+        ]
+      }
+    },
+    {
+      "id": "sec-internal-ent",
+      "title": "4.2.1 Internal Entities",
+      "level": 4,
+      "text_sha256": "7f5d7dda138c78e0e4fae843031a682ae9b3cfeaeefc6c6098adcb2335486b0c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-internal-ent",
+          "xml11.sec-internal-ent-clause-3c99c7d237c8"
+        ]
+      }
+    },
+    {
+      "id": "sec-external-ent",
+      "title": "4.2.2 External Entities",
+      "level": 4,
+      "text_sha256": "111132a0f60c3db0e62b298d55585162b5e27c614aa59f71e6a448e2869c6de9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-external-ent"
+        ]
+      }
+    },
+    {
+      "id": "IDAUIEU",
+      "title": "External Entity Declaration",
+      "level": 5,
+      "text_sha256": "0a4269a4abc271c9d9c9affeb2c19a209abb88faa927869769c69e07e5bd3380",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idauieu",
+          "xml11.idauieu-clause-c0318e993af7",
+          "xml11.idauieu-clause-68f0d6633936",
+          "xml11.idauieu-clause-83410cefa351"
+        ]
+      }
+    },
+    {
+      "id": "TextEntities",
+      "title": "4.3 Parsed Entities",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.textentities"
+        ]
+      }
+    },
+    {
+      "id": "sec-TextDecl",
+      "title": "4.3.1 The Text Declaration",
+      "level": 4,
+      "text_sha256": "19591f022228db6674cc03cbebb232375c00926b56ac4f67d0b160e09deb8a01",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-textdecl",
+          "xml11.sec-textdecl-clause-19591f022228"
+        ]
+      }
+    },
+    {
+      "id": "IDAUPEU",
+      "title": "Text Declaration",
+      "level": 5,
+      "text_sha256": "1714f8ae990d29a81ff47c322fed0557a0e12184f358d54438cd784bff84aa81",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idaupeu",
+          "xml11.idaupeu-clause-9da706a66855"
+        ]
+      }
+    },
+    {
+      "id": "wf-entities",
+      "title": "4.3.2 Well-Formed Parsed Entities",
+      "level": 4,
+      "text_sha256": "936f28007a587db7c4838e557b9ab2516390c7143268f46b1171d87d3ffdf8f1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.wf-entities"
+        ]
+      }
+    },
+    {
+      "id": "IDA2REU",
+      "title": "Well-Formed External Parsed Entity",
+      "level": 5,
+      "text_sha256": "b555612b05dcd6eae71f88345b8c47795e6ba299a057e7fef3b7f38407b2d9cc",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.ida2reu"
+        ]
+      }
+    },
+    {
+      "id": "charencoding",
+      "title": "4.3.3 Character Encoding in Entities",
+      "level": 4,
+      "text_sha256": "08d7054fee841305bed6303dd7c275d40d80105d83175079750080db3bb81b83",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.charencoding",
+          "xml11.charencoding-clause-065c04ea0179",
+          "xml11.charencoding-clause-8f371de695ef",
+          "xml11.charencoding-clause-d73b485a47f4"
+        ]
+      }
+    },
+    {
+      "id": "IDARVEU",
+      "title": "Encoding Declaration",
+      "level": 5,
+      "text_sha256": "53ae6387cce4936e8440cbc50b44a224a11c010e59dbd9007cc78bde8260d44c",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idarveu",
+          "xml11.idarveu-clause-30fe7926bdc7"
+        ]
+      }
+    },
+    {
+      "id": "sec-version-info",
+      "title": "4.3.4 Version Information in Entities",
+      "level": 4,
+      "text_sha256": "77ac4d09e5f1be25f50664c31847cc4aaddbe069ed9fd8507cf60bae869b0ea3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-version-info"
+        ]
+      }
+    },
+    {
+      "id": "entproc",
+      "title": "4.4 XML Processor Treatment of Entities and References",
+      "level": 3,
+      "text_sha256": "7c79ecfa362761baa9a772f5c83d66351d26db76d94ba6138336585aae40c701",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.entproc",
+          "xml11.entproc-clause-20c9a31818fa",
+          "xml11.entproc-clause-891a0a640531",
+          "xml11.entproc-clause-ef929c1d838e"
+        ]
+      }
+    },
+    {
+      "id": "not-recognized",
+      "title": "4.4.1 Not Recognized",
+      "level": 4,
+      "text_sha256": "c134f678128a0fed106c0e5a5831989fd3916b70186e57c9cb237797fada3065",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.not-recognized"
+        ]
+      }
+    },
+    {
+      "id": "included",
+      "title": "4.4.2 Included",
+      "level": 4,
+      "text_sha256": "d9b8c40f9dfbce2fc9c1cc6249ba69c1d26c82d96479d72cebdfbc09fc99d547",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.included",
+          "xml11.included-clause-d9b8c40f9dfb"
+        ]
+      }
+    },
+    {
+      "id": "include-if-valid",
+      "title": "4.4.3 Included If Validating",
+      "level": 4,
+      "text_sha256": "b0e47719d1effe311ba9f7c2c2fc77f161a608c66d54f70b677a82530cd06692",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.include-if-valid",
+          "xml11.include-if-valid-clause-0b73c717a490"
+        ]
+      }
+    },
+    {
+      "id": "forbidden",
+      "title": "4.4.4 Forbidden",
+      "level": 4,
+      "text_sha256": "992cbaf4467629008d8ad64e7fff62ae751743196e39fb2148c0007c0e385c9a",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.forbidden"
+        ]
+      }
+    },
+    {
+      "id": "inliteral",
+      "title": "4.4.5 Included in Literal",
+      "level": 4,
+      "text_sha256": "29138b2b82bf9eebcff58b7cfb661437e3c0b97ad512204ec7587c57c1e3e8db",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.inliteral",
+          "xml11.inliteral-clause-66f21f54b9dc"
+        ]
+      }
+    },
+    {
+      "id": "notify",
+      "title": "4.4.6 Notify",
+      "level": 4,
+      "text_sha256": "78bb308676e56ae99ab49c22338146c45ea9b3960adf658ce1b81c9620205c98",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.notify",
+          "xml11.notify-clause-78bb308676e5"
+        ]
+      }
+    },
+    {
+      "id": "bypass",
+      "title": "4.4.7 Bypassed",
+      "level": 4,
+      "text_sha256": "63bb665f4f6430041e591ec3989c91fefc23011b8dde47f7cd389516943447eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.bypass",
+          "xml11.bypass-clause-63bb665f4f64"
+        ]
+      }
+    },
+    {
+      "id": "as-PE",
+      "title": "4.4.8 Included as PE",
+      "level": 4,
+      "text_sha256": "75bdb9083ec1c525bc760cfe852cae29514dd7ff380ddc1eb4474c25f3753d15",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.as-pe",
+          "xml11.as-pe-clause-75bdb9083ec1"
+        ]
+      }
+    },
+    {
+      "id": "error",
+      "title": "4.4.9 Error",
+      "level": 4,
+      "text_sha256": "fade80bf0998837f4be52e6f54928211deced82a2d554785e6f74b06a5bf299f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.error"
+        ]
+      }
+    },
+    {
+      "id": "intern-replacement",
+      "title": "4.5 Construction of Entity Replacement Text",
+      "level": 3,
+      "text_sha256": "d19e763f876985e3331362a1b2e07253c684ecf7e9cdfed4b0269945f1a3b512",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.intern-replacement",
+          "xml11.intern-replacement-clause-0aadb19fb945",
+          "xml11.intern-replacement-clause-b8c3691d7622"
+        ]
+      }
+    },
+    {
+      "id": "sec-predefined-ent",
+      "title": "4.6 Predefined Entities",
+      "level": 3,
+      "text_sha256": "79ac2919050f3272214b80972001f4c78ee84a442225a92f85d9546183730515",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-predefined-ent",
+          "xml11.sec-predefined-ent-clause-922cc0732e81",
+          "xml11.sec-predefined-ent-clause-86b56581f4f8"
+        ]
+      }
+    },
+    {
+      "id": "Notations",
+      "title": "4.7 Notation Declarations",
+      "level": 3,
+      "text_sha256": "9453007ecf349bfed09be34c8aeb24b1094966d0e354f659d05dd0c759ab9bb5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.notations"
+        ]
+      }
+    },
+    {
+      "id": "IDAYTFU",
+      "title": "Notation Declarations",
+      "level": 5,
+      "text_sha256": "2431a0405cae735de08e012f32fcb514540f0623d0563bf76da05805e55bc55c",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.idaytfu",
+          "xml11.idaytfu-clause-eb24d0d7a623",
+          "xml11.idaytfu-clause-55e5066e03c4"
+        ]
+      }
+    },
+    {
+      "id": "sec-doc-entity",
+      "title": "4.8 Document Entity",
+      "level": 3,
+      "text_sha256": "c97caab82a51b75d3a664c55e3b425454c4db4d16262bd64cee6fd22b1d746ab",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-doc-entity"
+        ]
+      }
+    },
+    {
+      "id": "sec-conformance",
+      "title": "5 Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-conformance"
+        ]
+      }
+    },
+    {
+      "id": "proc-types",
+      "title": "5.1 Validating and Non-Validating Processors",
+      "level": 3,
+      "text_sha256": "9bbb3bbead288614e03d57c1f4bef9e88e195577bdfc6f90307ab0b96ca0f711",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.proc-types",
+          "xml11.proc-types-clause-c941db315453",
+          "xml11.proc-types-clause-cc422cc427ca",
+          "xml11.proc-types-clause-befc168223c6",
+          "xml11.proc-types-clause-661c23a9b194",
+          "xml11.proc-types-clause-165e13265852"
+        ]
+      }
+    },
+    {
+      "id": "safe-behavior",
+      "title": "5.2 Using XML Processors",
+      "level": 3,
+      "text_sha256": "7ec0dbb2dba63e499c5387e105920899affa8a8c0bbd850399482cfa626c8b04",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.safe-behavior",
+          "xml11.safe-behavior-clause-dec3cb0f5c81",
+          "xml11.safe-behavior-clause-950ac1e894c1"
+        ]
+      }
+    },
+    {
+      "id": "sec-notation",
+      "title": "6 Notation",
+      "level": 2,
+      "text_sha256": "f9de64b38658c63ed589100c79b2c16eab6f15941a64e3560dab51e973b8126b",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-notation"
+        ]
+      }
+    },
+    {
+      "id": "sec-bibliography",
+      "title": "A References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-bibliography"
+        ]
+      }
+    },
+    {
+      "id": "sec-existing-stds",
+      "title": "A.1 Normative References",
+      "level": 3,
+      "text_sha256": "deeab82efc0e64620ef1071a456907bc8935efb58c146ecc0f65cca005b5dbc8",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-existing-stds"
+        ]
+      }
+    },
+    {
+      "id": "null",
+      "title": "A.2 Other References",
+      "level": 3,
+      "text_sha256": "2c3ad15ced694cee8e4401a9219aac14291abc03bb5772630f9254fa4d9e0c4c",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.null"
+        ]
+      }
+    },
+    {
+      "id": "sec-CharNorm",
+      "title": "B Definitions for Character Normalization",
+      "level": 2,
+      "text_sha256": "86100c28e8e655fe16d236ee3cc56396e7605d5163d3a1b794ebdfa530801030",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-charnorm"
+        ]
+      }
+    },
+    {
+      "id": "sec-entexpand",
+      "title": "C Expansion of Entity and Character References (Non-Normative)",
+      "level": 2,
+      "text_sha256": "c40159544ca846b442ff197b0d409b3eaa6067e7be4f5ace4cbadc81c680d194",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-entexpand",
+          "xml11.sec-entexpand-clause-6944289205c2"
+        ]
+      }
+    },
+    {
+      "id": "determinism",
+      "title": "D Deterministic Content Models (Non-Normative)",
+      "level": 2,
+      "text_sha256": "a1162b920188f6b034b126b5e971582705bd425a5d711ffd825996147c1b453e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.determinism",
+          "xml11.determinism-clause-b2d5c186d666",
+          "xml11.determinism-clause-a45990102eb1"
+        ]
+      }
+    },
+    {
+      "id": "sec-guessing",
+      "title": "E Autodetection of Character Encodings (Non-Normative)",
+      "level": 2,
+      "text_sha256": "e9913c91cddcf4d96706876fb6c3a36ee5e5635a6b01bb48abd76a95b31c47c1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-guessing"
+        ]
+      }
+    },
+    {
+      "id": "sec-guessing-no-ext-info",
+      "title": "E.1 Detection Without External Encoding Information",
+      "level": 3,
+      "text_sha256": "23f4d7d509f2a0ab8d1a36dd4df7921a3e91d6f0a1d8a79f0102af6cd3025493",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-guessing-no-ext-info",
+          "xml11.sec-guessing-no-ext-info-clause-7f4d7ca526de",
+          "xml11.sec-guessing-no-ext-info-clause-1ad32af2c2b0",
+          "xml11.sec-guessing-no-ext-info-clause-145ed6046358",
+          "xml11.sec-guessing-no-ext-info-clause-14c5773c484c",
+          "xml11.sec-guessing-no-ext-info-clause-e9f387ab98b9",
+          "xml11.sec-guessing-no-ext-info-clause-60c14a30162f",
+          "xml11.sec-guessing-no-ext-info-clause-8d566e4b4e79",
+          "xml11.sec-guessing-no-ext-info-clause-37c299e23fa4",
+          "xml11.sec-guessing-no-ext-info-clause-cb2fe506389c"
+        ]
+      }
+    },
+    {
+      "id": "sec-guessing-with-ext-info",
+      "title": "E.2 Priorities in the Presence of External Encoding Information",
+      "level": 3,
+      "text_sha256": "1d16e1964772d975560a77b33d9d55832c44558fe118720806bcd40bcd6b4a65",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-guessing-with-ext-info",
+          "xml11.sec-guessing-with-ext-info-clause-8b7587d42a7d"
+        ]
+      }
+    },
+    {
+      "id": "sec-xml-wg",
+      "title": "F W3C XML Working Group (Non-Normative)",
+      "level": 2,
+      "text_sha256": "cb165f05dccbea32f8ab22e591fb6323c4fc8a84f0e6071877a59f2ef18b2811",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-xml-wg"
+        ]
+      }
+    },
+    {
+      "id": "sec-core-wg",
+      "title": "G W3C XML Core Working Group (Non-Normative)",
+      "level": 2,
+      "text_sha256": "2858e2f98432244a116f09f6f9bff86bb6731c66e0ef7520e80a085369d33724",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-core-wg"
+        ]
+      }
+    },
+    {
+      "id": "prod-notes",
+      "title": "H Production Notes (Non-Normative)",
+      "level": 2,
+      "text_sha256": "8225f6a2308c6c10d3fb49d95d77e0ad0d0a005f37d462eab2221b184b41184e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.prod-notes"
+        ]
+      }
+    },
+    {
+      "id": "sec-suggested-names",
+      "title": "I Suggestions for XML Names (Non-Normative)",
+      "level": 2,
+      "text_sha256": "e40f7710f75a386b1e2238db5ca6d4681a42acb78132ff54bc736a5ba9c817e1",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "xml11.sec-suggested-names",
+          "xml11.sec-suggested-names-clause-9ae7b77cb72b",
+          "xml11.sec-suggested-names-clause-cded2585671a",
+          "xml11.sec-suggested-names-clause-ecd990b3ce02",
+          "xml11.sec-suggested-names-clause-99691f10bb8e",
+          "xml11.sec-suggested-names-clause-f09d40b421d2",
+          "xml11.sec-suggested-names-clause-4aa92385c3c7",
+          "xml11.sec-suggested-names-clause-5867c838f707",
+          "xml11.sec-suggested-names-clause-e41f22445eef",
+          "xml11.sec-suggested-names-clause-a8ddd3a9ecfa"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1453 @@
+{
+  "schema_version": 1,
+  "source_id": "css-flexbox-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Flexible Box Layout Module Level 1",
+      "level": 1,
+      "text_sha256": "6569e2074e454c651a9c505e15a6ef0a55409058d1ca8e13b11584efc4b98b84",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "b7a16b398f5ded6864002a0c39791ef7a926381d9214e99be788779e2524f16a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "79c7d435e7f4adf2210eee7b68a7e49da3681592e936003b75cc661c5991e11d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "4351083ce0104a40a50a55c12409395dd3fffb1711f9826305288137c3f44a70",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "260adec8dc620b25200cffd800975441c9c79ef54a545ea5dcd48baf1307c614",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "1.1. Overview",
+      "level": 3,
+      "text_sha256": "100bf18570269798bcf6ed631752833125147bfca8863fb123e5583afce18520",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.overview"
+        ]
+      }
+    },
+    {
+      "id": "quiet-pubrules-1",
+      "title": "Computer Starter Kit",
+      "level": 1,
+      "text_sha256": "587b5ed640b6c8f5a7c21d96edbef66a7b787a685a9e789a53090a3d16487b67",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.quiet-pubrules-1"
+        ]
+      }
+    },
+    {
+      "id": "quiet-pubrules-2",
+      "title": "Printer",
+      "level": 1,
+      "text_sha256": "f3782a1d9674cd86263bc1c1535576d58484a2123c75e84fb71935f16e49dfba",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.quiet-pubrules-2"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.2. Module interactions",
+      "level": 3,
+      "text_sha256": "837bba60490c155a0b3503f704ee8ea5a59f298a60d2694886b6849d1f7be45a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.placement"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.3. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.values"
+        ]
+      }
+    },
+    {
+      "id": "box-model",
+      "title": "2. Flex Layout Box Model and Terminology",
+      "level": 2,
+      "text_sha256": "b8778fe650986c055a6af890808ea4329d9473046cd01254c1894c8a9981f35a",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.box-model",
+          "css-flexbox-1.box-model-clause-1e2494625e82"
+        ]
+      }
+    },
+    {
+      "id": "flex-containers",
+      "title": "3. Flex Containers: the flex and inline-flex display values",
+      "level": 2,
+      "text_sha256": "2bf3764517d32cbc8116bc0e8f9f2e6f05ac2b1fbf8d160e1391b6cc589b5a7e",
+      "clause_count": 233,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-containers",
+          "css-flexbox-1.flex-containers-clause-dfbae7f9fe7a",
+          "css-flexbox-1.flex-containers-clause-4aec341f69f6",
+          "css-flexbox-1.flex-containers-clause-0aea15fa89ab"
+        ]
+      }
+    },
+    {
+      "id": "flex-items",
+      "title": "4. Flex Items",
+      "level": 2,
+      "text_sha256": "c4018d7d328ca2c3eb7d7d4066cfb4d36841a65b3c839a1cc49c4aef03f2eeb4",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-items",
+          "css-flexbox-1.flex-items-clause-9513da3e2325",
+          "css-flexbox-1.flex-items-clause-40ce2d6eb8d2",
+          "css-flexbox-1.flex-items-clause-6d8b0cc5f097"
+        ]
+      }
+    },
+    {
+      "id": "abspos-items",
+      "title": "4.1. Absolutely-Positioned Flex Children",
+      "level": 3,
+      "text_sha256": "ae808c18072effb23702da48c13c47e02d56a79a57213ccb3ae7ff061a926263",
+      "clause_count": 73,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.abspos-items"
+        ]
+      }
+    },
+    {
+      "id": "item-margins",
+      "title": "4.2. Flex Item Margins and Paddings",
+      "level": 3,
+      "text_sha256": "44319dd99c2b8ff16ad25dd10ca20716dcaf9cb07519938ce68dd1ff3106c909",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.item-margins",
+          "css-flexbox-1.item-margins-clause-c14e78eb83ce"
+        ]
+      }
+    },
+    {
+      "id": "painting",
+      "title": "4.3. Flex Item Z-Ordering",
+      "level": 3,
+      "text_sha256": "ac25cd07771549a95443a721304da6928c02893aeb13f545b90b1fe95a517632",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.painting"
+        ]
+      }
+    },
+    {
+      "id": "visibility-collapse",
+      "title": "4.4. Collapsed Items",
+      "level": 3,
+      "text_sha256": "033c6dc380b65ac7b2240b0ad4685d8a0400b09fc2de01716cb390e592dd8f53",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.visibility-collapse",
+          "css-flexbox-1.visibility-collapse-clause-02df8f3e1c33",
+          "css-flexbox-1.visibility-collapse-clause-c006c53f059f"
+        ]
+      }
+    },
+    {
+      "id": "min-size-auto",
+      "title": "4.5. Automatic Minimum Size of Flex Items",
+      "level": 3,
+      "text_sha256": "a20a4071c3d74da7faa598877450cfdf874e4a20199ffec290aaca84433c8e43",
+      "clause_count": 148,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.min-size-auto",
+          "css-flexbox-1.min-size-auto-clause-ab89c056c45d",
+          "css-flexbox-1.min-size-auto-clause-b701ebcc9b17",
+          "css-flexbox-1.min-size-auto-clause-7fd7e1eb1d7c",
+          "css-flexbox-1.min-size-auto-clause-6b458a28f138",
+          "css-flexbox-1.min-size-auto-clause-a2a8bd8a0e1d"
+        ]
+      }
+    },
+    {
+      "id": "flow-order",
+      "title": "5. Ordering and Orientation",
+      "level": 2,
+      "text_sha256": "39f5d4af6b1f4de582052b9810045e9e44731a1efddd121e7a9f7381fce3626f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flow-order",
+          "css-flexbox-1.flow-order-clause-d99020cd1dce",
+          "css-flexbox-1.flow-order-clause-5ba749cd80cb"
+        ]
+      }
+    },
+    {
+      "id": "flex-direction-property",
+      "title": "5.1. Flex Flow Direction: the flex-direction property",
+      "level": 3,
+      "text_sha256": "ac4024d49443071afb0f5efeb83dd2caf0cd57ce220116a2e732fb47d2c04ecb",
+      "clause_count": 99,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-direction-property",
+          "css-flexbox-1.flex-direction-property-clause-cca2516ebb1d",
+          "css-flexbox-1.flex-direction-property-clause-d55fdef65873",
+          "css-flexbox-1.flex-direction-property-clause-cfa3d20d9cfa",
+          "css-flexbox-1.flex-direction-property-clause-1f71d6b3bc97"
+        ]
+      }
+    },
+    {
+      "id": "flex-wrap-property",
+      "title": "5.2. Flex Line Wrapping: the flex-wrap property",
+      "level": 3,
+      "text_sha256": "10b85a475f3ddf5cb9a60c928a53aa1b57dfe1672f55664fabfa0e28c7b8b483",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-wrap-property",
+          "css-flexbox-1.flex-wrap-property-clause-cca2516ebb1d",
+          "css-flexbox-1.flex-wrap-property-clause-8c4991febeeb",
+          "css-flexbox-1.flex-wrap-property-clause-fcb70a7b1c6a",
+          "css-flexbox-1.flex-wrap-property-clause-1b0bbc4a6da6"
+        ]
+      }
+    },
+    {
+      "id": "flex-flow-property",
+      "title": "5.3. Flex Direction and Wrap: the flex-flow shorthand",
+      "level": 3,
+      "text_sha256": "0dc861ed165463a253d62194c4cf384a227150797cc4680a1523ea6f3bedd0f0",
+      "clause_count": 117,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-flow-property",
+          "css-flexbox-1.flex-flow-property-clause-cca2516ebb1d",
+          "css-flexbox-1.flex-flow-property-clause-a1aa5f4bc1e6",
+          "css-flexbox-1.flex-flow-property-clause-dae5acb47f86",
+          "css-flexbox-1.flex-flow-property-clause-fd78c39c12ba",
+          "css-flexbox-1.flex-flow-property-clause-f99faca08306",
+          "css-flexbox-1.flex-flow-property-clause-edbcc25f1f75",
+          "css-flexbox-1.flex-flow-property-clause-3b73c067ce72",
+          "css-flexbox-1.flex-flow-property-clause-f94e93766134",
+          "css-flexbox-1.flex-flow-property-clause-75f86216fcf6",
+          "css-flexbox-1.flex-flow-property-clause-be78085f66ba"
+        ]
+      }
+    },
+    {
+      "id": "order-property",
+      "title": "5.4. Reordering and Accessibility: the order property",
+      "level": 3,
+      "text_sha256": "49b41c21459d18cfdd09b57fd1d94d7a05c0b2ddcc329f91d11fabdd79aa874d",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.order-property",
+          "css-flexbox-1.order-property-clause-a8e33f57a580"
+        ]
+      }
+    },
+    {
+      "id": "flex-lines",
+      "title": "6. Flex Lines",
+      "level": 2,
+      "text_sha256": "4c79ef2eb28d4b344ee6ba2f5ae8c4ee250d5a5065fd43cf5b629c1ae7a8e1c1",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-lines",
+          "css-flexbox-1.flex-lines-clause-844ea450aef1",
+          "css-flexbox-1.flex-lines-clause-20523397b2b4"
+        ]
+      }
+    },
+    {
+      "id": "flexibility",
+      "title": "7. Flexibility",
+      "level": 2,
+      "text_sha256": "65ce7d30c08b1ba7a60133e3f894c699dc67f199886ce35e98232f05d897817d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flexibility"
+        ]
+      }
+    },
+    {
+      "id": "flex-property",
+      "title": "7.1. The flex Shorthand",
+      "level": 3,
+      "text_sha256": "c64c7bab9944eedaf3d1978f7f75e10a253d89409033bcd680860bad77e92dc1",
+      "clause_count": 153,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-property",
+          "css-flexbox-1.flex-property-clause-cca2516ebb1d",
+          "css-flexbox-1.flex-property-clause-4b59fe755d34",
+          "css-flexbox-1.flex-property-clause-40adf8762a0b",
+          "css-flexbox-1.flex-property-clause-ac956af085bf",
+          "css-flexbox-1.flex-property-clause-944c4871bb13",
+          "css-flexbox-1.flex-property-clause-166161f87495",
+          "css-flexbox-1.flex-property-clause-05bad97bc62d",
+          "css-flexbox-1.flex-property-clause-3b6a35ca0da3",
+          "css-flexbox-1.flex-property-clause-4310a78b76fa",
+          "css-flexbox-1.flex-property-clause-87b55835c899",
+          "css-flexbox-1.flex-property-clause-b49326300984",
+          "css-flexbox-1.flex-property-clause-7444eb6b65ba",
+          "css-flexbox-1.flex-property-clause-c8385e196312",
+          "css-flexbox-1.flex-property-clause-e14429c6696f",
+          "css-flexbox-1.flex-property-clause-b59747df8d91",
+          "css-flexbox-1.flex-property-clause-d6da0ab5cb5b",
+          "css-flexbox-1.flex-property-clause-d3cf63d62584",
+          "css-flexbox-1.flex-property-clause-2edefa38265b",
+          "css-flexbox-1.flex-property-clause-3b8fc1cd165c",
+          "css-flexbox-1.flex-property-clause-eba314782570",
+          "css-flexbox-1.flex-property-clause-47e16a44db7b",
+          "css-flexbox-1.flex-property-clause-303313aaa742",
+          "css-flexbox-1.flex-property-clause-e67ab0ea31d7"
+        ]
+      }
+    },
+    {
+      "id": "flex-common",
+      "title": "7.1.1. Basic Values of flex",
+      "level": 4,
+      "text_sha256": "8bae0a7b3986b10d48dd893504f7820894daf7151358276989e2cb4c5d64841b",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-common"
+        ]
+      }
+    },
+    {
+      "id": "flex-components",
+      "title": "7.2. Components of Flexibility",
+      "level": 3,
+      "text_sha256": "2fce5172532b98d8382eaaadb8af61f8d4eec1b7cbc140ca89cf925543bf4e15",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-components"
+        ]
+      }
+    },
+    {
+      "id": "flex-grow-property",
+      "title": "7.2.1. The flex-grow property",
+      "level": 4,
+      "text_sha256": "e1dcbfffaf954943a7f365f78c810b7b11ac7a6f475d1ed310135a561434d200",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-grow-property",
+          "css-flexbox-1.flex-grow-property-clause-cca2516ebb1d",
+          "css-flexbox-1.flex-grow-property-clause-166161f87495",
+          "css-flexbox-1.flex-grow-property-clause-05bad97bc62d",
+          "css-flexbox-1.flex-grow-property-clause-3b6a35ca0da3",
+          "css-flexbox-1.flex-grow-property-clause-492b724df1c5"
+        ]
+      }
+    },
+    {
+      "id": "flex-shrink-property",
+      "title": "7.2.2. The flex-shrink property",
+      "level": 4,
+      "text_sha256": "a05c38261e65ab525d91217896540cafa7c0327d94c00651b8d0673d8569be5f",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-shrink-property",
+          "css-flexbox-1.flex-shrink-property-clause-cca2516ebb1d",
+          "css-flexbox-1.flex-shrink-property-clause-7444eb6b65ba",
+          "css-flexbox-1.flex-shrink-property-clause-c8385e196312",
+          "css-flexbox-1.flex-shrink-property-clause-e14429c6696f",
+          "css-flexbox-1.flex-shrink-property-clause-b59747df8d91",
+          "css-flexbox-1.flex-shrink-property-clause-3697f70a62ff"
+        ]
+      }
+    },
+    {
+      "id": "flex-basis-property",
+      "title": "7.2.3. The flex-basis property",
+      "level": 4,
+      "text_sha256": "2319112c4a5323b8c5ce3ed191137f9289914a8885539d3994b0a524332d3821",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-basis-property",
+          "css-flexbox-1.flex-basis-property-clause-cca2516ebb1d",
+          "css-flexbox-1.flex-basis-property-clause-e6e45a25f009",
+          "css-flexbox-1.flex-basis-property-clause-d3cf63d62584",
+          "css-flexbox-1.flex-basis-property-clause-2edefa38265b",
+          "css-flexbox-1.flex-basis-property-clause-2e52a9042bca",
+          "css-flexbox-1.flex-basis-property-clause-5f903db72dac"
+        ]
+      }
+    },
+    {
+      "id": "alignment",
+      "title": "8. Alignment",
+      "level": 2,
+      "text_sha256": "5a725b9ddf0e8eabca3e3c304c3f901430c4940869b012a2c3292117e09165d1",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.alignment"
+        ]
+      }
+    },
+    {
+      "id": "auto-margins",
+      "title": "8.1. Aligning with auto margins",
+      "level": 3,
+      "text_sha256": "f932b55ec24f85ad77122f01188311cd4cdaa7287ee0d389c1cfec97bc08fd8b",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.auto-margins"
+        ]
+      }
+    },
+    {
+      "id": "justify-content-property",
+      "title": "8.2. Axis Alignment: the justify-content property",
+      "level": 3,
+      "text_sha256": "0f3029308881e649036345c4f78f7b7f20e917963f43289df3c5a6f77b327dfa",
+      "clause_count": 116,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.justify-content-property",
+          "css-flexbox-1.justify-content-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "align-items-property",
+      "title": "8.3. Cross-axis Alignment: the align-items and align-self properties",
+      "level": 3,
+      "text_sha256": "e96af661e5b575759abdcb52b1b7dae9fd96508c11826ffc427b98b07c408250",
+      "clause_count": 176,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.align-items-property",
+          "css-flexbox-1.align-items-property-clause-cca2516ebb1d",
+          "css-flexbox-1.align-items-property-clause-397eb6ed37fe",
+          "css-flexbox-1.align-items-property-clause-cac41c1aad42",
+          "css-flexbox-1.align-items-property-clause-4f702297d7a5",
+          "css-flexbox-1.align-items-property-clause-d5869e7a16d4",
+          "css-flexbox-1.align-items-property-clause-8b572bbbf6f4",
+          "css-flexbox-1.align-items-property-clause-66a4f8c19a47"
+        ]
+      }
+    },
+    {
+      "id": "align-content-property",
+      "title": "8.4. Packing Flex Lines: the align-content property",
+      "level": 3,
+      "text_sha256": "3c7e927332370a81e3444a8051e5ba7986dcfe8cd423add87cc71ed06a37767e",
+      "clause_count": 68,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.align-content-property",
+          "css-flexbox-1.align-content-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "flex-baselines",
+      "title": "8.5. Flex Container Baselines",
+      "level": 3,
+      "text_sha256": "0a0d20f1c69dbb20a864b435bb9919c4c648c25246f705ec4791bab8fac9dca3",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.flex-baselines",
+          "css-flexbox-1.flex-baselines-clause-5c63bb88d661",
+          "css-flexbox-1.flex-baselines-clause-4b7867efe4b4"
+        ]
+      }
+    },
+    {
+      "id": "layout-algorithm",
+      "title": "9. Flex Layout Algorithm",
+      "level": 2,
+      "text_sha256": "c0492f6a811c6fe7997ec499ff3ee7bcfa467821a499078bacccf9661db07bec",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.layout-algorithm",
+          "css-flexbox-1.layout-algorithm-clause-5fca0b28fb13",
+          "css-flexbox-1.layout-algorithm-clause-6fe9a58c61ae",
+          "css-flexbox-1.layout-algorithm-clause-854d2be96b2d"
+        ]
+      }
+    },
+    {
+      "id": "box-manip",
+      "title": "9.1. Initial Setup",
+      "level": 3,
+      "text_sha256": "353d722997d88adca9eb9680e4dfe52de21ea184ef0b1b3b9350c1d4fedec944",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.box-manip"
+        ]
+      }
+    },
+    {
+      "id": "line-sizing",
+      "title": "9.2. Line Length Determination",
+      "level": 3,
+      "text_sha256": "7cf0ac9ce887065da68f18d550f28a651732192ed352feac574607ac55dd7492",
+      "clause_count": 54,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.line-sizing",
+          "css-flexbox-1.line-sizing-clause-2c92900aa3db",
+          "css-flexbox-1.line-sizing-clause-09f173a03022",
+          "css-flexbox-1.line-sizing-clause-d1b357734969"
+        ]
+      }
+    },
+    {
+      "id": "main-sizing",
+      "title": "9.3. Main Size Determination",
+      "level": 3,
+      "text_sha256": "146fc0dd6a89e84ae95f83829c8a94f908d8db42e9e6e7cd96d93050bb1ce3ef",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.main-sizing",
+          "css-flexbox-1.main-sizing-clause-3506d5cca7de"
+        ]
+      }
+    },
+    {
+      "id": "cross-sizing",
+      "title": "9.4. Cross Size Determination",
+      "level": 3,
+      "text_sha256": "e5637da0508a329764a6f10fd889542279c9867fdb717d650ac11399678fbdc9",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.cross-sizing",
+          "css-flexbox-1.cross-sizing-clause-b4c0efe8e682",
+          "css-flexbox-1.cross-sizing-clause-3446abde5d87",
+          "css-flexbox-1.cross-sizing-clause-a6b8c4da3eeb",
+          "css-flexbox-1.cross-sizing-clause-585f7b69e0d6",
+          "css-flexbox-1.cross-sizing-clause-845816e16423"
+        ]
+      }
+    },
+    {
+      "id": "main-alignment",
+      "title": "9.5. Main-Axis Alignment",
+      "level": 3,
+      "text_sha256": "cf88b6003bfeab943d7942be5c1d2a9effded9da36ff27f115bfe080c27f2e89",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.main-alignment"
+        ]
+      }
+    },
+    {
+      "id": "cross-alignment",
+      "title": "9.6. Cross-Axis Alignment",
+      "level": 3,
+      "text_sha256": "1eb5dd67fc536e683840d2979f8afc9176acc34c0e23eade062a11c595eb6d15",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.cross-alignment",
+          "css-flexbox-1.cross-alignment-clause-aacd258f918e"
+        ]
+      }
+    },
+    {
+      "id": "resolve-flexible-lengths",
+      "title": "9.7. Resolving Flexible Lengths",
+      "level": 3,
+      "text_sha256": "89c7109760084c5be8b620772d9f7f268b06b1cc6f78c5b50fa3c6a8e6f37eec",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.resolve-flexible-lengths",
+          "css-flexbox-1.resolve-flexible-lengths-clause-d4260446cdb9",
+          "css-flexbox-1.resolve-flexible-lengths-clause-f50e4b09c51d"
+        ]
+      }
+    },
+    {
+      "id": "definite-sizes",
+      "title": "9.8. Definite and Indefinite Sizes",
+      "level": 3,
+      "text_sha256": "360c47fdee81828ba4ed5f1df6faff6629e2a93f1e35829fa951dc4bd0e4a5c8",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.definite-sizes",
+          "css-flexbox-1.definite-sizes-clause-36774cb09c73"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-sizes",
+      "title": "9.9. Intrinsic Sizes",
+      "level": 3,
+      "text_sha256": "befa737eabf23be0d0e6bcd9196b051a93c2b128670339511a9c5c8506ee87be",
+      "clause_count": 80,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.intrinsic-sizes"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-main-sizes",
+      "title": "9.9.1. Flex Container Intrinsic Main Sizes",
+      "level": 4,
+      "text_sha256": "febfe7ec0a11f6083e102d78c62e5edb4cd4958c0a5a543abe6c60d1c6bc6732",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.intrinsic-main-sizes"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-main-sizes-ideal",
+      "title": "9.9.1.1. Ideal Algorithm",
+      "level": 5,
+      "text_sha256": "826d4829a9ca689ff45592a0e9bd907982ea2d5e5ee2f116e41fb4601d12b2cf",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.intrinsic-main-sizes-ideal",
+          "css-flexbox-1.intrinsic-main-sizes-ideal-clause-273eb6fb1566",
+          "css-flexbox-1.intrinsic-main-sizes-ideal-clause-82d55d82d9c9"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-main-sizes-compat",
+      "title": "9.9.1.2. Web-compatible Intrinsic Sizing Algorithm",
+      "level": 5,
+      "text_sha256": "1d08b287dbfb51d0969ef3d05e24434c55724f4265ba7e067e27456e8f8c90dd",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.intrinsic-main-sizes-compat",
+          "css-flexbox-1.intrinsic-main-sizes-compat-clause-fb1d2e5447a0",
+          "css-flexbox-1.intrinsic-main-sizes-compat-clause-1200cde994c0"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-main-sizes-multiline",
+      "title": "9.9.1.3. Multi-line Min-content Algorithm",
+      "level": 5,
+      "text_sha256": "e767cc9671f1d9e5d45504f42842d593a762d1a76da3728f28d4315ea32fe531",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.intrinsic-main-sizes-multiline"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-cross-sizes",
+      "title": "9.9.2. Flex Container Intrinsic Cross Sizes",
+      "level": 4,
+      "text_sha256": "603fcf34f3edae5d1776382e870669b2018599631c2725af678845f259e285ed",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.intrinsic-cross-sizes",
+          "css-flexbox-1.intrinsic-cross-sizes-clause-71117ef80cfa",
+          "css-flexbox-1.intrinsic-cross-sizes-clause-af6ce33a1318"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-item-contributions",
+      "title": "9.9.3. Flex Item Intrinsic Size Contributions",
+      "level": 4,
+      "text_sha256": "d93eec07195b7da9e7926162360ba8985900ca00bb30416d935872a8ab183d3c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.intrinsic-item-contributions"
+        ]
+      }
+    },
+    {
+      "id": "pagination",
+      "title": "10. Fragmenting Flex Layout",
+      "level": 2,
+      "text_sha256": "8087fbb40b476817151dc18c0b991dfedbefd22522dfb4ad90f37e3ef7fc9b04",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.pagination",
+          "css-flexbox-1.pagination-clause-3f7ad193aa58",
+          "css-flexbox-1.pagination-clause-091fdeffab67",
+          "css-flexbox-1.pagination-clause-0fb4379b2fbb"
+        ]
+      }
+    },
+    {
+      "id": "pagination-algo",
+      "title": "10.1. Sample Flex Fragmentation Algorithm",
+      "level": 3,
+      "text_sha256": "e14d6bfb9cec80111e5b87115fc08caee1750f9d7fa62c422c88d4bece98c638",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.pagination-algo",
+          "css-flexbox-1.pagination-algo-clause-628f181f7be4",
+          "css-flexbox-1.pagination-algo-clause-f3b68fbec16b",
+          "css-flexbox-1.pagination-algo-clause-702e015c13f9",
+          "css-flexbox-1.pagination-algo-clause-ee5d95110780",
+          "css-flexbox-1.pagination-algo-clause-4f2225f034dd",
+          "css-flexbox-1.pagination-algo-clause-da59c3d991e3",
+          "css-flexbox-1.pagination-algo-clause-0e4710150b26",
+          "css-flexbox-1.pagination-algo-clause-692002281cd6",
+          "css-flexbox-1.pagination-algo-clause-8fad9964b460",
+          "css-flexbox-1.pagination-algo-clause-bb78903b1cd3",
+          "css-flexbox-1.pagination-algo-clause-af7da13aab49",
+          "css-flexbox-1.pagination-algo-clause-771548b19591",
+          "css-flexbox-1.pagination-algo-clause-3c0941be2ce3",
+          "css-flexbox-1.pagination-algo-clause-e4404c17e41a",
+          "css-flexbox-1.pagination-algo-clause-a3e14d46ca36",
+          "css-flexbox-1.pagination-algo-clause-3d8b4e7a3c21",
+          "css-flexbox-1.pagination-algo-clause-8b2318babbff",
+          "css-flexbox-1.pagination-algo-clause-b27dbd44eda2",
+          "css-flexbox-1.pagination-algo-clause-9b8e627bd0c4",
+          "css-flexbox-1.pagination-algo-clause-7f5297314e1c",
+          "css-flexbox-1.pagination-algo-clause-e79f0135152a",
+          "css-flexbox-1.pagination-algo-clause-e1e50bacb7e8",
+          "css-flexbox-1.pagination-algo-clause-4ba692227c0d",
+          "css-flexbox-1.pagination-algo-clause-61f76c614d13",
+          "css-flexbox-1.pagination-algo-clause-8f388f9493fe"
+        ]
+      }
+    },
+    {
+      "id": "axis-mapping",
+      "title": "Appendix A: Axis Mappings",
+      "level": 2,
+      "text_sha256": "6285503557d1ead159434023fdd29abea5648ef7f60d4d0a9edd50fcf9d7489d",
+      "clause_count": 130,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.axis-mapping"
+        ]
+      }
+    },
+    {
+      "id": "webkit-aliases",
+      "title": "Appendix B: -webkit- Legacy Properties",
+      "level": 2,
+      "text_sha256": "4a2a07ca2ce444002818421f662a1638ec948030347b05a848436bebbae3d193",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.webkit-aliases",
+          "css-flexbox-1.webkit-aliases-clause-ed281fa03b1c",
+          "css-flexbox-1.webkit-aliases-clause-bfa2f01db06c"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "4f9df236e5472655759049967719b19e43674183d5282580d611c6fd6426a525",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e251ce7e8e99ca49cf86f446d7380b6d347a5f60e4322e370c8066d790088a97",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20181119",
+      "title": "Changes since the 19 November 2018 CR",
+      "level": 3,
+      "text_sha256": "3c784447b840f9f6e1cf9b18ae2795fa1c0da85341391ca50c68ccdc98d2b013",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.changes-20181119"
+        ]
+      }
+    },
+    {
+      "id": "changes-20171016",
+      "title": "Changes since the 16 October 2017 CR",
+      "level": 3,
+      "text_sha256": "3817b969079b880dc6ec074288eac889e565c0b293a85446386849f22065260c",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.changes-20171016"
+        ]
+      }
+    },
+    {
+      "id": "changes-20160526",
+      "title": "Changes since the 26 May 2016 CR",
+      "level": 3,
+      "text_sha256": "ef041f0c420cb1f66ff4356048a016591e744cbf58f1874d1d167a6af82f82eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.changes-20160526"
+        ]
+      }
+    },
+    {
+      "id": "change-201605-substantive",
+      "title": "Substantive Changes and Bugfixes",
+      "level": 4,
+      "text_sha256": "305b228637432b53cd95cc2a84d83aaa5d9f143e551680c93aa047269284a1f6",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.change-201605-substantive",
+          "css-flexbox-1.change-201605-substantive-clause-0c993e8304d4",
+          "css-flexbox-1.change-201605-substantive-clause-22b28666873c",
+          "css-flexbox-1.change-201605-substantive-clause-1355441260f3",
+          "css-flexbox-1.change-201605-substantive-clause-e0bec9c130a3",
+          "css-flexbox-1.change-201605-substantive-clause-cca2516ebb1d",
+          "css-flexbox-1.change-201605-substantive-clause-1879645dc6ab"
+        ]
+      }
+    },
+    {
+      "id": "change-201605-clarify",
+      "title": "Clarifications",
+      "level": 4,
+      "text_sha256": "2e4a613331e17104ff65ed36c131d73374d25780440f2f37654e8ff6b28ba4cf",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.change-201605-clarify"
+        ]
+      }
+    },
+    {
+      "id": "changes-20160301",
+      "title": "Changes since the 1 March 2016 CR",
+      "level": 3,
+      "text_sha256": "ef041f0c420cb1f66ff4356048a016591e744cbf58f1874d1d167a6af82f82eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.changes-20160301"
+        ]
+      }
+    },
+    {
+      "id": "change-201603-substantive",
+      "title": "Substantive Changes and Bugfixes",
+      "level": 4,
+      "text_sha256": "78da11e4ca6b6393e04b92d8c92c467aea8d37ed729f5f3db4063ebf2dd6ef69",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.change-201603-substantive",
+          "css-flexbox-1.change-201603-substantive-clause-456d0f06d693",
+          "css-flexbox-1.change-201603-substantive-clause-217eb0019d52"
+        ]
+      }
+    },
+    {
+      "id": "change-201603-clarify",
+      "title": "Clarifications",
+      "level": 4,
+      "text_sha256": "bdecde12f0c0acd80e10da9997be4e15f8e741dd5a1d678a3b3aa80ec3370af7",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.change-201603-clarify",
+          "css-flexbox-1.change-201603-clarify-clause-457ee4e0965f",
+          "css-flexbox-1.change-201603-clarify-clause-82310d004333"
+        ]
+      }
+    },
+    {
+      "id": "changes-201505",
+      "title": "Changes since the 14 May 2015 LCWD",
+      "level": 3,
+      "text_sha256": "ef041f0c420cb1f66ff4356048a016591e744cbf58f1874d1d167a6af82f82eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.changes-201505"
+        ]
+      }
+    },
+    {
+      "id": "change-201505-substantive",
+      "title": "Substantive Changes and Bugfixes",
+      "level": 4,
+      "text_sha256": "6be6637997b3cf18afae959217c683881910e3fca981f71f522c589c655d8426",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.change-201505-substantive",
+          "css-flexbox-1.change-201505-substantive-clause-f81c76aa4251",
+          "css-flexbox-1.change-201505-substantive-clause-49aa9d323da3",
+          "css-flexbox-1.change-201505-substantive-clause-b2b980878104",
+          "css-flexbox-1.change-201505-substantive-clause-95498a6477af",
+          "css-flexbox-1.change-201505-substantive-clause-630b2a07ae40",
+          "css-flexbox-1.change-201505-substantive-clause-deadd52f71aa",
+          "css-flexbox-1.change-201505-substantive-clause-0c642cd3d40f",
+          "css-flexbox-1.change-201505-substantive-clause-c9fa3bba2b19",
+          "css-flexbox-1.change-201505-substantive-clause-0cac07d0d3c9",
+          "css-flexbox-1.change-201505-substantive-clause-a56f7c3e81f7",
+          "css-flexbox-1.change-201505-substantive-clause-88edf1edc12f",
+          "css-flexbox-1.change-201505-substantive-clause-385a1b9a3f1a",
+          "css-flexbox-1.change-201505-substantive-clause-35c27c1c650a",
+          "css-flexbox-1.change-201505-substantive-clause-87ffd8d29b79",
+          "css-flexbox-1.change-201505-substantive-clause-59d11b2cfebe"
+        ]
+      }
+    },
+    {
+      "id": "change-201505-clarify",
+      "title": "Clarifications",
+      "level": 4,
+      "text_sha256": "a5bcf7ebafb4ed0113ded6fc8b08fd9cf331340f95639b472d9a0cf641079a08",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.change-201505-clarify"
+        ]
+      }
+    },
+    {
+      "id": "changes-201409",
+      "title": "Changes since the 25 September 2014 LCWD",
+      "level": 3,
+      "text_sha256": "ef041f0c420cb1f66ff4356048a016591e744cbf58f1874d1d167a6af82f82eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.changes-201409"
+        ]
+      }
+    },
+    {
+      "id": "change-201409-substantive",
+      "title": "Substantive Changes and Bugfixes",
+      "level": 4,
+      "text_sha256": "10fb7add6af8d559c0f2969a2a20b2db080250664f01954b750145fcd556fb61",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.change-201409-substantive",
+          "css-flexbox-1.change-201409-substantive-clause-d586a480e985",
+          "css-flexbox-1.change-201409-substantive-clause-dd917d666e57",
+          "css-flexbox-1.change-201409-substantive-clause-90601d391b3e",
+          "css-flexbox-1.change-201409-substantive-clause-b64f51f32898",
+          "css-flexbox-1.change-201409-substantive-clause-2983b03808a1"
+        ]
+      }
+    },
+    {
+      "id": "change-201409-clarify",
+      "title": "Clarifications",
+      "level": 4,
+      "text_sha256": "ddba6ccf3e450ab8fac0b2f0969bca7f0b64950911b1b5216dfa05782af048d3",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.change-201409-clarify",
+          "css-flexbox-1.change-201409-clarify-clause-549de992fbc1",
+          "css-flexbox-1.change-201409-clarify-clause-3d04e8b1b0ea"
+        ]
+      }
+    },
+    {
+      "id": "changes-201403",
+      "title": "Changes since the 25 March 2014 LCWD",
+      "level": 3,
+      "text_sha256": "ef041f0c420cb1f66ff4356048a016591e744cbf58f1874d1d167a6af82f82eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.changes-201403"
+        ]
+      }
+    },
+    {
+      "id": "change-201403-substantive",
+      "title": "Substantive Changes and Bugfixes",
+      "level": 4,
+      "text_sha256": "f160679fb2ee5f8a51e036fb7a1c9ad3186c55ee14ccf95b610ae8d8b232f84e",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.change-201403-substantive",
+          "css-flexbox-1.change-201403-substantive-clause-704b52c6e857",
+          "css-flexbox-1.change-201403-substantive-clause-8287f438b99c",
+          "css-flexbox-1.change-201403-substantive-clause-ac88a19d0f05",
+          "css-flexbox-1.change-201403-substantive-clause-734a51660b4b",
+          "css-flexbox-1.change-201403-substantive-clause-6ef1c838d653",
+          "css-flexbox-1.change-201403-substantive-clause-7b5e8fcff703",
+          "css-flexbox-1.change-201403-substantive-clause-f1f92bc67020"
+        ]
+      }
+    },
+    {
+      "id": "change-201403-clarify",
+      "title": "Clarifications",
+      "level": 4,
+      "text_sha256": "f2971cfa6763384e6d6d2124e3fc9c0078ecddbb49ee16b9449c3f255643cc07",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.change-201403-clarify"
+        ]
+      }
+    },
+    {
+      "id": "changes-2012",
+      "title": "Changes since the 18 September 2012 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "ef041f0c420cb1f66ff4356048a016591e744cbf58f1874d1d167a6af82f82eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.changes-2012"
+        ]
+      }
+    },
+    {
+      "id": "changes-2014-substantive",
+      "title": "Substantive Changes and Bugfixes",
+      "level": 4,
+      "text_sha256": "b7ae025af300671af5d98852403515e3cdae1fec4c20d7b46d566906082359f1",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.changes-2014-substantive"
+        ]
+      }
+    },
+    {
+      "id": "changes-2014-clarify",
+      "title": "Clarifications",
+      "level": 4,
+      "text_sha256": "19ec4143fa9538bea250541ec5e27eee892f303c19eaccc8a6eb11421c3ca7d8",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.changes-2014-clarify"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "d0cf9c18bd033d8f266a5132ff1e6b3a4a3b59d45695e0ecb216c26688539b3a",
+      "clause_count": 78,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.security",
+          "css-flexbox-1.security-clause-24f911f99aeb",
+          "css-flexbox-1.security-clause-9b0556801439",
+          "css-flexbox-1.security-clause-5b61bdf6bf57",
+          "css-flexbox-1.security-clause-ffc29403b085",
+          "css-flexbox-1.security-clause-61c6cf8f9730"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.w3c-conventions",
+          "css-flexbox-1.w3c-conventions-clause-5c98c879f070",
+          "css-flexbox-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.w3c-conformance-classes",
+          "css-flexbox-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-flexbox-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.w3c-partial",
+          "css-flexbox-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.w3c-testing",
+          "css-flexbox-1.w3c-testing-clause-1e0fff369221",
+          "css-flexbox-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.w3c-cr-exit-criteria",
+          "css-flexbox-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-flexbox-1.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-flexbox-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-flexbox-1.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-flexbox-1.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "6aa1f59effdeae1ead0a4061f17752f934c1cf8b8f9a3588f5790f4849aec0c8",
+      "clause_count": 118,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "6e316746d6d672cd15da251252a544af9d3edb5538ed09844aad94a2cb8c3bf6",
+      "clause_count": 155,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "34158bf4e24047274ae2c10149ce0abcdd0a16a3a95d25ea663cc1ccb374827a",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "e895e50fe636aea0deafb0b0a9018fd78d706cd6dcce045133b42475180a162c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "06632b4ef09ae08a5a4d8cae6e44321bc5b4e6ab141954b06222298fa751aad7",
+      "clause_count": 108,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.property-index",
+          "css-flexbox-1.property-index-clause-4b59fe755d34",
+          "css-flexbox-1.property-index-clause-e6e45a25f009"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "63857eb1ca21cf4189466ca81d3a7d7c8e266e8136f6f05f3203895b840af74a",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-flexbox-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,2672 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-syndata.q4-0",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "q4.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 4 Syntax and basic data types.",
+      "locator": {
+        "section_id": "q4.0",
+        "text_sha256": "b1ec4b5dace25aa63668397a64a40f26b9a55aa9a4c4c96dcf7c4fa35b3da1c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.syntax",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Syntax.",
+      "locator": {
+        "section_id": "syntax",
+        "text_sha256": "03b2ae9a63407348b156aec91254e79637692b46e2ccc0f4ad55e5e029ee27bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.tokenization",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "tokenization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tokenization.",
+      "locator": {
+        "section_id": "tokenization",
+        "text_sha256": "2fa21fbebc27b1fed5a80cdae283e11c7a3b571e592e911bebd86a8e9782585c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.tokenization-clause-c84c027052c1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.tokenization-clause-c84c027052c1",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "tokenization"
+      ],
+      "behaviour": "Tokenization — normative clause 112, located by its exact source hash.",
+      "locator": {
+        "section_id": "tokenization",
+        "clause_index": 111,
+        "clause_sha256": "c84c027052c15c81bf8d472628afd723b2366c9e211cb06ecf3436c76f3b1dec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.keywords",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "keywords"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Keywords.",
+      "locator": {
+        "section_id": "keywords",
+        "text_sha256": "97629f3a3fc8b8f1b2e9c8852a7e2adca0e42a7ea76e191367267e10de9dd6b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.keywords-clause-e94fcb58c027"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.keywords-clause-e94fcb58c027",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "keywords"
+      ],
+      "behaviour": "Keywords — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "keywords",
+        "clause_index": 0,
+        "clause_sha256": "e94fcb58c027abd52a1fc3878a8932ccdac69144632b6ec01b336cffa81e8e1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.vendor-keywords",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "vendor-keywords"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Vendor-specific extensions.",
+      "locator": {
+        "section_id": "vendor-keywords",
+        "text_sha256": "6f919eb63b4597b6f83f4ce88a07c2311eff533d454a9b1a3c5b4742899cff4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.vendor-keywords-clause-7e95795793bb",
+        "css21-syndata.vendor-keywords-clause-8769fa08cf96",
+        "css21-syndata.vendor-keywords-clause-29d845d5ccce"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.vendor-keywords-clause-7e95795793bb",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "vendor-keywords"
+      ],
+      "behaviour": "Vendor-specific extensions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "vendor-keywords",
+        "clause_index": 0,
+        "clause_sha256": "7e95795793bb7d7ae3993c52d452f136458394ee42968694956837d5497d74c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.vendor-keywords-clause-8769fa08cf96",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "vendor-keywords"
+      ],
+      "behaviour": "Vendor-specific extensions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "vendor-keywords",
+        "clause_index": 6,
+        "clause_sha256": "8769fa08cf96190a04b874e6cd4b762f56d455f5eaf9cb2071fe2a835c5f4af9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.vendor-keywords-clause-29d845d5ccce",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "vendor-keywords"
+      ],
+      "behaviour": "Vendor-specific extensions — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "vendor-keywords",
+        "clause_index": 7,
+        "clause_sha256": "29d845d5cccedfbfca7ce3db5f9d656fd4f87e0e58bccb8c8e23cacaf7c44e9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.characters",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "characters"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Characters and case.",
+      "locator": {
+        "section_id": "characters",
+        "text_sha256": "7db7032bb67a4329b0183fc3c481026af80a539b7dd3a72e3338ba022bd20aee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.characters-clause-2d4dea1e8dbd",
+        "css21-syndata.characters-clause-9057a2d53f5b",
+        "css21-syndata.characters-clause-65d55e40bdba",
+        "css21-syndata.characters-clause-58a8e6ebab23",
+        "css21-syndata.characters-clause-bdfd283fb0e0",
+        "css21-syndata.characters-clause-fc95be9ab8f5",
+        "css21-syndata.characters-clause-72e6123c32ac"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.characters-clause-2d4dea1e8dbd",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "characters"
+      ],
+      "behaviour": "Characters and case — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "characters",
+        "clause_index": 4,
+        "clause_sha256": "2d4dea1e8dbd280eb19ae66888baa8ceaad4be0d1d62a3b690bc7daba8341ca3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.characters-clause-9057a2d53f5b",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "characters"
+      ],
+      "behaviour": "Characters and case — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "characters",
+        "clause_index": 5,
+        "clause_sha256": "9057a2d53f5b269a71f14bf2420300e3a7a9e7154395bbdc8874e136ae117418"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.characters-clause-65d55e40bdba",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "characters"
+      ],
+      "behaviour": "Characters and case — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "characters",
+        "clause_index": 6,
+        "clause_sha256": "65d55e40bdba7c6274342f9f5d642a618797a9131b577fbe78c279ee9e58fdb2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.characters-clause-58a8e6ebab23",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "characters"
+      ],
+      "behaviour": "Characters and case — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "characters",
+        "clause_index": 7,
+        "clause_sha256": "58a8e6ebab2341678230310125efa4c3629912efcfc0c166397b36303142ae53"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.characters-clause-bdfd283fb0e0",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "characters"
+      ],
+      "behaviour": "Characters and case — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "characters",
+        "clause_index": 8,
+        "clause_sha256": "bdfd283fb0e0f5a1c2cc12e6496443c5badfa5e1e929ccfe6ce970f2fdd0bdc9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.characters-clause-fc95be9ab8f5",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "characters"
+      ],
+      "behaviour": "Characters and case — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "characters",
+        "clause_index": 10,
+        "clause_sha256": "fc95be9ab8f5a8b0d6b4614ebb9d0fdc2daead996b9e0ae9bc46ed2faf39f143"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.characters-clause-72e6123c32ac",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "characters"
+      ],
+      "behaviour": "Characters and case — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "characters",
+        "clause_index": 11,
+        "clause_sha256": "72e6123c32acc21b38ac5f6f12446862e00a7499fe17f35b3cf508f682596d68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.statements",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "statements"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Statements.",
+      "locator": {
+        "section_id": "statements",
+        "text_sha256": "aa159897813f019515c78067562f81caa3b3ea617723085215b61e2b548f73d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.at-rules",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "at-rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in At-rules.",
+      "locator": {
+        "section_id": "at-rules",
+        "text_sha256": "129d76e40cb421f6b7babc047fd85f7f8d76a6ee70c30c9a53abfe75a5dcd2c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.at-rules-clause-b52a815d94e4",
+        "css21-syndata.at-rules-clause-22797bec8e93"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.at-rules-clause-b52a815d94e4",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "at-rules"
+      ],
+      "behaviour": "At-rules — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-rules",
+        "clause_index": 2,
+        "clause_sha256": "b52a815d94e4c0c57e4cde19170f9359a2dc557bc97a03c166e15044abff4d31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.at-rules-clause-22797bec8e93",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "at-rules"
+      ],
+      "behaviour": "At-rules — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-rules",
+        "clause_index": 9,
+        "clause_sha256": "22797bec8e931083c863cc33b8d30ae7d0265a6cad20dff5d92aab8215d92e1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.block",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "block"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Blocks.",
+      "locator": {
+        "section_id": "block",
+        "text_sha256": "05d93cf88faba408cf7dcf17a592f44b645c5812a906bd5257053496ec25b43b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.block-clause-35052ed7a4cc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.block-clause-35052ed7a4cc",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "block"
+      ],
+      "behaviour": "Blocks — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "block",
+        "clause_index": 0,
+        "clause_sha256": "35052ed7a4cc05b0cce29f4c9f39bbf848636f6ae98d3eda3e80acdee67f5d9a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.rule-sets",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "rule-sets"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rule sets, declaration blocks, and selectors.",
+      "locator": {
+        "section_id": "rule-sets",
+        "text_sha256": "6f6bc76c64dae8f519635987b7ab2f992a10bb5ff3fd88dccd31a929cc6d99b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.rule-sets-clause-b222f9bd18a0",
+        "css21-syndata.rule-sets-clause-d6ef466ee2f1",
+        "css21-syndata.rule-sets-clause-9675f4cadd81",
+        "css21-syndata.rule-sets-clause-a97e465dd892"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.rule-sets-clause-b222f9bd18a0",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "rule-sets"
+      ],
+      "behaviour": "Rule sets, declaration blocks, and selectors — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "rule-sets",
+        "clause_index": 1,
+        "clause_sha256": "b222f9bd18a0d17155f8e6b8e2208bbc15eff7ea9de8c8dc6abf2994715e4d1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.rule-sets-clause-d6ef466ee2f1",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "rule-sets"
+      ],
+      "behaviour": "Rule sets, declaration blocks, and selectors — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "rule-sets",
+        "clause_index": 2,
+        "clause_sha256": "d6ef466ee2f137c223e97e51d1a5b1e8d211b68aee86c4b5190eea436a886b9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.rule-sets-clause-9675f4cadd81",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "rule-sets"
+      ],
+      "behaviour": "Rule sets, declaration blocks, and selectors — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "rule-sets",
+        "clause_index": 3,
+        "clause_sha256": "9675f4cadd814e8e6501e00c94a2cda1dc806b16e99e35b8da0ab81e1667f323"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.rule-sets-clause-a97e465dd892",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "rule-sets"
+      ],
+      "behaviour": "Rule sets, declaration blocks, and selectors — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "rule-sets",
+        "clause_index": 5,
+        "clause_sha256": "a97e465dd892229f955227aba66b9bf43e0dcbb7690cf24ed3d48dbc468e0628"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.properties",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Declarations and properties.",
+      "locator": {
+        "section_id": "properties",
+        "text_sha256": "b1c574965c8ddff164364d0b0bd24536f1952e261aef99d95cf69176583a031b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.properties-clause-67d95ef1e150",
+        "css21-syndata.properties-clause-6e195c8c8bad",
+        "css21-syndata.properties-clause-07f517a5cd14",
+        "css21-syndata.properties-clause-7f6dc031dd03"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.properties-clause-67d95ef1e150",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "properties"
+      ],
+      "behaviour": "Declarations and properties — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "properties",
+        "clause_index": 7,
+        "clause_sha256": "67d95ef1e1508926994d49cfa54022925cc98ab6f3d3cdb8ad01538a3e315eaf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.properties-clause-6e195c8c8bad",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "properties"
+      ],
+      "behaviour": "Declarations and properties — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "properties",
+        "clause_index": 9,
+        "clause_sha256": "6e195c8c8badf2fd8abda6105643c6c635c802a99c4c079b50585ea294d272e3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.properties-clause-07f517a5cd14",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "properties"
+      ],
+      "behaviour": "Declarations and properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "properties",
+        "clause_index": 12,
+        "clause_sha256": "07f517a5cd14a49dedfe4c629e04582e4bc8a9e49288537d74ee53852965c7d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.properties-clause-7f6dc031dd03",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "properties"
+      ],
+      "behaviour": "Declarations and properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "properties",
+        "clause_index": 13,
+        "clause_sha256": "7f6dc031dd03a30cad782b3509c6319c6b21425dd0bc135416162d24a0ad54dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.comments",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "comments"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Comments.",
+      "locator": {
+        "section_id": "comments",
+        "text_sha256": "3741150b6e2f93f669f8aaaf2d6807cd825955c64f43e8658416502ed3a751f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.parsing-errors",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rules for handling parsing errors.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "text_sha256": "e43aff6acbca21d8039e042b76e218bbd345ec6d678c05d62a398a8f26b83503"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.parsing-errors-clause-208976f565f8",
+        "css21-syndata.parsing-errors-clause-16dc7f5f9c66",
+        "css21-syndata.parsing-errors-clause-2ef25cc71288",
+        "css21-syndata.parsing-errors-clause-1268f689ffa0",
+        "css21-syndata.parsing-errors-clause-e4a1073515be",
+        "css21-syndata.parsing-errors-clause-4a3ae89db034",
+        "css21-syndata.parsing-errors-clause-64ddd599538d",
+        "css21-syndata.parsing-errors-clause-a1d53a21e953",
+        "css21-syndata.parsing-errors-clause-8078955f0a06",
+        "css21-syndata.parsing-errors-clause-14a7fdb07dc1",
+        "css21-syndata.parsing-errors-clause-1a2cce28bc1f",
+        "css21-syndata.parsing-errors-clause-96c845946619",
+        "css21-syndata.parsing-errors-clause-ebfc50dc4c80",
+        "css21-syndata.parsing-errors-clause-1487e8530768",
+        "css21-syndata.parsing-errors-clause-005607f1a187",
+        "css21-syndata.parsing-errors-clause-ea0793641e35"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-208976f565f8",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 0,
+        "clause_sha256": "208976f565f829e4ab5f60458416b1c4ba6548ec038ac0b563ab71ed70717b2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-16dc7f5f9c66",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 1,
+        "clause_sha256": "16dc7f5f9c661ddf73133fc65309f149673037c23b705db9eef6c7848858c8c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-2ef25cc71288",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 5,
+        "clause_sha256": "2ef25cc712883fcffd0d6792cf8625917051415325eab4abd1b0c7cdabc587e5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-1268f689ffa0",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 6,
+        "clause_sha256": "1268f689ffa069246ba5d864d2a61a8c6e4fd2ae4dcc5f1239db4b7abebd178d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-e4a1073515be",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 9,
+        "clause_sha256": "e4a1073515be9842e0d6c666b6ca642acd4d873dba0b637a34eed46d85a1818f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-4a3ae89db034",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 10,
+        "clause_sha256": "4a3ae89db034fbfdca7861a094195e7dcbbd1a94ed04877de20e76c3824d7853"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-64ddd599538d",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 11,
+        "clause_sha256": "64ddd599538d8caea97a5a33bad88bbbd37c7637a00230503cc40fa490e414e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-a1d53a21e953",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 13,
+        "clause_sha256": "a1d53a21e95395b359bc3b6e991ba84b9947be4c4a195ce2dbc2a6a3886d42f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-8078955f0a06",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 15,
+        "clause_sha256": "8078955f0a06c96cd4890e5a5f5b13bfc9bd25ccda4ec9e6048c1056010d73bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-14a7fdb07dc1",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 17,
+        "clause_sha256": "14a7fdb07dc150836f79c99b8d4616938e9e326f58d133b8216f628e1f5047be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-1a2cce28bc1f",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 18,
+        "clause_sha256": "1a2cce28bc1f68fbd2d4650f3a92a34979acce53439dd5ce3f9cb7a1b2e18026"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-96c845946619",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 19,
+        "clause_sha256": "96c84594661968de09a55b0c4ebe7392257ad08edcc8895c1e0117423214246b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-ebfc50dc4c80",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 24,
+        "clause_sha256": "ebfc50dc4c802af081f341f50e50c8a0d9d096b927c46352ba00c5053e31f166"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-1487e8530768",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 25,
+        "clause_sha256": "1487e85307680de973f507138d0e799e476127c696f942c43406ace3e8b0fe90"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-005607f1a187",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 29,
+        "clause_sha256": "005607f1a18757cd55e61dd79818ecb04326c805656ce5c9530f59e7248ee2f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.parsing-errors-clause-ea0793641e35",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "parsing-errors"
+      ],
+      "behaviour": "Rules for handling parsing errors — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-errors",
+        "clause_index": 30,
+        "clause_sha256": "ea0793641e357933093dd2382292ac3367881c75e9e679ecde92dacc07799de7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.values",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Values.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.numbers",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "numbers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Integers and real numbers.",
+      "locator": {
+        "section_id": "numbers",
+        "text_sha256": "171518dd1bd811ecaa35358de92fcafd39ea10512f251c05105fc5a7523dca59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.length-units",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "length-units"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lengths.",
+      "locator": {
+        "section_id": "length-units",
+        "text_sha256": "912d85401dc7c6f84b8b5ec3783dc71a20b1aaf15faa9b4c97eefcf3cfffa130"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.length-units-clause-60a2f3d3434e",
+        "css21-syndata.length-units-clause-d625434ad0d4",
+        "css21-syndata.length-units-clause-ee5f01bc9121",
+        "css21-syndata.length-units-clause-dc0721149024",
+        "css21-syndata.length-units-clause-f70d66d82a8f",
+        "css21-syndata.length-units-clause-7c2a1857038c",
+        "css21-syndata.length-units-clause-c4c4dcd1b892",
+        "css21-syndata.length-units-clause-19e0b64209f6",
+        "css21-syndata.length-units-clause-e3eeac3c2381"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.length-units-clause-60a2f3d3434e",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "length-units"
+      ],
+      "behaviour": "Lengths — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "length-units",
+        "clause_index": 2,
+        "clause_sha256": "60a2f3d3434ee2cf2b3324ed847720632ff36f0cf7a818c135af9e74c7045162"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.length-units-clause-d625434ad0d4",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "length-units"
+      ],
+      "behaviour": "Lengths — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "length-units",
+        "clause_index": 3,
+        "clause_sha256": "d625434ad0d41c19a1c10b785f7074b7e56bceff95c58fc9177e480582118f5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.length-units-clause-ee5f01bc9121",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "length-units"
+      ],
+      "behaviour": "Lengths — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "length-units",
+        "clause_index": 4,
+        "clause_sha256": "ee5f01bc91210975733f8385b6cfd15eef15b4990e636bcf41ffbd872a43578e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.length-units-clause-dc0721149024",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "length-units"
+      ],
+      "behaviour": "Lengths — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "length-units",
+        "clause_index": 11,
+        "clause_sha256": "dc072114902425e3ea6c9e33cdd9b6dd8d1997ccc44fdd5e9fb927ba5ae5ba4e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.length-units-clause-f70d66d82a8f",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "length-units"
+      ],
+      "behaviour": "Lengths — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "length-units",
+        "clause_index": 14,
+        "clause_sha256": "f70d66d82a8f45901eafff8f2c0b8b7f999cd60ea46a5dd3f73e22513a9fcc92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.length-units-clause-7c2a1857038c",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "length-units"
+      ],
+      "behaviour": "Lengths — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "length-units",
+        "clause_index": 21,
+        "clause_sha256": "7c2a1857038c059e8552d49d6af54a30749df6393c2e5d3cb2e84d9d700fe3dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.length-units-clause-c4c4dcd1b892",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "length-units"
+      ],
+      "behaviour": "Lengths — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "length-units",
+        "clause_index": 22,
+        "clause_sha256": "c4c4dcd1b8920ae0fa899fabe4a11f809dcc9f0534fda9ff7adcf7222ad6a230"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.length-units-clause-19e0b64209f6",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "length-units"
+      ],
+      "behaviour": "Lengths — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "length-units",
+        "clause_index": 24,
+        "clause_sha256": "19e0b64209f65b469c671d34f081cabae3731c03adc97f703400bfdfa78c68d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.length-units-clause-e3eeac3c2381",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "length-units"
+      ],
+      "behaviour": "Lengths — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "length-units",
+        "clause_index": 33,
+        "clause_sha256": "e3eeac3c2381390bf1bb32959c0f6c9944297922d3a054fb09563a7e0210158a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.percentage-units",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "percentage-units"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Percentages.",
+      "locator": {
+        "section_id": "percentage-units",
+        "text_sha256": "58eca2f49f5457ef854551f1e9923ac922c1acd11e52673a5dfdeefddd48fb6e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.percentage-units-clause-7f7656d599e3",
+        "css21-syndata.percentage-units-clause-1e97e8014348"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.percentage-units-clause-7f7656d599e3",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "percentage-units"
+      ],
+      "behaviour": "Percentages — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "percentage-units",
+        "clause_index": 1,
+        "clause_sha256": "7f7656d599e3c1dc26ebcc464c9bfaab7b7f19b7ce2310940e67841f44b6f9be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.percentage-units-clause-1e97e8014348",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "percentage-units"
+      ],
+      "behaviour": "Percentages — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "percentage-units",
+        "clause_index": 3,
+        "clause_sha256": "1e97e80143481c3c9fcc8211358c5e423c756ba4ebe0ca2947e6f35569b1fe98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.uri",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "uri"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in URLs and URIs.",
+      "locator": {
+        "section_id": "uri",
+        "text_sha256": "d7aa880636fa284f105ba74288d514351d5871b39e7d1b25c6fec827dad83693"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.uri-clause-6cebdf3149a0",
+        "css21-syndata.uri-clause-e07014bf0b52",
+        "css21-syndata.uri-clause-a32aaa8dcbd5",
+        "css21-syndata.uri-clause-db2d2ced5f77"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.uri-clause-6cebdf3149a0",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "uri"
+      ],
+      "behaviour": "URLs and URIs — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "uri",
+        "clause_index": 3,
+        "clause_sha256": "6cebdf3149a0f0f7de38483370ae5935aef05ad248231bcc07b9b788cafbc22e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.uri-clause-e07014bf0b52",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "uri"
+      ],
+      "behaviour": "URLs and URIs — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "uri",
+        "clause_index": 7,
+        "clause_sha256": "e07014bf0b52c0bd42062132ff5a7964adb537fad2b81ce36ceb734339f8d4e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.uri-clause-a32aaa8dcbd5",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "uri"
+      ],
+      "behaviour": "URLs and URIs — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "uri",
+        "clause_index": 10,
+        "clause_sha256": "a32aaa8dcbd523e2e24d7514ec1ff76dee0a444ebb8eef5753822cec501d3eff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.uri-clause-db2d2ced5f77",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "uri"
+      ],
+      "behaviour": "URLs and URIs — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "uri",
+        "clause_index": 18,
+        "clause_sha256": "db2d2ced5f77b0d66129f87ab1f929e2df43f36ce3360c6451438089693f81e3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.counter",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "counter"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Counters.",
+      "locator": {
+        "section_id": "counter",
+        "text_sha256": "fa10bda2e840ef6c4628821e153ce020c601ef899dd6e39356359d957fd34b42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.counter-clause-f40e40242419"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.counter-clause-f40e40242419",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "counter"
+      ],
+      "behaviour": "Counters — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "counter",
+        "clause_index": 2,
+        "clause_sha256": "f40e402424190408a75de81ae834e2fa9052f3402d3e318bc3b1d6efac54fdd1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.color-units",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "color-units"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Colors.",
+      "locator": {
+        "section_id": "color-units",
+        "text_sha256": "124c3373312a6c3e8149e1e0db7b847ed668ec8f8c6b21c321607fa91f97880a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.color-units-clause-5f2702cdac6b",
+        "css21-syndata.color-units-clause-facd854fc571",
+        "css21-syndata.color-units-clause-5fb72c43ab88",
+        "css21-syndata.color-units-clause-1900e35f4d86"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.color-units-clause-5f2702cdac6b",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "color-units"
+      ],
+      "behaviour": "Colors — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-units",
+        "clause_index": 10,
+        "clause_sha256": "5f2702cdac6b948333cd7f66c2c7d4f4334f690c5828fd0720ebe2ad794cecb3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.color-units-clause-facd854fc571",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "color-units"
+      ],
+      "behaviour": "Colors — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-units",
+        "clause_index": 11,
+        "clause_sha256": "facd854fc5713f610df6c4bd7ebce440e81fbd3edff8ed122f8ec3a8c00368bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.color-units-clause-5fb72c43ab88",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "color-units"
+      ],
+      "behaviour": "Colors — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-units",
+        "clause_index": 12,
+        "clause_sha256": "5fb72c43ab88d45c95e7c47eac2c02331f2411a31f08aeebb934191cff19a672"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.color-units-clause-1900e35f4d86",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "color-units"
+      ],
+      "behaviour": "Colors — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-units",
+        "clause_index": 16,
+        "clause_sha256": "1900e35f4d86802eb29b8e51fbc3fc152ba8a44fde771a523ff9297d502271f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.strings",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "strings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Strings.",
+      "locator": {
+        "section_id": "strings",
+        "text_sha256": "663a3e2714025a2e9f5311b65680c190b2e43555951d90559d6f349c553b9523"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.unsupported-values",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "unsupported-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unsupported Values.",
+      "locator": {
+        "section_id": "unsupported-values",
+        "text_sha256": "b97b3ab0f07f877f2621f8d03fb044df6cc4029c34502db4614809eeec38d0eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.unsupported-values-clause-66a9ea36b09b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.unsupported-values-clause-66a9ea36b09b",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "unsupported-values"
+      ],
+      "behaviour": "Unsupported Values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "unsupported-values",
+        "clause_index": 0,
+        "clause_sha256": "66a9ea36b09b051be97a977b603e7bd0aaac76ce0b474a6cc0111ff358d97f9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.charset",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS style sheet representation.",
+      "locator": {
+        "section_id": "charset",
+        "text_sha256": "df7269a85922e2306f64fa099c3d6c0ccaa0d6ba9d9c7fd996f02648396e422c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.charset-clause-04cca5bff14c",
+        "css21-syndata.charset-clause-c4146937bc97",
+        "css21-syndata.charset-clause-4ae7a03f6e27",
+        "css21-syndata.charset-clause-908600abe5b6",
+        "css21-syndata.charset-clause-a7c7d220a2e2",
+        "css21-syndata.charset-clause-d8e706dc2cb4",
+        "css21-syndata.charset-clause-9f3f9a716eeb",
+        "css21-syndata.charset-clause-0b5965e7c862",
+        "css21-syndata.charset-clause-d16b5fc9601a",
+        "css21-syndata.charset-clause-bb03ef95d397",
+        "css21-syndata.charset-clause-a732771533ea"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.charset-clause-04cca5bff14c",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "CSS style sheet representation — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "charset",
+        "clause_index": 0,
+        "clause_sha256": "04cca5bff14cc8dd4d8bf740046508437e5c48e1fa2a600a86c9ae95e2ddb1d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.charset-clause-c4146937bc97",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "CSS style sheet representation — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "charset",
+        "clause_index": 2,
+        "clause_sha256": "c4146937bc97dad66491ef6a0a5372bb34e5c7530b55797b117711868efacb73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.charset-clause-4ae7a03f6e27",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "CSS style sheet representation — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "charset",
+        "clause_index": 8,
+        "clause_sha256": "4ae7a03f6e27e13a5efcd09d6441da1f38e396c9e4113afd185c17fad8d5a6d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.charset-clause-908600abe5b6",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "CSS style sheet representation — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "charset",
+        "clause_index": 11,
+        "clause_sha256": "908600abe5b63ed4266e7e2379cf07d3b241f889daaf1a7fbaf4bec3c287934a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.charset-clause-a7c7d220a2e2",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "CSS style sheet representation — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "charset",
+        "clause_index": 12,
+        "clause_sha256": "a7c7d220a2e25256e3c75608cf5f6cd4198c0df40378bc366fe49aa27b5dbfc7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.charset-clause-d8e706dc2cb4",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "CSS style sheet representation — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "charset",
+        "clause_index": 13,
+        "clause_sha256": "d8e706dc2cb4d019e866806fdfa189fdafc087dcbc07c3ec779605fa83661a13"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.charset-clause-9f3f9a716eeb",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "CSS style sheet representation — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "charset",
+        "clause_index": 14,
+        "clause_sha256": "9f3f9a716eeb017aa6be358e335d6eb9ec718672e1ea4746249e093c3aed6231"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.charset-clause-0b5965e7c862",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "CSS style sheet representation — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "charset",
+        "clause_index": 15,
+        "clause_sha256": "0b5965e7c8623c03b994b339cc749ee778549e7a2201ee47f1babaff10935ef5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.charset-clause-d16b5fc9601a",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "CSS style sheet representation — normative clause 71, located by its exact source hash.",
+      "locator": {
+        "section_id": "charset",
+        "clause_index": 70,
+        "clause_sha256": "d16b5fc9601a731fd0d5d6d09bccd15e0310f6c36b9ba65a7f226ca233710d5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.charset-clause-bb03ef95d397",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "CSS style sheet representation — normative clause 72, located by its exact source hash.",
+      "locator": {
+        "section_id": "charset",
+        "clause_index": 71,
+        "clause_sha256": "bb03ef95d397d61fa588ca32a811f26eb7ad78947832f1361f1d9b68da2cbacf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.charset-clause-a732771533ea",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "charset"
+      ],
+      "behaviour": "CSS style sheet representation — normative clause 74, located by its exact source hash.",
+      "locator": {
+        "section_id": "charset",
+        "clause_index": 73,
+        "clause_sha256": "a732771533eafa1c65dc60145ca49dd06a6692a6cc826b62a8135ecb439342fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.escaping",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "escaping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Referring to characters not represented in a character encoding.",
+      "locator": {
+        "section_id": "escaping",
+        "text_sha256": "77091859d3d4cc84bee3a4224f3ad79c61fd5372ffc511d5e058915f9a011f34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-syndata.escaping-clause-a8c357f166b9",
+        "css21-syndata.escaping-clause-3040874a75b3",
+        "css21-syndata.escaping-clause-ee81558db1f3",
+        "css21-syndata.escaping-clause-c3a5660d1583"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-syndata.escaping-clause-a8c357f166b9",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "escaping"
+      ],
+      "behaviour": "Referring to characters not represented in a character encoding — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "escaping",
+        "clause_index": 0,
+        "clause_sha256": "a8c357f166b97f2b80ab0b7a431271c464519a68aba3cfb5222ce380fa2170ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.escaping-clause-3040874a75b3",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "escaping"
+      ],
+      "behaviour": "Referring to characters not represented in a character encoding — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "escaping",
+        "clause_index": 1,
+        "clause_sha256": "3040874a75b3834fd6c41dc9c9d9dfc0a80d43032b273adda2d05acd08febfdb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.escaping-clause-ee81558db1f3",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "escaping"
+      ],
+      "behaviour": "Referring to characters not represented in a character encoding — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "escaping",
+        "clause_index": 2,
+        "clause_sha256": "ee81558db1f3bae7cc9ea7e790e4c0c17d5215b881dd2fbf586fd5b78cd82bec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.escaping-clause-c3a5660d1583",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "escaping"
+      ],
+      "behaviour": "Referring to characters not represented in a character encoding — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "escaping",
+        "clause_index": 3,
+        "clause_sha256": "c3a5660d1583a0a2c2e4eb3f48aac34e1d216d0270b2b4290f0c4629af2f9624"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-syndata.vendor-keyword-history",
+      "family": "css21-syndata",
+      "source_id": "css21-syndata",
+      "sections": [
+        "vendor-keyword-history"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 4.1.2.2 Informative Historical Notes.",
+      "locator": {
+        "section_id": "vendor-keyword-history",
+        "text_sha256": "7a7fd6ec73627ea5e8f71a39c6cc36fbe7da52795bef2efdd95d2f531384f961"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

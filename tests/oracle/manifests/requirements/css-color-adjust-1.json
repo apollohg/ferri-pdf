@@ -1,0 +1,2590 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-color-adjust-1.intro",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "01fb2da30fa96757ec0955bf784131b7e5784e7643a98946de58ebbb5fe683ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.values",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.preferred",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "preferred"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Preferred Color Schemes.",
+      "locator": {
+        "section_id": "preferred",
+        "text_sha256": "51b16dcd1804d249f3935fc567cb2d0011253c002a8023d6473ee0c0ef0b213d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.preferred-clause-3fa2204a3229",
+        "css-color-adjust-1.preferred-clause-221f4e944f44",
+        "css-color-adjust-1.preferred-clause-7293ef19ac60"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.preferred-clause-3fa2204a3229",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "preferred"
+      ],
+      "behaviour": "Preferred Color Schemes — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "preferred",
+        "clause_index": 1,
+        "clause_sha256": "3fa2204a322998863c16626361e6c17510be7c164c61310369f10a9de7283f69"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.preferred-clause-221f4e944f44",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "preferred"
+      ],
+      "behaviour": "Preferred Color Schemes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "preferred",
+        "clause_index": 7,
+        "clause_sha256": "221f4e944f446127d48d608fb9865e09c33406822c1ef867d308ebc08f20ecef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.preferred-clause-7293ef19ac60",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "preferred"
+      ],
+      "behaviour": "Preferred Color Schemes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "preferred",
+        "clause_index": 9,
+        "clause_sha256": "7293ef19ac60b6884c40c36ecb321bc9ec13e8e92ebe2768d239125ab74cc37e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-prop",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Opting Into a Preferred Color Scheme: the color-scheme property.",
+      "locator": {
+        "section_id": "color-scheme-prop",
+        "text_sha256": "d535f630949df999b4ea8dc3584492bf5a645120f738ea02938d889240c2b9aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.color-scheme-prop-clause-cca2516ebb1d",
+        "css-color-adjust-1.color-scheme-prop-clause-b6b8d1d5b028",
+        "css-color-adjust-1.color-scheme-prop-clause-123acca31f0e",
+        "css-color-adjust-1.color-scheme-prop-clause-40d57119be91",
+        "css-color-adjust-1.color-scheme-prop-clause-19aeac9524e6",
+        "css-color-adjust-1.color-scheme-prop-clause-c120c5b2a926",
+        "css-color-adjust-1.color-scheme-prop-clause-28b6180082d3",
+        "css-color-adjust-1.color-scheme-prop-clause-d77dcf98c0c2",
+        "css-color-adjust-1.color-scheme-prop-clause-123589967e96"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-prop-clause-cca2516ebb1d",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-prop"
+      ],
+      "behaviour": "Opting Into a Preferred Color Scheme: the color-scheme property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-prop",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-prop-clause-b6b8d1d5b028",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-prop"
+      ],
+      "behaviour": "Opting Into a Preferred Color Scheme: the color-scheme property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-prop",
+        "clause_index": 17,
+        "clause_sha256": "b6b8d1d5b0288fb7e9facf2ccfdc9335e4a16543837f16d5804974f0c2dc1483"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-prop-clause-123acca31f0e",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-prop"
+      ],
+      "behaviour": "Opting Into a Preferred Color Scheme: the color-scheme property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-prop",
+        "clause_index": 18,
+        "clause_sha256": "123acca31f0e75d0856b480b437587f793a85fca4066e705362251b6cfb24a1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-prop-clause-40d57119be91",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-prop"
+      ],
+      "behaviour": "Opting Into a Preferred Color Scheme: the color-scheme property — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-prop",
+        "clause_index": 56,
+        "clause_sha256": "40d57119be91e9c4948bb2e5b128cd68bbeaeb827a81e722b2a2ba719fc5270e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-prop-clause-19aeac9524e6",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-prop"
+      ],
+      "behaviour": "Opting Into a Preferred Color Scheme: the color-scheme property — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-prop",
+        "clause_index": 57,
+        "clause_sha256": "19aeac9524e6a58be3886c49650ac37e01e39cb88113d18bc7c9dd691d4f0404"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-prop-clause-c120c5b2a926",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-prop"
+      ],
+      "behaviour": "Opting Into a Preferred Color Scheme: the color-scheme property — normative clause 63, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-prop",
+        "clause_index": 62,
+        "clause_sha256": "c120c5b2a92608aa6450d2e02992f56598342b6128d0b53be331d35eab83b83c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-prop-clause-28b6180082d3",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-prop"
+      ],
+      "behaviour": "Opting Into a Preferred Color Scheme: the color-scheme property — normative clause 69, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-prop",
+        "clause_index": 68,
+        "clause_sha256": "28b6180082d370bd833bdbd713781edc2338f8ad6292134ddad540163c10d09b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-prop-clause-d77dcf98c0c2",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-prop"
+      ],
+      "behaviour": "Opting Into a Preferred Color Scheme: the color-scheme property — normative clause 81, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-prop",
+        "clause_index": 80,
+        "clause_sha256": "d77dcf98c0c25459b2c67a9ca38ca25b3bad73b56224c18981a502576f5c55cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-prop-clause-123589967e96",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-prop"
+      ],
+      "behaviour": "Opting Into a Preferred Color Scheme: the color-scheme property — normative clause 82, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-prop",
+        "clause_index": 81,
+        "clause_sha256": "123589967e9688806935a66e20bd61205aa3c9c3592def35eb730696d3e35fde"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-effect",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-effect"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Effects of the Used Color Scheme.",
+      "locator": {
+        "section_id": "color-scheme-effect",
+        "text_sha256": "bd9633d6d7b2df2c95bfb6f09d812ca596c88eda878eccf4cdbd343afd4930cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.color-scheme-effect-clause-f79adcff408e",
+        "css-color-adjust-1.color-scheme-effect-clause-ce334e1b5d79",
+        "css-color-adjust-1.color-scheme-effect-clause-1726ee6c463e",
+        "css-color-adjust-1.color-scheme-effect-clause-dbae988fd9c3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-effect-clause-f79adcff408e",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-effect"
+      ],
+      "behaviour": "Effects of the Used Color Scheme — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-effect",
+        "clause_index": 0,
+        "clause_sha256": "f79adcff408e79f8074adb2097ea5053827e52a4f9153cbb52430e836a49ba72"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-effect-clause-ce334e1b5d79",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-effect"
+      ],
+      "behaviour": "Effects of the Used Color Scheme — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-effect",
+        "clause_index": 7,
+        "clause_sha256": "ce334e1b5d7902e3f10ee61b1ade04a15dbb4f968c2e9df4a42045bc2d2a6459"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-effect-clause-1726ee6c463e",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-effect"
+      ],
+      "behaviour": "Effects of the Used Color Scheme — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-effect",
+        "clause_index": 8,
+        "clause_sha256": "1726ee6c463eeb104a20e2cfccf2290083300f8c12afb6f156a39880bc195bb5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-effect-clause-dbae988fd9c3",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-effect"
+      ],
+      "behaviour": "Effects of the Used Color Scheme — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-effect",
+        "clause_index": 9,
+        "clause_sha256": "dbae988fd9c3a2f6d0de5c2429775fb0760eb8419a49149d25b8d6dc0111461f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-override",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-override"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overriding the Color Scheme.",
+      "locator": {
+        "section_id": "color-scheme-override",
+        "text_sha256": "5ba8056e486f89781521ceb5132ee9c97ca5d9613334d1818fbbff4bd9cd9004"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.color-scheme-override-clause-32b2f93a865c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.color-scheme-override-clause-32b2f93a865c",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-scheme-override"
+      ],
+      "behaviour": "Overriding the Color Scheme — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-scheme-override",
+        "clause_index": 0,
+        "clause_sha256": "32b2f93a865cde540ef50a7077a640b00db801fe013269f60847e882930fcb58"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Forced Color Palettes.",
+      "locator": {
+        "section_id": "forced",
+        "text_sha256": "9fcb59fff7bf3e5752df727b1714e44a6713aa1b9430796105f51c53f1649a98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.forced-clause-d4c17fc7ef9a",
+        "css-color-adjust-1.forced-clause-c27a358ac015"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.forced-clause-d4c17fc7ef9a",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced"
+      ],
+      "behaviour": "Forced Color Palettes — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced",
+        "clause_index": 3,
+        "clause_sha256": "d4c17fc7ef9ab1e6c70c92cbcbca9d06fde065414e6dc7b68dacf3cb002f4d96"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-clause-c27a358ac015",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced"
+      ],
+      "behaviour": "Forced Color Palettes — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced",
+        "clause_index": 4,
+        "clause_sha256": "c27a358ac015766ce4806e68b9f744eb600b799dfca9c7b1970a1a4770b7d5f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-colors-properties",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-colors-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Properties Affected by Forced Colors Mode.",
+      "locator": {
+        "section_id": "forced-colors-properties",
+        "text_sha256": "aac38ab8cfb5704763cb61079abbb0ceb26cdde8c3e6eafea7de259d7d4c2fb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.forced-colors-properties-clause-a610be2d3d6d",
+        "css-color-adjust-1.forced-colors-properties-clause-9b2e59ff21f5",
+        "css-color-adjust-1.forced-colors-properties-clause-e96592a862a9",
+        "css-color-adjust-1.forced-colors-properties-clause-cc3870f7a750",
+        "css-color-adjust-1.forced-colors-properties-clause-ea00c0e29955",
+        "css-color-adjust-1.forced-colors-properties-clause-0a24177d53d5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.forced-colors-properties-clause-a610be2d3d6d",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-colors-properties"
+      ],
+      "behaviour": "Properties Affected by Forced Colors Mode — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-colors-properties",
+        "clause_index": 17,
+        "clause_sha256": "a610be2d3d6d0031c7d0a7c8095398d5665855419f417c429a3d2749832e00f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-colors-properties-clause-9b2e59ff21f5",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-colors-properties"
+      ],
+      "behaviour": "Properties Affected by Forced Colors Mode — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-colors-properties",
+        "clause_index": 20,
+        "clause_sha256": "9b2e59ff21f5ee7961e28d59fc382240f9ee528c5ee7dfd76fcdb82b102c42d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-colors-properties-clause-e96592a862a9",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-colors-properties"
+      ],
+      "behaviour": "Properties Affected by Forced Colors Mode — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-colors-properties",
+        "clause_index": 22,
+        "clause_sha256": "e96592a862a95421b08301b5db54b71b9b2da3c870d52e8ef899fa39d89e1864"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-colors-properties-clause-cc3870f7a750",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-colors-properties"
+      ],
+      "behaviour": "Properties Affected by Forced Colors Mode — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-colors-properties",
+        "clause_index": 23,
+        "clause_sha256": "cc3870f7a7500cf8a0516d3ae8767c35247b26cd1219b7458abfcea38527a273"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-colors-properties-clause-ea00c0e29955",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-colors-properties"
+      ],
+      "behaviour": "Properties Affected by Forced Colors Mode — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-colors-properties",
+        "clause_index": 35,
+        "clause_sha256": "ea00c0e29955e45fb5befd145bed74e874e1666214d9c49d57bd670cbaafdb97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-colors-properties-clause-0a24177d53d5",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-colors-properties"
+      ],
+      "behaviour": "Properties Affected by Forced Colors Mode — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-colors-properties",
+        "clause_index": 39,
+        "clause_sha256": "0a24177d53d5cdf09d58bd99467f96ea0644825a3f2f00f0f4778615efccb20a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-adjust-prop",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-adjust-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Opting Out of a Forced Color Palette: the forced-color-adjust property.",
+      "locator": {
+        "section_id": "forced-color-adjust-prop",
+        "text_sha256": "c450fc332407b2afe6f1cb71e665d21650ca2f1c9d052810b59a986b444fb55e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.forced-color-adjust-prop-clause-cca2516ebb1d",
+        "css-color-adjust-1.forced-color-adjust-prop-clause-fd17d16bc0ee",
+        "css-color-adjust-1.forced-color-adjust-prop-clause-0f6874778ec4",
+        "css-color-adjust-1.forced-color-adjust-prop-clause-69ab651a84b1",
+        "css-color-adjust-1.forced-color-adjust-prop-clause-0ac2271ac760",
+        "css-color-adjust-1.forced-color-adjust-prop-clause-8588547191f7",
+        "css-color-adjust-1.forced-color-adjust-prop-clause-4c624448e425",
+        "css-color-adjust-1.forced-color-adjust-prop-clause-5984bb459399",
+        "css-color-adjust-1.forced-color-adjust-prop-clause-b69e74cab791",
+        "css-color-adjust-1.forced-color-adjust-prop-clause-1d6197223f77"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-adjust-prop-clause-cca2516ebb1d",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-adjust-prop"
+      ],
+      "behaviour": "Opting Out of a Forced Color Palette: the forced-color-adjust property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-color-adjust-prop",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-adjust-prop-clause-fd17d16bc0ee",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-adjust-prop"
+      ],
+      "behaviour": "Opting Out of a Forced Color Palette: the forced-color-adjust property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-color-adjust-prop",
+        "clause_index": 23,
+        "clause_sha256": "fd17d16bc0ee6169adde71c9d92fc7ac51b3c13463205f2b22952d388567393b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-adjust-prop-clause-0f6874778ec4",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-adjust-prop"
+      ],
+      "behaviour": "Opting Out of a Forced Color Palette: the forced-color-adjust property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-color-adjust-prop",
+        "clause_index": 24,
+        "clause_sha256": "0f6874778ec4e36be7f7a3e9da9162a77a3a20103df6a6b51adecf7bc6d61e0b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-adjust-prop-clause-69ab651a84b1",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-adjust-prop"
+      ],
+      "behaviour": "Opting Out of a Forced Color Palette: the forced-color-adjust property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-color-adjust-prop",
+        "clause_index": 26,
+        "clause_sha256": "69ab651a84b15cc6f3db6c50776a1a123604033b18b0dfab83800e129513c422"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-adjust-prop-clause-0ac2271ac760",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-adjust-prop"
+      ],
+      "behaviour": "Opting Out of a Forced Color Palette: the forced-color-adjust property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-color-adjust-prop",
+        "clause_index": 29,
+        "clause_sha256": "0ac2271ac760dcfe4aba24a9da3a70a36fd36d177b459a8e1ce37c794560fd68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-adjust-prop-clause-8588547191f7",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-adjust-prop"
+      ],
+      "behaviour": "Opting Out of a Forced Color Palette: the forced-color-adjust property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-color-adjust-prop",
+        "clause_index": 31,
+        "clause_sha256": "8588547191f79a98832cde675cd0c3a6dfb4e2f0c502787d0ceb940ad3dc7446"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-adjust-prop-clause-4c624448e425",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-adjust-prop"
+      ],
+      "behaviour": "Opting Out of a Forced Color Palette: the forced-color-adjust property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-color-adjust-prop",
+        "clause_index": 33,
+        "clause_sha256": "4c624448e425eda48103a3307baaf79fca1e138a8de840e922c7fd37288958fa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-adjust-prop-clause-5984bb459399",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-adjust-prop"
+      ],
+      "behaviour": "Opting Out of a Forced Color Palette: the forced-color-adjust property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-color-adjust-prop",
+        "clause_index": 34,
+        "clause_sha256": "5984bb459399467e9ca4631d1c4c1bdfa53e517a4c53d568293c14f0e63c631e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-adjust-prop-clause-b69e74cab791",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-adjust-prop"
+      ],
+      "behaviour": "Opting Out of a Forced Color Palette: the forced-color-adjust property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-color-adjust-prop",
+        "clause_index": 36,
+        "clause_sha256": "b69e74cab7915baa7954fc7a6c351ea47ccd2937004bbe228af3430191ccf29a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-adjust-prop-clause-1d6197223f77",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-adjust-prop"
+      ],
+      "behaviour": "Opting Out of a Forced Color Palette: the forced-color-adjust property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-color-adjust-prop",
+        "clause_index": 37,
+        "clause_sha256": "1d6197223f7772ee0363c6dfc53d3f686ad483e9619368116dfabef53a0ba77e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.perf",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "perf"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Performance-based Color Adjustments.",
+      "locator": {
+        "section_id": "perf",
+        "text_sha256": "e0d82b5fa31a3c24b4ba6e97b978f9c8e3775332b616ff7faafe096ab9bf50eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.print-color-adjust",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "print-color-adjust"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ink Economy: the print-color-adjust property.",
+      "locator": {
+        "section_id": "print-color-adjust",
+        "text_sha256": "d2c095e6bc09df464a52720c59824d7c9e069e94ab1e27406de84daec1fa8602"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.print-color-adjust-clause-cca2516ebb1d",
+        "css-color-adjust-1.print-color-adjust-clause-4884299482c1",
+        "css-color-adjust-1.print-color-adjust-clause-59c0a449675a",
+        "css-color-adjust-1.print-color-adjust-clause-fa2284b877b4",
+        "css-color-adjust-1.print-color-adjust-clause-a18e963107a5",
+        "css-color-adjust-1.print-color-adjust-clause-1d77d790d569"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.print-color-adjust-clause-cca2516ebb1d",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "print-color-adjust"
+      ],
+      "behaviour": "Ink Economy: the print-color-adjust property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "print-color-adjust",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.print-color-adjust-clause-4884299482c1",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "print-color-adjust"
+      ],
+      "behaviour": "Ink Economy: the print-color-adjust property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "print-color-adjust",
+        "clause_index": 18,
+        "clause_sha256": "4884299482c1d76f8b3526120875c56adb9b613f598137eeb8a5e0dfa5ad21f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.print-color-adjust-clause-59c0a449675a",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "print-color-adjust"
+      ],
+      "behaviour": "Ink Economy: the print-color-adjust property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "print-color-adjust",
+        "clause_index": 21,
+        "clause_sha256": "59c0a449675a28a8e448997928fe1ebcb2364f9ccdc7aa25e2efef7e5834cf8f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.print-color-adjust-clause-fa2284b877b4",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "print-color-adjust"
+      ],
+      "behaviour": "Ink Economy: the print-color-adjust property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "print-color-adjust",
+        "clause_index": 24,
+        "clause_sha256": "fa2284b877b475b84fdfb0becad987c5c4fc33fb1eece0cf20f2dc5dc1792970"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.print-color-adjust-clause-a18e963107a5",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "print-color-adjust"
+      ],
+      "behaviour": "Ink Economy: the print-color-adjust property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "print-color-adjust",
+        "clause_index": 25,
+        "clause_sha256": "a18e963107a52786974d27d4a3a7e069b80e943e8c773adb6d84f0bafa4fbe17"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.print-color-adjust-clause-1d77d790d569",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "print-color-adjust"
+      ],
+      "behaviour": "Ink Economy: the print-color-adjust property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "print-color-adjust",
+        "clause_index": 26,
+        "clause_sha256": "1d77d790d56903ed782b898ad2bbff02bf4c96ea9cc679625c2402d502500935"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-adjust",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-adjust"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The color-adjust Shorthand.",
+      "locator": {
+        "section_id": "color-adjust",
+        "text_sha256": "9b22b31dc3dbc283eb8816a9c94ac7aa9e581d88d6d730c43d91f3873a341fc9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.color-adjust-clause-cca2516ebb1d",
+        "css-color-adjust-1.color-adjust-clause-c84f6f10afc7",
+        "css-color-adjust-1.color-adjust-clause-a64f6bf13298"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.color-adjust-clause-cca2516ebb1d",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-adjust"
+      ],
+      "behaviour": "The color-adjust Shorthand — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-adjust",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-adjust-clause-c84f6f10afc7",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-adjust"
+      ],
+      "behaviour": "The color-adjust Shorthand — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-adjust",
+        "clause_index": 18,
+        "clause_sha256": "c84f6f10afc75963e3a72c8360603decc0ec3e0aa0d0b5f37e215af6913d09cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-adjust-clause-a64f6bf13298",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-adjust"
+      ],
+      "behaviour": "The color-adjust Shorthand — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-adjust",
+        "clause_index": 22,
+        "clause_sha256": "a64f6bf1329864727c20f86b6cc6a03e10126c67c54671de2e45d4b540601468"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.color-adjust-emulation",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "color-adjust-emulation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emulation.",
+      "locator": {
+        "section_id": "color-adjust-emulation",
+        "text_sha256": "60d887f8681b6cdc463db98439688912cdcff22ff4cf81a6b66199eec8bc4f91"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.emulate-forced-colors-mode",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "emulate-forced-colors-mode"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emulate Forced Colors Mode.",
+      "locator": {
+        "section_id": "emulate-forced-colors-mode",
+        "text_sha256": "5cb73d6e257aac2bfd951a09264ac2196f4cf94989f21f164696f51b09baad2b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.emulate-forced-colors-mode-clause-8791d46da365"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.emulate-forced-colors-mode-clause-8791d46da365",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "emulate-forced-colors-mode"
+      ],
+      "behaviour": "Emulate Forced Colors Mode — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "emulate-forced-colors-mode",
+        "clause_index": 11,
+        "clause_sha256": "8791d46da36588ddefbfb76bdef962c1c5f54956605067b85ec5fc250021c7b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-palettes",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-palettes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Forced Colors Mode Color Palettes.",
+      "locator": {
+        "section_id": "forced-color-palettes",
+        "text_sha256": "19762906645eec7739cd8b5e44395ce1d3e2687aaa76ce126c118a42a00ea9c1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.forced-color-palettes-clause-5a78415b099b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.forced-color-palettes-clause-5a78415b099b",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "forced-color-palettes"
+      ],
+      "behaviour": "Forced Colors Mode Color Palettes — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-color-palettes",
+        "clause_index": 31,
+        "clause_sha256": "5a78415b099b812a83e81951b127dca3f909167ba9b23ed64901e561eb51f349"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.privacy",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "df694efcc546d158da85252a7be0b4097ad8a9c0c72c1b869dbecb9b940e84b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.privacy-clause-720d5971ed76"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.privacy-clause-720d5971ed76",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Privacy Considerations — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "privacy",
+        "clause_index": 1,
+        "clause_sha256": "720d5971ed76651c275a5fdea096fbaf502bc141b98d4449e51ee4f4eb95cab0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.security",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "e5e4771db2c3d5e68338e0522473278f27164752f2ea535aaa6b10b7b44d43c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-conformance",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-conventions",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.w3c-conventions-clause-5c98c879f070",
+        "css-color-adjust-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-conformance-classes",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-color-adjust-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-partial",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-conform-future-proofing",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-testing",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.w3c-testing-clause-1e0fff369221",
+        "css-color-adjust-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-cr-exit-criteria",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-adjust-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+        "css-color-adjust-1.w3c-cr-exit-criteria-clause-ea752775913a",
+        "css-color-adjust-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+        "css-color-adjust-1.w3c-cr-exit-criteria-clause-b67129724911",
+        "css-color-adjust-1.w3c-cr-exit-criteria-clause-833729d43f23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-cr-exit-criteria-clause-ea752775913a",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-cr-exit-criteria-clause-b67129724911",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.w3c-cr-exit-criteria-clause-833729d43f23",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 10,
+        "clause_sha256": "833729d43f239b3deb57bcaaf1c29d2f077e86aad8b396f8458fa182e4db8d99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-adjust-1.property-index",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "1b40749e50d6f656e9002a0b6b73415ad70a7442aebaf00f60f10a78d4f7d0b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.idl-index",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "daff0c1b01e2ba7f98fc3ef408e4b71de4b739e693db7950bdbc672e2e89dd70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.issues-index",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "c5f7005fc9adaba08c8b5c121cc3f86c6ff3c91d38d6d67a4844d8a779ca87db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.title",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Color Adjustment Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "df03a8f687e869531ba59e2b7af9c87564e94d21a766c8689764859c7249a043"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.abstract",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "cb0e0ac745e17b40ec0ab0b9f663bd71d1471bc3de16d259e16e7b86da649713"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.sotd",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "aeb1e53051e89e2e8cadb235a3c941dce482cfe7255ab638cbff82f83a38024f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.contents",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "721d7217d2afe86d1417796054fc28e31c1abf8559ed06ee7291858c1cb118c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.acknowledgements",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8. Acknowledgements.",
+      "locator": {
+        "section_id": "acknowledgements",
+        "text_sha256": "0ea2980ffb0a21da5b3909b74178461ec23f3eb32b7d24aa31a3b4ef9e0c8c6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.changes",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "25d795050dbd94e01b9e3d283a6fe6ae752ed1c6ba5be9bd4b72b111c4270266"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.index",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.index-defined-here",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "fa940aa0fd8998784981b3634f25e0c29bc4fe6aa2cb292583c4865cbfe0689b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.index-defined-elsewhere",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "f1a82b2bfc84a171b2b4626ce1d55a9adba1b0a073f15d1a1ecf06f8dd5d159f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.references",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.normative",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "d86f2b8a2440a25d5467f599f72d32672659c23c5668d0c3c65be4842a3df2a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-adjust-1.informative",
+      "family": "css-color-adjust-1",
+      "source_id": "css-color-adjust-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "d624997ee386eafc8c08d8eacfba4a7ff1517b48ea933752b43d590f538722f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

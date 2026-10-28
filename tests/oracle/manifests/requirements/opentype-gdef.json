@@ -1,0 +1,748 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-gdef.gdef-glyph-definition-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "gdef--glyph-definition-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GDEF — Glyph Definition Table.",
+      "locator": {
+        "section_id": "gdef--glyph-definition-table",
+        "text_sha256": "214e1897aecdbc0fa38663f3c48b975638d01ca841f95852449b42b2f24c1245"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.overview",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overview.",
+      "locator": {
+        "section_id": "overview",
+        "text_sha256": "8a1cab3bed037c52db309b89248f5bf6ade3c609ead5ce955258735442f855f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gdef.overview-clause-233cd93f40ba",
+        "opentype-gdef.overview-clause-cbc2b32dc8d9",
+        "opentype-gdef.overview-clause-e0e9a96a0f71"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.overview-clause-233cd93f40ba",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Overview — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "overview",
+        "clause_index": 18,
+        "clause_sha256": "233cd93f40ba182f07007523d150d655e7160e5638f16b677ce3ac54210c08a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gdef.overview-clause-cbc2b32dc8d9",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Overview — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "overview",
+        "clause_index": 24,
+        "clause_sha256": "cbc2b32dc8d93a0b9c51144a3c4daebc060534ee4ff6e03f777822d290147dd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gdef.overview-clause-e0e9a96a0f71",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Overview — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "overview",
+        "clause_index": 27,
+        "clause_sha256": "e0e9a96a0f71a7e04b7b02f59e208992102884b5c31d3d9465bb8b4508494587"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gdef.gdef-table-structures",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "gdef-table-structures"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GDEF table structures.",
+      "locator": {
+        "section_id": "gdef-table-structures",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.gdef-header",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "gdef-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GDEF Header.",
+      "locator": {
+        "section_id": "gdef-header",
+        "text_sha256": "35dfa4c29bb0a3f353e3d0f67caaad73d4eb75ca3b77aa8ed77287d8bb0d83af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.glyph-class-definition-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "glyph-class-definition-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Glyph class definition table.",
+      "locator": {
+        "section_id": "glyph-class-definition-table",
+        "text_sha256": "964d39cc3603c0905190612ce4a2d2250889e083df418aae1a40a7c98afd037e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.attachment-point-list-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "attachment-point-list-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Attachment point list table.",
+      "locator": {
+        "section_id": "attachment-point-list-table",
+        "text_sha256": "a1a42a9486d31bf5b85b71456016b752950840f2c292b5ff18634d0e9ce91728"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.ligature-caret-list-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "ligature-caret-list-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ligature caret list table.",
+      "locator": {
+        "section_id": "ligature-caret-list-table",
+        "text_sha256": "e9081c89642ccfa96a8fbe74e32b9ca900d3067c30238608d84bc9a39a60e826"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gdef.ligature-caret-list-table-clause-d4e34fd1ce4b",
+        "opentype-gdef.ligature-caret-list-table-clause-24148a20b634"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.ligature-caret-list-table-clause-d4e34fd1ce4b",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "ligature-caret-list-table"
+      ],
+      "behaviour": "Ligature caret list table — normative clause 56, located by its exact source hash.",
+      "locator": {
+        "section_id": "ligature-caret-list-table",
+        "clause_index": 55,
+        "clause_sha256": "d4e34fd1ce4b1afa9da69ac82c9aa0e06d9c2da1ab5627540c6d59ccdc0a6e44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gdef.ligature-caret-list-table-clause-24148a20b634",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "ligature-caret-list-table"
+      ],
+      "behaviour": "Ligature caret list table — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "ligature-caret-list-table",
+        "clause_index": 56,
+        "clause_sha256": "24148a20b634b99446066907b1e8f7b259ceb4cb48e937b6e138b0e4c83161c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gdef.mark-attachment-class-definition-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "mark-attachment-class-definition-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mark attachment class definition table.",
+      "locator": {
+        "section_id": "mark-attachment-class-definition-table",
+        "text_sha256": "eb8b630424c5817de2e5c1c671b704bd79392ae733a0f370dca855c82ea93578"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.mark-glyph-sets-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "mark-glyph-sets-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mark glyph sets table.",
+      "locator": {
+        "section_id": "mark-glyph-sets-table",
+        "text_sha256": "f07810a0836826a8e2f3739befb0a4a0c15ae8fbea825a3a6a29cc45eacfe474"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gdef.mark-glyph-sets-table-clause-2c9542f06a65"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.mark-glyph-sets-table-clause-2c9542f06a65",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "mark-glyph-sets-table"
+      ],
+      "behaviour": "Mark glyph sets table — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "mark-glyph-sets-table",
+        "clause_index": 0,
+        "clause_sha256": "2c9542f06a655c0c9793c095740af2539367dcb76d53c2a87a8f07d977ad65f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gdef.item-variation-store-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "item-variation-store-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Item variation store table.",
+      "locator": {
+        "section_id": "item-variation-store-table",
+        "text_sha256": "49a6f372a498cd3a5e45aa35436081f4fabb3c1485149f3d5f0e47754ec39748"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gdef.item-variation-store-table-clause-02cfa0db206d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.item-variation-store-table-clause-02cfa0db206d",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "item-variation-store-table"
+      ],
+      "behaviour": "Item variation store table — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "item-variation-store-table",
+        "clause_index": 0,
+        "clause_sha256": "02cfa0db206d1d11badba1c5c745b5eba92b3a3cce45681a56836da287224402"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gdef.gdef-table-examples",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "gdef-table-examples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GDEF table examples.",
+      "locator": {
+        "section_id": "gdef-table-examples",
+        "text_sha256": "dc46f935ec25f00cf931742b094a5f8c2335911ff11b85b2f3802657374ede5e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.example-1-gdef-header",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "example-1-gdef-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 1: GDEF Header.",
+      "locator": {
+        "section_id": "example-1-gdef-header",
+        "text_sha256": "af9d2a52b777059959f34fbcb560889152e6c8be3db72fc020bc31a6424554ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.example-2-glyphclassdef-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "example-2-glyphclassdef-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 2: GlyphClassDef table.",
+      "locator": {
+        "section_id": "example-2-glyphclassdef-table",
+        "text_sha256": "b894a7630393ccce5a4f8095ca741a19a2d25dac58115ded2b9302a4b7713ee3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.example-3-attachlist-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "example-3-attachlist-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 3: AttachList table.",
+      "locator": {
+        "section_id": "example-3-attachlist-table",
+        "text_sha256": "9fb0700d4e3e7d71190b65e3c2c013cfd1be0f92f455f9146269a9258b12fc31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.example-4-ligcaretlist-ligglyph-and-caretvalueformat1-tables",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "example-4-ligcaretlist-ligglyph-and-caretvalueformat1-tables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 4: LigCaretList, LigGlyph and CaretValueFormat1 tables.",
+      "locator": {
+        "section_id": "example-4-ligcaretlist-ligglyph-and-caretvalueformat1-tables",
+        "text_sha256": "9c75ba57ab72b82f8e134e90bf63c45b3762675d3b22eb91ac1905d9bf79f71e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.example-5-caretvalueformat2-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "example-5-caretvalueformat2-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 5: CaretValueFormat2 table.",
+      "locator": {
+        "section_id": "example-5-caretvalueformat2-table",
+        "text_sha256": "bcf77f782db254911bc68bca40c5e977a4af2656b5cfd6fc5ef9a0904c03691f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.example-6-caretvalueformat3-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "example-6-caretvalueformat3-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 6: CaretValueFormat3 table.",
+      "locator": {
+        "section_id": "example-6-caretvalueformat3-table",
+        "text_sha256": "ff66462d1804ae7c1bee93ed96217bed385ce79d93aa360031fea26fb9fdcc3b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.example-7-mark-attachment-class-definition-table",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "example-7-mark-attachment-class-definition-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 7: Mark attachment class definition table.",
+      "locator": {
+        "section_id": "example-7-mark-attachment-class-definition-table",
+        "text_sha256": "d4e9d3ad40748dd77e620c407da9ca64430054aec3e425eb98438e58fb624bd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.ms-in-this-article",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.ms-feedback",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.ms-additional-resources-mobile-heading",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "4e2297f79525355aa3dc07756ae4ae6ba350dc012790f96133dc9fdbf48db6d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gdef.side-doc-outline",
+      "family": "opentype-gdef",
+      "source_id": "opentype-gdef",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

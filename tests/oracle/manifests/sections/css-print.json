@@ -1,0 +1,475 @@
+{
+  "schema_version": 1,
+  "source_id": "css-print",
+  "sections": [
+    {
+      "id": "cssprintprofile",
+      "title": "CSS Print Profile",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.cssprintprofile"
+        ]
+      }
+    },
+    {
+      "id": "workingdraft",
+      "title": "W3C Working Group Note 14 March 2013",
+      "level": 2,
+      "text_sha256": "39fd614b9a4985df7db15f94d71a609318e0582de2e283c0a893d569091c5e8c",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.workingdraft"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "437796bf65ea025c4e5de29039e6d9ede520e50d86de84e4f2ae9f49ca9ddb63",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this Document",
+      "level": 2,
+      "text_sha256": "6dada3fe81b5caefa3a2b3420bd675175cd857d26fee686426ee8e794582fd94",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.status"
+        ]
+      }
+    },
+    {
+      "id": "toc",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "432cba4b68d347cefc1990587f1e974308d51afe9e395777bdc21ae2b6f97096",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.toc"
+        ]
+      }
+    },
+    {
+      "id": "section-overview",
+      "title": "1. Overview",
+      "level": 2,
+      "text_sha256": "a7097c9d4dbf2a7857783c5f99730fa5194e27e87382f17458fd50707f3fbd06",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-overview"
+        ]
+      }
+    },
+    {
+      "id": "section-conformance",
+      "title": "2. Conformance",
+      "level": 2,
+      "text_sha256": "163728f6f714c5fa43f2d5b851661d0b873ab13e9f135edcd855dc2c89c0d007",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-conformance",
+          "css-print.section-conformance-clause-a8faaba5825b",
+          "css-print.section-conformance-clause-7d5c8470f4eb",
+          "css-print.section-conformance-clause-9267e0724112",
+          "css-print.section-conformance-clause-154d07c529aa",
+          "css-print.section-conformance-clause-d0fbbc504757",
+          "css-print.section-conformance-clause-86681a83b6ae",
+          "css-print.section-conformance-clause-d5910a1c0b78",
+          "css-print.section-conformance-clause-9aabb20f7715"
+        ]
+      }
+    },
+    {
+      "id": "s2.1",
+      "title": "2.1. Enhanced Layout Extension Conformance",
+      "level": 3,
+      "text_sha256": "62c0a41ae6f98622757210455d9262c965914853b373ea9da89348d80385229b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.s2-1",
+          "css-print.s2-1-clause-b988686521a9"
+        ]
+      }
+    },
+    {
+      "id": "section-selectors",
+      "title": "3. Selectors",
+      "level": 2,
+      "text_sha256": "84530b8508f9ebfe76daefb6932bd8b9683452a542eb06379bfbfcedd2eeac6d",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-selectors",
+          "css-print.section-selectors-clause-50d03fcd032f",
+          "css-print.section-selectors-clause-2dff2968962d",
+          "css-print.section-selectors-clause-ca8c6327598a"
+        ]
+      }
+    },
+    {
+      "id": "at-rules",
+      "title": "3.1 At-rules",
+      "level": 3,
+      "text_sha256": "b112da26396184b24c3a7a012ca2baddc7daa573844c352421fbb323cfff4851",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.at-rules",
+          "css-print.at-rules-clause-ca8c6327598a"
+        ]
+      }
+    },
+    {
+      "id": "section-properties",
+      "title": "4. Properties",
+      "level": 2,
+      "text_sha256": "6f931a4e8aa0d4234f7fc7c2fe26c7a770aff0a07c70ed000b40a69afa0fa5c0",
+      "clause_count": 344,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-properties",
+          "css-print.section-properties-clause-ed05aa3d61fc",
+          "css-print.section-properties-clause-5e3b13ab5ab8",
+          "css-print.section-properties-clause-0244122608d6",
+          "css-print.section-properties-clause-7128bd0a2f2f",
+          "css-print.section-properties-clause-b713bed18985",
+          "css-print.section-properties-clause-ca8c6327598a",
+          "css-print.section-properties-clause-7f6bc0356549",
+          "css-print.section-properties-clause-fd49d69af837",
+          "css-print.section-properties-clause-1d702e298c78",
+          "css-print.section-properties-clause-5a8d760f1d5a",
+          "css-print.section-properties-clause-00f373f414d4",
+          "css-print.section-properties-clause-2570ffb91bac",
+          "css-print.section-properties-clause-e25cbd74c9e9",
+          "css-print.section-properties-clause-cd45c0829af6",
+          "css-print.section-properties-clause-8e726d5f886d",
+          "css-print.section-properties-clause-9075ae10ac45",
+          "css-print.section-properties-clause-4f055adcb2a5",
+          "css-print.section-properties-clause-c749dff961ef",
+          "css-print.section-properties-clause-7f83e996800b",
+          "css-print.section-properties-clause-4d0ddff73888",
+          "css-print.section-properties-clause-cf6f7110d697",
+          "css-print.section-properties-clause-2a7d5c305568",
+          "css-print.section-properties-clause-905c37e8b2dc",
+          "css-print.section-properties-clause-6d9ab515958a",
+          "css-print.section-properties-clause-ce5fe8950526",
+          "css-print.section-properties-clause-0f99d729c71f",
+          "css-print.section-properties-clause-f3f34a06a085",
+          "css-print.section-properties-clause-23872c683c1b",
+          "css-print.section-properties-clause-3b00db0b6181",
+          "css-print.section-properties-clause-9c0aa9a59d37",
+          "css-print.section-properties-clause-aeeed49d63cc",
+          "css-print.section-properties-clause-7a9669fe144d",
+          "css-print.section-properties-clause-bf631f7936c7",
+          "css-print.section-properties-clause-4932a4cf5fea",
+          "css-print.section-properties-clause-1db80bbebd16",
+          "css-print.section-properties-clause-6a9ac367303b",
+          "css-print.section-properties-clause-ec1b8be619bb",
+          "css-print.section-properties-clause-100dc1623696",
+          "css-print.section-properties-clause-48665f42189a",
+          "css-print.section-properties-clause-a99fdaa19358",
+          "css-print.section-properties-clause-ea17e4d37ba2",
+          "css-print.section-properties-clause-f6249b8c8edf",
+          "css-print.section-properties-clause-8552fba22a91",
+          "css-print.section-properties-clause-9a0adeb44e00",
+          "css-print.section-properties-clause-c6ab495399ca",
+          "css-print.section-properties-clause-44e6d070fe95",
+          "css-print.section-properties-clause-50aa3cbfd6ec",
+          "css-print.section-properties-clause-e95634b63792",
+          "css-print.section-properties-clause-18e2b1e6dfea",
+          "css-print.section-properties-clause-7d800cb1c3eb",
+          "css-print.section-properties-clause-d30807ebe502",
+          "css-print.section-properties-clause-8561c4967f86",
+          "css-print.section-properties-clause-f75d455d7785",
+          "css-print.section-properties-clause-218b7cb9eb77",
+          "css-print.section-properties-clause-3fca0617d0d7",
+          "css-print.section-properties-clause-d1eab19bf286",
+          "css-print.section-properties-clause-ecaad4b2f157",
+          "css-print.section-properties-clause-723f10849f49",
+          "css-print.section-properties-clause-7b30b0ff7be6",
+          "css-print.section-properties-clause-804a2b0556f1",
+          "css-print.section-properties-clause-a848ae7ff741",
+          "css-print.section-properties-clause-8a6de76c36a0",
+          "css-print.section-properties-clause-8bfb30e1e6eb",
+          "css-print.section-properties-clause-795405b676c8",
+          "css-print.section-properties-clause-d39c2c6d626a",
+          "css-print.section-properties-clause-191b68211c23",
+          "css-print.section-properties-clause-df4b96f704a4",
+          "css-print.section-properties-clause-865415d4b5ca",
+          "css-print.section-properties-clause-c2e240a3a448",
+          "css-print.section-properties-clause-3727149fd846",
+          "css-print.section-properties-clause-a98320c2910c",
+          "css-print.section-properties-clause-035300f3afee",
+          "css-print.section-properties-clause-b2008bf3e979",
+          "css-print.section-properties-clause-9b3650da0f14",
+          "css-print.section-properties-clause-a2226555481b"
+        ]
+      }
+    },
+    {
+      "id": "section-images",
+      "title": "Image Rendering Properties",
+      "level": 3,
+      "text_sha256": "ddc250a0bc9427ccfedd6fe2d8842a78191b78eb3431fdc2b12985fff524ec72",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-images",
+          "css-print.section-images-clause-92491572d5bd",
+          "css-print.section-images-clause-043ace715651",
+          "css-print.section-images-clause-5f73cb29a28e"
+        ]
+      }
+    },
+    {
+      "id": "section-syntax",
+      "title": "5. CSS Syntax",
+      "level": 2,
+      "text_sha256": "a7e9ef8404f1e7bd46cc80345cfc26d4257b359bb366cdf93c73404600070988",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-syntax",
+          "css-print.section-syntax-clause-87b8dce5d0c9",
+          "css-print.section-syntax-clause-f4928a299f94",
+          "css-print.section-syntax-clause-7d7b1f062138",
+          "css-print.section-syntax-clause-990dd79a3823",
+          "css-print.section-syntax-clause-f6fe69f7d66e",
+          "css-print.section-syntax-clause-895416881428",
+          "css-print.section-syntax-clause-01c0755402d4",
+          "css-print.section-syntax-clause-b3cc954b98bf"
+        ]
+      }
+    },
+    {
+      "id": "section-assigning",
+      "title": "6. Assigning Property Values, Cascading, and Inheritance",
+      "level": 2,
+      "text_sha256": "f3faf4a11179bf8b8245ec54d4e2df06ed610bc495c055c9a341f191b8151330",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-assigning",
+          "css-print.section-assigning-clause-c3de633afb62",
+          "css-print.section-assigning-clause-97f33ec523a6",
+          "css-print.section-assigning-clause-3621cb19a317",
+          "css-print.section-assigning-clause-b7a3e6ebcd67",
+          "css-print.section-assigning-clause-d851a0d5f144"
+        ]
+      }
+    },
+    {
+      "id": "section-mediatypes",
+      "title": "7. Media Types",
+      "level": 2,
+      "text_sha256": "8c2d013fbcf47308310f85e6a271b7e7f0f47369cc02091068d69a43aea6f33e",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-mediatypes",
+          "css-print.section-mediatypes-clause-fb62b718008c",
+          "css-print.section-mediatypes-clause-313799ec8fb1",
+          "css-print.section-mediatypes-clause-fd2489a00c03",
+          "css-print.section-mediatypes-clause-3492ffceb66f",
+          "css-print.section-mediatypes-clause-ba62b504a2ac"
+        ]
+      }
+    },
+    {
+      "id": "section-interactions",
+      "title": "8. CSS Print Profile Properties and User Agent interactions",
+      "level": 2,
+      "text_sha256": "21ae4190916c7b9f6380d4c8b1d2b29edfa74e83679752cc455456deff2a774c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-interactions"
+        ]
+      }
+    },
+    {
+      "id": "s.8.1",
+      "title": "8.1 Nested Floats, Divs, and Absolutely Positioned Boxes",
+      "level": 3,
+      "text_sha256": "806523b46243bba0aacf0816679fb32ac9bd5eccffb07f5af5ba3755f5588af7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.s-8-1",
+          "css-print.s-8-1-clause-806523b46243"
+        ]
+      }
+    },
+    {
+      "id": "s.8.2",
+      "title": "8.2 Page Breaks",
+      "level": 3,
+      "text_sha256": "889e1242884f902c31799ea173fed2002130d2784ce56bf93638114fd2e511aa",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.s-8-2",
+          "css-print.s-8-2-clause-889e1242884f"
+        ]
+      }
+    },
+    {
+      "id": "s.8.3",
+      "title": "8.3 Page Size",
+      "level": 3,
+      "text_sha256": "e53bdd57a6075ede726dd5f5b50249fb89bbde69c4ff07ffc456299c5170801e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.s-8-3",
+          "css-print.s-8-3-clause-1f972d9e6bba"
+        ]
+      }
+    },
+    {
+      "id": "s.8.4",
+      "title": "8.4 Default Style Sheets",
+      "level": 3,
+      "text_sha256": "1b211f5d51865f408b7a4a3cb30d275f5aaeb3363184924210c99218ecab369a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.s-8-4",
+          "css-print.s-8-4-clause-054c9089d573"
+        ]
+      }
+    },
+    {
+      "id": "s.8.5.1",
+      "title": "8.5.1 Default Style Sheet Guidelines for printers",
+      "level": 4,
+      "text_sha256": "4afe5a8ec0906d95116bb091dddd284789a7dd1c1047a9ff0f4c31f599e830e9",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.s-8-5-1",
+          "css-print.s-8-5-1-clause-4223f8f3cb7f",
+          "css-print.s-8-5-1-clause-4cd2c8701870",
+          "css-print.s-8-5-1-clause-526bcd1f5c20",
+          "css-print.s-8-5-1-clause-c4868b44c827",
+          "css-print.s-8-5-1-clause-f18957f0cf2b",
+          "css-print.s-8-5-1-clause-76c40996f990",
+          "css-print.s-8-5-1-clause-3d01a795d80c",
+          "css-print.s-8-5-1-clause-fe701d347a37",
+          "css-print.s-8-5-1-clause-db27d3c0bf2a",
+          "css-print.s-8-5-1-clause-571b5ff33c48",
+          "css-print.s-8-5-1-clause-b756fcb05a24",
+          "css-print.s-8-5-1-clause-c8b130d82859",
+          "css-print.s-8-5-1-clause-b306af4486e9",
+          "css-print.s-8-5-1-clause-24c224fcb8b1"
+        ]
+      }
+    },
+    {
+      "id": "s.8.5.2",
+      "title": "8.5.2 Default Style Sheet Guidelines for Enhanced Layout printers",
+      "level": 4,
+      "text_sha256": "a63911d99d576fe14f16566992d4ca8bbc609d2eb4ff582d27fe620d9b657dee",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.s-8-5-2",
+          "css-print.s-8-5-2-clause-f07edcaa60bc",
+          "css-print.s-8-5-2-clause-a3bfe81a3772",
+          "css-print.s-8-5-2-clause-c4868b44c827",
+          "css-print.s-8-5-2-clause-73f36387890f"
+        ]
+      }
+    },
+    {
+      "id": "section-ack",
+      "title": "9. Acknowledgements",
+      "level": 2,
+      "text_sha256": "aa37fd3b016b28f5af6a67d331a760a3c27919aee1c30f369c9b0509f1c141f6",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-ack"
+        ]
+      }
+    },
+    {
+      "id": "section-references",
+      "title": "Appendix A. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-references"
+        ]
+      }
+    },
+    {
+      "id": "section-normref",
+      "title": "A.1 Normative References",
+      "level": 3,
+      "text_sha256": "9b7af4c3685b1950a051fa58e177afd8995f6b129c48511ecf43ce957c2fd2a3",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-normref"
+        ]
+      }
+    },
+    {
+      "id": "section-informref",
+      "title": "A.2 Informative References",
+      "level": 3,
+      "text_sha256": "4426b936cccd418bcab8790821c2e14339825f649583f2929aec381e05776af3",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-print.section-informref"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,508 @@
+{
+  "schema_version": 1,
+  "source_id": "intersection-observer",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Intersection Observer",
+      "level": 1,
+      "text_sha256": "05785b69cf1a783319c949cc0cbecb8da8c6c774a8216534dfac5c1eba919a6e",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "intersection-observer.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "f38a4131cb1dcc2fb0b71b176c26fe613be74e22215acc375ac45eaaddc92847",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "intersection-observer.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "3af3c7bbf57137eaa43f0da829d17cd4ed648058357eea8670439019e80bc992",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "intersection-observer.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "33d60babdb3b623fb77aa087eae7b2ddf55463681b3706a7448216e1bb02b711",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "intersection-observer.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "832091e9ef06d830f29ea38127e0ab7128b653d01113099b9dcdc49000688816",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "intersection-observer-api",
+      "title": "2. Intersection Observer",
+      "level": 2,
+      "text_sha256": "2da5396b1cdd46875d36416f8e8d723749b6a79e034db3ba88cb3a054ae25d55",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "intersection-observer-callback",
+      "title": "2.1. The IntersectionObserverCallback",
+      "level": 3,
+      "text_sha256": "d1f03c6c2435d692e1b2a1d1256c2609b296b71a235fa7b78f057ed01c5287ee",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "intersection-observer-interface",
+      "title": "2.2. The IntersectionObserver interface",
+      "level": 3,
+      "text_sha256": "9642cee8f448d77265e392f499d425e6ade21f0fe1578034baf8234f374312ac",
+      "clause_count": 84,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "intersection-observer-entry",
+      "title": "2.3. The IntersectionObserverEntry interface",
+      "level": 3,
+      "text_sha256": "5156e4730e9a0da8fbbf7a90feca82cd9d14867b2bb4da1a834d7b2b0fd3041a",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "intersection-observer-init",
+      "title": "2.4. The IntersectionObserverInit dictionary",
+      "level": 3,
+      "text_sha256": "d75bd5e14f7ff79eace184a45e57d3c1266033662057e56454ccb5f62e9aa0b9",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "intersection-observer-processing-model",
+      "title": "3. Processing Model",
+      "level": 2,
+      "text_sha256": "44d44e710217521b9f7f4a211f93aca58674f177c1ad19fae640bdcf4e5a7c2d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "defines",
+      "title": "3.1. Internal Slot Definitions",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "document-defines",
+      "title": "3.1.1. Document",
+      "level": 4,
+      "text_sha256": "0d7de6d6860bb82863fa3af9413ee9bf605652f5c7db59176a55bcaa1fc3e606",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "element-private-slots",
+      "title": "3.1.2. Element",
+      "level": 4,
+      "text_sha256": "acd0606fcd0cb76f8aba28fb322c5db7992eb812facaff265690a83e8160faae",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "intersection-observer-private-slots",
+      "title": "3.1.3. IntersectionObserver",
+      "level": 4,
+      "text_sha256": "c0f0987044cf800a8d0c13eb644d2f2e5ed2138564d8a4774d93b99d74ccf726",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "algorithms",
+      "title": "3.2. Algorithms",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "initialize-new-intersection-observer",
+      "title": "3.2.1. Initialize a new IntersectionObserver",
+      "level": 4,
+      "text_sha256": "e7cd79e175895e627e6f0cf52c01e067281d52ba339f11e8c488b8411c0a5dbc",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "observe-target-element",
+      "title": "3.2.2. Observe a target Element",
+      "level": 4,
+      "text_sha256": "0fb0b79fea8cf3cd4fd5d61e59bac6e1a77bc92a5500463ab03b69672e6d46d4",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "unobserve-target-element",
+      "title": "3.2.3. Unobserve a target Element",
+      "level": 4,
+      "text_sha256": "45f2a3246c44a71c6d134dea72db0d3f17bbdb01c7fdfceb8c37b1800d426687",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "queue-intersection-observer-task",
+      "title": "3.2.4. Queue an Intersection Observer Task",
+      "level": 4,
+      "text_sha256": "f8f1cf7f8f3bfcdca8b898e909fe9f7092f9dc236ba7f370459f4352be159c0f",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "notify-intersection-observers-algo",
+      "title": "3.2.5. Notify Intersection Observers",
+      "level": 4,
+      "text_sha256": "69aea9d3c8d5dd2d200ef527f015d727088b105a1d11c1871fcd3c59dbfb1274",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "queue-intersection-observer-entry-algo",
+      "title": "3.2.6. Queue an IntersectionObserverEntry",
+      "level": 4,
+      "text_sha256": "b569507a1cd241425b89b993f679e1df919f862b0f8371aac51e8d7b30d6b993",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "calculate-intersection-rect-algo",
+      "title": "3.2.7. Compute the Intersection of a Target Element and the Root",
+      "level": 4,
+      "text_sha256": "58c3076179a519cd6928736690ba388431716bb77180b3d49d6f93e2349553fd",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "update-intersection-observations-algo",
+      "title": "3.2.8. Run the Update Intersection Observations Steps",
+      "level": 4,
+      "text_sha256": "cbe31b0768b063d077800c46df129745a24a8db1894c2d6b6cd83dd22f6dfcc1",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "lifetime",
+      "title": "3.3. IntersectionObserver Lifetime",
+      "level": 3,
+      "text_sha256": "55bd822f6aa98a8d1ae8c9cc659f73fc70d9564f1a8fd6e00320517bd03dbdec",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "external-spec-integrations",
+      "title": "3.4. External Spec Integrations",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "event-loop",
+      "title": "3.4.1. HTML Processing Model: Event Loop",
+      "level": 4,
+      "text_sha256": "62b7bd17d32508006957b5ca5e167d229e1df7f3790e61860a0ea2743458e407",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "pending-initial-observation",
+      "title": "3.4.2. Pending initial IntersectionObserver targets",
+      "level": 4,
+      "text_sha256": "3f8fc7cca3ba7981757fb85ceaca571d9e624c8c78233aaccb1f19d24a79759a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "accessibility",
+      "title": "4. Accessibility Considerations",
+      "level": 2,
+      "text_sha256": "743330ff4c449e77fb6ce58fe1ab10ffc46be93812cbeb0ffbd0b0f24325541a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "5. Privacy and Security",
+      "level": 2,
+      "text_sha256": "1b1a51da4955329574f8c3f4a9c344c04946172f6c62a0e071f6b52342763232",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "internationalization",
+      "title": "6. Internationalization",
+      "level": 2,
+      "text_sha256": "2df706e814d7e52cd5c46bf2839aa99ab30669b31e6ef244e877f4925f37278e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "7. Acknowledgements",
+      "level": 2,
+      "text_sha256": "6f8fce684abeb02179745978f088a38a8f140622b05dbc31a439a01289ce1a36",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "intersection-observer.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "b6aef6cc118a4a4250f91ecc82d39e2a71cfdebc660e159d497e0f10a30856dd",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "w3c-conformant-algorithms",
+      "title": "Conformant Algorithms",
+      "level": 3,
+      "text_sha256": "f24e40f5fbbd0310d5d8d0242ab49d323a1b682478da32bfd63da90430728692",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "intersection-observer.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "b341e87673c8aeaa67b8b3b56aa8262b3ad445390566b0d9d4337aea769f8049",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "intersection-observer.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "eefda4b9d6f288bde7c3e2078707c7267956375af21362cb3cf54c84203b914f",
+      "clause_count": 66,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "intersection-observer.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "intersection-observer.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "95c60e9c3a11bacaa6440e5cfae1ab37107cd139e07bb49e9117fbbe489d8f45",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "intersection-observer.normative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "7c9d5817b1970a8200baf4f093ec248f7bf1547c1212aff1bbe1937b42410a75",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "excluded",
+        "reason": "Static-print profile excludes animation timelines, interactive scrolling/events and aural output; static parsing/fallback obligations remain in Syntax and Cascade.",
+        "classification": "interactive-only"
+      }
+    }
+  ]
+}

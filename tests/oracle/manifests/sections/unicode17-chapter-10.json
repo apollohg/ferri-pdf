@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-10",
+  "sections": [
+    {
+      "id": "G26314",
+      "title": "Middle East-II",
+      "level": 1,
+      "text_sha256": "54fba80fc8343a4a7e123aedcbd7359aa46ed5eb46e85f194f9f056c7addc4ef",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.g26314"
+        ]
+      }
+    },
+    {
+      "id": "heading-85ea9f36922d",
+      "title": "10.1 Old North Arabian",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-85ea9f36922d"
+        ]
+      }
+    },
+    {
+      "id": "heading-b9c8f84a9d08",
+      "title": "10.1.1 Old North Arabian: U+10A80–U+10A9F",
+      "level": 3,
+      "text_sha256": "56daa0b6814a1bcc78a099267e41e80ecebdea6d00fc9b6a2b88baa0feb1dd22",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-b9c8f84a9d08"
+        ]
+      }
+    },
+    {
+      "id": "heading-d14ead2c08ff",
+      "title": "10.2 Old South Arabian",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-d14ead2c08ff"
+        ]
+      }
+    },
+    {
+      "id": "heading-b78c2297d7fe",
+      "title": "10.2.1 Old South Arabian: U+10A60–U+10A7F",
+      "level": 3,
+      "text_sha256": "0aff2f1bc010f135917fef832f2f65ad3cb9027013a6052c0aa0c6a9962e54c8",
+      "clause_count": 91,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-b78c2297d7fe",
+          "unicode17-chapter-10.heading-b78c2297d7fe-clause-e84bd4a942bd"
+        ]
+      }
+    },
+    {
+      "id": "heading-39dfaf253d8b",
+      "title": "10.3 Phoenician",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-39dfaf253d8b"
+        ]
+      }
+    },
+    {
+      "id": "heading-059ca5e1cb89",
+      "title": "10.3.1 Phoenician: U+10900–U+1091F",
+      "level": 3,
+      "text_sha256": "f829f5e6804d0f2c3d10ecdd660f25b922dac6782c85499d390374328240bb12",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-059ca5e1cb89",
+          "unicode17-chapter-10.heading-059ca5e1cb89-clause-5718d4086b12"
+        ]
+      }
+    },
+    {
+      "id": "heading-fca609e97594",
+      "title": "10.4 Imperial Aramaic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-fca609e97594"
+        ]
+      }
+    },
+    {
+      "id": "heading-28a19b833967",
+      "title": "10.4.1 Imperial Aramaic: U+10840–U+1085F",
+      "level": 3,
+      "text_sha256": "d485eb7cda875d76a2a93c227ab45fb3ffe9be5f904e0ed668ae5e193a0ddd8c",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-28a19b833967",
+          "unicode17-chapter-10.heading-28a19b833967-clause-4a808bc2a8bf"
+        ]
+      }
+    },
+    {
+      "id": "heading-895fc518d56c",
+      "title": "10.5 Manichaean",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-895fc518d56c"
+        ]
+      }
+    },
+    {
+      "id": "heading-dfaa48057fee",
+      "title": "10.5.1 Manichaean: U+10AC0–U+10AFF",
+      "level": 3,
+      "text_sha256": "e9f2526ad73f5f165085f4d35a40d91d81aaa3495656cfa928252d740d61e71f",
+      "clause_count": 153,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-dfaa48057fee",
+          "unicode17-chapter-10.heading-dfaa48057fee-clause-1cf2d7dabbad"
+        ]
+      }
+    },
+    {
+      "id": "heading-b703b48be61e",
+      "title": "10.6 Pahlavi and Parthian",
+      "level": 2,
+      "text_sha256": "8f444445e5c46b147fe7609981ab492e68b5c6bed319182308ad76f825ec2386",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-b703b48be61e"
+        ]
+      }
+    },
+    {
+      "id": "heading-dc3d600a7f63",
+      "title": "10.6.1 Inscriptional Parthian: U+10B40–U+10B5F",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-dc3d600a7f63"
+        ]
+      }
+    },
+    {
+      "id": "heading-a521ab1e595f",
+      "title": "Inscriptional Pahlavi: U+10B60–U+10B7F",
+      "level": 3,
+      "text_sha256": "3198b7dc8d51d75e5e64144d6e3ade6387a60818d67d37c1778465ddfacd3c62",
+      "clause_count": 78,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-a521ab1e595f",
+          "unicode17-chapter-10.heading-a521ab1e595f-clause-2b8e34e0f2a8"
+        ]
+      }
+    },
+    {
+      "id": "heading-3d68ef67e8e5",
+      "title": "10.6.2 Psalter Pahlavi: U+10B80–U+10BAF",
+      "level": 3,
+      "text_sha256": "fa02e34579d88010c7b04a3270a2e80447f4fdb17c62771c2ca67e8c6a09fd2f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-3d68ef67e8e5"
+        ]
+      }
+    },
+    {
+      "id": "heading-794c435dc126",
+      "title": "10.7 Avestan",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-794c435dc126"
+        ]
+      }
+    },
+    {
+      "id": "heading-cffb3a19bf29",
+      "title": "10.7.1 Avestan: U+10B00–U+10B3F",
+      "level": 3,
+      "text_sha256": "7dfe7e4ffd362afd5c5c3b4bbb7de346689cdbf1aee15b29e0aac6719ce4e7f1",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-cffb3a19bf29",
+          "unicode17-chapter-10.heading-cffb3a19bf29-clause-6063cd8cfd99"
+        ]
+      }
+    },
+    {
+      "id": "heading-a504e28383f5",
+      "title": "10.8 Chorasmian",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-a504e28383f5"
+        ]
+      }
+    },
+    {
+      "id": "heading-4e7b0399a5f9",
+      "title": "10.8.1 Chorasmian: U+10FB0–U+10FDF",
+      "level": 3,
+      "text_sha256": "c8e040fea52c6570ba2cbc9d80fd64446731ae599acd7632f130f4eba787b2b0",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-4e7b0399a5f9"
+        ]
+      }
+    },
+    {
+      "id": "heading-00aff0c76355",
+      "title": "10.9 Elymaic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-00aff0c76355"
+        ]
+      }
+    },
+    {
+      "id": "heading-8931632c6470",
+      "title": "10.9.1 Elymaic: U+10FE0–U+10FFF",
+      "level": 3,
+      "text_sha256": "c3dd1e80086e4ea24e1d631898bfddfc0c86b42fb7deb08dd4a3d613deec3573",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-8931632c6470",
+          "unicode17-chapter-10.heading-8931632c6470-clause-6066dafa7da7"
+        ]
+      }
+    },
+    {
+      "id": "heading-6932918e221c",
+      "title": "10.10 Nabataean",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-6932918e221c"
+        ]
+      }
+    },
+    {
+      "id": "heading-a276152577eb",
+      "title": "10.10.1 Nabataean: U+10880–U+108AF",
+      "level": 3,
+      "text_sha256": "c4572b006a5c20247e0a5e7661e1468f210035219ce199685cb1274d1d1620e0",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-a276152577eb",
+          "unicode17-chapter-10.heading-a276152577eb-clause-3c4069e4368d"
+        ]
+      }
+    },
+    {
+      "id": "heading-f7046c8e9b17",
+      "title": "10.11 Palmyrene",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-f7046c8e9b17"
+        ]
+      }
+    },
+    {
+      "id": "heading-5033be82e3bf",
+      "title": "10.11.1 Palmyrene: U+10860–U+1087F",
+      "level": 3,
+      "text_sha256": "bbb25f3b82c25e371a7634645e79b1190f944bdcc970ce37f2e906c56706014a",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-5033be82e3bf",
+          "unicode17-chapter-10.heading-5033be82e3bf-clause-09e15d56d447",
+          "unicode17-chapter-10.heading-5033be82e3bf-clause-92631f468d8f"
+        ]
+      }
+    },
+    {
+      "id": "heading-327be80025a4",
+      "title": "10.12 Hatran",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-327be80025a4"
+        ]
+      }
+    },
+    {
+      "id": "heading-18df03f2863a",
+      "title": "10.12.1 Hatran: U+108E0–U+108FF",
+      "level": 3,
+      "text_sha256": "22d020e1f4fa904c307bfa829830cb4ac12273cf4d8c4d2f64bb5bfc94af8142",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-10.heading-18df03f2863a",
+          "unicode17-chapter-10.heading-18df03f2863a-clause-a0a704da2e2a"
+        ]
+      }
+    }
+  ]
+}

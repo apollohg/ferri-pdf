@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode-tr50-tr50-22",
+  "sections": [
+    {
+      "id": "heading-e3919b348ded",
+      "title": "Unicode® Standard Annex #50",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.heading-e3919b348ded"
+        ]
+      }
+    },
+    {
+      "id": "heading-8295a4f49b64",
+      "title": "Unicode Vertical Text Layout",
+      "level": 1,
+      "text_sha256": "d7ec5824adcc0786175ad943bbff078f860d5928c7df63094346fd0bb178e64e",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.heading-8295a4f49b64"
+        ]
+      }
+    },
+    {
+      "id": "heading-562e5643bfd0",
+      "title": "Summary",
+      "level": 4,
+      "text_sha256": "b94856917f8713be0999e12fca8a6e4b47e79b9af3871c9de36a221a96dc2eac",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.heading-562e5643bfd0"
+        ]
+      }
+    },
+    {
+      "id": "heading-b67e4e63a5c4",
+      "title": "Status",
+      "level": 4,
+      "text_sha256": "969770954d10eb10c58c417e62f0aeb8ceca31b93e33871538ad4b7096754f2f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.heading-b67e4e63a5c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-35d8550f521f",
+      "title": "Contents",
+      "level": 4,
+      "text_sha256": "bb611fa2af504bbaebd17b12febc77af45ee6691de510593394239e2647c207b",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.heading-35d8550f521f"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "1 Overview and Scope",
+      "level": 2,
+      "text_sha256": "6ba9c630fd9ffa36fdc0048148aa9a1cf847caec85f763863f861a1aebf63114",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.overview",
+          "unicode-tr50-tr50-22.overview-clause-61bb690c2b88",
+          "unicode-tr50-tr50-22.overview-clause-2451fe3762b5",
+          "unicode-tr50-tr50-22.overview-clause-48ea4257abab"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "2 Conformance",
+      "level": 2,
+      "text_sha256": "fb487dfe1778b6ded03c156b04ad6a7b3c00c4501add39d88daedd5039ef0da3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.conformance"
+        ]
+      }
+    },
+    {
+      "id": "vo",
+      "title": "3 The Vertical_Orientation Property (vo)",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.vo"
+        ]
+      }
+    },
+    {
+      "id": "vo_values",
+      "title": "3.1 Property Values",
+      "level": 3,
+      "text_sha256": "8ff300b65f51a0dfa5ed25affaa03b696963f552d659c14e3d8e8bff9fb9282b",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.vo-values"
+        ]
+      }
+    },
+    {
+      "id": "grapheme_clusters",
+      "title": "3.2 Grapheme Clusters",
+      "level": 3,
+      "text_sha256": "7608665fd2d566889d139f01db7a29d137db9d0bd52d22507da8dc56fda8f7b0",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.grapheme-clusters",
+          "unicode-tr50-tr50-22.grapheme-clusters-clause-96f4bc8dcff6"
+        ]
+      }
+    },
+    {
+      "id": "code_charts",
+      "title": "3.3 Vertical Glyphs in the Code Charts",
+      "level": 3,
+      "text_sha256": "86b8965b371e2aebc6d76b758b88c3ea865431e7b8fa462873cd82330fb0fcbe",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.code-charts",
+          "unicode-tr50-tr50-22.code-charts-clause-02ce3dbf84b1",
+          "unicode-tr50-tr50-22.code-charts-clause-7c2dd5093ad9"
+        ]
+      }
+    },
+    {
+      "id": "vertical_alternates",
+      "title": "4 Glyphs Changes for Vertical Orientation",
+      "level": 2,
+      "text_sha256": "75b8f527631ff52f71c155b376f935c0befabc1f1323e562deed81c3f90175b4",
+      "clause_count": 201,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.vertical-alternates",
+          "unicode-tr50-tr50-22.vertical-alternates-clause-4e277724f31e",
+          "unicode-tr50-tr50-22.vertical-alternates-clause-27296ad981fe"
+        ]
+      }
+    },
+    {
+      "id": "data",
+      "title": "5 Data File",
+      "level": 2,
+      "text_sha256": "485c37243313fb1aa273b8da6f710f29ec777533bfa31abb3e8b3848bfb3dd7e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.data"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "80161c3d60cb2a49e51ce613336da8523a593318783b452cec590cb351e59d1a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "References",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "8e262b530dd9dea23efac0eca37ae00f8a40d4b1be2872783d65ad768734b47a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.references"
+        ]
+      }
+    },
+    {
+      "id": "Modifications",
+      "title": "Modifications",
+      "level": 2,
+      "text_sha256": "63d36091034ae4dea87543b3fa4fda9883f4b582d042f09153290a4ae900e7b7",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr50-tr50-22.modifications"
+        ]
+      }
+    }
+  ]
+}

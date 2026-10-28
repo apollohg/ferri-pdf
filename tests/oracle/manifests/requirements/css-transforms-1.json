@@ -1,0 +1,669 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-transforms-1.heading-4f99dc0e1f31",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "heading-4f99dc0e1f31"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS 2D Transforms Module Level 3.",
+      "locator": {
+        "section_id": "heading-4f99dc0e1f31",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.longstatus-date",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "longstatus-date"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Working Draft 20 March 2009.",
+      "locator": {
+        "section_id": "longstatus-date",
+        "text_sha256": "ff760c082fe01aa89f3360d2fe4cc2703922d04603abfe32bc6395a1a18f083a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.transform-property",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "transform-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2 The ‘transform’ Property.",
+      "locator": {
+        "section_id": "transform-property",
+        "text_sha256": "d398874a9f7d66a8c07cbd41684394ae8af1659341dc5967ad14d79c205ba8d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-transforms-1.transform-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.transform-property-clause-cca2516ebb1d",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "transform-property"
+      ],
+      "behaviour": "2 The ‘transform’ Property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "transform-property",
+        "clause_index": 15,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-transforms-1.transform-origin-property",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "transform-origin-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 3 The ‘transform-origin’ Property.",
+      "locator": {
+        "section_id": "transform-origin-property",
+        "text_sha256": "bec5d3119e8ec6be4a98cc1fa2f6b52cdd73a4f397c34f6181be512e922c0c22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-transforms-1.transform-origin-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.transform-origin-property-clause-cca2516ebb1d",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "transform-origin-property"
+      ],
+      "behaviour": "3 The ‘transform-origin’ Property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "transform-origin-property",
+        "clause_index": 15,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-transforms-1.transform-functions",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "transform-functions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 4 The Transformation Functions.",
+      "locator": {
+        "section_id": "transform-functions",
+        "text_sha256": "447cb35f50794f15ebe85f9abdf1c5c22ae7dc8aac7d1875437f5a8612fe99d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.transform-values",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "transform-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 5 Transform Values and Lists.",
+      "locator": {
+        "section_id": "transform-values",
+        "text_sha256": "122c24b748ed5745cc31841ee45f407fd071d34b573ce21e888102310e6d0d50"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.animation",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "animation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 6 Transitions and animations between transform values.",
+      "locator": {
+        "section_id": "animation",
+        "text_sha256": "40f59fed31617f004a7c55fd240ee09ea4f6f533aa8d548c09a9e439690a4c91"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.dom-interfaces",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "dom-interfaces"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 7 DOM Interfaces.",
+      "locator": {
+        "section_id": "dom-interfaces",
+        "text_sha256": "6706415e9b457d9c3eab59c1bcfa1454ecfb1972c91423e7bc1af9db21d7e16c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.point-interface",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "point-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Point.",
+      "locator": {
+        "section_id": "point-interface",
+        "text_sha256": "a0b086eb941ee5e94e5839f7061033a512e0176c19b4390d0371d9fd7b076109"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.window-interface",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "window-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Window.",
+      "locator": {
+        "section_id": "window-interface",
+        "text_sha256": "91b404d7c6701b6954159e54706eca6ee0ed0b151a57eac9d5779709384bb99c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-transforms-1.window-interface-clause-5905d41a1c67",
+        "css-transforms-1.window-interface-clause-7f2df2833d4d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.window-interface-clause-5905d41a1c67",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "window-interface"
+      ],
+      "behaviour": "Window — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "window-interface",
+        "clause_index": 12,
+        "clause_sha256": "5905d41a1c67e3173d2223436d5b080d2062a7d6c41307940b45c89a933abade"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-transforms-1.window-interface-clause-7f2df2833d4d",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "window-interface"
+      ],
+      "behaviour": "Window — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "window-interface",
+        "clause_index": 20,
+        "clause_sha256": "7f2df2833d4d9c5bee3be5b887344c8b4a4e8720bdcc16baa6f9d76d86347c6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-transforms-1.cssmatrix-interface",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "cssmatrix-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSMatrix.",
+      "locator": {
+        "section_id": "cssmatrix-interface",
+        "text_sha256": "73c3d639304a910f2c5dcb04baae8f2be0c8abf8fc776dd54fc44c75fe873c27"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-transforms-1.cssmatrix-interface-clause-b3e377ead1e7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.cssmatrix-interface-clause-b3e377ead1e7",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "cssmatrix-interface"
+      ],
+      "behaviour": "CSSMatrix — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "cssmatrix-interface",
+        "clause_index": 11,
+        "clause_sha256": "b3e377ead1e75ff19c42696e81ad5d806d830429bbe64557dbd0c54c78f1142e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-transforms-1.csstransformvalue-interface",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "csstransformvalue-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSTransformValue.",
+      "locator": {
+        "section_id": "csstransformvalue-interface",
+        "text_sha256": "f2fab1a10ece525c04fc3a0445f7b7014bd3059f76f9eeca18b6aebfdb8f467e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.other-references",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "other-references"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Other references.",
+      "locator": {
+        "section_id": "other-references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.property-index",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "bc69305042c7fd3f3255afc98aa3e7ed59dc86f1c36985ce5563400ffbfc1dc4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.abstract",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "46e2bae9e9e37d45f3b5a256eb24ee92fc51a808f571fb1e6f4f2af069325743"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.status",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "72850b721cbf43d39f6300c3def59a3024e317fc54fcc805da6eec82dce46add"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.contents",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "983aee859bd7f2c1f6b11f9f65996061615432fd6aa618881faa02dd82a3f6e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.introduction",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1 Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "353d572eadc47110e2eacbb5005e3416072f4600a46a8c59a8c9cf13e9092680"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.references",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8 References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.normative-references",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "normative-references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative references.",
+      "locator": {
+        "section_id": "normative-references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-transforms-1.index",
+      "family": "css-transforms-1",
+      "source_id": "css-transforms-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "149de4af8ad618ff8f1ee4ad4b8b5940a739e7e363c445b34fbe58f03af30ce7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

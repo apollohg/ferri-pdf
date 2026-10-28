@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-1",
+  "sections": [
+    {
+      "id": "G7252",
+      "title": "Introduction",
+      "level": 1,
+      "text_sha256": "96f65e476b55395530222c04f4fbdfac37c4a980f962a6e7d08205db4302f6ef",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-1.g7252",
+          "unicode17-chapter-1.g7252-clause-6bcaa23d71e3",
+          "unicode17-chapter-1.g7252-clause-1de78747a409",
+          "unicode17-chapter-1.g7252-clause-36126eb6a427"
+        ]
+      }
+    },
+    {
+      "id": "heading-62785d654f34",
+      "title": "1.1 Coverage",
+      "level": 2,
+      "text_sha256": "ac5499adb2dba437f741ee13bb71a260c33ab777dbb6a50f7fb7c21f141cd881",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-1.heading-62785d654f34",
+          "unicode17-chapter-1.heading-62785d654f34-clause-791ee535c598"
+        ]
+      }
+    },
+    {
+      "id": "heading-b3e203c9e9d3",
+      "title": "1.1.1 Standards Coverage",
+      "level": 3,
+      "text_sha256": "0df535cb89787b723525ec78d740e6f4035e00dd74f108992fe44be4d7a7f0b6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-1.heading-b3e203c9e9d3"
+        ]
+      }
+    },
+    {
+      "id": "heading-2cd2a6ad47ef",
+      "title": "1.1.2 New Characters",
+      "level": 3,
+      "text_sha256": "7758d5d28d641a2084ca8beef02409d81990d42d41dc643c32eb85e2ebd74b00",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-1.heading-2cd2a6ad47ef"
+        ]
+      }
+    },
+    {
+      "id": "heading-5d08a4fac945",
+      "title": "1.2 Design Goals",
+      "level": 2,
+      "text_sha256": "ba8bf08453dd1a0e83951eb86a6418e6907d0956cd7ab49bc4fe198d32d78532",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-1.heading-5d08a4fac945",
+          "unicode17-chapter-1.heading-5d08a4fac945-clause-fe92c61065eb"
+        ]
+      }
+    },
+    {
+      "id": "heading-35e03269dc86",
+      "title": "1.3 Text Handling",
+      "level": 2,
+      "text_sha256": "34cc66ca5c829885a6199f78bd7e0f2f2d1dd7fa50fd284a30027309a0b5fc01",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-1.heading-35e03269dc86"
+        ]
+      }
+    },
+    {
+      "id": "heading-d2a9af0b2a2f",
+      "title": "1.3.1 Characters and Glyphs",
+      "level": 3,
+      "text_sha256": "cf997c3d09c90f72ae59055802a4d5ce86892cb91d705eb943197560cbca8df6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-1.heading-d2a9af0b2a2f"
+        ]
+      }
+    },
+    {
+      "id": "heading-56004d103db9",
+      "title": "1.3.2 Text Elements",
+      "level": 3,
+      "text_sha256": "acf52f0fff24c023ee50acefa76d1b57cf2c7188908ca3752fdc4eaa1504f69d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-1.heading-56004d103db9"
+        ]
+      }
+    }
+  ]
+}

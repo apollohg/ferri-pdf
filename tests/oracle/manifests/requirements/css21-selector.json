@@ -1,0 +1,1345 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-selector.q5-0",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "q5.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 5 Selectors.",
+      "locator": {
+        "section_id": "q5.0",
+        "text_sha256": "978bfcac613271a6304026cc40eb8baf6ecc5f28c0ecc08e9016fadc6634b019"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.pattern-matching",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "pattern-matching"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pattern matching.",
+      "locator": {
+        "section_id": "pattern-matching",
+        "text_sha256": "f2d23a1c9d5a2fd3eb6e9a3a89b0e20ca238c178936d59a5d5a87d425c6105da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.selector-syntax",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "selector-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selector syntax.",
+      "locator": {
+        "section_id": "selector-syntax",
+        "text_sha256": "7e9db92c78ce588c1d83a7a59d0d4b47bc94db73843a72527f91e753765028f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.grouping",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "grouping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grouping.",
+      "locator": {
+        "section_id": "grouping",
+        "text_sha256": "f3aab0705783e25c987b01bd828b1a844a5fdef84323783288e6e15adced767c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.universal-selector",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "universal-selector"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Universal selector.",
+      "locator": {
+        "section_id": "universal-selector",
+        "text_sha256": "e088e0845665914bfb1d6360a649e93c4506a929d367c2401ebd79745aad8e86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.type-selectors",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "type-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Type selectors.",
+      "locator": {
+        "section_id": "type-selectors",
+        "text_sha256": "681711d8813f693cc96039f9bf038d711f835db3f7e10131c1bda51cef508aa6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.descendant-selectors",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "descendant-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Descendant selectors.",
+      "locator": {
+        "section_id": "descendant-selectors",
+        "text_sha256": "0279d8b3c238c2ea163050705da6fef22ddeacbe3804b9285d6f2515fa7bff97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-selector.descendant-selectors-clause-848fcf3e38cc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.descendant-selectors-clause-848fcf3e38cc",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "descendant-selectors"
+      ],
+      "behaviour": "Descendant selectors — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "descendant-selectors",
+        "clause_index": 13,
+        "clause_sha256": "848fcf3e38ccc5344f0ba9122e968a5de0dde7fd4de934c89955c8ed01052bfc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.child-selectors",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "child-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Child selectors.",
+      "locator": {
+        "section_id": "child-selectors",
+        "text_sha256": "aca3e05945aa546539bb1df8ee7d7ecb739736bd9a8acdd542c23f36dc264b64"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-selector.child-selectors-clause-2e93f4ef527a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.child-selectors-clause-2e93f4ef527a",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "child-selectors"
+      ],
+      "behaviour": "Child selectors — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "child-selectors",
+        "clause_index": 7,
+        "clause_sha256": "2e93f4ef527a081611f4a2a7c8eff2d664fd5f1ba9ecf4f6a2174149b2d15b8b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.adjacent-selectors",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "adjacent-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Adjacent sibling selectors.",
+      "locator": {
+        "section_id": "adjacent-selectors",
+        "text_sha256": "34cc119b4e7a893088c0dc09763343389009cec3e5eaf2e1d88d8529e3bcae29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-selector.adjacent-selectors-clause-518339952fa8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.adjacent-selectors-clause-518339952fa8",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "adjacent-selectors"
+      ],
+      "behaviour": "Adjacent sibling selectors — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "adjacent-selectors",
+        "clause_index": 2,
+        "clause_sha256": "518339952fa86f032b691ebfe5a786f22fac81cb9301d35e1c74ce5135f66c69"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.attribute-selectors",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "attribute-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Attribute selectors.",
+      "locator": {
+        "section_id": "attribute-selectors",
+        "text_sha256": "ad04995e3eec8cd6f4a6cf476502bb695fd982a0633ca9c8b7ec508e049ee3de"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.matching-attrs",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "matching-attrs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Matching attributes and attribute values.",
+      "locator": {
+        "section_id": "matching-attrs",
+        "text_sha256": "6ebb13194da0533ff20261151498c26205e2220eb055d2cc68e3d7604b8ac9df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-selector.matching-attrs-clause-0d36c82e0022",
+        "css21-selector.matching-attrs-clause-ec8184ce7cf3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.matching-attrs-clause-0d36c82e0022",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "matching-attrs"
+      ],
+      "behaviour": "Matching attributes and attribute values — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-attrs",
+        "clause_index": 8,
+        "clause_sha256": "0d36c82e00222328fcefdcc5fd663582725ebe22ddf3d75be5fdb1162ff9a062"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.matching-attrs-clause-ec8184ce7cf3",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "matching-attrs"
+      ],
+      "behaviour": "Matching attributes and attribute values — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "matching-attrs",
+        "clause_index": 31,
+        "clause_sha256": "ec8184ce7cf33dc21d25ca7986763809c7531aebed17358b77d03ae8f203fa28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.default-attrs",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "default-attrs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default attribute values in DTDs.",
+      "locator": {
+        "section_id": "default-attrs",
+        "text_sha256": "e9989794d018b3437a4d60013f203aec2f94dc7f0a06255d3a27635d0d5105a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-selector.default-attrs-clause-7bcbc1f03fb7",
+        "css21-selector.default-attrs-clause-33ab6d15f77a",
+        "css21-selector.default-attrs-clause-c5b2fe4ca57e",
+        "css21-selector.default-attrs-clause-6b98688c3b4b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.default-attrs-clause-7bcbc1f03fb7",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "default-attrs"
+      ],
+      "behaviour": "Default attribute values in DTDs — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "default-attrs",
+        "clause_index": 0,
+        "clause_sha256": "7bcbc1f03fb7ff91bc1f9f7937bd6dccffc8e07fd451dfa2b0766eab856511a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.default-attrs-clause-33ab6d15f77a",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "default-attrs"
+      ],
+      "behaviour": "Default attribute values in DTDs — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "default-attrs",
+        "clause_index": 1,
+        "clause_sha256": "33ab6d15f77a82e038f7c99cad402ce923941405b9d2b0cc81fa20a3a4f0e82c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.default-attrs-clause-c5b2fe4ca57e",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "default-attrs"
+      ],
+      "behaviour": "Default attribute values in DTDs — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "default-attrs",
+        "clause_index": 2,
+        "clause_sha256": "c5b2fe4ca57ee8492d4013c5e9b215e912712b7bf577e8622d29368cc54c59fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.default-attrs-clause-6b98688c3b4b",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "default-attrs"
+      ],
+      "behaviour": "Default attribute values in DTDs — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "default-attrs",
+        "clause_index": 10,
+        "clause_sha256": "6b98688c3b4b51cf914d5aec0b4fa442dbbb32355b28e8308e52a3bb440504e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.class-html",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "class-html"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Class selectors.",
+      "locator": {
+        "section_id": "class-html",
+        "text_sha256": "b57e1466874d5cc44ae1372e5dbb70c08911059185312b0d1f60bf3055ba6df4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-selector.class-html-clause-725c3dca4ee0",
+        "css21-selector.class-html-clause-126715da67ef",
+        "css21-selector.class-html-clause-a1d6344c08b6",
+        "css21-selector.class-html-clause-6ae4b06586cc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.class-html-clause-725c3dca4ee0",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "class-html"
+      ],
+      "behaviour": "Class selectors — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "class-html",
+        "clause_index": 0,
+        "clause_sha256": "725c3dca4ee082a920a31c9009e6d07a04b43f4c7c969b9d5e5b86f6319132f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.class-html-clause-126715da67ef",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "class-html"
+      ],
+      "behaviour": "Class selectors — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "class-html",
+        "clause_index": 9,
+        "clause_sha256": "126715da67ef69bfe015a706abd97eb4ea4df9e52254cd67e8cfa912b7a43cf7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.class-html-clause-a1d6344c08b6",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "class-html"
+      ],
+      "behaviour": "Class selectors — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "class-html",
+        "clause_index": 14,
+        "clause_sha256": "a1d6344c08b6162925ca48d7943a0740868667ca9ab63720f3090d1c26cc0035"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.class-html-clause-6ae4b06586cc",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "class-html"
+      ],
+      "behaviour": "Class selectors — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "class-html",
+        "clause_index": 15,
+        "clause_sha256": "6ae4b06586cc204138fdc71473c9595edbb3ea8e913464d0fe4e3c534fabd7be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.id-selectors",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "id-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ID selectors.",
+      "locator": {
+        "section_id": "id-selectors",
+        "text_sha256": "43e741cff56e4c9ab5ccb2c19be7f11284397747c70326e3966f2febbb07c328"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-selector.id-selectors-clause-f9ca00e2588b",
+        "css21-selector.id-selectors-clause-d3034bf69d72",
+        "css21-selector.id-selectors-clause-0bde02170d4b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.id-selectors-clause-f9ca00e2588b",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "id-selectors"
+      ],
+      "behaviour": "ID selectors — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "id-selectors",
+        "clause_index": 1,
+        "clause_sha256": "f9ca00e2588bad1cbd43ccac252401c3a102c96857cfdf16ace3f6129e57a540"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.id-selectors-clause-d3034bf69d72",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "id-selectors"
+      ],
+      "behaviour": "ID selectors — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "id-selectors",
+        "clause_index": 11,
+        "clause_sha256": "d3034bf69d7275cd6c7bcc36116ccc9c35730146d1f8ccc9e852bf9351219a13"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.id-selectors-clause-0bde02170d4b",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "id-selectors"
+      ],
+      "behaviour": "ID selectors — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "id-selectors",
+        "clause_index": 12,
+        "clause_sha256": "0bde02170d4bea26530dc0927384640533c3348d18aca88fc876faa1cbcd1b82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.pseudo-classes",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "pseudo-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pseudo-elements and pseudo-classes.",
+      "locator": {
+        "section_id": "pseudo-classes",
+        "text_sha256": "fe7c736781a783569a2b36050954acfe0d64450e22e00c0a9305627cbc5fe7e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.pseudo-class-selectors",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "pseudo-class-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pseudo-classes.",
+      "locator": {
+        "section_id": "pseudo-class-selectors",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.first-child",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "first-child"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :first-child pseudo-class.",
+      "locator": {
+        "section_id": "first-child",
+        "text_sha256": "238bc5e99f246627b496ecf3e2acaea780a67ad72608f094dad479116332bf10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.x29",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x29"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The link pseudo-classes: :link and :visited.",
+      "locator": {
+        "section_id": "x29",
+        "text_sha256": "802b0454c7b4191a2bff05cfabe04849aa3968a1637e6629e25acbdde8734e71"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.x38",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x38"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The dynamic pseudo-classes: :hover, :active, and :focus.",
+      "locator": {
+        "section_id": "x38",
+        "text_sha256": "c1c7abfde78aa11da0324cce0e02f7b89543ac3abc89789b54c7780ecc6b99cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-selector.x38-clause-928d4686a2f5",
+        "css21-selector.x38-clause-655362df0d75"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.x38-clause-928d4686a2f5",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x38"
+      ],
+      "behaviour": "The dynamic pseudo-classes: :hover, :active, and :focus — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "x38",
+        "clause_index": 7,
+        "clause_sha256": "928d4686a2f5030750b5acf708210124013eb6fbffb1c475dbdc1a627bedf063"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.x38-clause-655362df0d75",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x38"
+      ],
+      "behaviour": "The dynamic pseudo-classes: :hover, :active, and :focus — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "x38",
+        "clause_index": 10,
+        "clause_sha256": "655362df0d75b1e980b6d54032fbaa0e8bac92c1581c738f90b0fa8299fcef8a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.x41",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x41"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The language pseudo-class: :lang.",
+      "locator": {
+        "section_id": "x41",
+        "text_sha256": "fcb0b620218fe7347777b47c29a7c1c0d3f84f61121933da00ac7b93d39d1bbb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-selector.x41-clause-d5d4bfeec145"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.x41-clause-d5d4bfeec145",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x41"
+      ],
+      "behaviour": "The language pseudo-class: :lang — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "x41",
+        "clause_index": 2,
+        "clause_sha256": "d5d4bfeec14514ab9ef33f96c7ecd17b688cf62f0f58b86eab5a81ee7661a17f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.pseudo-element-selectors",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "pseudo-element-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pseudo-elements.",
+      "locator": {
+        "section_id": "pseudo-element-selectors",
+        "text_sha256": "664fac7171e8b1bafe7a1205fc2562915fe5f00b1484e5c3c87fc2919d39f9bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.first-line-pseudo",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "first-line-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The :first-line pseudo-element.",
+      "locator": {
+        "section_id": "first-line-pseudo",
+        "text_sha256": "4ac6efc3bc67e996d9e24a94c6a1f221b11fe24c9046c2cbf388adef25964868"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-selector.first-line-pseudo-clause-033785cf8cdc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.first-line-pseudo-clause-033785cf8cdc",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "first-line-pseudo"
+      ],
+      "behaviour": "The :first-line pseudo-element — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "first-line-pseudo",
+        "clause_index": 17,
+        "clause_sha256": "033785cf8cdc4827cd1e3f73f9a64e1bdc379c0367ab8fb18e02b560ff119e29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.x50",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x50"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The :first-letter pseudo-element.",
+      "locator": {
+        "section_id": "x50",
+        "text_sha256": "d5dad3b8d76f4db34db2d4ce76bcdfdef9ad19182dd22061865e3e23cd0c9af9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-selector.x50-clause-2352550e3c00",
+        "css21-selector.x50-clause-3b342870de63",
+        "css21-selector.x50-clause-89c9cdb6f05c",
+        "css21-selector.x50-clause-5c04a0de00af",
+        "css21-selector.x50-clause-2ac572429d25",
+        "css21-selector.x50-clause-0ff546506f1b",
+        "css21-selector.x50-clause-bdd96ec0d016"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-selector.x50-clause-2352550e3c00",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x50"
+      ],
+      "behaviour": "The :first-letter pseudo-element — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "x50",
+        "clause_index": 0,
+        "clause_sha256": "2352550e3c008e559fc8f08667014cd8d86cc8f370aed141d5bbd251a988cfe0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.x50-clause-3b342870de63",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x50"
+      ],
+      "behaviour": "The :first-letter pseudo-element — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "x50",
+        "clause_index": 1,
+        "clause_sha256": "3b342870de63a3b0bdbf704e2e1fb5470a943bde4b4c1007d8ba718358e89702"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.x50-clause-89c9cdb6f05c",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x50"
+      ],
+      "behaviour": "The :first-letter pseudo-element — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "x50",
+        "clause_index": 2,
+        "clause_sha256": "89c9cdb6f05cddd18902348ee3d1f89576cddc887da7b53ccc2923aa9c4e11c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.x50-clause-5c04a0de00af",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x50"
+      ],
+      "behaviour": "The :first-letter pseudo-element — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "x50",
+        "clause_index": 12,
+        "clause_sha256": "5c04a0de00afd41c4d39e1cf5649bf4cc08c34d94ef24a0488fd967d9c5875be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.x50-clause-2ac572429d25",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x50"
+      ],
+      "behaviour": "The :first-letter pseudo-element — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "x50",
+        "clause_index": 16,
+        "clause_sha256": "2ac572429d252a48ed44ff667b07b95bdedb9b1a895e86befe3837eaf80d3cfa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.x50-clause-0ff546506f1b",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x50"
+      ],
+      "behaviour": "The :first-letter pseudo-element — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "x50",
+        "clause_index": 23,
+        "clause_sha256": "0ff546506f1b7790c7852ac906f3a64edd697772ac5811afff04631cd5a6d2ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.x50-clause-bdd96ec0d016",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x50"
+      ],
+      "behaviour": "The :first-letter pseudo-element — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "x50",
+        "clause_index": 26,
+        "clause_sha256": "bdd96ec0d01671c839a7409275dd09ce2b881585c0a97dacfef0e055c7aaa7d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-selector.x59",
+      "family": "css21-selector",
+      "source_id": "css21-selector",
+      "sections": [
+        "x59"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The :before and :after pseudo-elements.",
+      "locator": {
+        "section_id": "x59",
+        "text_sha256": "cd57651a34dd25efc78ffb39899a31564cd8a349df3e3139551f299b20b07eb3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

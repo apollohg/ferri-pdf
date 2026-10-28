@@ -1,0 +1,866 @@
+{
+  "schema_version": 1,
+  "source_id": "css-conditional-5",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Conditional Rules Module Level 5",
+      "level": 1,
+      "text_sha256": "b18805e3769eab24990bded0a09b77d2a72d0f2f8f6442b77d89d80463603fef",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "270ec5e56e0612f2dc877242031b096703fbfa3ca85877b74c7983f42caf550f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "984cbfd79a315fd67d49ea86496d2e298f014fd50127fdb3f0528b97064ef85f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "73d7c0a6c59d7ac929550de7a936a82ad3bf42ee64723935c3ccad5f4fcff7dd",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "ae226699225a994ea248a6e2ab0989b9aae8b3a82ae7032e405ee216c6e01198",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.introduction",
+          "css-conditional-5.introduction-clause-5d96120a5568",
+          "css-conditional-5.introduction-clause-6ff6ece39a27"
+        ]
+      }
+    },
+    {
+      "id": "at-supports-ext",
+      "title": "2. Extensions to the @supports rule",
+      "level": 2,
+      "text_sha256": "334cb6b23864df6418ec94e419969a5c97d839f6eb405933b3af087a3f7bb934",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.at-supports-ext",
+          "css-conditional-5.foundation-extended-support"
+        ]
+      }
+    },
+    {
+      "id": "support-definition-ext",
+      "title": "2.1. Extensions to the definition of support",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.support-definition-ext"
+        ]
+      }
+    },
+    {
+      "id": "support-definition-ext-fonts",
+      "title": "2.1.1. Font techs and formats",
+      "level": 4,
+      "text_sha256": "c71df90a57cb3d1fa88cfa99e82e9dcc42cce329180ca0e1354a9b2072f09cb6",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.support-definition-ext-fonts",
+          "css-conditional-5.foundation-extended-support"
+        ]
+      }
+    },
+    {
+      "id": "support-definition-at-rules",
+      "title": "2.1.2. At-rules",
+      "level": 4,
+      "text_sha256": "d43a4f8c9e26b0d6c7d5b7bd99f54e973fd3e1770ab39509e34b1d892a02e738",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.support-definition-at-rules",
+          "css-conditional-5.foundation-extended-support"
+        ]
+      }
+    },
+    {
+      "id": "support-definition-supports-condition-name",
+      "title": "2.1.3. Named conditions",
+      "level": 4,
+      "text_sha256": "3b3e5c66a226d379e23909c2c6bb95218ab7dbb2a4b4c7aa6efc5cf230379f40",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.support-definition-supports-condition-name",
+          "css-conditional-5.foundation-extended-support"
+        ]
+      }
+    },
+    {
+      "id": "when-rule",
+      "title": "3. Generalized Conditional Rules: the @when rule",
+      "level": 2,
+      "text_sha256": "933806900ba8b54607b4b46717ab52b0b2298d685a1b210d9523626953f0b2dd",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.when-rule",
+          "css-conditional-5.foundation-when-else"
+        ]
+      }
+    },
+    {
+      "id": "else-rule",
+      "title": "4. Chained Conditionals: the @else rule",
+      "level": 2,
+      "text_sha256": "1eb6c66119c86c0e5fe407e91af8ce1da6a633971f1f61d8235a7a448ad58a32",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.else-rule",
+          "css-conditional-5.else-rule-clause-6239f7e2df86",
+          "css-conditional-5.else-rule-clause-3f967518e598",
+          "css-conditional-5.foundation-when-else"
+        ]
+      }
+    },
+    {
+      "id": "container-queries",
+      "title": "5. Container Queries",
+      "level": 2,
+      "text_sha256": "af452653afea1bc34caf2e8ba386af8ac36b2300b5314d6fa57a68641429044a",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.container-queries",
+          "css-conditional-5.container-queries-clause-ea046358660c"
+        ]
+      }
+    },
+    {
+      "id": "container-type",
+      "title": "5.1. Creating Query Containers: the container-type property",
+      "level": 3,
+      "text_sha256": "0a8efd8b6c2eceb6fa834ce962e05f2bf88f95e886f55ac2f23f111d1a6c69bc",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.container-type",
+          "css-conditional-5.container-type-clause-cca2516ebb1d",
+          "css-conditional-5.container-type-clause-35c333aac452",
+          "css-conditional-5.container-type-clause-6febf8d01cff",
+          "css-conditional-5.container-type-clause-8ad55bc4df47"
+        ]
+      }
+    },
+    {
+      "id": "container-name",
+      "title": "5.2. Naming Query Containers: the container-name property",
+      "level": 3,
+      "text_sha256": "e828ebe23d2260bbf542123f8b320678f3a00b7ca31371eeb923cbf5f36eaea8",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.container-name",
+          "css-conditional-5.container-name-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "container-shorthand",
+      "title": "5.3. Creating Named Containers: the container shorthand",
+      "level": 3,
+      "text_sha256": "43085fc07780dddab078bc485652dca3b2bf771c212d2c9a23648aa7f03beee9",
+      "clause_count": 263,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.container-shorthand",
+          "css-conditional-5.container-shorthand-clause-cca2516ebb1d",
+          "css-conditional-5.container-shorthand-clause-9b63b2ac06d1",
+          "css-conditional-5.container-shorthand-clause-4ae87d9bcb05",
+          "css-conditional-5.container-shorthand-clause-f5f1f6c13dec",
+          "css-conditional-5.container-shorthand-clause-b00e38a6a80c",
+          "css-conditional-5.container-shorthand-clause-74b597bdf272",
+          "css-conditional-5.container-shorthand-clause-37bc96388b3e"
+        ]
+      }
+    },
+    {
+      "id": "container-rule",
+      "title": "5.4. Container Queries: the @container rule",
+      "level": 3,
+      "text_sha256": "fb9328610d91da1cedb171f3c2e9faa8f0d05592ccb474047e80ba5de522aaf2",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.container-rule"
+        ]
+      }
+    },
+    {
+      "id": "animated-containers",
+      "title": "5.5. Animated Containers",
+      "level": 3,
+      "text_sha256": "1cb3eeb59136bd96b295a6c3efb27fa29ad28dbbd1b331bf90ff8130f841759b",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.animated-containers",
+          "css-conditional-5.animated-containers-clause-69fd3e9ba662",
+          "css-conditional-5.animated-containers-clause-a740ad31d057",
+          "css-conditional-5.animated-containers-clause-57b56feccf62"
+        ]
+      }
+    },
+    {
+      "id": "container-features",
+      "title": "6. Container Features",
+      "level": 2,
+      "text_sha256": "736ee8ff7b6c94e4d9303f0f2881e276cd37dee2135de96cfbd6bfaeac9e1401",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.container-features"
+        ]
+      }
+    },
+    {
+      "id": "size-container",
+      "title": "6.1. Size Container Features",
+      "level": 3,
+      "text_sha256": "56ff7df4d9bf85fef9044bbea5d65cdf626b804e9ba777d23a28efde202bcfc3",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.size-container",
+          "css-conditional-5.size-container-clause-d431d6a49435",
+          "css-conditional-5.size-container-clause-5a2330bf9aab",
+          "css-conditional-5.size-container-clause-9f66896c32bb",
+          "css-conditional-5.size-container-clause-e0e23b69888e"
+        ]
+      }
+    },
+    {
+      "id": "width",
+      "title": "6.1.1. Width: the width feature",
+      "level": 4,
+      "text_sha256": "63390965ea2558edaa652583db6626716a46039bbfd59c15a42216ba69a0f9d1",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.width"
+        ]
+      }
+    },
+    {
+      "id": "height",
+      "title": "6.1.2. Height: the height feature",
+      "level": 4,
+      "text_sha256": "dd480e09fb511ba30818bf771d99b2f342687f48433b9639bea3593498498ea1",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.height"
+        ]
+      }
+    },
+    {
+      "id": "inline-size",
+      "title": "6.1.3. Inline-size: the inline-size feature",
+      "level": 4,
+      "text_sha256": "daf22890ab8218d05c4b58282cd1770ee0664fd2ccb01f601b40f5197473e1ec",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.inline-size"
+        ]
+      }
+    },
+    {
+      "id": "block-size",
+      "title": "6.1.4. Block-size: the block-size feature",
+      "level": 4,
+      "text_sha256": "f01f1143ad2a3a8ef08923546a53ea79e184ec7b1c64bd09a95435b4e60dbc94",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.block-size"
+        ]
+      }
+    },
+    {
+      "id": "aspect-ratio",
+      "title": "6.1.5. Aspect-ratio: the aspect-ratio feature",
+      "level": 4,
+      "text_sha256": "9021e8ccec9d2e9345825d8a57e1e64f0e99f64d9fa3836aa6ad69f826cf5b9e",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.aspect-ratio"
+        ]
+      }
+    },
+    {
+      "id": "orientation",
+      "title": "6.1.6. Orientation: the orientation feature",
+      "level": 4,
+      "text_sha256": "ad8e7dd854bc2c8615da223df68cb8ec5acb40db6234915c6772689b83600e8b",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.orientation"
+        ]
+      }
+    },
+    {
+      "id": "style-container",
+      "title": "6.2. Style Container Features",
+      "level": 3,
+      "text_sha256": "51a6af874317836cd8e5bfd89e58d99ea2291a2ec8fcb480f5f324c7c60adc44",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.style-container",
+          "css-conditional-5.style-container-clause-98b44313b55d",
+          "css-conditional-5.style-container-clause-059422e8855b",
+          "css-conditional-5.style-container-clause-b82487e4bd8b",
+          "css-conditional-5.style-container-clause-d9651b518765",
+          "css-conditional-5.style-container-clause-2c8f45262fcc",
+          "css-conditional-5.style-container-clause-2f33ded5a960",
+          "css-conditional-5.style-container-clause-3f42f5e289a6"
+        ]
+      }
+    },
+    {
+      "id": "scroll-state-container",
+      "title": "6.3. Scroll State Container Features",
+      "level": 3,
+      "text_sha256": "07e550325267897e3315d7f35bf6c976246eada950894718d75d2d40e16d82a5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.scroll-state-container"
+        ]
+      }
+    },
+    {
+      "id": "updating-scroll-state",
+      "title": "6.3.1. Updating Scroll State",
+      "level": 4,
+      "text_sha256": "cfd29c921a897ed8ad73d6d3a851677fd99ffe244b302e5ea2d841ec52534a89",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.updating-scroll-state"
+        ]
+      }
+    },
+    {
+      "id": "stuck",
+      "title": "6.3.2. Sticky positioning: the stuck feature",
+      "level": 4,
+      "text_sha256": "c74bce02e4f3d2d66005907dca4364cc7cb55a45f03417ca5f624d70a3365d1a",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.stuck"
+        ]
+      }
+    },
+    {
+      "id": "snapped",
+      "title": "6.3.3. Scroll snapping: the snapped feature",
+      "level": 4,
+      "text_sha256": "5482ecec0cfbe047399db4316691ad408a1b6bff5e81fdf5af2da52122e8085b",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.snapped"
+        ]
+      }
+    },
+    {
+      "id": "scrollable",
+      "title": "6.3.4. Scrollable: the scrollable feature",
+      "level": 4,
+      "text_sha256": "19b77714f06d7627936e79e3056820ba08ff788976b6a2b583e24ccb966765f0",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.scrollable"
+        ]
+      }
+    },
+    {
+      "id": "scrolled",
+      "title": "6.3.5. Scrolled: the scrolled feature",
+      "level": 4,
+      "text_sha256": "143108fed3b98c48d8cb751ab378420a902b6f01998aa34e9a6918d2c403a7af",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.scrolled"
+        ]
+      }
+    },
+    {
+      "id": "container-lengths",
+      "title": "7. Container Relative Lengths: the cqw, cqh, cqi, cqb, cqmin, cqmax units",
+      "level": 2,
+      "text_sha256": "2960abff663c6678f7072833f7e09b73b1ac6f6aa52a9aafed0157635e7e800a",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.container-lengths",
+          "css-conditional-5.container-lengths-clause-1a748627bfed",
+          "css-conditional-5.container-lengths-clause-812621d58d03"
+        ]
+      }
+    },
+    {
+      "id": "supports-condition-rule",
+      "title": "8. Defining Custom Support Queries: the @supports-condition rule",
+      "level": 2,
+      "text_sha256": "882f41958ca6ce4c83b1d4e306e520e516227554fb33fe35b9a747f5d15c94a8",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.supports-condition-rule",
+          "css-conditional-5.supports-condition-rule-clause-5c275c7d07cf",
+          "css-conditional-5.supports-condition-rule-clause-933f6755a5a2",
+          "css-conditional-5.foundation-extended-support"
+        ]
+      }
+    },
+    {
+      "id": "apis",
+      "title": "9. APIs",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.apis"
+        ]
+      }
+    },
+    {
+      "id": "the-csscontainerrule-interface",
+      "title": "9.1. The CSSContainerRule interface",
+      "level": 3,
+      "text_sha256": "a66e383a291c38b449224549c60a67ae6e99fbc99293f709b831b1914e7ab841",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.the-csscontainerrule-interface",
+          "css-conditional-5.the-csscontainerrule-interface-clause-a6f04ef1c92b",
+          "css-conditional-5.the-csscontainerrule-interface-clause-dc708318052e",
+          "css-conditional-5.the-csscontainerrule-interface-clause-c43a7bc5e4a6",
+          "css-conditional-5.the-csscontainerrule-interface-clause-63ea39eb7aa4"
+        ]
+      }
+    },
+    {
+      "id": "the-csssupportscondition-interface",
+      "title": "9.2. The CSSSupportsConditionRule interface",
+      "level": 3,
+      "text_sha256": "dc29f3a4f367b16255d16c70d3a793d1934b26d501a21cf75e98c7b2660f8b37",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.the-csssupportscondition-interface"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "a80ed4362d9ff2fc7b701cf8ede217dd8f7333f0fe9b313f52b151392caffca5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.security"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "a495963b19a7a82d600de6822e171c79a2327d28d2b652d20b52e4ef3af408ed",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.privacy"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20241105",
+      "title": "Changes since the Working Draft of 5 November 2024",
+      "level": 3,
+      "text_sha256": "2d2ab3e96612f10d54bfcc902aebe2b0d6ba4ad96441ea628537992754093743",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.changes-20241105"
+        ]
+      }
+    },
+    {
+      "id": "changes-20240723",
+      "title": "Changes since the Working Draft of 23 July 2024",
+      "level": 3,
+      "text_sha256": "efe53461be992e83b4cd5c57d546b54c04bd75d8504be818c1a8bd21e484aee4",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.changes-20240723"
+        ]
+      }
+    },
+    {
+      "id": "changes-20211221",
+      "title": "Changes since the First Public Working Draft of 21 December 2021",
+      "level": 3,
+      "text_sha256": "c653e381e6fa216f46169421e810b322f073ff0d42e7228a808e787e983537a7",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.changes-20211221"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-L4",
+      "title": "Additions since Level 4",
+      "level": 3,
+      "text_sha256": "81381299189fea58a39aa76ca35ca98830e2c98505b442c8195b36e5111a60ff",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.changes-from-l4"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "fa8302aa98fb644e84c133fa7a25beadca8181e2e4dcc8df5b5a71a0f3e18a6a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.w3c-conventions",
+          "css-conditional-5.w3c-conventions-clause-5c98c879f070",
+          "css-conditional-5.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.w3c-conformance-classes",
+          "css-conditional-5.w3c-conformance-classes-clause-ff408372426c",
+          "css-conditional-5.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.w3c-partial",
+          "css-conditional-5.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.w3c-testing",
+          "css-conditional-5.w3c-testing-clause-1e0fff369221",
+          "css-conditional-5.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "789f3ba34814b23985f81a588d59e68735e20d65806c61c7f2116b3ddc3f680f",
+      "clause_count": 131,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "5f5a3a9118a7a7217721332afe13574c0c0cd4e64a6557c5f7076d0117f4eb0b",
+      "clause_count": 160,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "1e3cbc20da24c332dd6932d8886f580d5a9c3e5182869e38f8d630e8d1c01372",
+      "clause_count": 68,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.import-9a42ce368333",
+          "css-conditional-5.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "ee3bf765506eabae9183d30c6aba9b0e84890175a593c10b5b47bbce7a732a47",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "2600e1665a0607d4f2fe340b133a2674a1b7ce051afe3c86f1bc7de1335414a2",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.property-index"
+        ]
+      }
+    },
+    {
+      "id": "container-descriptor-table",
+      "title": "@container Descriptors",
+      "level": 3,
+      "text_sha256": "d4bdff9d7b70bf935d6396f0f10276c3818634cd6d84874efbd047ee4fad6e6a",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.container-descriptor-table"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "c7df2d7c722f8c0a723305dac8c63e954c5b8d3c392fb6900a46b7546df34e01",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "71be601024b99db72930ace2741647f45d81db036c3bde047f45680920c4e82f",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-conditional-5.issues-index"
+        ]
+      }
+    }
+  ]
+}

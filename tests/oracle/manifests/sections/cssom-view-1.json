@@ -1,0 +1,897 @@
+{
+  "schema_version": 1,
+  "source_id": "cssom-view-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSSOM View Module",
+      "level": 1,
+      "text_sha256": "fda9902e6c03f3fee0ec6f9017d2803c6fa6b1e9b291a1234b89b1c16ce751e3",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "00ba201e232cdba6b1fcb93242d7a5f424ef29da48e7ff3688647a4a9ce1030b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "21a2ff6e03a3461dfbfd2a09221603bb4ef645caefc86e44b740d9711af95b31",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "881f5bef62c17e43ff994e4967c71beee893812e85d17c2ab304a6d8a69a9b3d",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "background",
+      "title": "1. Background",
+      "level": 2,
+      "text_sha256": "55f85204b866047180614da86b3204666c3d1e20fe2d5c44bfcfe0c084d7fac8",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.background"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "2. Terminology",
+      "level": 2,
+      "text_sha256": "10dc57a127e79f1422795fe674fff434a550282461a9d75d324bee3f3e00b33d",
+      "clause_count": 121,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.terminology",
+          "cssom-view-1.terminology-clause-8f1a52966cce",
+          "cssom-view-1.terminology-clause-131a0fe5b2f1",
+          "cssom-view-1.terminology-clause-be72c583b834",
+          "cssom-view-1.terminology-clause-6402d6ecabe4",
+          "cssom-view-1.terminology-clause-8ac3d1d9960d",
+          "cssom-view-1.terminology-clause-8208e59c273a"
+        ]
+      }
+    },
+    {
+      "id": "css-pixels",
+      "title": "2.1. CSS pixels",
+      "level": 3,
+      "text_sha256": "751076738342b4fa97a4c1d61dda412aacc68323267d4375580db457a9f3445a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.css-pixels"
+        ]
+      }
+    },
+    {
+      "id": "zooming",
+      "title": "2.2. Zooming",
+      "level": 3,
+      "text_sha256": "9c740fce3e2011537f1feff32612bc5072da6350c301eef765eda56207b1c7be",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.zooming"
+        ]
+      }
+    },
+    {
+      "id": "web-exposed-screen-information",
+      "title": "2.3. Web-exposed screen information",
+      "level": 3,
+      "text_sha256": "e16f32c405de91378a88c4ee666b54122c2b85eae139631647e210a84ec1f0ba",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.web-exposed-screen-information"
+        ]
+      }
+    },
+    {
+      "id": "common-infrastructure",
+      "title": "3. Common Infrastructure",
+      "level": 2,
+      "text_sha256": "6f7884b296f94ac27561d9793346d8b3c8155f99afdddeb3f0dff1e07ca8d610",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.common-infrastructure"
+        ]
+      }
+    },
+    {
+      "id": "scrolling",
+      "title": "3.1. Scrolling",
+      "level": 3,
+      "text_sha256": "51d6a2087f7a7a2665969cad425b7492b84b934091a73701a2f39530c02af225",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.scrolling",
+          "cssom-view-1.scrolling-clause-43d6fb77cba5",
+          "cssom-view-1.scrolling-clause-d65f532d4e28",
+          "cssom-view-1.scrolling-clause-248c813f9aae",
+          "cssom-view-1.scrolling-clause-16b426f060b1",
+          "cssom-view-1.scrolling-clause-6b8b9a74a904",
+          "cssom-view-1.scrolling-clause-c8641c1b91c2",
+          "cssom-view-1.scrolling-clause-3fe0ff5381a4",
+          "cssom-view-1.scrolling-clause-442b1877a223"
+        ]
+      }
+    },
+    {
+      "id": "webidl-values",
+      "title": "3.2. WebIDL values",
+      "level": 3,
+      "text_sha256": "8a60381f9d955b055964b3c5d656cd7b21d15946cdcc308df1e9fa7b0ec312cb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.webidl-values",
+          "cssom-view-1.webidl-values-clause-8a60381f9d95"
+        ]
+      }
+    },
+    {
+      "id": "extensions-to-the-window-interface",
+      "title": "4. Extensions to the Window Interface",
+      "level": 2,
+      "text_sha256": "5beaeb67b65643643be5aebf15944edc0d9c6b655293287b3d1b37859e0856e0",
+      "clause_count": 151,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.extensions-to-the-window-interface",
+          "cssom-view-1.extensions-to-the-window-interface-clause-831a089112f5",
+          "cssom-view-1.extensions-to-the-window-interface-clause-c73ef441e182",
+          "cssom-view-1.extensions-to-the-window-interface-clause-953d98fd4896",
+          "cssom-view-1.extensions-to-the-window-interface-clause-72d0ed72897c",
+          "cssom-view-1.extensions-to-the-window-interface-clause-86ff363be811",
+          "cssom-view-1.extensions-to-the-window-interface-clause-6e9d4df46b64",
+          "cssom-view-1.extensions-to-the-window-interface-clause-20e08cffb2b2",
+          "cssom-view-1.extensions-to-the-window-interface-clause-6fc86fb75454",
+          "cssom-view-1.extensions-to-the-window-interface-clause-fdec5b9a61d9",
+          "cssom-view-1.extensions-to-the-window-interface-clause-199df7657954",
+          "cssom-view-1.extensions-to-the-window-interface-clause-49e04644896b",
+          "cssom-view-1.extensions-to-the-window-interface-clause-56de84a888c8",
+          "cssom-view-1.extensions-to-the-window-interface-clause-42f68a04ecb4",
+          "cssom-view-1.extensions-to-the-window-interface-clause-67112c196596",
+          "cssom-view-1.extensions-to-the-window-interface-clause-928460cb9cf9",
+          "cssom-view-1.extensions-to-the-window-interface-clause-614b94c60985",
+          "cssom-view-1.extensions-to-the-window-interface-clause-eba09dded4c1",
+          "cssom-view-1.extensions-to-the-window-interface-clause-91975ffb2451",
+          "cssom-view-1.extensions-to-the-window-interface-clause-db369eed1851",
+          "cssom-view-1.extensions-to-the-window-interface-clause-517cb28588f3",
+          "cssom-view-1.extensions-to-the-window-interface-clause-d9faa668b6c7",
+          "cssom-view-1.extensions-to-the-window-interface-clause-df694588b4da",
+          "cssom-view-1.extensions-to-the-window-interface-clause-da5f56783fe5"
+        ]
+      }
+    },
+    {
+      "id": "the-features-argument-to-the-open()-method",
+      "title": "4.1. The features argument to the open() method",
+      "level": 3,
+      "text_sha256": "599c232de50774dac093c4bc11523a6df2d3987d98717e550db420b7ff368ea4",
+      "clause_count": 67,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.the-features-argument-to-the-open-method"
+        ]
+      }
+    },
+    {
+      "id": "the-mediaquerylist-interface",
+      "title": "4.2. The MediaQueryList Interface",
+      "level": 3,
+      "text_sha256": "6afa7d00a48e4d4e7810c1a5007ee3098da20bd140e6b7f205e60837823b6c9f",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.the-mediaquerylist-interface",
+          "cssom-view-1.the-mediaquerylist-interface-clause-3696a7413ee9",
+          "cssom-view-1.the-mediaquerylist-interface-clause-2a38cfe5c079",
+          "cssom-view-1.the-mediaquerylist-interface-clause-e9609bb0b2a3",
+          "cssom-view-1.the-mediaquerylist-interface-clause-f1409e0a802a",
+          "cssom-view-1.the-mediaquerylist-interface-clause-a8b9847a8bb5",
+          "cssom-view-1.the-mediaquerylist-interface-clause-6decfb50d139",
+          "cssom-view-1.the-mediaquerylist-interface-clause-9e54977b91fa",
+          "cssom-view-1.the-mediaquerylist-interface-clause-0dfaf85adde0"
+        ]
+      }
+    },
+    {
+      "id": "mediaquerylist-event-summary",
+      "title": "4.2.1. Event summary",
+      "level": 4,
+      "text_sha256": "555fa31e075f117c7d7b974bb4b123550b9f0de0126138f785efbc3a624d5778",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.mediaquerylist-event-summary"
+        ]
+      }
+    },
+    {
+      "id": "the-screen-interface",
+      "title": "4.3. The Screen Interface",
+      "level": 3,
+      "text_sha256": "405c0bd44a73f8c5818ab8785b7d6a840d656ae6f6ff111d1cf067a1efe1923a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.the-screen-interface",
+          "cssom-view-1.the-screen-interface-clause-683ceef7f6ed",
+          "cssom-view-1.the-screen-interface-clause-f805f9a384dc",
+          "cssom-view-1.the-screen-interface-clause-1f5f58ed89c0",
+          "cssom-view-1.the-screen-interface-clause-e71f1f8e39a9",
+          "cssom-view-1.the-screen-interface-clause-de20a66f91b7"
+        ]
+      }
+    },
+    {
+      "id": "extensions-to-the-document-interface",
+      "title": "5. Extensions to the Document Interface",
+      "level": 2,
+      "text_sha256": "ba0bfd06e251edb1c5a442cd162b0e5a595184a73bc23f60aad77f62cbdae94d",
+      "clause_count": 103,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.extensions-to-the-document-interface",
+          "cssom-view-1.extensions-to-the-document-interface-clause-92a4ee615acd",
+          "cssom-view-1.extensions-to-the-document-interface-clause-b725899f5810",
+          "cssom-view-1.extensions-to-the-document-interface-clause-ba4785d4d894",
+          "cssom-view-1.extensions-to-the-document-interface-clause-883f36d525d8",
+          "cssom-view-1.extensions-to-the-document-interface-clause-dcc9e4a0cd57",
+          "cssom-view-1.extensions-to-the-document-interface-clause-ad33d2606c5d",
+          "cssom-view-1.extensions-to-the-document-interface-clause-a6d16c1bbb14",
+          "cssom-view-1.extensions-to-the-document-interface-clause-dbb49735c77b",
+          "cssom-view-1.extensions-to-the-document-interface-clause-9e57809d1c3c"
+        ]
+      }
+    },
+    {
+      "id": "the-caretposition-interface",
+      "title": "5.1. The CaretPosition Interface",
+      "level": 3,
+      "text_sha256": "e177ce380a90ba6cfaf71fba372b1e78ce2e090b0e2c7e2cfd000b946ad75f95",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.the-caretposition-interface",
+          "cssom-view-1.the-caretposition-interface-clause-2af52419a9e3",
+          "cssom-view-1.the-caretposition-interface-clause-abc353101c76",
+          "cssom-view-1.the-caretposition-interface-clause-c5aefd968f8a"
+        ]
+      }
+    },
+    {
+      "id": "extension-to-the-element-interface",
+      "title": "6. Extensions to the Element Interface",
+      "level": 2,
+      "text_sha256": "e4b07b13ea68f1f783c7aa4be36cc06628ffed58115aa7d8911f0dd821f89124",
+      "clause_count": 363,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.extension-to-the-element-interface",
+          "cssom-view-1.extension-to-the-element-interface-clause-a3277d99f74b",
+          "cssom-view-1.extension-to-the-element-interface-clause-0002481e2011",
+          "cssom-view-1.extension-to-the-element-interface-clause-9b2a6ca4eab8",
+          "cssom-view-1.extension-to-the-element-interface-clause-480e4289e9f0",
+          "cssom-view-1.extension-to-the-element-interface-clause-2a355fda4cdd",
+          "cssom-view-1.extension-to-the-element-interface-clause-3f988c8ca256",
+          "cssom-view-1.extension-to-the-element-interface-clause-09eb22d2a31c",
+          "cssom-view-1.extension-to-the-element-interface-clause-6e4eaf486e72",
+          "cssom-view-1.extension-to-the-element-interface-clause-68b4d73cdc17",
+          "cssom-view-1.extension-to-the-element-interface-clause-614b94c60985",
+          "cssom-view-1.extension-to-the-element-interface-clause-eba09dded4c1",
+          "cssom-view-1.extension-to-the-element-interface-clause-a4747da8df84",
+          "cssom-view-1.extension-to-the-element-interface-clause-d3bae7e3d190",
+          "cssom-view-1.extension-to-the-element-interface-clause-14f8ff9db42a",
+          "cssom-view-1.extension-to-the-element-interface-clause-5b08b0f908fa",
+          "cssom-view-1.extension-to-the-element-interface-clause-77338d529935",
+          "cssom-view-1.extension-to-the-element-interface-clause-e58b1d5f8b00",
+          "cssom-view-1.extension-to-the-element-interface-clause-ff1abc224db9",
+          "cssom-view-1.extension-to-the-element-interface-clause-f4a6bcb9b4e8",
+          "cssom-view-1.extension-to-the-element-interface-clause-3c9ff547d21e",
+          "cssom-view-1.extension-to-the-element-interface-clause-ad9647cfc2e2",
+          "cssom-view-1.extension-to-the-element-interface-clause-f4cd105f0d93",
+          "cssom-view-1.extension-to-the-element-interface-clause-c97acf4d052d",
+          "cssom-view-1.extension-to-the-element-interface-clause-f3b46d381716"
+        ]
+      }
+    },
+    {
+      "id": "element-scrolling-members",
+      "title": "6.1. Element Scrolling Members",
+      "level": 3,
+      "text_sha256": "b403cc72eb699b930709f54809e2fad5d92109b800e0925d779b2fe6c740ae44",
+      "clause_count": 97,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.element-scrolling-members",
+          "cssom-view-1.element-scrolling-members-clause-92cd325f545c",
+          "cssom-view-1.element-scrolling-members-clause-738b177735b9",
+          "cssom-view-1.element-scrolling-members-clause-032050a67814"
+        ]
+      }
+    },
+    {
+      "id": "extensions-to-the-htmlelement-interface",
+      "title": "7. Extensions to the HTMLElement Interface",
+      "level": 2,
+      "text_sha256": "bafc547e6d01f729c7082d701bf974cfe1e5f180dba1f3d912a0ba03b341696b",
+      "clause_count": 99,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.extensions-to-the-htmlelement-interface",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-1749ca83d953",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-5c62f0d8f8bc",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-8f3e65256526",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-758203c628fd",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-95350f988279",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-70f5f0499931",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-ba9738acef80",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-db18f562e20a",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-59a3cb0c098b",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-84d1533310a0",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-2439292dc152",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-790b530eb6e2",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-43d3f88f7f65",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-fb887af5132c",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-8371fb7938ef",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-c453800caf0f",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-147a8f009236",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-2a1d0b108398",
+          "cssom-view-1.extensions-to-the-htmlelement-interface-clause-eaef02b58c00"
+        ]
+      }
+    },
+    {
+      "id": "extensions-to-the-htmlimageelement-interface",
+      "title": "8. Extensions to the HTMLImageElement Interface",
+      "level": 2,
+      "text_sha256": "1be474e4fda5a7c0352b5a7dab4b044ccce33c0a6607c4454c64218a93e93c43",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.extensions-to-the-htmlimageelement-interface",
+          "cssom-view-1.extensions-to-the-htmlimageelement-interface-clause-d31d2d68db96",
+          "cssom-view-1.extensions-to-the-htmlimageelement-interface-clause-5b5e74088392"
+        ]
+      }
+    },
+    {
+      "id": "extensions-to-the-range-interface",
+      "title": "9. Extensions to the Range Interface",
+      "level": 2,
+      "text_sha256": "0cefd80c614d9a256325079c62f010ff3a7e392d4fb94de36e70c770f988b70a",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.extensions-to-the-range-interface",
+          "cssom-view-1.extensions-to-the-range-interface-clause-cd49a789a157",
+          "cssom-view-1.extensions-to-the-range-interface-clause-6a80e1b830bc",
+          "cssom-view-1.extensions-to-the-range-interface-clause-09ea12c64457"
+        ]
+      }
+    },
+    {
+      "id": "extensions-to-the-mouseevent-interface",
+      "title": "10. Extensions to the MouseEvent Interface",
+      "level": 2,
+      "text_sha256": "7f57ce7e3e698422082796fd5f8014822054b8df36c0b7debadfb8d8b616a199",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.extensions-to-the-mouseevent-interface",
+          "cssom-view-1.extensions-to-the-mouseevent-interface-clause-723a9bef55e9",
+          "cssom-view-1.extensions-to-the-mouseevent-interface-clause-ef3752fa0e96",
+          "cssom-view-1.extensions-to-the-mouseevent-interface-clause-15dc036f981f",
+          "cssom-view-1.extensions-to-the-mouseevent-interface-clause-14ecb3a7bb36",
+          "cssom-view-1.extensions-to-the-mouseevent-interface-clause-a64d851fe335",
+          "cssom-view-1.extensions-to-the-mouseevent-interface-clause-059395a8803d",
+          "cssom-view-1.extensions-to-the-mouseevent-interface-clause-a986e7069cf2",
+          "cssom-view-1.extensions-to-the-mouseevent-interface-clause-456a9af66ac0",
+          "cssom-view-1.extensions-to-the-mouseevent-interface-clause-f7b07a61132b",
+          "cssom-view-1.extensions-to-the-mouseevent-interface-clause-3d8623c30a5c",
+          "cssom-view-1.extensions-to-the-mouseevent-interface-clause-13bf253bb927"
+        ]
+      }
+    },
+    {
+      "id": "geometry",
+      "title": "11. Geometry",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.geometry"
+        ]
+      }
+    },
+    {
+      "id": "the-geometryutils-interface",
+      "title": "11.1. The GeometryUtils Interface",
+      "level": 3,
+      "text_sha256": "eda16ce04377f6c4c155e13f01d83c8a81e9583377ca5a9e2fc590c0f219031a",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.the-geometryutils-interface",
+          "cssom-view-1.the-geometryutils-interface-clause-981129198a7b",
+          "cssom-view-1.the-geometryutils-interface-clause-42add258db8c",
+          "cssom-view-1.the-geometryutils-interface-clause-62e10833e561",
+          "cssom-view-1.the-geometryutils-interface-clause-8cdb679e7b50"
+        ]
+      }
+    },
+    {
+      "id": "visualViewport",
+      "title": "12. VisualViewport",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.visualviewport"
+        ]
+      }
+    },
+    {
+      "id": "the-visualviewport-interface",
+      "title": "12.1. The VisualViewport Interface",
+      "level": 3,
+      "text_sha256": "6c73c6ffb2e6b7e823a220a9302a6e77022aa8bd21d2a48e46463936631d45f9",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.the-visualviewport-interface",
+          "cssom-view-1.the-visualviewport-interface-clause-56779351444b",
+          "cssom-view-1.the-visualviewport-interface-clause-a237ff16a755",
+          "cssom-view-1.the-visualviewport-interface-clause-77b8105c4063",
+          "cssom-view-1.the-visualviewport-interface-clause-8b4925e82dcc",
+          "cssom-view-1.the-visualviewport-interface-clause-a8c79a6e4ef5",
+          "cssom-view-1.the-visualviewport-interface-clause-0ee241087e57",
+          "cssom-view-1.the-visualviewport-interface-clause-41fd8cc1ba31",
+          "cssom-view-1.the-visualviewport-interface-clause-56dee11382a2"
+        ]
+      }
+    },
+    {
+      "id": "events",
+      "title": "13. Events",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.events"
+        ]
+      }
+    },
+    {
+      "id": "resizing-viewports",
+      "title": "13.1. Resizing viewports",
+      "level": 3,
+      "text_sha256": "59187718e3b40f8961b7032f8ca7de3945e5ae5618f606684f04341d54f16ae4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.resizing-viewports"
+        ]
+      }
+    },
+    {
+      "id": "scrolling-events",
+      "title": "13.2. Scrolling",
+      "level": 3,
+      "text_sha256": "724af94d639a47137351c73ef1beba7f81bdb70933b8a43a8beffbc32a2644f4",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.scrolling-events",
+          "cssom-view-1.scrolling-events-clause-8488308889e2",
+          "cssom-view-1.scrolling-events-clause-d8e63e708229",
+          "cssom-view-1.scrolling-events-clause-d7f0def3c0f9",
+          "cssom-view-1.scrolling-events-clause-2926fd262328"
+        ]
+      }
+    },
+    {
+      "id": "event-summary",
+      "title": "13.3. Event summary",
+      "level": 3,
+      "text_sha256": "98dbd76efbf3488718cc6d0c0113965a841f1308fe7da7b15f122d09377cfe39",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.event-summary"
+        ]
+      }
+    },
+    {
+      "id": "post-layout-snapshot",
+      "title": "14. Post-Layout State Snapshotting",
+      "level": 2,
+      "text_sha256": "5814aba488f94d88fd05c01df318c6242cf652994023c70173902a373c3f6de7",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.post-layout-snapshot",
+          "cssom-view-1.post-layout-snapshot-clause-5fc372dff1ff"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "15. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "d174e04e6441af0986eceb4063ad38181b5b2fec194dd79878c7b50b4ac3c54a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "16. Security Considerations",
+      "level": 2,
+      "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.security"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "17. Changes",
+      "level": 2,
+      "text_sha256": "6b09a65a8360eb77de70d2ae1179dc9d739282fcb5a57d4ab8ef8ed9913b94c0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-2016-03-17",
+      "title": "Changes since the 17 March 2016 Working Draft",
+      "level": 3,
+      "text_sha256": "84d8182f09b8cfd6a95e2149e7b8ebb37b86a38627ede43b8eab847aec3e5fe2",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.changes-2016-03-17"
+        ]
+      }
+    },
+    {
+      "id": "changes-2013-12-17",
+      "title": "Changes since the 17 December 2013 Working Draft",
+      "level": 3,
+      "text_sha256": "c0da40cb23c8508ffd6c23df2bdbaaea3361b7661837fa4b981c301b4b142545",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.changes-2013-12-17"
+        ]
+      }
+    },
+    {
+      "id": "changes-2011-08-04",
+      "title": "Changes since the 04 August 2011 Working Draft",
+      "level": 3,
+      "text_sha256": "2a4fa07f32747b99121eb3047b0958011139a83deeb437c4dbd0dbbcc23724f3",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.changes-2011-08-04"
+        ]
+      }
+    },
+    {
+      "id": "changes-2009-08-04",
+      "title": "Changes since the 04 August 2009 Working Draft",
+      "level": 3,
+      "text_sha256": "4c1e094d8e1228eb5aacd26aa69d5d714693e686e5b7c977498a84c8252f5b61",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.changes-2009-08-04"
+        ]
+      }
+    },
+    {
+      "id": "changes-2008-02-22",
+      "title": "Changes since the 22 February 2008 Working Draft",
+      "level": 3,
+      "text_sha256": "6d9e2c607b1f7bc7a8a88e99ef2c96aa8b4a1b1ffb34ecb18e6100d7e672e8a2",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.changes-2008-02-22"
+        ]
+      }
+    },
+    {
+      "id": "acks",
+      "title": "18. Acknowledgements",
+      "level": 2,
+      "text_sha256": "7a2dbb21e5017ca69bdda02ddd2c76a7b51d6a429fe7faa2cdbc45595a2d9fb4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.acks"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.w3c-conventions",
+          "cssom-view-1.w3c-conventions-clause-5c98c879f070",
+          "cssom-view-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.w3c-conformance-classes",
+          "cssom-view-1.w3c-conformance-classes-clause-ff408372426c",
+          "cssom-view-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.w3c-partial",
+          "cssom-view-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.w3c-testing",
+          "cssom-view-1.w3c-testing-clause-1e0fff369221",
+          "cssom-view-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "279b923feb618c71e08b8cdac676718cbaf76569c9a6b0492db2eb9ee3b291c4",
+      "clause_count": 250,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "651d1fb6dd381b924855e72477f55f6fd6b7a126e106ef02aa069de7a4b1568d",
+      "clause_count": 201,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "a33165f76fd5c8bcfb8812c57369492f545b7f494bfb0ad52fd4df828688a09e",
+      "clause_count": 70,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.import-8c98fd4f4555",
+          "cssom-view-1.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "42dfeca469cdc67fc3291964338299bfb65cdfd697c15dfc99c95b9c3636db9d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "4d3794059faacd87b92823a30829be4d84980f535e5d1e74d22f2c4173e2d96c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "a42500f11c98cdecba12b406e86a83d91120ab3efd07bed1295a7dc2941cb431",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "cssom-view-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

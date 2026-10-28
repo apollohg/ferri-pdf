@@ -1,0 +1,1649 @@
+{
+  "schema_version": 1,
+  "source_id": "css-grid-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Grid Layout Module Level 1",
+      "level": 1,
+      "text_sha256": "14872c393cc2e445b838992d6b9d388e90e1e999276e9321eabaebf32115a10d",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "c33a360ba87dbe8d2f0c32137a6e1aec7dfbb8302e41d802881debfc5cc384ff",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "49a51a7744de8c4f8713e51d5b413f092fe49c29cc1418f3ca99762640ce92e2",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "169b55ad89d629f80d92770fb7b50960fff151bd26322608286683a87278a734",
+      "clause_count": 111,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "e5c401ef5dab2950cdbb3993e4b19ca540a792b82fa0c3a3887a2e3731cf5be4",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "background",
+      "title": "1.1. Background and Motivation",
+      "level": 3,
+      "text_sha256": "ad995c484a5bc73b78c48f4d5eaf261bef4dc17c6e808ba1b0984a9bc3e72ab1",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.background"
+        ]
+      }
+    },
+    {
+      "id": "adapting-to-available-space",
+      "title": "1.1.1. Adapting Layouts to Available Space",
+      "level": 4,
+      "text_sha256": "9e5dd89454779a12a1f9dce2e37dae844c6e8fbb356605708ecc854db4e73928",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.adapting-to-available-space"
+        ]
+      }
+    },
+    {
+      "id": "source-independence",
+      "title": "1.1.2. Source-Order Independence",
+      "level": 4,
+      "text_sha256": "0cd8b5475b0911890bd9ae538149542e6baaa119e9b79a0530cd2527c6c45a74",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.source-independence"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.values"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "2. Overview",
+      "level": 2,
+      "text_sha256": "dad634e88945925bb5e05f1f09b5890c867dc09cc12b9f01eec68e04d3e05b16",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.overview"
+        ]
+      }
+    },
+    {
+      "id": "overview-grid",
+      "title": "2.1. Declaring the Grid",
+      "level": 3,
+      "text_sha256": "6023f2b8025cde151dc0b47a86f8550edc5600be8d05580e0be3ed09dcd85e01",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.overview-grid"
+        ]
+      }
+    },
+    {
+      "id": "overview-placement",
+      "title": "2.2. Placing Items",
+      "level": 3,
+      "text_sha256": "f6b5802481cd047f93244c0cc0b9b2101cf5033c57466e4f418155a561d46d2b",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.overview-placement"
+        ]
+      }
+    },
+    {
+      "id": "overview-sizing",
+      "title": "2.3. Sizing the Grid",
+      "level": 3,
+      "text_sha256": "3563b0bbd8b497484459f6d050fdf0d7033a5cc7e9b49998b5863ffa181fb986",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.overview-sizing"
+        ]
+      }
+    },
+    {
+      "id": "grid-concepts",
+      "title": "3. Grid Layout Concepts and Terminology",
+      "level": 2,
+      "text_sha256": "3f024def404b0f793e1e741373432f25bca8648377f536203bea9cf2c21727e7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-concepts"
+        ]
+      }
+    },
+    {
+      "id": "grid-line-concept",
+      "title": "3.1. Grid Lines",
+      "level": 3,
+      "text_sha256": "c0ee66631a7d39a3b58d1b04a3bf416abfcab27f2a835004a2d701c9ffdb2cb4",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-line-concept"
+        ]
+      }
+    },
+    {
+      "id": "grid-track-concept",
+      "title": "3.2. Grid Tracks and Cells",
+      "level": 3,
+      "text_sha256": "4388d8e3b24f150ff9f556e3766eef58173908cb23c5350b3cee48ed8b18ddfd",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-track-concept"
+        ]
+      }
+    },
+    {
+      "id": "grid-area-concept",
+      "title": "3.3. Grid Areas",
+      "level": 3,
+      "text_sha256": "72d6936807c79d41418def2895e0319a7f1b577702bdd2c1d5d9ac5489344b27",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-area-concept"
+        ]
+      }
+    },
+    {
+      "id": "order-accessibility",
+      "title": "4. Reordering and Accessibility",
+      "level": 2,
+      "text_sha256": "2a6c60d83cdfed76ab7e2b384c51c90d5d9acda46d35929b7681226d9920a191",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.order-accessibility",
+          "css-grid-1.order-accessibility-clause-8fe69fc11d9a",
+          "css-grid-1.order-accessibility-clause-9151f9ecba6d",
+          "css-grid-1.order-accessibility-clause-ed74b7b4995f"
+        ]
+      }
+    },
+    {
+      "id": "grid-model",
+      "title": "5. Grid Containers",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-model"
+        ]
+      }
+    },
+    {
+      "id": "grid-containers",
+      "title": "5.1. Establishing Grid Containers: the grid and inline-grid display values",
+      "level": 3,
+      "text_sha256": "839f7f71d65bd4306aba1cf83a6c79a6324d9ef3c5cef471b822ae9c5b4daf6c",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-containers",
+          "css-grid-1.grid-containers-clause-c1d4f0df80b4",
+          "css-grid-1.grid-containers-clause-4b5a6e0d9163",
+          "css-grid-1.grid-containers-clause-048a1b2bfc4a",
+          "css-grid-1.grid-containers-clause-822ef248e408"
+        ]
+      }
+    },
+    {
+      "id": "intrinsic-sizes",
+      "title": "5.2. Sizing Grid Containers",
+      "level": 3,
+      "text_sha256": "25bc95db62bb1117265eec8c263297ca3c44597125177b7cbb17e4dab1cc0f5e",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.intrinsic-sizes",
+          "css-grid-1.intrinsic-sizes-clause-44aaf197ce83"
+        ]
+      }
+    },
+    {
+      "id": "overflow",
+      "title": "5.3. Scrollable Grid Overflow",
+      "level": 3,
+      "text_sha256": "42ba58395df143f243ef6adf0d6188887f607770b696752383e8312d03a20223",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.overflow"
+        ]
+      }
+    },
+    {
+      "id": "overlarge-grids",
+      "title": "5.4. Limiting Large Grids",
+      "level": 3,
+      "text_sha256": "7f27570f81da8b42ef6d10eb64e690b231c8c7f1c479f34b84c8f8613f394b18",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.overlarge-grids",
+          "css-grid-1.overlarge-grids-clause-e7812b42c35f",
+          "css-grid-1.overlarge-grids-clause-696009ff9154"
+        ]
+      }
+    },
+    {
+      "id": "grid-items",
+      "title": "6. Grid Items",
+      "level": 2,
+      "text_sha256": "ec68af33ea029e466eb3e463e01b51f1bfdcb6a998a8cb7b85c5718cdbb83daa",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-items",
+          "css-grid-1.grid-items-clause-6af3433ccaa1",
+          "css-grid-1.grid-items-clause-a73c46e184b5"
+        ]
+      }
+    },
+    {
+      "id": "grid-item-display",
+      "title": "6.1. Grid Item Display",
+      "level": 3,
+      "text_sha256": "658a8be53d21c9c92976f65c79d5e5656868b1452dab2a72ff4d77f543e7632e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-item-display",
+          "css-grid-1.grid-item-display-clause-9bf92316b0ca"
+        ]
+      }
+    },
+    {
+      "id": "grid-item-sizing",
+      "title": "6.2. Grid Item Sizing",
+      "level": 3,
+      "text_sha256": "628caf61c3d2573e569d3b1425c1e0e3b2f96a54fc8f3fc9057f07bd80903bef",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-item-sizing"
+        ]
+      }
+    },
+    {
+      "id": "order-property",
+      "title": "6.3. Reordered Grid Items: the order property",
+      "level": 3,
+      "text_sha256": "54cb669b875c4a9379f301ef1dd9811a1c3b1a3351a9d493a8d47debb14fb750",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.order-property",
+          "css-grid-1.order-property-clause-a73b304c0495"
+        ]
+      }
+    },
+    {
+      "id": "item-margins",
+      "title": "6.4. Grid Item Margins and Paddings",
+      "level": 3,
+      "text_sha256": "8a79f06fe5d1068eb6912220a2f9165c806eddbcef2b5aeb2d3451043e54b54d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.item-margins",
+          "css-grid-1.item-margins-clause-4382dbf10e50"
+        ]
+      }
+    },
+    {
+      "id": "z-order",
+      "title": "6.5. Z-axis Ordering: the z-index property",
+      "level": 3,
+      "text_sha256": "8bc47764bc0e7be1e3824800f62644cd07d0923fa19f2924670e63ca7d64c2b6",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.z-order"
+        ]
+      }
+    },
+    {
+      "id": "min-size-auto",
+      "title": "6.6. Automatic Minimum Size of Grid Items",
+      "level": 3,
+      "text_sha256": "449a23e1d5e97b6280f63e6a03f95b9ef9da9f3f0c6b3d6474b8d3b0290d1cd9",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.min-size-auto",
+          "css-grid-1.min-size-auto-clause-4d90cf17fd26",
+          "css-grid-1.min-size-auto-clause-7fd7e1eb1d7c",
+          "css-grid-1.min-size-auto-clause-6b458a28f138",
+          "css-grid-1.min-size-auto-clause-c280f6884661"
+        ]
+      }
+    },
+    {
+      "id": "grid-definition",
+      "title": "7. Defining the Grid",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-definition"
+        ]
+      }
+    },
+    {
+      "id": "explicit-grids",
+      "title": "7.1. The Explicit Grid",
+      "level": 3,
+      "text_sha256": "04373772de07ac33287a2f8360a85dceec1a39b094f4371e47abd7887dd31b26",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.explicit-grids"
+        ]
+      }
+    },
+    {
+      "id": "track-sizing",
+      "title": "7.2. Explicit Track Sizing: the grid-template-rows and grid-template-columns properties",
+      "level": 3,
+      "text_sha256": "bb23c5785cfe3346d8074218de7243f555aadcf50fb1d70069d77310e0cdeb5c",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.track-sizing",
+          "css-grid-1.track-sizing-clause-cca2516ebb1d",
+          "css-grid-1.track-sizing-clause-1577ca25e799",
+          "css-grid-1.track-sizing-clause-dce10256c0cf"
+        ]
+      }
+    },
+    {
+      "id": "track-sizes",
+      "title": "7.2.1. Track Sizes",
+      "level": 4,
+      "text_sha256": "9eab4591acfd1ed1a09beaee26a99b9dc92a478f4a57df0ad1c1df57da89e73e",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.track-sizes",
+          "css-grid-1.track-sizes-clause-c2aa32d68082",
+          "css-grid-1.track-sizes-clause-ed22123d6593",
+          "css-grid-1.track-sizes-clause-c5fb039a0d26",
+          "css-grid-1.track-sizes-clause-61b6edeed0a0",
+          "css-grid-1.track-sizes-clause-515bce6f87f4",
+          "css-grid-1.track-sizes-clause-f834730e2197"
+        ]
+      }
+    },
+    {
+      "id": "named-lines",
+      "title": "7.2.2. Naming Grid Lines: the [<custom-ident>*] syntax",
+      "level": 4,
+      "text_sha256": "581a7613266748abd5c7cb9b0283a3a3da9e27b3eefcca8619b5d5b0b1a3f157",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.named-lines"
+        ]
+      }
+    },
+    {
+      "id": "repeat-notation",
+      "title": "7.2.3. Repeating Rows and Columns: the repeat() notation",
+      "level": 4,
+      "text_sha256": "393cfd5193039e9d85a4eeccad49b6a2b24a7b2b9fd0146be63b8f70c0bf4771",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.repeat-notation"
+        ]
+      }
+    },
+    {
+      "id": "repeat-syntax",
+      "title": "7.2.3.1. Syntax of repeat()",
+      "level": 5,
+      "text_sha256": "1682ff0ada168924153be096079efdf6547634a8ca47e851ea5927f13ef28698",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.repeat-syntax"
+        ]
+      }
+    },
+    {
+      "id": "auto-repeat",
+      "title": "7.2.3.2. Repeat-to-fill: auto-fill and auto-fit repetitions",
+      "level": 5,
+      "text_sha256": "561be0c1384cb99d253002df9056fa68e4c68a0e1a7eb81cdf389f823e69874a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.auto-repeat",
+          "css-grid-1.auto-repeat-clause-ae48c2416aab"
+        ]
+      }
+    },
+    {
+      "id": "repeat-interpolation",
+      "title": "7.2.3.3. Interpolation/Combination of repeat()",
+      "level": 5,
+      "text_sha256": "11b03f056a827dc452f5a702297fce2ed7305855f606e301fae46f63d0e12c9c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.repeat-interpolation",
+          "css-grid-1.repeat-interpolation-clause-11b03f056a82"
+        ]
+      }
+    },
+    {
+      "id": "fr-unit",
+      "title": "7.2.4. Flexible Lengths: the fr unit",
+      "level": 4,
+      "text_sha256": "92b90e6e7a49f3cba817e11c0a37a0b5881ed9e6f45ebadbf6284fae3bb75d4d",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.fr-unit",
+          "css-grid-1.fr-unit-clause-60d19f9b4a84",
+          "css-grid-1.fr-unit-clause-ba91e57ed5d6",
+          "css-grid-1.fr-unit-clause-50f696e50ff7",
+          "css-grid-1.fr-unit-clause-fbb5c9f1aa57"
+        ]
+      }
+    },
+    {
+      "id": "computed-tracks",
+      "title": "7.2.5. Computed Value of a Track Listing",
+      "level": 4,
+      "text_sha256": "cc64956d28334caa502ece75435c752b857209ac528f40c6644f6b37c2c9ad13",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.computed-tracks",
+          "css-grid-1.computed-tracks-clause-a00f1bcc581e",
+          "css-grid-1.computed-tracks-clause-6773b2535bff",
+          "css-grid-1.computed-tracks-clause-6ce4e5a367a7"
+        ]
+      }
+    },
+    {
+      "id": "resolved-track-list",
+      "title": "7.2.6. Resolved Value of a Track Listing",
+      "level": 4,
+      "text_sha256": "f03eedbe7fc144cd35a4a941870389df522011a138af099dee1a3b37161bfde8",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.resolved-track-list",
+          "css-grid-1.resolved-track-list-clause-a51fe3d2c6bf",
+          "css-grid-1.resolved-track-list-clause-c89d1814ff07",
+          "css-grid-1.resolved-track-list-clause-09742f23fb4e"
+        ]
+      }
+    },
+    {
+      "id": "grid-template-areas-property",
+      "title": "7.3. Named Areas: the grid-template-areas property",
+      "level": 3,
+      "text_sha256": "5cb9c172dc4b753d624e6b6db807fad27339c37e4f32fb00468be205ed269835",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-template-areas-property",
+          "css-grid-1.grid-template-areas-property-clause-cca2516ebb1d",
+          "css-grid-1.grid-template-areas-property-clause-772d782739b8",
+          "css-grid-1.grid-template-areas-property-clause-f79b0478ff88",
+          "css-grid-1.grid-template-areas-property-clause-2e89d77451d7",
+          "css-grid-1.grid-template-areas-property-clause-34d6f86c7cb4"
+        ]
+      }
+    },
+    {
+      "id": "serialize-template",
+      "title": "7.3.1. Serialization Of Template Strings",
+      "level": 4,
+      "text_sha256": "fe9f88467bfcd5b477e3b892ec59da0162651fcd60ea102a3a1c3f799aaa2257",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.serialize-template",
+          "css-grid-1.serialize-template-clause-fe9f88467bfc"
+        ]
+      }
+    },
+    {
+      "id": "implicit-named-lines",
+      "title": "7.3.2. Implicitly-Assigned Line Names",
+      "level": 4,
+      "text_sha256": "dc609bb8f444789d0049791024bcb0c5ffb5a154bebd1c16a58a777d81b35470",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.implicit-named-lines"
+        ]
+      }
+    },
+    {
+      "id": "implicit-named-areas",
+      "title": "7.3.3. Implicitly-Named Areas",
+      "level": 4,
+      "text_sha256": "08b76be5ad963cd5fec85d6623a3d7fc756d4ae18ac986410344f0efab059847",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.implicit-named-areas"
+        ]
+      }
+    },
+    {
+      "id": "explicit-grid-shorthand",
+      "title": "7.4. Explicit Grid Shorthand: the grid-template property",
+      "level": 3,
+      "text_sha256": "86446f86ccf75e51a1263ee68cf8d0fed0b9253d1b6538f46c9d9c19c7b507d4",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.explicit-grid-shorthand",
+          "css-grid-1.explicit-grid-shorthand-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "implicit-grids",
+      "title": "7.5. The Implicit Grid",
+      "level": 3,
+      "text_sha256": "144f14e5182fbbf5e3e1861d616f30f6bf953befa05b82f6ea96fdc6cad2b829",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.implicit-grids"
+        ]
+      }
+    },
+    {
+      "id": "auto-tracks",
+      "title": "7.6. Implicit Track Sizing: the grid-auto-rows and grid-auto-columns properties",
+      "level": 3,
+      "text_sha256": "37f4a9cd5dec3b05f6efe359395bd4ef46ce0c61bd197ecb5d3b580d973b9188",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.auto-tracks",
+          "css-grid-1.auto-tracks-clause-cca2516ebb1d",
+          "css-grid-1.auto-tracks-clause-8cee723bf023",
+          "css-grid-1.auto-tracks-clause-3b49b7c7125c"
+        ]
+      }
+    },
+    {
+      "id": "grid-auto-flow-property",
+      "title": "7.7. Automatic Placement: the grid-auto-flow property",
+      "level": 3,
+      "text_sha256": "ddeeb911066eeb8d4165fe4ab1ab7178ed16f502d03f95ca28e92829bca30fc3",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-auto-flow-property",
+          "css-grid-1.grid-auto-flow-property-clause-cca2516ebb1d",
+          "css-grid-1.grid-auto-flow-property-clause-14f6e0267e0d",
+          "css-grid-1.grid-auto-flow-property-clause-c4f1edfb0a03",
+          "css-grid-1.grid-auto-flow-property-clause-0a2bf47fe048",
+          "css-grid-1.grid-auto-flow-property-clause-c463c3531760",
+          "css-grid-1.grid-auto-flow-property-clause-86e8d208a2bd",
+          "css-grid-1.grid-auto-flow-property-clause-3dde5989f954",
+          "css-grid-1.grid-auto-flow-property-clause-26d8ff6a0f11"
+        ]
+      }
+    },
+    {
+      "id": "grid-shorthand",
+      "title": "7.8. Grid Definition Shorthand: the grid property",
+      "level": 3,
+      "text_sha256": "3974945c7c2acb7ce4bc857bb6d63b1f36426e286edc93a73f73efc527e56b6a",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-shorthand",
+          "css-grid-1.grid-shorthand-clause-cca2516ebb1d",
+          "css-grid-1.grid-shorthand-clause-b8a8882b5c90",
+          "css-grid-1.grid-shorthand-clause-1620d896107e",
+          "css-grid-1.grid-shorthand-clause-8e3118ad50f7"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "8. Placing Grid Items",
+      "level": 2,
+      "text_sha256": "23421fdfb9c85105861641e8b8361a624fedb36443deb7c558d91eab366a9c19",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.placement",
+          "css-grid-1.placement-clause-f7baee3b3cf0"
+        ]
+      }
+    },
+    {
+      "id": "common-uses",
+      "title": "8.1. Common Patterns for Grid Placement",
+      "level": 3,
+      "text_sha256": "6684f2294e344eb32404bf8c3b5bba00368aac7401f28f4390e0fa3fb1e99ff1",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.common-uses"
+        ]
+      }
+    },
+    {
+      "id": "common-uses-named-areas",
+      "title": "8.1.1. Named Areas",
+      "level": 4,
+      "text_sha256": "1a9e72425dd9fe378efabf809cb4356bc457708f11713b3afcf971088e8215e3",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.common-uses-named-areas"
+        ]
+      }
+    },
+    {
+      "id": "common-uses-numeric",
+      "title": "8.1.2. Numeric Indexes and Spans",
+      "level": 4,
+      "text_sha256": "1634d5bdf6c0ae39a45b961c52180cf8f9f1da9b25d295d5b0bf9c8aa513b9a4",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.common-uses-numeric"
+        ]
+      }
+    },
+    {
+      "id": "common-uses-named-lines",
+      "title": "8.1.3. Named Lines and Spans",
+      "level": 4,
+      "text_sha256": "280f762fa8aa8a4ef92e271515f670f32abc02b66e573aeb95a5b30ac86b7b2c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.common-uses-named-lines"
+        ]
+      }
+    },
+    {
+      "id": "common-uses-auto-placement",
+      "title": "8.1.4. Auto Placement",
+      "level": 4,
+      "text_sha256": "5a5264ed7ec689ac05b873898a7aedd47a2d397fa4a38a5d12acee5cdc6a43be",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.common-uses-auto-placement"
+        ]
+      }
+    },
+    {
+      "id": "placement-a11y",
+      "title": "8.2. Grid Item Placement vs. Source Order",
+      "level": 3,
+      "text_sha256": "a34a6ea570e5bec1f246027646fa41efce8f21ccef67d7def0d52e5ac0b232ed",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.placement-a11y"
+        ]
+      }
+    },
+    {
+      "id": "line-placement",
+      "title": "8.3. Line-based Placement: the grid-row-start, grid-column-start, grid-row-end, and grid-column-end properties",
+      "level": 3,
+      "text_sha256": "413f88ea4803e756a103b0cc1e385abe214889969b718f8db9ba14270aa70136",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.line-placement",
+          "css-grid-1.line-placement-clause-cca2516ebb1d",
+          "css-grid-1.line-placement-clause-294306d179fe",
+          "css-grid-1.line-placement-clause-86ec329a6c01",
+          "css-grid-1.line-placement-clause-e888ddf78785",
+          "css-grid-1.line-placement-clause-114011b0aec0",
+          "css-grid-1.line-placement-clause-f9123e5da021",
+          "css-grid-1.line-placement-clause-d0a4489b4b2e",
+          "css-grid-1.line-placement-clause-a4adf672063c",
+          "css-grid-1.line-placement-clause-5a801b5ac7ce"
+        ]
+      }
+    },
+    {
+      "id": "grid-placement-errors",
+      "title": "8.3.1. Grid Placement Conflict Handling",
+      "level": 4,
+      "text_sha256": "b80271aef5f4c10b53512f218013aa8583aa399ff62d0e43007d0802031df608",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-placement-errors"
+        ]
+      }
+    },
+    {
+      "id": "placement-shorthands",
+      "title": "8.4. Placement Shorthands: the grid-column, grid-row, and grid-area properties",
+      "level": 3,
+      "text_sha256": "bf4676d2343f5811509562c41e2ccd7a7a608eb673c4490ababe48f8d697d550",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.placement-shorthands",
+          "css-grid-1.placement-shorthands-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "auto-placement-algo",
+      "title": "8.5. Grid Item Placement Algorithm",
+      "level": 3,
+      "text_sha256": "dcba6e9c6b96846737af65862528ade272c940976376252978e7c5468478db14",
+      "clause_count": 69,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.auto-placement-algo",
+          "css-grid-1.auto-placement-algo-clause-9c5ba0d820de",
+          "css-grid-1.auto-placement-algo-clause-d6d3366b3682",
+          "css-grid-1.auto-placement-algo-clause-452239ff6b41",
+          "css-grid-1.auto-placement-algo-clause-6d31170e5172",
+          "css-grid-1.auto-placement-algo-clause-89aa02d80f97",
+          "css-grid-1.auto-placement-algo-clause-80ecf5836558",
+          "css-grid-1.auto-placement-algo-clause-d13b77f510f5",
+          "css-grid-1.auto-placement-algo-clause-3ea3425d0554"
+        ]
+      }
+    },
+    {
+      "id": "abspos",
+      "title": "9. Absolute Positioning",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.abspos"
+        ]
+      }
+    },
+    {
+      "id": "abspos-items",
+      "title": "9.1. With a Grid Container as Containing Block",
+      "level": 3,
+      "text_sha256": "05a97ace93f402140adcd0f864651b7ece10e779220321c5c573b08d8cd3e351",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.abspos-items",
+          "css-grid-1.abspos-items-clause-6f691bbcbfab"
+        ]
+      }
+    },
+    {
+      "id": "static-position",
+      "title": "9.2. With a Grid Container as Parent",
+      "level": 3,
+      "text_sha256": "4358fed975a1c2e5ba488dbd6e71857dff7e88c747094524d461e61befa0b1d1",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.static-position"
+        ]
+      }
+    },
+    {
+      "id": "alignment",
+      "title": "10. Alignment and Spacing",
+      "level": 2,
+      "text_sha256": "e27ead10eb597cb86c26d3d65f72949e156095a0f8dc222406d38a4c155e9f02",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.alignment"
+        ]
+      }
+    },
+    {
+      "id": "gutters",
+      "title": "10.1. Gutters: the row-gap, column-gap, and gap properties",
+      "level": 3,
+      "text_sha256": "335b68742bdedd835927d7c8e2549868c064cde3174195891435964dd04cef5c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.gutters",
+          "css-grid-1.gutters-clause-124258f6675e",
+          "css-grid-1.gutters-clause-fbafb6eeb65d"
+        ]
+      }
+    },
+    {
+      "id": "auto-margins",
+      "title": "10.2. Aligning with auto margins",
+      "level": 3,
+      "text_sha256": "6db3f66a988c173182a1e4cf787cb9e5c14eeb8b15785d83c335d7c19432a2b7",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.auto-margins",
+          "css-grid-1.auto-margins-clause-1673dae4ac4f"
+        ]
+      }
+    },
+    {
+      "id": "row-align",
+      "title": "10.3. Inline-axis Alignment: the justify-self and justify-items properties",
+      "level": 3,
+      "text_sha256": "4d041ca2ae4ca1e9059fac11abb6100ee2704bdcb5da8c9963df6b176cfaab15",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.row-align"
+        ]
+      }
+    },
+    {
+      "id": "column-align",
+      "title": "10.4. Block-axis Alignment: the align-self and align-items properties",
+      "level": 3,
+      "text_sha256": "40df68fc1eeb2b2e65de81ad329450b17ce64148e0792b32cde428082138c91a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.column-align"
+        ]
+      }
+    },
+    {
+      "id": "grid-align",
+      "title": "10.5. Aligning the Grid: the justify-content and align-content properties",
+      "level": 3,
+      "text_sha256": "3254d28945826b39e4ebac599149dbfc56b769a381ce6d1ed23b9396d7b99a32",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-align",
+          "css-grid-1.grid-align-clause-7fc5f91b9aa0"
+        ]
+      }
+    },
+    {
+      "id": "grid-baselines",
+      "title": "10.6. Grid Container Baselines",
+      "level": 3,
+      "text_sha256": "0e3e95443931137899f628507fb70e299a56f254e520d767003b0072a81f18b3",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.grid-baselines",
+          "css-grid-1.grid-baselines-clause-82154a47ca27",
+          "css-grid-1.grid-baselines-clause-5c63bb88d661"
+        ]
+      }
+    },
+    {
+      "id": "layout-algorithm",
+      "title": "11. Grid Layout Algorithm",
+      "level": 2,
+      "text_sha256": "10e6b8a3aafd20d2ab913f89fc939f0efea7ab19e970495b619f70eef1f56d30",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.layout-algorithm",
+          "css-grid-1.layout-algorithm-clause-30d3949fc938",
+          "css-grid-1.layout-algorithm-clause-936188b94b6c",
+          "css-grid-1.layout-algorithm-clause-0d4b258886bd",
+          "css-grid-1.layout-algorithm-clause-8e3454e795ad"
+        ]
+      }
+    },
+    {
+      "id": "algo-grid-sizing",
+      "title": "11.1. Grid Sizing Algorithm",
+      "level": 3,
+      "text_sha256": "a99a413992247fac337a94e1543f3768c58ef535543f2a436f0cecdc4acdfeb3",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.algo-grid-sizing",
+          "css-grid-1.algo-grid-sizing-clause-9c3714cbb74f",
+          "css-grid-1.algo-grid-sizing-clause-a06dda4c4a99",
+          "css-grid-1.algo-grid-sizing-clause-ccdb09921422",
+          "css-grid-1.algo-grid-sizing-clause-cc9360b0fc1d",
+          "css-grid-1.algo-grid-sizing-clause-394e51c39831",
+          "css-grid-1.algo-grid-sizing-clause-42faa2d3d37c",
+          "css-grid-1.algo-grid-sizing-clause-2b6caec35543"
+        ]
+      }
+    },
+    {
+      "id": "algo-terms",
+      "title": "11.2. Track Sizing Terminology",
+      "level": 3,
+      "text_sha256": "4f8b7fcd5fd487e35e3f46dd7af3a843f2b09c68076ed7c296149ad7910bf80e",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.algo-terms",
+          "css-grid-1.algo-terms-clause-6f364f087db8",
+          "css-grid-1.algo-terms-clause-830a1af246f2"
+        ]
+      }
+    },
+    {
+      "id": "algo-track-sizing",
+      "title": "11.3. Track Sizing Algorithm",
+      "level": 3,
+      "text_sha256": "e1f667a0b875cbdc8a58bc155f550a0686f35d490edc4ea33c139fd503a122bc",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.algo-track-sizing",
+          "css-grid-1.algo-track-sizing-clause-89a0c22a4e29",
+          "css-grid-1.algo-track-sizing-clause-14616a46c13a"
+        ]
+      }
+    },
+    {
+      "id": "algo-init",
+      "title": "11.4. Initialize Track Sizes",
+      "level": 3,
+      "text_sha256": "687001cc0fd87abee44c3d4ee25d094ee2e94b3dbfb8f045d498895ada46ab56",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.algo-init",
+          "css-grid-1.algo-init-clause-d19cbd40aaf6",
+          "css-grid-1.algo-init-clause-65085c5ecaaa",
+          "css-grid-1.algo-init-clause-c61fd7e7055f",
+          "css-grid-1.algo-init-clause-6e48acec63f6"
+        ]
+      }
+    },
+    {
+      "id": "algo-content",
+      "title": "11.5. Resolve Intrinsic Track Sizes",
+      "level": 3,
+      "text_sha256": "a3823683cb428b52c5b30da6a8a397af67d3784bacd40fe17c89e090ddbdc728",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.algo-content",
+          "css-grid-1.algo-content-clause-51a2619f770a",
+          "css-grid-1.algo-content-clause-9c40544373d5",
+          "css-grid-1.algo-content-clause-9f75839b5a4c",
+          "css-grid-1.algo-content-clause-473d25f0af74",
+          "css-grid-1.algo-content-clause-b69e3c89e63f",
+          "css-grid-1.algo-content-clause-d40cbb605187",
+          "css-grid-1.algo-content-clause-ec3d90c0a13f",
+          "css-grid-1.algo-content-clause-1ac0617bd964",
+          "css-grid-1.algo-content-clause-f2273a93fb0f"
+        ]
+      }
+    },
+    {
+      "id": "extra-space",
+      "title": "11.5.1. Distributing Extra Space Across Spanned Tracks",
+      "level": 4,
+      "text_sha256": "4ebb7cef1dd1dc0f6c0c6a8a0fa1b1840d6be17a4fb0e489c3bc52a3a5334814",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.extra-space"
+        ]
+      }
+    },
+    {
+      "id": "algo-grow-tracks",
+      "title": "11.6. Maximize Tracks",
+      "level": 3,
+      "text_sha256": "58db541900d59414323670d4d14fd195b4c4753e9fa84e9658b4b908bec610ad",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.algo-grow-tracks"
+        ]
+      }
+    },
+    {
+      "id": "algo-flex-tracks",
+      "title": "11.7. Expand Flexible Tracks",
+      "level": 3,
+      "text_sha256": "01b2aa71adc88199cad72a76ae42b8fd4535b78d61d99b8cdf38596f954487b2",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.algo-flex-tracks"
+        ]
+      }
+    },
+    {
+      "id": "algo-find-fr-size",
+      "title": "11.7.1. Find the Size of an fr",
+      "level": 4,
+      "text_sha256": "28582122de07cc69bb3511b574864f1b332ae8807fd57cd04847a7dc0f7b18b8",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.algo-find-fr-size",
+          "css-grid-1.algo-find-fr-size-clause-69eea5cc03c2",
+          "css-grid-1.algo-find-fr-size-clause-91f059d5a3bb"
+        ]
+      }
+    },
+    {
+      "id": "algo-stretch",
+      "title": "11.8. Stretch auto Tracks",
+      "level": 3,
+      "text_sha256": "fce3c338d3d57ac51b1d1e9325c7068f5f523e9236d109246426f0480fcfa45f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.algo-stretch"
+        ]
+      }
+    },
+    {
+      "id": "pagination",
+      "title": "12. Fragmenting Grid Layout",
+      "level": 2,
+      "text_sha256": "1b6aa1432be281dfe1505ccf8b713eb3cdabd9eec01e9a1aca7afaf45b963022",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.pagination",
+          "css-grid-1.pagination-clause-8afbca738915"
+        ]
+      }
+    },
+    {
+      "id": "fragmentation-alg",
+      "title": "12.1. Sample Fragmentation Algorithm",
+      "level": 3,
+      "text_sha256": "f6c25d0e34fea7eef80af4148cf998fb3bc5bc3273406e3e4f64fb116d1fb8c1",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.fragmentation-alg"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "13. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "ac5600c10df249bc0fddfe94bffd577902b2e6c482c913d190ccccc20a9a680b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "14. Security Considerations",
+      "level": 2,
+      "text_sha256": "cd9ae15d3a3777350a9683f5c4466be69cfe5fa1c0f07afabacf3e93d2bcc9d3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.security"
+        ]
+      }
+    },
+    {
+      "id": "acks",
+      "title": "Acknowledgements",
+      "level": 2,
+      "text_sha256": "64f4ec0ba25bfb32fda6578bc7c21e20d192d4eb340fe3eed32590b31e9621c7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.acks"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e251ce7e8e99ca49cf86f446d7380b6d347a5f60e4322e370c8066d790088a97",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-202012",
+      "title": "Changes since the 18 December 2020 CR",
+      "level": 3,
+      "text_sha256": "2392a89aafd854b0a73d43be991e4fb6cdd5e8a564808e7416fbfa5d29464d28",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.changes-202012"
+        ]
+      }
+    },
+    {
+      "id": "changes-202008",
+      "title": "Changes since the 18 August 2020 CR",
+      "level": 3,
+      "text_sha256": "3ce440f4482a317b4abd63e17483556964866d2c138aed6f130dc5a6705604da",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.changes-202008"
+        ]
+      }
+    },
+    {
+      "id": "changes-2017",
+      "title": "Changes since the 15 December 2017 CR",
+      "level": 3,
+      "text_sha256": "a4eecd58a0f201ec0b6adc046d802f654393d4d9ffadf13e188ccc40e80d1342",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.changes-2017"
+        ]
+      }
+    },
+    {
+      "id": "major-2017",
+      "title": "Major Changes",
+      "level": 4,
+      "text_sha256": "f5d90e2dd5dd90f43464831f537a5722468f852486de5ebdce30e0ed74b51223",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.major-2017",
+          "css-grid-1.major-2017-clause-e1e69ea4f2c6",
+          "css-grid-1.major-2017-clause-d69b06382a3b",
+          "css-grid-1.major-2017-clause-45ff7c25c4ad",
+          "css-grid-1.major-2017-clause-12e58ac6edfa",
+          "css-grid-1.major-2017-clause-3cd4c6d7b860",
+          "css-grid-1.major-2017-clause-80d865020cb6",
+          "css-grid-1.major-2017-clause-34cf796440d2",
+          "css-grid-1.major-2017-clause-2709eeeaa808"
+        ]
+      }
+    },
+    {
+      "id": "minor-2017",
+      "title": "Minor Changes",
+      "level": 4,
+      "text_sha256": "0efd570de6ac706da988b24fddab6444e691850ce82f5812f4b3d169e6b7b57d",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.minor-2017",
+          "css-grid-1.minor-2017-clause-9f8753a0fff0",
+          "css-grid-1.minor-2017-clause-a699b23f76af",
+          "css-grid-1.minor-2017-clause-a1048eef8861",
+          "css-grid-1.minor-2017-clause-fb2fa97fdb93"
+        ]
+      }
+    },
+    {
+      "id": "clarify-2017",
+      "title": "Clarifications",
+      "level": 4,
+      "text_sha256": "cd3c692fcc7bc17a52b25113831051981c871e74be6b7fbfd3e65800afa225b4",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.clarify-2017",
+          "css-grid-1.clarify-2017-clause-6f364f087db8",
+          "css-grid-1.clarify-2017-clause-688c08a35219",
+          "css-grid-1.clarify-2017-clause-6adf80e29ee0",
+          "css-grid-1.clarify-2017-clause-aab3b34b0fa1",
+          "css-grid-1.clarify-2017-clause-e201a27898e1",
+          "css-grid-1.clarify-2017-clause-073ad829102e"
+        ]
+      }
+    },
+    {
+      "id": "changes-2016",
+      "title": "Changes since the 29 September 2016 CR",
+      "level": 3,
+      "text_sha256": "ef041f0c420cb1f66ff4356048a016591e744cbf58f1874d1d167a6af82f82eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.changes-2016"
+        ]
+      }
+    },
+    {
+      "id": "major-2016",
+      "title": "Major Changes",
+      "level": 4,
+      "text_sha256": "db8ff9760979e5622684c814d72b9430a4aa27f3f314de9ccf9f415189c3ef63",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.major-2016",
+          "css-grid-1.major-2016-clause-824a0bd4643b",
+          "css-grid-1.major-2016-clause-bd4de70832d6"
+        ]
+      }
+    },
+    {
+      "id": "fixes-2016",
+      "title": "Significant Adjustments and Fixes",
+      "level": 4,
+      "text_sha256": "7855ca878a9d797c8ab6633be084bc5daccd62be23cecad32e8d4085c9b05268",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.fixes-2016",
+          "css-grid-1.fixes-2016-clause-c93547ff631a",
+          "css-grid-1.fixes-2016-clause-14616a46c13a",
+          "css-grid-1.fixes-2016-clause-c3e7d490a34e",
+          "css-grid-1.fixes-2016-clause-feb7fe95a9ce",
+          "css-grid-1.fixes-2016-clause-d464e5a6df5c"
+        ]
+      }
+    },
+    {
+      "id": "clarify-2016",
+      "title": "Clarifications",
+      "level": 4,
+      "text_sha256": "bce94f25fccfd3b0d108ffea62e2eeec055d8ed7ec26792739d2ed402e39ef6d",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.clarify-2016"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.w3c-conventions",
+          "css-grid-1.w3c-conventions-clause-5c98c879f070",
+          "css-grid-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.w3c-conformance-classes",
+          "css-grid-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-grid-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.w3c-partial",
+          "css-grid-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.w3c-testing",
+          "css-grid-1.w3c-testing-clause-1e0fff369221",
+          "css-grid-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.w3c-cr-exit-criteria",
+          "css-grid-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-grid-1.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-grid-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-grid-1.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-grid-1.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "a94dde0fc7416139c6158df71fbaafa476c677d8e9bd732ae0ad5ac2dde4daed",
+      "clause_count": 180,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "44c1bf2d698ac8c8a735f6cb39b9ca88380deb08e82596a10c0945bbed2538db",
+      "clause_count": 204,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "5b1606e823e33747e943a64b0e2f2eddda717c3d1c30655fbefae03c621943d6",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "1ae375f045904f4bc164018ad3912edbdc78fe8caa340ec28d64fa6e184a48df",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "eb561c3201fca5966fd4cd01d635c817eafcfe6c599a69cc92935f1b8cb8e645",
+      "clause_count": 144,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.property-index",
+          "css-grid-1.property-index-clause-12a97a7aa5e3",
+          "css-grid-1.property-index-clause-db23beb55c47",
+          "css-grid-1.property-index-clause-1577ca25e799"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "c1e2a1218343e4d5c765c584583af1347eb5a1a9877388b1d1b7f458bcde0604",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-grid-1.issues-index",
+          "css-grid-1.issues-index-clause-a51fe3d2c6bf",
+          "css-grid-1.issues-index-clause-cc9360b0fc1d"
+        ]
+      }
+    }
+  ]
+}

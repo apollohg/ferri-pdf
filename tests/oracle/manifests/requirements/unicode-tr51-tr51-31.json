@@ -1,0 +1,4124 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "unicode-tr51-tr51-31.heading-133aa068de27",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "heading-133aa068de27"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unicode® Technical Standard #51.",
+      "locator": {
+        "section_id": "heading-133aa068de27",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.heading-0dd93ba3dfe5",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "heading-0dd93ba3dfe5"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unicode Emoji.",
+      "locator": {
+        "section_id": "heading-0dd93ba3dfe5",
+        "text_sha256": "e482d81abf6a62b22a0a4ea8964ce0a767daf4fd8baae9cead6ff1503ddc5b8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.heading-562e5643bfd0",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "heading-562e5643bfd0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Summary.",
+      "locator": {
+        "section_id": "heading-562e5643bfd0",
+        "text_sha256": "f3ff066a1eec0333786991b3c2d179f5ec5cbe61feb41c6cee35206c8a6e8d52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.heading-562e5643bfd0-clause-935ca2ec92f1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.heading-562e5643bfd0-clause-935ca2ec92f1",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "heading-562e5643bfd0"
+      ],
+      "behaviour": "Summary — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-562e5643bfd0",
+        "clause_index": 0,
+        "clause_sha256": "935ca2ec92f110535717cc2cddbf2cee91351529fbab6096c4eb53b4458dbdd0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.heading-b67e4e63a5c4",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "heading-b67e4e63a5c4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Status.",
+      "locator": {
+        "section_id": "heading-b67e4e63a5c4",
+        "text_sha256": "bb56c530fcb3a97dfd25bc6b4ae42dfb89e04c7ab8deaf0e7ed51acd8f8051d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.introduction",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 1 Introduction.",
+      "locator": {
+        "section_id": "Introduction",
+        "text_sha256": "2ff8d4b657777d21c9e9ebb7e9e0a4b2f3b7dc2898fda39419a7898591ec927f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.introduction-clause-cf5fbc6084b0",
+        "unicode-tr51-tr51-31.introduction-clause-facfba4114aa"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.introduction-clause-cf5fbc6084b0",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Introduction"
+      ],
+      "behaviour": "1 Introduction — normative clause 98, located by its exact source hash.",
+      "locator": {
+        "section_id": "Introduction",
+        "clause_index": 97,
+        "clause_sha256": "cf5fbc6084b07f15dcd75d6f5a7dd2c4cb16777816d58f48fa27c45244cf0c87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.introduction-clause-facfba4114aa",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Introduction"
+      ],
+      "behaviour": "1 Introduction — normative clause 99, located by its exact source hash.",
+      "locator": {
+        "section_id": "Introduction",
+        "clause_index": 98,
+        "clause_sha256": "facfba4114aa807a020f19f3a4b0152c76cc2d98b753ecca1c5c7466b3fc6d5c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoticons",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoticons"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoticons and Emoji.",
+      "locator": {
+        "section_id": "Emoticons",
+        "text_sha256": "807d48f08132b4e5f34970d32a186ce6e24d57eb750fb33c766802caf807acad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.encoding",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Encoding"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Encoding Considerations.",
+      "locator": {
+        "section_id": "Encoding",
+        "text_sha256": "1e7d49af003c5bcc05bec6c20071cb09c9f113b70e189a53919e309e1370e359"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.encoding-clause-9dbcb0bba7fd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.encoding-clause-9dbcb0bba7fd",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Encoding"
+      ],
+      "behaviour": "Encoding Considerations — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Encoding",
+        "clause_index": 1,
+        "clause_sha256": "9dbcb0bba7fddadfd4b4bb699b4d7dd9c2c94eeb9a1a3844e3ab54b072ca6f46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.goals",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Goals"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Goals.",
+      "locator": {
+        "section_id": "Goals",
+        "text_sha256": "a5b85d60224ed68fabaae3fa928e5c19831240526091d0325fe1ce5982caf799"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.goals-clause-beff6a50765d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.goals-clause-beff6a50765d",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Goals"
+      ],
+      "behaviour": "Goals — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "Goals",
+        "clause_index": 5,
+        "clause_sha256": "beff6a50765d2cb8e2960326b78bc7bb973c78bad0b59f6a06e90f20d367eadc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.definitions",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Definitions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Definitions.",
+      "locator": {
+        "section_id": "Definitions",
+        "text_sha256": "d92c79a31bb0ed199b5520f4a60de574b249ccfa6a3561f93bdc90496bdcd810"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-characters",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Characters"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji Characters.",
+      "locator": {
+        "section_id": "Emoji_Characters",
+        "text_sha256": "34dcbe8c5715bfda1b42cf3c35cf82c6f6efe5fa0cd0dfbb325c0b1ee1556133"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-presentation",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Presentation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji Presentation.",
+      "locator": {
+        "section_id": "Emoji_Presentation",
+        "text_sha256": "145bc6012d742b42824cc666871d8f61465979a847919cfb8606ad95afca136b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.emoji-presentation-clause-d3e8ce421754",
+        "unicode-tr51-tr51-31.emoji-presentation-clause-d8135775f8e9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-presentation-clause-d3e8ce421754",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Presentation"
+      ],
+      "behaviour": "Emoji Presentation — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Presentation",
+        "clause_index": 0,
+        "clause_sha256": "d3e8ce4217548b0af8fa0748327c52d4739c12d33465801b4a8ea9a5898340bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-presentation-clause-d8135775f8e9",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Presentation"
+      ],
+      "behaviour": "Emoji Presentation — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Presentation",
+        "clause_index": 3,
+        "clause_sha256": "d8135775f8e97cd708c460b1546c6cbc6d57ca676e2ce73b247c6c657906a183"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-variation-sequences",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Variation_Sequences"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji and Text Presentation Sequences.",
+      "locator": {
+        "section_id": "Emoji_Variation_Sequences",
+        "text_sha256": "8a12235d1d40f7599ffb12376d5c69c5984b9bf0ff9afbe36bde0254110c2561"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-modifiers",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Modifiers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji Modifiers.",
+      "locator": {
+        "section_id": "Emoji_Modifiers",
+        "text_sha256": "eb5f98bc104ac6e370b12f4faa5a3e3677a16eaa025e67bbd7233bfc4e55da2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-sequences",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Sequences"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji Sequences.",
+      "locator": {
+        "section_id": "Emoji_Sequences",
+        "text_sha256": "25cc4ad1def55afd0c0ff6924162157db99e79648c1e161e533b75047617279e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.emoji-sequences-clause-57c01c890151",
+        "unicode-tr51-tr51-31.emoji-sequences-clause-82a3757cc88f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-sequences-clause-57c01c890151",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Sequences"
+      ],
+      "behaviour": "Emoji Sequences — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Sequences",
+        "clause_index": 8,
+        "clause_sha256": "57c01c89015157f6b8563348b3168092a53db98a57adacec58e9448a8164396b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-sequences-clause-82a3757cc88f",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Sequences"
+      ],
+      "behaviour": "Emoji Sequences — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Sequences",
+        "clause_index": 10,
+        "clause_sha256": "82a3757cc88f08b59a23340bdade38ee085bf53008a739821ff3a21a7303eceb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-sets",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Sets"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji Sets.",
+      "locator": {
+        "section_id": "Emoji_Sets",
+        "text_sha256": "06f2cd7b64faca9b6413f68dd67fed3a7a2fc886336e345aea03490fa26f5b71"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.emoji-sets-clause-5f5706491746",
+        "unicode-tr51-tr51-31.emoji-sets-clause-3b0c45138db5",
+        "unicode-tr51-tr51-31.emoji-sets-clause-1c9e2431de53"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-sets-clause-5f5706491746",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Sets"
+      ],
+      "behaviour": "Emoji Sets — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Sets",
+        "clause_index": 4,
+        "clause_sha256": "5f5706491746e1f5cf19cc916521c2aea588d7c53559ff5bf184bf33d00c2c5c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-sets-clause-3b0c45138db5",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Sets"
+      ],
+      "behaviour": "Emoji Sets — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Sets",
+        "clause_index": 5,
+        "clause_sha256": "3b0c45138db5d1de7824858aaf278d9395187997de9e9fcd9156ad5e7522cf1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-sets-clause-1c9e2431de53",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Sets"
+      ],
+      "behaviour": "Emoji Sets — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Sets",
+        "clause_index": 6,
+        "clause_sha256": "1c9e2431de5363f136b73c7556eefcbede51404b205d3d3a9e8e97e657644ebf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.notation",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Notation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Notation.",
+      "locator": {
+        "section_id": "Notation",
+        "text_sha256": "38555ec604b51dd48c1474f99216028a55fdca4d23959550d390cf91077791ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.property-stability",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Property_Stability"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Stability.",
+      "locator": {
+        "section_id": "Property_Stability",
+        "text_sha256": "6a77485280312b5b02ac720f70da8022d42a6c39bf2df376b676ec6d358e30b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.property-stability-clause-07f71bbd4f2a",
+        "unicode-tr51-tr51-31.property-stability-clause-a2cce5926366"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.property-stability-clause-07f71bbd4f2a",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Property_Stability"
+      ],
+      "behaviour": "Property Stability — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Property_Stability",
+        "clause_index": 4,
+        "clause_sha256": "07f71bbd4f2a28c9ad67d8deaafb972198410992bafb5a83990cc13b354a9c6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.property-stability-clause-a2cce5926366",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Property_Stability"
+      ],
+      "behaviour": "Property Stability — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "Property_Stability",
+        "clause_index": 8,
+        "clause_sha256": "a2cce592636634cd1ad72a2c8b616fb36d6531c12d53d52d519521813659938d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.ebnf-and-regex",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "EBNF_and_Regex"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in EBNF and Regex.",
+      "locator": {
+        "section_id": "EBNF_and_Regex",
+        "text_sha256": "686b5641abf1a89621dee5dbfa3629ec44156e09b427782a589173b0bcb7a348"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.conformance",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "Conformance",
+        "text_sha256": "743ebe9cabca97d6d1d7acf1a65bea6e6cfa91df94e37bc1fb7258e9cfc5bd73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.conformance-clause-461f2284134d",
+        "unicode-tr51-tr51-31.conformance-clause-50928d9aeb94",
+        "unicode-tr51-tr51-31.conformance-clause-99ac4e78aa44",
+        "unicode-tr51-tr51-31.conformance-clause-0416ae7e755d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.conformance-clause-461f2284134d",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Conformance — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 1,
+        "clause_sha256": "461f2284134db997d44f139f3bfb0cdb8757bca6be02a04a058e75293673f8dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.conformance-clause-50928d9aeb94",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Conformance — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 2,
+        "clause_sha256": "50928d9aeb94a0c288a739340cdfa082bf4c5b50d3351090b50c173c618a5854"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.conformance-clause-99ac4e78aa44",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Conformance — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 3,
+        "clause_sha256": "99ac4e78aa44eccfb2d74de67b16ded9bcbb23a7dc1effee3f0cc9891f2c87d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.conformance-clause-0416ae7e755d",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Conformance — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 14,
+        "clause_sha256": "0416ae7e755d40c2e969d2db00bbbcd22c63686c4524086baee15ced006f9387"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.collation-conformance",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Collation_Conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Collation Conformance.",
+      "locator": {
+        "section_id": "Collation_Conformance",
+        "text_sha256": "c65c6848e32d5eea796d3eaa8fcbe14860ea8aa22f85f5b714c3b273ec73b22c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.versioning",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Versioning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Versioning.",
+      "locator": {
+        "section_id": "Versioning",
+        "text_sha256": "d93ad671979fa8f514108cd60a42be14bdafedc7cf23edc611ca43a3084cbfdf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.design-guidelines",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Design_Guidelines"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2 Design Guidelines.",
+      "locator": {
+        "section_id": "Design_Guidelines",
+        "text_sha256": "68141b486b1c0a5c3b7e7822b1bb319be6bf4b0a700d33b345af29b5cda5ab07"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.design-guidelines-clause-b8018034f73a",
+        "unicode-tr51-tr51-31.design-guidelines-clause-9cb24671a33c",
+        "unicode-tr51-tr51-31.design-guidelines-clause-3e78f9681549"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.design-guidelines-clause-b8018034f73a",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Design_Guidelines"
+      ],
+      "behaviour": "2 Design Guidelines — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Design_Guidelines",
+        "clause_index": 4,
+        "clause_sha256": "b8018034f73a501cf49b040f1c522d7cf22e6362abbbda1df1989aed6fddaa40"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.design-guidelines-clause-9cb24671a33c",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Design_Guidelines"
+      ],
+      "behaviour": "2 Design Guidelines — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "Design_Guidelines",
+        "clause_index": 5,
+        "clause_sha256": "9cb24671a33c62c3ce4e98105f76e733b45428c978eb17282ea6d5dcaf6cc4a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.design-guidelines-clause-3e78f9681549",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Design_Guidelines"
+      ],
+      "behaviour": "2 Design Guidelines — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "Design_Guidelines",
+        "clause_index": 6,
+        "clause_sha256": "3e78f9681549ab12bfb14db62b5e50a7a896a8efd87954151ff02d1fb6f66cd7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.names",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Names"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Names.",
+      "locator": {
+        "section_id": "Names",
+        "text_sha256": "7f5bfc57420428999242e9db27db6d63af7922f0133f5cf58cd5a3e50a0f7884"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.names-clause-ede3f4bd5669",
+        "unicode-tr51-tr51-31.names-clause-ffa73c73168c",
+        "unicode-tr51-tr51-31.names-clause-09da8ef9aa9f",
+        "unicode-tr51-tr51-31.names-clause-4aaa929d95e3",
+        "unicode-tr51-tr51-31.names-clause-4b4891ffd79c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.names-clause-ede3f4bd5669",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Names"
+      ],
+      "behaviour": "Names — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Names",
+        "clause_index": 1,
+        "clause_sha256": "ede3f4bd566981e866052f813f5d6b10bdd544f606d23c27ef0c3f718bfc2ab4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.names-clause-ffa73c73168c",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Names"
+      ],
+      "behaviour": "Names — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Names",
+        "clause_index": 2,
+        "clause_sha256": "ffa73c73168ce9f6b545362372366906a9a8f61a3ab6479f202e361a79e6974f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.names-clause-09da8ef9aa9f",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Names"
+      ],
+      "behaviour": "Names — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "Names",
+        "clause_index": 3,
+        "clause_sha256": "09da8ef9aa9fb76cfc2883794bfece16988da02e6bc6a5fcd9fb06ba6a432731"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.names-clause-4aaa929d95e3",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Names"
+      ],
+      "behaviour": "Names — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Names",
+        "clause_index": 4,
+        "clause_sha256": "4aaa929d95e3f697a9aff4e023a028da4a9d5a7dae969d92cdf22f0c567c2252"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.names-clause-4b4891ffd79c",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Names"
+      ],
+      "behaviour": "Names — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "Names",
+        "clause_index": 6,
+        "clause_sha256": "4b4891ffd79c2b1967aa4a5bced412836a9c81490562da895a2a1f1023ac809e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.display",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Display"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Display.",
+      "locator": {
+        "section_id": "Display",
+        "text_sha256": "654d46735ba895824245c30976dfe613eabf7894b2cd2d61b77b9008930564b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.display-clause-68b0f0267a46"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.display-clause-68b0f0267a46",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Display"
+      ],
+      "behaviour": "Display — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Display",
+        "clause_index": 2,
+        "clause_sha256": "68b0f0267a46f2fc7d9f6cdfa90b8c6552ac5bc259d5bc26995933214e920dd2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.gender",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Gender"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gender.",
+      "locator": {
+        "section_id": "Gender",
+        "text_sha256": "01709566bea976f0bd57965bf4c75c5ef7cccfdfecb1825fba6e6c7b4f7ded14"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.gender-neutral",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "gender-neutral"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gender-Neutral Emoji.",
+      "locator": {
+        "section_id": "gender-neutral",
+        "text_sha256": "e5f1d8c86638f75afed7cadb1b2e7897a980df7e19c47a13b740d440b521a5a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.gender-neutral-clause-ee5f816c3335",
+        "unicode-tr51-tr51-31.gender-neutral-clause-950018474786"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.gender-neutral-clause-ee5f816c3335",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "gender-neutral"
+      ],
+      "behaviour": "Gender-Neutral Emoji — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "gender-neutral",
+        "clause_index": 0,
+        "clause_sha256": "ee5f816c33352ac6e6dc698bc3de282d3ac7fac0d6ce3a3d1f54ba2fcf51b48b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.gender-neutral-clause-950018474786",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "gender-neutral"
+      ],
+      "behaviour": "Gender-Neutral Emoji — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "gender-neutral",
+        "clause_index": 6,
+        "clause_sha256": "950018474786c97aaea6cdc32ade9c0edd7f50ef5c05eb46b86818a16cd17700"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.marking-gender-in-input",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "marking-gender-in-input"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Marking Gender in Emoji Input.",
+      "locator": {
+        "section_id": "marking-gender-in-input",
+        "text_sha256": "900bbf30f5e0c455358edcd801723a866033f7a425f8330d6119fb4e827ae8e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.marking-gender-in-input-clause-287520c1c490",
+        "unicode-tr51-tr51-31.marking-gender-in-input-clause-34aae43f9d5d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.marking-gender-in-input-clause-287520c1c490",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "marking-gender-in-input"
+      ],
+      "behaviour": "Marking Gender in Emoji Input — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "marking-gender-in-input",
+        "clause_index": 0,
+        "clause_sha256": "287520c1c49040021495ffad2ba13d740adbd4aa794a57b82efe375d8a0364cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.marking-gender-in-input-clause-34aae43f9d5d",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "marking-gender-in-input"
+      ],
+      "behaviour": "Marking Gender in Emoji Input — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "marking-gender-in-input",
+        "clause_index": 1,
+        "clause_sha256": "34aae43f9d5d18fb14b0fa76a356109b2d9bccf5fdc0aa077ea00bd0b510d09c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.diversity",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Diversity"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Diversity.",
+      "locator": {
+        "section_id": "Diversity",
+        "text_sha256": "4be22264f939ada80464cf762270134b646c39d0743b10d2ae3dbd4588b8b8ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.diversity-clause-ea4583731e7b",
+        "unicode-tr51-tr51-31.diversity-clause-5a52ddf2ab3f",
+        "unicode-tr51-tr51-31.diversity-clause-91d1c469a8c7",
+        "unicode-tr51-tr51-31.diversity-clause-2c0e77f4dd52"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.diversity-clause-ea4583731e7b",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Diversity"
+      ],
+      "behaviour": "Diversity — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "Diversity",
+        "clause_index": 22,
+        "clause_sha256": "ea4583731e7b7889713f971c1513b861b36d54acc7bf573b249c7b4d9433e979"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.diversity-clause-5a52ddf2ab3f",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Diversity"
+      ],
+      "behaviour": "Diversity — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "Diversity",
+        "clause_index": 25,
+        "clause_sha256": "5a52ddf2ab3f8552f2a83a74049ce9c9ebe21d8d3cc948b1439ffe806d8bcd90"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.diversity-clause-91d1c469a8c7",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Diversity"
+      ],
+      "behaviour": "Diversity — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "Diversity",
+        "clause_index": 26,
+        "clause_sha256": "91d1c469a8c76bda7b209dd4cce3961c52b0062e0b0a6ef61871240f3630e694"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.diversity-clause-2c0e77f4dd52",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Diversity"
+      ],
+      "behaviour": "Diversity — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "Diversity",
+        "clause_index": 27,
+        "clause_sha256": "2c0e77f4dd52390e4c192e868adf7520c267404037e8d7b3dec005cf7535bf38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.diversity-implementations",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Diversity_Implementations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations.",
+      "locator": {
+        "section_id": "Diversity_Implementations",
+        "text_sha256": "8d18785bf065bb7a82f52ee8f816bcf0a465f26273c61cf2acd30d13c7cd7a23"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.diversity-implementations-clause-6229dfc9309c",
+        "unicode-tr51-tr51-31.diversity-implementations-clause-3cc99abb2e02",
+        "unicode-tr51-tr51-31.diversity-implementations-clause-cc7cd08fc5ce"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.diversity-implementations-clause-6229dfc9309c",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Diversity_Implementations"
+      ],
+      "behaviour": "Implementations — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "Diversity_Implementations",
+        "clause_index": 3,
+        "clause_sha256": "6229dfc9309cc515a6818436220b76a84000936da7ea0c6ebde9a0197f06439a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.diversity-implementations-clause-3cc99abb2e02",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Diversity_Implementations"
+      ],
+      "behaviour": "Implementations — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Diversity_Implementations",
+        "clause_index": 4,
+        "clause_sha256": "3cc99abb2e024ad89bab58be9545a368bbb40a751f1370c6277b10307871353d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.diversity-implementations-clause-cc7cd08fc5ce",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Diversity_Implementations"
+      ],
+      "behaviour": "Implementations — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "Diversity_Implementations",
+        "clause_index": 7,
+        "clause_sha256": "cc7cd08fc5cea04b75a3aa2032b4f7e67df8092521a100bbc887f82bcb7ca72a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-modifiers-in-text",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Modifiers_in_Text"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji Modifiers in Text.",
+      "locator": {
+        "section_id": "Emoji_Modifiers_in_Text",
+        "text_sha256": "cc49248ffa7afeb2af0de684008649bac8e11ff3ed0d2be051b9eebe39716196"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-zwj-sequences",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_ZWJ_Sequences"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji ZWJ Sequences.",
+      "locator": {
+        "section_id": "Emoji_ZWJ_Sequences",
+        "text_sha256": "b9a28a27d4b91c12990cbf38916dbaa8ff757befdeff7048cafea240c4f6357e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.emoji-zwj-sequences-clause-9b22bb0e6d52",
+        "unicode-tr51-tr51-31.emoji-zwj-sequences-clause-6433a35f2fcb",
+        "unicode-tr51-tr51-31.emoji-zwj-sequences-clause-d4855ffca82e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-zwj-sequences-clause-9b22bb0e6d52",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_ZWJ_Sequences"
+      ],
+      "behaviour": "Emoji ZWJ Sequences — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_ZWJ_Sequences",
+        "clause_index": 0,
+        "clause_sha256": "9b22bb0e6d52f81c638b757e3d9d23d10f3dfac6e5fe4a5460a8c0fd906823cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-zwj-sequences-clause-6433a35f2fcb",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_ZWJ_Sequences"
+      ],
+      "behaviour": "Emoji ZWJ Sequences — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_ZWJ_Sequences",
+        "clause_index": 1,
+        "clause_sha256": "6433a35f2fcbc985b2b4be549c9e000963be17014e96f3f18e0c797d52e3be0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-zwj-sequences-clause-d4855ffca82e",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_ZWJ_Sequences"
+      ],
+      "behaviour": "Emoji ZWJ Sequences — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_ZWJ_Sequences",
+        "clause_index": 10,
+        "clause_sha256": "d4855ffca82ee641bb03c647a757be8c7359c68ebc9a977d2ba319795aaa1b2b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.multi-person-groupings",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Multi_Person_Groupings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Multi-Person Groupings.",
+      "locator": {
+        "section_id": "Multi_Person_Groupings",
+        "text_sha256": "8f0d270bdc5f658ffd237521b6f1c62f471277ca5607f3f4115a09b31f5abdeb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.multi-person-groupings-clause-5213ba40d945",
+        "unicode-tr51-tr51-31.multi-person-groupings-clause-84cf2884869c",
+        "unicode-tr51-tr51-31.multi-person-groupings-clause-6a4120129182"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.multi-person-groupings-clause-5213ba40d945",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Multi_Person_Groupings"
+      ],
+      "behaviour": "Multi-Person Groupings — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Multi_Person_Groupings",
+        "clause_index": 0,
+        "clause_sha256": "5213ba40d945cfe0d44ae8dcdb2a6aad40c3d38ab1d30421473e69ba6b3adf65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.multi-person-groupings-clause-84cf2884869c",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Multi_Person_Groupings"
+      ],
+      "behaviour": "Multi-Person Groupings — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "Multi_Person_Groupings",
+        "clause_index": 23,
+        "clause_sha256": "84cf2884869c04ac52dd3d75f45b5dd932ba8564a577796a35960cd51676106a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.multi-person-groupings-clause-6a4120129182",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Multi_Person_Groupings"
+      ],
+      "behaviour": "Multi-Person Groupings — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "Multi_Person_Groupings",
+        "clause_index": 24,
+        "clause_sha256": "6a4120129182af555a317ddc5f034de4f9cb8b001f69db22099a8e2c06df9b26"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.multiperson-gender",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "multiperson_gender"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Multi-Person Gender.",
+      "locator": {
+        "section_id": "multiperson_gender",
+        "text_sha256": "bf967f4c1e5c0dfcf4f6696c38272a29f5d82c13a850991798fc35cad3032d49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.multiperson-gender-clause-70337cf039f3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.multiperson-gender-clause-70337cf039f3",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "multiperson_gender"
+      ],
+      "behaviour": "Multi-Person Gender — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "multiperson_gender",
+        "clause_index": 1,
+        "clause_sha256": "70337cf039f3ec9b0b2288fbfd4c505603132030e04928280c1de4e428998ec7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.multiperson-skintones",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "multiperson_skintones"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Multi-Person Skin Tones.",
+      "locator": {
+        "section_id": "multiperson_skintones",
+        "text_sha256": "cda4b011d19114b614f3bb56efdde1c00edccbbacfdd93eabad488050f54c35d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.multiperson-skintones-clause-2530a9268499",
+        "unicode-tr51-tr51-31.multiperson-skintones-clause-d06c90d1dcb6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.multiperson-skintones-clause-2530a9268499",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "multiperson_skintones"
+      ],
+      "behaviour": "Multi-Person Skin Tones — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "multiperson_skintones",
+        "clause_index": 1,
+        "clause_sha256": "2530a926849990ae581960c0f926bffd711907be0e17da8c3cd37abb1ffc7446"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.multiperson-skintones-clause-d06c90d1dcb6",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "multiperson_skintones"
+      ],
+      "behaviour": "Multi-Person Skin Tones — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "multiperson_skintones",
+        "clause_index": 7,
+        "clause_sha256": "d06c90d1dcb6a7b8259bb3637e08e3b1fa853bf4baac5f5f34c2b4064a478aa9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-implementation-notes",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Implementation_Notes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji Implementation Notes.",
+      "locator": {
+        "section_id": "Emoji_Implementation_Notes",
+        "text_sha256": "91a483f4fcc3a8570708bbaaef9ebed7fb2b67d3021ec892715eed90677bf62b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-variation-selector-notes",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Variation_Selector_Notes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji and Text Presentation Selectors.",
+      "locator": {
+        "section_id": "Emoji_Variation_Selector_Notes",
+        "text_sha256": "8a550752b42349a618ab27642ff07b3c439908b4d1a548cd100cdf0f963894ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-46ff882dbc6d",
+        "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-868f7c70a8ad",
+        "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-e20165b9e3d4",
+        "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-5f435b78e7fd",
+        "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-315d0ffda29a",
+        "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-e4d1cd7040f8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-46ff882dbc6d",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Variation_Selector_Notes"
+      ],
+      "behaviour": "Emoji and Text Presentation Selectors — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Variation_Selector_Notes",
+        "clause_index": 5,
+        "clause_sha256": "46ff882dbc6d01c2e99e6ccbfee75656275de6e0b2bc672232ee7ab91f590041"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-868f7c70a8ad",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Variation_Selector_Notes"
+      ],
+      "behaviour": "Emoji and Text Presentation Selectors — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Variation_Selector_Notes",
+        "clause_index": 8,
+        "clause_sha256": "868f7c70a8ada16abf11fdc67da05f7de50267c606eca4ce7547a8bdfb4f4702"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-e20165b9e3d4",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Variation_Selector_Notes"
+      ],
+      "behaviour": "Emoji and Text Presentation Selectors — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Variation_Selector_Notes",
+        "clause_index": 12,
+        "clause_sha256": "e20165b9e3d48d85050dd76b4d9c03e636d4ff9663564a6ab3e1478f97738942"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-5f435b78e7fd",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Variation_Selector_Notes"
+      ],
+      "behaviour": "Emoji and Text Presentation Selectors — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Variation_Selector_Notes",
+        "clause_index": 14,
+        "clause_sha256": "5f435b78e7fd1bb0b48e8af65da50d1488c93e6379526e61d5095d3eafa0a51f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-315d0ffda29a",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Variation_Selector_Notes"
+      ],
+      "behaviour": "Emoji and Text Presentation Selectors — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Variation_Selector_Notes",
+        "clause_index": 15,
+        "clause_sha256": "315d0ffda29a2f1494abd424e5117cd962a5ece60b4ab3c02cf13bb729392511"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-variation-selector-notes-clause-e4d1cd7040f8",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Variation_Selector_Notes"
+      ],
+      "behaviour": "Emoji and Text Presentation Selectors — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Variation_Selector_Notes",
+        "clause_index": 17,
+        "clause_sha256": "e4d1cd7040f8db4e9ba5a25f3ecfb93e00387941241034381ff11a50f24f79bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-with-tags-notes",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_With_Tags_Notes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Handling Tag Characters.",
+      "locator": {
+        "section_id": "Emoji_With_Tags_Notes",
+        "text_sha256": "15d0ba038b1e6486900b1c7fb5900c54ad48724e1e5bb61c6d44f71227107260"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.hair-components",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "hair_components"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Hair Components.",
+      "locator": {
+        "section_id": "hair_components",
+        "text_sha256": "c469d3e010194b7ca381dd757a014a3b5be86d9db847ff3a8a12a9d6821cd652"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.color",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color.",
+      "locator": {
+        "section_id": "color",
+        "text_sha256": "835839ea6fdc8a4047b26d7b4d550124bab21b662c32470ad303b5d3e994067e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.color-clause-c2176f3f4bd0",
+        "unicode-tr51-tr51-31.color-clause-1619904982aa"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.color-clause-c2176f3f4bd0",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "color"
+      ],
+      "behaviour": "Color — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "color",
+        "clause_index": 0,
+        "clause_sha256": "c2176f3f4bd0aacd1be3364580f0a6d2a8110d2f7e33748813e907f6c9c53005"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.color-clause-1619904982aa",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "color"
+      ],
+      "behaviour": "Color — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "color",
+        "clause_index": 4,
+        "clause_sha256": "1619904982aae46fa8bdd39269d7201c0f2d2d7572b9883676c2fd2302dd157b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.direction",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Direction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji Glyph Facing Direction.",
+      "locator": {
+        "section_id": "Direction",
+        "text_sha256": "e93ffaf4ff7ef62b9c5c58f687e59edf835fd16b5bd0086b82c005adf26a7031"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.direction-clause-9a1d115aacde"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.direction-clause-9a1d115aacde",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Direction"
+      ],
+      "behaviour": "Emoji Glyph Facing Direction — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Direction",
+        "clause_index": 0,
+        "clause_sha256": "9a1d115aacde2558bb3eda9f39eeb97ecb59513332cd0c069817bfe2935ca03b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.composing-zwj-seq",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "composing_zwj_seq"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Order of Emoji ZWJ Sequences.",
+      "locator": {
+        "section_id": "composing_zwj_seq",
+        "text_sha256": "1cb02636f6d2ce21ae0b3911fb10e0a28e104b3c5f571486eed27fef70fa7579"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.composing-zwj-seq-clause-6a91ba657ab7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.composing-zwj-seq-clause-6a91ba657ab7",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "composing_zwj_seq"
+      ],
+      "behaviour": "Order of Emoji ZWJ Sequences — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "composing_zwj_seq",
+        "clause_index": 0,
+        "clause_sha256": "6a91ba657ab79f05a9a57aae460d8b2680dd2c5861d4849b4191460a830fe50f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.identification",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Identification"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 3 Which Characters are Emoji.",
+      "locator": {
+        "section_id": "Identification",
+        "text_sha256": "2dcc1c4ada74029005d2249c503ab257df3350b080638b9f996fde3c75e465d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.identification-clause-ed0fec3a27a1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.identification-clause-ed0fec3a27a1",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Identification"
+      ],
+      "behaviour": "3 Which Characters are Emoji — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "Identification",
+        "clause_index": 3,
+        "clause_sha256": "ed0fec3a27a1b2742fc9d95918566edf417e871fd59899cb590d58ffc1bd81fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.presentation-style",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Presentation_Style"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 4 Presentation Style.",
+      "locator": {
+        "section_id": "Presentation_Style",
+        "text_sha256": "ddadb946904cddf6565414d5e13c969e1afb770aa4d94e8d70dbaa6f5299b173"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.presentation-style-clause-5e81bc41fe6e",
+        "unicode-tr51-tr51-31.presentation-style-clause-2e72093b07c5",
+        "unicode-tr51-tr51-31.presentation-style-clause-90da069151a6",
+        "unicode-tr51-tr51-31.presentation-style-clause-34f601f587e2",
+        "unicode-tr51-tr51-31.presentation-style-clause-edd1fcd7a1bf",
+        "unicode-tr51-tr51-31.presentation-style-clause-02316be86d49"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.presentation-style-clause-5e81bc41fe6e",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Presentation_Style"
+      ],
+      "behaviour": "4 Presentation Style — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Presentation_Style",
+        "clause_index": 2,
+        "clause_sha256": "5e81bc41fe6ee0fda62d475635c052758db0a6102026c476a85588c77705ebeb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.presentation-style-clause-2e72093b07c5",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Presentation_Style"
+      ],
+      "behaviour": "4 Presentation Style — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "Presentation_Style",
+        "clause_index": 3,
+        "clause_sha256": "2e72093b07c5efff89a81d090556894ad5a13a7f47ac7219779a44ed866f25f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.presentation-style-clause-90da069151a6",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Presentation_Style"
+      ],
+      "behaviour": "4 Presentation Style — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "Presentation_Style",
+        "clause_index": 5,
+        "clause_sha256": "90da069151a6e82eb1b994a375ebd163d77bb1a7ca72dd792454d93a51256be9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.presentation-style-clause-34f601f587e2",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Presentation_Style"
+      ],
+      "behaviour": "4 Presentation Style — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "Presentation_Style",
+        "clause_index": 6,
+        "clause_sha256": "34f601f587e2b7b6169033de70634e8b246ea6eba27f8e756ff727f5a42f43cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.presentation-style-clause-edd1fcd7a1bf",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Presentation_Style"
+      ],
+      "behaviour": "4 Presentation Style — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "Presentation_Style",
+        "clause_index": 7,
+        "clause_sha256": "edd1fcd7a1bff77d4653b5aa2611c234acb0194875b671ef6086e804e92e67ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.presentation-style-clause-02316be86d49",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Presentation_Style"
+      ],
+      "behaviour": "4 Presentation Style — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "Presentation_Style",
+        "clause_index": 21,
+        "clause_sha256": "02316be86d4920488fbe28ea16d0e94d02d600db2f001a231b16308f708f1fa5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-variation-selectors",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Variation_Selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji and Text Presentation Selectors.",
+      "locator": {
+        "section_id": "Emoji_Variation_Selectors",
+        "text_sha256": "1d56e7f41043154504dc7978ce7436874c20d84625c8c10fb7c75dcb20c07116"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-locale-extension",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Locale_Extension"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji Locale Extension.",
+      "locator": {
+        "section_id": "Emoji_Locale_Extension",
+        "text_sha256": "8cf490e223fc9b80ac87242f9828b1333273193d033a1f7378615febb1fce91b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-script",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Script"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emoji Script Codes.",
+      "locator": {
+        "section_id": "Emoji_Script",
+        "text_sha256": "6e9929fa3e58729f7dea6a4158f0f02076657baff6d9ac54a15ca6811c7c9b11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.other-emoji-presentation-approaches",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Other_Emoji_Presentation_Approaches"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Other Approaches for Control of Emoji Presentation.",
+      "locator": {
+        "section_id": "Other_Emoji_Presentation_Approaches",
+        "text_sha256": "0675f32b73478c5c43435d8854055a68f4a87c3e84f92dcfd38812edf8607195"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sorting",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sorting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 5 Ordering and Grouping.",
+      "locator": {
+        "section_id": "Sorting",
+        "text_sha256": "a515e0243e3ba7d774b3a6addfc492b4c7f9d2497e75dd8234a01145d51bde47"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.sorting-clause-b185c754da4e",
+        "unicode-tr51-tr51-31.sorting-clause-3e668a189beb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sorting-clause-b185c754da4e",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sorting"
+      ],
+      "behaviour": "5 Ordering and Grouping — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Sorting",
+        "clause_index": 0,
+        "clause_sha256": "b185c754da4e40318c997a0c6ad8c55b4a8ffd3699b68b6fb6950ea5048491ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sorting-clause-3e668a189beb",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sorting"
+      ],
+      "behaviour": "5 Ordering and Grouping — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Sorting",
+        "clause_index": 2,
+        "clause_sha256": "3e668a189beb17503a729d4a86eed909ed9b350c6bdc4dbcaa6cfa93c1377a5d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.input",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Input"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 6 Input.",
+      "locator": {
+        "section_id": "Input",
+        "text_sha256": "f793c7cf264b9956e2745197c88eaadc73e6a596b3feb66aa9dddc5f1cd0d3cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.input-clause-85684169c4df",
+        "unicode-tr51-tr51-31.input-clause-8e3134fc3c19"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.input-clause-85684169c4df",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Input"
+      ],
+      "behaviour": "6 Input — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "Input",
+        "clause_index": 3,
+        "clause_sha256": "85684169c4dfe508b55c594e80708896302c2e60ede01c318e1b65f7eafa66cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.input-clause-8e3134fc3c19",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Input"
+      ],
+      "behaviour": "6 Input — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "Input",
+        "clause_index": 11,
+        "clause_sha256": "8e3134fc3c198bba364f7941f1641f47877fcbc8b137fdc5f209e8fd66769119"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.searching",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Searching"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 7 Searching.",
+      "locator": {
+        "section_id": "Searching",
+        "text_sha256": "80828bf6a3878c42820c701b5d3d016880ab1aa120f71804b95a3d5612f060ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.searching-clause-084b510a8ac3",
+        "unicode-tr51-tr51-31.searching-clause-fd2c6e3d2fac"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.searching-clause-084b510a8ac3",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Searching"
+      ],
+      "behaviour": "7 Searching — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Searching",
+        "clause_index": 1,
+        "clause_sha256": "084b510a8ac3136fb3b498f31c7a6fd715b7aff16e44d658a243024f4ae4cfc7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.searching-clause-fd2c6e3d2fac",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Searching"
+      ],
+      "behaviour": "7 Searching — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Searching",
+        "clause_index": 2,
+        "clause_sha256": "fd2c6e3d2fac1298cf6e6a36835ee8c4dbb301c7c98c8fca219c111713ec5792"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.longer-term",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Longer_Term"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 8 Longer Term Solutions.",
+      "locator": {
+        "section_id": "Longer_Term",
+        "text_sha256": "0794155758d88b48cce929b99cb3676d77e3130ceff89d6fcedfebd6dbace0bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.longer-term-clause-bc825bc2251b",
+        "unicode-tr51-tr51-31.longer-term-clause-d97530d3bf50"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.longer-term-clause-bc825bc2251b",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Longer_Term"
+      ],
+      "behaviour": "8 Longer Term Solutions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Longer_Term",
+        "clause_index": 0,
+        "clause_sha256": "bc825bc2251b4aff74c1fc46d522b76345902eb19f7a0a85cf39382bb7cbbc3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.longer-term-clause-d97530d3bf50",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Longer_Term"
+      ],
+      "behaviour": "8 Longer Term Solutions — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Longer_Term",
+        "clause_index": 4,
+        "clause_sha256": "d97530d3bf506f7aa6395f3416e8e37373dc69c64752849ca7d3f5fdeccdbb8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-properties-and-data-files",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Properties_and_Data_Files"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Annex A: Emoji Properties and Data Files.",
+      "locator": {
+        "section_id": "Emoji_Properties_and_Data_Files",
+        "text_sha256": "0f9b56448a965d0e45ccaee96139c02fde958a2b789725e2619bd26bc6fa4598"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.emoji-properties-and-data-files-clause-50d2087496e0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.emoji-properties-and-data-files-clause-50d2087496e0",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Emoji_Properties_and_Data_Files"
+      ],
+      "behaviour": "Annex A: Emoji Properties and Data Files — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "Emoji_Properties_and_Data_Files",
+        "clause_index": 19,
+        "clause_sha256": "50d2087496e0460ca7a46975efafdac03ebf6736686ccd03bdf39c885fdd87f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.data-files",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Data_Files"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Data Files.",
+      "locator": {
+        "section_id": "Data_Files",
+        "text_sha256": "67175a21b496f3667143c51efa787a77a8e2cfb047ea983512f574581e8340e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.flags",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Flags"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Annex B: Valid Emoji Flag Sequences.",
+      "locator": {
+        "section_id": "Flags",
+        "text_sha256": "24a39ae05dbac818b07fa860c0fd342075325025314dadb1369d302ad7e553fa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.flags-clause-748c2ffe3b13"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.flags-clause-748c2ffe3b13",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Flags"
+      ],
+      "behaviour": "Annex B: Valid Emoji Flag Sequences — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Flags",
+        "clause_index": 2,
+        "clause_sha256": "748c2ffe3b13a4516473d3b93c1a9060b9b64e473ec449d441696ea6a46e3f1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.flag-presentation",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Flag_Presentation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Presentation.",
+      "locator": {
+        "section_id": "Flag_Presentation",
+        "text_sha256": "6be4453c5227b4aa427a51c2440e7bffe7bafec613d0f969c6fa6f99d0cba83c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.flag-presentation-clause-37beaf60d4f9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.flag-presentation-clause-37beaf60d4f9",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Flag_Presentation"
+      ],
+      "behaviour": "Presentation — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Flag_Presentation",
+        "clause_index": 1,
+        "clause_sha256": "37beaf60d4f90b4830b03b5c7fb4743cc43d427103ad7603e08b2dfe3e1c8bb8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.flag-ordering",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Flag_Ordering"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ordering.",
+      "locator": {
+        "section_id": "Flag_Ordering",
+        "text_sha256": "5aee59f9b116d8cd125b50f1022f21199c561083b543305edf5f14cd6941c7ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.valid-emoji-tag-sequences",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "valid-emoji-tag-sequences"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Annex C: Valid Emoji Tag Sequences.",
+      "locator": {
+        "section_id": "valid-emoji-tag-sequences",
+        "text_sha256": "5b28b26dfb9bd055c7cc4ddef0a425411d4521d95c52a997b193635465ae81a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-b53154893b2f",
+        "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-56f76e692f2c",
+        "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-848a13d68642",
+        "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-df55c96650c2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-b53154893b2f",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "valid-emoji-tag-sequences"
+      ],
+      "behaviour": "Annex C: Valid Emoji Tag Sequences — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "valid-emoji-tag-sequences",
+        "clause_index": 0,
+        "clause_sha256": "b53154893b2fac970aa4e85a5558e4e99cdb01052615855bdd15511161b15cca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-56f76e692f2c",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "valid-emoji-tag-sequences"
+      ],
+      "behaviour": "Annex C: Valid Emoji Tag Sequences — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "valid-emoji-tag-sequences",
+        "clause_index": 1,
+        "clause_sha256": "56f76e692f2c94b9dfa1b2c94a90adff58a2995c46c440af2189be08f802a7a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-848a13d68642",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "valid-emoji-tag-sequences"
+      ],
+      "behaviour": "Annex C: Valid Emoji Tag Sequences — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "valid-emoji-tag-sequences",
+        "clause_index": 2,
+        "clause_sha256": "848a13d686423b4da283a7cc63a484d1bf897c45c3c41616baba7075e062e293"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.valid-emoji-tag-sequences-clause-df55c96650c2",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "valid-emoji-tag-sequences"
+      ],
+      "behaviour": "Annex C: Valid Emoji Tag Sequences — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "valid-emoji-tag-sequences",
+        "clause_index": 5,
+        "clause_sha256": "df55c96650c24a459c060522ae75222e3b2738097d1bccfcba2abde33b5bb1c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.flag-emoji-tag-sequences",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "flag-emoji-tag-sequences"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flag Emoji Tag Sequences.",
+      "locator": {
+        "section_id": "flag-emoji-tag-sequences",
+        "text_sha256": "ff7a3989733af996ad46257189cb99d0946710bd2e2e076bb9bbd75b5104f862"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-f17c40c4aa81",
+        "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-90c3a4714707",
+        "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-2034ad04cb1c",
+        "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-e65e4b0eef11"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-f17c40c4aa81",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "flag-emoji-tag-sequences"
+      ],
+      "behaviour": "Flag Emoji Tag Sequences — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "flag-emoji-tag-sequences",
+        "clause_index": 0,
+        "clause_sha256": "f17c40c4aa81cbcf87631ee8b6121931d297daaf491918aecab692f68f305211"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-90c3a4714707",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "flag-emoji-tag-sequences"
+      ],
+      "behaviour": "Flag Emoji Tag Sequences — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "flag-emoji-tag-sequences",
+        "clause_index": 8,
+        "clause_sha256": "90c3a471470741fc74e6ba8c68632b15dfacbe20e74241bdb6c1695c4cf29939"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-2034ad04cb1c",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "flag-emoji-tag-sequences"
+      ],
+      "behaviour": "Flag Emoji Tag Sequences — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "flag-emoji-tag-sequences",
+        "clause_index": 9,
+        "clause_sha256": "2034ad04cb1c8561fe0e0fb50357fb76e5fa7d4e253846f10ddc8b016c458074"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.flag-emoji-tag-sequences-clause-e65e4b0eef11",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "flag-emoji-tag-sequences"
+      ],
+      "behaviour": "Flag Emoji Tag Sequences — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "flag-emoji-tag-sequences",
+        "clause_index": 11,
+        "clause_sha256": "e65e4b0eef119a682fab0872f490533bb523baaebada9e7767d5f92abe87d115"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sample-valid-emoji-tag-sequences",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sample_Valid_Emoji_Tag_Sequences"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sample Valid Emoji Tag Sequences.",
+      "locator": {
+        "section_id": "Sample_Valid_Emoji_Tag_Sequences",
+        "text_sha256": "106eac79bd1143977c39858779193ab96c192b5a7b0029521227259c58bf6c69"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.sample-valid-emoji-tag-sequences-clause-6c0e2a21911a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sample-valid-emoji-tag-sequences-clause-6c0e2a21911a",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sample_Valid_Emoji_Tag_Sequences"
+      ],
+      "behaviour": "Sample Valid Emoji Tag Sequences — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Sample_Valid_Emoji_Tag_Sequences",
+        "clause_index": 2,
+        "clause_sha256": "6c0e2a21911a48a976c8facca0a04b251b42464d4a01b8be797e0e0255f1f60b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sample_Invalid_Emoji_Tag_Sequences"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sample Invalid Emoji Tag Sequences.",
+      "locator": {
+        "section_id": "Sample_Invalid_Emoji_Tag_Sequences",
+        "text_sha256": "a0328939841eb3d722a0edcd727cd200fde09ad8cde3902eb785b1c11143dcc2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-26bb08a86976",
+        "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-53466d5cc0f9",
+        "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-c523399651a5",
+        "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-0dd31b8ee229"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-26bb08a86976",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sample_Invalid_Emoji_Tag_Sequences"
+      ],
+      "behaviour": "Sample Invalid Emoji Tag Sequences — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Sample_Invalid_Emoji_Tag_Sequences",
+        "clause_index": 0,
+        "clause_sha256": "26bb08a869767fc510346b72a2a58a3ae304080a90fe17430d6d27e47f4d4156"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-53466d5cc0f9",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sample_Invalid_Emoji_Tag_Sequences"
+      ],
+      "behaviour": "Sample Invalid Emoji Tag Sequences — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Sample_Invalid_Emoji_Tag_Sequences",
+        "clause_index": 1,
+        "clause_sha256": "53466d5cc0f9e8e1420714f09fff95f98d41c545e8c3e18110403f1f0b74c75c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-c523399651a5",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sample_Invalid_Emoji_Tag_Sequences"
+      ],
+      "behaviour": "Sample Invalid Emoji Tag Sequences — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "Sample_Invalid_Emoji_Tag_Sequences",
+        "clause_index": 11,
+        "clause_sha256": "c523399651a5f85ac2da2bd81ea58a952bfb5dd0f613b0243249122d79b6d709"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sample-invalid-emoji-tag-sequences-clause-0dd31b8ee229",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sample_Invalid_Emoji_Tag_Sequences"
+      ],
+      "behaviour": "Sample Invalid Emoji Tag Sequences — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "Sample_Invalid_Emoji_Tag_Sequences",
+        "clause_index": 13,
+        "clause_sha256": "0dd31b8ee2298283d3bbae961f31b926afbca647d67aeaafdb743b73cde65c79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sample-ill-formed-emoji-tag-sequences",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sample_Ill_formed_Emoji_Tag_Sequences"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sample Ill-formed Emoji Tag Sequences.",
+      "locator": {
+        "section_id": "Sample_Ill_formed_Emoji_Tag_Sequences",
+        "text_sha256": "84b591ce44dfa6f6c4bc477ab986d3aeb875cfc4eb37cbcdd1f6fc68829ff9bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.sample-ill-formed-emoji-tag-sequences-clause-dffe0a397495"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.sample-ill-formed-emoji-tag-sequences-clause-dffe0a397495",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Sample_Ill_formed_Emoji_Tag_Sequences"
+      ],
+      "behaviour": "Sample Ill-formed Emoji Tag Sequences — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Sample_Ill_formed_Emoji_Tag_Sequences",
+        "clause_index": 0,
+        "clause_sha256": "dffe0a397495a106c5448245b73c95b5983d1f8abd6ee47f708afceadc184909"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.rights-to-emoji-images",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Rights_to_Emoji_Images"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rights to Emoji Images.",
+      "locator": {
+        "section_id": "Rights_to_Emoji_Images",
+        "text_sha256": "81988912b97da6bc28ddbe8528bba64666a33455bede39dc6d074273b7ce78d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.modifications",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Modifications"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Modifications.",
+      "locator": {
+        "section_id": "Modifications",
+        "text_sha256": "a204601cb434d04e8d89d48a2013ee475c10ba2cf523eb68ce49f6d3c2a87cce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr51-tr51-31.modifications-clause-fa769f06ae3d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.modifications-clause-fa769f06ae3d",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Modifications"
+      ],
+      "behaviour": "Modifications — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "Modifications",
+        "clause_index": 9,
+        "clause_sha256": "fa769f06ae3d50f8db20f137081a5fa903354a11a5fac5a717920788cb0cbd92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.contents",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Contents.",
+      "locator": {
+        "section_id": "Contents",
+        "text_sha256": "0dbdda060026897123da83bb2ba80e72f0219a6a7c9eed5256981cc06f666c3f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.acknowledgements",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "Acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "Acknowledgements",
+        "text_sha256": "e6b109caba9bc0609c85e661d820fbb514c9cc4b51c52ac20ff7fc6b427169ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr51-tr51-31.references",
+      "family": "unicode-tr51-tr51-31",
+      "source_id": "unicode-tr51-tr51-31",
+      "sections": [
+        "References"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "References",
+        "text_sha256": "921241508c18e6e6ecaff100937ae50a32f0dcc2d625781d6e5d3905533fa332"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

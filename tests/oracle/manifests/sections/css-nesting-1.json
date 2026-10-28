@@ -1,0 +1,488 @@
+{
+  "schema_version": 1,
+  "source_id": "css-nesting-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Nesting Module Level 1",
+      "level": 1,
+      "text_sha256": "3d82e0d8e3e4c7d5d141ae6f25136cede44fc7caee1afec915deb4d992f57fb1",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "14c9be4424abdfcddee989e7071ae5c014ac3f8012ef1fe0bd16e629db31c4f3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "294b07b9229493703642b5a6971b75531d7c96c6c36fe2db8b0f4985522617a4",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "1bd5c5f2f761b610873f5ee9dd327d275a61c72844009d27647ef61a19187afb",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "07bb8a8c79bddb4f3b836bd86b2230152ae911444fb1a8083197fd55c7b1eab7",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "ee9a9f081cb17c26a5a4ea67f853ab44fb4290f24c15507a2d10c4b53a2d2e85",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.placement"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Values",
+      "level": 3,
+      "text_sha256": "78eba7ff2d1df3bc1639576d81da86ff648d6086f8e426b109c1ce83e0763a32",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.values"
+        ]
+      }
+    },
+    {
+      "id": "explainer",
+      "title": "2. Explainer",
+      "level": 2,
+      "text_sha256": "bd0cb2f2bb25651c49408f5b076f3a899046667b693050d9db83d503999cd22d",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.explainer"
+        ]
+      }
+    },
+    {
+      "id": "nesting",
+      "title": "3. Nesting Style Rules",
+      "level": 2,
+      "text_sha256": "b0e25fe3c766b12d03b448d67d8f25dad8da3da3c48cf34f1a4fc837d63078fc",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.nesting",
+          "css-nesting-1.nesting-clause-3ddcd53a51c5",
+          "css-nesting-1.foundation-css-nesting"
+        ]
+      }
+    },
+    {
+      "id": "syntax",
+      "title": "3.1. Syntax",
+      "level": 3,
+      "text_sha256": "d4f6e99adb58135b45bf8bc23a49b90925d1e9029cb9a45106d6a46466e35c2f",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.syntax",
+          "css-nesting-1.syntax-clause-90fa1602b3df",
+          "css-nesting-1.syntax-clause-bf4242a969d5",
+          "css-nesting-1.syntax-clause-3096f34d11ba",
+          "css-nesting-1.foundation-css-nesting"
+        ]
+      }
+    },
+    {
+      "id": "syntax-examples",
+      "title": "3.2. Examples",
+      "level": 3,
+      "text_sha256": "59bb6994dc47d40ed065a99e1f30b8ea20925f55f7c5d08072d7eeac229b1881",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.syntax-examples"
+        ]
+      }
+    },
+    {
+      "id": "conditionals",
+      "title": "3.3. Nesting Other At-Rules",
+      "level": 3,
+      "text_sha256": "4a55a429a2d7561307608225d5fdddf581acc4ad45327949d5c108ae55793a86",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.conditionals",
+          "css-nesting-1.conditionals-clause-8db560cbd7a3",
+          "css-nesting-1.foundation-css-nesting"
+        ]
+      }
+    },
+    {
+      "id": "nesting-at-scope",
+      "title": "3.3.1. Nested @scope Rules",
+      "level": 4,
+      "text_sha256": "d1c683ceae08e905596f3fe5bd5eb933e093bcbbe3fa1445d106649fe0c4847d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.nesting-at-scope",
+          "css-nesting-1.foundation-css-nesting"
+        ]
+      }
+    },
+    {
+      "id": "mixing",
+      "title": "3.4. Mixing Nesting Rules and Declarations",
+      "level": 3,
+      "text_sha256": "067658d4a5ad239ec25e18ca964d698e2722dca7b76d47c899b50176bf5fc6ce",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.mixing",
+          "css-nesting-1.foundation-css-nesting"
+        ]
+      }
+    },
+    {
+      "id": "nest-selector",
+      "title": "4. Nesting Selector: the & selector",
+      "level": 2,
+      "text_sha256": "2f7b971b13be15bc12e1ce89887b80d675e8e62486e123b90f47ea61ff244f78",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.nest-selector",
+          "css-nesting-1.nest-selector-clause-9d3af682fa8e",
+          "css-nesting-1.nest-selector-clause-df4321859884",
+          "css-nesting-1.nest-selector-clause-6d6e4cd283c3",
+          "css-nesting-1.nest-selector-clause-53bf008766c7",
+          "css-nesting-1.nest-selector-clause-1e6844aa2ab2",
+          "css-nesting-1.nest-selector-clause-fd2108b053bc",
+          "css-nesting-1.foundation-css-nesting"
+        ]
+      }
+    },
+    {
+      "id": "nested-declarations",
+      "title": "5. The Nested Declarations Rule",
+      "level": 2,
+      "text_sha256": "436705ceca63b98ed851dce437463018d89863ba7183e689147b52f63cf793b2",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.nested-declarations",
+          "css-nesting-1.foundation-css-nesting"
+        ]
+      }
+    },
+    {
+      "id": "cssom",
+      "title": "6. CSSOM",
+      "level": 2,
+      "text_sha256": "c011467ed23e1ff63f46f5c669009a0966e2c5a46e3d575cadf3196b22b9ee77",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.cssom",
+          "css-nesting-1.cssom-clause-5bee87ad0964"
+        ]
+      }
+    },
+    {
+      "id": "the-cssnestrule",
+      "title": "6.1. The CSSNestedDeclarations Interface",
+      "level": 3,
+      "text_sha256": "c38d482a0140fa2b118b70a2d9800ac5c041bb9dc092171b140330e241b6dab4",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.the-cssnestrule",
+          "css-nesting-1.the-cssnestrule-clause-2523ef4433ef"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.security"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "7. Changes",
+      "level": 2,
+      "text_sha256": "cf041938d783a105a9f8bf38ecb0b6e323c73ac82d29171c5324a1f867944837",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.w3c-conventions",
+          "css-nesting-1.w3c-conventions-clause-5c98c879f070",
+          "css-nesting-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.w3c-conformance-classes",
+          "css-nesting-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-nesting-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.w3c-partial",
+          "css-nesting-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.w3c-testing",
+          "css-nesting-1.w3c-testing-clause-1e0fff369221",
+          "css-nesting-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "bea38a30cebc8528f985bd30fcbd193ef3e28c3fa4c34d52a869271f2955b614",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "8797f843c2960e87c8809330aadd16064c8929fa7b71a98103604cae5fb33d2f",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "9dc2c00063690e9acf45f1b274298a740d6a5d27247c6d318f04e0a833dc27b0",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "b9ef09c10fa6c2b0aceccf793d9afad904dce8440c750bca732c64389c32a240",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "ceac7264659908fca72e73bbbc339200ad60940f68a9a8a8007c1e9bc561e053",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "c39ea0bd59b1b665cbe16e200b50b9e9fb468d680883d714c71375c1b2c65ea7",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-nesting-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

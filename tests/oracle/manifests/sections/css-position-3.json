@@ -1,0 +1,739 @@
+{
+  "schema_version": 1,
+  "source_id": "css-position-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Positioned Layout Module Level 3",
+      "level": 1,
+      "text_sha256": "88248ca62b1e4a87b32a73edf7b9528823e42d94819036b7c49f49d80b0b750b",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "20f7ab38f7e24cd0574e24416024a9827c26c1eceb3c49c7c444785aa06eb00c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "e5b8af2684365b5316c78f7b0b9139f0d73034768c12ce83df5fad22b50063b0",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "991c93a2f59090c5ce8c121f5ecae99751c931ddf9448e6104a63b759038f620",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "a4b9e6ec16db9dd4484b5711d81f615c9a6fa9acafca75daaf732be76d16179a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "21e28e4e59e67432535c3a618334123f7daf09582a6453dd7a29bf28602ca7f2",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.placement"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.values"
+        ]
+      }
+    },
+    {
+      "id": "position-property",
+      "title": "2. Choosing A Positioning Scheme: position property",
+      "level": 2,
+      "text_sha256": "f6aef3987326a14f96b026cd517d68043d5fa1ae063b41d48b790e381ba1c6e0",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.position-property",
+          "css-position-3.position-property-clause-cca2516ebb1d",
+          "css-position-3.fixed-output-repetition"
+        ]
+      }
+    },
+    {
+      "id": "def-cb",
+      "title": "2.1. Containing Blocks of Positioned Boxes",
+      "level": 3,
+      "text_sha256": "15d94c716dd91d051ac2014708fba28a908f658c65067b06b6dc4d66beff6206",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.def-cb"
+        ]
+      }
+    },
+    {
+      "id": "original-cb",
+      "title": "2.1.1. Further Adjustments to the Containing Block",
+      "level": 4,
+      "text_sha256": "e82a9b4ee79fbb8e8f7cf1937a3acf7edc88b12cca7f8d27d02cf38916901579",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.original-cb"
+        ]
+      }
+    },
+    {
+      "id": "stacking",
+      "title": "2.2. Painting Order and Stacking Contexts",
+      "level": 3,
+      "text_sha256": "0576480d6da1882dee3fa4070ecc284d17c9e6b2c457cdfcf1ce41dd19c0ced9",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.stacking"
+        ]
+      }
+    },
+    {
+      "id": "coords",
+      "title": "3. Positioning Coordinates",
+      "level": 2,
+      "text_sha256": "da721b0321b473b4d9586229955621cbc2f1f48afb19649b898773f76e7d2221",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.coords"
+        ]
+      }
+    },
+    {
+      "id": "insets",
+      "title": "3.1. Box Insets: the top, right, bottom, left, inset-block-start, inset-inline-start, inset-block-end, and inset-inline-end properties",
+      "level": 3,
+      "text_sha256": "bf756084e6a4134853eab658790dea93d64999d3f227f4743f907733a57dc801",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.insets",
+          "css-position-3.insets-clause-cca2516ebb1d",
+          "css-position-3.insets-clause-70ca303ace2b",
+          "css-position-3.insets-clause-4b59fe755d34"
+        ]
+      }
+    },
+    {
+      "id": "inset-shorthands",
+      "title": "3.2. Box Insets Shorthands: the inset-block, inset-inline, and inset properties",
+      "level": 3,
+      "text_sha256": "e22c0bbf3e82400d7da2a31f7fa9e6db5344ff5b17b19f71d665a1cd57ed9648",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.inset-shorthands",
+          "css-position-3.inset-shorthands-clause-cca2516ebb1d",
+          "css-position-3.inset-shorthands-clause-2cfd6192756b",
+          "css-position-3.inset-shorthands-clause-0ffb95dc2463",
+          "css-position-3.inset-shorthands-clause-f643aece3940"
+        ]
+      }
+    },
+    {
+      "id": "relpos-insets",
+      "title": "3.3. Relative Positioning",
+      "level": 3,
+      "text_sha256": "e3cbeeed34e2fb914b8d2c9df22703d7dc6410eb7b18e784fbca54d76b11d097",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.relpos-insets",
+          "css-position-3.relpos-insets-clause-e6d4958e506d",
+          "css-position-3.relpos-insets-clause-25895a6400a7"
+        ]
+      }
+    },
+    {
+      "id": "stickypos-insets",
+      "title": "3.4. Sticky positioning",
+      "level": 3,
+      "text_sha256": "e17f8c70b5e082f07826b77ef5472e45a097110081b75e8985385f422cfb6d00",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.stickypos-insets",
+          "css-position-3.stickypos-insets-clause-0f33563814b5"
+        ]
+      }
+    },
+    {
+      "id": "stickypos-scroll",
+      "title": "3.4.1. Scroll Position of Sticky-Positioned Boxes",
+      "level": 4,
+      "text_sha256": "05f793fd1d4fe8065c462219d746dcf0c286875670edda199d486dd1cdff9153",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.stickypos-scroll",
+          "css-position-3.stickypos-scroll-clause-fe3548889613"
+        ]
+      }
+    },
+    {
+      "id": "abspos-insets",
+      "title": "3.5. Absolute (and Fixed) Positioning",
+      "level": 3,
+      "text_sha256": "fe40f56aac05bcb607e5283289031e6c9dd590ed91159a46a7ae2a04a757fae7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abspos-insets"
+        ]
+      }
+    },
+    {
+      "id": "resolving-insets",
+      "title": "3.5.1. Resolvings Insets for the “Inset-Modified Containing Block”",
+      "level": 4,
+      "text_sha256": "fa3409ff3db114a54c3891e10b098cc5ddc038468b1101396335de1f00ee7b88",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.resolving-insets"
+        ]
+      }
+    },
+    {
+      "id": "staticpos-rect",
+      "title": "3.5.2. Calculating the Static Position and the “Static-Position Rectangle”",
+      "level": 4,
+      "text_sha256": "2ec4d2947cab542c11d2b47a2118d997d20f7ffa825f04e439bf05c01f6ec07a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.staticpos-rect",
+          "css-position-3.staticpos-rect-clause-5960f7da2e9d",
+          "css-position-3.staticpos-rect-clause-f45fdc402d98"
+        ]
+      }
+    },
+    {
+      "id": "abspos-breaking",
+      "title": "3.5.3. Fragmenting Absolutely-positioned Elements",
+      "level": 4,
+      "text_sha256": "8c8bbd79cfacf02144e7026ef72dbc88fc478d2b5ad14678347420b2113c48d9",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abspos-breaking",
+          "css-position-3.abspos-breaking-clause-8fc39f980e45"
+        ]
+      }
+    },
+    {
+      "id": "abspos-layout",
+      "title": "4. Absolute Positioning Layout Model",
+      "level": 2,
+      "text_sha256": "fc26e28bd83deac17a010afd497fde75eb8cb38865bec767d1234d7836e276e6",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abspos-layout"
+        ]
+      }
+    },
+    {
+      "id": "abspos-auto-size",
+      "title": "4.1. Automatic Sizes of Absolutely-Positioned Boxes",
+      "level": 3,
+      "text_sha256": "f5948e1c8cfd65212f9caaf72e520a7bc31c718201448b6078c03466707454b4",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abspos-auto-size",
+          "css-position-3.abspos-auto-size-clause-7cf8f119f7e8",
+          "css-position-3.abspos-auto-size-clause-c46238228dc9"
+        ]
+      }
+    },
+    {
+      "id": "abspos-margins",
+      "title": "4.2. Auto Margins of Absolutely-Positioned Boxes",
+      "level": 3,
+      "text_sha256": "6cb3bc2a68ad6c4cd5be8b63d14d73cce4a4653e62bf8fa2ccfe1f1e34590312",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abspos-margins",
+          "css-position-3.abspos-margins-clause-9b3da9a46af1",
+          "css-position-3.abspos-margins-clause-2e84a33c7c86"
+        ]
+      }
+    },
+    {
+      "id": "abspos-alignment",
+      "title": "5. Self-Alignment of Absolutely Positioned Boxes",
+      "level": 2,
+      "text_sha256": "323133bdd0f26724d23ab044cb324fd849d37034d53233b52ff72819e52d2092",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abspos-alignment",
+          "css-position-3.abspos-alignment-clause-c89c245c1444"
+        ]
+      }
+    },
+    {
+      "id": "abspos-old",
+      "title": "6. Old Absolute Positioning Layout Model",
+      "level": 2,
+      "text_sha256": "0f505f26df33dbf29717a3488ad151b7c1452f245fbe0ee375d05a224c186cd1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abspos-old",
+          "css-position-3.abspos-old-clause-0f505f26df33"
+        ]
+      }
+    },
+    {
+      "id": "abs-non-replaced-width",
+      "title": "6.1. The Width of Absolutely-Positioned, Non-Replaced Elements",
+      "level": 3,
+      "text_sha256": "3cad1cc68b1a85306183be6832d7911e93bb871aa3a6d67cdc27336c6bd9bf97",
+      "clause_count": 83,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abs-non-replaced-width"
+        ]
+      }
+    },
+    {
+      "id": "abs-replaced-width",
+      "title": "6.2. The width of absolute or fixed positioned, replaced elements",
+      "level": 3,
+      "text_sha256": "3178729073ab9a4f30872fa8fd358fe763d833adc6f931714f166d7764507644",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abs-replaced-width",
+          "css-position-3.abs-replaced-width-clause-86e005c85e4a",
+          "css-position-3.abs-replaced-width-clause-f24f5ff87f6a",
+          "css-position-3.abs-replaced-width-clause-3930b04042c1",
+          "css-position-3.abs-replaced-width-clause-25e5b2be47ef",
+          "css-position-3.abs-replaced-width-clause-006720e961b6",
+          "css-position-3.abs-replaced-width-clause-0eb7759f19c2"
+        ]
+      }
+    },
+    {
+      "id": "abs-non-replaced-height",
+      "title": "6.3. The Height Of Absolutely Positioned, Non-Replaced Elements",
+      "level": 3,
+      "text_sha256": "b1ec0b9151ec0bfdc301cea20d9d426f5c6a67bc1563fb0c1598bf82f9203562",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abs-non-replaced-height",
+          "css-position-3.abs-non-replaced-height-clause-2230b21209d5"
+        ]
+      }
+    },
+    {
+      "id": "abs-replaced-height",
+      "title": "6.4. The Height Of Absolutely Positioned, Replaced Elements",
+      "level": 3,
+      "text_sha256": "5affd7e5b0a118d2aa55f7cfc41b7cb4b2b8b2c938e769eef832a03fc4cbf7ec",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.abs-replaced-height",
+          "css-position-3.abs-replaced-height-clause-2f03742620b5",
+          "css-position-3.abs-replaced-height-clause-c659d763c14d",
+          "css-position-3.abs-replaced-height-clause-2999a28cfeb3",
+          "css-position-3.abs-replaced-height-clause-21f60f6a9e12",
+          "css-position-3.abs-replaced-height-clause-59959874d0a2"
+        ]
+      }
+    },
+    {
+      "id": "comparison",
+      "title": "7. Informative Comparison of Normal Flow, Floats, and Positioning",
+      "level": 2,
+      "text_sha256": "299c512f5ac6bf217e3c26af2386d3a0f2713bed883635891b1f9b9d4a61e1f3",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.comparison"
+        ]
+      }
+    },
+    {
+      "id": "comp-normal-flow",
+      "title": "7.1. Normal Flow Example",
+      "level": 3,
+      "text_sha256": "b3eb1fae04497e31bde05103c294e80f4abb8dc19d59f6e963360198b512bce0",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.comp-normal-flow"
+        ]
+      }
+    },
+    {
+      "id": "comp-relpos",
+      "title": "7.2. Relative Positioning Example",
+      "level": 3,
+      "text_sha256": "b29313e0e210242f23bc81f95dc5696739b84d85faa1e424d5277d18a250a3a8",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.comp-relpos"
+        ]
+      }
+    },
+    {
+      "id": "comp-floating",
+      "title": "7.3. Floating Example",
+      "level": 3,
+      "text_sha256": "0b4f4540d1c3d202f79636475baeb8239911cad633932e85c7f677f99f31abc6",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.comp-floating"
+        ]
+      }
+    },
+    {
+      "id": "comp-abspos",
+      "title": "7.4. Absolute Positioning Example",
+      "level": 3,
+      "text_sha256": "b8c520229288b3583a2e9d514b7cd6cb21fdfe9c2f75de044ecf3667c35888d4",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.comp-abspos"
+        ]
+      }
+    },
+    {
+      "id": "ack",
+      "title": "8. Acknowledgments",
+      "level": 2,
+      "text_sha256": "188c3856cd3466faaa83bb485241b7df57d314a998f13cf70894858049a3cde6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.ack"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "878c651f4844265b3ef316d58c3537705bcaeca041999550984a182fa4859a37",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "85b0bbcbc137ec4d540097af52b8b2bbdcc04575c1aed6ca81a878d6150d0b32",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "fb62f78fc895a312bd85908f4e173a9e3efacd27beca7f78f1804e1379a022f9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.security",
+          "css-position-3.security-clause-2613b0d653bb"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.w3c-conventions",
+          "css-position-3.w3c-conventions-clause-5c98c879f070",
+          "css-position-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.w3c-conformance-classes",
+          "css-position-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-position-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.w3c-partial",
+          "css-position-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.w3c-testing",
+          "css-position-3.w3c-testing-clause-1e0fff369221",
+          "css-position-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "55ccf0647a630e9f3082f1216b274332b59af124067713c79a8a7d3dc9063b75",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "1443ac545b6690d3dc462a941c2a819d9027a82e07627a97a4b4457f0141ec42",
+      "clause_count": 166,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "59418fc090286d901014e94d9ce58207f7ca4366ce332fefc7c679751733ecd5",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "b7fcd33ae1b0dd5f5314a736d4e2a6a2234d062022c2856213f049939e5c5fba",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "7d127e5163ed6bb72bd31001fc92ed38bc39f5fa7d22eaa45652e1c409fe2183",
+      "clause_count": 126,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.property-index",
+          "css-position-3.property-index-clause-4b59fe755d34",
+          "css-position-3.property-index-clause-70ca303ace2b"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "ed64391a718fa285ff8dce6dbf3be25db56f3a9c1184abd9756198392c5b988c",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-3.issues-index"
+        ]
+      }
+    }
+  ]
+}

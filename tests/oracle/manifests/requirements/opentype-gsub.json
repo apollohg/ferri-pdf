@@ -1,0 +1,1171 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-gsub.gsub-glyph-substitution-table",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub--glyph-substitution-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GSUB — Glyph Substitution Table.",
+      "locator": {
+        "section_id": "gsub--glyph-substitution-table",
+        "text_sha256": "214e1897aecdbc0fa38663f3c48b975638d01ca841f95852449b42b2f24c1245"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.overview",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overview.",
+      "locator": {
+        "section_id": "overview",
+        "text_sha256": "4105238c65301bea5f8f2985efcacd76b917cb010750b6c3b4ea3ec64a3be9fa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.gsub-table-and-opentype-font-variations",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub-table-and-opentype-font-variations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GSUB table and OpenType Font Variations.",
+      "locator": {
+        "section_id": "gsub-table-and-opentype-font-variations",
+        "text_sha256": "f08f2f9f3a6f28359483ca9b910e190d7107429f8193f2532ed36a757e027f68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gsub.gsub-table-and-opentype-font-variations-clause-0e1e63ff767b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.gsub-table-and-opentype-font-variations-clause-0e1e63ff767b",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub-table-and-opentype-font-variations"
+      ],
+      "behaviour": "GSUB table and OpenType Font Variations — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "gsub-table-and-opentype-font-variations",
+        "clause_index": 1,
+        "clause_sha256": "0e1e63ff767b81ea4c81781514efd9c1f5b14ba60ee5f5370cbd2be919fc2c31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.gsub-table-organization",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub-table-organization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GSUB table organization.",
+      "locator": {
+        "section_id": "gsub-table-organization",
+        "text_sha256": "f5b112f7bfa9d08e40be6ce54cefda6ac895a264ed632ee1ac8fae69483c1867"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gsub.gsub-table-organization-clause-4930c500dff6",
+        "opentype-gsub.gsub-table-organization-clause-e556dbf818e2",
+        "opentype-gsub.gsub-table-organization-clause-be33316089de",
+        "opentype-gsub.gsub-table-organization-clause-44e9b3db7476",
+        "opentype-gsub.gsub-table-organization-clause-47d6d3370b92"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.gsub-table-organization-clause-4930c500dff6",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub-table-organization"
+      ],
+      "behaviour": "GSUB table organization — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "gsub-table-organization",
+        "clause_index": 2,
+        "clause_sha256": "4930c500dff6521575391114aebd99e6ed00d2e75dd17d022ba0047f4e774478"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.gsub-table-organization-clause-e556dbf818e2",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub-table-organization"
+      ],
+      "behaviour": "GSUB table organization — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "gsub-table-organization",
+        "clause_index": 6,
+        "clause_sha256": "e556dbf818e263e238171f749226319c3d0e6de3c645fe16e5dbfd87334a0d4b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.gsub-table-organization-clause-be33316089de",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub-table-organization"
+      ],
+      "behaviour": "GSUB table organization — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "gsub-table-organization",
+        "clause_index": 9,
+        "clause_sha256": "be33316089ded714b4a66af006b25eec66d142ecfc9f9b832a87082541538c98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.gsub-table-organization-clause-44e9b3db7476",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub-table-organization"
+      ],
+      "behaviour": "GSUB table organization — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "gsub-table-organization",
+        "clause_index": 11,
+        "clause_sha256": "44e9b3db74767dde2beb3951e9e92df24956681e22ce6cc90e3099976698d46c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.gsub-table-organization-clause-47d6d3370b92",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub-table-organization"
+      ],
+      "behaviour": "GSUB table organization — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "gsub-table-organization",
+        "clause_index": 14,
+        "clause_sha256": "47d6d3370b927aaed8b2f670e45ed7fa08855b3fc72e189ab7ca8629ae4dcadc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.gsub-table-structures",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub-table-structures"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GSUB table structures.",
+      "locator": {
+        "section_id": "gsub-table-structures",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.gsub-header",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GSUB Header.",
+      "locator": {
+        "section_id": "gsub-header",
+        "text_sha256": "4ac880a1fba7e9eb56a961f62843a3bc3dcd208d4a00238d41da30954ae42313"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-1-subtable-single-substitution",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-1-subtable-single-substitution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 1 subtable: single substitution.",
+      "locator": {
+        "section_id": "lookup-type-1-subtable-single-substitution",
+        "text_sha256": "ba88704e5a1971d27df76bf0ff60840e4c6bceaa8bc595d35616f335f0a39de0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gsub.lookup-type-1-subtable-single-substitution-clause-bd29580fad20"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-1-subtable-single-substitution-clause-bd29580fad20",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-1-subtable-single-substitution"
+      ],
+      "behaviour": "Lookup type 1 subtable: single substitution — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-1-subtable-single-substitution",
+        "clause_index": 21,
+        "clause_sha256": "bd29580fad20b569fa1d7416ee1d010ee729e11a96f3fa4f71500c55327d5294"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-2-subtable-multiple-substitution",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-2-subtable-multiple-substitution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 2 subtable: multiple substitution.",
+      "locator": {
+        "section_id": "lookup-type-2-subtable-multiple-substitution",
+        "text_sha256": "1abf6c507bbcf5828fe636f0bf8906fa6cb4922d18177fd7f713e0d680b5265a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gsub.lookup-type-2-subtable-multiple-substitution-clause-87f08d14bd0e",
+        "opentype-gsub.lookup-type-2-subtable-multiple-substitution-clause-23e99f8fd9b2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-2-subtable-multiple-substitution-clause-87f08d14bd0e",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-2-subtable-multiple-substitution"
+      ],
+      "behaviour": "Lookup type 2 subtable: multiple substitution — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-2-subtable-multiple-substitution",
+        "clause_index": 5,
+        "clause_sha256": "87f08d14bd0ed2614bc15a26cd2a3f708b58bb0311c5823f3ae5f26bbbc1f9f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-2-subtable-multiple-substitution-clause-23e99f8fd9b2",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-2-subtable-multiple-substitution"
+      ],
+      "behaviour": "Lookup type 2 subtable: multiple substitution — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-2-subtable-multiple-substitution",
+        "clause_index": 29,
+        "clause_sha256": "23e99f8fd9b22cf8efb67914a712b764168530d46a6587a5484ea6174d91c008"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-3-subtable-alternate-substitution",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-3-subtable-alternate-substitution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 3 subtable: alternate substitution.",
+      "locator": {
+        "section_id": "lookup-type-3-subtable-alternate-substitution",
+        "text_sha256": "92872c424755ec7e30846a47b1d3e8c6605b038fbd458a6ea24380d7ecabd412"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-4-subtable-ligature-substitution",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-4-subtable-ligature-substitution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 4 subtable: ligature substitution.",
+      "locator": {
+        "section_id": "lookup-type-4-subtable-ligature-substitution",
+        "text_sha256": "4df6045ea9df833e34e97b87bf54032b3d5799490f71382680eb1cf37907495a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-5-subtable-contextual-substitution",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-5-subtable-contextual-substitution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 5 subtable: contextual substitution.",
+      "locator": {
+        "section_id": "lookup-type-5-subtable-contextual-substitution",
+        "text_sha256": "856f563a9bd6e5bccffa8e312c8a074444f7465c1aea18b3f0cb38b536d7c74a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gsub.lookup-type-5-subtable-contextual-substitution-clause-9b7b1994636e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-5-subtable-contextual-substitution-clause-9b7b1994636e",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-5-subtable-contextual-substitution"
+      ],
+      "behaviour": "Lookup type 5 subtable: contextual substitution — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-5-subtable-contextual-substitution",
+        "clause_index": 16,
+        "clause_sha256": "9b7b1994636e49950979f07eb44cf82d134b0e8d5a8f5b3ea2aacabcfd461d37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-6-subtable-chained-contexts-substitution",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-6-subtable-chained-contexts-substitution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 6 subtable: chained contexts substitution.",
+      "locator": {
+        "section_id": "lookup-type-6-subtable-chained-contexts-substitution",
+        "text_sha256": "2f839b4d20dad9eeb8e6a727b7cd46b1a1aac26edebb365cf4c482deac75f7c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-7-subtable-substitution-subtable-extension",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-7-subtable-substitution-subtable-extension"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 7 subtable: substitution subtable extension.",
+      "locator": {
+        "section_id": "lookup-type-7-subtable-substitution-subtable-extension",
+        "text_sha256": "a6d0665c5b8f73fab8dcaf9c858647838326051188a076cb665397a95f799d29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gsub.lookup-type-7-subtable-substitution-subtable-extension-clause-b42f9ab717f1",
+        "opentype-gsub.lookup-type-7-subtable-substitution-subtable-extension-clause-207689d86a83"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-7-subtable-substitution-subtable-extension-clause-b42f9ab717f1",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-7-subtable-substitution-subtable-extension"
+      ],
+      "behaviour": "Lookup type 7 subtable: substitution subtable extension — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-7-subtable-substitution-subtable-extension",
+        "clause_index": 16,
+        "clause_sha256": "b42f9ab717f1e825208cc2d965b05ba038dff1c041ed72de3484be29056555b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-7-subtable-substitution-subtable-extension-clause-207689d86a83",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-7-subtable-substitution-subtable-extension"
+      ],
+      "behaviour": "Lookup type 7 subtable: substitution subtable extension — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-7-subtable-substitution-subtable-extension",
+        "clause_index": 17,
+        "clause_sha256": "207689d86a8334c6ebac027edef2193ea4883995f4a19e427d04b0de190fa070"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-8-subtable-reverse-chained-contexts-single-substitution",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-8-subtable-reverse-chained-contexts-single-substitution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lookup type 8 subtable: reverse chained contexts single substitution.",
+      "locator": {
+        "section_id": "lookup-type-8-subtable-reverse-chained-contexts-single-substitution",
+        "text_sha256": "6f43d485ac6559ea859d0e5cd6a9be5050db9d9f91adbc40e6e7bcdbae240555"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gsub.lookup-type-8-subtable-reverse-chained-contexts-single-substitution-clause-d684414e21bb",
+        "opentype-gsub.lookup-type-8-subtable-reverse-chained-contexts-single-substitution-clause-fca9e589992a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-8-subtable-reverse-chained-contexts-single-substitution-clause-d684414e21bb",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-8-subtable-reverse-chained-contexts-single-substitution"
+      ],
+      "behaviour": "Lookup type 8 subtable: reverse chained contexts single substitution — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-8-subtable-reverse-chained-contexts-single-substitution",
+        "clause_index": 6,
+        "clause_sha256": "d684414e21bb1dd785928c6843bf716cdf74e621cfc4c5c72c04c45e064a59cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.lookup-type-8-subtable-reverse-chained-contexts-single-substitution-clause-fca9e589992a",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "lookup-type-8-subtable-reverse-chained-contexts-single-substitution"
+      ],
+      "behaviour": "Lookup type 8 subtable: reverse chained contexts single substitution — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "lookup-type-8-subtable-reverse-chained-contexts-single-substitution",
+        "clause_index": 7,
+        "clause_sha256": "fca9e589992a469b6a4d5b5965539f4bbe61d141bd8e24e2cb6a976d6808f70c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.gsub-structure-examples",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "gsub-structure-examples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in GSUB structure examples.",
+      "locator": {
+        "section_id": "gsub-structure-examples",
+        "text_sha256": "1237480ebe186aa017ffe093e3acecbde4ee5899c2f7762aa66799702af46701"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.example-1-gsub-header",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-1-gsub-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 1: GSUB Header.",
+      "locator": {
+        "section_id": "example-1-gsub-header",
+        "text_sha256": "4d73e2618c6e0b81e79b44fc374472806a2ddb1e726c41145223546f043f4720"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.example-2-singlesubstformat1-subtable",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-2-singlesubstformat1-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 2: SingleSubstFormat1 subtable.",
+      "locator": {
+        "section_id": "example-2-singlesubstformat1-subtable",
+        "text_sha256": "98a06e9960070f9be0030c804a98608e028d78ec3b248f27e5716ab4c4fe1bd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.example-3-singlesubstformat2-subtable",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-3-singlesubstformat2-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 3: SingleSubstFormat2 subtable.",
+      "locator": {
+        "section_id": "example-3-singlesubstformat2-subtable",
+        "text_sha256": "bc4b82221ce865375c153c664d340eca39768e7fcb33f3a2ec4b6c897ee10432"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gsub.example-3-singlesubstformat2-subtable-clause-379d7de7d065"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.example-3-singlesubstformat2-subtable-clause-379d7de7d065",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-3-singlesubstformat2-subtable"
+      ],
+      "behaviour": "Example 3: SingleSubstFormat2 subtable — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "example-3-singlesubstformat2-subtable",
+        "clause_index": 1,
+        "clause_sha256": "379d7de7d065dc1c7828cb859e76c900d9fa019426aa2797dead117e674ea928"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.example-4-multiplesubstformat1-subtable",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-4-multiplesubstformat1-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 4: MultipleSubstFormat1 subtable.",
+      "locator": {
+        "section_id": "example-4-multiplesubstformat1-subtable",
+        "text_sha256": "fa789e9b7850dcf7cca4b4187f9c37a36d919884b35578febbac75696b043f0f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.example-5-alternatesubstformat-1-subtable",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-5-alternatesubstformat-1-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 5: AlternateSubstFormat 1 subtable.",
+      "locator": {
+        "section_id": "example-5-alternatesubstformat-1-subtable",
+        "text_sha256": "74c0b3d9648c68480f165e4f877e354d85c6da6d3371265aa4e202ddbaca13a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.example-6-ligaturesubstformat1-subtable",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-6-ligaturesubstformat1-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 6: LigatureSubstFormat1 subtable.",
+      "locator": {
+        "section_id": "example-6-ligaturesubstformat1-subtable",
+        "text_sha256": "233ca19b1d82d9a16dbd0f465f5384f58a44dfca003ce03b8053408aa864dc24"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.example-7-contextual-substitution-format-1",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-7-contextual-substitution-format-1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 7: Contextual substitution format 1.",
+      "locator": {
+        "section_id": "example-7-contextual-substitution-format-1",
+        "text_sha256": "156887aae37ad376a3fca1203141cd59fca077ea8f2325f2c282f14ac2cb6af0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-gsub.example-7-contextual-substitution-format-1-clause-6a6f27e4036b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.example-7-contextual-substitution-format-1-clause-6a6f27e4036b",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-7-contextual-substitution-format-1"
+      ],
+      "behaviour": "Example 7: Contextual substitution format 1 — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "example-7-contextual-substitution-format-1",
+        "clause_index": 3,
+        "clause_sha256": "6a6f27e4036bfa6fa54ff35ca10557444896e44eb92c7b8ec85b1b2cf7dd37b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-gsub.example-8-contextual-substitution-format-2",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-8-contextual-substitution-format-2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 8: Contextual substitution format 2.",
+      "locator": {
+        "section_id": "example-8-contextual-substitution-format-2",
+        "text_sha256": "efd9502c4b700a56d62fcd2cea91b2bee6b22319464587e647ce73e86de72373"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.example-9-contextual-substitution-format-3",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-9-contextual-substitution-format-3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 9: Contextual substitution format 3.",
+      "locator": {
+        "section_id": "example-9-contextual-substitution-format-3",
+        "text_sha256": "921a73ea2fb390a09f0905e407650cda4ffb0eb75e8b162c227d8a8e2a625d61"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.example-10-reversechainsinglesubstformat1-subtable",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "example-10-reversechainsinglesubstformat1-subtable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Example 10: ReverseChainSingleSubstFormat1 subtable.",
+      "locator": {
+        "section_id": "example-10-reversechainsinglesubstformat1-subtable",
+        "text_sha256": "5f557271fddd15d3d2d54e9cd16b93432b7afe0f3515d52a1b806fa81861922f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.ms-in-this-article",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.ms-feedback",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.ms-additional-resources-mobile-heading",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "3eb25b59e14381d11045c4430465c544fb0a9c44ecad8beae369fc9d1fea3786"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-gsub.side-doc-outline",
+      "family": "opentype-gsub",
+      "source_id": "opentype-gsub",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

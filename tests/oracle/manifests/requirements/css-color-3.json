@@ -1,0 +1,1693 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-color-3.heading-f9fb44959851",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "heading-f9fb44959851"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Color Module Level 3.",
+      "locator": {
+        "section_id": "heading-f9fb44959851",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.heading-017de5afb903",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "heading-017de5afb903"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Proposed Recommendation 15 March 2018.",
+      "locator": {
+        "section_id": "heading-017de5afb903",
+        "text_sha256": "32e86c51e04ae4801d0a1f1c98a8880b1314bf1dc1e7c0703d2734628804bffd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.dependencies",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "dependencies"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dependencies.",
+      "locator": {
+        "section_id": "dependencies",
+        "text_sha256": "3aa9e333a13f5b9d9dd6ad1240fa96fad5d5d499983203e5eb10ea3381e87e3f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.color",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color properties.",
+      "locator": {
+        "section_id": "color",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.foreground",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "foreground"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Foreground color: the ‘color’ property.",
+      "locator": {
+        "section_id": "foreground",
+        "text_sha256": "56f1408fe6833d0a17162ea99580bf60c53b80d709811f9bc3f2d679a6f98a08"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.foreground-clause-6d9ab515958a",
+        "css-color-3.foreground-clause-cca2516ebb1d",
+        "css-color-3.foreground-clause-aeba9d5df0ff",
+        "css-color-3.foreground-clause-2409ec47c9ed",
+        "css-color-3.foreground-clause-c4305a59201e",
+        "css-color-3.foreground-clause-2bb9c47d3869",
+        "css-color-3.foreground-clause-eaa27a90f458"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.foreground-clause-6d9ab515958a",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "foreground"
+      ],
+      "behaviour": "Foreground color: the ‘color’ property — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "foreground",
+        "clause_index": 3,
+        "clause_sha256": "6d9ab515958ab411b30836e0d02d297ac1a2ca8da1658f1d83e97e2d76bd5e3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.foreground-clause-cca2516ebb1d",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "foreground"
+      ],
+      "behaviour": "Foreground color: the ‘color’ property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "foreground",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.foreground-clause-aeba9d5df0ff",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "foreground"
+      ],
+      "behaviour": "Foreground color: the ‘color’ property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "foreground",
+        "clause_index": 15,
+        "clause_sha256": "aeba9d5df0ff123cf4b407549be2cb2f445c456952607f07966216d37a8ec581"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.foreground-clause-2409ec47c9ed",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "foreground"
+      ],
+      "behaviour": "Foreground color: the ‘color’ property — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "foreground",
+        "clause_index": 16,
+        "clause_sha256": "2409ec47c9ed6b56e9dda48f9e38ef0c311762cd3d3143998aebe3bd9c2e240d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.foreground-clause-c4305a59201e",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "foreground"
+      ],
+      "behaviour": "Foreground color: the ‘color’ property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "foreground",
+        "clause_index": 17,
+        "clause_sha256": "c4305a59201e59c8a06b166a944d3d88f444c8cfc5cdf30a40e8670859ea8b91"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.foreground-clause-2bb9c47d3869",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "foreground"
+      ],
+      "behaviour": "Foreground color: the ‘color’ property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "foreground",
+        "clause_index": 18,
+        "clause_sha256": "2bb9c47d3869d8f6208a11dfbd8dca7bdf1fb1acc18107671620267c9e550925"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.foreground-clause-eaa27a90f458",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "foreground"
+      ],
+      "behaviour": "Foreground color: the ‘color’ property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "foreground",
+        "clause_index": 24,
+        "clause_sha256": "eaa27a90f4582aa1890e3c29a23f80821a8591da288c35d21f4a499d79d1c642"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.transparency",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "transparency"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Transparency: the ‘opacity’ property.",
+      "locator": {
+        "section_id": "transparency",
+        "text_sha256": "f7b2977d336275340eaa3e89fbcacc2affab2a09221a51759ee50ffdde7ac59b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.transparency-clause-dc37cd6e62b8",
+        "css-color-3.transparency-clause-cca2516ebb1d",
+        "css-color-3.transparency-clause-9dc8ee380b63",
+        "css-color-3.transparency-clause-0567ff8b0223",
+        "css-color-3.transparency-clause-da678ef55f1a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.transparency-clause-dc37cd6e62b8",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "transparency"
+      ],
+      "behaviour": "Transparency: the ‘opacity’ property — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "transparency",
+        "clause_index": 4,
+        "clause_sha256": "dc37cd6e62b828060600026d1dd61e3f9d244406f2102b6e954246aba9be52de"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.transparency-clause-cca2516ebb1d",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "transparency"
+      ],
+      "behaviour": "Transparency: the ‘opacity’ property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "transparency",
+        "clause_index": 15,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.transparency-clause-9dc8ee380b63",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "transparency"
+      ],
+      "behaviour": "Transparency: the ‘opacity’ property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "transparency",
+        "clause_index": 17,
+        "clause_sha256": "9dc8ee380b63d35acee22dd03994dd0a098c2d5f7107f04b802c2af48cea84c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.transparency-clause-0567ff8b0223",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "transparency"
+      ],
+      "behaviour": "Transparency: the ‘opacity’ property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "transparency",
+        "clause_index": 18,
+        "clause_sha256": "0567ff8b022303b9b987077a268576ea4127a9a12d2987db1738a8df84c59d38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.transparency-clause-da678ef55f1a",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "transparency"
+      ],
+      "behaviour": "Transparency: the ‘opacity’ property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "transparency",
+        "clause_index": 19,
+        "clause_sha256": "da678ef55f1aaf209f867eeee4e8c071a6459fb339061573dd340978c0f28fa6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.colorunits",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "colorunits"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color units.",
+      "locator": {
+        "section_id": "colorunits",
+        "text_sha256": "45b3cc77ffed7139bd0169670c76a9ae433a8f725a4c91f0e7fcdb146e4601d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.html4",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "html4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Basic color keywords.",
+      "locator": {
+        "section_id": "html4",
+        "text_sha256": "ec12d504faec03f76b6ca12b8f75a35c33403198d1aaae1635c473c00e0691bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.numerical",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "numerical"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Numerical color values.",
+      "locator": {
+        "section_id": "numerical",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.rgb-color",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "rgb-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in RGB color values.",
+      "locator": {
+        "section_id": "rgb-color",
+        "text_sha256": "645afcd00f139d035977b0cb589a5c20e71fa78121acb811b3508ac367573022"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.rgb-color-clause-5f2702cdac6b",
+        "css-color-3.rgb-color-clause-7e86a68e588c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.rgb-color-clause-5f2702cdac6b",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "rgb-color"
+      ],
+      "behaviour": "RGB color values — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "rgb-color",
+        "clause_index": 5,
+        "clause_sha256": "5f2702cdac6b948333cd7f66c2c7d4f4334f690c5828fd0720ebe2ad794cecb3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.rgb-color-clause-7e86a68e588c",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "rgb-color"
+      ],
+      "behaviour": "RGB color values — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "rgb-color",
+        "clause_index": 6,
+        "clause_sha256": "7e86a68e588cc51c9398b601011b1c1ac559688c745af6f2b0a9d8e3efe57560"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.rgba-color",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "rgba-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in RGBA color values.",
+      "locator": {
+        "section_id": "rgba-color",
+        "text_sha256": "ceddcbe35cccd7023142e0d0fd98ab920661ff949a378f8f7940c5560ea8f206"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.rgba-color-clause-c67d9df6da40",
+        "css-color-3.rgba-color-clause-63fa7d1f5a92"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.rgba-color-clause-c67d9df6da40",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "rgba-color"
+      ],
+      "behaviour": "RGBA color values — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "rgba-color",
+        "clause_index": 5,
+        "clause_sha256": "c67d9df6da40a847e32d021b9ee53dee424204a2cc8939e536a73b9db82f3517"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.rgba-color-clause-63fa7d1f5a92",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "rgba-color"
+      ],
+      "behaviour": "RGBA color values — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "rgba-color",
+        "clause_index": 9,
+        "clause_sha256": "63fa7d1f5a9272528977cfbb213ce6175b476e95f54ac919c248fe2ed0f10b61"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.transparent",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "transparent"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ‘transparent’ color keyword.",
+      "locator": {
+        "section_id": "transparent",
+        "text_sha256": "c6f035450502b6080576d591342a24ef4def9c50358bbd2c0e95f92ecc6589ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.transparent-clause-deff06aac38c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.transparent-clause-deff06aac38c",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "transparent"
+      ],
+      "behaviour": "‘transparent’ color keyword — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "transparent",
+        "clause_index": 2,
+        "clause_sha256": "deff06aac38c6d1e4c515554228128fb3bd6084bdab98c39443a9ac9290528ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.hsl-color",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "hsl-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in HSL color values.",
+      "locator": {
+        "section_id": "hsl-color",
+        "text_sha256": "7ababfbdc2e7a2601eb1ada2ebeda11337588f2087468e8a7f7ba0826cb87d3f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.hsl-color-clause-218ba2b94cce",
+        "css-color-3.hsl-color-clause-04a547b7e8da"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.hsl-color-clause-218ba2b94cce",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "hsl-color"
+      ],
+      "behaviour": "HSL color values — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "hsl-color",
+        "clause_index": 9,
+        "clause_sha256": "218ba2b94cce9227911347c3bbde46f74a6c43eb23cd4595fe46067a19c71901"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.hsl-color-clause-04a547b7e8da",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "hsl-color"
+      ],
+      "behaviour": "HSL color values — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "hsl-color",
+        "clause_index": 10,
+        "clause_sha256": "04a547b7e8dad2265327694bf60b209a8ab56f2c01dab37b96a8fc45c9d66d59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.hsl-examples",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "hsl-examples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in HSL examples.",
+      "locator": {
+        "section_id": "hsl-examples",
+        "text_sha256": "99b80cf3ff9c30c6593a45944e847aca0dfffbcd9b43087fc2fb103f5536c30e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.hsla-color",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "hsla-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in HSLA color values.",
+      "locator": {
+        "section_id": "hsla-color",
+        "text_sha256": "e895921cf6d00baedd50acaa6d2ef334287f3b220a64d0fb3a6b56c92bacf1d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.hsla-color-clause-65ebf55e204f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.hsla-color-clause-65ebf55e204f",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "hsla-color"
+      ],
+      "behaviour": "HSLA color values — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "hsla-color",
+        "clause_index": 4,
+        "clause_sha256": "65ebf55e204f9bb27e059bcf27e3812bac80d5cb3afd80a70301c776f5079540"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.svg-color",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "svg-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extended color keywords.",
+      "locator": {
+        "section_id": "svg-color",
+        "text_sha256": "a0013e195d1ae24a45a34aeccf8865d4eb0cd01f572e2e86c123dafb80ba5036"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.currentcolor",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "currentcolor"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ‘currentColor’ color keyword.",
+      "locator": {
+        "section_id": "currentcolor",
+        "text_sha256": "6cc232b7eb5cec1dc46d6e67072b7f3373a098da2b2e0ca72c42255598047d29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.currentcolor-clause-dcb504c5b144",
+        "css-color-3.currentcolor-clause-d836358f549d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.currentcolor-clause-dcb504c5b144",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "currentcolor"
+      ],
+      "behaviour": "‘currentColor’ color keyword — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "currentcolor",
+        "clause_index": 0,
+        "clause_sha256": "dcb504c5b144c09aa57968713200c13bac65f10d9e7dce77cded6d0c79d05089"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.currentcolor-clause-d836358f549d",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "currentcolor"
+      ],
+      "behaviour": "‘currentColor’ color keyword — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "currentcolor",
+        "clause_index": 2,
+        "clause_sha256": "d836358f549d87a3c4a3eeb870bc25183cc53e3e3a57496fadd8e050365a925d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.css-system",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "css-system"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS system colors.",
+      "locator": {
+        "section_id": "css-system",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.css2-system",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "css2-system"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS2 system colors.",
+      "locator": {
+        "section_id": "css2-system",
+        "text_sha256": "ca3e93ef98013810d7411cb628443dcd8a88faae674cf36724d59a779b16262a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.css2-system-clause-2e11cc550c9f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.css2-system-clause-2e11cc550c9f",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "css2-system"
+      ],
+      "behaviour": "CSS2 system colors — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "css2-system",
+        "clause_index": 1,
+        "clause_sha256": "2e11cc550c9f94a41580e537492bcbd0fc36719d5b7ea228067a01a3a9664ac3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.notes",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "notes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Notes on using colors.",
+      "locator": {
+        "section_id": "notes",
+        "text_sha256": "7bbf439f9f41e984b2bfa06f1fca43ded6cfd7d79a45ee209fddef223e466f6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.alpha",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "alpha"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Simple alpha compositing.",
+      "locator": {
+        "section_id": "alpha",
+        "text_sha256": "6d3cf0319e4fe3e53da4b9f6748b70116e6bb804f0390edf87ad3999fe416652"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.alpha-clause-6d3cf0319e4f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.alpha-clause-6d3cf0319e4f",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "alpha"
+      ],
+      "behaviour": "Simple alpha compositing — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "alpha",
+        "clause_index": 0,
+        "clause_sha256": "6d3cf0319e4fe3e53da4b9f6748b70116e6bb804f0390edf87ad3999fe416652"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.sample",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "sample"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sample style sheet for (X)HTML.",
+      "locator": {
+        "section_id": "sample",
+        "text_sha256": "14756a5a557ac1a61bf94d5cb36bdc4f24f7af77c2497cff8ad20960512feb9c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.profiles",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "profiles"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Profiles.",
+      "locator": {
+        "section_id": "profiles",
+        "text_sha256": "58452d790c4421406c906db87e8121ee668b59656f12c6c83805e73ee8dddf18"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.profiles-clause-0307f146f3bd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.profiles-clause-0307f146f3bd",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "profiles"
+      ],
+      "behaviour": "Profiles — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "profiles",
+        "clause_index": 0,
+        "clause_sha256": "0307f146f3bdad37c91c01995993c3ba44830f44906c76fc1345a870e2336935"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.testsuite",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "testsuite"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Test suite.",
+      "locator": {
+        "section_id": "testsuite",
+        "text_sha256": "b57ad8a05f4758b6011858a2a8fae294cdab26f5cab88a952ded0b842c79c9d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.dropped",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "dropped"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Call for Implementations of dropped features.",
+      "locator": {
+        "section_id": "dropped",
+        "text_sha256": "7fa0655490020b337eef64d603f4ec8433fa5f482a0a4c5c67e7f59a4f4220f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.property",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property index.",
+      "locator": {
+        "section_id": "property",
+        "text_sha256": "a15236396c7de98ff659c2251de0d7cc2c4c1c5aedd66f31c1f35a780e669d49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-color-3.property-clause-6d9ab515958a",
+        "css-color-3.property-clause-dc37cd6e62b8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.property-clause-6d9ab515958a",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "property"
+      ],
+      "behaviour": "Property index — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "property",
+        "clause_index": 8,
+        "clause_sha256": "6d9ab515958ab411b30836e0d02d297ac1a2ca8da1658f1d83e97e2d76bd5e3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.property-clause-dc37cd6e62b8",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "property"
+      ],
+      "behaviour": "Property index — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "property",
+        "clause_index": 14,
+        "clause_sha256": "dc37cd6e62b828060600026d1dd61e3f9d244406f2102b6e954246aba9be52de"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-color-3.import-ca61a732eb2c",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webstore.iec.ch/publication/6168.",
+      "unresolved_reference": "https://webstore.iec.ch/publication/6168",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-color-3.abstract",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "853842e40b400782815692b48fa659b93a7def2deffc40e66f7abffadb4800d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.status",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of This Document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "5b5b932ac6d712559afde363e526dc4e305e74046469850f5e71e6950c675155"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.contents",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "c3db3396c50341362232f925dc48123688715b6449efd5665d217d854ef1c6b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.introduction",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "f4e88404974f48cb21eb5161f964c97b3e14abb39223a5fe13584a38d92ddb04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.acknowledgments",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 10. Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "e20ee4d6c9ae2e5a40e4d6c3c96b6fc64ec5157e0782b601d982fd919c31a640"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.changes",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.changes-since-cr",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "changes-since-CR"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 5 December 2017 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-since-CR",
+        "text_sha256": "76dd4312de57607fc8673c72b17370f16299b4290cd9dd567ee58f43a1d6c1a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.changes-since-rec",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "changes-since-REC"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 2011 June 07 Recommendation.",
+      "locator": {
+        "section_id": "changes-since-REC",
+        "text_sha256": "ba787deeaadda637c6d516a332024d2926ab7581e9077280ef5067a41fc4bcb6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.references",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 12. References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.informative",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 12.2. Informative.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "9b1ac6c843c2f44a2ceb655c57e492d1c07895f861939fb4e6383878248cfa83"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-color-3.index",
+      "family": "css-color-3",
+      "source_id": "css-color-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "3928435bb7c2496c3aaa1e1ec872142b3fd2962263907d3c0fc74e1d25800f3a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

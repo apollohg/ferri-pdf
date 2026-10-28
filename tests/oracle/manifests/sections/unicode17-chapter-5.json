@@ -1,0 +1,787 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-5",
+  "sections": [
+    {
+      "id": "G34785",
+      "title": "Implementation Guidelines",
+      "level": 1,
+      "text_sha256": "e122c8e1e7950ec1e074c92b97b9b6a921085bf8a92ef66dd2b8b326e46d8064",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.g34785"
+        ]
+      }
+    },
+    {
+      "id": "heading-624c0fc6271e",
+      "title": "5.1 Data Structures for Character Conversion",
+      "level": 2,
+      "text_sha256": "6f7c212a07d2aafe83211fa87e35cdaae1dca85d2515b6a9d95202ab6d53d1a9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-624c0fc6271e"
+        ]
+      }
+    },
+    {
+      "id": "heading-b2a46846fa9c",
+      "title": "5.1.1 Issues",
+      "level": 3,
+      "text_sha256": "86a67760e02883d06f65d5ab0155dd6a87677ce1a46b68bd1d76b0adc907cf30",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-b2a46846fa9c",
+          "unicode17-chapter-5.heading-b2a46846fa9c-clause-ab4d05b7629b"
+        ]
+      }
+    },
+    {
+      "id": "heading-834768c61e5d",
+      "title": "5.1.2 Multistage Tables",
+      "level": 3,
+      "text_sha256": "315f06ebab4d131ed92c6a0e5e723ae8156f731f0bc6d2fa6f66bd2f671287aa",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-834768c61e5d"
+        ]
+      }
+    },
+    {
+      "id": "heading-f8fd8fcee985",
+      "title": "5.2 Programming Languages and Data Types",
+      "level": 2,
+      "text_sha256": "defe894b5eb6b97d04334032b9141dcdf1cd6dfa5fecac868a12706c9a03bd99",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-f8fd8fcee985",
+          "unicode17-chapter-5.heading-f8fd8fcee985-clause-22c9864df5b7"
+        ]
+      }
+    },
+    {
+      "id": "heading-a4ff1bca5bf0",
+      "title": "5.2.1 Unicode Data Types for C",
+      "level": 3,
+      "text_sha256": "794627f303557fbd0036a961db69fb6b52dcd76ed1a563d9381b6424e2a9dab3",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-a4ff1bca5bf0",
+          "unicode17-chapter-5.heading-a4ff1bca5bf0-clause-14bc2b4c1e72",
+          "unicode17-chapter-5.heading-a4ff1bca5bf0-clause-1afe98fce726"
+        ]
+      }
+    },
+    {
+      "id": "heading-55219fd3a263",
+      "title": "5.3 Unknown and Missing Characters",
+      "level": 2,
+      "text_sha256": "53d480bb4d275e3212d994d28fe9c7564c22282693c32962248115a2fe595721",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-55219fd3a263",
+          "unicode17-chapter-5.heading-55219fd3a263-clause-3f3afc22b7a4",
+          "unicode17-chapter-5.heading-55219fd3a263-clause-02f6ec973197",
+          "unicode17-chapter-5.heading-55219fd3a263-clause-99fd75d65520"
+        ]
+      }
+    },
+    {
+      "id": "heading-241fda835b8c",
+      "title": "5.4 Handling Surrogate Pairs in UTF-16",
+      "level": 2,
+      "text_sha256": "4770da132a71a9b37c539821416cb2f171ccd41195074fe5b2072206666176c5",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-241fda835b8c",
+          "unicode17-chapter-5.heading-241fda835b8c-clause-d3948ee40f8d",
+          "unicode17-chapter-5.heading-241fda835b8c-clause-d3ca710848b5"
+        ]
+      }
+    },
+    {
+      "id": "heading-37a021370185",
+      "title": "5.5 Handling Numbers",
+      "level": 2,
+      "text_sha256": "f9d29a663ca479c883c18d2d90dec10fd22b6a37d695bd12b382e6ed0a5873c5",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-37a021370185",
+          "unicode17-chapter-5.heading-37a021370185-clause-5a0d2e8d74ce",
+          "unicode17-chapter-5.heading-37a021370185-clause-989865b6bf86",
+          "unicode17-chapter-5.heading-37a021370185-clause-920f8bbcf881"
+        ]
+      }
+    },
+    {
+      "id": "heading-4057babafb52",
+      "title": "5.6 Normalization",
+      "level": 2,
+      "text_sha256": "2c2253baec4c7d064e36992b0abf95b10c64fb1b97408f124f9c70be14355419",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-4057babafb52"
+        ]
+      }
+    },
+    {
+      "id": "heading-1e55ab6a5d52",
+      "title": "5.7 Compression",
+      "level": 2,
+      "text_sha256": "81c156434e85cc67ffa848eb418e659aaabb7a4e37c499e3eeac8a1482c5f695",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-1e55ab6a5d52",
+          "unicode17-chapter-5.heading-1e55ab6a5d52-clause-1de5975db5a8"
+        ]
+      }
+    },
+    {
+      "id": "heading-406a5b2ee6b3",
+      "title": "5.8 Newline Guidelines",
+      "level": 2,
+      "text_sha256": "4f0f2972c04ca57d2d0705645166652043bcb89385aa1018dc94585a862e8289",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-406a5b2ee6b3",
+          "unicode17-chapter-5.heading-406a5b2ee6b3-clause-de6aea39e287"
+        ]
+      }
+    },
+    {
+      "id": "heading-f7c28901d7a2",
+      "title": "5.8.1 Definitions",
+      "level": 3,
+      "text_sha256": "78061b4f335e2002db4ba87b77923baad8451016be7c7343118d347f40e2400f",
+      "clause_count": 74,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-f7c28901d7a2"
+        ]
+      }
+    },
+    {
+      "id": "heading-b855ed91870f",
+      "title": "5.8.2 Line Separator and Paragraph Separator",
+      "level": 3,
+      "text_sha256": "b22cc15a1b618e1f4136333385dfa70c544177a10a959937eda8ddfd5524fd01",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-b855ed91870f",
+          "unicode17-chapter-5.heading-b855ed91870f-clause-9165eb946e9a"
+        ]
+      }
+    },
+    {
+      "id": "heading-0e1361915330",
+      "title": "5.8.3 Recommendations",
+      "level": 3,
+      "text_sha256": "674401eb13dbd5ac8d9feb5410051dfa1f1c858dbd0b36ce69cfe5b1a52e1c2c",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-0e1361915330",
+          "unicode17-chapter-5.heading-0e1361915330-clause-343822d2a926",
+          "unicode17-chapter-5.heading-0e1361915330-clause-c8fcc20e176f",
+          "unicode17-chapter-5.heading-0e1361915330-clause-2962a35025a3",
+          "unicode17-chapter-5.heading-0e1361915330-clause-be61f781d4a3",
+          "unicode17-chapter-5.heading-0e1361915330-clause-a5a65cea8e65",
+          "unicode17-chapter-5.heading-0e1361915330-clause-ed51293b545a"
+        ]
+      }
+    },
+    {
+      "id": "heading-8595f9f6467f",
+      "title": "5.9 Regular Expressions",
+      "level": 2,
+      "text_sha256": "21240c615bba57b62e6599d42d6d8c1d04260349ba8450c17e4640aa3bf500a3",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-8595f9f6467f"
+        ]
+      }
+    },
+    {
+      "id": "heading-3eab94c77f46",
+      "title": "5.10 Language Information in Plain Text",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-3eab94c77f46"
+        ]
+      }
+    },
+    {
+      "id": "heading-c079fa242b0b",
+      "title": "5.10.1 Requirements for Language Tagging",
+      "level": 3,
+      "text_sha256": "b72f3b40e8f307c314fcd2a7d86dea434af546874e778f4061aae01e20326923",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-c079fa242b0b",
+          "unicode17-chapter-5.heading-c079fa242b0b-clause-a60cc6b437fe",
+          "unicode17-chapter-5.heading-c079fa242b0b-clause-477ff9ec60ce"
+        ]
+      }
+    },
+    {
+      "id": "heading-da5218f4eb05",
+      "title": "5.10.2 Language Tags and Han Unification",
+      "level": 3,
+      "text_sha256": "fbd74215142e2472d3e46822e14746a36fb42c8498d9bb6cf7730c92cc3a0d39",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-da5218f4eb05",
+          "unicode17-chapter-5.heading-da5218f4eb05-clause-73ff5a7deea3",
+          "unicode17-chapter-5.heading-da5218f4eb05-clause-c2b6ccf52350"
+        ]
+      }
+    },
+    {
+      "id": "heading-ec6ac60b97ab",
+      "title": "5.11 Editing and Selection",
+      "level": 2,
+      "text_sha256": "a356942ffd6ffedcddbf285fcf9bebfb438520fb6052ed74805f285dc3d032c3",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-ec6ac60b97ab"
+        ]
+      }
+    },
+    {
+      "id": "heading-15f7ffe45e3c",
+      "title": "5.12 Strategies for Handling Nonspacing Marks",
+      "level": 2,
+      "text_sha256": "3ed964ea727b19a801817881c81ab56b43cd00bb169db166e7f36f0d18489547",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-15f7ffe45e3c",
+          "unicode17-chapter-5.heading-15f7ffe45e3c-clause-b6f22d7cdde1",
+          "unicode17-chapter-5.heading-15f7ffe45e3c-clause-39158de6833f",
+          "unicode17-chapter-5.heading-15f7ffe45e3c-clause-c0144869f5a8",
+          "unicode17-chapter-5.heading-15f7ffe45e3c-clause-e984da7cf402",
+          "unicode17-chapter-5.heading-15f7ffe45e3c-clause-a817fc82fc7a",
+          "unicode17-chapter-5.heading-15f7ffe45e3c-clause-82d318f48a26"
+        ]
+      }
+    },
+    {
+      "id": "heading-8142d2b1c637",
+      "title": "5.12.1 Keyboard Input",
+      "level": 3,
+      "text_sha256": "a49aa4937110ae666d8afa4a1d06a754f879fd1e063321a86e6d7bed346836e1",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-8142d2b1c637"
+        ]
+      }
+    },
+    {
+      "id": "heading-03418563af76",
+      "title": "5.12.2 Truncation",
+      "level": 3,
+      "text_sha256": "b5780cef4b6a0b3597278ac336cec2d192dd4f819f5ffa4d19c327bb43b63c88",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-03418563af76",
+          "unicode17-chapter-5.heading-03418563af76-clause-50a619c22495"
+        ]
+      }
+    },
+    {
+      "id": "heading-231f5fee27a9",
+      "title": "5.13 Rendering Nonspacing Marks",
+      "level": 2,
+      "text_sha256": "763462cd100ae48f167b10ee354752096fdd7947c5c91e03552edc66acfa4fec",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-231f5fee27a9",
+          "unicode17-chapter-5.heading-231f5fee27a9-clause-1c67a676b8bb",
+          "unicode17-chapter-5.heading-231f5fee27a9-clause-ac38718be00c",
+          "unicode17-chapter-5.heading-231f5fee27a9-clause-f093a40f4ec2",
+          "unicode17-chapter-5.heading-231f5fee27a9-clause-8f814ba0e524",
+          "unicode17-chapter-5.heading-231f5fee27a9-clause-3bfd8d8436ec",
+          "unicode17-chapter-5.heading-231f5fee27a9-clause-16eab08923cb"
+        ]
+      }
+    },
+    {
+      "id": "heading-2ba90d005660",
+      "title": "5.13.1 Canonical Equivalence",
+      "level": 3,
+      "text_sha256": "7b764e3d6d92a8fc29b1135436c2e37bae6267347a46d19c5110c17c30f0078e",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-2ba90d005660",
+          "unicode17-chapter-5.heading-2ba90d005660-clause-75ccd4133b49",
+          "unicode17-chapter-5.heading-2ba90d005660-clause-38965f5bde55",
+          "unicode17-chapter-5.heading-2ba90d005660-clause-330f931677bc",
+          "unicode17-chapter-5.heading-2ba90d005660-clause-c32db581f67b"
+        ]
+      }
+    },
+    {
+      "id": "heading-3239e9b58ead",
+      "title": "5.13.2 Positioning Methods",
+      "level": 3,
+      "text_sha256": "3cece62bca61282f796b5b2fd1b2698be8b1728f1f34eabb0bc40d033bfe2ef4",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-3239e9b58ead",
+          "unicode17-chapter-5.heading-3239e9b58ead-clause-b0330cac6915",
+          "unicode17-chapter-5.heading-3239e9b58ead-clause-dc8f8c12865d"
+        ]
+      }
+    },
+    {
+      "id": "heading-06b4da30d905",
+      "title": "5.14 Locating Text Element Boundaries",
+      "level": 2,
+      "text_sha256": "4174271394905c910ed4f585b26cacaad65ac562899d06ca6435bf762b3f39d2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-06b4da30d905",
+          "unicode17-chapter-5.heading-06b4da30d905-clause-8c0250cd76b5"
+        ]
+      }
+    },
+    {
+      "id": "heading-20ccd86b204f",
+      "title": "5.15 Identifiers",
+      "level": 2,
+      "text_sha256": "2b0d3683b7b0d56ebba6187cf6672cfa405626df89a85144dd92b1f256c769b3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-20ccd86b204f"
+        ]
+      }
+    },
+    {
+      "id": "heading-04626a2fb331",
+      "title": "5.16 Sorting and Searching",
+      "level": 2,
+      "text_sha256": "69fb1ac9aab8e1964b585e9b82acb40ae4b678d03b4dbf7ae797ad6d6b205846",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-04626a2fb331",
+          "unicode17-chapter-5.heading-04626a2fb331-clause-69fb1ac9aab8"
+        ]
+      }
+    },
+    {
+      "id": "heading-24218e8da893",
+      "title": "5.16.1 Culturally Expected Sorting and Searching",
+      "level": 3,
+      "text_sha256": "dec5b178ec989ad576016d73c0f53ea3f71c57ce14b5ed2979b773f7777558ca",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-24218e8da893",
+          "unicode17-chapter-5.heading-24218e8da893-clause-8cae2cbe4810",
+          "unicode17-chapter-5.heading-24218e8da893-clause-218c71d967c6"
+        ]
+      }
+    },
+    {
+      "id": "heading-99372ee8c31d",
+      "title": "5.16.2 Language-Insensitive Sorting",
+      "level": 3,
+      "text_sha256": "7f3753881cbc0f339a75a16e6df3048b5cb387dc3d94c15843ade184ee1da27c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-99372ee8c31d",
+          "unicode17-chapter-5.heading-99372ee8c31d-clause-46fd3e201d31"
+        ]
+      }
+    },
+    {
+      "id": "heading-2c6e0f0279ee",
+      "title": "5.16.3 Searching",
+      "level": 3,
+      "text_sha256": "fad92e78f00d1d44f361198d771fbe2465a21ac48238c97e79d66f977dfe191b",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-2c6e0f0279ee",
+          "unicode17-chapter-5.heading-2c6e0f0279ee-clause-b3e61fd932f1"
+        ]
+      }
+    },
+    {
+      "id": "heading-d602c20a00f4",
+      "title": "5.16.4 Sublinear Searching",
+      "level": 3,
+      "text_sha256": "f328002c1f831098f8c384cc2a63da88db221c33973d194da7c7328e0f4daba9",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-d602c20a00f4",
+          "unicode17-chapter-5.heading-d602c20a00f4-clause-ef66b93d891f",
+          "unicode17-chapter-5.heading-d602c20a00f4-clause-a6b760f7dbe5",
+          "unicode17-chapter-5.heading-d602c20a00f4-clause-26c91f63176c"
+        ]
+      }
+    },
+    {
+      "id": "heading-5cb9d196ca7a",
+      "title": "5.17 Binary Order",
+      "level": 2,
+      "text_sha256": "c7877d6829998f482401955e8c2531ccdde9881c6103ffe178d6e33b4a728962",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-5cb9d196ca7a",
+          "unicode17-chapter-5.heading-5cb9d196ca7a-clause-ec18c6a3b5be",
+          "unicode17-chapter-5.heading-5cb9d196ca7a-clause-e335198a320b"
+        ]
+      }
+    },
+    {
+      "id": "heading-528af6ed42bc",
+      "title": "5.17.1 UTF-8 in UTF-16 Order",
+      "level": 3,
+      "text_sha256": "0b49078304f76de78129b9a66825ba704fec24724e5adfee210a201c2ebebf1b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-528af6ed42bc"
+        ]
+      }
+    },
+    {
+      "id": "heading-f8bf70a8dbec",
+      "title": "5.17.2 UTF-16 in UTF-8 Order",
+      "level": 3,
+      "text_sha256": "1747c4d06251741be519c4bc0bf02d8c5a9499f2ebc153fe06a87f9a2fd2b67a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-f8bf70a8dbec",
+          "unicode17-chapter-5.heading-f8bf70a8dbec-clause-45cdcb42e751"
+        ]
+      }
+    },
+    {
+      "id": "heading-4e8c0b9a19e3",
+      "title": "5.18 Case Mappings",
+      "level": 2,
+      "text_sha256": "2a161ada82a2df0596d2b2d9ac7ff120bf31c01af61bc06933d5b59a06046290",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-4e8c0b9a19e3"
+        ]
+      }
+    },
+    {
+      "id": "heading-b72bc4c0a927",
+      "title": "5.18.1 Titlecasing",
+      "level": 3,
+      "text_sha256": "63491ec91ee810555f9a724d5db3bd37b8e6d8b0e3bbed306bc3f12805140803",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-b72bc4c0a927"
+        ]
+      }
+    },
+    {
+      "id": "heading-28616e8805c5",
+      "title": "5.18.2 Complications for Case Mapping",
+      "level": 3,
+      "text_sha256": "73ea1671ea3f34ff199236a32b79c80f8414ac4117c78875c5f9cf0fc5aeed4d",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-28616e8805c5",
+          "unicode17-chapter-5.heading-28616e8805c5-clause-5d9975689255",
+          "unicode17-chapter-5.heading-28616e8805c5-clause-26fb38183e27"
+        ]
+      }
+    },
+    {
+      "id": "heading-9591869ba3eb",
+      "title": "5.18.3 Reversibility",
+      "level": 3,
+      "text_sha256": "aa8b5097d12357bb7521b4d28c05de48d02c5b01aac3adfbdef645545a6a4ead",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-9591869ba3eb"
+        ]
+      }
+    },
+    {
+      "id": "heading-d854e4bb2707",
+      "title": "5.18.4 Caseless Matching",
+      "level": 3,
+      "text_sha256": "9297923548ce2257553b478953ec6d8b6c3da728de27f4b5b1f2cda5d3b0c922",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-d854e4bb2707",
+          "unicode17-chapter-5.heading-d854e4bb2707-clause-865ef93bc2b5",
+          "unicode17-chapter-5.heading-d854e4bb2707-clause-3134ea27f545",
+          "unicode17-chapter-5.heading-d854e4bb2707-clause-405b51c284d9",
+          "unicode17-chapter-5.heading-d854e4bb2707-clause-12d09609c111",
+          "unicode17-chapter-5.heading-d854e4bb2707-clause-2b1ee3933add",
+          "unicode17-chapter-5.heading-d854e4bb2707-clause-6b33d1d00f6e",
+          "unicode17-chapter-5.heading-d854e4bb2707-clause-4c96cda8ff44",
+          "unicode17-chapter-5.heading-d854e4bb2707-clause-158c89d6b4bb"
+        ]
+      }
+    },
+    {
+      "id": "heading-b7e651c42d5b",
+      "title": "5.18.5 Normalization and Casing",
+      "level": 3,
+      "text_sha256": "498a0c6d97e9112ce90adae8bdb3f6b0d5955a3eb8cab43f2e112164d0f37c84",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-b7e651c42d5b",
+          "unicode17-chapter-5.heading-b7e651c42d5b-clause-8868fa283db4"
+        ]
+      }
+    },
+    {
+      "id": "heading-13ad14fa1669",
+      "title": "5.19 Mapping Compatibility Variants",
+      "level": 2,
+      "text_sha256": "810dd1b9cafc5ad2cb698e3685bae1da363dad1beb5582e250d41d5ca904dfe5",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-13ad14fa1669",
+          "unicode17-chapter-5.heading-13ad14fa1669-clause-7725c3188445",
+          "unicode17-chapter-5.heading-13ad14fa1669-clause-4e0fc21f918a",
+          "unicode17-chapter-5.heading-13ad14fa1669-clause-f355eeae4e65",
+          "unicode17-chapter-5.heading-13ad14fa1669-clause-20197b114724"
+        ]
+      }
+    },
+    {
+      "id": "heading-e9d97ecb46c1",
+      "title": "5.20 Unicode Security",
+      "level": 2,
+      "text_sha256": "841fce161a60fc412385ec7b8bd2f26d300274dc862a4614c42a6fe42f5a6242",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-e9d97ecb46c1",
+          "unicode17-chapter-5.heading-e9d97ecb46c1-clause-7e5fe380f593",
+          "unicode17-chapter-5.heading-e9d97ecb46c1-clause-9415aea21d58",
+          "unicode17-chapter-5.heading-e9d97ecb46c1-clause-711cd5f670e5",
+          "unicode17-chapter-5.heading-e9d97ecb46c1-clause-2bffc2dc3234",
+          "unicode17-chapter-5.heading-e9d97ecb46c1-clause-5f2e31804b8d"
+        ]
+      }
+    },
+    {
+      "id": "heading-2a1fbc30e74f",
+      "title": "5.21 Ignoring Characters in Processing",
+      "level": 2,
+      "text_sha256": "602467633a25a713117052a9c1096995eeb6e4ec3ac16d4178b180b1ca8bde1e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-2a1fbc30e74f",
+          "unicode17-chapter-5.heading-2a1fbc30e74f-clause-45f29678a351"
+        ]
+      }
+    },
+    {
+      "id": "heading-2543bc5ba3b3",
+      "title": "5.21.1 Characters Ignored in Text Segmentation",
+      "level": 3,
+      "text_sha256": "1754932571d3306c77a2a85da40dbdf2ee74e97f087ad8bb00e647a32c110415",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-2543bc5ba3b3",
+          "unicode17-chapter-5.heading-2543bc5ba3b3-clause-ba9406f9a3a5",
+          "unicode17-chapter-5.heading-2543bc5ba3b3-clause-fb69329227a5"
+        ]
+      }
+    },
+    {
+      "id": "heading-64ea08794bbe",
+      "title": "5.21.2 Characters Ignored in Line Breaking",
+      "level": 3,
+      "text_sha256": "d88d5128082f03cbae41fec357fb0d391651f3d936e5d4d308fdd8b005223cc8",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-64ea08794bbe",
+          "unicode17-chapter-5.heading-64ea08794bbe-clause-6437378340d0",
+          "unicode17-chapter-5.heading-64ea08794bbe-clause-06ba9e9b876c"
+        ]
+      }
+    },
+    {
+      "id": "heading-c192b5e3ed5d",
+      "title": "5.21.3 Characters Ignored in Cursive Joining",
+      "level": 3,
+      "text_sha256": "8336f2e0cff237fc5de2a593dce33ff135d98788bcb875ea1071a143c75d5062",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-c192b5e3ed5d",
+          "unicode17-chapter-5.heading-c192b5e3ed5d-clause-2b2c090187f4",
+          "unicode17-chapter-5.heading-c192b5e3ed5d-clause-76a6b16ffc8b"
+        ]
+      }
+    },
+    {
+      "id": "heading-44f5b0e1cd1a",
+      "title": "5.21.4 Characters Ignored in Identifiers",
+      "level": 3,
+      "text_sha256": "2b42adc801e2cae14208e9f8af793a2b7da7185391e6626017cdee2e617435c4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-44f5b0e1cd1a",
+          "unicode17-chapter-5.heading-44f5b0e1cd1a-clause-253bf57dce26"
+        ]
+      }
+    },
+    {
+      "id": "heading-4613b122aa36",
+      "title": "5.21.5 Characters Ignored in Searching and Sorting",
+      "level": 3,
+      "text_sha256": "7a48f70e3b309fdf05292897539aea6ae1bc4417dde9e8f36f3590a91b1fb5b1",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-4613b122aa36",
+          "unicode17-chapter-5.heading-4613b122aa36-clause-491b970f531c",
+          "unicode17-chapter-5.heading-4613b122aa36-clause-502289efcec0",
+          "unicode17-chapter-5.heading-4613b122aa36-clause-0f160d204049",
+          "unicode17-chapter-5.heading-4613b122aa36-clause-dfd3209c5bfb"
+        ]
+      }
+    },
+    {
+      "id": "heading-7f7f96a3e64d",
+      "title": "5.21.6 Characters Ignored for Display",
+      "level": 3,
+      "text_sha256": "36272b7cb10a9cd16666426d0cee7f74539846890027b194f1a5cae08bba4620",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-7f7f96a3e64d",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-19ba3b20d984",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-2dae79092f04",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-833fb2cc4f8a",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-6d20a645aad3",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-b7b19ce9c0c4",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-6359d836ebba",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-8d34f09f03c6",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-981c3079f79f",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-e3bcc45b3d77",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-35c5a5bae23a",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-8ae4dad76254",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-5d44af03f3fc",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-acc99d805a96",
+          "unicode17-chapter-5.heading-7f7f96a3e64d-clause-91e17c48d68d"
+        ]
+      }
+    },
+    {
+      "id": "heading-4ec88c4d3ccd",
+      "title": "5.22 U+FFFD Substitution in Conversion",
+      "level": 2,
+      "text_sha256": "282cffef014cd609f0049e282d8537a5763a9b0c1a115480cd5a98a1de6b0757",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-5.heading-4ec88c4d3ccd",
+          "unicode17-chapter-5.heading-4ec88c4d3ccd-clause-80f3150c0ccc",
+          "unicode17-chapter-5.heading-4ec88c4d3ccd-clause-66e31cd4fe4c",
+          "unicode17-chapter-5.heading-4ec88c4d3ccd-clause-f4689a3e2c28"
+        ]
+      }
+    }
+  ]
+}

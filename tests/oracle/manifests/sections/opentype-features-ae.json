@@ -1,0 +1,521 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-features-ae",
+  "sections": [
+    {
+      "id": "registered-features-descriptions-and-implementations-a--e",
+      "title": "Registered Features: Descriptions and Implementations (a – e)",
+      "level": 1,
+      "text_sha256": "286d7b29f4d9dba62cb0b13ee635a957acdd20fe619ee0edba45a3da03f10db0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.registered-features-descriptions-and-implementations-a-e"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "tag-aalt",
+      "title": "Tag: 'aalt'",
+      "level": 2,
+      "text_sha256": "63829c213589a2eee8863abcc5f53f8c02d7286163c12bb1af5893fe38125e78",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-aalt",
+          "opentype-features-ae.tag-aalt-clause-5e739b056d65",
+          "opentype-features-ae.tag-aalt-clause-9ed8cd0dcab4",
+          "opentype-features-ae.tag-aalt-clause-931861b684c0",
+          "opentype-features-ae.tag-aalt-clause-c67b1d9c5202"
+        ]
+      }
+    },
+    {
+      "id": "tag-abvf",
+      "title": "Tag: 'abvf'",
+      "level": 2,
+      "text_sha256": "67eb11ad11677cc44b16b70f2dcdc35697fbad2c79a9a79afce8d05f5be16e37",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-abvf",
+          "opentype-features-ae.tag-abvf-clause-fddf97762b28",
+          "opentype-features-ae.tag-abvf-clause-8ddda34b34a2"
+        ]
+      }
+    },
+    {
+      "id": "tag-abvm",
+      "title": "Tag: 'abvm'",
+      "level": 2,
+      "text_sha256": "6f2752dda75fb56b3dba75733d70d1e5ab7e6a01888f322a6fa40a69cf0a2d24",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-abvm",
+          "opentype-features-ae.tag-abvm-clause-4b9a3413f193",
+          "opentype-features-ae.tag-abvm-clause-8ddda34b34a2"
+        ]
+      }
+    },
+    {
+      "id": "tag-abvs",
+      "title": "Tag: 'abvs'",
+      "level": 2,
+      "text_sha256": "85e77af8ae54d441c2fde5d76b083bdeff774f8946259ba4bde799e2783168c2",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-abvs",
+          "opentype-features-ae.tag-abvs-clause-e8b10bbbf439",
+          "opentype-features-ae.tag-abvs-clause-8ddda34b34a2"
+        ]
+      }
+    },
+    {
+      "id": "tag-afrc",
+      "title": "Tag: 'afrc'",
+      "level": 2,
+      "text_sha256": "3e31cb5797f460bc85f6644a18cfc7b1fe3bb0af7f5d37c282abbf73fa858d4c",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-afrc",
+          "opentype-features-ae.tag-afrc-clause-529bb023650c"
+        ]
+      }
+    },
+    {
+      "id": "tag-akhn",
+      "title": "Tag: 'akhn'",
+      "level": 2,
+      "text_sha256": "21f98e4145f024f47f1771780fd02f72614cf16580bd3a2d0406fd66c7932d6a",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-akhn",
+          "opentype-features-ae.tag-akhn-clause-6a8ab7281c92",
+          "opentype-features-ae.tag-akhn-clause-e8b10bbbf439",
+          "opentype-features-ae.tag-akhn-clause-8ddda34b34a2",
+          "opentype-features-ae.tag-akhn-clause-c34af3392f06"
+        ]
+      }
+    },
+    {
+      "id": "tag-apkn",
+      "title": "Tag: 'apkn'",
+      "level": 2,
+      "text_sha256": "180ba5b366b66238a15c663a946bca8732a02912a226f4a3f97a4f30e2d236c0",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-apkn",
+          "opentype-features-ae.tag-apkn-clause-e1a42e4f379a",
+          "opentype-features-ae.tag-apkn-clause-bad7f638e441",
+          "opentype-features-ae.tag-apkn-clause-ea106a1d497d"
+        ]
+      }
+    },
+    {
+      "id": "tag-blwf",
+      "title": "Tag: 'blwf'",
+      "level": 2,
+      "text_sha256": "35052ca2dfc2d14eec56e9b09884a84bc381168e29f56290b9b7e5ff5984d22c",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-blwf",
+          "opentype-features-ae.tag-blwf-clause-e8b10bbbf439",
+          "opentype-features-ae.tag-blwf-clause-8ddda34b34a2",
+          "opentype-features-ae.tag-blwf-clause-d9afa509ae4f"
+        ]
+      }
+    },
+    {
+      "id": "tag-blwm",
+      "title": "Tag: 'blwm'",
+      "level": 2,
+      "text_sha256": "06a097a6e53eb0bbb4f3294739f7f9213f5b156eb96ac19da574a4f33a0fa20e",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-blwm",
+          "opentype-features-ae.tag-blwm-clause-4b9a3413f193",
+          "opentype-features-ae.tag-blwm-clause-8ddda34b34a2"
+        ]
+      }
+    },
+    {
+      "id": "tag-blws",
+      "title": "Tag: 'blws'",
+      "level": 2,
+      "text_sha256": "3cb5293e3ca262f999cb5d9cb88b4687a123aea480a1b7c4d653f1b960fbca6e",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-blws",
+          "opentype-features-ae.tag-blws-clause-e8b10bbbf439",
+          "opentype-features-ae.tag-blws-clause-8ddda34b34a2"
+        ]
+      }
+    },
+    {
+      "id": "tag-calt",
+      "title": "Tag: 'calt'",
+      "level": 2,
+      "text_sha256": "aaab6d52ac66f6779bfd2eb87fa6dabf68fb618ef3c8a42f67c93bed130b6500",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-calt",
+          "opentype-features-ae.tag-calt-clause-da12983888fe"
+        ]
+      }
+    },
+    {
+      "id": "tag-case",
+      "title": "Tag: 'case'",
+      "level": 2,
+      "text_sha256": "44b4924bf728901cc13d9acca181d24c9234d51fc2d85a72f473ad0842d62e65",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-case",
+          "opentype-features-ae.tag-case-clause-0be0d3557462"
+        ]
+      }
+    },
+    {
+      "id": "tag-ccmp",
+      "title": "Tag: 'ccmp'",
+      "level": 2,
+      "text_sha256": "3591fcdf9476b21601d2641331a43189103b24c790eca3b2769b5b22ed73086c",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-ccmp",
+          "opentype-features-ae.tag-ccmp-clause-b4087b753d07",
+          "opentype-features-ae.tag-ccmp-clause-80af3f3c2599",
+          "opentype-features-ae.tag-ccmp-clause-8ddda34b34a2"
+        ]
+      }
+    },
+    {
+      "id": "tag-cfar",
+      "title": "Tag: 'cfar'",
+      "level": 2,
+      "text_sha256": "0354b4ca8b6fb49b689e050edddf7726f8768e9866007da6206486dd95a8c93c",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-cfar",
+          "opentype-features-ae.tag-cfar-clause-05c1f6fbd953",
+          "opentype-features-ae.tag-cfar-clause-8ddda34b34a2",
+          "opentype-features-ae.tag-cfar-clause-5c4b45f0d988"
+        ]
+      }
+    },
+    {
+      "id": "tag-chws",
+      "title": "Tag: 'chws'",
+      "level": 2,
+      "text_sha256": "b25793fdc0093635f9643e45839cca7d8baf977a62b01f1966e202a3a1231cd7",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-chws",
+          "opentype-features-ae.tag-chws-clause-c73411be4d3f",
+          "opentype-features-ae.tag-chws-clause-04da4ebdd38d",
+          "opentype-features-ae.tag-chws-clause-fe59e7d5375b",
+          "opentype-features-ae.tag-chws-clause-8c2229283652"
+        ]
+      }
+    },
+    {
+      "id": "tag-cjct",
+      "title": "Tag: 'cjct'",
+      "level": 2,
+      "text_sha256": "71ff79a4f9ca8e0d960ac1e78041ca07a529579df573545e758d172005ef5aeb",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-cjct",
+          "opentype-features-ae.tag-cjct-clause-548f88aa775e",
+          "opentype-features-ae.tag-cjct-clause-8ddda34b34a2",
+          "opentype-features-ae.tag-cjct-clause-c34af3392f06"
+        ]
+      }
+    },
+    {
+      "id": "tag-clig",
+      "title": "Tag: 'clig'",
+      "level": 2,
+      "text_sha256": "6fcfb1da75b4cf9e0be4efa89cc2407009dd1e6d08737432d2405603c9e77d70",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-clig",
+          "opentype-features-ae.tag-clig-clause-6ef7923ea9f3",
+          "opentype-features-ae.tag-clig-clause-da12983888fe"
+        ]
+      }
+    },
+    {
+      "id": "tag-cpct",
+      "title": "Tag: 'cpct'",
+      "level": 2,
+      "text_sha256": "48eb6f0ac31384cb58c0a2926930918b317473bd0ca76ddee179b465a702078d",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-cpct",
+          "opentype-features-ae.tag-cpct-clause-529bb023650c",
+          "opentype-features-ae.tag-cpct-clause-55a346f7b0e2"
+        ]
+      }
+    },
+    {
+      "id": "tag-cpsp",
+      "title": "Tag: 'cpsp'",
+      "level": 2,
+      "text_sha256": "7e6e20df4c9c404245f5085458bdad40bada4e50e8fb9b78485952255661a259",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-cpsp",
+          "opentype-features-ae.tag-cpsp-clause-f878840d568e",
+          "opentype-features-ae.tag-cpsp-clause-d0951df014c3"
+        ]
+      }
+    },
+    {
+      "id": "tag-cswh",
+      "title": "Tag: 'cswh'",
+      "level": 2,
+      "text_sha256": "f3f000dd0785a59649f8f3fead8185f697533f8cd6ee88a512c3e64da253647a",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-cswh",
+          "opentype-features-ae.tag-cswh-clause-5cd5a4764389",
+          "opentype-features-ae.tag-cswh-clause-420906e9a21b",
+          "opentype-features-ae.tag-cswh-clause-3ee4dc46c5a7"
+        ]
+      }
+    },
+    {
+      "id": "tag-curs",
+      "title": "Tag: 'curs'",
+      "level": 2,
+      "text_sha256": "4bf93a7ddec032207f607346913635ad6f4d82d8b625f4bedff6b6ff66de4a9a",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-curs",
+          "opentype-features-ae.tag-curs-clause-716a4371e4a1",
+          "opentype-features-ae.tag-curs-clause-721433c83d9b"
+        ]
+      }
+    },
+    {
+      "id": "tag-cv01--cv99",
+      "title": "Tag: 'cv01' – 'cv99'",
+      "level": 2,
+      "text_sha256": "854a1c28da55f27865f7f3af8aa73edfb96eae811c398776ddacb1b08d2a2f47",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-cv01-cv99",
+          "opentype-features-ae.tag-cv01-cv99-clause-2862c14f4d8b",
+          "opentype-features-ae.tag-cv01-cv99-clause-396a9713bbc1",
+          "opentype-features-ae.tag-cv01-cv99-clause-43fde46776c4",
+          "opentype-features-ae.tag-cv01-cv99-clause-bc44c0e8c3ea",
+          "opentype-features-ae.tag-cv01-cv99-clause-b56d08debf7a",
+          "opentype-features-ae.tag-cv01-cv99-clause-084d967756cc",
+          "opentype-features-ae.tag-cv01-cv99-clause-569e794af243",
+          "opentype-features-ae.tag-cv01-cv99-clause-b42ee0f5639c",
+          "opentype-features-ae.tag-cv01-cv99-clause-129a5edcdebd",
+          "opentype-features-ae.tag-cv01-cv99-clause-6575817595fc"
+        ]
+      }
+    },
+    {
+      "id": "tag-c2pc",
+      "title": "Tag: 'c2pc'",
+      "level": 2,
+      "text_sha256": "56e010cb97354303a0795a6c86842b64d2d3cd2c275d26b7095c472bca864b18",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-c2pc",
+          "opentype-features-ae.tag-c2pc-clause-529bb023650c"
+        ]
+      }
+    },
+    {
+      "id": "tag-c2sc",
+      "title": "Tag: 'c2sc'",
+      "level": 2,
+      "text_sha256": "272b633dce4c345907f745ec5d01e8d4687532d2a9367f4b4a11a161ce353c4f",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-c2sc",
+          "opentype-features-ae.tag-c2sc-clause-529bb023650c"
+        ]
+      }
+    },
+    {
+      "id": "tag-dist",
+      "title": "Tag: 'dist'",
+      "level": 2,
+      "text_sha256": "f82a86faf59348e75da03ceed36bad9ad5ce44f93cc41e509257ad48f7f2ec4f",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-dist",
+          "opentype-features-ae.tag-dist-clause-871214fd7c17",
+          "opentype-features-ae.tag-dist-clause-1f8540783f63",
+          "opentype-features-ae.tag-dist-clause-8ddda34b34a2",
+          "opentype-features-ae.tag-dist-clause-3700ac5cc7bc"
+        ]
+      }
+    },
+    {
+      "id": "tag-dlig",
+      "title": "Tag: 'dlig'",
+      "level": 2,
+      "text_sha256": "cb5b8f319d890e46d6f33db2789878f3b891096972f3cf3b085a99d27e6df9b9",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-dlig",
+          "opentype-features-ae.tag-dlig-clause-529bb023650c"
+        ]
+      }
+    },
+    {
+      "id": "tag-dnom",
+      "title": "Tag: 'dnom'",
+      "level": 2,
+      "text_sha256": "d004cbaa9d0969756365fbcf528b2c0be72c10a9988cc3f45deedcaf57f4251d",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-dnom",
+          "opentype-features-ae.tag-dnom-clause-ec3d453ace46"
+        ]
+      }
+    },
+    {
+      "id": "tag-dtls",
+      "title": "Tag: 'dtls'",
+      "level": 2,
+      "text_sha256": "443986031ea8d58a77eb76f62e2a37a7a139e74f194375429afaa8fe29ab0935",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-dtls",
+          "opentype-features-ae.tag-dtls-clause-1c30c07aa536",
+          "opentype-features-ae.tag-dtls-clause-8ddda34b34a2"
+        ]
+      }
+    },
+    {
+      "id": "tag-expt",
+      "title": "Tag: 'expt'",
+      "level": 2,
+      "text_sha256": "f9bd880cbe3b027e8a694fb00e57a3bae07edd4d0a75607029eccff3c84ea577",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.tag-expt",
+          "opentype-features-ae.tag-expt-clause-d0b6515ae6a6",
+          "opentype-features-ae.tag-expt-clause-8db10d09b8d0"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "9431b47d266d386d8892bc7d335adbaf141067c42ab76f2b9deeb5210d64ca82",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-ae.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

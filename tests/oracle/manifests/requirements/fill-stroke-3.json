@@ -1,0 +1,4604 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "fill-stroke-3.subtitle",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "subtitle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C First Public Working Draft, 13 April 2017.",
+      "locator": {
+        "section_id": "subtitle",
+        "text_sha256": "cd4676c051d488003f11134aaa9620cd010c4f644f129ae3dd16dc761eed0efd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.intro",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "feeb553515802b8ca940462939f0aa9964f1585c83170236b7f5ee4dd32f959b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.paint",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "paint"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Paint.",
+      "locator": {
+        "section_id": "paint",
+        "text_sha256": "498d27b921a589b7ec4699b4a328a924b7c88f3528e6868fbd42c67e857c91d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.svg-paint",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "svg-paint"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in SVG-Specific Paints.",
+      "locator": {
+        "section_id": "svg-paint",
+        "text_sha256": "5a803c78d311ea5cd198af4cdebdbcfaa3a0e352587495e2a44cc418e66cab6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.svg-paint-clause-c27af8095196",
+        "fill-stroke-3.svg-paint-clause-8e27efd10216"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.svg-paint-clause-c27af8095196",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "svg-paint"
+      ],
+      "behaviour": "SVG-Specific Paints — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "svg-paint",
+        "clause_index": 8,
+        "clause_sha256": "c27af8095196c334c694341656932601e76605d963fc3b504cbdbe4b5cd75a51"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.svg-paint-clause-8e27efd10216",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "svg-paint"
+      ],
+      "behaviour": "SVG-Specific Paints — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "svg-paint",
+        "clause_index": 11,
+        "clause_sha256": "8e27efd1021661cbfaa9f942bec52e9a54c184e400c1da597604a00d0adc0ab5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fills",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fills"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fills.",
+      "locator": {
+        "section_id": "fills",
+        "text_sha256": "630cc7e0081cb3e7d5f2f628ed20cf2f0cc3b25e254cffcab102249717d2ea74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.fills-clause-0a44cf0d15d5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fills-clause-0a44cf0d15d5",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fills"
+      ],
+      "behaviour": "Fills — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "fills",
+        "clause_index": 1,
+        "clause_sha256": "0a44cf0d15d552548a5f2033f8133f8cf18f6334c7ebe8f6ca7a3fab64c8319e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-layering",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-layering"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layering Multiple Fills.",
+      "locator": {
+        "section_id": "fill-layering",
+        "text_sha256": "9263d54f301a0d6567eb9548b74db88b68f6b5ff1b1907166538aef1175b4598"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-geometry",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-geometry"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fill Geometry.",
+      "locator": {
+        "section_id": "fill-geometry",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-rule",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-rule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Winding Rule for SVG shapes: the fill-rule property.",
+      "locator": {
+        "section_id": "fill-rule",
+        "text_sha256": "0fc5fc28de5559cc38dc6a4fd2b7353babc0cefaad115bf6303010bee26e78dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.fill-rule-clause-cca2516ebb1d",
+        "fill-stroke-3.fill-rule-clause-d9f4e73741ad",
+        "fill-stroke-3.fill-rule-clause-fe8f99435026",
+        "fill-stroke-3.fill-rule-clause-e778e67f3936"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-rule-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-rule"
+      ],
+      "behaviour": "Winding Rule for SVG shapes: the fill-rule property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-rule",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-rule-clause-d9f4e73741ad",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-rule"
+      ],
+      "behaviour": "Winding Rule for SVG shapes: the fill-rule property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-rule",
+        "clause_index": 26,
+        "clause_sha256": "d9f4e73741ad44712c6399443fcd470b0eca8615b0c0fe83fb7e9fc3aa93c39b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-rule-clause-fe8f99435026",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-rule"
+      ],
+      "behaviour": "Winding Rule for SVG shapes: the fill-rule property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-rule",
+        "clause_index": 27,
+        "clause_sha256": "fe8f994350268293ebbff23c240b73b36ef1c624a238ff3fe858cefd588e7d2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-rule-clause-e778e67f3936",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-rule"
+      ],
+      "behaviour": "Winding Rule for SVG shapes: the fill-rule property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-rule",
+        "clause_index": 28,
+        "clause_sha256": "e778e67f3936939922990bb1bce3da4028c30ae5fc80b1a475d777f453168be6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-break",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-break"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fragmented Fills: the fill-break property.",
+      "locator": {
+        "section_id": "fill-break",
+        "text_sha256": "31c2716d9e03f132c47c20a7ff3095730d37fd3ba91459495bbf0b35189941f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.fill-break-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-break-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-break"
+      ],
+      "behaviour": "Fragmented Fills: the fill-break property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-break",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-paint",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-paint"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fill Paint.",
+      "locator": {
+        "section_id": "fill-paint",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-color",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fill Color: the fill-color property.",
+      "locator": {
+        "section_id": "fill-color",
+        "text_sha256": "4390c8427c2559248f09cf264229fe9bb47599156eb42613aff0ff29dba14dd6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.fill-color-clause-cca2516ebb1d",
+        "fill-stroke-3.fill-color-clause-bfe0717776b9",
+        "fill-stroke-3.fill-color-clause-b1891f3b8f53",
+        "fill-stroke-3.fill-color-clause-ca01b9e7bd8b",
+        "fill-stroke-3.fill-color-clause-8b8633342f5b",
+        "fill-stroke-3.fill-color-clause-ae79b58fb8b7",
+        "fill-stroke-3.fill-color-clause-586469136c53"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-color-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-color"
+      ],
+      "behaviour": "Fill Color: the fill-color property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-color",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-color-clause-bfe0717776b9",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-color"
+      ],
+      "behaviour": "Fill Color: the fill-color property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-color",
+        "clause_index": 15,
+        "clause_sha256": "bfe0717776b9af90e68423cc02f641efdc73774636092fd5abf0d0bce0a74193"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-color-clause-b1891f3b8f53",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-color"
+      ],
+      "behaviour": "Fill Color: the fill-color property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-color",
+        "clause_index": 21,
+        "clause_sha256": "b1891f3b8f53d98a8afdcb4ddedc0eb5ea836b529fd09401704dbc8571a3660f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-color-clause-ca01b9e7bd8b",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-color"
+      ],
+      "behaviour": "Fill Color: the fill-color property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-color",
+        "clause_index": 22,
+        "clause_sha256": "ca01b9e7bd8b2bcba380d2ce6d198ba33cb83fa02b8a2dbb5d5551dcd2510ebe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-color-clause-8b8633342f5b",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-color"
+      ],
+      "behaviour": "Fill Color: the fill-color property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-color",
+        "clause_index": 23,
+        "clause_sha256": "8b8633342f5bf6a0cc4a6e198ef4eca3a7c12cdb274a1208e91ede0baeb013ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-color-clause-ae79b58fb8b7",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-color"
+      ],
+      "behaviour": "Fill Color: the fill-color property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-color",
+        "clause_index": 24,
+        "clause_sha256": "ae79b58fb8b75e9e5f1604b75d47d522a0d2013364e3952986ea76687955ec66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-color-clause-586469136c53",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-color"
+      ],
+      "behaviour": "Fill Color: the fill-color property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-color",
+        "clause_index": 26,
+        "clause_sha256": "586469136c53e1934213981e02eac92b273aa0761017d6d7b6e0c62bd0023a6c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-image",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-image"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fill Image Sources: the fill-image property.",
+      "locator": {
+        "section_id": "fill-image",
+        "text_sha256": "a91395e6d04594f0c2549e1a9bc11d1e760c77d44865e1cde2b2b447b7d61a3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.fill-image-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-image-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-image"
+      ],
+      "behaviour": "Fill Image Sources: the fill-image property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-image",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-origin",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-origin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fill Positioning Area: the fill-origin property.",
+      "locator": {
+        "section_id": "fill-origin",
+        "text_sha256": "6176812b60651693d117912f40d586e85b7ca786bd0ee37b6da159771ce0ddcf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.fill-origin-clause-cca2516ebb1d",
+        "fill-stroke-3.fill-origin-clause-faac2da73eb4",
+        "fill-stroke-3.fill-origin-clause-47ee370e9a91",
+        "fill-stroke-3.fill-origin-clause-890a767f5725"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-origin-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-origin"
+      ],
+      "behaviour": "Fill Positioning Area: the fill-origin property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-origin",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-origin-clause-faac2da73eb4",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-origin"
+      ],
+      "behaviour": "Fill Positioning Area: the fill-origin property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-origin",
+        "clause_index": 32,
+        "clause_sha256": "faac2da73eb46986354f1a33e8ca3096d18653ac50b8b7b8195641c20ea5c060"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-origin-clause-47ee370e9a91",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-origin"
+      ],
+      "behaviour": "Fill Positioning Area: the fill-origin property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-origin",
+        "clause_index": 33,
+        "clause_sha256": "47ee370e9a91d18c807c59eea229866ec38beff259039057d85c53b846044ed8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-origin-clause-890a767f5725",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-origin"
+      ],
+      "behaviour": "Fill Positioning Area: the fill-origin property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-origin",
+        "clause_index": 34,
+        "clause_sha256": "890a767f572574f5b6aef65f2cf5653786842e41635f82e8df7077b0ab20ccc0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-position",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Positioning Fill Images: the fill-position property.",
+      "locator": {
+        "section_id": "fill-position",
+        "text_sha256": "177d730ed862e4ae56ab8122e4c2726f13951b5649f30c6bede40fa006c8114f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.fill-position-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-position-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-position"
+      ],
+      "behaviour": "Positioning Fill Images: the fill-position property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-position",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-size",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-size"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sizing Fill Images: the fill-size property.",
+      "locator": {
+        "section_id": "fill-size",
+        "text_sha256": "0f1c401f0172bf4a5bf02ad22da19e87f521b28d9fcbbd6ac78732ed6d8cfc8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.fill-size-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-size-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-size"
+      ],
+      "behaviour": "Sizing Fill Images: the fill-size property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-size",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-repeat",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-repeat"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tiling Fill Images: the fill-repeat property.",
+      "locator": {
+        "section_id": "fill-repeat",
+        "text_sha256": "d3b677252cd874dfbde4694fdc97566cdc3f7fe4cbf87595ecacd0bd92ae64fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.fill-repeat-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-repeat-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-repeat"
+      ],
+      "behaviour": "Tiling Fill Images: the fill-repeat property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-repeat",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-shorthand",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-shorthand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fill Shorthand: the fill property.",
+      "locator": {
+        "section_id": "fill-shorthand",
+        "text_sha256": "1a074b9f6970da338a5880b95ae2e5096cb12761739807b4feaf1476c382524b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.fill-shorthand-clause-cca2516ebb1d",
+        "fill-stroke-3.fill-shorthand-clause-4fc7bbf72197",
+        "fill-stroke-3.fill-shorthand-clause-ed8bdcb1f4b7",
+        "fill-stroke-3.fill-shorthand-clause-cdb398e819d6",
+        "fill-stroke-3.fill-shorthand-clause-83e5cdabef6e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-shorthand-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-shorthand"
+      ],
+      "behaviour": "Fill Shorthand: the fill property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-shorthand",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-shorthand-clause-4fc7bbf72197",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-shorthand"
+      ],
+      "behaviour": "Fill Shorthand: the fill property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-shorthand",
+        "clause_index": 19,
+        "clause_sha256": "4fc7bbf72197ad8746e8585a32b5c6c91dfd745220af67ad42da34c4801ed795"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-shorthand-clause-ed8bdcb1f4b7",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-shorthand"
+      ],
+      "behaviour": "Fill Shorthand: the fill property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-shorthand",
+        "clause_index": 20,
+        "clause_sha256": "ed8bdcb1f4b70179989bf52db05a91923358cd2d8152bcd97871cb3c40ad3959"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-shorthand-clause-cdb398e819d6",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-shorthand"
+      ],
+      "behaviour": "Fill Shorthand: the fill property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-shorthand",
+        "clause_index": 21,
+        "clause_sha256": "cdb398e819d61957b440cb7ec674f306040f3c73bda03435ec887511339f3b88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-shorthand-clause-83e5cdabef6e",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-shorthand"
+      ],
+      "behaviour": "Fill Shorthand: the fill property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-shorthand",
+        "clause_index": 22,
+        "clause_sha256": "83e5cdabef6edadc9d63a9f8a9e76688c2043df8d3460f9c6f949852425a3fa7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.fill-filter",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-filter"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fill Transparency.",
+      "locator": {
+        "section_id": "fill-filter",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-opacity",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-opacity"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fill Opacity: the fill-opacity property.",
+      "locator": {
+        "section_id": "fill-opacity",
+        "text_sha256": "da600b5d4ff7551068c0bdb8ffdacb417ef82ae22668a360918df2ebad0f28d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.fill-opacity-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.fill-opacity-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "fill-opacity"
+      ],
+      "behaviour": "Fill Opacity: the fill-opacity property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "fill-opacity",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.strokes",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "strokes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Strokes (Outlines).",
+      "locator": {
+        "section_id": "strokes",
+        "text_sha256": "49cfed1b60ff9300f4a74f31dedfc1d7ae0badec74fe85d8b7e225cd117f843c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.strokes-clause-f6c9da4701d8",
+        "fill-stroke-3.strokes-clause-4daa3f080c3d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.strokes-clause-f6c9da4701d8",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "strokes"
+      ],
+      "behaviour": "Strokes (Outlines) — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "strokes",
+        "clause_index": 1,
+        "clause_sha256": "f6c9da4701d8592cbbcf6b6d41c5a2096cf58d311b6ef43385c8025a47a5e0eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.strokes-clause-4daa3f080c3d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "strokes"
+      ],
+      "behaviour": "Strokes (Outlines) — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "strokes",
+        "clause_index": 3,
+        "clause_sha256": "4daa3f080c3d70184df6b20c39780606b4bf8eab0b4f97f8e8cfbc6bd69d5ced"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-layering",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-layering"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layering Multiple Strokes.",
+      "locator": {
+        "section_id": "stroke-layering",
+        "text_sha256": "bf16b4aba999d034882cef3787fa5058d76c24c5f7042561f9a18c1ef03f342b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-layering-clause-6aa0b2810464"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-layering-clause-6aa0b2810464",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-layering"
+      ],
+      "behaviour": "Layering Multiple Strokes — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-layering",
+        "clause_index": 3,
+        "clause_sha256": "6aa0b2810464c2945d8495d0a303a65b27314a1dd1eedb73094d2e2bcf1c499a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-geometry",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-geometry"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Geometry.",
+      "locator": {
+        "section_id": "stroke-geometry",
+        "text_sha256": "9befc21aed55d56b97897b252c9254255323e7ef7ec2be4fb3a16f8276093617"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-geometry-clause-9befc21aed55"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-geometry-clause-9befc21aed55",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-geometry"
+      ],
+      "behaviour": "Stroke Geometry — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-geometry",
+        "clause_index": 0,
+        "clause_sha256": "9befc21aed55d56b97897b252c9254255323e7ef7ec2be4fb3a16f8276093617"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-width",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Thickness: the stroke-width property.",
+      "locator": {
+        "section_id": "stroke-width",
+        "text_sha256": "56ae577fb00d633c28d8cb72274206dd15b5c26e5218be4f58d2b56f6100b30f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-width-clause-cca2516ebb1d",
+        "fill-stroke-3.stroke-width-clause-3d3889c844ea",
+        "fill-stroke-3.stroke-width-clause-22c51076b1de"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-width-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-width"
+      ],
+      "behaviour": "Stroke Thickness: the stroke-width property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-width",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-width-clause-3d3889c844ea",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-width"
+      ],
+      "behaviour": "Stroke Thickness: the stroke-width property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-width",
+        "clause_index": 19,
+        "clause_sha256": "3d3889c844ea8b4be1b3e489c1e50c868252a43bfc849e71a2a3fc89fcd501c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-width-clause-22c51076b1de",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-width"
+      ],
+      "behaviour": "Stroke Thickness: the stroke-width property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-width",
+        "clause_index": 21,
+        "clause_sha256": "22c51076b1deb5061ed921486fc2c8941f4d097806a61488bd1a7f32974bdfdb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-align",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-align"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Positioning: the stroke-align property.",
+      "locator": {
+        "section_id": "stroke-align",
+        "text_sha256": "fc3bb956627409f50f9fc5cc2f532327fe0671ff7539c4a410e9910e264e07d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-align-clause-cca2516ebb1d",
+        "fill-stroke-3.stroke-align-clause-8362d77eae79",
+        "fill-stroke-3.stroke-align-clause-a5c352f6a672",
+        "fill-stroke-3.stroke-align-clause-18c88382ad78",
+        "fill-stroke-3.stroke-align-clause-fea5882eeceb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-align-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-align"
+      ],
+      "behaviour": "Stroke Positioning: the stroke-align property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-align",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-align-clause-8362d77eae79",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-align"
+      ],
+      "behaviour": "Stroke Positioning: the stroke-align property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-align",
+        "clause_index": 23,
+        "clause_sha256": "8362d77eae7952e71cacd07aff9781b784c9ad097228f9971e0e903a2adfe148"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-align-clause-a5c352f6a672",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-align"
+      ],
+      "behaviour": "Stroke Positioning: the stroke-align property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-align",
+        "clause_index": 24,
+        "clause_sha256": "a5c352f6a672ee3260cfc5009a117bdf53a48814d7c192b8507b1219d034631e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-align-clause-18c88382ad78",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-align"
+      ],
+      "behaviour": "Stroke Positioning: the stroke-align property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-align",
+        "clause_index": 25,
+        "clause_sha256": "18c88382ad788cc0e7782f30bb7c2c4ed459d47ef08399cc98ede4c5832d4af5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-align-clause-fea5882eeceb",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-align"
+      ],
+      "behaviour": "Stroke Positioning: the stroke-align property — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-align",
+        "clause_index": 57,
+        "clause_sha256": "fea5882eecebaf2302f3a7c3751bf33690ca4acd11e2c87b5550689c493f6075"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-linecap",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-linecap"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke End Shapes: the stroke-linecap property.",
+      "locator": {
+        "section_id": "stroke-linecap",
+        "text_sha256": "c2fa9b281e7ad7ce4cd226174e492a0dd000362c4ae690477c04c2e0351d478e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-linecap-clause-cca2516ebb1d",
+        "fill-stroke-3.stroke-linecap-clause-bdfa1e4d2c70",
+        "fill-stroke-3.stroke-linecap-clause-44003420efa4",
+        "fill-stroke-3.stroke-linecap-clause-97126496c9f5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-linecap-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-linecap"
+      ],
+      "behaviour": "Stroke End Shapes: the stroke-linecap property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-linecap",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-linecap-clause-bdfa1e4d2c70",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-linecap"
+      ],
+      "behaviour": "Stroke End Shapes: the stroke-linecap property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-linecap",
+        "clause_index": 25,
+        "clause_sha256": "bdfa1e4d2c70b93c410811fb79b62e51d4dba73a0ec8d9530e838778315ef02f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-linecap-clause-44003420efa4",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-linecap"
+      ],
+      "behaviour": "Stroke End Shapes: the stroke-linecap property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-linecap",
+        "clause_index": 27,
+        "clause_sha256": "44003420efa43079eabf04db18ead6dd82a548461ad9a81f18fb635e12b8d3a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-linecap-clause-97126496c9f5",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-linecap"
+      ],
+      "behaviour": "Stroke End Shapes: the stroke-linecap property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-linecap",
+        "clause_index": 28,
+        "clause_sha256": "97126496c9f5c5201cefd314ef233ad5a69446270f45b5065177b876b4dbc454"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-linejoin",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-linejoin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Corner Shapes: the stroke-linejoin property.",
+      "locator": {
+        "section_id": "stroke-linejoin",
+        "text_sha256": "889a8411651610dfe103c91e71e1d3731606f908d5e37fabb70ebaaf5d274b99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-linejoin-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-linejoin-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-linejoin"
+      ],
+      "behaviour": "Stroke Corner Shapes: the stroke-linejoin property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-linejoin",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-miterlimit",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-miterlimit"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Corner Limits: the stroke-miterlimit property.",
+      "locator": {
+        "section_id": "stroke-miterlimit",
+        "text_sha256": "61fd6d260db46319fd477a8a5b8bbe1c24cdeef02dc7b8f4e7f9182262770240"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-miterlimit-clause-cca2516ebb1d",
+        "fill-stroke-3.stroke-miterlimit-clause-bcc23aa8a1f5",
+        "fill-stroke-3.stroke-miterlimit-clause-72ea1ea516c8",
+        "fill-stroke-3.stroke-miterlimit-clause-cef8d79b85bf"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-miterlimit-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-miterlimit"
+      ],
+      "behaviour": "Stroke Corner Limits: the stroke-miterlimit property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-miterlimit",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-miterlimit-clause-bcc23aa8a1f5",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-miterlimit"
+      ],
+      "behaviour": "Stroke Corner Limits: the stroke-miterlimit property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-miterlimit",
+        "clause_index": 25,
+        "clause_sha256": "bcc23aa8a1f51bdb506cd438b4723db1816b4f17dfbe27476780ce52bd88ada9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-miterlimit-clause-72ea1ea516c8",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-miterlimit"
+      ],
+      "behaviour": "Stroke Corner Limits: the stroke-miterlimit property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-miterlimit",
+        "clause_index": 26,
+        "clause_sha256": "72ea1ea516c8ff128550ee24874273ed8f303652683a908afe7053f2c654938f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-miterlimit-clause-cef8d79b85bf",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-miterlimit"
+      ],
+      "behaviour": "Stroke Corner Limits: the stroke-miterlimit property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-miterlimit",
+        "clause_index": 27,
+        "clause_sha256": "cef8d79b85bfc2aa6746e79810b8e181f4d66a5f3511fbfcdab10418d583700e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-break",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-break"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fragmented Strokes: the stroke-break property.",
+      "locator": {
+        "section_id": "stroke-break",
+        "text_sha256": "f2cd2dd15e160cd2385060c6d1279d43206f3cd13783d6343de0f6cdd98ad19a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-break-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-break-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-break"
+      ],
+      "behaviour": "Fragmented Strokes: the stroke-break property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-break",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-dashes",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-dashes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Dashing.",
+      "locator": {
+        "section_id": "stroke-dashes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-dasharray",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-dasharray"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Dash Patterns: the stroke-dasharray property.",
+      "locator": {
+        "section_id": "stroke-dasharray",
+        "text_sha256": "19106d7c209a474eb97b5656050be026e2f13e0c04cbf045e8db6cfb652722d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-dasharray-clause-cca2516ebb1d",
+        "fill-stroke-3.stroke-dasharray-clause-267f3a573354",
+        "fill-stroke-3.stroke-dasharray-clause-0580cbae17ad",
+        "fill-stroke-3.stroke-dasharray-clause-ea78b86fff49"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-dasharray-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-dasharray"
+      ],
+      "behaviour": "Stroke Dash Patterns: the stroke-dasharray property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-dasharray",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-dasharray-clause-267f3a573354",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-dasharray"
+      ],
+      "behaviour": "Stroke Dash Patterns: the stroke-dasharray property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-dasharray",
+        "clause_index": 23,
+        "clause_sha256": "267f3a5733542d79d3fbe89371d38a8db5f58554498f386e10cbd9239bf4264f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-dasharray-clause-0580cbae17ad",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-dasharray"
+      ],
+      "behaviour": "Stroke Dash Patterns: the stroke-dasharray property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-dasharray",
+        "clause_index": 27,
+        "clause_sha256": "0580cbae17adf514df50cccb9e6f7bed1b58eb9f2da1f7e9280563ec3a2aeb32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-dasharray-clause-ea78b86fff49",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-dasharray"
+      ],
+      "behaviour": "Stroke Dash Patterns: the stroke-dasharray property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-dasharray",
+        "clause_index": 28,
+        "clause_sha256": "ea78b86fff496b8f2d56925b42f867fc1e37b76a1314a41ff2ed67576e867adb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-dashoffset",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-dashoffset"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Dash Start Position: the stroke-dashoffset property.",
+      "locator": {
+        "section_id": "stroke-dashoffset",
+        "text_sha256": "6ccc3114ac93df7de6dbaf2582be526ff35757624e9a1e1fc9010bff857d3155"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-dashoffset-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-dashoffset-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-dashoffset"
+      ],
+      "behaviour": "Stroke Dash Start Position: the stroke-dashoffset property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-dashoffset",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Corner Control: the stroke-dash-corner and stroke-dash-justify properties.",
+      "locator": {
+        "section_id": "corner-control",
+        "text_sha256": "89648df6901870888edfa478417458045f131a2c12f9400c75e67d9735b1a434"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.corner-control-clause-cca2516ebb1d",
+        "fill-stroke-3.corner-control-clause-40d4169dd84d",
+        "fill-stroke-3.corner-control-clause-02a3af76b809",
+        "fill-stroke-3.corner-control-clause-cd1b736bccd6",
+        "fill-stroke-3.corner-control-clause-e1c96cf20893",
+        "fill-stroke-3.corner-control-clause-0925845a31ac",
+        "fill-stroke-3.corner-control-clause-c156c68b3ea4",
+        "fill-stroke-3.corner-control-clause-30a3504550fd",
+        "fill-stroke-3.corner-control-clause-7f79be62670a",
+        "fill-stroke-3.corner-control-clause-a459a80b06ee",
+        "fill-stroke-3.corner-control-clause-9522db6d708f",
+        "fill-stroke-3.corner-control-clause-be24fd5b96fb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-40d4169dd84d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 24,
+        "clause_sha256": "40d4169dd84d86677fbea2f1de58ab06ecada2cfef8660864ce5ab4e3628e0c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-02a3af76b809",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 25,
+        "clause_sha256": "02a3af76b809eb7f86ed15d10b6fa3f1863a4172745d0f36d6acbe694a0ef5cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-cd1b736bccd6",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 26,
+        "clause_sha256": "cd1b736bccd66773ce3882d2e2787c0176078c47a10eccea92d6df3e9d54ff7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-e1c96cf20893",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 31,
+        "clause_sha256": "e1c96cf2089368cc57c35d45e3471981dffc8f1050b6ccf58ecaf30dcad9e404"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-0925845a31ac",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 32,
+        "clause_sha256": "0925845a31ac8b26d8e8fda4bd1ec9d41072c70c67036865e671e7ba15e629a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-c156c68b3ea4",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 54, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 53,
+        "clause_sha256": "c156c68b3ea4579231c3ba82d9d6bfcafb31bd6e51d8eb2594593b4511fcb1f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-30a3504550fd",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 71, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 70,
+        "clause_sha256": "30a3504550fd0b968c8d549a2cd2af2edba2389c834517efb10012d4864e3040"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-7f79be62670a",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 79, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 78,
+        "clause_sha256": "7f79be62670a632b8204150738a902bd0f8d1194047f0169cefb68b79865a3c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-a459a80b06ee",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 80, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 79,
+        "clause_sha256": "a459a80b06eec524153c0085425ccf6caf11a497f6c53c8169598b4f09d04178"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-9522db6d708f",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 82, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 81,
+        "clause_sha256": "9522db6d708f8e2351f22dcb97def389c96b1116529d6dcbf4f986796bdb086e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.corner-control-clause-be24fd5b96fb",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "corner-control"
+      ],
+      "behaviour": "Corner Control: the stroke-dash-corner and stroke-dash-justify properties — normative clause 83, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-control",
+        "clause_index": 82,
+        "clause_sha256": "be24fd5b96fb0615c331e29f2dca4ac7c8d84b9441bbfc2ee56c9bfd5b3f3b2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-paint",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-paint"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Paint.",
+      "locator": {
+        "section_id": "stroke-paint",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-color",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Color: the stroke-color property.",
+      "locator": {
+        "section_id": "stroke-color",
+        "text_sha256": "34bdadbd098b720e17f96fbb186d450f348e59962d9b260b39c133df6bc78c63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-color-clause-cca2516ebb1d",
+        "fill-stroke-3.stroke-color-clause-bfe0717776b9",
+        "fill-stroke-3.stroke-color-clause-a936de37c2d7",
+        "fill-stroke-3.stroke-color-clause-c2c9a31ae499",
+        "fill-stroke-3.stroke-color-clause-df9256ea6384"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-color-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-color"
+      ],
+      "behaviour": "Stroke Color: the stroke-color property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-color",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-color-clause-bfe0717776b9",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-color"
+      ],
+      "behaviour": "Stroke Color: the stroke-color property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-color",
+        "clause_index": 15,
+        "clause_sha256": "bfe0717776b9af90e68423cc02f641efdc73774636092fd5abf0d0bce0a74193"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-color-clause-a936de37c2d7",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-color"
+      ],
+      "behaviour": "Stroke Color: the stroke-color property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-color",
+        "clause_index": 20,
+        "clause_sha256": "a936de37c2d76533d7cd65ef9d21617ce14508a7b001883d4b34bb48c67287fa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-color-clause-c2c9a31ae499",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-color"
+      ],
+      "behaviour": "Stroke Color: the stroke-color property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-color",
+        "clause_index": 21,
+        "clause_sha256": "c2c9a31ae499f08aeae05130b820e36ad1058da5024509243733f241e8cf8c9b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-color-clause-df9256ea6384",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-color"
+      ],
+      "behaviour": "Stroke Color: the stroke-color property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-color",
+        "clause_index": 22,
+        "clause_sha256": "df9256ea63841938a2b98811de0d05f5f79f6117d9ff8d39998bbab72fa64fac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-image",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-image"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Image Sources: the stroke-image property.",
+      "locator": {
+        "section_id": "stroke-image",
+        "text_sha256": "f4d9e81ffda2ddbb419f94d3cc2fca0687e684989718650855abc6190c83d2bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-image-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-image-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-image"
+      ],
+      "behaviour": "Stroke Image Sources: the stroke-image property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-image",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-origin",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-origin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Positioning Area: the stroke-origin property.",
+      "locator": {
+        "section_id": "stroke-origin",
+        "text_sha256": "b462b0f845348ba189a09ed816d723f66dcaa634fec3cd41f089efe5109054d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-origin-clause-cca2516ebb1d",
+        "fill-stroke-3.stroke-origin-clause-faac2da73eb4",
+        "fill-stroke-3.stroke-origin-clause-d3f2a09aea91",
+        "fill-stroke-3.stroke-origin-clause-3476a753d891"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-origin-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-origin"
+      ],
+      "behaviour": "Stroke Positioning Area: the stroke-origin property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-origin",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-origin-clause-faac2da73eb4",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-origin"
+      ],
+      "behaviour": "Stroke Positioning Area: the stroke-origin property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-origin",
+        "clause_index": 32,
+        "clause_sha256": "faac2da73eb46986354f1a33e8ca3096d18653ac50b8b7b8195641c20ea5c060"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-origin-clause-d3f2a09aea91",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-origin"
+      ],
+      "behaviour": "Stroke Positioning Area: the stroke-origin property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-origin",
+        "clause_index": 33,
+        "clause_sha256": "d3f2a09aea9146658b7e482b2d26a0a4870dbb588df2f4fb346a34a6b8a8b396"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-origin-clause-3476a753d891",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-origin"
+      ],
+      "behaviour": "Stroke Positioning Area: the stroke-origin property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-origin",
+        "clause_index": 34,
+        "clause_sha256": "3476a753d891d4df2b565781956515d5b3f584504ee03f16917dd438513fba8f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-position",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Positioning Stroke Images: the stroke-position property.",
+      "locator": {
+        "section_id": "stroke-position",
+        "text_sha256": "bcbf8db82e74cd354336eb994a21e0bce3407eb744b446eb123e4d3b8382cdd7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-position-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-position-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-position"
+      ],
+      "behaviour": "Positioning Stroke Images: the stroke-position property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-position",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-size",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-size"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sizing Stroke Images: the stroke-size property.",
+      "locator": {
+        "section_id": "stroke-size",
+        "text_sha256": "64380754c4239145df181ee4db9177b418d0d25256847a1faea5511a389b8e24"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-size-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-size-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-size"
+      ],
+      "behaviour": "Sizing Stroke Images: the stroke-size property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-size",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-repeat",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-repeat"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tiling Stroke Images: the stroke-repeat property.",
+      "locator": {
+        "section_id": "stroke-repeat",
+        "text_sha256": "ad66229bb1192396fff6ccc97e318f1b0889520855b63554c75fc7d1772335e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-repeat-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-repeat-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-repeat"
+      ],
+      "behaviour": "Tiling Stroke Images: the stroke-repeat property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-repeat",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-shorthand",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-shorthand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Shorthand: the stroke property.",
+      "locator": {
+        "section_id": "stroke-shorthand",
+        "text_sha256": "8b7f2f49126736375da8cca2622b20f1383932f6442f48927de9c808aefbbbf4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-shorthand-clause-cca2516ebb1d",
+        "fill-stroke-3.stroke-shorthand-clause-06207e091f97",
+        "fill-stroke-3.stroke-shorthand-clause-9e7cd16b3fe8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-shorthand-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-shorthand"
+      ],
+      "behaviour": "Stroke Shorthand: the stroke property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-shorthand",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-shorthand-clause-06207e091f97",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-shorthand"
+      ],
+      "behaviour": "Stroke Shorthand: the stroke property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-shorthand",
+        "clause_index": 19,
+        "clause_sha256": "06207e091f97c0001a374591d8cb3a7cbc2818c1c0aabee4a9a80bcba4bb72fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-shorthand-clause-9e7cd16b3fe8",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-shorthand"
+      ],
+      "behaviour": "Stroke Shorthand: the stroke property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-shorthand",
+        "clause_index": 20,
+        "clause_sha256": "9e7cd16b3fe8a8d0590381693e355536205d3a0bf8e41cd78fb49256784ab79e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-filter",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-filter"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Transparency.",
+      "locator": {
+        "section_id": "stroke-filter",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-opacity",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-opacity"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Opacity: the stroke-opacity property.",
+      "locator": {
+        "section_id": "stroke-opacity",
+        "text_sha256": "8ad70f6a7b251fa822c425077d6feff70ace95b560f769dde39c11c2d053150b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-opacity-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-opacity-clause-cca2516ebb1d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-opacity"
+      ],
+      "behaviour": "Stroke Opacity: the stroke-opacity property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-opacity",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.path-notes",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "path-notes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Computing the Shape of the Stroke.",
+      "locator": {
+        "section_id": "path-notes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-paths",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-paths"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Paths.",
+      "locator": {
+        "section_id": "stroke-paths",
+        "text_sha256": "d4d19c9a4ee2c02b58caa452f1380c23c38c335f2e1808d2e517e8d7ba582ee1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.stroke-paths-clause-fe2ab3d2bad5",
+        "fill-stroke-3.stroke-paths-clause-998949d0bafa",
+        "fill-stroke-3.stroke-paths-clause-606f20cdfdc7",
+        "fill-stroke-3.stroke-paths-clause-ed81bf6a29b0",
+        "fill-stroke-3.stroke-paths-clause-2b58613eec7c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.stroke-paths-clause-fe2ab3d2bad5",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-paths"
+      ],
+      "behaviour": "Stroke Paths — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-paths",
+        "clause_index": 0,
+        "clause_sha256": "fe2ab3d2bad57e7769a961262860255a6247d03cbed44e15468da61349d9819c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-paths-clause-998949d0bafa",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-paths"
+      ],
+      "behaviour": "Stroke Paths — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-paths",
+        "clause_index": 1,
+        "clause_sha256": "998949d0bafa03df447310001976fa701bc3b81dfd5d750f1edfd8d57f0b3059"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-paths-clause-606f20cdfdc7",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-paths"
+      ],
+      "behaviour": "Stroke Paths — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-paths",
+        "clause_index": 2,
+        "clause_sha256": "606f20cdfdc7d5e06d7e44419ca531d52e9642b0e18dc7bf8ace5be84317572d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-paths-clause-ed81bf6a29b0",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-paths"
+      ],
+      "behaviour": "Stroke Paths — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-paths",
+        "clause_index": 3,
+        "clause_sha256": "ed81bf6a29b045c62122ea43b657e99edd96d6e302bcc23f68687aa0fcde0ae4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.stroke-paths-clause-2b58613eec7c",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "stroke-paths"
+      ],
+      "behaviour": "Stroke Paths — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "stroke-paths",
+        "clause_index": 4,
+        "clause_sha256": "2b58613eec7c64c9cd8625968a3f4b07d87a173f2de85a87dde5f1e5b95d4f41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.algo-stroke-shape",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "algo-stroke-shape"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stroke Shape.",
+      "locator": {
+        "section_id": "algo-stroke-shape",
+        "text_sha256": "4a6fff9ece916140d3cdf14d0ebdd1a8fac810a796cd0e26a7de6fcaa0b61963"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.algo-dash-positions",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "algo-dash-positions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dash Positions.",
+      "locator": {
+        "section_id": "algo-dash-positions",
+        "text_sha256": "b466db8fb3b8001c7951161d015682bdd5c291b840202aec9ab20ff9e95dbb2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.algo-cap-shapes",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "algo-cap-shapes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cap Shapes.",
+      "locator": {
+        "section_id": "algo-cap-shapes",
+        "text_sha256": "55a8fac60c2adf5ca57a66427dbea6e2860c48784bfa1b54e84813c2d5c2c57e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.algo-line-join-shape",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "algo-line-join-shape"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line Join Shape.",
+      "locator": {
+        "section_id": "algo-line-join-shape",
+        "text_sha256": "c1d961f48fc24e078f31a875dae6b8bfcb16bf35f01ef82a067b8750672d0b19"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.algo-arcs-linejoin",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "algo-arcs-linejoin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Arcs Linejoin.",
+      "locator": {
+        "section_id": "algo-arcs-linejoin",
+        "text_sha256": "55ba0124fa9b2fbd60a4994b6916f8acae7e404c88aa8001d10587f2f88e6c3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.algo-arcs-linejoin-clause-67f63eacd526",
+        "fill-stroke-3.algo-arcs-linejoin-clause-bc2b7d0e7f1f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.algo-arcs-linejoin-clause-67f63eacd526",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "algo-arcs-linejoin"
+      ],
+      "behaviour": "Arcs Linejoin — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "algo-arcs-linejoin",
+        "clause_index": 10,
+        "clause_sha256": "67f63eacd526d44c427e067f915e03c3eb12bb6c5960f79f5a292a4440c48e91"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.algo-arcs-linejoin-clause-bc2b7d0e7f1f",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "algo-arcs-linejoin"
+      ],
+      "behaviour": "Arcs Linejoin — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "algo-arcs-linejoin",
+        "clause_index": 11,
+        "clause_sha256": "bc2b7d0e7f1f928e2c9ccc0e863ec2e609a9be1fffe6d1913e3064c5da9203e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.perfect-world",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "perfect-world"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Perfect-World Syntax.",
+      "locator": {
+        "section_id": "perfect-world",
+        "text_sha256": "54254609af1ba1db171e0700f03ac079e061d58a2fd33a450eca8ac1566f304d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.perfect-world-clause-6b31dfdc1bd4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.perfect-world-clause-6b31dfdc1bd4",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "perfect-world"
+      ],
+      "behaviour": "Perfect-World Syntax — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "perfect-world",
+        "clause_index": 0,
+        "clause_sha256": "6b31dfdc1bd455678824ebd3b1d1a899fc236962b4354cb444e729ba3c65aeb8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.text-decor",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "text-decor"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Decoration Fills and Strokes.",
+      "locator": {
+        "section_id": "text-decor",
+        "text_sha256": "8ff248c9a8bf16af05f8fcaf174a8ae8b5336db0d1f648397f099ea5d92ffe04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.text-decor-clause-8d002c16c654",
+        "fill-stroke-3.text-decor-clause-2d1da9de0f25",
+        "fill-stroke-3.text-decor-clause-34501435a135"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.text-decor-clause-8d002c16c654",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "text-decor"
+      ],
+      "behaviour": "Text Decoration Fills and Strokes — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decor",
+        "clause_index": 1,
+        "clause_sha256": "8d002c16c654e46c9a14dca3e45d66b186cb493f278c472c50bd6c48ecbde4c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.text-decor-clause-2d1da9de0f25",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "text-decor"
+      ],
+      "behaviour": "Text Decoration Fills and Strokes — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decor",
+        "clause_index": 3,
+        "clause_sha256": "2d1da9de0f2522dd4a0db2bde9ef79f1d522a1bb7ad6a2b6dc725fa3110179d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.text-decor-clause-34501435a135",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "text-decor"
+      ],
+      "behaviour": "Text Decoration Fills and Strokes — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decor",
+        "clause_index": 5,
+        "clause_sha256": "34501435a135a5f5c4066c9593bb40f0e7e9c1da262be44601d28f0508477439"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.priv-sec",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy and Security Considerations.",
+      "locator": {
+        "section_id": "priv-sec",
+        "text_sha256": "508211c345cc46d3344bf3460ffcde7c9eef7b952e529c627c53a5123db53ee3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.conformance",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.conventions",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.conventions-clause-5c98c879f070",
+        "fill-stroke-3.conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.conventions-clause-5c98c879f070",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.conventions-clause-33a5ed16a48d",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.conformance-classes",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.conformance-classes-clause-ff408372426c",
+        "fill-stroke-3.conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.conformance-classes-clause-ff408372426c",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.conformance-classes-clause-d9976214330c",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.partial",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.partial-clause-ef40c4aab200",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.conform-future-proofing",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.testing",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.testing-clause-1e0fff369221",
+        "fill-stroke-3.testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.testing-clause-1e0fff369221",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.testing-clause-ae1210cf9643",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.property-index",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "643a4acebf807cc75e11212259b9e12948207d0c98e085fa81ab1749936d8c19"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "fill-stroke-3.property-index-clause-bfe0717776b9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.property-index-clause-bfe0717776b9",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 39,
+        "clause_sha256": "bfe0717776b9af90e68423cc02f641efdc73774636092fd5abf0d0bce0a74193"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "fill-stroke-3.issues-index",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "3de348aa6d8c194103af6f5040b9cfd6190b85b652118bad36e2d6ead50566d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.title",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Fill and Stroke Module Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.abstract",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "d8834487cd069388a2ed61a7ec907983067e900712c2116db5163b20cb0eeb20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.status",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "f3a1487acd9f3e9c1ed5ef2d96cda149a33294124a2b896804b2c7771cd713ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.contents",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "7b7206d94b994e5ad1ec0961ae494679cce785d2d6eae92f2a69adacf6d5890d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.index",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.index-defined-here",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "ba5e42ad5e18c8af422c7c100b5a24a98fb3063c756047599ee450d054577a09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.index-defined-elsewhere",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "8819777217357c4848951389dd2cb97a54ba2f6a55907282b67603c43bc90773"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.references",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.normative",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "9d9d86bceb620418f591523f67101924a4de41a5baed34d71ef5b0c856da93e3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "fill-stroke-3.informative",
+      "family": "fill-stroke-3",
+      "source_id": "fill-stroke-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "f04f7eefcdd92d8b5cd8a5e43bd93c5fa6c1d353f6be7548f048fd0df4233691"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

@@ -1,0 +1,630 @@
+{
+  "schema_version": 1,
+  "source_id": "geometry-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Geometry Interfaces Module Level 1",
+      "level": 1,
+      "text_sha256": "8a19676c4cbe49e4efc2fd8f7606cacf65d03aa8074e578e4c564b0209446e04",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "e595181888b61493a33321f99692ff7b2aac7334c5c77156f2eac836890a3926",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "d310c50e873d06dab6beefe3ae12366e5822a8096a8e405fcebbe0b099295d21",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "99ea5159962eec52e6f3bb0ed134d9b935f00e598ccd941b94fc3a3f7774024c",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "53c8055a6bb3c9eb9725671432ee6ed8ed5fd27405ac6e6f2483bde4dc3e4679",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "DOMPoint",
+      "title": "2. The DOMPoint interfaces",
+      "level": 2,
+      "text_sha256": "56161b72f8484f433a2bf2c435c2f2e14d31ce9da4984b781ff624043a76b8d2",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.dompoint",
+          "geometry-1.dompoint-clause-2cdb71bc82bd",
+          "geometry-1.dompoint-clause-8375a7a46448",
+          "geometry-1.dompoint-clause-70205ad89b43",
+          "geometry-1.dompoint-clause-79c0fd2d72d5",
+          "geometry-1.dompoint-clause-3edfbab1b4e8",
+          "geometry-1.dompoint-clause-f45242e6096b",
+          "geometry-1.dompoint-clause-fec30304f980",
+          "geometry-1.dompoint-clause-978e521a0b1f",
+          "geometry-1.dompoint-clause-8fd4bf57e4b8",
+          "geometry-1.dompoint-clause-2f4484f0d46c",
+          "geometry-1.dompoint-clause-e9ef8212dd28"
+        ]
+      }
+    },
+    {
+      "id": "transforming-a-point-with-a-matrix",
+      "title": "2.1. Transforming a point with a matrix",
+      "level": 3,
+      "text_sha256": "c0cd3098bb70d1e475c3ad5a94df188fd5528fcfe583a04d4c15cb511fb1f045",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.transforming-a-point-with-a-matrix"
+        ]
+      }
+    },
+    {
+      "id": "DOMRect",
+      "title": "3. The DOMRect interfaces",
+      "level": 2,
+      "text_sha256": "07a9cb8e0586be8c3acc1f35d845212979e5959e393bd47d5c51ddf2b8b51939",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.domrect",
+          "geometry-1.domrect-clause-29e0aa19c216",
+          "geometry-1.domrect-clause-9cf529000cb2",
+          "geometry-1.domrect-clause-67ed8dfdcebe",
+          "geometry-1.domrect-clause-79c0fd2d72d5",
+          "geometry-1.domrect-clause-6587ca03a640",
+          "geometry-1.domrect-clause-f39856f5e8c4",
+          "geometry-1.domrect-clause-52db72db9c2a",
+          "geometry-1.domrect-clause-67f638a4661b",
+          "geometry-1.domrect-clause-5f1f7bc6b451",
+          "geometry-1.domrect-clause-f32e1f500127",
+          "geometry-1.domrect-clause-95723a6fd240",
+          "geometry-1.domrect-clause-82961927b1e3",
+          "geometry-1.domrect-clause-d19c1f2ba1cd",
+          "geometry-1.domrect-clause-a1a67361aa7b",
+          "geometry-1.domrect-clause-a0e2c52ae189"
+        ]
+      }
+    },
+    {
+      "id": "DOMRectList",
+      "title": "4. The DOMRectList interface",
+      "level": 2,
+      "text_sha256": "fef2b6568ff40dbf51198d9ef18f6fa92adb57c173a9b9027c095bd055bfeb60",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.domrectlist",
+          "geometry-1.domrectlist-clause-2e402b941af3",
+          "geometry-1.domrectlist-clause-5ff31c53bf95",
+          "geometry-1.domrectlist-clause-27c46023e67b"
+        ]
+      }
+    },
+    {
+      "id": "DOMQuad",
+      "title": "5. The DOMQuad interface",
+      "level": 2,
+      "text_sha256": "9e4cb2c2f478f7d06f466c06d962f0b108fb5297f0e92c93a7fd6df6d892006f",
+      "clause_count": 68,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.domquad",
+          "geometry-1.domquad-clause-024cd2b75aae",
+          "geometry-1.domquad-clause-486a63489ab1",
+          "geometry-1.domquad-clause-79c0fd2d72d5",
+          "geometry-1.domquad-clause-0ffd2ec0733a",
+          "geometry-1.domquad-clause-55b7f542b6a6",
+          "geometry-1.domquad-clause-ac3c86db99ae",
+          "geometry-1.domquad-clause-c2dbe3a21028",
+          "geometry-1.domquad-clause-a050f10a9056",
+          "geometry-1.domquad-clause-0271e85b8723",
+          "geometry-1.domquad-clause-3fca72f1b5d1"
+        ]
+      }
+    },
+    {
+      "id": "DOMMatrix",
+      "title": "6. The DOMMatrix interfaces",
+      "level": 2,
+      "text_sha256": "8abee7da6b64827d167eeb96b43b508660d481748f964bb5071330f23a53f6be",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.dommatrix",
+          "geometry-1.dommatrix-clause-5c7eeb0e4833",
+          "geometry-1.dommatrix-clause-bf4821b8722e",
+          "geometry-1.dommatrix-clause-d36500b764bd",
+          "geometry-1.dommatrix-clause-79c0fd2d72d5",
+          "geometry-1.dommatrix-clause-49ee9a75c1df"
+        ]
+      }
+    },
+    {
+      "id": "dommatrixinit-dictionary",
+      "title": "6.1. DOMMatrix2DInit and DOMMatrixInit dictionaries",
+      "level": 3,
+      "text_sha256": "2fde2665c794627c84dfa329f65180eb55d58642a4ffee69f6c2f3e917429448",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.dommatrixinit-dictionary",
+          "geometry-1.dommatrixinit-dictionary-clause-4a39f9ce9fe9",
+          "geometry-1.dommatrixinit-dictionary-clause-024ffb88656b",
+          "geometry-1.dommatrixinit-dictionary-clause-ea6baf162472"
+        ]
+      }
+    },
+    {
+      "id": "dommatrix-parse",
+      "title": "6.2. Parsing a string into an abstract matrix",
+      "level": 3,
+      "text_sha256": "256570d81e41c41cba30fe17c6a553d4db106e23288d53114444dc98d6ac19b8",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.dommatrix-parse",
+          "geometry-1.dommatrix-parse-clause-ab461406c67d"
+        ]
+      }
+    },
+    {
+      "id": "dommatrix-create",
+      "title": "6.3. Creating DOMMatrixReadOnly and DOMMatrix objects",
+      "level": 3,
+      "text_sha256": "0dd3a7b9822debf4735cb9a3cdde1e369ae6a6371170e376f9575406ea8ccc84",
+      "clause_count": 86,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.dommatrix-create",
+          "geometry-1.dommatrix-create-clause-c39d399e363f",
+          "geometry-1.dommatrix-create-clause-38594acd1aa7",
+          "geometry-1.dommatrix-create-clause-224e1cfd4a76",
+          "geometry-1.dommatrix-create-clause-31456d0c39e7",
+          "geometry-1.dommatrix-create-clause-4c02e7469197",
+          "geometry-1.dommatrix-create-clause-34efaf952962",
+          "geometry-1.dommatrix-create-clause-d4cb9731e527",
+          "geometry-1.dommatrix-create-clause-96b49d8daad8"
+        ]
+      }
+    },
+    {
+      "id": "dommatrix-attributes",
+      "title": "6.4. DOMMatrix attributes",
+      "level": 3,
+      "text_sha256": "796a1075e733816670584681640a4c6b5e51075b9fbc0b34ed8764aacc1a0a26",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.dommatrix-attributes",
+          "geometry-1.dommatrix-attributes-clause-2e49e7dc496d",
+          "geometry-1.dommatrix-attributes-clause-3fe7d3a05cd7",
+          "geometry-1.dommatrix-attributes-clause-818cfdd6780c",
+          "geometry-1.dommatrix-attributes-clause-5ec43294acf3",
+          "geometry-1.dommatrix-attributes-clause-597533916216",
+          "geometry-1.dommatrix-attributes-clause-99e5fe695baa",
+          "geometry-1.dommatrix-attributes-clause-94b7f8ae3587",
+          "geometry-1.dommatrix-attributes-clause-512d64e6d26c",
+          "geometry-1.dommatrix-attributes-clause-ee07379b99f9",
+          "geometry-1.dommatrix-attributes-clause-1501318ea524",
+          "geometry-1.dommatrix-attributes-clause-e35b5e54e185",
+          "geometry-1.dommatrix-attributes-clause-501d2289395c",
+          "geometry-1.dommatrix-attributes-clause-b4678ad5b1a8",
+          "geometry-1.dommatrix-attributes-clause-52407d9b2710",
+          "geometry-1.dommatrix-attributes-clause-799f3d8ec885",
+          "geometry-1.dommatrix-attributes-clause-08840101746f",
+          "geometry-1.dommatrix-attributes-clause-4ec878f700a4",
+          "geometry-1.dommatrix-attributes-clause-dd1d1df629b2"
+        ]
+      }
+    },
+    {
+      "id": "immutable-transformation-methods",
+      "title": "6.5. Immutable transformation methods",
+      "level": 3,
+      "text_sha256": "828a318cc0e0bfefd46f836a855511b2788ff54811f21ed82318de1fe1437f95",
+      "clause_count": 230,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.immutable-transformation-methods"
+        ]
+      }
+    },
+    {
+      "id": "mutable-transformation-methods",
+      "title": "6.6. Mutable transformation methods",
+      "level": 3,
+      "text_sha256": "820235491ffd22c570fe438fc3f246d5b8b52b33fccb2cf823edcbde3cea355b",
+      "clause_count": 128,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.mutable-transformation-methods",
+          "geometry-1.mutable-transformation-methods-clause-3e8a019d6ac9",
+          "geometry-1.mutable-transformation-methods-clause-50721b680fc8"
+        ]
+      }
+    },
+    {
+      "id": "structured-serialization",
+      "title": "7. Structured serialization",
+      "level": 2,
+      "text_sha256": "24ef9ddd44520ac49ba3005808655ea8a443eb26c003130b04e30aabf33a41cb",
+      "clause_count": 183,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.structured-serialization",
+          "geometry-1.structured-serialization-clause-02fbe789c7ef"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "8. Security Considerations",
+      "level": 2,
+      "text_sha256": "f527e9bea13089039e7400e7468b03389ff74e746f7eeff2a195a06ee4a95e02",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.security"
+        ]
+      }
+    },
+    {
+      "id": "priv-sec",
+      "title": "9. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "cbd7e89d877432328c10ec90650bd27abcc2574bc3d2db6084159a3c0f878ddc",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.priv-sec"
+        ]
+      }
+    },
+    {
+      "id": "historical",
+      "title": "10. Historical",
+      "level": 2,
+      "text_sha256": "fd77a939f1561e03f5a5f8540f2128333294f7dd99ae110f71f9da7e216a2ce8",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.historical"
+        ]
+      }
+    },
+    {
+      "id": "historical-cssom-view",
+      "title": "10.1. CSSOM View",
+      "level": 3,
+      "text_sha256": "6f0527710c04f500b780ed4ab33973da425ec232daaf0057fd855d8fbeb0f200",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.historical-cssom-view"
+        ]
+      }
+    },
+    {
+      "id": "historical-svg",
+      "title": "10.2. SVG",
+      "level": 3,
+      "text_sha256": "013b465a2083f672b1fd08b58c09e213d9aeb53dadea313879894fb81d6d22a4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.historical-svg"
+        ]
+      }
+    },
+    {
+      "id": "historical-non-standard",
+      "title": "10.3. Non-standard",
+      "level": 3,
+      "text_sha256": "94b1c0ee136595bc60d532264369f7df9cecddad6dfa9b70b8f023c01a31e42d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.historical-non-standard"
+        ]
+      }
+    },
+    {
+      "id": "conventions",
+      "title": "Document conventions",
+      "level": 2,
+      "text_sha256": "a0868ef6003aa87f45c379eb873f254dd5057133d22f46ef79fe5cf0154e316a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.conventions"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes since last publication",
+      "level": 2,
+      "text_sha256": "5192cda1641fb324bef0f8aec3a4f9aa68bfe7b33e8d772fff98ad572b49d256",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "2a0e318e56fab851f650b0b276b2bd24d3dcf49e6bdd270b2ffac8863b09b97a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.w3c-conventions",
+          "geometry-1.w3c-conventions-clause-5c98c879f070",
+          "geometry-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.w3c-conformance-classes",
+          "geometry-1.w3c-conformance-classes-clause-ff408372426c",
+          "geometry-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.w3c-partial",
+          "geometry-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.w3c-testing",
+          "geometry-1.w3c-testing-clause-1e0fff369221",
+          "geometry-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.w3c-cr-exit-criteria",
+          "geometry-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "geometry-1.w3c-cr-exit-criteria-clause-ea752775913a",
+          "geometry-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "geometry-1.w3c-cr-exit-criteria-clause-b67129724911",
+          "geometry-1.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "40f7e434484f23e3930e5f627e742cbd195085e0fa85055b5db175e187bef816",
+      "clause_count": 386,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "e85a919a3c6d8495bd57797f892df0734a36be0ba8f9a4f337f7ac4c92317da1",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "ff0e68783532321ec89b24383cb3c2d2ed9c7f5fdc6e7b7bdcf77e6eb0161359",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.import-81d6eacb7a2f",
+          "geometry-1.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "48ece950c2b1a4649db4782677ea7df6a81fe1efbd236cee1c912a430865f857",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "0c4e0f8d0ac5cd261342650ac5aac08d5aa02d1344275406e734e20cae858287",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "geometry-1.idl-index",
+          "geometry-1.idl-index-clause-f4c1038aeb66"
+        ]
+      }
+    }
+  ]
+}

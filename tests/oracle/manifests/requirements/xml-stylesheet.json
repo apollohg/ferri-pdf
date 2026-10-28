@@ -1,0 +1,952 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "xml-stylesheet.w3c-doctype",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "w3c-doctype"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Recommendation 28 October 2010.",
+      "locator": {
+        "section_id": "w3c-doctype",
+        "text_sha256": "028e4eacf670469b88753c849ac681e71f5c9bbcd845f82372ad16bce57bfb50"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.appendices",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "appendices"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendices.",
+      "locator": {
+        "section_id": "appendices",
+        "text_sha256": "8891e31e33dfd5165ae723fe334d3ce78bdefb93d6f9ebfdfd1c547dbdc33406"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.introduction",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 1 Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "b61f851211866a837595e41dfdf0d52860939db9b8265933421c891e44eb1e11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.conformance-requirements",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "conformance-requirements"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2 Conformance requirements.",
+      "locator": {
+        "section_id": "conformance-requirements",
+        "text_sha256": "b08221d5b5960ae4683026cefdaff34d1303304f20215fec9bf5f5244a6dd567"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "xml-stylesheet.conformance-requirements-clause-eddee0053742",
+        "xml-stylesheet.conformance-requirements-clause-218053bbda66",
+        "xml-stylesheet.conformance-requirements-clause-50001c08caa9",
+        "xml-stylesheet.conformance-requirements-clause-34b9ea22c153",
+        "xml-stylesheet.conformance-requirements-clause-e616ab73cb9d",
+        "xml-stylesheet.conformance-requirements-clause-eea4588a122f",
+        "xml-stylesheet.conformance-requirements-clause-b6c7a37a0607"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.conformance-requirements-clause-eddee0053742",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "conformance-requirements"
+      ],
+      "behaviour": "2 Conformance requirements — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-requirements",
+        "clause_index": 1,
+        "clause_sha256": "eddee00537428e17313cd44d4d8007893434ebe0df76de6b2519e2268aed2ad2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.conformance-requirements-clause-218053bbda66",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "conformance-requirements"
+      ],
+      "behaviour": "2 Conformance requirements — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-requirements",
+        "clause_index": 4,
+        "clause_sha256": "218053bbda6606f4eae7b5e8e46e155d88533bb118221ce730d7ed4f006a021b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.conformance-requirements-clause-50001c08caa9",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "conformance-requirements"
+      ],
+      "behaviour": "2 Conformance requirements — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-requirements",
+        "clause_index": 6,
+        "clause_sha256": "50001c08caa9ce8b25308babba2b444805e74749ffdab7d981f3dec3a69cba41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.conformance-requirements-clause-34b9ea22c153",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "conformance-requirements"
+      ],
+      "behaviour": "2 Conformance requirements — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-requirements",
+        "clause_index": 9,
+        "clause_sha256": "34b9ea22c1533b0fb105ee2c7a6b30d0193044f1873b243d19ffe8c2c5b20d58"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.conformance-requirements-clause-e616ab73cb9d",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "conformance-requirements"
+      ],
+      "behaviour": "2 Conformance requirements — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-requirements",
+        "clause_index": 10,
+        "clause_sha256": "e616ab73cb9d8461f04c364076b9f478bfb29b97fdf5758c0f390ffccc236e65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.conformance-requirements-clause-eea4588a122f",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "conformance-requirements"
+      ],
+      "behaviour": "2 Conformance requirements — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-requirements",
+        "clause_index": 14,
+        "clause_sha256": "eea4588a122fcd994153997a3769162e2823217137d0ca0d9f2acf481d86e45f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.conformance-requirements-clause-b6c7a37a0607",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "conformance-requirements"
+      ],
+      "behaviour": "2 Conformance requirements — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-requirements",
+        "clause_index": 15,
+        "clause_sha256": "b6c7a37a0607204cd5bf6900c8265e619f817fcdac18b7679304dbc7b932b825"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.pseudo-attributes",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "pseudo-attributes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 3 Pseudo-attributes.",
+      "locator": {
+        "section_id": "pseudo-attributes",
+        "text_sha256": "c92acc349499e76cdafe2770321de53fc23f39138fde19e97a74ae981099d230"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.d0e323",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e323"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Productions for strings with pseudo-attributes.",
+      "locator": {
+        "section_id": "d0e323",
+        "text_sha256": "c2a36cac45ef577861d02dc78ab30d60a7d49b18e7d834927f974bcb66c306b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.the-xml-stylesheet-processing-instruction",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "the-xml-stylesheet-processing-instruction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 4 The xml-stylesheet processing instruction.",
+      "locator": {
+        "section_id": "the-xml-stylesheet-processing-instruction",
+        "text_sha256": "3eacdf59652e8800873f41810cdddf858b938910f9ed3a62d6375b1c3264cc8b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-382a9dc5dcf7",
+        "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-fea7790c220c",
+        "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-2bbb88830a5e",
+        "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-16499b63f14c",
+        "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-a41f7a50c831"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-382a9dc5dcf7",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "the-xml-stylesheet-processing-instruction"
+      ],
+      "behaviour": "4 The xml-stylesheet processing instruction — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-xml-stylesheet-processing-instruction",
+        "clause_index": 1,
+        "clause_sha256": "382a9dc5dcf715ad715980ea01bd21f4a5f678415b5ef0220a8351a4915be54b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-fea7790c220c",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "the-xml-stylesheet-processing-instruction"
+      ],
+      "behaviour": "4 The xml-stylesheet processing instruction — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-xml-stylesheet-processing-instruction",
+        "clause_index": 2,
+        "clause_sha256": "fea7790c220c21848de54af9a18076fdff37d9a01959ddf4b0691511f100b149"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-2bbb88830a5e",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "the-xml-stylesheet-processing-instruction"
+      ],
+      "behaviour": "4 The xml-stylesheet processing instruction — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-xml-stylesheet-processing-instruction",
+        "clause_index": 4,
+        "clause_sha256": "2bbb88830a5e84260d0546c46c12941a5e618ffe016fed4fc9ff83ad7ed5d186"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-16499b63f14c",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "the-xml-stylesheet-processing-instruction"
+      ],
+      "behaviour": "4 The xml-stylesheet processing instruction — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-xml-stylesheet-processing-instruction",
+        "clause_index": 6,
+        "clause_sha256": "16499b63f14c4f53bcd38c1c00fcd4dbe568ab399b9ad29cf6bfae142d9e34b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.the-xml-stylesheet-processing-instruction-clause-a41f7a50c831",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "the-xml-stylesheet-processing-instruction"
+      ],
+      "behaviour": "4 The xml-stylesheet processing instruction — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-xml-stylesheet-processing-instruction",
+        "clause_index": 7,
+        "clause_sha256": "a41f7a50c83168c8637361cfa6833f9598ec3a67bb3624d8db87be8fa4599af8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.d0e611",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e611"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Production for xml-stylesheet processing instruction.",
+      "locator": {
+        "section_id": "d0e611",
+        "text_sha256": "5f922b9218d57ef7c0532d283b37723b48d9ee103f2d3790543583a43726907d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "xml-stylesheet.d0e611-clause-102443d35393",
+        "xml-stylesheet.d0e611-clause-b4b697774eff",
+        "xml-stylesheet.d0e611-clause-ee765409b3db",
+        "xml-stylesheet.d0e611-clause-3dd064888f96",
+        "xml-stylesheet.d0e611-clause-f0b4249faf0c",
+        "xml-stylesheet.d0e611-clause-ab0129c9626b",
+        "xml-stylesheet.d0e611-clause-c12325fc227a",
+        "xml-stylesheet.d0e611-clause-942d46e22413",
+        "xml-stylesheet.d0e611-clause-469478808d59",
+        "xml-stylesheet.d0e611-clause-db1e3b850d19"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.d0e611-clause-102443d35393",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e611"
+      ],
+      "behaviour": "Production for xml-stylesheet processing instruction — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "d0e611",
+        "clause_index": 6,
+        "clause_sha256": "102443d3539349a36d9b6ca6c2cb8979a9b7496e1ffc3e794627e5b4b6888d72"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.d0e611-clause-b4b697774eff",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e611"
+      ],
+      "behaviour": "Production for xml-stylesheet processing instruction — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "d0e611",
+        "clause_index": 10,
+        "clause_sha256": "b4b697774eff4816393c477f868b2f0b7c37a8dc3fa3fd9806d897a7f515bc25"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.d0e611-clause-ee765409b3db",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e611"
+      ],
+      "behaviour": "Production for xml-stylesheet processing instruction — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "d0e611",
+        "clause_index": 12,
+        "clause_sha256": "ee765409b3db0753ad4ed66c884eaeb764b27921da8534b6e427373e2edea2ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.d0e611-clause-3dd064888f96",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e611"
+      ],
+      "behaviour": "Production for xml-stylesheet processing instruction — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "d0e611",
+        "clause_index": 14,
+        "clause_sha256": "3dd064888f96395354e4c6171935ab8bbcd0c8cd33c4d3eaf7a3fa1dbde2aaf5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.d0e611-clause-f0b4249faf0c",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e611"
+      ],
+      "behaviour": "Production for xml-stylesheet processing instruction — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "d0e611",
+        "clause_index": 16,
+        "clause_sha256": "f0b4249faf0c95c18205df4620ec2c99e44a27393771fb7dbbf8e5829d4467a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.d0e611-clause-ab0129c9626b",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e611"
+      ],
+      "behaviour": "Production for xml-stylesheet processing instruction — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "d0e611",
+        "clause_index": 21,
+        "clause_sha256": "ab0129c9626bc992b5b7304e931f8caff1b248c8645c463403c128cc6436fc43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.d0e611-clause-c12325fc227a",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e611"
+      ],
+      "behaviour": "Production for xml-stylesheet processing instruction — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "d0e611",
+        "clause_index": 24,
+        "clause_sha256": "c12325fc227af4b301c51e28ec29592efc41d857eeee34864977ee74215035d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.d0e611-clause-942d46e22413",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e611"
+      ],
+      "behaviour": "Production for xml-stylesheet processing instruction — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "d0e611",
+        "clause_index": 26,
+        "clause_sha256": "942d46e22413a23e75ac997b2fa66454893d209d2b78cce514df937adde8c950"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.d0e611-clause-469478808d59",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e611"
+      ],
+      "behaviour": "Production for xml-stylesheet processing instruction — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "d0e611",
+        "clause_index": 28,
+        "clause_sha256": "469478808d5961419dd63ac5ed87424477f445c710d059af5657cc5d8c6f1641"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.d0e611-clause-db1e3b850d19",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "d0e611"
+      ],
+      "behaviour": "Production for xml-stylesheet processing instruction — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "d0e611",
+        "clause_index": 30,
+        "clause_sha256": "db1e3b850d1949904a3cf431c4ac4cc5f2c0331e5dd4000977e7028857ab1e3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "xml-stylesheet.title",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Associating Style Sheets with XML documents 1.0 (Second Edition).",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.abstract",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "b133d363ce4a145875c7b4110d4fdd31621653793a9b66f3be3140cac1358cbe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.status",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of This Document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "70427412aeae45b455134c0b98177a66c816d88c21cd99976a1a8307d00743df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.contents",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "f98a7d8f75dcf78ec08d2c279299efe9c4e05368a284e2c4ae3e06c619c6f665"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.references",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in A References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "9228880c904a74d223b9c7eb3c04621458e3296c0fa76665f08310b45ca4a7b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "xml-stylesheet.changes",
+      "family": "xml-stylesheet",
+      "source_id": "xml-stylesheet",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in B Changes since the first edition.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "05ce6898dd0753e731c349627dc378ee0ce00d517d846a7bf9d865216605b5a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

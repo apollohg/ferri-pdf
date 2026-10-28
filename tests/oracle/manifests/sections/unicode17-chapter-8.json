@@ -1,0 +1,523 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-8",
+  "sections": [
+    {
+      "id": "G26313",
+      "title": "Europe-II",
+      "level": 1,
+      "text_sha256": "1b3ee39b0e925beb806a6a5df4b759d64a7ef72d9a4dec94c9bfca3ad95b1419",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.g26313"
+        ]
+      }
+    },
+    {
+      "id": "heading-fcfe8e1f6e0b",
+      "title": "8.1 Linear A",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-fcfe8e1f6e0b"
+        ]
+      }
+    },
+    {
+      "id": "heading-cd8c5215c5a1",
+      "title": "8.1.1 Linear A: U+10600–U+1077F",
+      "level": 3,
+      "text_sha256": "afdc323094ff921c638c358e3af2903183bdffb5904da16a33e7147e093811b3",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-cd8c5215c5a1"
+        ]
+      }
+    },
+    {
+      "id": "heading-77a3a0b9a256",
+      "title": "8.2 Linear B",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-77a3a0b9a256"
+        ]
+      }
+    },
+    {
+      "id": "heading-a3e7644f39a0",
+      "title": "8.2.1 Linear B Syllabary: U+10000–U+1007F",
+      "level": 3,
+      "text_sha256": "e7baebcd66945ecc598d9d08516b97ddea894180d2376415e2265ee7508c71ea",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-a3e7644f39a0"
+        ]
+      }
+    },
+    {
+      "id": "heading-88f9ba7c9828",
+      "title": "8.2.2 Linear B Ideograms: U+10080–U+100FF",
+      "level": 3,
+      "text_sha256": "2aad3e1448a5523fa99012bfd94a699fb9d9763523b4173423d73e59c998fe70",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-88f9ba7c9828"
+        ]
+      }
+    },
+    {
+      "id": "heading-2993abac7770",
+      "title": "8.2.3 Aegean Numbers: U+10100–U+1013F",
+      "level": 3,
+      "text_sha256": "4b8be127c82f6b58450e7ad88eb1d46ae679def583e0574ff2457af0ca048bc0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-2993abac7770"
+        ]
+      }
+    },
+    {
+      "id": "heading-b82e4e08c07c",
+      "title": "8.3 Cypriot Syllabary",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-b82e4e08c07c"
+        ]
+      }
+    },
+    {
+      "id": "heading-6378cd6c7971",
+      "title": "8.3.1 Cypriot Syllabary: U+10800–U+1083F",
+      "level": 3,
+      "text_sha256": "87bda2806c76920efe43551c3dcf71d16a2a8515fa0242974e36ba5381df889e",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-6378cd6c7971"
+        ]
+      }
+    },
+    {
+      "id": "heading-f660c37c28b9",
+      "title": "8.4 Cypro-Minoan",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-f660c37c28b9"
+        ]
+      }
+    },
+    {
+      "id": "heading-146fc718d2fa",
+      "title": "8.4.1 Cypro-Minoan: U+12F90–U+12FFF",
+      "level": 3,
+      "text_sha256": "08fa5a33203aa2eab689c682e7e3cc829b0f268a20fa182f42097c97be5a87b1",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-146fc718d2fa"
+        ]
+      }
+    },
+    {
+      "id": "heading-88b7935ed92a",
+      "title": "8.5 Ancient Anatolian Alphabets",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-88b7935ed92a"
+        ]
+      }
+    },
+    {
+      "id": "heading-e6f123f03735",
+      "title": "8.5.1 Lycian: U+10280–U+1029F",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-e6f123f03735"
+        ]
+      }
+    },
+    {
+      "id": "heading-afec096f802c",
+      "title": "Carian: U+102A0–U+102DF",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-afec096f802c"
+        ]
+      }
+    },
+    {
+      "id": "heading-66398ec8c523",
+      "title": "Lydian: U+10920–U+1093F",
+      "level": 3,
+      "text_sha256": "f21f7338b61414eb4d38782a9e98f2efbc5dfa4ea0d6aa619a9c058d8ce2ea78",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-66398ec8c523"
+        ]
+      }
+    },
+    {
+      "id": "heading-919c72fb939e",
+      "title": "8.6 Old Italic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-919c72fb939e"
+        ]
+      }
+    },
+    {
+      "id": "heading-86abd2170080",
+      "title": "8.6.1 Old Italic: U+10300–U+1032F",
+      "level": 3,
+      "text_sha256": "b7b1e64edd983d886fb80c6b9b340cc5ddd4fe2c639df2ee6f465ec1117f9fe9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-86abd2170080",
+          "unicode17-chapter-8.heading-86abd2170080-clause-5e5fbdd8c12a",
+          "unicode17-chapter-8.heading-86abd2170080-clause-ce028e23646b"
+        ]
+      }
+    },
+    {
+      "id": "heading-ba69b249db06",
+      "title": "8.7 Runic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-ba69b249db06"
+        ]
+      }
+    },
+    {
+      "id": "heading-1ae254ce042a",
+      "title": "8.7.1 Runic: U+16A0–U+16FF",
+      "level": 3,
+      "text_sha256": "917c74457848de89a7512aa659870d9bcae7846c757fbe64dfc52253af8dd043",
+      "clause_count": 97,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-1ae254ce042a",
+          "unicode17-chapter-8.heading-1ae254ce042a-clause-917eb9b37234",
+          "unicode17-chapter-8.heading-1ae254ce042a-clause-048fdea234dd"
+        ]
+      }
+    },
+    {
+      "id": "heading-9e24ec8d08e8",
+      "title": "8.8 Old Hungarian",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-9e24ec8d08e8"
+        ]
+      }
+    },
+    {
+      "id": "heading-b6b555664cd8",
+      "title": "8.8.1 Old Hungarian: U+10C80–U+10CFF",
+      "level": 3,
+      "text_sha256": "68503f7d33f64e22cd65598035237794f1b7cfb56d1105696ada5461dab2af3d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-b6b555664cd8",
+          "unicode17-chapter-8.heading-b6b555664cd8-clause-46785e8059fc"
+        ]
+      }
+    },
+    {
+      "id": "heading-9580988ce553",
+      "title": "8.9 Gothic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-9580988ce553"
+        ]
+      }
+    },
+    {
+      "id": "heading-6e56e48aed14",
+      "title": "8.9.1 Gothic: U+10330–U+1034F",
+      "level": 3,
+      "text_sha256": "b1ac0063b44da0df5b117c7533db02574aa837d95c59bd2c8b48004485189cd8",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-6e56e48aed14"
+        ]
+      }
+    },
+    {
+      "id": "heading-5ad643cbf71f",
+      "title": "8.10 Elbasan",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-5ad643cbf71f"
+        ]
+      }
+    },
+    {
+      "id": "heading-f042fe67fc0f",
+      "title": "8.10.1 Elbasan: U+10500–U+1052F",
+      "level": 3,
+      "text_sha256": "1ef8022476c3696cb0dc8ccce67a865033bb166ba9d3c7a6256781f8e93e8df7",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-f042fe67fc0f"
+        ]
+      }
+    },
+    {
+      "id": "heading-05d45844938b",
+      "title": "8.11 Caucasian Albanian",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-05d45844938b"
+        ]
+      }
+    },
+    {
+      "id": "heading-c81272a3bcf4",
+      "title": "8.11.1 Caucasian Albanian: U+10530–U+1056F",
+      "level": 3,
+      "text_sha256": "b33987596004ee1d7e5defba503fb136f858f53022b6b4a70fd61a66af7ac2ea",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-c81272a3bcf4"
+        ]
+      }
+    },
+    {
+      "id": "heading-c131902f8d46",
+      "title": "8.12 Vithkuqi",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-c131902f8d46"
+        ]
+      }
+    },
+    {
+      "id": "heading-8750e9f8a02f",
+      "title": "8.12.1 Vithkuqi: U+10570–U+105BF",
+      "level": 3,
+      "text_sha256": "421f765fa95ad189f48b29527578f1f5034211d853be532358aed8ff0139863c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-8750e9f8a02f"
+        ]
+      }
+    },
+    {
+      "id": "heading-5146fe1dcae7",
+      "title": "8.13 Todhri",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-5146fe1dcae7"
+        ]
+      }
+    },
+    {
+      "id": "heading-f5b032fb038d",
+      "title": "8.13.1 Todhri: U+105C0–U+105FF",
+      "level": 3,
+      "text_sha256": "c421f706b1b2ecd113296a260f35bab55f69486de1207a7e9f7972fc61da89ff",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-f5b032fb038d",
+          "unicode17-chapter-8.heading-f5b032fb038d-clause-f294be4ef1fe"
+        ]
+      }
+    },
+    {
+      "id": "heading-6387ae054e23",
+      "title": "8.14 Old Permic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-6387ae054e23"
+        ]
+      }
+    },
+    {
+      "id": "heading-39072b0d7f04",
+      "title": "8.14.1 Old Permic: U+10350–U+1037F",
+      "level": 3,
+      "text_sha256": "10ded89e0c96714463bfff53fd3164d51ae3838e90042e803404857c6320a06d",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-39072b0d7f04"
+        ]
+      }
+    },
+    {
+      "id": "heading-710823e2c7dd",
+      "title": "8.15 Ogham",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-710823e2c7dd"
+        ]
+      }
+    },
+    {
+      "id": "heading-d7fa5478d157",
+      "title": "8.15.1 Ogham: U+1680–U+169F",
+      "level": 3,
+      "text_sha256": "f71ea94d18a82c49ac345089f0c4067477e9b61fc4b902e5613c958c2f743640",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-d7fa5478d157",
+          "unicode17-chapter-8.heading-d7fa5478d157-clause-2615c2f7e5de",
+          "unicode17-chapter-8.heading-d7fa5478d157-clause-8dfb54e1330d"
+        ]
+      }
+    },
+    {
+      "id": "heading-98ad5a7c3313",
+      "title": "8.16 Shavian",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-98ad5a7c3313"
+        ]
+      }
+    },
+    {
+      "id": "heading-f16d1e6cd6e4",
+      "title": "8.16.1 Shavian: U+10450–U+1047F",
+      "level": 3,
+      "text_sha256": "ad9c9108aba32703cdac0de3db6ee5b9da24876a24e93964f8ebbc5350819b45",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-f16d1e6cd6e4",
+          "unicode17-chapter-8.heading-f16d1e6cd6e4-clause-112a4343da5f"
+        ]
+      }
+    },
+    {
+      "id": "heading-248623111a21",
+      "title": "8.17 Sidetic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-248623111a21"
+        ]
+      }
+    },
+    {
+      "id": "heading-dedfea259bf4",
+      "title": "8.17.1 Sidetic: U+10940–U+1095F",
+      "level": 3,
+      "text_sha256": "7c663cb668db1d6b8e4fe4d1b3f9cd5e1ab32710c1e0ad8cc5e15f134f96ddca",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-8.heading-dedfea259bf4",
+          "unicode17-chapter-8.heading-dedfea259bf4-clause-49a95155c280"
+        ]
+      }
+    }
+  ]
+}

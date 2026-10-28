@@ -1,0 +1,653 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-7",
+  "sections": [
+    {
+      "id": "G3683",
+      "title": "Europe-I",
+      "level": 1,
+      "text_sha256": "93fe22090b04d3d874c115a86dc7e7ec358af2e56f8a9fd9c97c920b329a7f5e",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.g3683"
+        ]
+      }
+    },
+    {
+      "id": "heading-dcb003ca2673",
+      "title": "7.1 Latin",
+      "level": 2,
+      "text_sha256": "522b52b8f234a97cf2d4114acaed45ab52caab6c80db29d5217366cdfbcf757c",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-dcb003ca2673",
+          "unicode17-chapter-7.heading-dcb003ca2673-clause-1a47f44c7e4a",
+          "unicode17-chapter-7.heading-dcb003ca2673-clause-3e65e8e40e83",
+          "unicode17-chapter-7.heading-dcb003ca2673-clause-bde24e636c7f"
+        ]
+      }
+    },
+    {
+      "id": "heading-17957ccfd410",
+      "title": "7.1.1 Letters of Basic Latin: U+0041–U+007A",
+      "level": 3,
+      "text_sha256": "1b588a56c3f4994f3ea336f855d0a2ba9eeba08d35ecfe5ffa207484e67940cb",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-17957ccfd410"
+        ]
+      }
+    },
+    {
+      "id": "heading-e4328a2eee51",
+      "title": "7.1.2 Letters of the Latin-1 Supplement: U+00C0–U+00FE",
+      "level": 3,
+      "text_sha256": "a47d8854a0611be816d03bfda287bd9c31c9a3a94cdbce725db9aca17440f4ab",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-e4328a2eee51",
+          "unicode17-chapter-7.heading-e4328a2eee51-clause-46ffd0541dfd"
+        ]
+      }
+    },
+    {
+      "id": "heading-a1ef5e2550b8",
+      "title": "7.1.3 Latin Extended-A: U+0100–U+017F",
+      "level": 3,
+      "text_sha256": "c8ec71641ae18fd1bfc008e4ca4132e27c7e9e6aa2c5b10920d76f06059e9a4f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-a1ef5e2550b8"
+        ]
+      }
+    },
+    {
+      "id": "heading-c19563dede27",
+      "title": "7.1.4 Latin Extended-B: U+0180–U+024F",
+      "level": 3,
+      "text_sha256": "682f6acfa2f986b9c60739478e6c66bebe17eb2f1e5cc42eb109284978093d05",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-c19563dede27",
+          "unicode17-chapter-7.heading-c19563dede27-clause-5e3a406cc8cf",
+          "unicode17-chapter-7.heading-c19563dede27-clause-dbd7fd2efdc0"
+        ]
+      }
+    },
+    {
+      "id": "heading-03a8b277f594",
+      "title": "7.1.5 IPA Extensions: U+0250–U+02AF",
+      "level": 3,
+      "text_sha256": "f964c50af42f812f2bb4ffe4a7371a95f8458920428ba619d14f946c38466f48",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-03a8b277f594",
+          "unicode17-chapter-7.heading-03a8b277f594-clause-b1999638bfaa"
+        ]
+      }
+    },
+    {
+      "id": "heading-b031e815fe1c",
+      "title": "7.1.6 Phonetic Extensions: U+1D00–U+1D7F",
+      "level": 3,
+      "text_sha256": "8046b5927eb8345fdfa2df8ddaefa60ca55656d5525855090238b5f95b3004bc",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-b031e815fe1c"
+        ]
+      }
+    },
+    {
+      "id": "heading-4404c3a4a28f",
+      "title": "7.1.7 Latin Extended Additional: U+1E00–U+1EFF",
+      "level": 3,
+      "text_sha256": "941f947fd121f467e3def4b28a327776215ee8537fffe5a5a650e50b76826f32",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-4404c3a4a28f"
+        ]
+      }
+    },
+    {
+      "id": "heading-ea6fd052e600",
+      "title": "7.1.8 Latin Extended-C: U+2C60–U+2C7F",
+      "level": 3,
+      "text_sha256": "9678015ef4630bde7e4bb1696cbbdbe4d44358b3e7f5153d58732f195eea4e0d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-ea6fd052e600"
+        ]
+      }
+    },
+    {
+      "id": "heading-b4f92c6cfba6",
+      "title": "7.1.9 Latin Extended-D: U+A720–U+A7FF",
+      "level": 3,
+      "text_sha256": "33838e0283f2a6595314ae2764224338f082bfab66dcec0b37a051cd6adebb06",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-b4f92c6cfba6",
+          "unicode17-chapter-7.heading-b4f92c6cfba6-clause-5e53a6d9917e",
+          "unicode17-chapter-7.heading-b4f92c6cfba6-clause-da71fa8a8f8c"
+        ]
+      }
+    },
+    {
+      "id": "heading-e9fe8a4be289",
+      "title": "7.1.10 Latin Extended-E: U+AB30–U+AB6F",
+      "level": 3,
+      "text_sha256": "f829b1ae349aea14759fa85f49f8738e709e00c4f0f628abb52a16f60a739a52",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-e9fe8a4be289"
+        ]
+      }
+    },
+    {
+      "id": "heading-efd353480597",
+      "title": "7.1.11 Latin Extended-F: U+10780–U+107BF",
+      "level": 3,
+      "text_sha256": "1990cc8a852775f1a96e1d4f2a39a5b23c8605dbcb00842ee441d1305c6d39ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-efd353480597"
+        ]
+      }
+    },
+    {
+      "id": "heading-6ddca7fc261a",
+      "title": "7.1.12 Latin Extended-G: U+1DF00–U+1DFFF",
+      "level": 3,
+      "text_sha256": "ac016e8a7d3727c80e099e5a8b6ab6890dd9becfac31ebbae2e06de3d4916c46",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-6ddca7fc261a"
+        ]
+      }
+    },
+    {
+      "id": "heading-c7a4b13048c5",
+      "title": "7.1.13 Latin Ligatures: U+FB00–U+FB06",
+      "level": 3,
+      "text_sha256": "5813e56f4d6cc52b3d3903071d60766e7ad196c3209543bd8da64c5d387de8b2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-c7a4b13048c5"
+        ]
+      }
+    },
+    {
+      "id": "heading-dd2d24072fa6",
+      "title": "7.2 Greek",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-dd2d24072fa6"
+        ]
+      }
+    },
+    {
+      "id": "heading-635c2498c154",
+      "title": "7.2.1 Greek: U+0370–U+03FF",
+      "level": 3,
+      "text_sha256": "2c188b9d22f0f24e053edc25ff9f1e5e28e58b911023cd7061f18083befe17e2",
+      "clause_count": 61,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-635c2498c154",
+          "unicode17-chapter-7.heading-635c2498c154-clause-ec5d44a0a27a",
+          "unicode17-chapter-7.heading-635c2498c154-clause-a7eb866fd66a",
+          "unicode17-chapter-7.heading-635c2498c154-clause-24def262e003",
+          "unicode17-chapter-7.heading-635c2498c154-clause-3d9782c35971",
+          "unicode17-chapter-7.heading-635c2498c154-clause-05ee52b018d0",
+          "unicode17-chapter-7.heading-635c2498c154-clause-e12e31ea5f5e",
+          "unicode17-chapter-7.heading-635c2498c154-clause-b04b8949d7c5",
+          "unicode17-chapter-7.heading-635c2498c154-clause-d23cec90f72a"
+        ]
+      }
+    },
+    {
+      "id": "heading-d5870e10896e",
+      "title": "7.2.2 Greek Extended: U+1F00–U+1FFF",
+      "level": 3,
+      "text_sha256": "4eac3d4adf09c9b19d0b40330cec1676403528752e43f13cb7d9bdaa027bf348",
+      "clause_count": 69,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-d5870e10896e",
+          "unicode17-chapter-7.heading-d5870e10896e-clause-63a04fadc48e"
+        ]
+      }
+    },
+    {
+      "id": "heading-29eb8666a742",
+      "title": "7.2.3 Ancient Greek Numbers: U+10140–U+1018F",
+      "level": 3,
+      "text_sha256": "260cb633841d776d812546397473eab0120a894f625dee9f8a0c669bafb672d7",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-29eb8666a742",
+          "unicode17-chapter-7.heading-29eb8666a742-clause-5267613f137b"
+        ]
+      }
+    },
+    {
+      "id": "heading-dcbacbbf0a2d",
+      "title": "7.3 Coptic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-dcbacbbf0a2d"
+        ]
+      }
+    },
+    {
+      "id": "heading-4689f39b5421",
+      "title": "7.3.1 Coptic: U+2C80–U+2CFF",
+      "level": 3,
+      "text_sha256": "0e4718c760da0aa7b1ca25e399ac3a978f875494f3d128c7332da086b6ad4bc5",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-4689f39b5421",
+          "unicode17-chapter-7.heading-4689f39b5421-clause-cceff33d2d45"
+        ]
+      }
+    },
+    {
+      "id": "heading-0b29b7037066",
+      "title": "7.4 Cyrillic",
+      "level": 2,
+      "text_sha256": "f6eacf807bf418c80312a5a995ade2487f4d149f4075dc467169dcce23d6b400",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-0b29b7037066"
+        ]
+      }
+    },
+    {
+      "id": "heading-137537bb7b1e",
+      "title": "7.4.1 Cyrillic: U+0400–U+04FF",
+      "level": 3,
+      "text_sha256": "638e91996590c45af9f9ec8dbe23751f93d8c8beea80cd1c159d62569fcd9c07",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-137537bb7b1e",
+          "unicode17-chapter-7.heading-137537bb7b1e-clause-2fc53bccb951",
+          "unicode17-chapter-7.heading-137537bb7b1e-clause-e07128610c25",
+          "unicode17-chapter-7.heading-137537bb7b1e-clause-cbc71d994648"
+        ]
+      }
+    },
+    {
+      "id": "heading-adffe43ae5d5",
+      "title": "7.4.2 Cyrillic Supplement: U+0500–U+052F",
+      "level": 3,
+      "text_sha256": "c95cff134295f1fd129043bc6d06252d9f40795385623f088b4af04c8b702e4c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-adffe43ae5d5"
+        ]
+      }
+    },
+    {
+      "id": "heading-3fffd033c634",
+      "title": "7.4.3 Cyrillic Extended-A: U+2DE0–U+2DFF",
+      "level": 3,
+      "text_sha256": "d37d3240e9753a52ed0608465792b54f21c026679bd004f31f9c28f47e1bd1f9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-3fffd033c634"
+        ]
+      }
+    },
+    {
+      "id": "heading-ba31e56c6e1c",
+      "title": "7.4.4 Cyrillic Extended-B: U+A640–U+A69F",
+      "level": 3,
+      "text_sha256": "6acb99eec9cb206858d9ca17e7943fe123b0a35a003cd27862323350a0ab6ac9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-ba31e56c6e1c"
+        ]
+      }
+    },
+    {
+      "id": "heading-1513eee128d3",
+      "title": "7.4.5 Cyrillic Extended-C: U+1C80–U+1C8F",
+      "level": 3,
+      "text_sha256": "397e0fc060ab2003f21b82de9508d50c7df48f44dc1b4472ebed6412c56ea1e1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-1513eee128d3"
+        ]
+      }
+    },
+    {
+      "id": "heading-cb2ce0d6fdb6",
+      "title": "7.4.6 Cyrillic Extended-D: U+1E030–U+1E08F",
+      "level": 3,
+      "text_sha256": "dc9912f1088ac520b3d9c908c6f6376b985899f59bffbc2869bfadfdb2829f13",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-cb2ce0d6fdb6"
+        ]
+      }
+    },
+    {
+      "id": "heading-b14c005fea2b",
+      "title": "7.5 Glagolitic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-b14c005fea2b"
+        ]
+      }
+    },
+    {
+      "id": "heading-1cd1cfc4452a",
+      "title": "7.5.1 Glagolitic: U+2C00–U+2C5F",
+      "level": 3,
+      "text_sha256": "95801105ea21a98ea1b32302ee4ae63a67987a22ba718f206a72c6fa0e5af800",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-1cd1cfc4452a"
+        ]
+      }
+    },
+    {
+      "id": "heading-9b367231c4df",
+      "title": "7.5.2 Glagolitic Supplement: U+1E000–U+1E02F",
+      "level": 3,
+      "text_sha256": "687489ef7da9be9e2c12175dd2edd0812aedab5fd09b2f1c1d16a5a72cae2684",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-9b367231c4df"
+        ]
+      }
+    },
+    {
+      "id": "heading-e679e1e2da1e",
+      "title": "7.6 Armenian",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-e679e1e2da1e"
+        ]
+      }
+    },
+    {
+      "id": "heading-33af745424dc",
+      "title": "7.6.1 Armenian: U+0530–U+058F",
+      "level": 3,
+      "text_sha256": "82c4376659c2de3fece4a9431f4b1e356a5bf7cbbc10602ad0fa3e612cea8b9a",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-33af745424dc"
+        ]
+      }
+    },
+    {
+      "id": "heading-6c6115d980ef",
+      "title": "7.7 Georgian",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-6c6115d980ef"
+        ]
+      }
+    },
+    {
+      "id": "heading-d7649a6c0f6d",
+      "title": "7.7.1 Georgian: U+10A0–U+10FF",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-d7649a6c0f6d"
+        ]
+      }
+    },
+    {
+      "id": "heading-bbf4920fc7c9",
+      "title": "Georgian Extended: U+1C90–U+1CBF",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-bbf4920fc7c9"
+        ]
+      }
+    },
+    {
+      "id": "heading-631dd5691bd4",
+      "title": "Georgian Supplement: U+2D00–U+2D2F",
+      "level": 3,
+      "text_sha256": "64b87b9a6c98f5a084828863cfb16d3d020dbd85f71a97afb33a222ecca2f85d",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-631dd5691bd4",
+          "unicode17-chapter-7.heading-631dd5691bd4-clause-667e8c214aa0"
+        ]
+      }
+    },
+    {
+      "id": "heading-e5b4dae8ff47",
+      "title": "7.8 Modifier Letters",
+      "level": 2,
+      "text_sha256": "e4924102618350987e6b9f88d7ffdd4d838e1ed5778c7d6e87626fb00364c995",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-e5b4dae8ff47"
+        ]
+      }
+    },
+    {
+      "id": "heading-594519fc6ebc",
+      "title": "7.8.1 Spacing Modifier Letters: U+02B0–U+02FF",
+      "level": 3,
+      "text_sha256": "8ace9da835865f7f852e1b4cc344a8bb32321e1e09094734d0fc061135244239",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-594519fc6ebc",
+          "unicode17-chapter-7.heading-594519fc6ebc-clause-bfe6a6390143",
+          "unicode17-chapter-7.heading-594519fc6ebc-clause-40f782206d5c",
+          "unicode17-chapter-7.heading-594519fc6ebc-clause-b64444f842a1"
+        ]
+      }
+    },
+    {
+      "id": "heading-0a28b9cc915d",
+      "title": "7.8.2 Modifier Tone Letters: U+A700–U+A71F",
+      "level": 3,
+      "text_sha256": "61e25ff201c72ea79b98b0c7d6f897108b348f653e8dd6cc4fef021851100473",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-0a28b9cc915d"
+        ]
+      }
+    },
+    {
+      "id": "heading-e91aab0b5fca",
+      "title": "7.9 Combining Marks",
+      "level": 2,
+      "text_sha256": "8dfc56314e216c6b79698c13793488133bd07cae7945d136f408bb884dc982f0",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-e91aab0b5fca",
+          "unicode17-chapter-7.heading-e91aab0b5fca-clause-7a445be49aa6",
+          "unicode17-chapter-7.heading-e91aab0b5fca-clause-0b1772cfe81c",
+          "unicode17-chapter-7.heading-e91aab0b5fca-clause-aa0df4691a11",
+          "unicode17-chapter-7.heading-e91aab0b5fca-clause-1a9d0a089edd",
+          "unicode17-chapter-7.heading-e91aab0b5fca-clause-b4953d5107ac",
+          "unicode17-chapter-7.heading-e91aab0b5fca-clause-6d9cfe3fa4e6"
+        ]
+      }
+    },
+    {
+      "id": "heading-cb398467b176",
+      "title": "7.9.1 Combining Diacritical Marks: U+0300–U+036F",
+      "level": 3,
+      "text_sha256": "682c4a505b5bdd6eb90ec519d05cebf782e78f36e497e5f1128b93c8dab95d3f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-cb398467b176"
+        ]
+      }
+    },
+    {
+      "id": "heading-8e302fdd6385",
+      "title": "7.9.2 Combining Diacritical Marks Extended: U+1AB0–U+1AFF",
+      "level": 3,
+      "text_sha256": "0c9f20d54600e53d5d1a4b30a6241e038e033b186d8ad199c1d3d20fb7c0f992",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-8e302fdd6385",
+          "unicode17-chapter-7.heading-8e302fdd6385-clause-26d9e66ad1aa"
+        ]
+      }
+    },
+    {
+      "id": "heading-a6b86d959120",
+      "title": "7.9.3 Combining Diacritical Marks Supplement: U+1DC0–U+1DFF",
+      "level": 3,
+      "text_sha256": "26a795b5dc5cfa4a2ada80370b5f6dee9ab97ae24f0be1e5188726ee9f9cd6a1",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-a6b86d959120"
+        ]
+      }
+    },
+    {
+      "id": "heading-bdf7188960ec",
+      "title": "7.9.4 Combining Diacritical Marks for Symbols: U+20D0–U+20FF",
+      "level": 3,
+      "text_sha256": "daf47811cbb6836b992451e4c56ee26010694e4d00d81f3e17f6f53280eead88",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-bdf7188960ec",
+          "unicode17-chapter-7.heading-bdf7188960ec-clause-1eea559cf441"
+        ]
+      }
+    },
+    {
+      "id": "heading-b3a24bc2c8a0",
+      "title": "7.9.5 Combining Half Marks: U+FE20–U+FE2F",
+      "level": 3,
+      "text_sha256": "eb9811794fa69699e268f3931b3a37b6daebcd4aa618f5d6c5caf951f2fbb46c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-b3a24bc2c8a0"
+        ]
+      }
+    },
+    {
+      "id": "heading-cfcc3274e51f",
+      "title": "7.9.6 Combining Marks in Other Blocks",
+      "level": 3,
+      "text_sha256": "512d517914bfbcf6d4d9fc0de9c22c21d0c562eb2bc7ac3253a889c118970652",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-7.heading-cfcc3274e51f",
+          "unicode17-chapter-7.heading-cfcc3274e51f-clause-73dc687dd27b"
+        ]
+      }
+    }
+  ]
+}

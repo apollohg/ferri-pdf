@@ -1,0 +1,1717 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-box-4.intro",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "f6e59f6cfa6f29e4da46f2b08aae1c94b4c1af514fd9dd9e520e7d3a295ca891"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.values",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.placement",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module Interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "44d3090783ef0ea37813f6c46f6e666e02a41b979fd0b0f3687f9adf7feffacc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.box-model",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "box-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSS Box Model.",
+      "locator": {
+        "section_id": "box-model",
+        "text_sha256": "efa5d7a31266c69f170caf15651fe08e9c37f8da6330f43f9e77359f4b1f5097"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.box-edges",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "box-edges"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Boxes and Edges.",
+      "locator": {
+        "section_id": "box-edges",
+        "text_sha256": "2b50ee40daf00abfaba77d3086295ba2098e5f461021a7d19f8671ff82ec1caa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.fragmentation",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "fragmentation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fragmentation.",
+      "locator": {
+        "section_id": "fragmentation",
+        "text_sha256": "c883c2f9cfc5efafdbb71af45375e55dbaf5448e9ae5069b6e8a23066998a8e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.keywords",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "keywords"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Box-edge Keywords.",
+      "locator": {
+        "section_id": "keywords",
+        "text_sha256": "a667255fceea0ea2b91882c3fc80e24119b91831a0cc36bd7099eb58ddf2a8ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.margins",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margins"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Margins.",
+      "locator": {
+        "section_id": "margins",
+        "text_sha256": "13957ce9d553c51322dd52ffcbcfa657c843556985e8ca8ad046886e59855dba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.margin-physical",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-physical"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page-relative (Physical) Margin Properties: the margin-top, margin-right, margin-bottom, and margin-left properties.",
+      "locator": {
+        "section_id": "margin-physical",
+        "text_sha256": "fcc28f20ec01582d4266f3019ef0cdd25b33758528203ff8c2c2bc054b34bfd2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-box-4.margin-physical-clause-cca2516ebb1d",
+        "css-box-4.margin-physical-clause-70ca303ace2b",
+        "css-box-4.margin-physical-clause-4b59fe755d34"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.margin-physical-clause-cca2516ebb1d",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-physical"
+      ],
+      "behaviour": "Page-relative (Physical) Margin Properties: the margin-top, margin-right, margin-bottom, and margin-left properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-physical",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.margin-physical-clause-70ca303ace2b",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-physical"
+      ],
+      "behaviour": "Page-relative (Physical) Margin Properties: the margin-top, margin-right, margin-bottom, and margin-left properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-physical",
+        "clause_index": 13,
+        "clause_sha256": "70ca303ace2bd64987555fa5c460eaa16752d0d2ade9186a2655c1cd9de0f97e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.margin-physical-clause-4b59fe755d34",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-physical"
+      ],
+      "behaviour": "Page-relative (Physical) Margin Properties: the margin-top, margin-right, margin-bottom, and margin-left properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-physical",
+        "clause_index": 17,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.margin-shorthand",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-shorthand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Margin Shorthand: the margin property.",
+      "locator": {
+        "section_id": "margin-shorthand",
+        "text_sha256": "31f3077406c41b79a21b2702f50fcb1d87ce8caf14d4d7d3e95853947c7180a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-box-4.margin-shorthand-clause-cca2516ebb1d",
+        "css-box-4.margin-shorthand-clause-d68c94ccc43e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.margin-shorthand-clause-cca2516ebb1d",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-shorthand"
+      ],
+      "behaviour": "Margin Shorthand: the margin property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-shorthand",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.margin-shorthand-clause-d68c94ccc43e",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-shorthand"
+      ],
+      "behaviour": "Margin Shorthand: the margin property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-shorthand",
+        "clause_index": 22,
+        "clause_sha256": "d68c94ccc43e33fd2bf068fe262b06bf220d2c7c3101c5a80300ef2432834515"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.margin-trim",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-trim"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Margins at Container Edges: the margin-trim property.",
+      "locator": {
+        "section_id": "margin-trim",
+        "text_sha256": "a79d362d505b28d3ef99c0b71fbf78d2d4308dd3a363bed0fb633a716a2816d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-box-4.margin-trim-clause-cca2516ebb1d",
+        "css-box-4.margin-trim-clause-649fce7a5f9b",
+        "css-box-4.margin-trim-clause-4323105f0e34",
+        "css-box-4.margin-trim-clause-fcbd4e397017"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.margin-trim-clause-cca2516ebb1d",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-trim"
+      ],
+      "behaviour": "Margins at Container Edges: the margin-trim property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-trim",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.margin-trim-clause-649fce7a5f9b",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-trim"
+      ],
+      "behaviour": "Margins at Container Edges: the margin-trim property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-trim",
+        "clause_index": 29,
+        "clause_sha256": "649fce7a5f9bff6e470992e4909b30fdeb6c19d90ec6063031645ca1c4e39bda"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.margin-trim-clause-4323105f0e34",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-trim"
+      ],
+      "behaviour": "Margins at Container Edges: the margin-trim property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-trim",
+        "clause_index": 34,
+        "clause_sha256": "4323105f0e34f6a51a6190c3bb646a82ff1edcbfe19017c4b11060f5c8debc42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.margin-trim-clause-fcbd4e397017",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-trim"
+      ],
+      "behaviour": "Margins at Container Edges: the margin-trim property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "margin-trim",
+        "clause_index": 35,
+        "clause_sha256": "fcbd4e3970179c031a23f94da5ef02ac287b52fcb5df61b592fb97e6691cb109"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.margin-trim-block",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-trim-block"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Trimming Block Container Content.",
+      "locator": {
+        "section_id": "margin-trim-block",
+        "text_sha256": "6e967e9b8324c31849586cca58157c9f4586fec5d0f9cffe23ff322f0cd7c54d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.margin-trim-flex",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-trim-flex"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Trimming Flex Container Content.",
+      "locator": {
+        "section_id": "margin-trim-flex",
+        "text_sha256": "6636619c43a2d23bcb026a96b7963bb6542db07a9d247dd0f737b3034345cdfd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.margin-trim-grid",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "margin-trim-grid"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Trimming Grid Container Content.",
+      "locator": {
+        "section_id": "margin-trim-grid",
+        "text_sha256": "33eca85a0fdd354acd5710843b66fe6e33b2e860dd60c85e2b2daaa6f919ca16"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.paddings",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "paddings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Padding.",
+      "locator": {
+        "section_id": "paddings",
+        "text_sha256": "2022d28e959be5edfc0e4a900780985c0506d1de5171668000cd20e12642ead2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.padding-physical",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "padding-physical"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page-relative (Physical) Padding Properties: the padding-top, padding-right, padding-bottom, and padding-left properties.",
+      "locator": {
+        "section_id": "padding-physical",
+        "text_sha256": "711d2529c95eef1af8d42e9272cd4350172bab74abfdb2b131e609711994a90f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-box-4.padding-physical-clause-cca2516ebb1d",
+        "css-box-4.padding-physical-clause-986b7b70ef39",
+        "css-box-4.padding-physical-clause-4b59fe755d34",
+        "css-box-4.padding-physical-clause-9682d165f771",
+        "css-box-4.padding-physical-clause-9209b12d072c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.padding-physical-clause-cca2516ebb1d",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "padding-physical"
+      ],
+      "behaviour": "Page-relative (Physical) Padding Properties: the padding-top, padding-right, padding-bottom, and padding-left properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-physical",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.padding-physical-clause-986b7b70ef39",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "padding-physical"
+      ],
+      "behaviour": "Page-relative (Physical) Padding Properties: the padding-top, padding-right, padding-bottom, and padding-left properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-physical",
+        "clause_index": 13,
+        "clause_sha256": "986b7b70ef3912bd09b5bbe9f656bc532851f3e25f00b8a0d8cc06e31eb75a65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.padding-physical-clause-4b59fe755d34",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "padding-physical"
+      ],
+      "behaviour": "Page-relative (Physical) Padding Properties: the padding-top, padding-right, padding-bottom, and padding-left properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-physical",
+        "clause_index": 17,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.padding-physical-clause-9682d165f771",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "padding-physical"
+      ],
+      "behaviour": "Page-relative (Physical) Padding Properties: the padding-top, padding-right, padding-bottom, and padding-left properties — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-physical",
+        "clause_index": 20,
+        "clause_sha256": "9682d165f771ffeeb77443d526b564ad2251cbe6649454a0181e4ccb9a86eeb6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.padding-physical-clause-9209b12d072c",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "padding-physical"
+      ],
+      "behaviour": "Page-relative (Physical) Padding Properties: the padding-top, padding-right, padding-bottom, and padding-left properties — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-physical",
+        "clause_index": 21,
+        "clause_sha256": "9209b12d072c06f448ef3115cae270349f381e12cda7860d2c5091fd9c4bb003"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.padding-shorthand",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "padding-shorthand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Padding Shorthand: the padding property.",
+      "locator": {
+        "section_id": "padding-shorthand",
+        "text_sha256": "e3ea10c0dff6b972e87d778860cb2c1eb306eaf129df4598817ffb78c389e853"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-box-4.padding-shorthand-clause-cca2516ebb1d",
+        "css-box-4.padding-shorthand-clause-caa283590472"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.padding-shorthand-clause-cca2516ebb1d",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "padding-shorthand"
+      ],
+      "behaviour": "Padding Shorthand: the padding property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-shorthand",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.padding-shorthand-clause-caa283590472",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "padding-shorthand"
+      ],
+      "behaviour": "Padding Shorthand: the padding property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "padding-shorthand",
+        "clause_index": 22,
+        "clause_sha256": "caa283590472f0d9d67301a0e4d23cfa4b50dc1d4ada805050ccf4f9e821c792"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.borders",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "borders"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Borders.",
+      "locator": {
+        "section_id": "borders",
+        "text_sha256": "c74ca6711c444a2938417822f5adc6f0cc86c0b958b8034383bea2fb4260070d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.priv",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "priv"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "priv",
+        "text_sha256": "7a9934cd805d28ecdc853e3658c088d8318f6b74d084a0689e3487749afe9908"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.sec",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "sec",
+        "text_sha256": "5771fe88628ce078ae9af6b8cb38f873ccccbc8215d378b4b1a93763150386c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.w3c-conformance",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.w3c-conventions",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-box-4.w3c-conventions-clause-5c98c879f070",
+        "css-box-4.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.w3c-conventions-clause-5c98c879f070",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.w3c-conformance-classes",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-box-4.w3c-conformance-classes-clause-ff408372426c",
+        "css-box-4.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.w3c-partial",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-box-4.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.w3c-partial-clause-ef40c4aab200",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.w3c-conform-future-proofing",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.w3c-testing",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-box-4.w3c-testing-clause-1e0fff369221",
+        "css-box-4.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.w3c-testing-clause-1e0fff369221",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.w3c-testing-clause-ae1210cf9643",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.property-index",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "1e69d33ef89170de7235a21ed63bcdbc6be71685054b8522754e6ec3abda2322"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-box-4.property-index-clause-4b59fe755d34",
+        "css-box-4.property-index-clause-70ca303ace2b",
+        "css-box-4.property-index-clause-986b7b70ef39"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.property-index-clause-4b59fe755d34",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 16,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.property-index-clause-70ca303ace2b",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 27,
+        "clause_sha256": "70ca303ace2bd64987555fa5c460eaa16752d0d2ade9186a2655c1cd9de0f97e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.property-index-clause-986b7b70ef39",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 86, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 85,
+        "clause_sha256": "986b7b70ef3912bd09b5bbe9f656bc532851f3e25f00b8a0d8cc06e31eb75a65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-box-4.issues-index",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "7171d71517244b826add3c89db30a0cfd11f213b5e9ec2db7570674c15f08ed7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.title",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Box Model Module Level 4.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "2ea817b23f135df49f27d452cffd85ed38de5e257585b24fbc3d53a9287b4741"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.abstract",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "a1cd67e564ffcb75d8bd359d0f2806d34d01f6d0c62fd63b547f93dc2ad9ac52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.sotd",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "4f7143a597abfb40ef02407b83153f92d09d402ce9b4bd907eed9dafebf16fd6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.contents",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "7fa766c6b332deec48cb81f2b3042e8bb7c630f5f1a3b35ece3b5bb3fefd1ef6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.changes",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 6. Recent Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "7b3196ff4a85f125dbe934eef4d57de7e5bf2283baafe5d617bc266fd9ff8d44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.changes-since-3",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "changes-since-3"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7. Changes Since CSS Level 3.",
+      "locator": {
+        "section_id": "changes-since-3",
+        "text_sha256": "a1d323370e9cf725344494ff85592ffc674d53e7928bf923ffa2d612d23edce3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.changes-since-2",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "changes-since-2"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8. Changes Since CSS Level 2.",
+      "locator": {
+        "section_id": "changes-since-2",
+        "text_sha256": "faaef35392f71771ebee5f70ca29fa639fce250ceb4693cfae6eac8d72d74c4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.index",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.index-defined-here",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "de70c68510ce81c63611894369f5e32ab195d62ddef17b32c404961fc9ed0bc5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.index-defined-elsewhere",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "19a67fc3672b4b77bff99865cfee8f9cf34837b3f5da698ce2d099538bbb2215"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.references",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-box-4.normative",
+      "family": "css-box-4",
+      "source_id": "css-box-4",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "e250cbfc68b788ffaead01136764be34eb677ff050ed7a68144744a9d9f1bdba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

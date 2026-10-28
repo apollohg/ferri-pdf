@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-about",
+  "sections": [
+    {
+      "id": "q1.0",
+      "title": "1 About the CSS 2.1 Specification",
+      "level": 1,
+      "text_sha256": "821701142f42ff40bf2ea9d7591a6aa250c3a7fff15c6f0e3100151e9af90e66",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.q1-0",
+          "css21-about.q1-0-clause-c4291a798bbe"
+        ]
+      }
+    },
+    {
+      "id": "css2.1-v-css2",
+      "title": "1.1 CSS 2.1 vs CSS 2",
+      "level": 2,
+      "text_sha256": "b0cb2626f66d0e725b159e5ed78e8857f549319d68f20f2bc89bf7eb538b0c24",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.css2-1-v-css2",
+          "css21-about.css2-1-v-css2-clause-5da3a5a597cf"
+        ]
+      }
+    },
+    {
+      "id": "reading",
+      "title": "1.2 Reading the specification",
+      "level": 2,
+      "text_sha256": "9d0c804aff6f8c4bdd42647bed556ab12c5c4f1dcb26e478b3d042a99bed06b2",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.reading"
+        ]
+      }
+    },
+    {
+      "id": "organization",
+      "title": "1.3 How the specification is organized",
+      "level": 2,
+      "text_sha256": "a7c6e5092f941b256bc92198dc01b87892e671c8f0aebc9a869739e4fdc5315a",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.organization"
+        ]
+      }
+    },
+    {
+      "id": "conventions",
+      "title": "1.4 Conventions",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.conventions"
+        ]
+      }
+    },
+    {
+      "id": "doc-language",
+      "title": "1.4.1 Document language elements and attributes",
+      "level": 3,
+      "text_sha256": "488241c7e0f7a7927ff8ff9afe47cf86b9f84ac0559e4c7380eaddcf9f42a707",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.doc-language"
+        ]
+      }
+    },
+    {
+      "id": "property-defs",
+      "title": "1.4.2 CSS property definitions",
+      "level": 3,
+      "text_sha256": "98e693c33f0473dcd6e16cb5f38f09eec1fa98487fcabd37aacef07f181ddb73",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.property-defs",
+          "css21-about.property-defs-clause-09df68f6d02f",
+          "css21-about.property-defs-clause-cca2516ebb1d",
+          "css21-about.property-defs-clause-81e2455d104f",
+          "css21-about.property-defs-clause-836178bf8d99"
+        ]
+      }
+    },
+    {
+      "id": "value-defs",
+      "title": "1.4.2.1 Value",
+      "level": 4,
+      "text_sha256": "15eaa6f6a216e86123bedaef32f9c2d41c42ca153d8c48b5f5165efa879a8a2c",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.value-defs",
+          "css21-about.value-defs-clause-be9f9fdf667c",
+          "css21-about.value-defs-clause-6f1fc3f624f2",
+          "css21-about.value-defs-clause-12a6e0b2f1ff",
+          "css21-about.value-defs-clause-64803acc6929",
+          "css21-about.value-defs-clause-78e1a461fe59",
+          "css21-about.value-defs-clause-fe86adcdc33d",
+          "css21-about.value-defs-clause-babcd429b83c"
+        ]
+      }
+    },
+    {
+      "id": "initial-value",
+      "title": "1.4.2.2 Initial",
+      "level": 4,
+      "text_sha256": "ac165e122e5aa0ec50be83c78a6053000feb8059f20a5e38c060990d8063c297",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.initial-value",
+          "css21-about.initial-value-clause-ac165e122e5a"
+        ]
+      }
+    },
+    {
+      "id": "applies-to",
+      "title": "1.4.2.3 Applies to",
+      "level": 4,
+      "text_sha256": "817e93511862c779f8dae06421142a4b11056846e08cae4381fb40f5be455056",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.applies-to"
+        ]
+      }
+    },
+    {
+      "id": "inherited-prop",
+      "title": "1.4.2.4 Inherited",
+      "level": 4,
+      "text_sha256": "c51748788836aa1d76391e8b57e9f2c7ec9286cb834ba0d273d8552de3e2a37b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.inherited-prop"
+        ]
+      }
+    },
+    {
+      "id": "percentage-wrt",
+      "title": "1.4.2.5 Percentage values",
+      "level": 4,
+      "text_sha256": "a764ad5134038f58db81453ebee6336fb1c567c10fbbfc95ad7bfad872f05975",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.percentage-wrt",
+          "css21-about.percentage-wrt-clause-a764ad513403"
+        ]
+      }
+    },
+    {
+      "id": "media-applies",
+      "title": "1.4.2.6 Media groups",
+      "level": 4,
+      "text_sha256": "59185fc98def1d052687164acf8db30eb4f328d32403b0956c7c5eaf35cad711",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.media-applies"
+        ]
+      }
+    },
+    {
+      "id": "computed-defs",
+      "title": "1.4.2.7 Computed value",
+      "level": 4,
+      "text_sha256": "125c8275999093498a507a37401b6f59d695dc54dda3f432192c28980a65bac3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.computed-defs",
+          "css21-about.computed-defs-clause-125c82759990"
+        ]
+      }
+    },
+    {
+      "id": "shorthand",
+      "title": "1.4.3 Shorthand properties",
+      "level": 3,
+      "text_sha256": "5abeac3b1f4d46d97b3821efc382872b1670892190a9cd8e11efe004665447b5",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.shorthand",
+          "css21-about.shorthand-clause-41b709e69013"
+        ]
+      }
+    },
+    {
+      "id": "notes-and-examples",
+      "title": "1.4.4 Notes and examples",
+      "level": 3,
+      "text_sha256": "2e9dd46bbde82766b3c10bb41d96df9fc276e48b5ec72c66a195971a3176dfae",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.notes-and-examples"
+        ]
+      }
+    },
+    {
+      "id": "images-and-longdesc",
+      "title": "1.4.5 Images and long descriptions",
+      "level": 3,
+      "text_sha256": "a11ab1ad25cfa2dedcf082d7cd5d2b5a1d3e0436eab0f95e6ef21b88d097785b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.images-and-longdesc"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "1.5 Acknowledgments",
+      "level": 2,
+      "text_sha256": "154ed0a87ab587fc3b8796bb636f1a519d2559ab60400dc765136608a684bd2e",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-about.acknowledgements"
+        ]
+      }
+    }
+  ]
+}

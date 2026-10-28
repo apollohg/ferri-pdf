@@ -1,0 +1,837 @@
+{
+  "schema_version": 1,
+  "source_id": "css-gcpm-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Generated Content for Paged Media Module",
+      "level": 1,
+      "text_sha256": "02aa3085d5bb1ee31d05632dc81d3e96c5d154c82ed7ad214d9cb1a2fcca523d",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "1ea69562ba43477905958b0c7c8f78b7ded5196733483fae3d71cb2a9e0eaf65",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "5ef6644dc35db5522d6f7d8180fe66edc546259a5eae786cb11e6dbf71694e77",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "184b73f331dad29b4ab782f50ba0aa49c926616f7781c14a78abeeb7726b917b",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "Introduction",
+      "level": 2,
+      "text_sha256": "b06736fcfb051debc3a168e7e1b4851ddce5b36a0c9ab7582cd37d2f22d3c583",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.introduction"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "Value Definitions",
+      "level": 3,
+      "text_sha256": "5f8506dcb420c6d6df7be65e3ff0126c9f92cd23f8505cebe02804b8578eccd4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.values"
+        ]
+      }
+    },
+    {
+      "id": "running-headers-and-footers",
+      "title": "1. Running headers and footers",
+      "level": 2,
+      "text_sha256": "2e61898263a3346d7f29dfb0df1f474335e806880539c378ec14d86f8fbf0f68",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.running-headers-and-footers",
+          "benchmark-output.bench-books-small.running-page-number",
+          "benchmark-output.bench-books-medium.running-page-number",
+          "benchmark-output.bench-books-large.running-page-number"
+        ]
+      }
+    },
+    {
+      "id": "named-strings",
+      "title": "1.1. Named strings",
+      "level": 3,
+      "text_sha256": "c6da3e58caabab9f66e6f481c66778755ba0ae01cb4502b12f959d10754e38e2",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.named-strings"
+        ]
+      }
+    },
+    {
+      "id": "setting-named-strings-the-string-set-pro",
+      "title": "1.1.1. The string-set property",
+      "level": 4,
+      "text_sha256": "f3fd3214a970c1c446682b62581e3222c08596503b55a552106e099924d8f1c3",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.setting-named-strings-the-string-set-pro",
+          "css-gcpm-3.setting-named-strings-the-string-set-pro-clause-cca2516ebb1d",
+          "css-gcpm-3.setting-named-strings-the-string-set-pro-clause-4b8cefc02e15",
+          "css-gcpm-3.setting-named-strings-the-string-set-pro-clause-2159a8d9d082"
+        ]
+      }
+    },
+    {
+      "id": "content-function-header",
+      "title": "1.1.1.1. The content() function",
+      "level": 5,
+      "text_sha256": "3350a959c5e647adf7a77daa653636deb22fe2c3c918b75b2ccb15301cfd0623",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.content-function-header",
+          "css-gcpm-3.content-function-header-clause-706d946fce82",
+          "css-gcpm-3.content-function-header-clause-20cb6e55af80"
+        ]
+      }
+    },
+    {
+      "id": "using-named-strings",
+      "title": "1.1.2. The string() function",
+      "level": 4,
+      "text_sha256": "9f51b9044b56250d6314abbc04832500f5d46934ac2ce43649f35304448babf1",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.using-named-strings"
+        ]
+      }
+    },
+    {
+      "id": "running-elements",
+      "title": "1.2. Running elements",
+      "level": 3,
+      "text_sha256": "48f2dfab0823ae02177e552ccca8cc202ea9f88c53c4f9dd0635cb41e39bc2c6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.running-elements"
+        ]
+      }
+    },
+    {
+      "id": "running-syntax",
+      "title": "1.2.1. The running() value",
+      "level": 4,
+      "text_sha256": "dad4345c96d2afb93d173ee2645214953e64b7ad5539350bd87da55b538c2056",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.running-syntax",
+          "css-gcpm-3.running-syntax-clause-cca2516ebb1d",
+          "css-gcpm-3.running-syntax-clause-4b8cefc02e15",
+          "css-gcpm-3.running-syntax-clause-955aac81b081"
+        ]
+      }
+    },
+    {
+      "id": "element-syntax",
+      "title": "1.2.2. The element() value",
+      "level": 4,
+      "text_sha256": "cfd8cc4c752592941862f0c9430fa849362e23ce14b5fd46973ea3d2fc792172",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.element-syntax",
+          "css-gcpm-3.element-syntax-clause-d2f6929a7900"
+        ]
+      }
+    },
+    {
+      "id": "footnotes",
+      "title": "2. Footnotes",
+      "level": 2,
+      "text_sha256": "299031c1a10f0d7bd3246d41bf232db9408b8a87fda2bcfc16e38dcea3080194",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.footnotes"
+        ]
+      }
+    },
+    {
+      "id": "footnote-terms",
+      "title": "2.1. Terminology",
+      "level": 3,
+      "text_sha256": "2a2dca5bbca39302dc726907c2a0ad2ee677ad8458120c868a78d1677f411154",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.footnote-terms",
+          "css-gcpm-3.footnote-terms-clause-4a91f4cc9f4b"
+        ]
+      }
+    },
+    {
+      "id": "creating-footnotes",
+      "title": "2.2. Creating footnotes",
+      "level": 3,
+      "text_sha256": "e13b084f5e34c90cf1fc41eca38cfdf904e52842f55f23260ff3678d6cd670e5",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.creating-footnotes"
+        ]
+      }
+    },
+    {
+      "id": "footnote-types",
+      "title": "2.3. Types of footnotes",
+      "level": 3,
+      "text_sha256": "b41ac47766d8ad862b42507fa1191a7beaaed0a951839c58b4dcace1ad93f38b",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.footnote-types",
+          "css-gcpm-3.footnote-types-clause-cca2516ebb1d",
+          "css-gcpm-3.footnote-types-clause-483bdc239cf1",
+          "css-gcpm-3.footnote-types-clause-e61d6b35fb6b",
+          "css-gcpm-3.footnote-types-clause-3a6ca2710ec5"
+        ]
+      }
+    },
+    {
+      "id": "footnote-area",
+      "title": "2.4. The footnote area",
+      "level": 3,
+      "text_sha256": "460d4ec7c3b0144662303cef23406da52e3ee70aef5a0f67e3c9f0e496fc2bc7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.footnote-area"
+        ]
+      }
+    },
+    {
+      "id": "footnote-area-position",
+      "title": "2.4.1. Positioning of the footnote area",
+      "level": 4,
+      "text_sha256": "7a81556f217d8344269dc95b088a9e245b4148912e8e94b77993e3895c7669ba",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.footnote-area-position",
+          "css-gcpm-3.footnote-area-position-clause-3f2197c9b9fa"
+        ]
+      }
+    },
+    {
+      "id": "footnote-area-size",
+      "title": "2.4.2. Size of the footnote area",
+      "level": 4,
+      "text_sha256": "40d4f09044f90be76a65562cc7a6939160a2b711894f6e46a6c61329cb940a37",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.footnote-area-size"
+        ]
+      }
+    },
+    {
+      "id": "footnote-counters",
+      "title": "2.5. The Footnote Counter",
+      "level": 3,
+      "text_sha256": "dd211ba735bdb5be63ef498f2a0d2a9238d59ebd22a93fe221e25803a925b7bf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.footnote-counters",
+          "css-gcpm-3.footnote-counters-clause-dd211ba735bd"
+        ]
+      }
+    },
+    {
+      "id": "footnote-counter-values",
+      "title": "2.5.1. Values of the footnote counter",
+      "level": 4,
+      "text_sha256": "a50454ea9c9f475e14d996f5c1ee93841a291dc7e0c26cb88ab564164df1777c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.footnote-counter-values"
+        ]
+      }
+    },
+    {
+      "id": "resetting-footnote-counter",
+      "title": "2.5.2. Resetting the footnote counter",
+      "level": 4,
+      "text_sha256": "38a0f030395df9464b4a6fd03c5854e246c6830b6488312d7fb75630761b5725",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.resetting-footnote-counter",
+          "css-gcpm-3.resetting-footnote-counter-clause-4a6ec143bec6"
+        ]
+      }
+    },
+    {
+      "id": "footnote-call",
+      "title": "2.6. The footnote-call pseudo-element",
+      "level": 3,
+      "text_sha256": "581d50bbe62308cd653a85266ebe9cf8396246990261bc8cd49a1d7022307f35",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.footnote-call",
+          "css-gcpm-3.footnote-call-clause-30549801dd95"
+        ]
+      }
+    },
+    {
+      "id": "footnote-marker",
+      "title": "2.7. The footnote-marker pseudo-element",
+      "level": 3,
+      "text_sha256": "ddbaf5b7737aa3c281ca6f52fbdc07ca2787e5c5b5bd45a3fefa6b94414c54b1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.footnote-marker"
+        ]
+      }
+    },
+    {
+      "id": "footnote-policy",
+      "title": "2.8. Rendering footnotes and footnote policy",
+      "level": 3,
+      "text_sha256": "8f1e5debc31211fa3040f7e7b8b3e5831fe88a08ea3e5a8bacb03e37206cf5c1",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.footnote-policy",
+          "css-gcpm-3.footnote-policy-clause-cca2516ebb1d",
+          "css-gcpm-3.footnote-policy-clause-8011495bdc85",
+          "css-gcpm-3.footnote-policy-clause-9d4c8c958175",
+          "css-gcpm-3.footnote-policy-clause-430436d4d388",
+          "css-gcpm-3.footnote-policy-clause-d5a8ae8309c4",
+          "css-gcpm-3.footnote-policy-clause-3f0b68e791ab"
+        ]
+      }
+    },
+    {
+      "id": "future",
+      "title": "2.9. Future directions",
+      "level": 3,
+      "text_sha256": "6a2d4e37fe4e5fd1bd5fb51bc2864088106264d4c9d623fef11d7f51db056918",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.future"
+        ]
+      }
+    },
+    {
+      "id": "the-first-page-pseudo-element",
+      "title": "3. Selecting Pages",
+      "level": 2,
+      "text_sha256": "ba5e868c5b7906b974232a041a3c999d573d0d65df63448a9f7bd0ac58ba1146",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.the-first-page-pseudo-element"
+        ]
+      }
+    },
+    {
+      "id": "document-page-selectors",
+      "title": "3.1. Page Selectors",
+      "level": 3,
+      "text_sha256": "154fc6173b81ce482eba03eeb7e3ffaf8a11765684968f3ea72d3646af558cdf",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.document-page-selectors"
+        ]
+      }
+    },
+    {
+      "id": "document-sequence-selectors",
+      "title": "3.2. Page groups",
+      "level": 3,
+      "text_sha256": "219f8ffa801c67da2bc5801adfe040c1cac139606bb194eec42b35b49e138614",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.document-sequence-selectors"
+        ]
+      }
+    },
+    {
+      "id": "leaders",
+      "title": "4. Leaders (moved)",
+      "level": 2,
+      "text_sha256": "0e9a33294c28a069d6a22fcac744e1a44c0f67cbda6eb79ff25ab40eec29dc3b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.leaders"
+        ]
+      }
+    },
+    {
+      "id": "cross-references",
+      "title": "5. Cross-references (moved)",
+      "level": 2,
+      "text_sha256": "0e9a33294c28a069d6a22fcac744e1a44c0f67cbda6eb79ff25ab40eec29dc3b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.cross-references"
+        ]
+      }
+    },
+    {
+      "id": "bookmarks",
+      "title": "6. Bookmarks (moved)",
+      "level": 2,
+      "text_sha256": "0e9a33294c28a069d6a22fcac744e1a44c0f67cbda6eb79ff25ab40eec29dc3b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.bookmarks"
+        ]
+      }
+    },
+    {
+      "id": "former-wd-sections",
+      "title": "Appendix A: Where Are They Now?",
+      "level": 2,
+      "text_sha256": "da71296c4751544deef82e0a2900c01d78d28ce2cadf1abf9c26ad6af5715aed",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.former-wd-sections"
+        ]
+      }
+    },
+    {
+      "id": "page-marks-and-bleed-area",
+      "title": "Page marks and bleed area",
+      "level": 3,
+      "text_sha256": "58a4a3bc4c2804d9ff0ef24767219ab786f3b248412cada1a39800b3b9bc658e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.page-marks-and-bleed-area"
+        ]
+      }
+    },
+    {
+      "id": "cmyk-colors",
+      "title": "CMYK colors",
+      "level": 3,
+      "text_sha256": "0485674cb26c6bcc4de2be9b5f417d76abd66c81ac005ef4b39ef4224ada3fdc",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.cmyk-colors"
+        ]
+      }
+    },
+    {
+      "id": "styling-blank-pages",
+      "title": "Styling blank pages",
+      "level": 3,
+      "text_sha256": "4fd411f569293aa63f67b5ea44fdb7e520dfb039b954ceb7f8c81fd1e1de477a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.styling-blank-pages"
+        ]
+      }
+    },
+    {
+      "id": "paged-presentations",
+      "title": "Paged presentations",
+      "level": 3,
+      "text_sha256": "e64e0342755e968357cfe12ffa5eae0e36ba178009283588f9cdb93b463c0922",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.paged-presentations"
+        ]
+      }
+    },
+    {
+      "id": "navigation-between-pages",
+      "title": "Navigation between pages",
+      "level": 3,
+      "text_sha256": "8bcfc5ba6424665413ebe06bdc695107bf4d1042c13d96409bd45629a16df7a2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.navigation-between-pages"
+        ]
+      }
+    },
+    {
+      "id": "page-floats",
+      "title": "Page floats",
+      "level": 3,
+      "text_sha256": "bc983f00a1fb680130db42b31c637000f555c8eeaa31a9d3e5847ede5ce46759",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.page-floats"
+        ]
+      }
+    },
+    {
+      "id": "selecting-columns-and-pages",
+      "title": "Selecting columns and pages",
+      "level": 3,
+      "text_sha256": "c053691b3836ba1ae847c8ac4a15a4883d61f34bd08dc4b27f0dc186e46d8c7f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.selecting-columns-and-pages"
+        ]
+      }
+    },
+    {
+      "id": "ua-stylesheet",
+      "title": "Appendix B: Default UA Stylesheet",
+      "level": 2,
+      "text_sha256": "adb60cd3c3addfd2e53bd972bc3fe299b3726296e0c6fff7f766b17bbfb3a96e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.ua-stylesheet",
+          "css-gcpm-3.ua-stylesheet-clause-4999b3f7ce14"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Appendix C: Changes",
+      "level": 2,
+      "text_sha256": "9b8278de1fcc2860a54cc29c0d8abc762df2d700471106a6c1e370344b7b5882",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.security"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "5009f886ce5a45c2b845d12bf5c642ba5371473a1a26881de43ec86b3b4e6d69",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.w3c-conventions",
+          "css-gcpm-3.w3c-conventions-clause-5c98c879f070",
+          "css-gcpm-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.w3c-conformance-classes",
+          "css-gcpm-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-gcpm-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.w3c-partial",
+          "css-gcpm-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.w3c-testing",
+          "css-gcpm-3.w3c-testing-clause-1e0fff369221",
+          "css-gcpm-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "a5b4c626e57f0383b2686170d2267fe3d819e4a7f4ada0963f404932560fd177",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "6a8dcadb5d121917180adc9dd288aa692bbf8ee7ab1bf07ff643832cafce3bb7",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "4d8b0d5eab54c0e4476ac9c2ce827733e7be84aba56e587cf869d899f082f8f5",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "35f43e98ee6abc94c7dd0059d36bd03634ddb02612f32476706a265f417a9e54",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "5b511949c129f3118582c10e4830621c9d65cf99d974398a15e2cd7a62d17169",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.property-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "5871c367839b7a0e4296d3c62007be3e543d983ffe60d26d12dbad2f19994590",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gcpm-3.issues-index",
+          "css-gcpm-3.issues-index-clause-cca2516ebb1d",
+          "css-gcpm-3.issues-index-clause-4b8cefc02e15",
+          "css-gcpm-3.issues-index-clause-a50187188e1d"
+        ]
+      }
+    }
+  ]
+}

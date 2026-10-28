@@ -1,0 +1,5198 @@
+{
+  "schema_version": 1,
+  "id": "html-css-foundations-2026-10-23",
+  "required_group_ids": [
+    "cascade-defaulting",
+    "font-declarations",
+    "html-foundations",
+    "rule-applicability",
+    "syntax-acquisition",
+    "values-sizing"
+  ],
+  "required_behavior_ids": [
+    "foundations.html-byte-decoding",
+    "foundations.encoding-labels-decoders",
+    "foundations.css-byte-decoding",
+    "foundations.css-token-recovery",
+    "foundations.css-rule-recovery",
+    "foundations.stylesheet-imports",
+    "foundations.style-link-applicability",
+    "foundations.resource-url-resolution",
+    "foundations.cascade-origins",
+    "foundations.element-attached-cascade",
+    "foundations.css-wide-defaulting",
+    "foundations.custom-property-substitution",
+    "foundations.cascade-layers",
+    "foundations.layer-rollback",
+    "foundations.html-ua-declarations",
+    "foundations.media-query-syntax",
+    "foundations.media-width",
+    "foundations.media-height",
+    "foundations.media-aspect-ratio",
+    "foundations.media-orientation",
+    "foundations.media-overflow-block",
+    "foundations.media-overflow-inline",
+    "foundations.media-horizontal-viewport-segments",
+    "foundations.media-vertical-viewport-segments",
+    "foundations.media-display-mode",
+    "foundations.media-resolution",
+    "foundations.media-scan",
+    "foundations.media-grid",
+    "foundations.media-update",
+    "foundations.media-environment-blending",
+    "foundations.media-color",
+    "foundations.media-color-index",
+    "foundations.media-monochrome",
+    "foundations.media-color-gamut",
+    "foundations.media-dynamic-range",
+    "foundations.media-inverted-colors",
+    "foundations.media-pointer",
+    "foundations.media-hover",
+    "foundations.media-any-pointer-hover",
+    "foundations.media-nav-controls",
+    "foundations.media-video-color-gamut",
+    "foundations.media-video-dynamic-range",
+    "foundations.media-scripting",
+    "foundations.media-prefers-reduced-motion",
+    "foundations.media-prefers-reduced-transparency",
+    "foundations.media-prefers-contrast",
+    "foundations.media-forced-colors",
+    "foundations.media-prefers-color-scheme",
+    "foundations.media-prefers-reduced-data",
+    "foundations.media-device-width",
+    "foundations.media-device-height",
+    "foundations.media-device-aspect-ratio",
+    "foundations.custom-media-queries",
+    "foundations.declaration-support",
+    "foundations.selector-support",
+    "foundations.extended-support",
+    "foundations.when-else",
+    "foundations.selector-namespaces",
+    "foundations.static-selector-structure",
+    "foundations.static-selector-logical",
+    "foundations.static-selector-language-links",
+    "foundations.static-selectors-level-five",
+    "foundations.css-nesting",
+    "foundations.css-scope",
+    "foundations.shadow-selectors-cascade",
+    "foundations.shadow-parts-names",
+    "foundations.shadow-slot-distribution",
+    "foundations.declarative-shadow-template",
+    "foundations.font-shorthand",
+    "foundations.font-family-syntax",
+    "foundations.font-face-matching",
+    "foundations.font-resource-fallback",
+    "foundations.css2-small-caps",
+    "foundations.font-size-metrics",
+    "foundations.font-relative-units",
+    "foundations.viewport-units",
+    "foundations.page-size-environment",
+    "foundations.scalar-types-math",
+    "foundations.math-calc",
+    "foundations.math-min-max-clamp",
+    "foundations.math-round-mod-rem",
+    "foundations.math-sin-cos-tan-asin-acos-atan-atan2",
+    "foundations.math-pow-sqrt-hypot-log-exp",
+    "foundations.math-abs-sign",
+    "foundations.math-constants",
+    "foundations.static-function-progress",
+    "foundations.static-function-media-progress",
+    "foundations.static-function-calc-mix",
+    "foundations.static-function-first-valid",
+    "foundations.static-function-if",
+    "foundations.static-function-toggle",
+    "foundations.static-function-inherit",
+    "foundations.static-function-attr",
+    "foundations.static-function-random",
+    "foundations.static-function-random-item",
+    "foundations.static-function-sibling-count-index",
+    "foundations.static-function-calc-size",
+    "foundations.substitution-order",
+    "foundations.intrinsic-sizing",
+    "foundations.aspect-ratio-sizing",
+    "foundations.logical-sizing",
+    "foundations.existing-mode-sizing",
+    "foundations.shared-static-dom",
+    "foundations.html-base-metadata",
+    "foundations.html-language-direction",
+    "foundations.html-hidden-inert",
+    "foundations.html-details-dialog",
+    "foundations.html-noscript-template",
+    "foundations.html-control-common",
+    "foundations.input-text-search",
+    "foundations.input-tel",
+    "foundations.input-url",
+    "foundations.input-email",
+    "foundations.input-password",
+    "foundations.input-date",
+    "foundations.input-month",
+    "foundations.input-week",
+    "foundations.input-time",
+    "foundations.input-datetime-local",
+    "foundations.input-number",
+    "foundations.input-range",
+    "foundations.input-color",
+    "foundations.input-checkbox",
+    "foundations.input-radio",
+    "foundations.input-file",
+    "foundations.input-submit",
+    "foundations.input-image",
+    "foundations.input-reset",
+    "foundations.input-button",
+    "foundations.input-hidden",
+    "foundations.control-select",
+    "foundations.control-textarea",
+    "foundations.control-button",
+    "foundations.control-progress",
+    "foundations.control-meter",
+    "foundations.control-fieldset-legend",
+    "foundations.initial-control-selectors",
+    "foundations.embedded-static-content",
+    "foundations.embedded-images-fallback"
+  ],
+  "required_requirement_ids": [
+    "html.foundation-html-byte-decoding",
+    "encoding.foundation-encoding-labels-decoders",
+    "css-syntax-3.foundation-css-byte-decoding",
+    "css-syntax-3.foundation-css-token-recovery",
+    "css-syntax-3.foundation-css-rule-recovery",
+    "css-cascade-5.foundation-stylesheet-imports",
+    "html.foundation-style-link-applicability",
+    "url.foundation-resource-url-resolution",
+    "css-cascade-5.foundation-cascade-origins",
+    "css-cascade-6.foundation-element-attached-cascade",
+    "css-cascade-5.foundation-css-wide-defaulting",
+    "css-variables-1.foundation-custom-property-substitution",
+    "css-cascade-5.foundation-cascade-layers",
+    "css-cascade-5.foundation-layer-rollback",
+    "html.foundation-html-ua-declarations",
+    "mediaqueries-5.foundation-media-query-syntax",
+    "mediaqueries-5.foundation-media-width",
+    "mediaqueries-5.foundation-media-height",
+    "mediaqueries-5.foundation-media-aspect-ratio",
+    "mediaqueries-5.foundation-media-orientation",
+    "mediaqueries-5.foundation-media-overflow-block",
+    "mediaqueries-5.foundation-media-overflow-inline",
+    "mediaqueries-5.foundation-media-horizontal-viewport-segments",
+    "mediaqueries-5.foundation-media-vertical-viewport-segments",
+    "mediaqueries-5.foundation-media-display-mode",
+    "mediaqueries-5.foundation-media-resolution",
+    "mediaqueries-5.foundation-media-scan",
+    "mediaqueries-5.foundation-media-grid",
+    "mediaqueries-5.foundation-media-update",
+    "mediaqueries-5.foundation-media-environment-blending",
+    "mediaqueries-5.foundation-media-color",
+    "mediaqueries-5.foundation-media-color-index",
+    "mediaqueries-5.foundation-media-monochrome",
+    "mediaqueries-5.foundation-media-color-gamut",
+    "mediaqueries-5.foundation-media-dynamic-range",
+    "mediaqueries-5.foundation-media-inverted-colors",
+    "mediaqueries-5.foundation-media-pointer",
+    "mediaqueries-5.foundation-media-hover",
+    "mediaqueries-5.foundation-media-any-pointer-hover",
+    "mediaqueries-5.foundation-media-nav-controls",
+    "mediaqueries-5.foundation-media-video-color-gamut",
+    "mediaqueries-5.foundation-media-video-dynamic-range",
+    "mediaqueries-5.foundation-media-scripting",
+    "mediaqueries-5.foundation-media-prefers-reduced-motion",
+    "mediaqueries-5.foundation-media-prefers-reduced-transparency",
+    "mediaqueries-5.foundation-media-prefers-contrast",
+    "mediaqueries-5.foundation-media-forced-colors",
+    "mediaqueries-5.foundation-media-prefers-color-scheme",
+    "mediaqueries-5.foundation-media-prefers-reduced-data",
+    "mediaqueries-5.foundation-media-device-width",
+    "mediaqueries-5.foundation-media-device-height",
+    "mediaqueries-5.foundation-media-device-aspect-ratio",
+    "mediaqueries-5.foundation-custom-media-queries",
+    "css-conditional-3.foundation-declaration-support",
+    "css-conditional-4.foundation-selector-support",
+    "css-conditional-5.foundation-extended-support",
+    "css-conditional-5.foundation-when-else",
+    "css-namespaces-3.foundation-selector-namespaces",
+    "selectors-4.foundation-static-selector-structure",
+    "selectors-4.foundation-static-selector-logical",
+    "selectors-4.foundation-static-selector-language-links",
+    "selectors-5.foundation-static-selectors-level-five",
+    "css-nesting-1.foundation-css-nesting",
+    "css-cascade-6.foundation-css-scope",
+    "css-shadow-1.foundation-shadow-selectors-cascade",
+    "css-shadow-1.foundation-shadow-parts-names",
+    "dom.foundation-shadow-slot-distribution",
+    "html.foundation-declarative-shadow-template",
+    "css-fonts-4.foundation-font-shorthand",
+    "css-fonts-4.foundation-font-family-syntax",
+    "css-fonts-4.foundation-font-face-matching",
+    "css-fonts-4.foundation-font-resource-fallback",
+    "css-fonts-4.foundation-css2-small-caps",
+    "css-fonts-4.foundation-font-size-metrics",
+    "css-values-4.foundation-font-relative-units",
+    "css-values-4.foundation-viewport-units",
+    "css-page-3.foundation-page-size-environment",
+    "css-values-4.foundation-scalar-types-math",
+    "css-values-4.foundation-math-calc",
+    "css-values-4.foundation-math-min-max-clamp",
+    "css-values-4.foundation-math-round-mod-rem",
+    "css-values-4.foundation-math-sin-cos-tan-asin-acos-atan-atan2",
+    "css-values-4.foundation-math-pow-sqrt-hypot-log-exp",
+    "css-values-4.foundation-math-abs-sign",
+    "css-values-4.foundation-math-constants",
+    "css-values-5.foundation-static-function-progress",
+    "css-values-5.foundation-static-function-media-progress",
+    "css-values-5.foundation-static-function-calc-mix",
+    "css-values-5.foundation-static-function-first-valid",
+    "css-values-5.foundation-static-function-if",
+    "css-values-5.foundation-static-function-toggle",
+    "css-values-5.foundation-static-function-inherit",
+    "css-values-5.foundation-static-function-attr",
+    "css-values-5.foundation-static-function-random",
+    "css-values-5.foundation-static-function-random-item",
+    "css-values-5.foundation-static-function-sibling-count-index",
+    "css-values-5.foundation-static-function-calc-size",
+    "css-values-5.foundation-substitution-order",
+    "css-sizing-3.foundation-intrinsic-sizing",
+    "css-sizing-4.foundation-aspect-ratio-sizing",
+    "css-logical-1.foundation-logical-sizing",
+    "css-sizing-3.foundation-existing-mode-sizing",
+    "dom.foundation-shared-static-dom",
+    "html.foundation-html-base-metadata",
+    "html.foundation-html-language-direction",
+    "html.foundation-html-hidden-inert",
+    "html.foundation-html-details-dialog",
+    "html.foundation-html-noscript-template",
+    "html.foundation-html-control-common",
+    "html.foundation-input-text-search",
+    "html.foundation-input-tel",
+    "html.foundation-input-url",
+    "html.foundation-input-email",
+    "html.foundation-input-password",
+    "html.foundation-input-date",
+    "html.foundation-input-month",
+    "html.foundation-input-week",
+    "html.foundation-input-time",
+    "html.foundation-input-datetime-local",
+    "html.foundation-input-number",
+    "html.foundation-input-range",
+    "html.foundation-input-color",
+    "html.foundation-input-checkbox",
+    "html.foundation-input-radio",
+    "html.foundation-input-file",
+    "html.foundation-input-submit",
+    "html.foundation-input-image",
+    "html.foundation-input-reset",
+    "html.foundation-input-button",
+    "html.foundation-input-hidden",
+    "html.foundation-control-select",
+    "html.foundation-control-textarea",
+    "html.foundation-control-button",
+    "html.foundation-control-progress",
+    "html.foundation-control-meter",
+    "html.foundation-control-fieldset-legend",
+    "selectors-4.foundation-initial-control-selectors",
+    "html.foundation-embedded-static-content",
+    "html.foundation-embedded-images-fallback"
+  ],
+  "behaviors": [
+    {
+      "group": "syntax-acquisition",
+      "owner_task": 3,
+      "source_id": "html",
+      "id": "foundations.html-byte-decoding",
+      "section_ids": [
+        "determining-the-character-encoding",
+        "character-encodings",
+        "changing-the-encoding-while-parsing"
+      ],
+      "default_obligations": [
+        "Already-decoded Unicode remains Unicode; byte input uses specified fallback."
+      ],
+      "invalid_obligations": [
+        "Malformed bytes use the selected decoder replacement behavior."
+      ],
+      "interaction_obligations": [
+        "Transport, BOM and meta conflicts are tested through public byte rendering."
+      ],
+      "requirement_ids": [
+        "html.foundation-html-byte-decoding"
+      ],
+      "implementation_files": [
+        "src/lib.rs",
+        "crates/document/src/lib.rs",
+        "crates/style/src/stylesheet.rs",
+        "crates/resources/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "syntax-acquisition",
+      "owner_task": 3,
+      "source_id": "encoding",
+      "id": "foundations.encoding-labels-decoders",
+      "section_ids": [
+        "names-and-labels",
+        "specification-hooks",
+        "utf-8-decoder",
+        "single-byte-decoder",
+        "shared-utf-16-decoder"
+      ],
+      "default_obligations": [
+        "Absent transport metadata is distinct from an explicit label."
+      ],
+      "invalid_obligations": [
+        "Unknown labels and malformed sequences follow consumer algorithms."
+      ],
+      "interaction_obligations": [
+        "Legacy and UTF-16 input reaches the same Unicode rendering path."
+      ],
+      "requirement_ids": [
+        "encoding.foundation-encoding-labels-decoders"
+      ],
+      "implementation_files": [
+        "src/lib.rs",
+        "crates/document/src/lib.rs",
+        "crates/style/src/stylesheet.rs",
+        "crates/resources/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "syntax-acquisition",
+      "owner_task": 3,
+      "source_id": "css-syntax-3",
+      "id": "foundations.css-byte-decoding",
+      "section_ids": [
+        "input-byte-stream",
+        "input-preprocessing"
+      ],
+      "default_obligations": [
+        "Environment encoding participates only at the specified precedence."
+      ],
+      "invalid_obligations": [
+        "Bad encoding declarations do not abort otherwise recoverable CSS."
+      ],
+      "interaction_obligations": [
+        "BOM, transport, @charset and importing-sheet fallback conflict cases preserve decoded text."
+      ],
+      "requirement_ids": [
+        "css-syntax-3.foundation-css-byte-decoding"
+      ],
+      "implementation_files": [
+        "src/lib.rs",
+        "crates/document/src/lib.rs",
+        "crates/style/src/stylesheet.rs",
+        "crates/resources/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "syntax-acquisition",
+      "owner_task": 4,
+      "source_id": "css-syntax-3",
+      "id": "foundations.css-token-recovery",
+      "section_ids": [
+        "tokenizer-algorithms",
+        "consume-string-token",
+        "consume-url-token",
+        "consume-remnants-of-bad-url"
+      ],
+      "default_obligations": [
+        "Whitespace/comments and EOF obey tokenization rules."
+      ],
+      "invalid_obligations": [
+        "Bad URL/string tokens discard the prescribed construct."
+      ],
+      "interaction_obligations": [
+        "A malformed declaration cannot consume valid following declarations or rules."
+      ],
+      "requirement_ids": [
+        "css-syntax-3.foundation-css-token-recovery"
+      ],
+      "implementation_files": [
+        "crates/style/src/parser.rs",
+        "crates/style/src/declaration.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "syntax-acquisition",
+      "owner_task": 4,
+      "source_id": "css-syntax-3",
+      "id": "foundations.css-rule-recovery",
+      "section_ids": [
+        "error-handling",
+        "parse-stylesheet",
+        "consume-at-rule",
+        "consume-qualified-rule",
+        "consume-block-contents",
+        "consume-declaration"
+      ],
+      "default_obligations": [
+        "Unknown at-rules have no rendering effect."
+      ],
+      "invalid_obligations": [
+        "Invalid selector lists and malformed declarations preserve valid siblings."
+      ],
+      "interaction_obligations": [
+        "Nested blocks, unmatched delimiters and custom properties exercise real stylesheet parsing."
+      ],
+      "requirement_ids": [
+        "css-syntax-3.foundation-css-rule-recovery"
+      ],
+      "implementation_files": [
+        "crates/style/src/parser.rs",
+        "crates/style/src/declaration.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "syntax-acquisition",
+      "owner_task": 10,
+      "source_id": "css-cascade-5",
+      "id": "foundations.stylesheet-imports",
+      "section_ids": [
+        "at-import",
+        "conditional-import",
+        "import-processing",
+        "content-type"
+      ],
+      "default_obligations": [
+        "Repeated imports retain distinct cascade occurrences."
+      ],
+      "invalid_obligations": [
+        "Late/invalid imports are discarded; unavailable optional sheets warn."
+      ],
+      "interaction_obligations": [
+        "Cycles stop along active paths; inactive conditions do not fetch; denial and named limits remain typed failures."
+      ],
+      "requirement_ids": [
+        "css-cascade-5.foundation-stylesheet-imports"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "crates/style/src/parser.rs",
+        "crates/resources/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "syntax-acquisition",
+      "owner_task": 10,
+      "source_id": "html",
+      "id": "foundations.style-link-applicability",
+      "section_ids": [
+        "the-style-element",
+        "the-link-element",
+        "fetching-and-processing-a-resource-from-a-link-element"
+      ],
+      "default_obligations": [
+        "Additional author sheets follow document author sheets."
+      ],
+      "invalid_obligations": [
+        "Unsupported or unavailable optional sheet types follow prescribed handling."
+      ],
+      "interaction_obligations": [
+        "Document base, redirected sheet base and imported resource base remain distinct."
+      ],
+      "requirement_ids": [
+        "html.foundation-style-link-applicability"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "crates/style/src/parser.rs",
+        "crates/resources/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "syntax-acquisition",
+      "owner_task": 10,
+      "source_id": "url",
+      "id": "foundations.resource-url-resolution",
+      "section_ids": [
+        "url-parsing",
+        "url-serializing",
+        "url-equivalence"
+      ],
+      "default_obligations": [
+        "Relative URLs use their declaring resource final base."
+      ],
+      "invalid_obligations": [
+        "Malformed URLs and policy denials remain distinguishable."
+      ],
+      "interaction_obligations": [
+        "Data URLs, redirects, repeated imports and graph cycles share canonical identity rules."
+      ],
+      "requirement_ids": [
+        "url.foundation-resource-url-resolution"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "crates/style/src/parser.rs",
+        "crates/resources/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "cascade-defaulting",
+      "owner_task": 6,
+      "source_id": "css-cascade-5",
+      "id": "foundations.cascade-origins",
+      "section_ids": [
+        "cascade-sort",
+        "cascading-origins",
+        "importance",
+        "preshint"
+      ],
+      "default_obligations": [
+        "UA declarations and hints establish explicit defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid declarations are absent rather than invalid computed winners."
+      ],
+      "interaction_obligations": [
+        "Hints, user !important, author !important and normal origins have independent conflict tests."
+      ],
+      "requirement_ids": [
+        "css-cascade-5.foundation-cascade-origins"
+      ],
+      "implementation_files": [
+        "crates/style/src/cascade.rs",
+        "crates/style/src/computed.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/variables.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "cascade-defaulting",
+      "owner_task": 6,
+      "source_id": "css-cascade-6",
+      "id": "foundations.element-attached-cascade",
+      "section_ids": [
+        "cascade-sort",
+        "cascading-origins",
+        "importance"
+      ],
+      "default_obligations": [
+        "Inline style has its prescribed origin/context precedence."
+      ],
+      "invalid_obligations": [
+        "Invalid inline declarations recover independently."
+      ],
+      "interaction_obligations": [
+        "Inline normal/important competes with origins, layers and encapsulation."
+      ],
+      "requirement_ids": [
+        "css-cascade-6.foundation-element-attached-cascade"
+      ],
+      "implementation_files": [
+        "crates/style/src/cascade.rs",
+        "crates/style/src/computed.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/variables.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "cascade-defaulting",
+      "owner_task": 6,
+      "source_id": "css-cascade-5",
+      "id": "foundations.css-wide-defaulting",
+      "section_ids": [
+        "all-shorthand",
+        "initial-values",
+        "inheriting",
+        "defaulting-keywords",
+        "initial",
+        "inherit",
+        "inherit-initial",
+        "default"
+      ],
+      "default_obligations": [
+        "Anonymous and generated/page/margin contexts use their own applicability and inheritance."
+      ],
+      "invalid_obligations": [
+        "A rejected declaration differs from an invalid-at-computed-value-time winner."
+      ],
+      "interaction_obligations": [
+        "all excludes direction/unicode-bidi/custom properties and shorthands reset their full prescribed groups."
+      ],
+      "requirement_ids": [
+        "css-cascade-5.foundation-css-wide-defaulting"
+      ],
+      "implementation_files": [
+        "crates/style/src/cascade.rs",
+        "crates/style/src/computed.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/variables.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "cascade-defaulting",
+      "owner_task": 6,
+      "source_id": "css-variables-1",
+      "id": "foundations.custom-property-substitution",
+      "section_ids": [
+        "syntax",
+        "guaranteed-invalid",
+        "cycles",
+        "using-variables",
+        "invalid-variables",
+        "variables-in-shorthands",
+        "long-variables"
+      ],
+      "default_obligations": [
+        "Unregistered custom properties inherit token streams."
+      ],
+      "invalid_obligations": [
+        "Cycles and failed substitution use guaranteed-invalid/IACVT semantics without reviving losing declarations."
+      ],
+      "interaction_obligations": [
+        "Rollback, shorthand expansion and consuming stylesheet URL bases preserve token provenance."
+      ],
+      "requirement_ids": [
+        "css-variables-1.foundation-custom-property-substitution"
+      ],
+      "implementation_files": [
+        "crates/style/src/cascade.rs",
+        "crates/style/src/computed.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/variables.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "cascade-defaulting",
+      "owner_task": 7,
+      "source_id": "css-cascade-5",
+      "id": "foundations.cascade-layers",
+      "section_ids": [
+        "layering",
+        "layer-declaration",
+        "layer-names",
+        "unnamed-layers",
+        "layer-ordering",
+        "at-layer",
+        "layer-block",
+        "layer-empty"
+      ],
+      "default_obligations": [
+        "First appearance establishes layer order."
+      ],
+      "invalid_obligations": [
+        "Malformed layer names/rules are discarded at syntax boundaries."
+      ],
+      "interaction_obligations": [
+        "Normal/important order reverses correctly across origins, inline declarations and nested layers."
+      ],
+      "requirement_ids": [
+        "css-cascade-5.foundation-cascade-layers"
+      ],
+      "implementation_files": [
+        "crates/style/src/cascade.rs",
+        "crates/style/src/parser.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "cascade-defaulting",
+      "owner_task": 7,
+      "source_id": "css-cascade-5",
+      "id": "foundations.layer-rollback",
+      "section_ids": [
+        "revert-layer",
+        "default"
+      ],
+      "default_obligations": [
+        "No surviving candidate uses the prescribed defaulting result."
+      ],
+      "invalid_obligations": [
+        "IACVT rollback tokens do not act as valid rollback declarations."
+      ],
+      "interaction_obligations": [
+        "Rollback includes custom properties, pending shorthands, nested layers and encapsulation contexts."
+      ],
+      "requirement_ids": [
+        "css-cascade-5.foundation-layer-rollback"
+      ],
+      "implementation_files": [
+        "crates/style/src/cascade.rs",
+        "crates/style/src/parser.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "cascade-defaulting",
+      "owner_task": 6,
+      "source_id": "html",
+      "id": "foundations.html-ua-declarations",
+      "section_ids": [
+        "the-css-user-agent-style-sheet-and-presentational-hints",
+        "non-replaced-elements",
+        "flow-content-3",
+        "phrasing-content-3",
+        "sections-and-headings",
+        "lists",
+        "tables-2"
+      ],
+      "default_obligations": [
+        "UA styles reproduce the prescribed initial static presentation."
+      ],
+      "invalid_obligations": [
+        "Malformed presentational attributes are ignored according to their parsers."
+      ],
+      "interaction_obligations": [
+        "Author/user resets and all override defaults consistently; superseded imperative mutations are deleted."
+      ],
+      "requirement_ids": [
+        "html.foundation-html-ua-declarations"
+      ],
+      "implementation_files": [
+        "crates/style/src/cascade.rs",
+        "crates/style/src/computed.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/variables.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-query-syntax",
+      "section_ids": [
+        "mq-list",
+        "mq-prefix",
+        "mq-not",
+        "mq-only",
+        "media-types",
+        "mq-features",
+        "mq-ranges",
+        "mq-boolean-context",
+        "mq-range-context",
+        "mq-min-max",
+        "media-conditions",
+        "mq-syntax",
+        "evaluating",
+        "error-handling"
+      ],
+      "default_obligations": [
+        "Absent media applies to all."
+      ],
+      "invalid_obligations": [
+        "Invalid queries recover as prescribed without activating their branches."
+      ],
+      "interaction_obligations": [
+        "Nested media/import conditions and UA-relative query units agree."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-query-syntax"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-width",
+      "section_ids": [
+        "width"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-width"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-height",
+      "section_ids": [
+        "height"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-height"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-aspect-ratio",
+      "section_ids": [
+        "aspect-ratio"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-aspect-ratio"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-orientation",
+      "section_ids": [
+        "orientation"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-orientation"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-overflow-block",
+      "section_ids": [
+        "mf-overflow-block"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-overflow-block"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-overflow-inline",
+      "section_ids": [
+        "mf-overflow-inline"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-overflow-inline"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-horizontal-viewport-segments",
+      "section_ids": [
+        "mf-horizontal-viewport-segments"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-horizontal-viewport-segments"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-vertical-viewport-segments",
+      "section_ids": [
+        "mf-vertical-viewport-segments"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-vertical-viewport-segments"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-display-mode",
+      "section_ids": [
+        "display-modes"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-display-mode"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-resolution",
+      "section_ids": [
+        "resolution"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-resolution"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-scan",
+      "section_ids": [
+        "scan"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-scan"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-grid",
+      "section_ids": [
+        "grid"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-grid"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-update",
+      "section_ids": [
+        "update"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-update"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-environment-blending",
+      "section_ids": [
+        "environment-blending"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-environment-blending"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-color",
+      "section_ids": [
+        "color"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-color"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-color-index",
+      "section_ids": [
+        "color-index"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-color-index"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-monochrome",
+      "section_ids": [
+        "monochrome"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-monochrome"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-color-gamut",
+      "section_ids": [
+        "color-gamut"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-color-gamut"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-dynamic-range",
+      "section_ids": [
+        "dynamic-range"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-dynamic-range"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-inverted-colors",
+      "section_ids": [
+        "inverted"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-inverted-colors"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-pointer",
+      "section_ids": [
+        "pointer"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-pointer"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-hover",
+      "section_ids": [
+        "hover"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-hover"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-any-pointer-hover",
+      "section_ids": [
+        "any-input"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-any-pointer-hover"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-nav-controls",
+      "section_ids": [
+        "nav-controls"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-nav-controls"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-video-color-gamut",
+      "section_ids": [
+        "video-color-gamut"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-video-color-gamut"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-video-dynamic-range",
+      "section_ids": [
+        "video-dynamic-range"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-video-dynamic-range"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-scripting",
+      "section_ids": [
+        "scripting"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-scripting"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-prefers-reduced-motion",
+      "section_ids": [
+        "prefers-reduced-motion"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-prefers-reduced-motion"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-prefers-reduced-transparency",
+      "section_ids": [
+        "prefers-reduced-transparency"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-prefers-reduced-transparency"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-prefers-contrast",
+      "section_ids": [
+        "prefers-contrast"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-prefers-contrast"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-forced-colors",
+      "section_ids": [
+        "forced-colors"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-forced-colors"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-prefers-color-scheme",
+      "section_ids": [
+        "prefers-color-scheme"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-prefers-color-scheme"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-prefers-reduced-data",
+      "section_ids": [
+        "prefers-reduced-data"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-prefers-reduced-data"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-device-width",
+      "section_ids": [
+        "device-width"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-device-width"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-device-height",
+      "section_ids": [
+        "device-height"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-device-height"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.media-device-aspect-ratio",
+      "section_ids": [
+        "device-aspect-ratio"
+      ],
+      "default_obligations": [
+        "Use the approved deterministic vector-print environment and any exposed preference override."
+      ],
+      "invalid_obligations": [
+        "Unsupported values and out-of-range operands follow media-query false/unknown rules."
+      ],
+      "interaction_obligations": [
+        "Test equality/boolean/range forms where allowed; paper dimensions remain independent of author @page size."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-media-device-aspect-ratio"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 8,
+      "source_id": "mediaqueries-5",
+      "id": "foundations.custom-media-queries",
+      "section_ids": [
+        "custom-mq"
+      ],
+      "default_obligations": [
+        "Definitions use the selected publication order and scope."
+      ],
+      "invalid_obligations": [
+        "Undefined names, invalid definitions and cycles follow specified query behavior."
+      ],
+      "interaction_obligations": [
+        "Nested boolean use and repeated definitions interact with imports without executing script APIs."
+      ],
+      "requirement_ids": [
+        "mediaqueries-5.foundation-custom-media-queries"
+      ],
+      "implementation_files": [
+        "crates/style/src/stylesheet.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 9,
+      "source_id": "css-conditional-3",
+      "id": "foundations.declaration-support",
+      "section_ids": [
+        "at-supports",
+        "support-definition"
+      ],
+      "default_obligations": [
+        "Unknown properties and valid but unimplemented active features report unsupported."
+      ],
+      "invalid_obligations": [
+        "Invalid syntax, variables, general-enclosed and boolean combinations follow support-query rules."
+      ],
+      "interaction_obligations": [
+        "Queries never mutate styles or load resources; font shorthand capability matches rendering."
+      ],
+      "requirement_ids": [
+        "css-conditional-3.foundation-declaration-support"
+      ],
+      "implementation_files": [
+        "crates/style/src/conformance.rs",
+        "crates/style/src/selector.rs",
+        "crates/style/src/parser.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 9,
+      "source_id": "css-conditional-4",
+      "id": "foundations.selector-support",
+      "section_ids": [
+        "at-supports-ext",
+        "support-definition-ext"
+      ],
+      "default_obligations": [
+        "A grammar-known but unavailable selector is not advertised."
+      ],
+      "invalid_obligations": [
+        "Forgiving/non-forgiving selector errors use the specified support result."
+      ],
+      "interaction_obligations": [
+        "Namespace, nesting and static state support reflects the actual matching context."
+      ],
+      "requirement_ids": [
+        "css-conditional-4.foundation-selector-support"
+      ],
+      "implementation_files": [
+        "crates/style/src/conformance.rs",
+        "crates/style/src/selector.rs",
+        "crates/style/src/parser.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 9,
+      "source_id": "css-conditional-5",
+      "id": "foundations.extended-support",
+      "section_ids": [
+        "at-supports-ext",
+        "support-definition-ext-fonts",
+        "support-definition-at-rules",
+        "support-definition-supports-condition-name",
+        "supports-condition-rule"
+      ],
+      "default_obligations": [
+        "Named queries test capability without applying their block."
+      ],
+      "invalid_obligations": [
+        "Undefined names and invalid nested declarations do not activate unsupported content."
+      ],
+      "interaction_obligations": [
+        "Last same-name definition wins; pre-import definitions and imported/nested rules preserve document order."
+      ],
+      "requirement_ids": [
+        "css-conditional-5.foundation-extended-support"
+      ],
+      "implementation_files": [
+        "crates/style/src/conformance.rs",
+        "crates/style/src/selector.rs",
+        "crates/style/src/parser.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 9,
+      "source_id": "css-conditional-5",
+      "id": "foundations.when-else",
+      "section_ids": [
+        "when-rule",
+        "else-rule"
+      ],
+      "default_obligations": [
+        "Only the first true branch contributes declarations."
+      ],
+      "invalid_obligations": [
+        "Orphaned or invalid branch syntax follows prescribed recovery."
+      ],
+      "interaction_obligations": [
+        "Nested chains, imports and inactive resources preserve ordering effects."
+      ],
+      "requirement_ids": [
+        "css-conditional-5.foundation-when-else"
+      ],
+      "implementation_files": [
+        "crates/style/src/conformance.rs",
+        "crates/style/src/selector.rs",
+        "crates/style/src/parser.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 11,
+      "source_id": "css-namespaces-3",
+      "id": "foundations.selector-namespaces",
+      "section_ids": [
+        "declaration",
+        "syntax",
+        "scope",
+        "prefixes",
+        "css-qnames"
+      ],
+      "default_obligations": [
+        "Default element namespaces do not become default attribute namespaces."
+      ],
+      "invalid_obligations": [
+        "Unknown prefixes invalidate the required selector/rule."
+      ],
+      "interaction_obligations": [
+        "HTML/SVG/MathML trees, imported sheets and selector support queries retain independent namespace environments."
+      ],
+      "requirement_ids": [
+        "css-namespaces-3.foundation-selector-namespaces"
+      ],
+      "implementation_files": [
+        "crates/style/src/selector.rs",
+        "crates/style/src/parser.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 11,
+      "source_id": "selectors-4",
+      "id": "foundations.static-selector-structure",
+      "section_ids": [
+        "structure",
+        "data-model",
+        "featureless-elements",
+        "relative",
+        "type-selectors",
+        "the-universal-selector",
+        "type-nmsp",
+        "attribute-representation",
+        "attribute-substrings",
+        "attribute-case",
+        "attrnmsp",
+        "class-html",
+        "id-selectors",
+        "combinators",
+        "specificity-rules",
+        "grammar",
+        "forgiving-selector"
+      ],
+      "default_obligations": [
+        "Selector matching uses the document tree required by the selector."
+      ],
+      "invalid_obligations": [
+        "Invalid lists recover according to forgiving versus non-forgiving grammar."
+      ],
+      "interaction_obligations": [
+        "HTML case rules, namespaces, light/shadow relationships and nesting preserve specificity."
+      ],
+      "requirement_ids": [
+        "selectors-4.foundation-static-selector-structure"
+      ],
+      "implementation_files": [
+        "crates/style/src/selector.rs",
+        "crates/style/src/parser.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 11,
+      "source_id": "selectors-4",
+      "id": "foundations.static-selector-logical",
+      "section_ids": [
+        "grouping",
+        "matches",
+        "negation",
+        "zero-matches",
+        "relational",
+        "structural-pseudos",
+        "the-root-pseudo",
+        "the-empty-pseudo",
+        "child-index",
+        "typed-child-index"
+      ],
+      "default_obligations": [
+        "Structural indices use the specified sibling set."
+      ],
+      "invalid_obligations": [
+        "Invalid nested and relative selector lists follow their defined grammar."
+      ],
+      "interaction_obligations": [
+        "Pseudo specificity and nth-child of-lists survive nesting and scopes."
+      ],
+      "requirement_ids": [
+        "selectors-4.foundation-static-selector-logical"
+      ],
+      "implementation_files": [
+        "crates/style/src/selector.rs",
+        "crates/style/src/parser.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 11,
+      "source_id": "selectors-4",
+      "id": "foundations.static-selector-language-links",
+      "section_ids": [
+        "the-defined-pseudo",
+        "the-dir-pseudo",
+        "the-lang-pseudo",
+        "the-any-link-pseudo",
+        "link",
+        "the-target-pseudo",
+        "the-scope-pseudo",
+        "visited-privacy"
+      ],
+      "default_obligations": [
+        "No navigation or script mutation is simulated."
+      ],
+      "invalid_obligations": [
+        "Invalid language ranges and malformed selectors do not match."
+      ],
+      "interaction_obligations": [
+        "Document URL/fragment, inherited language and dir=auto use shared semantic state."
+      ],
+      "requirement_ids": [
+        "selectors-4.foundation-static-selector-language-links"
+      ],
+      "implementation_files": [
+        "crates/style/src/selector.rs",
+        "crates/style/src/parser.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 11,
+      "source_id": "selectors-5",
+      "id": "foundations.static-selectors-level-five",
+      "section_ids": [
+        "local-pseudo",
+        "blank",
+        "interest-pseudos",
+        "time-pseudos"
+      ],
+      "default_obligations": [
+        "Interaction-only states remain inactive in static print."
+      ],
+      "invalid_obligations": [
+        "Invalid arguments recover with their selector grammar."
+      ],
+      "interaction_obligations": [
+        "Initial control values and document URL determine applicable static state."
+      ],
+      "requirement_ids": [
+        "selectors-5.foundation-static-selectors-level-five"
+      ],
+      "implementation_files": [
+        "crates/style/src/selector.rs",
+        "crates/style/src/parser.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 12,
+      "source_id": "css-nesting-1",
+      "id": "foundations.css-nesting",
+      "section_ids": [
+        "nesting",
+        "syntax",
+        "conditionals",
+        "nesting-at-scope",
+        "mixing",
+        "nest-selector",
+        "nested-declarations"
+      ],
+      "default_obligations": [
+        "Nested declarations retain their exact source position."
+      ],
+      "invalid_obligations": [
+        "Invalid nesting selectors do not swallow valid subsequent declarations."
+      ],
+      "interaction_obligations": [
+        "Specificity, conditional ancestry, namespace scope and nested @scope agree with expanded semantics."
+      ],
+      "requirement_ids": [
+        "css-nesting-1.foundation-css-nesting"
+      ],
+      "implementation_files": [
+        "crates/style/src/parser.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 13,
+      "source_id": "css-cascade-6",
+      "id": "foundations.css-scope",
+      "section_ids": [
+        "scoped-styles",
+        "scope-effects",
+        "scope-syntax",
+        "scoped-rules",
+        "scope-limits",
+        "scope-scope",
+        "cascade-sort"
+      ],
+      "default_obligations": [
+        "Unscoped and implicit roots retain their prescribed bounds."
+      ],
+      "invalid_obligations": [
+        "Invalid scope selectors/rules recover without broadening scope."
+      ],
+      "interaction_obligations": [
+        "Proximity is compared at its prescribed cascade step; nesting and :scope preserve tree boundaries."
+      ],
+      "requirement_ids": [
+        "css-cascade-6.foundation-css-scope"
+      ],
+      "implementation_files": [
+        "crates/style/src/cascade.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 14,
+      "source_id": "css-shadow-1",
+      "id": "foundations.shadow-selectors-cascade",
+      "section_ids": [
+        "selectors-data-model",
+        "host-element-in-tree",
+        "host-selector",
+        "slotted-pseudo",
+        "the-has-slotted-pseudo",
+        "shadow-cascading"
+      ],
+      "default_obligations": [
+        "Light tree, shadow tree and flattened inheritance remain distinct."
+      ],
+      "invalid_obligations": [
+        "Selectors cannot cross a boundary unless the defined selector permits it."
+      ],
+      "interaction_obligations": [
+        "Normal/important origins, inline rules, slots and scopes exercise opposing encapsulation precedence."
+      ],
+      "requirement_ids": [
+        "css-shadow-1.foundation-shadow-selectors-cascade"
+      ],
+      "implementation_files": [
+        "crates/dom/src/lib.rs",
+        "crates/style/src/selector.rs",
+        "crates/style/src/cascade.rs",
+        "crates/document/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 14,
+      "source_id": "css-shadow-1",
+      "id": "foundations.shadow-parts-names",
+      "section_ids": [
+        "shadow-names",
+        "shadow-names-serialization",
+        "part-attr",
+        "exportparts-attr",
+        "part",
+        "parsing",
+        "parsing-mapping",
+        "parsing-mapping-list"
+      ],
+      "default_obligations": [
+        "Inherited scoped names preserve their declaring scope."
+      ],
+      "invalid_obligations": [
+        "Malformed part maps and inaccessible names do not expose unrelated content."
+      ],
+      "interaction_obligations": [
+        "Nested shadow roots, @font-face names and inheritance use the specified ancestor lookup."
+      ],
+      "requirement_ids": [
+        "css-shadow-1.foundation-shadow-parts-names"
+      ],
+      "implementation_files": [
+        "crates/dom/src/lib.rs",
+        "crates/style/src/selector.rs",
+        "crates/style/src/cascade.rs",
+        "crates/document/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 14,
+      "source_id": "dom",
+      "id": "foundations.shadow-slot-distribution",
+      "section_ids": [
+        "trees",
+        "shadow-trees",
+        "shadow-tree-slots",
+        "light-tree-slotables",
+        "finding-slots-and-slotables",
+        "assigning-slotables-and-slots"
+      ],
+      "default_obligations": [
+        "Unassigned slot fallback and first matching named slot use DOM rules."
+      ],
+      "invalid_obligations": [
+        "Invalid/unsupported declarative root creation leaves ordinary inert template behavior."
+      ],
+      "interaction_obligations": [
+        "Selector matching, inheritance, formatting and sibling functions consume their required tree relation."
+      ],
+      "requirement_ids": [
+        "dom.foundation-shadow-slot-distribution"
+      ],
+      "implementation_files": [
+        "crates/dom/src/lib.rs",
+        "crates/style/src/selector.rs",
+        "crates/style/src/cascade.rs",
+        "crates/document/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "rule-applicability",
+      "owner_task": 14,
+      "source_id": "html",
+      "id": "foundations.declarative-shadow-template",
+      "section_ids": [
+        "the-template-element",
+        "the-slot-element"
+      ],
+      "default_obligations": [
+        "Ordinary template contents are inert."
+      ],
+      "invalid_obligations": [
+        "Disallowed hosts, duplicate roots and invalid attributes follow HTML construction rules."
+      ],
+      "interaction_obligations": [
+        "Nested roots, styles, fallback slots and composed form/text content render without script."
+      ],
+      "requirement_ids": [
+        "html.foundation-declarative-shadow-template"
+      ],
+      "implementation_files": [
+        "crates/dom/src/lib.rs",
+        "crates/style/src/selector.rs",
+        "crates/style/src/cascade.rs",
+        "crates/document/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "font-declarations",
+      "owner_task": 15,
+      "source_id": "css-fonts-4",
+      "id": "foundations.font-shorthand",
+      "section_ids": [
+        "font-prop",
+        "font-variant-prop"
+      ],
+      "default_obligations": [
+        "Omitted style/variant/weight/width/line-height and reset-only properties return to their initial values."
+      ],
+      "invalid_obligations": [
+        "Reject invalid optional ordering, duplicates, numeric width and incomplete size/family syntax."
+      ],
+      "interaction_obligations": [
+        "CSS-wide/variable forms expand once; independent synthesis/palette settings survive; system keywords substitute UA defaults."
+      ],
+      "requirement_ids": [
+        "css-fonts-4.foundation-font-shorthand"
+      ],
+      "implementation_files": [
+        "crates/style/src/shorthands.rs",
+        "crates/style/src/properties.rs",
+        "crates/style/src/text_values.rs",
+        "spec/css/errata.json"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "font-declarations",
+      "owner_task": 15,
+      "source_id": "css-fonts-4",
+      "id": "foundations.font-family-syntax",
+      "section_ids": [
+        "font-family-prop",
+        "font-family-name-syntax",
+        "generic-family-name-syntax",
+        "system",
+        "font-families",
+        "generic-font-families"
+      ],
+      "default_obligations": [
+        "Fallback families retain declared order and UA generic policy."
+      ],
+      "invalid_obligations": [
+        "Reserved keywords and malformed lists do not become invented family names."
+      ],
+      "interaction_obligations": [
+        "A family named menu in family-list position differs from a system font keyword; Unicode caseless name matching is preserved."
+      ],
+      "requirement_ids": [
+        "css-fonts-4.foundation-font-family-syntax"
+      ],
+      "implementation_files": [
+        "crates/style/src/shorthands.rs",
+        "crates/style/src/properties.rs",
+        "crates/style/src/text_values.rs",
+        "spec/css/errata.json"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "font-declarations",
+      "owner_task": 16,
+      "source_id": "css-fonts-4",
+      "id": "foundations.font-face-matching",
+      "section_ids": [
+        "font-weight-prop",
+        "relative-weights",
+        "missing-weights",
+        "font-width-prop",
+        "font-stretch-prop",
+        "font-style-prop",
+        "font-matching-algorithm",
+        "font-style-matching",
+        "localized-name-matching"
+      ],
+      "default_obligations": [
+        "Absent axes use normal face descriptors."
+      ],
+      "invalid_obligations": [
+        "Out-of-range or invalid declarations follow parse/computed range rules."
+      ],
+      "interaction_obligations": [
+        "Variable/static faces, family order, width-first matching and fallback embed the actual selected font."
+      ],
+      "requirement_ids": [
+        "css-fonts-4.foundation-font-face-matching"
+      ],
+      "implementation_files": [
+        "crates/fonts/src/lib.rs",
+        "crates/style/src/text_values.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "font-declarations",
+      "owner_task": 16,
+      "source_id": "css-fonts-4",
+      "id": "foundations.font-resource-fallback",
+      "section_ids": [
+        "src-desc",
+        "font-face-src-parsing",
+        "font-face-src-loading",
+        "font-face-src-formats",
+        "font-fetching-requirements",
+        "cluster-matching",
+        "char-handling-issues"
+      ],
+      "default_obligations": [
+        "Unused font resources remain unfetched."
+      ],
+      "invalid_obligations": [
+        "Unavailable/invalid fonts follow source fallback while policy denial remains fatal."
+      ],
+      "interaction_obligations": [
+        "Actual glyph coverage, private-use restrictions, supported format/tech queries and PDF font identity agree."
+      ],
+      "requirement_ids": [
+        "css-fonts-4.foundation-font-resource-fallback"
+      ],
+      "implementation_files": [
+        "crates/fonts/src/lib.rs",
+        "crates/style/src/text_values.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "font-declarations",
+      "owner_task": 17,
+      "source_id": "css-fonts-4",
+      "id": "foundations.css2-small-caps",
+      "section_ids": [
+        "font-variant-caps-prop",
+        "font-synthesis-small-caps",
+        "font-feature-variation-resolution"
+      ],
+      "default_obligations": [
+        "Normal caps do not change text."
+      ],
+      "invalid_obligations": [
+        "Unavailable advanced variants remain honestly unsupported."
+      ],
+      "interaction_obligations": [
+        "Mixed Unicode text, font-synthesis restrictions, original text extraction and actual glyph placement are tested."
+      ],
+      "requirement_ids": [
+        "css-fonts-4.foundation-css2-small-caps"
+      ],
+      "implementation_files": [
+        "crates/fonts/src/lib.rs",
+        "crates/text/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "font-declarations",
+      "owner_task": 18,
+      "source_id": "css-fonts-4",
+      "id": "foundations.font-size-metrics",
+      "section_ids": [
+        "font-size-prop",
+        "absolute-size-mapping",
+        "font-size-adjust-prop"
+      ],
+      "default_obligations": [
+        "Root initial and inherited sizes use their prescribed bases."
+      ],
+      "invalid_obligations": [
+        "Invalid or impossible metrics follow specified fallbacks rather than a universal half-em approximation."
+      ],
+      "interaction_obligations": [
+        "Font-size and line-height unit dependencies use the face that renders, including fallback and system fonts."
+      ],
+      "requirement_ids": [
+        "css-fonts-4.foundation-font-size-metrics"
+      ],
+      "implementation_files": [
+        "crates/style/src/units.rs",
+        "crates/style/src/computed.rs",
+        "crates/fonts/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 18,
+      "source_id": "css-values-4",
+      "id": "foundations.font-relative-units",
+      "section_ids": [
+        "font-relative-lengths"
+      ],
+      "default_obligations": [
+        "Root/font-size/line-height special bases use initial or inherited metrics as prescribed."
+      ],
+      "invalid_obligations": [
+        "Unavailable metrics use each unit specified fallback."
+      ],
+      "interaction_obligations": [
+        "Nested calculations, root changes, fallback fonts and direct values share one resolution context."
+      ],
+      "requirement_ids": [
+        "css-values-4.foundation-font-relative-units"
+      ],
+      "implementation_files": [
+        "crates/style/src/units.rs",
+        "crates/style/src/computed.rs",
+        "crates/fonts/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 19,
+      "source_id": "css-values-4",
+      "id": "foundations.viewport-units",
+      "section_ids": [
+        "viewport-relative-lengths",
+        "viewport-variants",
+        "viewport-relative-units"
+      ],
+      "default_obligations": [
+        "Static viewport variants use the defined print viewport."
+      ],
+      "invalid_obligations": [
+        "Undefined geometry cycles produce a typed source-labelled error."
+      ],
+      "interaction_obligations": [
+        "Logical axes, page margins, font-relative page dimensions and deferred calculations retain dependency order."
+      ],
+      "requirement_ids": [
+        "css-values-4.foundation-viewport-units"
+      ],
+      "implementation_files": [
+        "crates/style/src/page_values.rs",
+        "crates/style/src/units.rs",
+        "crates/style/src/stylesheet.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 19,
+      "source_id": "css-page-3",
+      "id": "foundations.page-size-environment",
+      "section_ids": [
+        "page-model",
+        "page-size-prop",
+        "page-size-media-query",
+        "page-property-list",
+        "margin-property-list"
+      ],
+      "default_obligations": [
+        "Omitted/auto/orientation-only size uses configured A4 paper and one-inch default margins."
+      ],
+      "invalid_obligations": [
+        "Paper-size-dependent conditional size declarations are ignored as prescribed; undefined cycles remain unverified typed errors."
+      ],
+      "interaction_obligations": [
+        "Page font metrics use the approved UA-initial compatibility policy; page rules do not inherit root element declarations."
+      ],
+      "requirement_ids": [
+        "css-page-3.foundation-page-size-environment"
+      ],
+      "implementation_files": [
+        "crates/style/src/page_values.rs",
+        "crates/style/src/units.rs",
+        "crates/style/src/stylesheet.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-4",
+      "id": "foundations.scalar-types-math",
+      "section_ids": [
+        "numeric-ranges",
+        "integers",
+        "numbers",
+        "dimensions",
+        "percentages",
+        "mixed-percentages",
+        "ratios",
+        "calc-syntax",
+        "calc-type-checking",
+        "calc-ieee",
+        "calc-simplification",
+        "calc-computed-value",
+        "calc-range"
+      ],
+      "default_obligations": [
+        "Indefinite percentages stay deferred instead of becoming zero."
+      ],
+      "invalid_obligations": [
+        "Invalid type combinations and unsupported active values have distinct diagnostics."
+      ],
+      "interaction_obligations": [
+        "Specified/computed/used stages resolve only known bases across style and existing layout modes."
+      ],
+      "requirement_ids": [
+        "css-values-4.foundation-scalar-types-math"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-4",
+      "id": "foundations.math-calc",
+      "section_ids": [
+        "calc-func"
+      ],
+      "default_obligations": [
+        "Omitted optional arguments and supported constants follow the selected grammar."
+      ],
+      "invalid_obligations": [
+        "Argument dimensions, infinities, NaN and range restrictions follow the selected definition."
+      ],
+      "interaction_obligations": [
+        "Nested functions and deferred percentage/relative-unit operands share the existing calculation tree."
+      ],
+      "requirement_ids": [
+        "css-values-4.foundation-math-calc"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-4",
+      "id": "foundations.math-min-max-clamp",
+      "section_ids": [
+        "comp-func"
+      ],
+      "default_obligations": [
+        "Omitted optional arguments and supported constants follow the selected grammar."
+      ],
+      "invalid_obligations": [
+        "Argument dimensions, infinities, NaN and range restrictions follow the selected definition."
+      ],
+      "interaction_obligations": [
+        "Nested functions and deferred percentage/relative-unit operands share the existing calculation tree."
+      ],
+      "requirement_ids": [
+        "css-values-4.foundation-math-min-max-clamp"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-4",
+      "id": "foundations.math-round-mod-rem",
+      "section_ids": [
+        "round-func"
+      ],
+      "default_obligations": [
+        "Omitted optional arguments and supported constants follow the selected grammar."
+      ],
+      "invalid_obligations": [
+        "Argument dimensions, infinities, NaN and range restrictions follow the selected definition."
+      ],
+      "interaction_obligations": [
+        "Nested functions and deferred percentage/relative-unit operands share the existing calculation tree."
+      ],
+      "requirement_ids": [
+        "css-values-4.foundation-math-round-mod-rem"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-4",
+      "id": "foundations.math-sin-cos-tan-asin-acos-atan-atan2",
+      "section_ids": [
+        "trig-funcs"
+      ],
+      "default_obligations": [
+        "Omitted optional arguments and supported constants follow the selected grammar."
+      ],
+      "invalid_obligations": [
+        "Argument dimensions, infinities, NaN and range restrictions follow the selected definition."
+      ],
+      "interaction_obligations": [
+        "Nested functions and deferred percentage/relative-unit operands share the existing calculation tree."
+      ],
+      "requirement_ids": [
+        "css-values-4.foundation-math-sin-cos-tan-asin-acos-atan-atan2"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-4",
+      "id": "foundations.math-pow-sqrt-hypot-log-exp",
+      "section_ids": [
+        "exponent-funcs"
+      ],
+      "default_obligations": [
+        "Omitted optional arguments and supported constants follow the selected grammar."
+      ],
+      "invalid_obligations": [
+        "Argument dimensions, infinities, NaN and range restrictions follow the selected definition."
+      ],
+      "interaction_obligations": [
+        "Nested functions and deferred percentage/relative-unit operands share the existing calculation tree."
+      ],
+      "requirement_ids": [
+        "css-values-4.foundation-math-pow-sqrt-hypot-log-exp"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-4",
+      "id": "foundations.math-abs-sign",
+      "section_ids": [
+        "sign-funcs"
+      ],
+      "default_obligations": [
+        "Omitted optional arguments and supported constants follow the selected grammar."
+      ],
+      "invalid_obligations": [
+        "Argument dimensions, infinities, NaN and range restrictions follow the selected definition."
+      ],
+      "interaction_obligations": [
+        "Nested functions and deferred percentage/relative-unit operands share the existing calculation tree."
+      ],
+      "requirement_ids": [
+        "css-values-4.foundation-math-abs-sign"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-4",
+      "id": "foundations.math-constants",
+      "section_ids": [
+        "calc-keywords"
+      ],
+      "default_obligations": [
+        "Omitted optional arguments and supported constants follow the selected grammar."
+      ],
+      "invalid_obligations": [
+        "Argument dimensions, infinities, NaN and range restrictions follow the selected definition."
+      ],
+      "interaction_obligations": [
+        "Nested functions and deferred percentage/relative-unit operands share the existing calculation tree."
+      ],
+      "requirement_ids": [
+        "css-values-4.foundation-math-constants"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-progress",
+      "section_ids": [
+        "progress-func"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-progress"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-media-progress",
+      "section_ids": [
+        "media-progress-func"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-media-progress"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-calc-mix",
+      "section_ids": [
+        "calc-mix"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-calc-mix"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-first-valid",
+      "section_ids": [
+        "first-valid"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-first-valid"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-if",
+      "section_ids": [
+        "if-notation"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-if"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-toggle",
+      "section_ids": [
+        "toggle-notation"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-toggle"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-inherit",
+      "section_ids": [
+        "inherit-notation"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-inherit"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-attr",
+      "section_ids": [
+        "attr-notation"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-attr"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-random",
+      "section_ids": [
+        "random"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-random"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-random-item",
+      "section_ids": [
+        "random-item"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-random-item"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-sibling-count-index",
+      "section_ids": [
+        "tree-counting"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-sibling-count-index"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.static-function-calc-size",
+      "section_ids": [
+        "calc-size"
+      ],
+      "default_obligations": [
+        "Use the pinned grammar and specified omitted/fallback/cache behavior."
+      ],
+      "invalid_obligations": [
+        "Invalid substitution, type/range errors and taint restrictions use the prescribed invalid-value result."
+      ],
+      "interaction_obligations": [
+        "Variables, nested calculations, flat-tree/pseudo context and deferred sizing are tested where applicable; external container layout stays an explicit handoff."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-static-function-calc-size"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 20,
+      "source_id": "css-values-5",
+      "id": "foundations.substitution-order",
+      "section_ids": [
+        "arbitrary-substitution",
+        "invalid-substitution",
+        "substitution-in-shorthands",
+        "long-substitution",
+        "boolean-logic"
+      ],
+      "default_obligations": [
+        "An empty token stream differs from guaranteed-invalid."
+      ],
+      "invalid_obligations": [
+        "Bound pathological substitution work using named limits."
+      ],
+      "interaction_obligations": [
+        "first-valid/support queries and post-substitution shorthand parsing use the actual property capability path."
+      ],
+      "requirement_ids": [
+        "css-values-5.foundation-substitution-order"
+      ],
+      "implementation_files": [
+        "crates/style/src/calc.rs",
+        "crates/style/src/variables.rs",
+        "crates/graphics/src/calculation.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 21,
+      "source_id": "css-sizing-3",
+      "id": "foundations.intrinsic-sizing",
+      "section_ids": [
+        "preferred-size-properties",
+        "min-size-properties",
+        "max-size-properties",
+        "sizing-values",
+        "box-sizing",
+        "stretch-fit-sizing",
+        "intrinsic-sizes",
+        "intrinsic-contribution",
+        "cyclic-percentage-contribution",
+        "min-content-zero"
+      ],
+      "default_obligations": [
+        "Indefinite bases and auto remain distinct from zero."
+      ],
+      "invalid_obligations": [
+        "Negative/invalid sizing values are discarded or range-clamped at their prescribed stage."
+      ],
+      "interaction_obligations": [
+        "Box sizing, min/max precedence, replaced content and intrinsic contributions reuse shared geometry."
+      ],
+      "requirement_ids": [
+        "css-sizing-3.foundation-intrinsic-sizing"
+      ],
+      "implementation_files": [
+        "crates/style/src/box_values.rs",
+        "crates/layout/src/geometry.rs",
+        "crates/layout/src/intrinsic.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 21,
+      "source_id": "css-sizing-4",
+      "id": "foundations.aspect-ratio-sizing",
+      "section_ids": [
+        "aspect-ratio",
+        "aspect-ratio-automatic",
+        "aspect-ratio-margin-collapse",
+        "aspect-ratio-minimum",
+        "aspect-ratio-size-transfers",
+        "sizing-values"
+      ],
+      "default_obligations": [
+        "auto ratio uses replaced intrinsic ratios where defined."
+      ],
+      "invalid_obligations": [
+        "Invalid/degenerate ratios follow the selected sizing rules."
+      ],
+      "interaction_obligations": [
+        "Min/max transfers, content versus border box and indefinite opposite axes retain exact size semantics."
+      ],
+      "requirement_ids": [
+        "css-sizing-4.foundation-aspect-ratio-sizing"
+      ],
+      "implementation_files": [
+        "crates/style/src/box_values.rs",
+        "crates/layout/src/geometry.rs",
+        "crates/layout/src/intrinsic.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 21,
+      "source_id": "css-logical-1",
+      "id": "foundations.logical-sizing",
+      "section_ids": [
+        "dimension-properties",
+        "margin-properties",
+        "padding-properties",
+        "border-properties",
+        "position-properties"
+      ],
+      "default_obligations": [
+        "Horizontal writing and direction establish the proper inline/block axes."
+      ],
+      "invalid_obligations": [
+        "Valid active full vertical layout remains explicitly unsupported until its mandatory later workstream."
+      ],
+      "interaction_obligations": [
+        "Physical/logical declaration order, percentages, min/max and replaced sizing interact through the common cascade."
+      ],
+      "requirement_ids": [
+        "css-logical-1.foundation-logical-sizing"
+      ],
+      "implementation_files": [
+        "crates/style/src/box_values.rs",
+        "crates/layout/src/geometry.rs",
+        "crates/layout/src/intrinsic.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "values-sizing",
+      "owner_task": 22,
+      "source_id": "css-sizing-3",
+      "id": "foundations.existing-mode-sizing",
+      "section_ids": [
+        "constraints",
+        "intrinsic-contribution",
+        "percentage-sizing"
+      ],
+      "default_obligations": [
+        "Each existing formatting mode uses its defined automatic and intrinsic contributions."
+      ],
+      "invalid_obligations": [
+        "Unsupported new formatting modes remain explicit failures."
+      ],
+      "interaction_obligations": [
+        "Shared min/max, aspect ratio, indefinite percentages and fragmentation are checked in real PDFs, avoiding mode-specific duplicate evaluators."
+      ],
+      "requirement_ids": [
+        "css-sizing-3.foundation-existing-mode-sizing"
+      ],
+      "implementation_files": [
+        "crates/layout/src/flex/mod.rs",
+        "crates/layout/src/tables/mod.rs",
+        "crates/layout/src/inline.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 5,
+      "source_id": "dom",
+      "id": "foundations.shared-static-dom",
+      "section_ids": [
+        "trees",
+        "node-trees",
+        "document-trees",
+        "namespaces"
+      ],
+      "default_obligations": [
+        "HTML parsing remains html5ever tree construction."
+      ],
+      "invalid_obligations": [
+        "Malformed markup retains parser recovery rather than custom tag reparsing."
+      ],
+      "interaction_obligations": [
+        "Foreign content, templates, shadow roots, selector ancestry and flattened formatting use distinct required relations."
+      ],
+      "requirement_ids": [
+        "dom.foundation-shared-static-dom"
+      ],
+      "implementation_files": [
+        "crates/dom/src/lib.rs",
+        "crates/style/src/selector.rs",
+        "crates/document/src/lib.rs",
+        "crates/dom/src/tree.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 3,
+      "source_id": "html",
+      "id": "foundations.html-base-metadata",
+      "section_ids": [
+        "the-head-element",
+        "the-base-element"
+      ],
+      "default_obligations": [
+        "First applicable base establishes relative URL resolution."
+      ],
+      "invalid_obligations": [
+        "Invalid base URLs do not override valid fallback bases."
+      ],
+      "interaction_obligations": [
+        "Stylesheets, images, links and embedded documents share the effective document base without bypassing resource policy."
+      ],
+      "requirement_ids": [
+        "html.foundation-html-base-metadata"
+      ],
+      "implementation_files": [
+        "src/lib.rs",
+        "crates/document/src/lib.rs",
+        "crates/style/src/stylesheet.rs",
+        "crates/resources/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 23,
+      "source_id": "html",
+      "id": "foundations.html-language-direction",
+      "section_ids": [
+        "the-lang-and-xml:lang-attributes",
+        "the-dir-attribute",
+        "bidi-rendering"
+      ],
+      "default_obligations": [
+        "Absent metadata inherits according to HTML namespace rules."
+      ],
+      "invalid_obligations": [
+        "Invalid/empty direction and language values use their specified inheritance behavior."
+      ],
+      "interaction_obligations": [
+        "bdi/bdo, controls, mixed scripts, lists and shadow/slot ancestry retain correct shaping and extracted text."
+      ],
+      "requirement_ids": [
+        "html.foundation-html-language-direction"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/text/src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 24,
+      "source_id": "html",
+      "id": "foundations.html-hidden-inert",
+      "section_ids": [
+        "the-hidden-attribute",
+        "inert-subtrees",
+        "the-inert-attribute",
+        "hidden-elements",
+        "interaction-with-details-and-hidden=until-found"
+      ],
+      "default_obligations": [
+        "Inert content remains printable where the standard does not hide it."
+      ],
+      "invalid_obligations": [
+        "Invalid hidden keywords use the defined enumerated state."
+      ],
+      "interaction_obligations": [
+        "Author display/content visibility, hidden-until-found layout effects, shadow distribution and nested inertness are tested."
+      ],
+      "requirement_ids": [
+        "html.foundation-html-hidden-inert"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/style/src/user_agent.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 24,
+      "source_id": "html",
+      "id": "foundations.html-details-dialog",
+      "section_ids": [
+        "the-details-element",
+        "the-summary-element",
+        "the-dialog-element",
+        "the-details-and-summary-elements"
+      ],
+      "default_obligations": [
+        "Closed details exposes its first summary and defined fallback summary."
+      ],
+      "invalid_obligations": [
+        "Duplicate/invalid summary placement follows HTML semantics."
+      ],
+      "interaction_obligations": [
+        "Selectors, hidden content, author overrides and initial open state share one document state model."
+      ],
+      "requirement_ids": [
+        "html.foundation-html-details-dialog"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/style/src/user_agent.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 24,
+      "source_id": "html",
+      "id": "foundations.html-noscript-template",
+      "section_ids": [
+        "the-noscript-element",
+        "the-template-element"
+      ],
+      "default_obligations": [
+        "No script or custom-element execution occurs."
+      ],
+      "invalid_obligations": [
+        "Malformed nested templates/noscript use the HTML parser rules."
+      ],
+      "interaction_obligations": [
+        "Head/body noscript and declarative shadow roots retain their distinct parsing and visibility behavior."
+      ],
+      "requirement_ids": [
+        "html.foundation-html-noscript-template"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/style/src/user_agent.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.html-control-common",
+      "section_ids": [
+        "the-input-element",
+        "common-input-element-attributes",
+        "the-button-element",
+        "form-controls",
+        "native-appearance-2"
+      ],
+      "default_obligations": [
+        "Missing type uses text; controls inherit/cascade only as prescribed."
+      ],
+      "invalid_obligations": [
+        "Invalid attributes and constraints use the relevant initial-state algorithms."
+      ],
+      "interaction_obligations": [
+        "fieldset/legend disabling, labels, CSS overrides and real PDF content/paint preserve control state."
+      ],
+      "requirement_ids": [
+        "html.foundation-html-control-common"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-text-search",
+      "section_ids": [
+        "text-(type=text)-state-and-search-state-(type=search)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-text-search"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-tel",
+      "section_ids": [
+        "telephone-state-(type=tel)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-tel"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-url",
+      "section_ids": [
+        "url-state-(type=url)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-url"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-email",
+      "section_ids": [
+        "email-state-(type=email)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-email"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-password",
+      "section_ids": [
+        "password-state-(type=password)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-password"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-date",
+      "section_ids": [
+        "date-state-(type=date)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-date"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-month",
+      "section_ids": [
+        "month-state-(type=month)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-month"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-week",
+      "section_ids": [
+        "week-state-(type=week)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-week"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-time",
+      "section_ids": [
+        "time-state-(type=time)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-time"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-datetime-local",
+      "section_ids": [
+        "local-date-and-time-state-(type=datetime-local)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-datetime-local"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-number",
+      "section_ids": [
+        "number-state-(type=number)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-number"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-range",
+      "section_ids": [
+        "range-state-(type=range)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-range"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-color",
+      "section_ids": [
+        "color-state-(type=color)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-color"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-checkbox",
+      "section_ids": [
+        "checkbox-state-(type=checkbox)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-checkbox"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-radio",
+      "section_ids": [
+        "radio-button-state-(type=radio)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-radio"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-file",
+      "section_ids": [
+        "file-upload-state-(type=file)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-file"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-submit",
+      "section_ids": [
+        "submit-button-state-(type=submit)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-submit"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-image",
+      "section_ids": [
+        "image-button-state-(type=image)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-image"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-reset",
+      "section_ids": [
+        "reset-button-state-(type=reset)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-reset"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-button",
+      "section_ids": [
+        "button-state-(type=button)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-button"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.input-hidden",
+      "section_ids": [
+        "hidden-state-(type=hidden)"
+      ],
+      "default_obligations": [
+        "Use the selected HTML missing/invalid value and state defaults."
+      ],
+      "invalid_obligations": [
+        "Invalid lexical/range/step/value attributes follow that input state algorithm."
+      ],
+      "interaction_obligations": [
+        "Initial validity/selectors, direction, disabled state and author styling agree; no arbitrary local file is read."
+      ],
+      "requirement_ids": [
+        "html.foundation-input-hidden"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.control-select",
+      "section_ids": [
+        "the-select-element",
+        "the-select-element-2"
+      ],
+      "default_obligations": [
+        "Missing values/selection and state use the selected element algorithms."
+      ],
+      "invalid_obligations": [
+        "Invalid numeric/selection/child state follows HTML fallback rules."
+      ],
+      "interaction_obligations": [
+        "Intrinsic sizing, direction, author CSS, disabled inheritance and PDF text/paint preserve initial content and state."
+      ],
+      "requirement_ids": [
+        "html.foundation-control-select"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.control-textarea",
+      "section_ids": [
+        "the-textarea-element",
+        "the-textarea-element-2"
+      ],
+      "default_obligations": [
+        "Missing values/selection and state use the selected element algorithms."
+      ],
+      "invalid_obligations": [
+        "Invalid numeric/selection/child state follows HTML fallback rules."
+      ],
+      "interaction_obligations": [
+        "Intrinsic sizing, direction, author CSS, disabled inheritance and PDF text/paint preserve initial content and state."
+      ],
+      "requirement_ids": [
+        "html.foundation-control-textarea"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.control-button",
+      "section_ids": [
+        "the-button-element",
+        "the-button-element-2"
+      ],
+      "default_obligations": [
+        "Missing values/selection and state use the selected element algorithms."
+      ],
+      "invalid_obligations": [
+        "Invalid numeric/selection/child state follows HTML fallback rules."
+      ],
+      "interaction_obligations": [
+        "Intrinsic sizing, direction, author CSS, disabled inheritance and PDF text/paint preserve initial content and state."
+      ],
+      "requirement_ids": [
+        "html.foundation-control-button"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.control-progress",
+      "section_ids": [
+        "the-progress-element",
+        "the-progress-element-2"
+      ],
+      "default_obligations": [
+        "Missing values/selection and state use the selected element algorithms."
+      ],
+      "invalid_obligations": [
+        "Invalid numeric/selection/child state follows HTML fallback rules."
+      ],
+      "interaction_obligations": [
+        "Intrinsic sizing, direction, author CSS, disabled inheritance and PDF text/paint preserve initial content and state."
+      ],
+      "requirement_ids": [
+        "html.foundation-control-progress"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.control-meter",
+      "section_ids": [
+        "the-meter-element",
+        "the-meter-element-2"
+      ],
+      "default_obligations": [
+        "Missing values/selection and state use the selected element algorithms."
+      ],
+      "invalid_obligations": [
+        "Invalid numeric/selection/child state follows HTML fallback rules."
+      ],
+      "interaction_obligations": [
+        "Intrinsic sizing, direction, author CSS, disabled inheritance and PDF text/paint preserve initial content and state."
+      ],
+      "requirement_ids": [
+        "html.foundation-control-meter"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "html",
+      "id": "foundations.control-fieldset-legend",
+      "section_ids": [
+        "the-fieldset-element",
+        "the-legend-element",
+        "the-fieldset-and-legend-elements"
+      ],
+      "default_obligations": [
+        "Missing values/selection and state use the selected element algorithms."
+      ],
+      "invalid_obligations": [
+        "Invalid numeric/selection/child state follows HTML fallback rules."
+      ],
+      "interaction_obligations": [
+        "Intrinsic sizing, direction, author CSS, disabled inheritance and PDF text/paint preserve initial content and state."
+      ],
+      "requirement_ids": [
+        "html.foundation-control-fieldset-legend"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 25,
+      "source_id": "selectors-4",
+      "id": "foundations.initial-control-selectors",
+      "section_ids": [
+        "enableddisabled",
+        "rw-pseudos",
+        "placeholder",
+        "autofill",
+        "the-default-pseudo",
+        "checked",
+        "validity-pseudos",
+        "range-pseudos",
+        "opt-pseudos",
+        "user-pseudos"
+      ],
+      "default_obligations": [
+        "Untouched controls do not gain interaction-dependent user/autofill states."
+      ],
+      "invalid_obligations": [
+        "Malformed constraints follow HTML state algorithms."
+      ],
+      "interaction_obligations": [
+        "Select/radio groups, fieldset/legend, sanitization and rendered state consume the same initial control model."
+      ],
+      "requirement_ids": [
+        "selectors-4.foundation-initial-control-selectors"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/document/src/inline.rs",
+        "crates/style/src/user_agent.rs",
+        "crates/style/src/selector.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 26,
+      "source_id": "html",
+      "id": "foundations.embedded-static-content",
+      "section_ids": [
+        "the-iframe-element",
+        "the-object-element",
+        "the-embed-element",
+        "embedded-content-rendering-rules",
+        "dimension-attributes"
+      ],
+      "default_obligations": [
+        "Unsupported plugin/media content follows element-specific fallback rules."
+      ],
+      "invalid_obligations": [
+        "Unavailable resources warn; resolver denial and budget exhaustion stay typed fatal errors."
+      ],
+      "interaction_obligations": [
+        "Nested HTML uses independent document/styles, bounded ancestors/resources and shared font identity remapping."
+      ],
+      "requirement_ids": [
+        "html.foundation-embedded-static-content"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/fonts/src/lib.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    },
+    {
+      "group": "html-foundations",
+      "owner_task": 26,
+      "source_id": "html",
+      "id": "foundations.embedded-images-fallback",
+      "section_ids": [
+        "images-3",
+        "attributes-for-embedded-content-and-images",
+        "replaced-elements"
+      ],
+      "default_obligations": [
+        "Absent/unavailable image content uses the specified alternative presentation."
+      ],
+      "invalid_obligations": [
+        "Invalid dimensions and malformed supported resources retain meaningful diagnostics."
+      ],
+      "interaction_obligations": [
+        "Intrinsic size/ratio, author CSS, decoding, font choice and real PDF paint share the existing rendering machinery."
+      ],
+      "requirement_ids": [
+        "html.foundation-embedded-images-fallback"
+      ],
+      "implementation_files": [
+        "crates/document/src/lib.rs",
+        "crates/fonts/src/lib.rs",
+        "src/lib.rs"
+      ],
+      "case_ids": [],
+      "handoff": null
+    }
+  ],
+  "source_reviews": [
+    {
+      "source_id": "css-cascade-5",
+      "sha256": "1fe27cdb69e4990a801bdad630d4bea755b4d472ff9aa23bf07f743056a3a2a1",
+      "section_ids": [
+        "all-shorthand",
+        "at-import",
+        "at-layer",
+        "cascade-sort",
+        "cascading-origins",
+        "conditional-import",
+        "content-type",
+        "default",
+        "defaulting-keywords",
+        "import-processing",
+        "importance",
+        "inherit",
+        "inherit-initial",
+        "inheriting",
+        "initial",
+        "initial-values",
+        "layer-block",
+        "layer-declaration",
+        "layer-empty",
+        "layer-names",
+        "layer-ordering",
+        "layering",
+        "preshint",
+        "revert-layer",
+        "unnamed-layers"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        6,
+        7,
+        10
+      ]
+    },
+    {
+      "source_id": "css-cascade-6",
+      "sha256": "0cc42c0d3579cacf79c4549bc3302d31a2c847a325693585c21cafd92632263d",
+      "section_ids": [
+        "cascade-sort",
+        "cascading-origins",
+        "importance",
+        "scope-effects",
+        "scope-limits",
+        "scope-scope",
+        "scope-syntax",
+        "scoped-rules",
+        "scoped-styles"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        6,
+        13
+      ]
+    },
+    {
+      "source_id": "css-conditional-3",
+      "sha256": "672eb79c78c53b9c92a460ffcfd8718af3c1e38ecf317566d955ffa1df470b35",
+      "section_ids": [
+        "at-supports",
+        "support-definition"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        9
+      ]
+    },
+    {
+      "source_id": "css-conditional-4",
+      "sha256": "59e3eaee1e7311d7c1c295ae5f27d30abf64c424d21ed007b74849aec7ab000f",
+      "section_ids": [
+        "at-supports-ext",
+        "support-definition-ext"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        9
+      ]
+    },
+    {
+      "source_id": "css-conditional-5",
+      "sha256": "272548f0468544b6834bce6b5bbdb1203d3dade2b3480edfc7aed40b066d0f4a",
+      "section_ids": [
+        "at-supports-ext",
+        "else-rule",
+        "support-definition-at-rules",
+        "support-definition-ext-fonts",
+        "support-definition-supports-condition-name",
+        "supports-condition-rule",
+        "when-rule"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        9
+      ]
+    },
+    {
+      "source_id": "css-fonts-4",
+      "sha256": "b8e2b86d61febe7a32a1bb72c308c0de428cc2c275de26445ff3305fa9205360",
+      "section_ids": [
+        "absolute-size-mapping",
+        "char-handling-issues",
+        "cluster-matching",
+        "font-face-src-formats",
+        "font-face-src-loading",
+        "font-face-src-parsing",
+        "font-families",
+        "font-family-name-syntax",
+        "font-family-prop",
+        "font-feature-variation-resolution",
+        "font-fetching-requirements",
+        "font-matching-algorithm",
+        "font-prop",
+        "font-size-adjust-prop",
+        "font-size-prop",
+        "font-stretch-prop",
+        "font-style-matching",
+        "font-style-prop",
+        "font-synthesis-small-caps",
+        "font-variant-caps-prop",
+        "font-variant-prop",
+        "font-weight-prop",
+        "font-width-prop",
+        "generic-family-name-syntax",
+        "generic-font-families",
+        "localized-name-matching",
+        "missing-weights",
+        "relative-weights",
+        "src-desc",
+        "system"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        15,
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "source_id": "css-logical-1",
+      "sha256": "4c0f9fbefd2c66a86f220d5daa1514facca3ad7dbae68a4c1a82b569de370edc",
+      "section_ids": [
+        "border-properties",
+        "dimension-properties",
+        "margin-properties",
+        "padding-properties",
+        "position-properties"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        21
+      ]
+    },
+    {
+      "source_id": "css-namespaces-3",
+      "sha256": "a23b00b30e8e3c550f35f85291cd514e0907c00899e12802569b7f977207daa8",
+      "section_ids": [
+        "css-qnames",
+        "declaration",
+        "prefixes",
+        "scope",
+        "syntax"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        11
+      ]
+    },
+    {
+      "source_id": "css-nesting-1",
+      "sha256": "b29b0db74b96af295efcd7cd94f34366dd099ebb905dc5529c61409184f6fa9c",
+      "section_ids": [
+        "conditionals",
+        "mixing",
+        "nest-selector",
+        "nested-declarations",
+        "nesting",
+        "nesting-at-scope",
+        "syntax"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        12
+      ]
+    },
+    {
+      "source_id": "css-page-3",
+      "sha256": "6051274a159df3f315c0e6474faf5c7b595b9e0f8c23e1402dc956b765812f57",
+      "section_ids": [
+        "margin-property-list",
+        "page-model",
+        "page-property-list",
+        "page-size-media-query",
+        "page-size-prop"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        19
+      ]
+    },
+    {
+      "source_id": "css-shadow-1",
+      "sha256": "0879121699895ad7670985665e6ee70bccd96c2a42e26cf99ca7fd56c44816e7",
+      "section_ids": [
+        "exportparts-attr",
+        "host-element-in-tree",
+        "host-selector",
+        "parsing",
+        "parsing-mapping",
+        "parsing-mapping-list",
+        "part",
+        "part-attr",
+        "selectors-data-model",
+        "shadow-cascading",
+        "shadow-names",
+        "shadow-names-serialization",
+        "slotted-pseudo",
+        "the-has-slotted-pseudo"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        14
+      ]
+    },
+    {
+      "source_id": "css-sizing-3",
+      "sha256": "ca0f1db3d5ad0c9799bf9dc04b9c30b4d9adf8d4d6f222787e4759ed81a6bbad",
+      "section_ids": [
+        "box-sizing",
+        "constraints",
+        "cyclic-percentage-contribution",
+        "intrinsic-contribution",
+        "intrinsic-sizes",
+        "max-size-properties",
+        "min-content-zero",
+        "min-size-properties",
+        "percentage-sizing",
+        "preferred-size-properties",
+        "sizing-values",
+        "stretch-fit-sizing"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        21,
+        22
+      ]
+    },
+    {
+      "source_id": "css-sizing-4",
+      "sha256": "faaa865895590c6c523bd5faf127ba940886d5113cef822f8d08eb0aac2ea468",
+      "section_ids": [
+        "aspect-ratio",
+        "aspect-ratio-automatic",
+        "aspect-ratio-margin-collapse",
+        "aspect-ratio-minimum",
+        "aspect-ratio-size-transfers",
+        "sizing-values"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        21
+      ]
+    },
+    {
+      "source_id": "css-syntax-3",
+      "sha256": "8dc3adcc2b4e8fd8fa73c0be85cec67f006874ab42010cdf4528af4aa83f2878",
+      "section_ids": [
+        "consume-at-rule",
+        "consume-block-contents",
+        "consume-declaration",
+        "consume-qualified-rule",
+        "consume-remnants-of-bad-url",
+        "consume-string-token",
+        "consume-url-token",
+        "error-handling",
+        "input-byte-stream",
+        "input-preprocessing",
+        "parse-stylesheet",
+        "tokenizer-algorithms"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        3,
+        4
+      ]
+    },
+    {
+      "source_id": "css-values-4",
+      "sha256": "7b6b68c34d00d7f6945e66e4e2efa913266299f597d5825393cae85dac1cc78c",
+      "section_ids": [
+        "calc-computed-value",
+        "calc-func",
+        "calc-ieee",
+        "calc-keywords",
+        "calc-range",
+        "calc-simplification",
+        "calc-syntax",
+        "calc-type-checking",
+        "comp-func",
+        "dimensions",
+        "exponent-funcs",
+        "font-relative-lengths",
+        "integers",
+        "mixed-percentages",
+        "numbers",
+        "numeric-ranges",
+        "percentages",
+        "ratios",
+        "round-func",
+        "sign-funcs",
+        "trig-funcs",
+        "viewport-relative-lengths",
+        "viewport-relative-units",
+        "viewport-variants"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        18,
+        19,
+        20
+      ]
+    },
+    {
+      "source_id": "css-values-5",
+      "sha256": "af984ef26b3954143b0f270253e3373f06b5255a5ac00aad919a4cb1b334a8ad",
+      "section_ids": [
+        "arbitrary-substitution",
+        "attr-notation",
+        "boolean-logic",
+        "calc-mix",
+        "calc-size",
+        "first-valid",
+        "if-notation",
+        "inherit-notation",
+        "invalid-substitution",
+        "long-substitution",
+        "media-progress-func",
+        "progress-func",
+        "random",
+        "random-item",
+        "substitution-in-shorthands",
+        "toggle-notation",
+        "tree-counting"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        20
+      ]
+    },
+    {
+      "source_id": "css-variables-1",
+      "sha256": "5ce7b2c106af576328f222dd622598f847881f2ba9a64d53d6681d27d07ea0db",
+      "section_ids": [
+        "cycles",
+        "guaranteed-invalid",
+        "invalid-variables",
+        "long-variables",
+        "syntax",
+        "using-variables",
+        "variables-in-shorthands"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        6
+      ]
+    },
+    {
+      "source_id": "dom",
+      "sha256": "ee88d76b0ca5b371ae51e4c20bbf8a1295265fb6f3f2c05635ea733d5e5eeeb1",
+      "section_ids": [
+        "assigning-slotables-and-slots",
+        "document-trees",
+        "finding-slots-and-slotables",
+        "light-tree-slotables",
+        "namespaces",
+        "node-trees",
+        "shadow-tree-slots",
+        "shadow-trees",
+        "trees"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        5,
+        14
+      ]
+    },
+    {
+      "source_id": "encoding",
+      "sha256": "f19b8fb06d0fd24ff54e02cf36afe76aa13743a539ff9a4eda30ba26a83931b0",
+      "section_ids": [
+        "names-and-labels",
+        "shared-utf-16-decoder",
+        "single-byte-decoder",
+        "specification-hooks",
+        "utf-8-decoder"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        3
+      ]
+    },
+    {
+      "source_id": "html",
+      "sha256": "6cdeb0258a285d27bfbd6f49213fd78274cb9bd007e904656c0483c377b3b404",
+      "section_ids": [
+        "attributes-for-embedded-content-and-images",
+        "bidi-rendering",
+        "button-state-(type=button)",
+        "changing-the-encoding-while-parsing",
+        "character-encodings",
+        "checkbox-state-(type=checkbox)",
+        "color-state-(type=color)",
+        "common-input-element-attributes",
+        "date-state-(type=date)",
+        "determining-the-character-encoding",
+        "dimension-attributes",
+        "email-state-(type=email)",
+        "embedded-content-rendering-rules",
+        "fetching-and-processing-a-resource-from-a-link-element",
+        "file-upload-state-(type=file)",
+        "flow-content-3",
+        "form-controls",
+        "hidden-elements",
+        "hidden-state-(type=hidden)",
+        "image-button-state-(type=image)",
+        "images-3",
+        "inert-subtrees",
+        "interaction-with-details-and-hidden=until-found",
+        "lists",
+        "local-date-and-time-state-(type=datetime-local)",
+        "month-state-(type=month)",
+        "native-appearance-2",
+        "non-replaced-elements",
+        "number-state-(type=number)",
+        "password-state-(type=password)",
+        "phrasing-content-3",
+        "radio-button-state-(type=radio)",
+        "range-state-(type=range)",
+        "replaced-elements",
+        "reset-button-state-(type=reset)",
+        "sections-and-headings",
+        "submit-button-state-(type=submit)",
+        "tables-2",
+        "telephone-state-(type=tel)",
+        "text-(type=text)-state-and-search-state-(type=search)",
+        "the-base-element",
+        "the-button-element",
+        "the-button-element-2",
+        "the-css-user-agent-style-sheet-and-presentational-hints",
+        "the-details-and-summary-elements",
+        "the-details-element",
+        "the-dialog-element",
+        "the-dir-attribute",
+        "the-embed-element",
+        "the-fieldset-and-legend-elements",
+        "the-fieldset-element",
+        "the-head-element",
+        "the-hidden-attribute",
+        "the-iframe-element",
+        "the-inert-attribute",
+        "the-input-element",
+        "the-lang-and-xml:lang-attributes",
+        "the-legend-element",
+        "the-link-element",
+        "the-meter-element",
+        "the-meter-element-2",
+        "the-noscript-element",
+        "the-object-element",
+        "the-progress-element",
+        "the-progress-element-2",
+        "the-select-element",
+        "the-select-element-2",
+        "the-slot-element",
+        "the-style-element",
+        "the-summary-element",
+        "the-template-element",
+        "the-textarea-element",
+        "the-textarea-element-2",
+        "time-state-(type=time)",
+        "url-state-(type=url)",
+        "week-state-(type=week)"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        3,
+        6,
+        10,
+        14,
+        23,
+        24,
+        25,
+        26
+      ]
+    },
+    {
+      "source_id": "mediaqueries-5",
+      "sha256": "9e761f96f6a9935591264b470bdf5e4c1b5b15874c376b9de70e670171671c95",
+      "section_ids": [
+        "any-input",
+        "aspect-ratio",
+        "color",
+        "color-gamut",
+        "color-index",
+        "custom-mq",
+        "device-aspect-ratio",
+        "device-height",
+        "device-width",
+        "display-modes",
+        "dynamic-range",
+        "environment-blending",
+        "error-handling",
+        "evaluating",
+        "forced-colors",
+        "grid",
+        "height",
+        "hover",
+        "inverted",
+        "media-conditions",
+        "media-types",
+        "mf-horizontal-viewport-segments",
+        "mf-overflow-block",
+        "mf-overflow-inline",
+        "mf-vertical-viewport-segments",
+        "monochrome",
+        "mq-boolean-context",
+        "mq-features",
+        "mq-list",
+        "mq-min-max",
+        "mq-not",
+        "mq-only",
+        "mq-prefix",
+        "mq-range-context",
+        "mq-ranges",
+        "mq-syntax",
+        "nav-controls",
+        "orientation",
+        "pointer",
+        "prefers-color-scheme",
+        "prefers-contrast",
+        "prefers-reduced-data",
+        "prefers-reduced-motion",
+        "prefers-reduced-transparency",
+        "resolution",
+        "scan",
+        "scripting",
+        "update",
+        "video-color-gamut",
+        "video-dynamic-range",
+        "width"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        8
+      ]
+    },
+    {
+      "source_id": "selectors-4",
+      "sha256": "5d3b3f7e1fcc562dcec1a01ad2c5651e9f0bac294b255a75352e9df202604e6d",
+      "section_ids": [
+        "attribute-case",
+        "attribute-representation",
+        "attribute-substrings",
+        "attrnmsp",
+        "autofill",
+        "checked",
+        "child-index",
+        "class-html",
+        "combinators",
+        "data-model",
+        "enableddisabled",
+        "featureless-elements",
+        "forgiving-selector",
+        "grammar",
+        "grouping",
+        "id-selectors",
+        "link",
+        "matches",
+        "negation",
+        "opt-pseudos",
+        "placeholder",
+        "range-pseudos",
+        "relational",
+        "relative",
+        "rw-pseudos",
+        "specificity-rules",
+        "structural-pseudos",
+        "structure",
+        "the-any-link-pseudo",
+        "the-default-pseudo",
+        "the-defined-pseudo",
+        "the-dir-pseudo",
+        "the-empty-pseudo",
+        "the-lang-pseudo",
+        "the-root-pseudo",
+        "the-scope-pseudo",
+        "the-target-pseudo",
+        "the-universal-selector",
+        "type-nmsp",
+        "type-selectors",
+        "typed-child-index",
+        "user-pseudos",
+        "validity-pseudos",
+        "visited-privacy",
+        "zero-matches"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        11,
+        25
+      ]
+    },
+    {
+      "source_id": "selectors-5",
+      "sha256": "5d0567ed04bb6b51f3d27dd670cd5f46c1669c83ab131f0b408443050545bc89",
+      "section_ids": [
+        "blank",
+        "interest-pseudos",
+        "local-pseudo",
+        "time-pseudos"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        11
+      ]
+    },
+    {
+      "source_id": "url",
+      "sha256": "642835a1c464d0ff5764f57e1d6043f95728e2d2520b30f869c53d009b516fcd",
+      "section_ids": [
+        "url-equivalence",
+        "url-parsing",
+        "url-serializing"
+      ],
+      "review_state": "pending",
+      "import_dispositions": [],
+      "overlap_dispositions": [],
+      "owner_tasks": [
+        10
+      ]
+    }
+  ],
+  "handoffs": [
+    {
+      "workstream": "float-layout",
+      "reason": "New float formatting is the approved later layout workstream; existing block/flex/table sizing remains in foundations.",
+      "requirement_ids": [
+        "css21-visuren.floats",
+        "css21-visuren.float-position",
+        "css21-visuren.flow-control"
+      ]
+    },
+    {
+      "workstream": "grid-layout",
+      "reason": "New grid/subgrid formatting remains mandatory in the global profile.",
+      "requirement_ids": [
+        "css-grid-2.layout-algorithm",
+        "css-grid-2.algo-track-sizing",
+        "css-grid-2.subgrids"
+      ]
+    },
+    {
+      "workstream": "multicol-layout",
+      "reason": "New multicol formatting remains mandatory; foundations does not advertise usable layout support.",
+      "requirement_ids": [
+        "css-multicol-2.introduction"
+      ]
+    },
+    {
+      "workstream": "vertical-writing",
+      "reason": "Complete vertical writing layout remains later; supported-mode logical mappings remain foundations obligations.",
+      "requirement_ids": [
+        "css-writing-modes-4.text-flow"
+      ]
+    },
+    {
+      "workstream": "container-layout",
+      "reason": "Container query/layout and its dependent units/functions require the approved later layout workstream.",
+      "requirement_ids": [
+        "css-conditional-5.container-queries",
+        "css-conditional-5.container-rule",
+        "css-conditional-5.container-features",
+        "css-conditional-5.container-lengths"
+      ]
+    },
+    {
+      "workstream": "advanced-typography",
+      "reason": "Advanced font rendering beyond required CSS2 shorthand/small-caps/matching remains later; resets still apply in foundations.",
+      "requirement_ids": [
+        "css-fonts-4.font-variant-alternates-prop",
+        "css-fonts-4.font-variant-east-asian-prop",
+        "css-fonts-4.font-palette-prop"
+      ]
+    },
+    {
+      "workstream": "book-generated-content",
+      "reason": "General generated content and book features remain mandatory in the complete profile.",
+      "requirement_ids": [
+        "css-content-3.intro"
+      ]
+    },
+    {
+      "workstream": "counter-styles",
+      "reason": "General counter-style generation remains later; current list semantics stay supported.",
+      "requirement_ids": [
+        "css-counter-styles-3.intro"
+      ]
+    },
+    {
+      "workstream": "svg-graphics",
+      "reason": "Remaining SVG rendering remains mandatory; existing supported static SVG is reused.",
+      "requirement_ids": [
+        "svg2-complete.render-renderingtree"
+      ]
+    },
+    {
+      "workstream": "mathml-graphics",
+      "reason": "Remaining MathML layout remains mandatory; HTML foreign-content parsing is a foundation.",
+      "requirement_ids": [
+        "mathml-core.x3-1-2-layout-algorithms"
+      ]
+    }
+  ]
+}

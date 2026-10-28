@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css22.w3c-doctype",
+      "family": "css22",
+      "source_id": "css22",
+      "sections": [
+        "W3C-doctype"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C First Public Working Draft 12 April 2016.",
+      "locator": {
+        "section_id": "W3C-doctype",
+        "text_sha256": "fd7729fdb7db2cdaf18f885ee082e115c363a5ecb9ec8e02557ed66eb5960082"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css22.fulltoc",
+      "family": "css22",
+      "source_id": "css22",
+      "sections": [
+        "fulltoc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Full Table of Contents.",
+      "locator": {
+        "section_id": "fulltoc",
+        "text_sha256": "282ed9dd593632f2310d9aacbd9a1f684d414e75575f95e40e828bb51632a430"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css22.fulltoc-clause-c4291a798bbe",
+        "css22.fulltoc-clause-eeeb79dd53a5",
+        "css22.fulltoc-clause-1690ea7386d2",
+        "css22.fulltoc-clause-5e0758efa953",
+        "css22.fulltoc-clause-7d29c3bcaf2e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css22.fulltoc-clause-c4291a798bbe",
+      "family": "css22",
+      "source_id": "css22",
+      "sections": [
+        "fulltoc"
+      ],
+      "behaviour": "Full Table of Contents — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "fulltoc",
+        "clause_index": 13,
+        "clause_sha256": "c4291a798bbec6681e5dbd446d2ddc941c9900dbbea75818201619da9e30bb3a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css22.fulltoc-clause-eeeb79dd53a5",
+      "family": "css22",
+      "source_id": "css22",
+      "sections": [
+        "fulltoc"
+      ],
+      "behaviour": "Full Table of Contents — normative clause 81, located by its exact source hash.",
+      "locator": {
+        "section_id": "fulltoc",
+        "clause_index": 80,
+        "clause_sha256": "eeeb79dd53a51474d73706bec18f0b25980eccbf40e07453aa010fcd287cf4d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css22.fulltoc-clause-1690ea7386d2",
+      "family": "css22",
+      "source_id": "css22",
+      "sections": [
+        "fulltoc"
+      ],
+      "behaviour": "Full Table of Contents — normative clause 83, located by its exact source hash.",
+      "locator": {
+        "section_id": "fulltoc",
+        "clause_index": 82,
+        "clause_sha256": "1690ea7386d27d917feacb98166e3746b11fc134d01deb1e18b8a8ccd3037eb8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css22.fulltoc-clause-5e0758efa953",
+      "family": "css22",
+      "source_id": "css22",
+      "sections": [
+        "fulltoc"
+      ],
+      "behaviour": "Full Table of Contents — normative clause 87, located by its exact source hash.",
+      "locator": {
+        "section_id": "fulltoc",
+        "clause_index": 86,
+        "clause_sha256": "5e0758efa953ea4c7bea7dbebe6c6bfed8caae3062d60a12259d17b98c592432"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css22.fulltoc-clause-7d29c3bcaf2e",
+      "family": "css22",
+      "source_id": "css22",
+      "sections": [
+        "fulltoc"
+      ],
+      "behaviour": "Full Table of Contents — normative clause 207, located by its exact source hash.",
+      "locator": {
+        "section_id": "fulltoc",
+        "clause_index": 206,
+        "clause_sha256": "7d29c3bcaf2e6012bdd59079551d21afcedecfc2858acb9f640de14f178ccd92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css22.title",
+      "family": "css22",
+      "source_id": "css22",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Cascading Style Sheets Level 2 Revision 2 (CSS 2.2) Specification.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css22.abstract",
+      "family": "css22",
+      "source_id": "css22",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "3a9fab60ef3d8e2cda61be7d5e40111e78233e7853f9f667627230a8b66b478b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css22.status",
+      "family": "css22",
+      "source_id": "css22",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "d07327f5a19271c56ce037ecf5e53dc8aa5aab6da2c38e2d0885ec1f8f3edebf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css22.minitoc",
+      "family": "css22",
+      "source_id": "css22",
+      "sections": [
+        "minitoc"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "minitoc",
+        "text_sha256": "d40381e2c0d92cbaeafdcd709d25b0063296e58d2472641a01a7ae4affd31677"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

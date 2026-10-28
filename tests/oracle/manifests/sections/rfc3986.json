@@ -1,0 +1,1004 @@
+{
+  "schema_version": 1,
+  "source_id": "rfc3986",
+  "sections": [
+    {
+      "id": "heading-ffd4978b5867",
+      "title": "Uniform Resource Identifier (URI): Generic Syntax",
+      "level": 1,
+      "text_sha256": "842a9eeb18497e20230dc513f10baf9f9b58a99aea5af96ee0b409a2d867c513",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.heading-ffd4978b5867"
+        ]
+      }
+    },
+    {
+      "id": "section-1",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "c199b8ece80709b7ca0c1f8cff8691576328c1c5183a1c9e12fa0680ac49db27",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-1"
+        ]
+      }
+    },
+    {
+      "id": "section-1.1",
+      "title": "1.1. Overview of URIs",
+      "level": 3,
+      "text_sha256": "7df3a83a7717f3f1abea0184c20346c5033986a4e5763f29ebfe766328bf314c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-1-1",
+          "rfc3986.section-1-1-clause-7b637e4dc224",
+          "rfc3986.section-1-1-clause-4d464457e2c0"
+        ]
+      }
+    },
+    {
+      "id": "section-1.1.1",
+      "title": "1.1.1. Generic Syntax",
+      "level": 4,
+      "text_sha256": "7c56373eeb674d465c5a8f6825eec07e8f8ee0f65dc31537f949e97b31840b24",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-1-1-1"
+        ]
+      }
+    },
+    {
+      "id": "section-1.1.2",
+      "title": "1.1.2. Examples",
+      "level": 4,
+      "text_sha256": "67e2671b5fbf26e8463804b14efd257fcf4d108219c094ba46020202797db4cc",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-1-1-2"
+        ]
+      }
+    },
+    {
+      "id": "section-1.1.3",
+      "title": "1.1.3. URI, URL, and URN",
+      "level": 4,
+      "text_sha256": "b708f3b543f2d3f7aea94019e9e6eadc922b6376eaaa736fa0cc46b13c4f7498",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-1-1-3"
+        ]
+      }
+    },
+    {
+      "id": "section-1.2",
+      "title": "1.2. Design Considerations",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-1-2"
+        ]
+      }
+    },
+    {
+      "id": "section-1.2.1",
+      "title": "1.2.1. Transcription",
+      "level": 4,
+      "text_sha256": "f1bd6d9fee8bef9ca280e82c8c592405e34bb2934a16a19258e82b086a217c4c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-1-2-1",
+          "rfc3986.section-1-2-1-clause-5098251ba25d"
+        ]
+      }
+    },
+    {
+      "id": "section-1.2.2",
+      "title": "1.2.2. Separating Identification from Interaction",
+      "level": 4,
+      "text_sha256": "2799dd2a73a92ed872754d227ac3f8a88e56f081c7bf505aca446ee09182371a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-1-2-2"
+        ]
+      }
+    },
+    {
+      "id": "section-1.2.3",
+      "title": "1.2.3. Hierarchical Identifiers",
+      "level": 4,
+      "text_sha256": "dd18a06beca6a2bbacd35faaf6b323f590a920b56741f683bcd6510d4da856ec",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-1-2-3",
+          "rfc3986.section-1-2-3-clause-352762aff651"
+        ]
+      }
+    },
+    {
+      "id": "section-1.3",
+      "title": "1.3. Syntax Notation",
+      "level": 3,
+      "text_sha256": "bc7d8a7a8f5998ab30fe603256a2ba9842fedc85d44e79089af173e030fd41c8",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-1-3"
+        ]
+      }
+    },
+    {
+      "id": "section-2",
+      "title": "2. Characters",
+      "level": 2,
+      "text_sha256": "624f252889aed517c828b93014827587aaf1cec427eb65841ec3a0914b3ae3b4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-2",
+          "rfc3986.section-2-clause-d791a90cd564"
+        ]
+      }
+    },
+    {
+      "id": "section-2.1",
+      "title": "2.1. Percent-Encoding",
+      "level": 3,
+      "text_sha256": "b8289aa97978c0b47e2855ed564682cffc219a9ab9083643ce3b90b50f7bbe0b",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-2-1"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2",
+      "title": "2.2. Reserved Characters",
+      "level": 3,
+      "text_sha256": "56b36e5715ba121b47e415bedaa5a8e2a35ae358433ed4d9b9785647d4116c24",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-2-2",
+          "rfc3986.section-2-2-clause-27d5fdc346e7"
+        ]
+      }
+    },
+    {
+      "id": "section-2.3",
+      "title": "2.3. Unreserved Characters",
+      "level": 3,
+      "text_sha256": "d2c7dc5ddb3abe7fb5a94f4168d6c6c869f23eaddcd44c4d0380f2a7d7e18377",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-2-3",
+          "rfc3986.section-2-3-clause-d0d5d0063b92"
+        ]
+      }
+    },
+    {
+      "id": "section-2.4",
+      "title": "2.4. When to Encode or Decode",
+      "level": 3,
+      "text_sha256": "eacbe1635f60ea554ef56513c86d8cd6fc965e700f1bd3ce6050e6830eb478ff",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-2-4"
+        ]
+      }
+    },
+    {
+      "id": "section-2.5",
+      "title": "2.5. Identifying Data",
+      "level": 3,
+      "text_sha256": "a203e15b5fed61d9793f142f1ea0cef62bcd9bd580caf9f0c064e39bf8f01e25",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-2-5",
+          "rfc3986.section-2-5-clause-19bceba57658",
+          "rfc3986.section-2-5-clause-1268d15b74cb"
+        ]
+      }
+    },
+    {
+      "id": "section-3",
+      "title": "3. Syntax Components",
+      "level": 2,
+      "text_sha256": "9f1ab2d67d99fc4506ce3854e8417e7a0dc1d50b34d4234cf1b026b353a84b3c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-3"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1",
+      "title": "3.1. Scheme",
+      "level": 3,
+      "text_sha256": "4be4c38e198308b4450bad23028c92a4128b94f745c2663147f47f85bb738fd7",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-3-1"
+        ]
+      }
+    },
+    {
+      "id": "section-3.2",
+      "title": "3.2. Authority",
+      "level": 3,
+      "text_sha256": "77b7744602e5ff8e72287d0fbe2bce81813e5faf4e14744d212e8af9093aeb37",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-3-2",
+          "rfc3986.section-3-2-clause-70ba99190fb1"
+        ]
+      }
+    },
+    {
+      "id": "section-3.2.1",
+      "title": "3.2.1. User Information",
+      "level": 4,
+      "text_sha256": "482d95ed477607a936c6bbd9226169e6f08f0f895a048d018a40c86862331fc0",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-3-2-1"
+        ]
+      }
+    },
+    {
+      "id": "section-3.2.2",
+      "title": "3.2.2. Host",
+      "level": 4,
+      "text_sha256": "32d14946599d0be9cdb8551a9fd118f6eb86e20bfcc2c56173e6d2aa8455e528",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-3-2-2",
+          "rfc3986.section-3-2-2-clause-e53570b7542a",
+          "rfc3986.section-3-2-2-clause-418aad52c009"
+        ]
+      }
+    },
+    {
+      "id": "section-3.2.3",
+      "title": "3.2.3. Port",
+      "level": 4,
+      "text_sha256": "98801508ce5dc3bf6757c06e0a4a583bfd4e36591460d1882631774c9c59d79b",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-3-2-3"
+        ]
+      }
+    },
+    {
+      "id": "section-3.3",
+      "title": "3.3. Path",
+      "level": 3,
+      "text_sha256": "0ba60f8e2c02925f31ae187425e580608f41b1fe7c42804395532797c092ed1e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-3-3",
+          "rfc3986.section-3-3-clause-d1c7d750b4f9"
+        ]
+      }
+    },
+    {
+      "id": "section-3.4",
+      "title": "3.4. Query",
+      "level": 3,
+      "text_sha256": "e5cacad5060bf613c2b038d1bcb56a98c6684232170ef8edd8bfa01e7c351984",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-3-4"
+        ]
+      }
+    },
+    {
+      "id": "section-3.5",
+      "title": "3.5. Fragment",
+      "level": 3,
+      "text_sha256": "b7c23366b577510e52bcdb9402aeb371626de4633af5b64f965799bb07f8cf68",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-3-5"
+        ]
+      }
+    },
+    {
+      "id": "section-4",
+      "title": "4. Usage",
+      "level": 2,
+      "text_sha256": "e80e0a203d752fdcb5a3d83b0a713269fd44240e77828fe99a40f4e995d081b2",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-4"
+        ]
+      }
+    },
+    {
+      "id": "section-4.1",
+      "title": "4.1. URI Reference",
+      "level": 3,
+      "text_sha256": "f158f6f908a1bcce6d855793f6a0ea191ff8074af48ae00c3a06c20b5bc56e73",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-4-1",
+          "rfc3986.section-4-1-clause-d9462a8e5e2e"
+        ]
+      }
+    },
+    {
+      "id": "section-4.2",
+      "title": "4.2. Relative Reference",
+      "level": 3,
+      "text_sha256": "dfd0efb4ff16cb88165d4ad0bd980d2ab941870555fddbe45fd883a3bea60238",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-4-2"
+        ]
+      }
+    },
+    {
+      "id": "section-4.3",
+      "title": "4.3. Absolute URI",
+      "level": 3,
+      "text_sha256": "c14d1fd0d9dc42df9fc6bd08c9c074bdeb33206d1262a17ccbb02cf842fbb1c0",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-4-3"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4",
+      "title": "4.4. Same-Document Reference",
+      "level": 3,
+      "text_sha256": "b37f4491abc72dbd65b3ede86e82108102d5f2d713ba4486c620d5b168208f24",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-4-4"
+        ]
+      }
+    },
+    {
+      "id": "section-4.5",
+      "title": "4.5. Suffix Reference",
+      "level": 3,
+      "text_sha256": "7d2a7e87320a0be08ac66d5bf42064e82b21f1d706cd5dde3ad313244bb6b07e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-4-5",
+          "rfc3986.section-4-5-clause-2c783af5db3e"
+        ]
+      }
+    },
+    {
+      "id": "section-5",
+      "title": "5. Reference Resolution",
+      "level": 2,
+      "text_sha256": "211cbc182a76d2999efd1b91d4f4cb1d21f0c7fb9560f9c5875df3133594ce83",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5"
+        ]
+      }
+    },
+    {
+      "id": "section-5.1",
+      "title": "5.1. Establishing a Base URI",
+      "level": 3,
+      "text_sha256": "aa7d433c216cf8f3de6267eb56f03310493f1f7d8efc3a248770bcc7929da167",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-1"
+        ]
+      }
+    },
+    {
+      "id": "section-5.1.1",
+      "title": "5.1.1. Base URI Embedded in Content",
+      "level": 4,
+      "text_sha256": "a21504398499e8cc9baba685b218723c52d726ab16fc66ff2321c476cf7b74ed",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-1-1"
+        ]
+      }
+    },
+    {
+      "id": "section-5.1.2",
+      "title": "5.1.2. Base URI from the Encapsulating Entity",
+      "level": 4,
+      "text_sha256": "01428414c96ed477c5e541b972b3875b1df7d7fcee1f63e7e91b35d07f5f9853",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-1-2"
+        ]
+      }
+    },
+    {
+      "id": "section-5.1.3",
+      "title": "5.1.3. Base URI from the Retrieval URI",
+      "level": 4,
+      "text_sha256": "85d8aaf471dfdbf86eeff711213e057db84147b88d9397eff94e985fb7577466",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-1-3"
+        ]
+      }
+    },
+    {
+      "id": "section-5.1.4",
+      "title": "5.1.4. Default Base URI",
+      "level": 4,
+      "text_sha256": "cbb5c485d5b488ce7fdf7add56ba6e3fda20196188f64fa3b5873d17e19678e7",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-1-4"
+        ]
+      }
+    },
+    {
+      "id": "section-5.2",
+      "title": "5.2. Relative Resolution",
+      "level": 3,
+      "text_sha256": "a267991b69bdbc978d8b2e6caa644bb1f1666c96ecb415924de5b4e229709dd5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-2"
+        ]
+      }
+    },
+    {
+      "id": "section-5.2.1",
+      "title": "5.2.1. Pre-parse the Base URI",
+      "level": 4,
+      "text_sha256": "049e6880ed7905f7ba29917620b986dceedec8283749050ecc6c8f843feef1fe",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-2-1"
+        ]
+      }
+    },
+    {
+      "id": "section-5.2.2",
+      "title": "5.2.2. Transform References",
+      "level": 4,
+      "text_sha256": "f58aa1a50f681e3a5dc66572cee71bdec46a392f0355340403253370f23db024",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-2-2"
+        ]
+      }
+    },
+    {
+      "id": "section-5.2.3",
+      "title": "5.2.3. Merge Paths",
+      "level": 4,
+      "text_sha256": "8f928462c2b71cea22c9db5640488aa14b12f54afb2a186f5066c42b188dd6f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-2-3"
+        ]
+      }
+    },
+    {
+      "id": "section-5.2.4",
+      "title": "5.2.4. Remove Dot Segments",
+      "level": 4,
+      "text_sha256": "da106a35eacfe37c7e20a1bf54aa6575ddd1bd2ba0cc93d866503ce8d4445de5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-2-4",
+          "rfc3986.section-5-2-4-clause-0d08dd12bf2c"
+        ]
+      }
+    },
+    {
+      "id": "section-5.3",
+      "title": "5.3. Component Recomposition",
+      "level": 3,
+      "text_sha256": "50e6488c8743297daa27e1830777da6ef949b7f010894adb986c4c7b4ebb5db1",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-3"
+        ]
+      }
+    },
+    {
+      "id": "section-5.4",
+      "title": "5.4. Reference Resolution Examples",
+      "level": 3,
+      "text_sha256": "6380662bea0b0737d6ff2cdc60b0afa323996e6f77363775c525ba9e099c3678",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-4"
+        ]
+      }
+    },
+    {
+      "id": "section-5.4.1",
+      "title": "5.4.1. Normal Examples",
+      "level": 4,
+      "text_sha256": "04a57fab774f80f39f97b6ea0960766b604358237143a2583f9669b83fff0664",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-4-1"
+        ]
+      }
+    },
+    {
+      "id": "section-5.4.2",
+      "title": "5.4.2. Abnormal Examples",
+      "level": 4,
+      "text_sha256": "bc8aaefdb98e94143d4ac3075dd26408d7d37bbfe29f3358dd3243d94ea36388",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-5-4-2",
+          "rfc3986.section-5-4-2-clause-dacf23f6bcd8"
+        ]
+      }
+    },
+    {
+      "id": "section-6",
+      "title": "6. Normalization and Comparison",
+      "level": 2,
+      "text_sha256": "5cd0e6a6506ee63d0e2a7ded771af159943068701afdd745446d5df84388fc2d",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-6"
+        ]
+      }
+    },
+    {
+      "id": "section-6.1",
+      "title": "6.1. Equivalence",
+      "level": 3,
+      "text_sha256": "99dc1c8df98562f9cb1a7be2d9924f3d3381169a95a164e028345c619e4af839",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-6-1"
+        ]
+      }
+    },
+    {
+      "id": "section-6.2",
+      "title": "6.2. Comparison Ladder",
+      "level": 3,
+      "text_sha256": "0adcc61b35102c5a28d1eef8f4441e14d2e7d8dcd774857ca7167f7eb046d7ff",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-6-2"
+        ]
+      }
+    },
+    {
+      "id": "section-6.2.1",
+      "title": "6.2.1. Simple String Comparison",
+      "level": 4,
+      "text_sha256": "d33bdd680e5940267dce8faa2ac89e2c57f2a0a8792b8e56d4c39674000affe0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-6-2-1"
+        ]
+      }
+    },
+    {
+      "id": "section-6.2.2",
+      "title": "6.2.2. Syntax-Based Normalization",
+      "level": 4,
+      "text_sha256": "a0ffe1bf4971f7f79b8ace80107b2f6b771ee3d1a836ab630d7c509825411f89",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-6-2-2"
+        ]
+      }
+    },
+    {
+      "id": "section-6.2.2.1",
+      "title": "6.2.2.1. Case Normalization",
+      "level": 5,
+      "text_sha256": "e768ad7fe500e989d545bafb9c76981a9aa323e51f108c209798544ecd995031",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-6-2-2-1"
+        ]
+      }
+    },
+    {
+      "id": "section-6.2.2.2",
+      "title": "6.2.2.2. Percent-Encoding Normalization",
+      "level": 5,
+      "text_sha256": "22627bb87692b9eb2eccbeb224c535d2a4970f0ad18236f8df58e33bc3269b77",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-6-2-2-2"
+        ]
+      }
+    },
+    {
+      "id": "section-6.2.2.3",
+      "title": "6.2.2.3. Path Segment Normalization",
+      "level": 5,
+      "text_sha256": "1eadbf3d72aafffa4963b287e7a840f7fab6887c1dbf4e4ccce895da82e224f4",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-6-2-2-3"
+        ]
+      }
+    },
+    {
+      "id": "section-6.2.3",
+      "title": "6.2.3. Scheme-Based Normalization",
+      "level": 4,
+      "text_sha256": "cab05b7ef0cb3240a9057f5dba08c8e6e90ee76400e8240980d3bbda1cd69db3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-6-2-3"
+        ]
+      }
+    },
+    {
+      "id": "section-6.2.4",
+      "title": "6.2.4. Protocol-Based Normalization",
+      "level": 4,
+      "text_sha256": "f38fc007b71327c2d3c8a8f4320e01c8fb79de51f07123153f8b87c1c6aa13c8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-6-2-4"
+        ]
+      }
+    },
+    {
+      "id": "section-7",
+      "title": "7. Security Considerations",
+      "level": 2,
+      "text_sha256": "1b270da9f713d5b46c5803d9b078d4b616b6d3e5e9e91aa809499776c88c1c31",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-7"
+        ]
+      }
+    },
+    {
+      "id": "section-7.1",
+      "title": "7.1. Reliability and Consistency",
+      "level": 3,
+      "text_sha256": "404283b85b111d139ac651497efc270aa54946a19274077f071e81f7dcefce97",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-7-1"
+        ]
+      }
+    },
+    {
+      "id": "section-7.2",
+      "title": "7.2. Malicious Construction",
+      "level": 3,
+      "text_sha256": "28cc6f51ca28535dfabdc5ce64ba6e67da40c1e725b040a24d3798bf8fbf1beb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-7-2",
+          "rfc3986.section-7-2-clause-b0c78bf8ee2b"
+        ]
+      }
+    },
+    {
+      "id": "section-7.3",
+      "title": "7.3. Back-End Transcoding",
+      "level": 3,
+      "text_sha256": "f9750556f9ccc0d05e3858ea09ef5ef22e598d4f825198ff69c57d82f96c4848",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-7-3"
+        ]
+      }
+    },
+    {
+      "id": "section-7.4",
+      "title": "7.4. Rare IP Address Formats",
+      "level": 3,
+      "text_sha256": "c4feff99e1597a12c620eb3dcafe7f6e2c5b2ad5847964326e51af4fc424367a",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-7-4"
+        ]
+      }
+    },
+    {
+      "id": "section-7.5",
+      "title": "7.5. Sensitive Information",
+      "level": 3,
+      "text_sha256": "d12f5dd0f1dafbfeaa76965d4022700d4f1ec8e6b858a4f2639bb279846adfe9",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-7-5"
+        ]
+      }
+    },
+    {
+      "id": "section-7.6",
+      "title": "7.6. Semantic Attacks",
+      "level": 3,
+      "text_sha256": "521fb1cd8195a845f436f9f351bacd610ca5d26ccb85c5325e20680b7336e68a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-7-6"
+        ]
+      }
+    },
+    {
+      "id": "section-8",
+      "title": "8. IANA Considerations",
+      "level": 2,
+      "text_sha256": "f53452453864b7cde11d6030fc90d9f81462e2ab51f167bd1ea384d089c2e822",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-8"
+        ]
+      }
+    },
+    {
+      "id": "section-9",
+      "title": "9. Acknowledgements",
+      "level": 2,
+      "text_sha256": "5798d6b06173cc83b5d40c69896d11cf3c6ff60492c39a97114b2ce326d4ce5a",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-9"
+        ]
+      }
+    },
+    {
+      "id": "section-10",
+      "title": "10. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-10"
+        ]
+      }
+    },
+    {
+      "id": "section-10.1",
+      "title": "10.1. Normative References",
+      "level": 3,
+      "text_sha256": "b85deb7f2ea2e82410f3e44a868204e531c43b88ad883d888e2eafcb1ece52bc",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-10-1"
+        ]
+      }
+    },
+    {
+      "id": "section-10.2",
+      "title": "10.2. Informative References",
+      "level": 3,
+      "text_sha256": "580d3a7c7adba262827ff600c4043746404850552ca47f75c10a43528a3aa38f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.section-10-2"
+        ]
+      }
+    },
+    {
+      "id": "appendix-A",
+      "title": "Appendix A. Collected ABNF for URI",
+      "level": 2,
+      "text_sha256": "7b5a04558635ffad521a2f4dd20915d9545899d2aaaea301528ad42aae391b73",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.appendix-a"
+        ]
+      }
+    },
+    {
+      "id": "appendix-B",
+      "title": "Appendix B. Parsing a URI Reference with a Regular Expression",
+      "level": 2,
+      "text_sha256": "c47f978018c4c082ca8cca47f749ad92beb266e0f234bc791d882f1ea39039a4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.appendix-b",
+          "rfc3986.appendix-b-clause-dc8d739ff541"
+        ]
+      }
+    },
+    {
+      "id": "appendix-C",
+      "title": "Appendix C. Delimiting a URI in Context",
+      "level": 2,
+      "text_sha256": "4c75c2cf08a7fa7c65041aa4096afc3f3becf78aa542df8623d85b77f0e82613",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.appendix-c",
+          "rfc3986.appendix-c-clause-5cd4866a616f"
+        ]
+      }
+    },
+    {
+      "id": "appendix-D",
+      "title": "Appendix D. Changes from RFC 2396",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.appendix-d"
+        ]
+      }
+    },
+    {
+      "id": "appendix-D.1",
+      "title": "D.1. Additions",
+      "level": 3,
+      "text_sha256": "178ebb0b3dc5303b7e32ad1c3fe1d64cda7ed80ec7af271c64a0fd2347a8c031",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.appendix-d-1"
+        ]
+      }
+    },
+    {
+      "id": "appendix-D.2",
+      "title": "D.2. Modifications",
+      "level": 3,
+      "text_sha256": "9ccfaefd25a829aa26731536b76d9784daa387efd0046fb91e51f585416345b2",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc3986.appendix-d-2",
+          "rfc3986.appendix-d-2-clause-752f18e146d4",
+          "rfc3986.appendix-d-2-clause-22dc3dc6f6fb",
+          "rfc3986.appendix-d-2-clause-3aa6a901e310"
+        ]
+      }
+    }
+  ]
+}

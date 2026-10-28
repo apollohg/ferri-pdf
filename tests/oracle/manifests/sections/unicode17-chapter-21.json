@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-21",
+  "sections": [
+    {
+      "id": "G26317",
+      "title": "Notational Systems",
+      "level": 1,
+      "text_sha256": "ee2703d733e28326de7c4f23bc4c54d7f7f2f29a52e59584edac889a9b471c7c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.g26317",
+          "unicode17-chapter-21.g26317-clause-b38650d2e174"
+        ]
+      }
+    },
+    {
+      "id": "heading-f3f7472fec09",
+      "title": "21.1 Braille",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-f3f7472fec09"
+        ]
+      }
+    },
+    {
+      "id": "heading-d791d1ba21a4",
+      "title": "21.1.1 Braille Patterns: U+2800–U+28FF",
+      "level": 3,
+      "text_sha256": "99a0d0b7157a4dab75f14c7aa59f69e9b0c4bef378d4e21e41e0548adc8d9ad1",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-d791d1ba21a4"
+        ]
+      }
+    },
+    {
+      "id": "heading-18720fe40f6a",
+      "title": "21.2 Western Musical Symbols",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-18720fe40f6a"
+        ]
+      }
+    },
+    {
+      "id": "heading-c906938afd1e",
+      "title": "21.2.1 Musical Symbols: U+1D100–U+1D1FF",
+      "level": 3,
+      "text_sha256": "1b8c3bef4b1fb5cc13366e3d11ee3c704c3bf5f7767815d571ea678d8ac549a1",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-c906938afd1e",
+          "unicode17-chapter-21.heading-c906938afd1e-clause-933615c1baf4",
+          "unicode17-chapter-21.heading-c906938afd1e-clause-c373c95930e5",
+          "unicode17-chapter-21.heading-c906938afd1e-clause-9ff9f3ad7318"
+        ]
+      }
+    },
+    {
+      "id": "heading-fea7b3f5bbb5",
+      "title": "21.3 Byzantine Musical Symbols",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-fea7b3f5bbb5"
+        ]
+      }
+    },
+    {
+      "id": "heading-c5279603a456",
+      "title": "21.3.1 Byzantine Musical Symbols: U+1D000–U+1D0FF",
+      "level": 3,
+      "text_sha256": "d4650a87f7e908f3c29fc6ab5661cb187b6afea1ed83456456837bf5cf1baf39",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-c5279603a456"
+        ]
+      }
+    },
+    {
+      "id": "heading-1267c2bdd54d",
+      "title": "21.4 Znamenny Musical Notation",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-1267c2bdd54d"
+        ]
+      }
+    },
+    {
+      "id": "heading-4c5954b74f09",
+      "title": "21.4.1 Znamenny Musical Notation: U+1CF00–U+1CFCF",
+      "level": 3,
+      "text_sha256": "46fd89bf4f0f7c641145a791e80678f470b4f85f3ef7ca5498633e33892330de",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-4c5954b74f09"
+        ]
+      }
+    },
+    {
+      "id": "heading-cee5aa3e2d6d",
+      "title": "21.5 Ancient Greek Musical Notation",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-cee5aa3e2d6d"
+        ]
+      }
+    },
+    {
+      "id": "heading-dac1711236f3",
+      "title": "21.5.1 Ancient Greek Musical Notation: U+1D200–U+1D24F",
+      "level": 3,
+      "text_sha256": "e91eb5ccb8019e0f1fa4880450f25fdf3fa66500d6ec5f32daff04a01fdc1ae3",
+      "clause_count": 246,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-dac1711236f3",
+          "unicode17-chapter-21.heading-dac1711236f3-clause-f0072323a10d"
+        ]
+      }
+    },
+    {
+      "id": "heading-b072e0c2c8e7",
+      "title": "21.6 Duployan",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-b072e0c2c8e7"
+        ]
+      }
+    },
+    {
+      "id": "heading-ffff430cbc7c",
+      "title": "21.6.1 Duployan: U+1BC00–U+1BC9F",
+      "level": 3,
+      "text_sha256": "e9406d2fc639725a623c15aaa70d56d6d67ccd9afa7881f3f86557430166e242",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-ffff430cbc7c"
+        ]
+      }
+    },
+    {
+      "id": "heading-5e36680dc367",
+      "title": "21.6.2 Shorthand Format Controls: U+1BCA0–U+1BCAF",
+      "level": 3,
+      "text_sha256": "8012d339ed18cf9312486a64d36c161c71909de958c3d4fbabbe38ea425dfdcd",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-5e36680dc367",
+          "unicode17-chapter-21.heading-5e36680dc367-clause-9965f34518b1"
+        ]
+      }
+    },
+    {
+      "id": "heading-e561ac41fb70",
+      "title": "21.7 Sutton SignWriting",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-e561ac41fb70"
+        ]
+      }
+    },
+    {
+      "id": "heading-280d3fd497ed",
+      "title": "21.7.1 Sutton SignWriting: U+1D800–U+1DAAF",
+      "level": 3,
+      "text_sha256": "031bb2e96c16294601571cf253d570503a6b8204b3058d6932f25790d409587e",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-21.heading-280d3fd497ed"
+        ]
+      }
+    }
+  ]
+}

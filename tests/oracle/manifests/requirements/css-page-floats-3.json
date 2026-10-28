@@ -1,0 +1,1782 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-page-floats-3.subtitle",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "subtitle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C First Public Working Draft, 15 September 2015.",
+      "locator": {
+        "section_id": "subtitle",
+        "text_sha256": "51c07f2892f067fd8ec363cfbf976c1f741a1709c0aea4e5de57edfd7dd709b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.terms",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "terms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terms",
+        "text_sha256": "58e71b9a6ea6f7359624ebea1496102854534d2582de93938cc52c4cf380b12c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.floating",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "floating"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Floating to the inline-start/inline-end and block-start/block-end.",
+      "locator": {
+        "section_id": "floating",
+        "text_sha256": "a11a526da26e796b953deeab578271e1b179ec3471544eadb23cf512a83af04a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.float-reference-property",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-reference-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The float-reference property.",
+      "locator": {
+        "section_id": "float-reference-property",
+        "text_sha256": "81a45294cd7f91cf756abac3f100f06f9a95c342e737185559da56e69a45fd0f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.float-reference-property-clause-cca2516ebb1d",
+        "css-page-floats-3.float-reference-property-clause-8dc79c1d57cd",
+        "css-page-floats-3.float-reference-property-clause-5f81b98afd65",
+        "css-page-floats-3.float-reference-property-clause-55b77051be66"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.float-reference-property-clause-cca2516ebb1d",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-reference-property"
+      ],
+      "behaviour": "The float-reference property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-reference-property",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-reference-property-clause-8dc79c1d57cd",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-reference-property"
+      ],
+      "behaviour": "The float-reference property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-reference-property",
+        "clause_index": 30,
+        "clause_sha256": "8dc79c1d57cd7545108d1bd40ee54989a72f2750b5a63e7160b3199139791790"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-reference-property-clause-5f81b98afd65",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-reference-property"
+      ],
+      "behaviour": "The float-reference property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-reference-property",
+        "clause_index": 31,
+        "clause_sha256": "5f81b98afd65b0e16dc285ade1011193ef25650161def4e7f24eb5192de27abb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-reference-property-clause-55b77051be66",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-reference-property"
+      ],
+      "behaviour": "The float-reference property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-reference-property",
+        "clause_index": 32,
+        "clause_sha256": "55b77051be66feeeb20bd47506c0eb0daec782d3b0f312eadf6ca42053acd799"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-property",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The float property.",
+      "locator": {
+        "section_id": "float-property",
+        "text_sha256": "820232100b9a72a5f0d29207a153b50007ef4b7c95039f9cddee6b9c834b7c4d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.float-property-clause-cca2516ebb1d",
+        "css-page-floats-3.float-property-clause-818b71be02f8",
+        "css-page-floats-3.float-property-clause-9a96cd6a872c",
+        "css-page-floats-3.float-property-clause-3e0b3b776af2",
+        "css-page-floats-3.float-property-clause-857f68ab60cd",
+        "css-page-floats-3.float-property-clause-69fc5db37002",
+        "css-page-floats-3.float-property-clause-2296f8287fc5",
+        "css-page-floats-3.float-property-clause-0895e99451c0",
+        "css-page-floats-3.float-property-clause-92ce46599f84"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.float-property-clause-cca2516ebb1d",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-property"
+      ],
+      "behaviour": "The float property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-property",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-property-clause-818b71be02f8",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-property"
+      ],
+      "behaviour": "The float property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-property",
+        "clause_index": 23,
+        "clause_sha256": "818b71be02f839d1a3d4fbd13cdea7aba2da6e9a08140898b318f63427474c2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-property-clause-9a96cd6a872c",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-property"
+      ],
+      "behaviour": "The float property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-property",
+        "clause_index": 25,
+        "clause_sha256": "9a96cd6a872c45e7da839bed2d1293f940c05b8019989d8fe5a716097fd6d2b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-property-clause-3e0b3b776af2",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-property"
+      ],
+      "behaviour": "The float property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-property",
+        "clause_index": 30,
+        "clause_sha256": "3e0b3b776af278f86aa0dc605d50fca56380d69c57cf99534cf00bcf314d6728"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-property-clause-857f68ab60cd",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-property"
+      ],
+      "behaviour": "The float property — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-property",
+        "clause_index": 42,
+        "clause_sha256": "857f68ab60cd4dbb700360f7289a5d2d9c5c0eac148858c38f743b9a3e3dd0c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-property-clause-69fc5db37002",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-property"
+      ],
+      "behaviour": "The float property — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-property",
+        "clause_index": 44,
+        "clause_sha256": "69fc5db3700274ecb11a50484842034abf5e8f071702a7bbc658faeec2882d56"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-property-clause-2296f8287fc5",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-property"
+      ],
+      "behaviour": "The float property — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-property",
+        "clause_index": 48,
+        "clause_sha256": "2296f8287fc52a6f40e87ab4b153806a807ee88da0545c98cb1a8e6e5dcc57c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-property-clause-0895e99451c0",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-property"
+      ],
+      "behaviour": "The float property — normative clause 51, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-property",
+        "clause_index": 50,
+        "clause_sha256": "0895e99451c02aec255271c627cdc76a9620816ddc985daeaa4b09c42e7eab10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-property-clause-92ce46599f84",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-property"
+      ],
+      "behaviour": "The float property — normative clause 70, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-property",
+        "clause_index": 69,
+        "clause_sha256": "92ce46599f848e9c437f3bb7e07e090a4ed652ae15f975aea3d114fdadb33e09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.clearing-page-floats",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "clearing_page_floats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The clear property.",
+      "locator": {
+        "section_id": "clearing_page_floats",
+        "text_sha256": "5c2915b0f04f354dcb0cf92d0f1b99f527fce4c1e31c73fe3538375585e9ced7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.clearing-page-floats-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.clearing-page-floats-clause-cca2516ebb1d",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "clearing_page_floats"
+      ],
+      "behaviour": "The clear property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "clearing_page_floats",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.deferring-floats",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "deferring_floats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Deferring floats.",
+      "locator": {
+        "section_id": "deferring_floats",
+        "text_sha256": "18cfe4010d00eb735342436bd7d7e9170b64dbe3f4c1b56aa0491168b2093c2b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.float-defer-property",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-defer-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The float-defer property.",
+      "locator": {
+        "section_id": "float-defer-property",
+        "text_sha256": "946c692c19cfc4b90dbb6f62916c16b4e3eb4c0d977b49982b364dbcb4171bc7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.float-defer-property-clause-cca2516ebb1d",
+        "css-page-floats-3.float-defer-property-clause-f6a970ea6386",
+        "css-page-floats-3.float-defer-property-clause-f22814561078",
+        "css-page-floats-3.float-defer-property-clause-4f0180a96607"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.float-defer-property-clause-cca2516ebb1d",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-defer-property"
+      ],
+      "behaviour": "The float-defer property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-defer-property",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-defer-property-clause-f6a970ea6386",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-defer-property"
+      ],
+      "behaviour": "The float-defer property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-defer-property",
+        "clause_index": 21,
+        "clause_sha256": "f6a970ea638622c73d67b4798f799344ff4118dc0ac7e88b62d960c2bafc0ee6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-defer-property-clause-f22814561078",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-defer-property"
+      ],
+      "behaviour": "The float-defer property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-defer-property",
+        "clause_index": 25,
+        "clause_sha256": "f228145610788838607a44fdab43ffce9987cfd4bf8b81f9f5e60c3627fffccb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-defer-property-clause-4f0180a96607",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-defer-property"
+      ],
+      "behaviour": "The float-defer property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-defer-property",
+        "clause_index": 33,
+        "clause_sha256": "4f0180a96607e8947a69fc49c74e204b62ae5f2edc567532fe2b760c08bbc945"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.wrapping-around-page-floats",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "wrapping-around-page-floats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Wrapping around floats.",
+      "locator": {
+        "section_id": "wrapping-around-page-floats",
+        "text_sha256": "19e4acf809b491cf1388aecc22bcc8c054117d51e78027d57440dee68a859197"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.the-float-offset-property",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "the-float_offset-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The float-offset property.",
+      "locator": {
+        "section_id": "the-float_offset-property",
+        "text_sha256": "02e3cdf7b72b845f72535134571e0425a4b82ae7d60bc18681fa5bc8ac9bcfef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.the-float-offset-property-clause-cca2516ebb1d",
+        "css-page-floats-3.the-float-offset-property-clause-7dd765114c24",
+        "css-page-floats-3.the-float-offset-property-clause-bc181400edfb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.the-float-offset-property-clause-cca2516ebb1d",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "the-float_offset-property"
+      ],
+      "behaviour": "The float-offset property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-float_offset-property",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.the-float-offset-property-clause-7dd765114c24",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "the-float_offset-property"
+      ],
+      "behaviour": "The float-offset property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-float_offset-property",
+        "clause_index": 25,
+        "clause_sha256": "7dd765114c248328d00c04bc966c396551fb4c2ffed3130def4a8e6bc6000982"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.the-float-offset-property-clause-bc181400edfb",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "the-float_offset-property"
+      ],
+      "behaviour": "The float-offset property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-float_offset-property",
+        "clause_index": 26,
+        "clause_sha256": "bc181400edfb31e00aae48e94b106e26853eb7cb7d940b782a2a6abc8a866c28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.page-float-placement",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "page-float-placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page float placement.",
+      "locator": {
+        "section_id": "page-float-placement",
+        "text_sha256": "3862eb0551ccbe99c9ad610463eb1c441ecbe90a61e34b76fb21d7b61769b251"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.page-float-placement-clause-577de872aee0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.page-float-placement-clause-577de872aee0",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "page-float-placement"
+      ],
+      "behaviour": "Page float placement — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-float-placement",
+        "clause_index": 3,
+        "clause_sha256": "577de872aee0b0a0af6a4e59b7c4d912b3d8195d1017d3f72ae85df014ddf7b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.float-reference-growth",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-reference-growth"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Float reference growth.",
+      "locator": {
+        "section_id": "float-reference-growth",
+        "text_sha256": "8bc44331bc43e24a6c128129171852bd144ff57e77c68e54ea86be9339c810ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.float-stacking",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "float-stacking"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rules for Float stacking.",
+      "locator": {
+        "section_id": "float-stacking",
+        "text_sha256": "e6bd0a9a89e8267fe8f7fd4688a6bdaf785f9a2908adbafff153a6539e11130d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.relation-to-absolutely-positioned-exclusions",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "relation_to_absolutely_positioned_exclusions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Floats and absolutely positioned exclusions.",
+      "locator": {
+        "section_id": "relation_to_absolutely_positioned_exclusions",
+        "text_sha256": "a7b9a45682e69a9950956fa53beda4de9a953cb95e761750148ce1d8c29e7345"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.relation-to-absolutely-positioned-exclusions-clause-a7b9a45682e6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.relation-to-absolutely-positioned-exclusions-clause-a7b9a45682e6",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "relation_to_absolutely_positioned_exclusions"
+      ],
+      "behaviour": "Floats and absolutely positioned exclusions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "relation_to_absolutely_positioned_exclusions",
+        "clause_index": 0,
+        "clause_sha256": "a7b9a45682e69a9950956fa53beda4de9a953cb95e761750148ce1d8c29e7345"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.overconstrained-page-floats",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "overconstrained-page-floats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overconstrained floats.",
+      "locator": {
+        "section_id": "overconstrained-page-floats",
+        "text_sha256": "e347945fc09c5150bc04f400b49d8b1104beff01f30ceda64476bccf9bfcbb9c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.conformance",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.conventions",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "conventions",
+        "text_sha256": "e1ee93bc8e4af9acf7083acfc75714b46c1c4685bdf761ebdfd63a4b9d6e8cad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.conventions-clause-6abbe28898f0",
+        "css-page-floats-3.conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.conventions-clause-6abbe28898f0",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conventions",
+        "clause_index": 0,
+        "clause_sha256": "6abbe28898f04f06c3df34bdfedec00f0f19e823fcf139f5d2d79b1692543553"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.conventions-clause-33a5ed16a48d",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.conformance-classes",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.conformance-classes-clause-ff408372426c",
+        "css-page-floats-3.conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.conformance-classes-clause-ff408372426c",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.conformance-classes-clause-d9976214330c",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.partial",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.partial-clause-ef40c4aab200",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.experimental",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "experimental"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Experimental implementations.",
+      "locator": {
+        "section_id": "experimental",
+        "text_sha256": "d65302001727731f480732eea29f70c56e93286eee5ffd392400e6a470f873c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.testing",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "testing",
+        "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.testing-clause-1e0fff369221",
+        "css-page-floats-3.testing-clause-c7ed0d126be3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.testing-clause-1e0fff369221",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.testing-clause-c7ed0d126be3",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "testing",
+        "clause_index": 2,
+        "clause_sha256": "c7ed0d126be3854ca3a86569b068a6069b272f15531252ad1bf9883a45eb699a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.property-index",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "187fe4a595809698f153b8dc3f40c1b3b9f4e9c33d7ae70cc245975172b4cdd8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.property-index-clause-22edaa34f875"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.property-index-clause-22edaa34f875",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 8,
+        "clause_sha256": "22edaa34f8759ed3f8fac50d7189c775d864f00320b5d78025c41c6f5b4456d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.issues-index",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "47e1b01db0d8622abb638cf8d021dc858e68d4c663010a215b9af75a5fc8ca2b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-page-floats-3.issues-index-clause-8dc79c1d57cd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.issues-index-clause-8dc79c1d57cd",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 2,
+        "clause_sha256": "8dc79c1d57cd7545108d1bd40ee54989a72f2750b5a63e7160b3199139791790"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-page-floats-3.title",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Page Floats.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.abstract",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "e744fb1de7340f8a249a2751922451223ca5c90134cc294e80c3a4ff9504445d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.status",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "5593cb0c899582ae6fe5f289ff2a9e78358f63cd31e553c2243056b9b2625dcc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.contents",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "54c1959773132528c1f64a8acb92e28f0a653f65e5b5a36f975ade0ebcc0a2c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.overview",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Overview.",
+      "locator": {
+        "section_id": "overview",
+        "text_sha256": "98d7a885953812415d320178faba143663c4ddfad1c57e9caefef33494fe5a6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.inline-floats-and-absolutely-positioned-exclusions",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "inline_floats_and_absolutely_positioned_exclusions"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9.1. Differences between inline floats and absolutely positioned elements.",
+      "locator": {
+        "section_id": "inline_floats_and_absolutely_positioned_exclusions",
+        "text_sha256": "af86da542acfac790caaf035bee16e238d3055e1e9d53f6bac048f193409b655"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.acks",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "acks"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acks",
+        "text_sha256": "04127f794a0093c9ebbb047034137eb85e09d6231b70daced20ca2d45f9f0c69"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.index",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.index-defined-here",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "e8992d1871908a2a73d30ea4922261eb39ae24212d383548df4342f67abe4a7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.index-defined-elsewhere",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "83b3b75e48093a5ed5d11d2ffbb6bce54299eadb9fafb8e3ba80b0a3b9c51495"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.references",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.normative",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "67aeafd8fcbe0ab38480e61bdd60f40998a7d5a8baea89647c0eecd25a863011"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-page-floats-3.informative",
+      "family": "css-page-floats-3",
+      "source_id": "css-page-floats-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "d14b13c1de9c699635643f7c80e83c9b24657bf6ea3c5ba082f18b615e95a5c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

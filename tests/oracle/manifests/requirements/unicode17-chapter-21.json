@@ -1,0 +1,571 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "unicode17-chapter-21.g26317",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "G26317"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Notational Systems.",
+      "locator": {
+        "section_id": "G26317",
+        "text_sha256": "ee2703d733e28326de7c4f23bc4c54d7f7f2f29a52e59584edac889a9b471c7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-21.g26317-clause-b38650d2e174"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.g26317-clause-b38650d2e174",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "G26317"
+      ],
+      "behaviour": "Notational Systems — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "G26317",
+        "clause_index": 0,
+        "clause_sha256": "b38650d2e174ec2a6c908bf1ca99f61df73a7a7e3db954c8574c71bc70912e31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-f3f7472fec09",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-f3f7472fec09"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Braille.",
+      "locator": {
+        "section_id": "heading-f3f7472fec09",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-d791d1ba21a4",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-d791d1ba21a4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Braille Patterns: U+2800–U+28FF.",
+      "locator": {
+        "section_id": "heading-d791d1ba21a4",
+        "text_sha256": "99a0d0b7157a4dab75f14c7aa59f69e9b0c4bef378d4e21e41e0548adc8d9ad1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-18720fe40f6a",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-18720fe40f6a"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Western Musical Symbols.",
+      "locator": {
+        "section_id": "heading-18720fe40f6a",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-c906938afd1e",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-c906938afd1e"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Musical Symbols: U+1D100–U+1D1FF.",
+      "locator": {
+        "section_id": "heading-c906938afd1e",
+        "text_sha256": "1b8c3bef4b1fb5cc13366e3d11ee3c704c3bf5f7767815d571ea678d8ac549a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-21.heading-c906938afd1e-clause-933615c1baf4",
+        "unicode17-chapter-21.heading-c906938afd1e-clause-c373c95930e5",
+        "unicode17-chapter-21.heading-c906938afd1e-clause-9ff9f3ad7318"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-c906938afd1e-clause-933615c1baf4",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-c906938afd1e"
+      ],
+      "behaviour": "Musical Symbols: U+1D100–U+1D1FF — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-c906938afd1e",
+        "clause_index": 3,
+        "clause_sha256": "933615c1baf4af57f5e08d08b99cd4a7993442a9391158cb4ec51a7565e69e97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-c906938afd1e-clause-c373c95930e5",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-c906938afd1e"
+      ],
+      "behaviour": "Musical Symbols: U+1D100–U+1D1FF — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-c906938afd1e",
+        "clause_index": 19,
+        "clause_sha256": "c373c95930e52f4a8ba8497b36408b80b0f2c9f549610aee0b26a0a64212ddcc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-c906938afd1e-clause-9ff9f3ad7318",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-c906938afd1e"
+      ],
+      "behaviour": "Musical Symbols: U+1D100–U+1D1FF — normative clause 51, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-c906938afd1e",
+        "clause_index": 50,
+        "clause_sha256": "9ff9f3ad7318d2a791ef98711b9289b37b821b6641ce276d6e08e6f9e1b463b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-fea7b3f5bbb5",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-fea7b3f5bbb5"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Byzantine Musical Symbols.",
+      "locator": {
+        "section_id": "heading-fea7b3f5bbb5",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-c5279603a456",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-c5279603a456"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Byzantine Musical Symbols: U+1D000–U+1D0FF.",
+      "locator": {
+        "section_id": "heading-c5279603a456",
+        "text_sha256": "d4650a87f7e908f3c29fc6ab5661cb187b6afea1ed83456456837bf5cf1baf39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-1267c2bdd54d",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-1267c2bdd54d"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Znamenny Musical Notation.",
+      "locator": {
+        "section_id": "heading-1267c2bdd54d",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-4c5954b74f09",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-4c5954b74f09"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Znamenny Musical Notation: U+1CF00–U+1CFCF.",
+      "locator": {
+        "section_id": "heading-4c5954b74f09",
+        "text_sha256": "46fd89bf4f0f7c641145a791e80678f470b4f85f3ef7ca5498633e33892330de"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-cee5aa3e2d6d",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-cee5aa3e2d6d"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ancient Greek Musical Notation.",
+      "locator": {
+        "section_id": "heading-cee5aa3e2d6d",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-dac1711236f3",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-dac1711236f3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ancient Greek Musical Notation: U+1D200–U+1D24F.",
+      "locator": {
+        "section_id": "heading-dac1711236f3",
+        "text_sha256": "e91eb5ccb8019e0f1fa4880450f25fdf3fa66500d6ec5f32daff04a01fdc1ae3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-21.heading-dac1711236f3-clause-f0072323a10d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-dac1711236f3-clause-f0072323a10d",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-dac1711236f3"
+      ],
+      "behaviour": "Ancient Greek Musical Notation: U+1D200–U+1D24F — normative clause 245, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-dac1711236f3",
+        "clause_index": 244,
+        "clause_sha256": "f0072323a10d70512ae81848d69f198a604908ad004a6de4d4981535addf5460"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-b072e0c2c8e7",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-b072e0c2c8e7"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Duployan.",
+      "locator": {
+        "section_id": "heading-b072e0c2c8e7",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-ffff430cbc7c",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-ffff430cbc7c"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Duployan: U+1BC00–U+1BC9F.",
+      "locator": {
+        "section_id": "heading-ffff430cbc7c",
+        "text_sha256": "e9406d2fc639725a623c15aaa70d56d6d67ccd9afa7881f3f86557430166e242"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-5e36680dc367",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-5e36680dc367"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shorthand Format Controls: U+1BCA0–U+1BCAF.",
+      "locator": {
+        "section_id": "heading-5e36680dc367",
+        "text_sha256": "8012d339ed18cf9312486a64d36c161c71909de958c3d4fbabbe38ea425dfdcd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-21.heading-5e36680dc367-clause-9965f34518b1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-5e36680dc367-clause-9965f34518b1",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-5e36680dc367"
+      ],
+      "behaviour": "Shorthand Format Controls: U+1BCA0–U+1BCAF — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-5e36680dc367",
+        "clause_index": 1,
+        "clause_sha256": "9965f34518b15b1235968c1014c6873f3dad4bde8f4a2eb1670110c2d907917f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-e561ac41fb70",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-e561ac41fb70"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sutton SignWriting.",
+      "locator": {
+        "section_id": "heading-e561ac41fb70",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-21.heading-280d3fd497ed",
+      "family": "unicode17-chapter-21",
+      "source_id": "unicode17-chapter-21",
+      "sections": [
+        "heading-280d3fd497ed"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sutton SignWriting: U+1D800–U+1DAAF.",
+      "locator": {
+        "section_id": "heading-280d3fd497ed",
+        "text_sha256": "031bb2e96c16294601571cf253d570503a6b8204b3058d6932f25790d409587e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

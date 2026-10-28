@@ -1,0 +1,1150 @@
+{
+  "schema_version": 1,
+  "source_id": "css-writing-modes-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Writing Modes Level 3",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.title"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C Recommendation, 10 December 2019",
+      "level": 2,
+      "text_sha256": "4d0ccf1897d12f36de60b4367c4d8edd74e97cd58471913be329ac2eccbde524",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.subtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "a8685f178a73b25d3c20099ee077c979661b20197ff33dfa2a6a2c731a9ec1cc",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "9ed1653637be3e68343677fff3075147e969bff470ee6e09e3469858fd991777",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "d5047674b0898ad0623944dab3f6903215e34cabb5c3a6955ce00172859c5448",
+      "clause_count": 75,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "text-flow",
+      "title": "1. Introduction to Writing Modes",
+      "level": 2,
+      "text_sha256": "99a6f9dd263280cc27653c132aa1b2d09ae9beeb47e5f5b75adb7284348ae0bd",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.text-flow",
+          "css-writing-modes-3.text-flow-clause-0eccba2dbef2",
+          "css-writing-modes-3.text-flow-clause-23c97adb8933"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "4b31a5c7c456366d68273d9e7155301fd83ad35f2c95822656a7f7882cc6fa6d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.placement",
+          "css-writing-modes-3.placement-clause-d3c0ee02f485"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Types and Terminology",
+      "level": 3,
+      "text_sha256": "10451bbad017f18751f49119018cf3df0f5b8e7021984f1f8170c0a8263d9f44",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.values"
+        ]
+      }
+    },
+    {
+      "id": "text-direction",
+      "title": "2. Inline Direction and Bidirectionality",
+      "level": 2,
+      "text_sha256": "fb877a26c576e3ae29fdfac6e77a80c8e8046b5ee7d9460b7247a5feff57c175",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.text-direction",
+          "css-writing-modes-3.text-direction-clause-cf7fe3a5a0a0",
+          "css-writing-modes-3.text-direction-clause-661eb48a4ffe",
+          "css-writing-modes-3.text-direction-clause-95f6fe7d9aa2"
+        ]
+      }
+    },
+    {
+      "id": "direction",
+      "title": "2.1. Specifying Directionality: the direction property",
+      "level": 3,
+      "text_sha256": "68743da30bfef56b515a6f4a5dd8498e2572b7f1eb4d8a525bb94f54ead1f867",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.direction",
+          "css-writing-modes-3.direction-clause-cca2516ebb1d",
+          "css-writing-modes-3.direction-clause-742671f701e6",
+          "css-writing-modes-3.direction-clause-e4f9f5ba53bc",
+          "css-writing-modes-3.direction-clause-d319c6b4e441",
+          "css-writing-modes-3.direction-clause-8dc26148c6db"
+        ]
+      }
+    },
+    {
+      "id": "unicode-bidi",
+      "title": "2.2. Embeddings and Overrides: the unicode-bidi property",
+      "level": 3,
+      "text_sha256": "ef330b57512170aaf0aa02fa932753443c25e4ef5a7b4ffd8ac79642c077fecd",
+      "clause_count": 95,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.unicode-bidi",
+          "css-writing-modes-3.unicode-bidi-clause-cca2516ebb1d",
+          "css-writing-modes-3.unicode-bidi-clause-ec2163648efe",
+          "css-writing-modes-3.unicode-bidi-clause-91675cfedc29",
+          "css-writing-modes-3.unicode-bidi-clause-ae81354bb452",
+          "css-writing-modes-3.unicode-bidi-clause-6d282d21a4a5",
+          "css-writing-modes-3.unicode-bidi-clause-3bc07ae9fdba",
+          "css-writing-modes-3.unicode-bidi-clause-9033cd7447e7",
+          "css-writing-modes-3.unicode-bidi-clause-1316393cd794",
+          "css-writing-modes-3.unicode-bidi-clause-33c151599918",
+          "css-writing-modes-3.unicode-bidi-clause-a07d3f5794ae",
+          "css-writing-modes-3.unicode-bidi-clause-34abc7a4fb7f",
+          "css-writing-modes-3.unicode-bidi-clause-3379982e51b1",
+          "css-writing-modes-3.unicode-bidi-clause-407b91cb77b2",
+          "css-writing-modes-3.unicode-bidi-clause-4248286e094f"
+        ]
+      }
+    },
+    {
+      "id": "bidi-example",
+      "title": "2.3. Example of Bidirectional Text",
+      "level": 3,
+      "text_sha256": "2ccd59562543dd1790583b6685a900f4a334636e6b017bf1ff0c5770a64926cb",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.bidi-example",
+          "css-writing-modes-3.bidi-example-clause-cd2dc7ba6ced",
+          "css-writing-modes-3.bidi-example-clause-434df93d8ce3",
+          "css-writing-modes-3.bidi-example-clause-dc36566a29f0",
+          "css-writing-modes-3.bidi-example-clause-606c8bf5fd9b"
+        ]
+      }
+    },
+    {
+      "id": "bidi-algo",
+      "title": "2.4. Applying the Bidirectional Reordering Algorithm",
+      "level": 3,
+      "text_sha256": "ce21c80589319895fd6162412ddee5f1bae8cdf8a98055106bc03310a34d857a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.bidi-algo",
+          "css-writing-modes-3.bidi-algo-clause-ce21c8058931"
+        ]
+      }
+    },
+    {
+      "id": "bidi-para-direction",
+      "title": "2.4.1. Bidi Paragraph Embedding Levels",
+      "level": 4,
+      "text_sha256": "b4f62978efd262a82866d5f47ecfdf73afa4c9ee1f04348e21cc2ee43da49214",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.bidi-para-direction",
+          "css-writing-modes-3.bidi-para-direction-clause-f6604564287e",
+          "css-writing-modes-3.bidi-para-direction-clause-5b22e15f112d"
+        ]
+      }
+    },
+    {
+      "id": "bidi-control-codes",
+      "title": "2.4.2. CSS–Unicode Bidi Control Translation, Text Reordering",
+      "level": 4,
+      "text_sha256": "abb607602d5f4d92e1ccaeb8433d3a5451e060741080e000a63a6b5113d6774e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.bidi-control-codes",
+          "css-writing-modes-3.bidi-control-codes-clause-b3d0f5be67b2"
+        ]
+      }
+    },
+    {
+      "id": "bidi-atomic-inlines",
+      "title": "2.4.3. Bidi Treatment of Atomic Inlines",
+      "level": 4,
+      "text_sha256": "97d484c53e148ab6c64967d23105b7ab769a52d28f071ef5cedbb7d4b05dd5b5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.bidi-atomic-inlines"
+        ]
+      }
+    },
+    {
+      "id": "bidi-embedding-breaks",
+      "title": "2.4.4. Paragraph Breaks Within Embeddings and Isolates",
+      "level": 4,
+      "text_sha256": "d14ad6c7501f13e9010abd83b48e76b5660ac82f13126f0797b45bc933de55d7",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.bidi-embedding-breaks"
+        ]
+      }
+    },
+    {
+      "id": "bidi-box-model",
+      "title": "2.4.5. Reordering-induced Box Fragmentation",
+      "level": 4,
+      "text_sha256": "2b38040aaae8248eb25625047db3739a0454dc7181118ad176321d6af6ecd2e7",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.bidi-box-model",
+          "css-writing-modes-3.bidi-box-model-clause-6e5a1af81fb6"
+        ]
+      }
+    },
+    {
+      "id": "vertical-modes",
+      "title": "3. Vertical Writing Modes",
+      "level": 2,
+      "text_sha256": "0f89f1fd156251467838ef42186058b7f8536194d6635b5a409c47b12e8d4e99",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.vertical-modes"
+        ]
+      }
+    },
+    {
+      "id": "vertical-intro",
+      "title": "3.1. Introduction to Vertical Writing",
+      "level": 3,
+      "text_sha256": "ba8c3ae06faf53c10af420f6a99357be609894028dced1e1657964b5dbf0ca39",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.vertical-intro"
+        ]
+      }
+    },
+    {
+      "id": "block-flow",
+      "title": "3.2. Block Flow Direction: the writing-mode property",
+      "level": 3,
+      "text_sha256": "060ad9b10809ae3407ae398fc7d4af1c636a1cd6e842d575b9b0a0f64210035f",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.block-flow",
+          "css-writing-modes-3.block-flow-clause-cca2516ebb1d",
+          "css-writing-modes-3.block-flow-clause-36406d3329c4",
+          "css-writing-modes-3.block-flow-clause-d45322c98d53",
+          "css-writing-modes-3.block-flow-clause-12b1447d90a1",
+          "css-writing-modes-3.block-flow-clause-781cf8c74e90",
+          "css-writing-modes-3.block-flow-clause-18bb9ce2f151"
+        ]
+      }
+    },
+    {
+      "id": "svg-writing-mode",
+      "title": "3.2.1. Obsolete SVG1.1 writing-mode Values",
+      "level": 4,
+      "text_sha256": "e99699ac334b692df32f0a9a1122a30932c96ad254557b82a7a3332248d9ad49",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.svg-writing-mode"
+        ]
+      }
+    },
+    {
+      "id": "svg-writing-mode-css",
+      "title": "3.2.1.1. Supporting SVG1.1 writing-mode values in CSS syntax",
+      "level": 5,
+      "text_sha256": "085eb60a4d46ca907ce6be999c91dbbc18d161c6781bcb8953c27fa3822c9f11",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.svg-writing-mode-css",
+          "css-writing-modes-3.svg-writing-mode-css-clause-b69fd12c20f6",
+          "css-writing-modes-3.svg-writing-mode-css-clause-7a15102667bd"
+        ]
+      }
+    },
+    {
+      "id": "svg-writing-mode-markup",
+      "title": "3.2.1.2. Supporting SVG1.1 writing-mode values in presentational attributes",
+      "level": 5,
+      "text_sha256": "06a47e2e001d8b35b205dac236d2e586c01a71f25cb1912c1e8a89c37023b0ef",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.svg-writing-mode-markup",
+          "css-writing-modes-3.svg-writing-mode-markup-clause-f65f94fcd989"
+        ]
+      }
+    },
+    {
+      "id": "inline-alignment",
+      "title": "4. Inline-level Alignment",
+      "level": 2,
+      "text_sha256": "8747e1298f898028ca3e3fac56f59bf18875039920feb21d7b6b1672f1a91a3b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.inline-alignment"
+        ]
+      }
+    },
+    {
+      "id": "intro-baselines",
+      "title": "4.1. Introduction to Baselines",
+      "level": 3,
+      "text_sha256": "13280d57e7048aca2ddbc49d51453dc53925333f338f0a618cea9bbffe4002e1",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.intro-baselines"
+        ]
+      }
+    },
+    {
+      "id": "text-baselines",
+      "title": "4.2. Text Baselines",
+      "level": 3,
+      "text_sha256": "c5d24cbca26c296af7cfed9a29a18aeb5734ed84d2e4425bce14a4547ada2132",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.text-baselines"
+        ]
+      }
+    },
+    {
+      "id": "replaced-baselines",
+      "title": "4.3. Atomic Inline Baselines",
+      "level": 3,
+      "text_sha256": "430450a085bd8996ba82bc56453a5a78b299a37620b1f195e3cfe9f1453a1608",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.replaced-baselines"
+        ]
+      }
+    },
+    {
+      "id": "baseline-alignment",
+      "title": "4.4. Baseline Alignment",
+      "level": 3,
+      "text_sha256": "1a2b8cec93fe0126fe411edc127972ec6b7b46c96c818aa3925c7e1a1b54e872",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.baseline-alignment"
+        ]
+      }
+    },
+    {
+      "id": "intro-text-layout",
+      "title": "5. Introduction to Vertical Text Layout",
+      "level": 2,
+      "text_sha256": "1936f522ca1036cfda2c704870e1544439d37fd057b4766b215c5b4e6dd4bd16",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.intro-text-layout"
+        ]
+      }
+    },
+    {
+      "id": "text-orientation",
+      "title": "5.1. Orienting Text: the text-orientation property",
+      "level": 3,
+      "text_sha256": "b7bffdcbed3492d3b42292cd27397b096f736159e3cea16aa4646d2c2b1c7250",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.text-orientation",
+          "css-writing-modes-3.text-orientation-clause-cca2516ebb1d",
+          "css-writing-modes-3.text-orientation-clause-ab9f7b0674cc",
+          "css-writing-modes-3.text-orientation-clause-e283aa6ad2ed",
+          "css-writing-modes-3.text-orientation-clause-f994fd8947e9"
+        ]
+      }
+    },
+    {
+      "id": "vertical-font-features",
+      "title": "5.1.1. Vertical Typesetting and Font Features",
+      "level": 4,
+      "text_sha256": "3b9745fcba1426823b7957f3f9db072da1c8046a823aa2f59e1f5181c36df9d2",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.vertical-font-features",
+          "css-writing-modes-3.vertical-font-features-clause-fb535219d513",
+          "css-writing-modes-3.vertical-font-features-clause-dc0e0eb6fa5a",
+          "css-writing-modes-3.vertical-font-features-clause-1f266dce859a"
+        ]
+      }
+    },
+    {
+      "id": "vertical-orientations",
+      "title": "5.1.2. Mixed Vertical Orientations",
+      "level": 4,
+      "text_sha256": "9a7a8f9ea66a1c55fdf422b08729553300af13ce2608a7b551bc1a88799d19e6",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.vertical-orientations",
+          "css-writing-modes-3.vertical-orientations-clause-69f44d0447d6"
+        ]
+      }
+    },
+    {
+      "id": "glyph-orientation",
+      "title": "5.1.3. Obsolete: the SVG1.1 glyph-orientation-vertical property",
+      "level": 4,
+      "text_sha256": "47acbba30268f834cb5a1a2e98b9661fefdd34601c638da0244c0b828a6bc170",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.glyph-orientation",
+          "css-writing-modes-3.glyph-orientation-clause-cca2516ebb1d",
+          "css-writing-modes-3.glyph-orientation-clause-d40517dc1a66",
+          "css-writing-modes-3.glyph-orientation-clause-4a136ef3f29f",
+          "css-writing-modes-3.glyph-orientation-clause-1148457b61e8",
+          "css-writing-modes-3.glyph-orientation-clause-384030e1ac55"
+        ]
+      }
+    },
+    {
+      "id": "abstract-box",
+      "title": "6. Abstract Box Terminology",
+      "level": 2,
+      "text_sha256": "7a32173e4601afcc5d31223e301eb9ef28070a23bb86be868a0f5f5048b6e38c",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.abstract-box"
+        ]
+      }
+    },
+    {
+      "id": "abstract-axes",
+      "title": "6.1. Abstract Dimensions",
+      "level": 3,
+      "text_sha256": "62f03af78af47d4280a8c8cfbc53f372b333a3d70507cf047f079245b231a291",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.abstract-axes"
+        ]
+      }
+    },
+    {
+      "id": "logical-directions",
+      "title": "6.2. Flow-relative Directions",
+      "level": 3,
+      "text_sha256": "09bbd71f2bb2cdf979f2c820594e33eb71b15c6cfc3c9268f32177cd01310ba7",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.logical-directions"
+        ]
+      }
+    },
+    {
+      "id": "line-directions",
+      "title": "6.3. Line-relative Directions",
+      "level": 3,
+      "text_sha256": "61b8aeed4034be617fa89fbc252c6c92bbb552e44166a0d94fa03a1e5cefd27c",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.line-directions"
+        ]
+      }
+    },
+    {
+      "id": "logical-to-physical",
+      "title": "6.4. Abstract-to-Physical Mappings",
+      "level": 3,
+      "text_sha256": "d403f9482e2c562ec2b62133efe8b8b41624830e3bd7f542201805e9df428c21",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.logical-to-physical",
+          "css-writing-modes-3.logical-to-physical-clause-ad503c06ccd8",
+          "css-writing-modes-3.logical-to-physical-clause-e25435b8f76f"
+        ]
+      }
+    },
+    {
+      "id": "abstract-layout",
+      "title": "7. Abstract Box Layout",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.abstract-layout"
+        ]
+      }
+    },
+    {
+      "id": "vertical-layout",
+      "title": "7.1. Principles of Layout in Vertical Writing Modes",
+      "level": 3,
+      "text_sha256": "ab4c6384cd0dc4d91bcfcee1bc0942ce82e72d23d940c50f60693065afcefad4",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.vertical-layout",
+          "css-writing-modes-3.vertical-layout-clause-4b668fdb67b3"
+        ]
+      }
+    },
+    {
+      "id": "dimension-mapping",
+      "title": "7.2. Dimensional Mapping",
+      "level": 3,
+      "text_sha256": "4929a18a799162d51eda38a47f0bb7db4ae96215197a1625dcb8ffe987331064",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.dimension-mapping"
+        ]
+      }
+    },
+    {
+      "id": "orthogonal-flows",
+      "title": "7.3. Orthogonal Flows",
+      "level": 3,
+      "text_sha256": "33b679cbe4ecb3935babd2701406f92a4020bc0bd99164a6aa39a46915de974d",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.orthogonal-flows",
+          "css-writing-modes-3.orthogonal-flows-clause-44a5c467c678"
+        ]
+      }
+    },
+    {
+      "id": "orthogonal-auto",
+      "title": "7.3.1. Available Space of Orthogonal Flows",
+      "level": 4,
+      "text_sha256": "eb72e165c96dead68f177bbe9c70d72b086170dc87c960a74932921dba7182dc",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.orthogonal-auto"
+        ]
+      }
+    },
+    {
+      "id": "orthogonal-layout",
+      "title": "7.3.2. Auto-sizing Orthogonal Flow Roots",
+      "level": 4,
+      "text_sha256": "d48574be44483bb5536eaaf206c9d27bc62fe4336f1d5063f36a4cdb5037f704",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.orthogonal-layout"
+        ]
+      }
+    },
+    {
+      "id": "orthogonal-pagination",
+      "title": "7.3.3. Fragmenting Orthogonal Flows",
+      "level": 4,
+      "text_sha256": "a43c8d190a9cd5aa8ee32221991adb3ae4db54ba312eb2e01cfbc0df3554a7f6",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.orthogonal-pagination"
+        ]
+      }
+    },
+    {
+      "id": "logical-direction-layout",
+      "title": "7.4. Flow-Relative Mappings",
+      "level": 3,
+      "text_sha256": "d9284dc50be98c6e74f4096321d3f1655206708c88913ea8918ca4e3812f94ec",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.logical-direction-layout",
+          "css-writing-modes-3.logical-direction-layout-clause-83571db9e466"
+        ]
+      }
+    },
+    {
+      "id": "line-mappings",
+      "title": "7.5. Line-Relative Mappings",
+      "level": 3,
+      "text_sha256": "98b93c1ae18f27ee2ec676bef932482a2ae834c9890f1631c009f0375be3471c",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.line-mappings"
+        ]
+      }
+    },
+    {
+      "id": "physical-only",
+      "title": "7.6. Purely Physical Mappings",
+      "level": 3,
+      "text_sha256": "16de769b55031827bdb41edcc74350a2ff2c455188447609de9ec4a42f0e8579",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.physical-only"
+        ]
+      }
+    },
+    {
+      "id": "principal-flow",
+      "title": "8. The Principal Writing Mode",
+      "level": 2,
+      "text_sha256": "8091241cdd02700fcfca246da3a262c27e523262170744fca3dec94822558960",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.principal-flow",
+          "css-writing-modes-3.principal-flow-clause-1d1d74a99abc",
+          "css-writing-modes-3.principal-flow-clause-3d262dbabe42"
+        ]
+      }
+    },
+    {
+      "id": "icb",
+      "title": "8.1. Propagation to the Initial Containing Block",
+      "level": 3,
+      "text_sha256": "e2a301c22ab9a4fa3c97a056063d954d365a6d303be943764720f6aaca02e0fc",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.icb"
+        ]
+      }
+    },
+    {
+      "id": "page-direction",
+      "title": "8.2. Page Flow: the page progression direction",
+      "level": 3,
+      "text_sha256": "1b9f2c6f6e54223e029fa1e7e875c06327a7cdc155c6e38cf8630f5ebc28a23c",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.page-direction"
+        ]
+      }
+    },
+    {
+      "id": "text-combine",
+      "title": "9. Glyph Composition",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.text-combine"
+        ]
+      }
+    },
+    {
+      "id": "text-combine-upright",
+      "title": "9.1. Horizontal-in-Vertical Composition: the text-combine-upright property",
+      "level": 3,
+      "text_sha256": "630a54bc042f1418ea5d36b7556032e408d8bc6b140e0cccc773b62647ee4df2",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.text-combine-upright",
+          "css-writing-modes-3.text-combine-upright-clause-cca2516ebb1d",
+          "css-writing-modes-3.text-combine-upright-clause-4497cccc5109",
+          "css-writing-modes-3.text-combine-upright-clause-f216cb793238"
+        ]
+      }
+    },
+    {
+      "id": "text-combine-runs",
+      "title": "9.1.1. Text Run Rules",
+      "level": 4,
+      "text_sha256": "35ba6e61e62c5d762f7efb5b2cf9822e417b8df8479bf77fa607fa4279d87b78",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.text-combine-runs",
+          "css-writing-modes-3.text-combine-runs-clause-dbf2f3346f8f"
+        ]
+      }
+    },
+    {
+      "id": "text-combine-layout",
+      "title": "9.1.2. Layout Rules",
+      "level": 4,
+      "text_sha256": "ebd227a9e6e1f39838e718378b9e0b05c17cb18412debb5b08e7d158f1228152",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.text-combine-layout",
+          "css-writing-modes-3.text-combine-layout-clause-2c8862494e51",
+          "css-writing-modes-3.text-combine-layout-clause-738183551bd4"
+        ]
+      }
+    },
+    {
+      "id": "text-combine-compression",
+      "title": "9.1.3. Compression Rules",
+      "level": 4,
+      "text_sha256": "d50c01e656201e0c51abcde5bd6868167af460b049f24a33940a3f1799ede15b",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.text-combine-compression",
+          "css-writing-modes-3.text-combine-compression-clause-e609ce8c923d"
+        ]
+      }
+    },
+    {
+      "id": "text-combine-fullwidth",
+      "title": "9.1.3.1. Full-width Characters",
+      "level": 5,
+      "text_sha256": "ef9496479e4b93901357b2ebf5befd97d58a08e4e602d02c1e6a6d1aa023a412",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.text-combine-fullwidth",
+          "css-writing-modes-3.text-combine-fullwidth-clause-ef0e02f6ce55"
+        ]
+      }
+    },
+    {
+      "id": "priv-sec",
+      "title": "10. Privacy and Security Considerations",
+      "level": 2,
+      "text_sha256": "91a947de90cd3ca38256a2a1ed8710f1ae14f242d3498d4e49288c8de14886bf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.priv-sec"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20190903",
+      "title": "Changes since the September 2019 CSS Writing Modes Module Level 3 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "f5cd95f47b3d0b58ee2c0b6dd4823c7d47ea4d5dc60828722c646c819fde076c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.changes-20190903"
+        ]
+      }
+    },
+    {
+      "id": "changes-20190730",
+      "title": "Changes since the July 2019 CSS Writing Modes Module Level 3 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "aafc160869751e8d398b1eaffcd3aff37749ff5fab7d495e6e9eabfaf3d0a712",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.changes-20190730"
+        ]
+      }
+    },
+    {
+      "id": "changes-201805",
+      "title": "Changes since the May 2018 CSS Writing Modes Module Level 3 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "0ff9fed55b011cc202b5e4a8cb1e2f6307dca9d274b2fd732829b40e69f2b208",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.changes-201805"
+        ]
+      }
+    },
+    {
+      "id": "changes-201712",
+      "title": "Changes since the December 2017 CSS Writing Modes Module Level 3 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "e3d466c1204c974284b1a3f80d42a00313769cc3db8f2068512c5a1f7760a54c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.changes-201712"
+        ]
+      }
+    },
+    {
+      "id": "changes-201512",
+      "title": "Changes since the December 2015 CSS Writing Modes Module Level 3 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "8b40555060b9db6332566529574df3d5286e54d33d610d7c719e70a5abf3e5c2",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.changes-201512"
+        ]
+      }
+    },
+    {
+      "id": "changes-201311",
+      "title": "Changes since the March 2014 CSS Writing Modes Module Level 3 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "41932e5df85e59746a2538df2eb0e825d596e81a0c4ede711112b5f8654173a4",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.changes-201311"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "Acknowledgements",
+      "level": 2,
+      "text_sha256": "185bfc549870b7ebaa0710e9fffa3fb591c3689dda76d4d50ae1c26edfb1b93c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "script-orientations",
+      "title": "Appendix A: Vertical Scripts in Unicode",
+      "level": 2,
+      "text_sha256": "168146fb280a98bdee34f1c04740985221878364dd84b853799dbdb8d641fc44",
+      "clause_count": 61,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.script-orientations"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.conformance"
+        ]
+      }
+    },
+    {
+      "id": "document-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.document-conventions",
+          "css-writing-modes-3.document-conventions-clause-5c98c879f070",
+          "css-writing-modes-3.document-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "conform-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.conform-classes",
+          "css-writing-modes-3.conform-classes-clause-ff408372426c",
+          "css-writing-modes-3.conform-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "conform-responsible",
+      "title": "Requirements for Responsible Implementation of CSS",
+      "level": 3,
+      "text_sha256": "63e281f28ed2ebefafb560d6716cfc98d63caa0f55f4ae36a918cca31886f4b3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.conform-responsible"
+        ]
+      }
+    },
+    {
+      "id": "conform-partial",
+      "title": "Partial Implementations",
+      "level": 4,
+      "text_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.conform-partial",
+          "css-writing-modes-3.conform-partial-clause-db223ebb5aec"
+        ]
+      }
+    },
+    {
+      "id": "conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "conform-testing",
+      "title": "Implementations of CR-level Features",
+      "level": 4,
+      "text_sha256": "85a2aab62de157ff88eb104ecdbf2c4c32e685f5fa12638fd5357bdf89415d2c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.conform-testing",
+          "css-writing-modes-3.conform-testing-clause-003938d8c19a",
+          "css-writing-modes-3.conform-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "660a50d198bad9368d6c02d053f04e567308dd225ffac8684ad491dcd75b644f",
+      "clause_count": 252,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "dfd43c0a6065764f9ee99e31866f95da8b6dc5ccb355b2dc2bb15272b4b86bef",
+      "clause_count": 112,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "9229837b77a3b1962f37e21a162531d9e2a1699ccd409decd1943b381b0ffeeb",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.import-93f9b7e9ae0c"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "1d799e45062e9b95ca4a5846c64d88d484b19377a78ce02508fafc36c9a29eb0",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "66ae2dc36062ded353ce0e22516fd162b70506da001780af847343e6bdfe9156",
+      "clause_count": 313,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-writing-modes-3.property-index"
+        ]
+      }
+    }
+  ]
+}

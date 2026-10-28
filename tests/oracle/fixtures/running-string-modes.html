@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Manual</title><style>@font-face { font-family: Probe; src: url('../assets/DejaVuSans.ttf'); }
+@page {
+  size: 500pt 300pt;
+  margin: 36pt;
+  font: 10pt Probe;
+  @top-left { content: 'F[' string(heading, first) ']S[' string(heading, start) ']L[' string(heading, last) ']X[' string(heading, first-except) ']'; }
+  @top-right { content: string(document); }
+  @bottom-left { content: string(folio); }
+}
+html, body { margin: 0; padding: 0; }
+body { font: 10pt/15pt Probe; counter-reset: chapter; }
+p, h2 { margin: 0; font: inherit; }
+h2 { counter-increment: chapter; break-after: auto; string-set: heading counter(chapter, upper-roman) ':' content(), folio 'Assigned' counter(page) '/' counter(pages); }
+title { string-set: document content(); }
+.next { break-before: page; }</style></head><body><p>Intro</p><h2>Alpha</h2><h2>Beta</h2>
+<p class="next">Continuation</p>
+<h2 class="next">Gamma</h2></body></html>

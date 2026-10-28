@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>table-caption-margins</title><style>@font-face { font-family: Spike; src: url('../assets/DejaVuSans.ttf'); }
+@page { size: 360pt 480pt; margin: 36pt; }
+html, body { margin: 0; padding: 0; }
+body { font-family: Spike; font-size: 12pt; line-height: 18pt; }
+p { margin: 0 0 12pt; widows: 2; orphans: 2; hyphens: none; }
+.new-page { break-before: page; }
+.keep { break-inside: avoid; }
+table{width:180pt;border:2pt solid navy;border-spacing:4pt 6pt}td{padding:3pt;border:1pt solid maroon}caption{padding:2pt;border:1pt solid navy}</style></head><body><table><caption style="margin:1pt 0 2pt">First top</caption><caption style="margin:3pt 0 -1pt">Last top</caption><tr><td>A</td><td>B</td></tr></table><p>After</p><table><caption style="margin:1pt 0 2pt">First top</caption><caption style="margin:3pt 0 -1pt">Last top</caption><caption style="caption-side:bottom;margin:4pt 0 5pt">Bottom</caption><tr><td>A</td><td>B</td></tr></table><p>After</p></body></html>

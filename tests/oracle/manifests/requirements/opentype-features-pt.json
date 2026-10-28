@@ -1,0 +1,4062 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "opentype-features-pt.registered-features-descriptions-and-implementations-p-t",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "registered-features-descriptions-and-implementations-p--t"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Registered Features: Descriptions and Implementations (p – t).",
+      "locator": {
+        "section_id": "registered-features-descriptions-and-implementations-p--t",
+        "text_sha256": "286d7b29f4d9dba62cb0b13ee635a957acdd20fe619ee0edba45a3da03f10db0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-palt",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-palt"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'palt'.",
+      "locator": {
+        "section_id": "tag-palt",
+        "text_sha256": "1a96af685a5009787284c1caa586b9deb9438e3d6333df29594bfbeb0e74dc98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-palt-clause-7bc3f0781b7b",
+        "opentype-features-pt.tag-palt-clause-e8c1f9efb5c0",
+        "opentype-features-pt.tag-palt-clause-ef2922a93f5a",
+        "opentype-features-pt.tag-palt-clause-84a836e05e16"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-palt-clause-7bc3f0781b7b",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-palt"
+      ],
+      "behaviour": "Tag: 'palt' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-palt",
+        "clause_index": 5,
+        "clause_sha256": "7bc3f0781b7b89b61066f8b27ea1fd0d4409a56af8bbc1d50a20bf54de551c30"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-palt-clause-e8c1f9efb5c0",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-palt"
+      ],
+      "behaviour": "Tag: 'palt' — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-palt",
+        "clause_index": 7,
+        "clause_sha256": "e8c1f9efb5c02835152d6fea147966bb5b289dd2cda2ce22d8e451d2fe66c93f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-palt-clause-ef2922a93f5a",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-palt"
+      ],
+      "behaviour": "Tag: 'palt' — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-palt",
+        "clause_index": 9,
+        "clause_sha256": "ef2922a93f5afd5a28c29a8bca36b2cf459c1c10288298958bcb3b0265f88469"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-palt-clause-84a836e05e16",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-palt"
+      ],
+      "behaviour": "Tag: 'palt' — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-palt",
+        "clause_index": 10,
+        "clause_sha256": "84a836e05e16f978f6552db87a8eb5935cfdbf88bc6a619c7632fc24fd76d311"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pcap",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pcap"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'pcap'.",
+      "locator": {
+        "section_id": "tag-pcap",
+        "text_sha256": "f871dda89e51871ef1d1f6ec5dcfec997f04b49d5d1a911c7bbf889cbf3e3d74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-pcap-clause-5c60f0b77717",
+        "opentype-features-pt.tag-pcap-clause-529bb023650c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-pcap-clause-5c60f0b77717",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pcap"
+      ],
+      "behaviour": "Tag: 'pcap' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pcap",
+        "clause_index": 6,
+        "clause_sha256": "5c60f0b777171bb088cb4511e247fe93388b62a505cc1daba8e70f6f0eacc641"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pcap-clause-529bb023650c",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pcap"
+      ],
+      "behaviour": "Tag: 'pcap' — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pcap",
+        "clause_index": 9,
+        "clause_sha256": "529bb023650cd51495e42d70fa7efe7ce69762677846239fc6cab56ba2544acf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pkna",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pkna"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'pkna'.",
+      "locator": {
+        "section_id": "tag-pkna",
+        "text_sha256": "372a3e2a9f779b4da5a2bc0bfec36a9b00abf67f92145798a22583e0000c484b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-pkna-clause-a73e8e20597f",
+        "opentype-features-pt.tag-pkna-clause-e9794ff39c09",
+        "opentype-features-pt.tag-pkna-clause-b66a1c4c1308",
+        "opentype-features-pt.tag-pkna-clause-6709b71a92be"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-pkna-clause-a73e8e20597f",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pkna"
+      ],
+      "behaviour": "Tag: 'pkna' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pkna",
+        "clause_index": 5,
+        "clause_sha256": "a73e8e20597f45e07f436f3dc724facfbb1676fccadd5b5a0ddf74b7bd2d60bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pkna-clause-e9794ff39c09",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pkna"
+      ],
+      "behaviour": "Tag: 'pkna' — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pkna",
+        "clause_index": 7,
+        "clause_sha256": "e9794ff39c0930f1b8f2b67f91157f422837a5bbd1c24a162d56dd56e74a6bab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pkna-clause-b66a1c4c1308",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pkna"
+      ],
+      "behaviour": "Tag: 'pkna' — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pkna",
+        "clause_index": 9,
+        "clause_sha256": "b66a1c4c130884ea3c1de309845866c918a8f35c21b3078b7bb6b6405693614e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pkna-clause-6709b71a92be",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pkna"
+      ],
+      "behaviour": "Tag: 'pkna' — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pkna",
+        "clause_index": 10,
+        "clause_sha256": "6709b71a92bef0996fef7cc0fbbc6461a01ff727623db1c8e5c70ff1f2e52e1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pnum",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pnum"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'pnum'.",
+      "locator": {
+        "section_id": "tag-pnum",
+        "text_sha256": "b1efec1aed69d5227efa0786b034acb4cd8ddc9c1f7ba52d8175479c14cd9cb3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-pnum-clause-353bb0663539",
+        "opentype-features-pt.tag-pnum-clause-0a0175420faf"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-pnum-clause-353bb0663539",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pnum"
+      ],
+      "behaviour": "Tag: 'pnum' — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pnum",
+        "clause_index": 4,
+        "clause_sha256": "353bb0663539f9e9c8646cf77773814c4265992d9d297d93324086d690b715b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pnum-clause-0a0175420faf",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pnum"
+      ],
+      "behaviour": "Tag: 'pnum' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pnum",
+        "clause_index": 6,
+        "clause_sha256": "0a0175420fafd4e9c86821e3cb9cfacf44d1ca811b29c2c9b72c9c4dd3c72839"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pref",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pref"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'pref'.",
+      "locator": {
+        "section_id": "tag-pref",
+        "text_sha256": "d8826e52b9f723d9d1ec77e11f59f079584ae4a1e10f4026bd5bf6517d1fc618"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-pref-clause-e7e182d1831a",
+        "opentype-features-pt.tag-pref-clause-befaf310aeb2",
+        "opentype-features-pt.tag-pref-clause-8ddda34b34a2",
+        "opentype-features-pt.tag-pref-clause-b3b40d97b217"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-pref-clause-e7e182d1831a",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pref"
+      ],
+      "behaviour": "Tag: 'pref' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pref",
+        "clause_index": 5,
+        "clause_sha256": "e7e182d1831abcbe87c42871b448ee279ad3c37f13517ddb42f529ff1d5f0731"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pref-clause-befaf310aeb2",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pref"
+      ],
+      "behaviour": "Tag: 'pref' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pref",
+        "clause_index": 6,
+        "clause_sha256": "befaf310aeb2c63ef44d3dc864d7d6411d0d0565824c9d3217cd310dd549bea3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pref-clause-8ddda34b34a2",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pref"
+      ],
+      "behaviour": "Tag: 'pref' — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pref",
+        "clause_index": 7,
+        "clause_sha256": "8ddda34b34a28df127e5e31edd716892e4cac3f9014c05a7211e0fcc89bfcec8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pref-clause-b3b40d97b217",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pref"
+      ],
+      "behaviour": "Tag: 'pref' — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pref",
+        "clause_index": 9,
+        "clause_sha256": "b3b40d97b21762c3913a8196c6f630085db2f0896d4f6b26125d6fa1b620f172"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pres",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pres"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'pres'.",
+      "locator": {
+        "section_id": "tag-pres",
+        "text_sha256": "9bb12ae1e2d5ed516026a7f03a84a5fcee7a50eff862120ea27dc38b75e5285c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-pres-clause-e8b10bbbf439",
+        "opentype-features-pt.tag-pres-clause-8ddda34b34a2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-pres-clause-e8b10bbbf439",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pres"
+      ],
+      "behaviour": "Tag: 'pres' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pres",
+        "clause_index": 5,
+        "clause_sha256": "e8b10bbbf43952ab2750b67a8a774b971c031cc70aa4a3800b2c8dee5590a6b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pres-clause-8ddda34b34a2",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pres"
+      ],
+      "behaviour": "Tag: 'pres' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pres",
+        "clause_index": 6,
+        "clause_sha256": "8ddda34b34a28df127e5e31edd716892e4cac3f9014c05a7211e0fcc89bfcec8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pstf",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pstf"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'pstf'.",
+      "locator": {
+        "section_id": "tag-pstf",
+        "text_sha256": "d02e6c94dd7d20c72ad07285b8b100444895fda105d9edd55ba17032c2e50a45"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-pstf-clause-43fb3575fb9a",
+        "opentype-features-pt.tag-pstf-clause-e8b10bbbf439",
+        "opentype-features-pt.tag-pstf-clause-8ddda34b34a2",
+        "opentype-features-pt.tag-pstf-clause-235d83f52f7d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-pstf-clause-43fb3575fb9a",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pstf"
+      ],
+      "behaviour": "Tag: 'pstf' — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pstf",
+        "clause_index": 4,
+        "clause_sha256": "43fb3575fb9afc615ed586908024ee5935e9d2c5aeb7ff990efbd003bb452254"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pstf-clause-e8b10bbbf439",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pstf"
+      ],
+      "behaviour": "Tag: 'pstf' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pstf",
+        "clause_index": 5,
+        "clause_sha256": "e8b10bbbf43952ab2750b67a8a774b971c031cc70aa4a3800b2c8dee5590a6b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pstf-clause-8ddda34b34a2",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pstf"
+      ],
+      "behaviour": "Tag: 'pstf' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pstf",
+        "clause_index": 6,
+        "clause_sha256": "8ddda34b34a28df127e5e31edd716892e4cac3f9014c05a7211e0fcc89bfcec8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pstf-clause-235d83f52f7d",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pstf"
+      ],
+      "behaviour": "Tag: 'pstf' — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pstf",
+        "clause_index": 8,
+        "clause_sha256": "235d83f52f7d9e1969bf40385f0e83ee7e4831a6de53b1b58a29468e44d9e6f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-psts",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-psts"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'psts'.",
+      "locator": {
+        "section_id": "tag-psts",
+        "text_sha256": "047520273e5b85ab0f296d57d96007ba3f1400bee8fc2b396c1a3a32c1e94495"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-psts-clause-e8b10bbbf439",
+        "opentype-features-pt.tag-psts-clause-8ddda34b34a2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-psts-clause-e8b10bbbf439",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-psts"
+      ],
+      "behaviour": "Tag: 'psts' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-psts",
+        "clause_index": 5,
+        "clause_sha256": "e8b10bbbf43952ab2750b67a8a774b971c031cc70aa4a3800b2c8dee5590a6b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-psts-clause-8ddda34b34a2",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-psts"
+      ],
+      "behaviour": "Tag: 'psts' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-psts",
+        "clause_index": 6,
+        "clause_sha256": "8ddda34b34a28df127e5e31edd716892e4cac3f9014c05a7211e0fcc89bfcec8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pwid",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pwid"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'pwid'.",
+      "locator": {
+        "section_id": "tag-pwid",
+        "text_sha256": "40e35117d023f012cedd5a5841d9064d2143ae599a2340fda0292aaa2b7df22d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-pwid-clause-a73e8e20597f",
+        "opentype-features-pt.tag-pwid-clause-134a9d36a414",
+        "opentype-features-pt.tag-pwid-clause-6709b71a92be"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-pwid-clause-a73e8e20597f",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pwid"
+      ],
+      "behaviour": "Tag: 'pwid' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pwid",
+        "clause_index": 5,
+        "clause_sha256": "a73e8e20597f45e07f436f3dc724facfbb1676fccadd5b5a0ddf74b7bd2d60bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pwid-clause-134a9d36a414",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pwid"
+      ],
+      "behaviour": "Tag: 'pwid' — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pwid",
+        "clause_index": 9,
+        "clause_sha256": "134a9d36a414880932e77dfe1b3851745d2b3576d9af28610e041cfd2851d1a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-pwid-clause-6709b71a92be",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-pwid"
+      ],
+      "behaviour": "Tag: 'pwid' — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-pwid",
+        "clause_index": 10,
+        "clause_sha256": "6709b71a92bef0996fef7cc0fbbc6461a01ff727623db1c8e5c70ff1f2e52e1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-qwid",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-qwid"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'qwid'.",
+      "locator": {
+        "section_id": "tag-qwid",
+        "text_sha256": "d5601e99ac9131accd9164eff47b68d90e97abaccc583e7cfdf83e130fc22fe5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-qwid-clause-e9794ff39c09",
+        "opentype-features-pt.tag-qwid-clause-0bae0ff86486"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-qwid-clause-e9794ff39c09",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-qwid"
+      ],
+      "behaviour": "Tag: 'qwid' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-qwid",
+        "clause_index": 6,
+        "clause_sha256": "e9794ff39c0930f1b8f2b67f91157f422837a5bbd1c24a162d56dd56e74a6bab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-qwid-clause-0bae0ff86486",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-qwid"
+      ],
+      "behaviour": "Tag: 'qwid' — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-qwid",
+        "clause_index": 8,
+        "clause_sha256": "0bae0ff86486d4988178a170248f8359e757ac0c34ccefbf78785f77106f7699"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rand",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'rand'.",
+      "locator": {
+        "section_id": "tag-rand",
+        "text_sha256": "07625cbf8a3153cec3e1a01369511f00148bc6d4638e66624b7cbfd1ebefb394"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-rand-clause-1d7628808873",
+        "opentype-features-pt.tag-rand-clause-e9fe4753c756"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-rand-clause-1d7628808873",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rand"
+      ],
+      "behaviour": "Tag: 'rand' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rand",
+        "clause_index": 5,
+        "clause_sha256": "1d76288088733a8de3788a5b76ea55fdd9b9d1d4c00e8a0bbcde4a238f4043bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rand-clause-e9fe4753c756",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rand"
+      ],
+      "behaviour": "Tag: 'rand' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rand",
+        "clause_index": 6,
+        "clause_sha256": "e9fe4753c756185ea9312ffb991c4933a3ac3467feabe47a1bdcbd9b9f271468"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rclt",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rclt"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'rclt'.",
+      "locator": {
+        "section_id": "tag-rclt",
+        "text_sha256": "f9c083d413817ba9479d7314318c52b7e55e00ef8834a8c3365d436de4edf5ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-rclt-clause-9e8a45fa6622",
+        "opentype-features-pt.tag-rclt-clause-4a784de0a22a",
+        "opentype-features-pt.tag-rclt-clause-f063cfba98fc",
+        "opentype-features-pt.tag-rclt-clause-25e16798a6ab",
+        "opentype-features-pt.tag-rclt-clause-c06b10ad65c2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-rclt-clause-9e8a45fa6622",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rclt"
+      ],
+      "behaviour": "Tag: 'rclt' — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rclt",
+        "clause_index": 0,
+        "clause_sha256": "9e8a45fa662246aed3bee72b0da58c6de9d6ce691f29f21a8e82d7960ee5bd05"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rclt-clause-4a784de0a22a",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rclt"
+      ],
+      "behaviour": "Tag: 'rclt' — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rclt",
+        "clause_index": 2,
+        "clause_sha256": "4a784de0a22a2853e6796359aed345e26f05afcd4995760b7ae0c46e2b069ad5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rclt-clause-f063cfba98fc",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rclt"
+      ],
+      "behaviour": "Tag: 'rclt' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rclt",
+        "clause_index": 5,
+        "clause_sha256": "f063cfba98fccb593c2cc8492ef49cd9fe4ae3ad0a7c9dab013c14bfc52ca948"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rclt-clause-25e16798a6ab",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rclt"
+      ],
+      "behaviour": "Tag: 'rclt' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rclt",
+        "clause_index": 6,
+        "clause_sha256": "25e16798a6ab693986b5a7cd6cc3e3c9ba70b3c3868da05a00f9c5f6854a32ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rclt-clause-c06b10ad65c2",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rclt"
+      ],
+      "behaviour": "Tag: 'rclt' — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rclt",
+        "clause_index": 8,
+        "clause_sha256": "c06b10ad65c28d624065ff973eac82c223e87f6971b15c45fd68b636b3e3f67d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rkrf",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rkrf"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'rkrf'.",
+      "locator": {
+        "section_id": "tag-rkrf",
+        "text_sha256": "56d515e909b6ffd9e9c3e86e2171eb0391dc3ef2582b3757c4b6ddb8e08aac0b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-rkrf-clause-ebf5fdf91ed1",
+        "opentype-features-pt.tag-rkrf-clause-8ddda34b34a2",
+        "opentype-features-pt.tag-rkrf-clause-c34af3392f06"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-rkrf-clause-ebf5fdf91ed1",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rkrf"
+      ],
+      "behaviour": "Tag: 'rkrf' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rkrf",
+        "clause_index": 6,
+        "clause_sha256": "ebf5fdf91ed151ebb8656e1ef0d40f85f3b0da2c676481d4c0ae654db28b0e64"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rkrf-clause-8ddda34b34a2",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rkrf"
+      ],
+      "behaviour": "Tag: 'rkrf' — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rkrf",
+        "clause_index": 7,
+        "clause_sha256": "8ddda34b34a28df127e5e31edd716892e4cac3f9014c05a7211e0fcc89bfcec8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rkrf-clause-c34af3392f06",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rkrf"
+      ],
+      "behaviour": "Tag: 'rkrf' — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rkrf",
+        "clause_index": 9,
+        "clause_sha256": "c34af3392f0695dfc577d323fb1044aaf75a237bb86c1f545a467e42bc25664a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rlig",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rlig"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'rlig'.",
+      "locator": {
+        "section_id": "tag-rlig",
+        "text_sha256": "1d364d67cb80d161e72f3fa59a0091475bff7f0889def27f3c1ad101a7853312"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-rlig-clause-5360234977ec",
+        "opentype-features-pt.tag-rlig-clause-df817432bdee",
+        "opentype-features-pt.tag-rlig-clause-e78a17ce34e9",
+        "opentype-features-pt.tag-rlig-clause-e8b10bbbf439",
+        "opentype-features-pt.tag-rlig-clause-25e16798a6ab"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-rlig-clause-5360234977ec",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rlig"
+      ],
+      "behaviour": "Tag: 'rlig' — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rlig",
+        "clause_index": 0,
+        "clause_sha256": "5360234977ecd4eec3e06aae050a8d218dc4a7bb93f3df1470ed715a0509098d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rlig-clause-df817432bdee",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rlig"
+      ],
+      "behaviour": "Tag: 'rlig' — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rlig",
+        "clause_index": 2,
+        "clause_sha256": "df817432bdee5ad161d0e8ca6ef3c842600dfa3a0d22af71561b18a24fac6f68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rlig-clause-e78a17ce34e9",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rlig"
+      ],
+      "behaviour": "Tag: 'rlig' — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rlig",
+        "clause_index": 4,
+        "clause_sha256": "e78a17ce34e9a291278f33c9cc7a696807957de5f69eb88cb2f07c4df96aa1bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rlig-clause-e8b10bbbf439",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rlig"
+      ],
+      "behaviour": "Tag: 'rlig' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rlig",
+        "clause_index": 5,
+        "clause_sha256": "e8b10bbbf43952ab2750b67a8a774b971c031cc70aa4a3800b2c8dee5590a6b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rlig-clause-25e16798a6ab",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rlig"
+      ],
+      "behaviour": "Tag: 'rlig' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rlig",
+        "clause_index": 6,
+        "clause_sha256": "25e16798a6ab693986b5a7cd6cc3e3c9ba70b3c3868da05a00f9c5f6854a32ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rphf",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rphf"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'rphf'.",
+      "locator": {
+        "section_id": "tag-rphf",
+        "text_sha256": "69a14db149b378aab82058dabf5d68827c1f2d08050a1bb9a2141a694f73719b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-rphf-clause-e8b10bbbf439",
+        "opentype-features-pt.tag-rphf-clause-8ddda34b34a2",
+        "opentype-features-pt.tag-rphf-clause-c34af3392f06"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-rphf-clause-e8b10bbbf439",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rphf"
+      ],
+      "behaviour": "Tag: 'rphf' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rphf",
+        "clause_index": 5,
+        "clause_sha256": "e8b10bbbf43952ab2750b67a8a774b971c031cc70aa4a3800b2c8dee5590a6b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rphf-clause-8ddda34b34a2",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rphf"
+      ],
+      "behaviour": "Tag: 'rphf' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rphf",
+        "clause_index": 6,
+        "clause_sha256": "8ddda34b34a28df127e5e31edd716892e4cac3f9014c05a7211e0fcc89bfcec8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rphf-clause-c34af3392f06",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rphf"
+      ],
+      "behaviour": "Tag: 'rphf' — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rphf",
+        "clause_index": 8,
+        "clause_sha256": "c34af3392f0695dfc577d323fb1044aaf75a237bb86c1f545a467e42bc25664a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rtbd",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rtbd"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'rtbd'.",
+      "locator": {
+        "section_id": "tag-rtbd",
+        "text_sha256": "d3f14ef427daecfb7a3e53626f862a9b53392b42ade3e1b178efc15c7c29405a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-rtbd-clause-77b1ad9d0ab7",
+        "opentype-features-pt.tag-rtbd-clause-ca905dd2f71d",
+        "opentype-features-pt.tag-rtbd-clause-9d1a5a291ca1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-rtbd-clause-77b1ad9d0ab7",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rtbd"
+      ],
+      "behaviour": "Tag: 'rtbd' — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rtbd",
+        "clause_index": 4,
+        "clause_sha256": "77b1ad9d0ab7038f4312f6e322e81e5ee7c2d46b6cf5d57566c56f7c10dffad6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rtbd-clause-ca905dd2f71d",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rtbd"
+      ],
+      "behaviour": "Tag: 'rtbd' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rtbd",
+        "clause_index": 6,
+        "clause_sha256": "ca905dd2f71d4b41277cb6ddb2b11d919f049d2f0a03e4b649d7dea66b2d2e49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rtbd-clause-9d1a5a291ca1",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rtbd"
+      ],
+      "behaviour": "Tag: 'rtbd' — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rtbd",
+        "clause_index": 8,
+        "clause_sha256": "9d1a5a291ca13a6c77221528044f275e625e9c0ad622c3e53fadb014299f7f26"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rtla",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rtla"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'rtla'.",
+      "locator": {
+        "section_id": "tag-rtla",
+        "text_sha256": "2c9dd6205a21ec02b765bbfe9ee9e7668a90a10af4c83692d6486b43d6264d80"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-rtla-clause-18b90a673dd2",
+        "opentype-features-pt.tag-rtla-clause-25e16798a6ab"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-rtla-clause-18b90a673dd2",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rtla"
+      ],
+      "behaviour": "Tag: 'rtla' — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rtla",
+        "clause_index": 3,
+        "clause_sha256": "18b90a673dd2f3d9dfa4419807ff0e71989fd8d8b247682e0bf20c7935b2e5fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rtla-clause-25e16798a6ab",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rtla"
+      ],
+      "behaviour": "Tag: 'rtla' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rtla",
+        "clause_index": 5,
+        "clause_sha256": "25e16798a6ab693986b5a7cd6cc3e3c9ba70b3c3868da05a00f9c5f6854a32ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rtlm",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rtlm"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'rtlm'.",
+      "locator": {
+        "section_id": "tag-rtlm",
+        "text_sha256": "5522491b9d154328b74860e1f235451df233a3832ba5b2a1309cf2723c11fe99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-rtlm-clause-18b90a673dd2",
+        "opentype-features-pt.tag-rtlm-clause-25e16798a6ab"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-rtlm-clause-18b90a673dd2",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rtlm"
+      ],
+      "behaviour": "Tag: 'rtlm' — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rtlm",
+        "clause_index": 4,
+        "clause_sha256": "18b90a673dd2f3d9dfa4419807ff0e71989fd8d8b247682e0bf20c7935b2e5fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rtlm-clause-25e16798a6ab",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rtlm"
+      ],
+      "behaviour": "Tag: 'rtlm' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rtlm",
+        "clause_index": 6,
+        "clause_sha256": "25e16798a6ab693986b5a7cd6cc3e3c9ba70b3c3868da05a00f9c5f6854a32ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-ruby",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-ruby"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'ruby'.",
+      "locator": {
+        "section_id": "tag-ruby",
+        "text_sha256": "94f615172243ef6dcb4cc903779880bbb3902026c6ccc62d72f6c51ecab698b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-ruby-clause-e9935a0446be"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-ruby-clause-e9935a0446be",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-ruby"
+      ],
+      "behaviour": "Tag: 'ruby' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-ruby",
+        "clause_index": 6,
+        "clause_sha256": "e9935a0446be947af1ccbf94cdece201ad2737028566f913941ce97ad917d3f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rvrn",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rvrn"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'rvrn'.",
+      "locator": {
+        "section_id": "tag-rvrn",
+        "text_sha256": "594efe5815a554befcf9ee78b985b156394c2d42d6717e640cf5f457253fa153"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-rvrn-clause-db7cc96d3273",
+        "opentype-features-pt.tag-rvrn-clause-8632828dcb18",
+        "opentype-features-pt.tag-rvrn-clause-951a90633795",
+        "opentype-features-pt.tag-rvrn-clause-fb1e4ae01e0d",
+        "opentype-features-pt.tag-rvrn-clause-19a91824dc3d",
+        "opentype-features-pt.tag-rvrn-clause-d43bac43cd9d",
+        "opentype-features-pt.tag-rvrn-clause-fd5ea6f3bc38",
+        "opentype-features-pt.tag-rvrn-clause-20083240134a",
+        "opentype-features-pt.tag-rvrn-clause-7e83084c6668"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-rvrn-clause-db7cc96d3273",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rvrn"
+      ],
+      "behaviour": "Tag: 'rvrn' — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rvrn",
+        "clause_index": 0,
+        "clause_sha256": "db7cc96d32739ce758970c782ae10711e4a2cfd73ec62ea623a7738aba9d3b5f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rvrn-clause-8632828dcb18",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rvrn"
+      ],
+      "behaviour": "Tag: 'rvrn' — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rvrn",
+        "clause_index": 3,
+        "clause_sha256": "8632828dcb18555966ee53fc59881554e54aa12585c56251fb2fb1eb11383521"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rvrn-clause-951a90633795",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rvrn"
+      ],
+      "behaviour": "Tag: 'rvrn' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rvrn",
+        "clause_index": 6,
+        "clause_sha256": "951a90633795d65173616b17086a082dd248075bf9e632be3eedf59943bc8d25"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rvrn-clause-fb1e4ae01e0d",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rvrn"
+      ],
+      "behaviour": "Tag: 'rvrn' — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rvrn",
+        "clause_index": 7,
+        "clause_sha256": "fb1e4ae01e0d8bffeac50b862c1f432e15241e63c2b59dccde254c948ad511cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rvrn-clause-19a91824dc3d",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rvrn"
+      ],
+      "behaviour": "Tag: 'rvrn' — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rvrn",
+        "clause_index": 8,
+        "clause_sha256": "19a91824dc3dfde3d6c74812ce1b6a91af2b57f342fa7eadf161034b0be23fcc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rvrn-clause-d43bac43cd9d",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rvrn"
+      ],
+      "behaviour": "Tag: 'rvrn' — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rvrn",
+        "clause_index": 9,
+        "clause_sha256": "d43bac43cd9dfbb183fc76d62b415de7f3d23ff549cfc0449d4aa672d635cb6e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rvrn-clause-fd5ea6f3bc38",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rvrn"
+      ],
+      "behaviour": "Tag: 'rvrn' — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rvrn",
+        "clause_index": 11,
+        "clause_sha256": "fd5ea6f3bc38dc366245c8b0c11f75ae7827011d63520afc589b81d2bce79bb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rvrn-clause-20083240134a",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rvrn"
+      ],
+      "behaviour": "Tag: 'rvrn' — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rvrn",
+        "clause_index": 12,
+        "clause_sha256": "20083240134a081574c94de68eeb93d9f43790d96df1acb80aaeadd1dd513ede"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-rvrn-clause-7e83084c6668",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-rvrn"
+      ],
+      "behaviour": "Tag: 'rvrn' — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-rvrn",
+        "clause_index": 14,
+        "clause_sha256": "7e83084c6668be3644869902605a42a3f46fea6e94044e715261452e464e5c17"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-salt",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-salt"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'salt'.",
+      "locator": {
+        "section_id": "tag-salt",
+        "text_sha256": "3638144eefa6ab3829b32fd5ace58b172d575bd2f1422bfdc68f0d17a36576e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-salt-clause-2bad28f62213",
+        "opentype-features-pt.tag-salt-clause-7c895e7bc767"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-salt-clause-2bad28f62213",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-salt"
+      ],
+      "behaviour": "Tag: 'salt' — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-salt",
+        "clause_index": 4,
+        "clause_sha256": "2bad28f622136a7362056c7cfa85d5b5bba031fef86df61ac1020d73fad32537"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-salt-clause-7c895e7bc767",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-salt"
+      ],
+      "behaviour": "Tag: 'salt' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-salt",
+        "clause_index": 6,
+        "clause_sha256": "7c895e7bc767f3f5959d857296b766b8a25e204845f267c00ffc6345ab48334f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-sinf",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-sinf"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'sinf'.",
+      "locator": {
+        "section_id": "tag-sinf",
+        "text_sha256": "4272ac0e11413999ba39d815d91cb6865c005fabc096c4449f3c4aa4eba73ec7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-sinf-clause-529bb023650c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-sinf-clause-529bb023650c",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-sinf"
+      ],
+      "behaviour": "Tag: 'sinf' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-sinf",
+        "clause_index": 6,
+        "clause_sha256": "529bb023650cd51495e42d70fa7efe7ce69762677846239fc6cab56ba2544acf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-size",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-size"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'size'.",
+      "locator": {
+        "section_id": "tag-size",
+        "text_sha256": "87b8bf353a6c9a4e137434d633e440b1b92b6ea396ffd61f7c7e568b9d8dc69e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-size-clause-5a436bb81104",
+        "opentype-features-pt.tag-size-clause-30d5549a7817",
+        "opentype-features-pt.tag-size-clause-a43990d848af",
+        "opentype-features-pt.tag-size-clause-ebc577fa2533",
+        "opentype-features-pt.tag-size-clause-c20c3e59b304",
+        "opentype-features-pt.tag-size-clause-d655e11f036a",
+        "opentype-features-pt.tag-size-clause-fb220b849b8e",
+        "opentype-features-pt.tag-size-clause-253297c21a2b",
+        "opentype-features-pt.tag-size-clause-20121a7454e5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-size-clause-5a436bb81104",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-size"
+      ],
+      "behaviour": "Tag: 'size' — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-size",
+        "clause_index": 9,
+        "clause_sha256": "5a436bb8110456997fad41b188b6f326dbf5a44c4e945408377f1c8301da0ae4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-size-clause-30d5549a7817",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-size"
+      ],
+      "behaviour": "Tag: 'size' — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-size",
+        "clause_index": 10,
+        "clause_sha256": "30d5549a7817df5665f465adf0376a608ed1575c2e7ea13c38755a9d8192d364"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-size-clause-a43990d848af",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-size"
+      ],
+      "behaviour": "Tag: 'size' — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-size",
+        "clause_index": 11,
+        "clause_sha256": "a43990d848af4366992b3c677a951c2b2efb2fec5eff2395611eda150d62861f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-size-clause-ebc577fa2533",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-size"
+      ],
+      "behaviour": "Tag: 'size' — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-size",
+        "clause_index": 13,
+        "clause_sha256": "ebc577fa25331d175f6718178007ebf2c08c5991e17c569036a60980878ae4f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-size-clause-c20c3e59b304",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-size"
+      ],
+      "behaviour": "Tag: 'size' — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-size",
+        "clause_index": 15,
+        "clause_sha256": "c20c3e59b304286790279049c597c4953718365aba72687466a92e6e3ca080eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-size-clause-d655e11f036a",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-size"
+      ],
+      "behaviour": "Tag: 'size' — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-size",
+        "clause_index": 17,
+        "clause_sha256": "d655e11f036af1675f4e13cfcd0e815b268e1b5f3420740c1a557709a54136e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-size-clause-fb220b849b8e",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-size"
+      ],
+      "behaviour": "Tag: 'size' — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-size",
+        "clause_index": 20,
+        "clause_sha256": "fb220b849b8e0d738b2d99b883dbf6dce3955340a3c8f0c0ce29c08106abc50a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-size-clause-253297c21a2b",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-size"
+      ],
+      "behaviour": "Tag: 'size' — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-size",
+        "clause_index": 22,
+        "clause_sha256": "253297c21a2b1a031a15f4683042aafb02d6b31de1e68f94a701dcf8063d6020"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-size-clause-20121a7454e5",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-size"
+      ],
+      "behaviour": "Tag: 'size' — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-size",
+        "clause_index": 24,
+        "clause_sha256": "20121a7454e53d7c079e4c89aa9756907c9355052615064b25a09aef654680ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-smcp",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-smcp"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'smcp'.",
+      "locator": {
+        "section_id": "tag-smcp",
+        "text_sha256": "8708886445a4b8f7c640401dc00e9582189177144b30879cd8e6691de0a7bdf8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-smcp-clause-d99af514f0c9",
+        "opentype-features-pt.tag-smcp-clause-f99411e1f282",
+        "opentype-features-pt.tag-smcp-clause-529bb023650c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-smcp-clause-d99af514f0c9",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-smcp"
+      ],
+      "behaviour": "Tag: 'smcp' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-smcp",
+        "clause_index": 6,
+        "clause_sha256": "d99af514f0c9d0eb4fb2f1bff5297de721a89db606a3790c5ab0189deb299d06"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-smcp-clause-f99411e1f282",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-smcp"
+      ],
+      "behaviour": "Tag: 'smcp' — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-smcp",
+        "clause_index": 8,
+        "clause_sha256": "f99411e1f2824dec29cc0da01872ae3edc710030befdfe20c1ce1a133b53a0bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-smcp-clause-529bb023650c",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-smcp"
+      ],
+      "behaviour": "Tag: 'smcp' — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-smcp",
+        "clause_index": 9,
+        "clause_sha256": "529bb023650cd51495e42d70fa7efe7ce69762677846239fc6cab56ba2544acf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-smpl",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-smpl"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'smpl'.",
+      "locator": {
+        "section_id": "tag-smpl",
+        "text_sha256": "9a77b8c352e14e655e72b3fa54e0b76db398fcf5b5cbaead9d679e07f3093190"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-smpl-clause-dfccf85302ec",
+        "opentype-features-pt.tag-smpl-clause-b0fe47a05e3c",
+        "opentype-features-pt.tag-smpl-clause-67a1b8efc8b1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-smpl-clause-dfccf85302ec",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-smpl"
+      ],
+      "behaviour": "Tag: 'smpl' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-smpl",
+        "clause_index": 5,
+        "clause_sha256": "dfccf85302ec82cfb890dfa69c0f1d1568b59aa656a1a60b97e1e75a344ea769"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-smpl-clause-b0fe47a05e3c",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-smpl"
+      ],
+      "behaviour": "Tag: 'smpl' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-smpl",
+        "clause_index": 6,
+        "clause_sha256": "b0fe47a05e3cf61cc1034250c8d13791c0c7e940088348998eea74c42a750cfb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-smpl-clause-67a1b8efc8b1",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-smpl"
+      ],
+      "behaviour": "Tag: 'smpl' — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-smpl",
+        "clause_index": 8,
+        "clause_sha256": "67a1b8efc8b15f4be9cca54afc070a6706ecc2d97482651e19b81250c7ab1ea8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-ss01-ss20",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-ss01---ss20"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'ss01' - 'ss20'.",
+      "locator": {
+        "section_id": "tag-ss01---ss20",
+        "text_sha256": "915749e8b6116476eb89770fe437d3e4243cd67b73335240da5263853ac0a22d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-ss01-ss20-clause-9518ead9b193",
+        "opentype-features-pt.tag-ss01-ss20-clause-6bff00de987e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-ss01-ss20-clause-9518ead9b193",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-ss01---ss20"
+      ],
+      "behaviour": "Tag: 'ss01' - 'ss20' — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-ss01---ss20",
+        "clause_index": 9,
+        "clause_sha256": "9518ead9b19373e02b7a6a39a8a79e07cf6609622ff533d135551200d10bd1a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-ss01-ss20-clause-6bff00de987e",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-ss01---ss20"
+      ],
+      "behaviour": "Tag: 'ss01' - 'ss20' — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-ss01---ss20",
+        "clause_index": 12,
+        "clause_sha256": "6bff00de987e7c61199366dbd85dfde30dfbce5d69da5c6e60d56799be4be14a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-ssty",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-ssty"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'ssty'.",
+      "locator": {
+        "section_id": "tag-ssty",
+        "text_sha256": "b32afd15e4aad7521cc11a5f23b536d7940da0f180202a48f0b8232c6c1b7e41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-ssty-clause-49f310fd6530",
+        "opentype-features-pt.tag-ssty-clause-5401d87e82c1",
+        "opentype-features-pt.tag-ssty-clause-8ddda34b34a2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-ssty-clause-49f310fd6530",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-ssty"
+      ],
+      "behaviour": "Tag: 'ssty' — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-ssty",
+        "clause_index": 2,
+        "clause_sha256": "49f310fd653003b77d9d231a3b216ea8a689614cae16c52be0ee057418c42b70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-ssty-clause-5401d87e82c1",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-ssty"
+      ],
+      "behaviour": "Tag: 'ssty' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-ssty",
+        "clause_index": 6,
+        "clause_sha256": "5401d87e82c13520adb58bd939f546ab07633ba22165473e9543924b2e06fda1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-ssty-clause-8ddda34b34a2",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-ssty"
+      ],
+      "behaviour": "Tag: 'ssty' — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-ssty",
+        "clause_index": 7,
+        "clause_sha256": "8ddda34b34a28df127e5e31edd716892e4cac3f9014c05a7211e0fcc89bfcec8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-stch",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-stch"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'stch'.",
+      "locator": {
+        "section_id": "tag-stch",
+        "text_sha256": "266d7e077512770601a18e5006b56da9a82c8ec7a7d64064678d9924073a5149"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-stch-clause-3559b2947dce",
+        "opentype-features-pt.tag-stch-clause-10d437f2775e",
+        "opentype-features-pt.tag-stch-clause-25e16798a6ab"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-stch-clause-3559b2947dce",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-stch"
+      ],
+      "behaviour": "Tag: 'stch' — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-stch",
+        "clause_index": 2,
+        "clause_sha256": "3559b2947dce21727f96724a054de12c8c92c6ac1c3cbc9c23f996b10eabedf7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-stch-clause-10d437f2775e",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-stch"
+      ],
+      "behaviour": "Tag: 'stch' — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-stch",
+        "clause_index": 3,
+        "clause_sha256": "10d437f2775ee6356ac4c83a79ec390b3edaa6fefc6882d74508f6ea0c04507a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-stch-clause-25e16798a6ab",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-stch"
+      ],
+      "behaviour": "Tag: 'stch' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-stch",
+        "clause_index": 6,
+        "clause_sha256": "25e16798a6ab693986b5a7cd6cc3e3c9ba70b3c3868da05a00f9c5f6854a32ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-subs",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-subs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'subs'.",
+      "locator": {
+        "section_id": "tag-subs",
+        "text_sha256": "22fe77b30fabfefd8e79a493c7a8dfd1e3ab790aa065d3cd74aecdc2ab90f735"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-subs-clause-a9b8f759a930",
+        "opentype-features-pt.tag-subs-clause-529bb023650c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-subs-clause-a9b8f759a930",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-subs"
+      ],
+      "behaviour": "Tag: 'subs' — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-subs",
+        "clause_index": 4,
+        "clause_sha256": "a9b8f759a9306a9b5087adba62d291f9f4e650cf6b4123fbba0d81ad4f63ecd2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-subs-clause-529bb023650c",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-subs"
+      ],
+      "behaviour": "Tag: 'subs' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-subs",
+        "clause_index": 5,
+        "clause_sha256": "529bb023650cd51495e42d70fa7efe7ce69762677846239fc6cab56ba2544acf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-sups",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-sups"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'sups'.",
+      "locator": {
+        "section_id": "tag-sups",
+        "text_sha256": "6311427af6cbdb5fb6d2a334701e7a5b7b1c1747891e0e72bde0ce8f62e4733b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-sups-clause-a9b8f759a930",
+        "opentype-features-pt.tag-sups-clause-529bb023650c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-sups-clause-a9b8f759a930",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-sups"
+      ],
+      "behaviour": "Tag: 'sups' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-sups",
+        "clause_index": 5,
+        "clause_sha256": "a9b8f759a9306a9b5087adba62d291f9f4e650cf6b4123fbba0d81ad4f63ecd2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-sups-clause-529bb023650c",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-sups"
+      ],
+      "behaviour": "Tag: 'sups' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-sups",
+        "clause_index": 6,
+        "clause_sha256": "529bb023650cd51495e42d70fa7efe7ce69762677846239fc6cab56ba2544acf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-swsh",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-swsh"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'swsh'.",
+      "locator": {
+        "section_id": "tag-swsh",
+        "text_sha256": "1ca3263652708315c2154e625a11f981a40fc0936b12bd6c910e922b14c41431"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-swsh-clause-f6eafc841a43",
+        "opentype-features-pt.tag-swsh-clause-95b4bd590564"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-swsh-clause-f6eafc841a43",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-swsh"
+      ],
+      "behaviour": "Tag: 'swsh' — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-swsh",
+        "clause_index": 4,
+        "clause_sha256": "f6eafc841a43d565933f9050cc3aca34ec605a38e7e819f43c2814055d5182f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-swsh-clause-95b4bd590564",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-swsh"
+      ],
+      "behaviour": "Tag: 'swsh' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-swsh",
+        "clause_index": 6,
+        "clause_sha256": "95b4bd590564298242e50539709a37e3db99cc664cac4009954ebd5374b25847"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-titl",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-titl"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'titl'.",
+      "locator": {
+        "section_id": "tag-titl",
+        "text_sha256": "79b036ffe18d173c784f322e88f10aa29b47d34579f85de8746e7a9350a288ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-titl-clause-529bb023650c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-titl-clause-529bb023650c",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-titl"
+      ],
+      "behaviour": "Tag: 'titl' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-titl",
+        "clause_index": 6,
+        "clause_sha256": "529bb023650cd51495e42d70fa7efe7ce69762677846239fc6cab56ba2544acf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-tjmo",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-tjmo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'tjmo'.",
+      "locator": {
+        "section_id": "tag-tjmo",
+        "text_sha256": "4e1924d5c3c93ae6e85c1711d0dfcf98862d5fbd0d39f11536c2934004ce8945"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-tjmo-clause-5d14c048201e",
+        "opentype-features-pt.tag-tjmo-clause-9dd0ce98182e",
+        "opentype-features-pt.tag-tjmo-clause-152476b49bfb",
+        "opentype-features-pt.tag-tjmo-clause-25e16798a6ab"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-tjmo-clause-5d14c048201e",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-tjmo"
+      ],
+      "behaviour": "Tag: 'tjmo' — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-tjmo",
+        "clause_index": 3,
+        "clause_sha256": "5d14c048201ec7210ff831dd8bfedfcb877a53bfb122a7a13dd6a6c6170e6254"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-tjmo-clause-9dd0ce98182e",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-tjmo"
+      ],
+      "behaviour": "Tag: 'tjmo' — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-tjmo",
+        "clause_index": 4,
+        "clause_sha256": "9dd0ce98182e628b01202ccf45af03ff1c6ea51242aab3ab38b33a6b1dbbe8ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-tjmo-clause-152476b49bfb",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-tjmo"
+      ],
+      "behaviour": "Tag: 'tjmo' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-tjmo",
+        "clause_index": 5,
+        "clause_sha256": "152476b49bfb35b582c1e96e3a927c2bab348fc47ecad1fc445e0cf8192c4d6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-tjmo-clause-25e16798a6ab",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-tjmo"
+      ],
+      "behaviour": "Tag: 'tjmo' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-tjmo",
+        "clause_index": 6,
+        "clause_sha256": "25e16798a6ab693986b5a7cd6cc3e3c9ba70b3c3868da05a00f9c5f6854a32ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-tnam",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-tnam"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'tnam'.",
+      "locator": {
+        "section_id": "tag-tnam",
+        "text_sha256": "616ed27267b74ab50011fbb014bf1fb417990fc3629fb7d3f6f3d6ca8d011bc6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-tnam-clause-1136f6c1e0cc",
+        "opentype-features-pt.tag-tnam-clause-529bb023650c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-tnam-clause-1136f6c1e0cc",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-tnam"
+      ],
+      "behaviour": "Tag: 'tnam' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-tnam",
+        "clause_index": 5,
+        "clause_sha256": "1136f6c1e0cc717f6001523b27e755ab63d77961ddb51bef6e4363cdd05f1721"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-tnam-clause-529bb023650c",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-tnam"
+      ],
+      "behaviour": "Tag: 'tnam' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-tnam",
+        "clause_index": 6,
+        "clause_sha256": "529bb023650cd51495e42d70fa7efe7ce69762677846239fc6cab56ba2544acf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-tnum",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-tnum"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'tnum'.",
+      "locator": {
+        "section_id": "tag-tnum",
+        "text_sha256": "f80d324b31ed5d47e4c792b332d9189f68bcb3669a8cd8c3951153f6c442a82e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-tnum-clause-4bc1e6af6b09",
+        "opentype-features-pt.tag-tnum-clause-0a0175420faf"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-tnum-clause-4bc1e6af6b09",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-tnum"
+      ],
+      "behaviour": "Tag: 'tnum' — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-tnum",
+        "clause_index": 4,
+        "clause_sha256": "4bc1e6af6b0971ba29d7703bbef4124c45223fc8d4929853a9b5faf526c5c468"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-tnum-clause-0a0175420faf",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-tnum"
+      ],
+      "behaviour": "Tag: 'tnum' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-tnum",
+        "clause_index": 6,
+        "clause_sha256": "0a0175420fafd4e9c86821e3cb9cfacf44d1ca811b29c2c9b72c9c4dd3c72839"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-trad",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-trad"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'trad'.",
+      "locator": {
+        "section_id": "tag-trad",
+        "text_sha256": "59486dbcd8145b659f939e4d8ebf249917c98f33a5973308a95133c65f0952dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-trad-clause-62f4ea99a201",
+        "opentype-features-pt.tag-trad-clause-ce2f4163474f",
+        "opentype-features-pt.tag-trad-clause-2898112ce374"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-trad-clause-62f4ea99a201",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-trad"
+      ],
+      "behaviour": "Tag: 'trad' — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-trad",
+        "clause_index": 4,
+        "clause_sha256": "62f4ea99a201ebfcbfcba5aa3a12e9e7548ed728190eac22b4f84724730d18e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-trad-clause-ce2f4163474f",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-trad"
+      ],
+      "behaviour": "Tag: 'trad' — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-trad",
+        "clause_index": 5,
+        "clause_sha256": "ce2f4163474f3765b8b026bac7ebae04ac847757ff6210f90cf63fd2311d7d31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-trad-clause-2898112ce374",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-trad"
+      ],
+      "behaviour": "Tag: 'trad' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-trad",
+        "clause_index": 6,
+        "clause_sha256": "2898112ce3746365398c852a07d0637faddb1b8e6a919f16553df69c72925a8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-twid",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-twid"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tag: 'twid'.",
+      "locator": {
+        "section_id": "tag-twid",
+        "text_sha256": "ea65928b76bf5973589c3ad3030407a202415ddbdc73d7dbee28e7943f2a0228"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "opentype-features-pt.tag-twid-clause-e9794ff39c09",
+        "opentype-features-pt.tag-twid-clause-842c1c3180b9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.tag-twid-clause-e9794ff39c09",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-twid"
+      ],
+      "behaviour": "Tag: 'twid' — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-twid",
+        "clause_index": 6,
+        "clause_sha256": "e9794ff39c0930f1b8f2b67f91157f422837a5bbd1c24a162d56dd56e74a6bab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.tag-twid-clause-842c1c3180b9",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "tag-twid"
+      ],
+      "behaviour": "Tag: 'twid' — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "tag-twid",
+        "clause_index": 8,
+        "clause_sha256": "842c1c3180b97bbff13855e1139565760f8f815b603a9d1c6a23b3bd2d022e1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "opentype-features-pt.ms-in-this-article",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "ms--in-this-article"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "ms--in-this-article",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.ms-feedback",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "ms--feedback"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Feedback.",
+      "locator": {
+        "section_id": "ms--feedback",
+        "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.ms-additional-resources-mobile-heading",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "ms--additional-resources-mobile-heading"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additional resources.",
+      "locator": {
+        "section_id": "ms--additional-resources-mobile-heading",
+        "text_sha256": "4e2297f79525355aa3dc07756ae4ae6ba350dc012790f96133dc9fdbf48db6d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "opentype-features-pt.side-doc-outline",
+      "family": "opentype-features-pt",
+      "source_id": "opentype-features-pt",
+      "sections": [
+        "side-doc-outline"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in In this article.",
+      "locator": {
+        "section_id": "side-doc-outline",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

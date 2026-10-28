@@ -1,0 +1,2492 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-gcpm-3.introduction",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "b06736fcfb051debc3a168e7e1b4851ddce5b36a0c9ab7582cd37d2f22d3c583"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.values",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "5f8506dcb420c6d6df7be65e3ff0126c9f92cd23f8505cebe02804b8578eccd4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.running-headers-and-footers",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "running-headers-and-footers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Running headers and footers.",
+      "locator": {
+        "section_id": "running-headers-and-footers",
+        "text_sha256": "2e61898263a3346d7f29dfb0df1f474335e806880539c378ec14d86f8fbf0f68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.named-strings",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "named-strings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Named strings.",
+      "locator": {
+        "section_id": "named-strings",
+        "text_sha256": "c6da3e58caabab9f66e6f481c66778755ba0ae01cb4502b12f959d10754e38e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.setting-named-strings-the-string-set-pro",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "setting-named-strings-the-string-set-pro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The string-set property.",
+      "locator": {
+        "section_id": "setting-named-strings-the-string-set-pro",
+        "text_sha256": "f3fd3214a970c1c446682b62581e3222c08596503b55a552106e099924d8f1c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.setting-named-strings-the-string-set-pro-clause-cca2516ebb1d",
+        "css-gcpm-3.setting-named-strings-the-string-set-pro-clause-4b8cefc02e15",
+        "css-gcpm-3.setting-named-strings-the-string-set-pro-clause-2159a8d9d082"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.setting-named-strings-the-string-set-pro-clause-cca2516ebb1d",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "setting-named-strings-the-string-set-pro"
+      ],
+      "behaviour": "The string-set property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "setting-named-strings-the-string-set-pro",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.setting-named-strings-the-string-set-pro-clause-4b8cefc02e15",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "setting-named-strings-the-string-set-pro"
+      ],
+      "behaviour": "The string-set property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "setting-named-strings-the-string-set-pro",
+        "clause_index": 17,
+        "clause_sha256": "4b8cefc02e153377ecb4bc945a3cd214a7d53fd308ab81f9679a0f4ff2741433"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.setting-named-strings-the-string-set-pro-clause-2159a8d9d082",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "setting-named-strings-the-string-set-pro"
+      ],
+      "behaviour": "The string-set property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "setting-named-strings-the-string-set-pro",
+        "clause_index": 31,
+        "clause_sha256": "2159a8d9d082d5cb2847c1748063fb8daae04bd06feb3c794731db0e46d6a911"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.content-function-header",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "content-function-header"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The content() function.",
+      "locator": {
+        "section_id": "content-function-header",
+        "text_sha256": "3350a959c5e647adf7a77daa653636deb22fe2c3c918b75b2ccb15301cfd0623"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.content-function-header-clause-706d946fce82",
+        "css-gcpm-3.content-function-header-clause-20cb6e55af80"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.content-function-header-clause-706d946fce82",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "content-function-header"
+      ],
+      "behaviour": "The content() function — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-function-header",
+        "clause_index": 10,
+        "clause_sha256": "706d946fce82c28cbea1cff31ab9ceafd181843bc0bb42c86a1360b0d89a4a4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.content-function-header-clause-20cb6e55af80",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "content-function-header"
+      ],
+      "behaviour": "The content() function — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-function-header",
+        "clause_index": 20,
+        "clause_sha256": "20cb6e55af80d9c7f868554d432ba1d354905e0d21b428cf43905ae930b57469"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.using-named-strings",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "using-named-strings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The string() function.",
+      "locator": {
+        "section_id": "using-named-strings",
+        "text_sha256": "9f51b9044b56250d6314abbc04832500f5d46934ac2ce43649f35304448babf1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.running-elements",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "running-elements"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Running elements.",
+      "locator": {
+        "section_id": "running-elements",
+        "text_sha256": "48f2dfab0823ae02177e552ccca8cc202ea9f88c53c4f9dd0635cb41e39bc2c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.running-syntax",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "running-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The running() value.",
+      "locator": {
+        "section_id": "running-syntax",
+        "text_sha256": "dad4345c96d2afb93d173ee2645214953e64b7ad5539350bd87da55b538c2056"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.running-syntax-clause-cca2516ebb1d",
+        "css-gcpm-3.running-syntax-clause-4b8cefc02e15",
+        "css-gcpm-3.running-syntax-clause-955aac81b081"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.running-syntax-clause-cca2516ebb1d",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "running-syntax"
+      ],
+      "behaviour": "The running() value — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "running-syntax",
+        "clause_index": 26,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.running-syntax-clause-4b8cefc02e15",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "running-syntax"
+      ],
+      "behaviour": "The running() value — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "running-syntax",
+        "clause_index": 31,
+        "clause_sha256": "4b8cefc02e153377ecb4bc945a3cd214a7d53fd308ab81f9679a0f4ff2741433"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.running-syntax-clause-955aac81b081",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "running-syntax"
+      ],
+      "behaviour": "The running() value — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "running-syntax",
+        "clause_index": 32,
+        "clause_sha256": "955aac81b081fa98ed15ab27e17f6d6187aacb7117acaa34fd663891945a3421"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.element-syntax",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "element-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The element() value.",
+      "locator": {
+        "section_id": "element-syntax",
+        "text_sha256": "cfd8cc4c752592941862f0c9430fa849362e23ce14b5fd46973ea3d2fc792172"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.element-syntax-clause-d2f6929a7900"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.element-syntax-clause-d2f6929a7900",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "element-syntax"
+      ],
+      "behaviour": "The element() value — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-syntax",
+        "clause_index": 1,
+        "clause_sha256": "d2f6929a790082a647bb518c590ad0525f60a2b69eb84dbdcb82b92d2fef6c26"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnotes",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnotes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Footnotes.",
+      "locator": {
+        "section_id": "footnotes",
+        "text_sha256": "299031c1a10f0d7bd3246d41bf232db9408b8a87fda2bcfc16e38dcea3080194"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.footnote-terms",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-terms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "footnote-terms",
+        "text_sha256": "2a2dca5bbca39302dc726907c2a0ad2ee677ad8458120c868a78d1677f411154"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.footnote-terms-clause-4a91f4cc9f4b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.footnote-terms-clause-4a91f4cc9f4b",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-terms"
+      ],
+      "behaviour": "Terminology — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-terms",
+        "clause_index": 4,
+        "clause_sha256": "4a91f4cc9f4b091addddc62cf6fb1fb2b8fa34f982e12da1837abf3de508475b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.creating-footnotes",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "creating-footnotes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Creating footnotes.",
+      "locator": {
+        "section_id": "creating-footnotes",
+        "text_sha256": "e13b084f5e34c90cf1fc41eca38cfdf904e52842f55f23260ff3678d6cd670e5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.footnote-types",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-types"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Types of footnotes.",
+      "locator": {
+        "section_id": "footnote-types",
+        "text_sha256": "b41ac47766d8ad862b42507fa1191a7beaaed0a951839c58b4dcace1ad93f38b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.footnote-types-clause-cca2516ebb1d",
+        "css-gcpm-3.footnote-types-clause-483bdc239cf1",
+        "css-gcpm-3.footnote-types-clause-e61d6b35fb6b",
+        "css-gcpm-3.footnote-types-clause-3a6ca2710ec5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.footnote-types-clause-cca2516ebb1d",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-types"
+      ],
+      "behaviour": "Types of footnotes — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-types",
+        "clause_index": 18,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-types-clause-483bdc239cf1",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-types"
+      ],
+      "behaviour": "Types of footnotes — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-types",
+        "clause_index": 23,
+        "clause_sha256": "483bdc239cf1b6148250af7816bec2c8b85d5cbbdefcc0611bd132df5e9f0e9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-types-clause-e61d6b35fb6b",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-types"
+      ],
+      "behaviour": "Types of footnotes — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-types",
+        "clause_index": 29,
+        "clause_sha256": "e61d6b35fb6b35e93c1a08f8176b71162529ece4646ce5bbc98e25ed59bea658"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-types-clause-3a6ca2710ec5",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-types"
+      ],
+      "behaviour": "Types of footnotes — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-types",
+        "clause_index": 30,
+        "clause_sha256": "3a6ca2710ec521c0c7d39fd7bc5494d48e329ef515c9ebde83f4f50921552ecd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-area",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-area"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The footnote area.",
+      "locator": {
+        "section_id": "footnote-area",
+        "text_sha256": "460d4ec7c3b0144662303cef23406da52e3ee70aef5a0f67e3c9f0e496fc2bc7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.footnote-area-position",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-area-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Positioning of the footnote area.",
+      "locator": {
+        "section_id": "footnote-area-position",
+        "text_sha256": "7a81556f217d8344269dc95b088a9e245b4148912e8e94b77993e3895c7669ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.footnote-area-position-clause-3f2197c9b9fa"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.footnote-area-position-clause-3f2197c9b9fa",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-area-position"
+      ],
+      "behaviour": "Positioning of the footnote area — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-area-position",
+        "clause_index": 1,
+        "clause_sha256": "3f2197c9b9fad482f5e1e9bbb9cfa15996a12a8414b2073e46a14e187ea5438c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-area-size",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-area-size"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Size of the footnote area.",
+      "locator": {
+        "section_id": "footnote-area-size",
+        "text_sha256": "40d4f09044f90be76a65562cc7a6939160a2b711894f6e46a6c61329cb940a37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.footnote-counters",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-counters"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Footnote Counter.",
+      "locator": {
+        "section_id": "footnote-counters",
+        "text_sha256": "dd211ba735bdb5be63ef498f2a0d2a9238d59ebd22a93fe221e25803a925b7bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.footnote-counters-clause-dd211ba735bd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.footnote-counters-clause-dd211ba735bd",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-counters"
+      ],
+      "behaviour": "The Footnote Counter — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-counters",
+        "clause_index": 0,
+        "clause_sha256": "dd211ba735bdb5be63ef498f2a0d2a9238d59ebd22a93fe221e25803a925b7bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-counter-values",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-counter-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Values of the footnote counter.",
+      "locator": {
+        "section_id": "footnote-counter-values",
+        "text_sha256": "a50454ea9c9f475e14d996f5c1ee93841a291dc7e0c26cb88ab564164df1777c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.resetting-footnote-counter",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "resetting-footnote-counter"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resetting the footnote counter.",
+      "locator": {
+        "section_id": "resetting-footnote-counter",
+        "text_sha256": "38a0f030395df9464b4a6fd03c5854e246c6830b6488312d7fb75630761b5725"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.resetting-footnote-counter-clause-4a6ec143bec6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.resetting-footnote-counter-clause-4a6ec143bec6",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "resetting-footnote-counter"
+      ],
+      "behaviour": "Resetting the footnote counter — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "resetting-footnote-counter",
+        "clause_index": 2,
+        "clause_sha256": "4a6ec143bec67cd076e881f1667ee295ea0aa2134d8d7601bbc85224ca78ee06"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-call",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-call"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The footnote-call pseudo-element.",
+      "locator": {
+        "section_id": "footnote-call",
+        "text_sha256": "581d50bbe62308cd653a85266ebe9cf8396246990261bc8cd49a1d7022307f35"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.footnote-call-clause-30549801dd95"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.footnote-call-clause-30549801dd95",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-call"
+      ],
+      "behaviour": "The footnote-call pseudo-element — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-call",
+        "clause_index": 0,
+        "clause_sha256": "30549801dd95a5510f145f7d8aaf08abfff302115c01fac24e4206d1ecfc7c9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-marker",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-marker"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The footnote-marker pseudo-element.",
+      "locator": {
+        "section_id": "footnote-marker",
+        "text_sha256": "ddbaf5b7737aa3c281ca6f52fbdc07ca2787e5c5b5bd45a3fefa6b94414c54b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.footnote-policy",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-policy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rendering footnotes and footnote policy.",
+      "locator": {
+        "section_id": "footnote-policy",
+        "text_sha256": "8f1e5debc31211fa3040f7e7b8b3e5831fe88a08ea3e5a8bacb03e37206cf5c1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.footnote-policy-clause-cca2516ebb1d",
+        "css-gcpm-3.footnote-policy-clause-8011495bdc85",
+        "css-gcpm-3.footnote-policy-clause-9d4c8c958175",
+        "css-gcpm-3.footnote-policy-clause-430436d4d388",
+        "css-gcpm-3.footnote-policy-clause-d5a8ae8309c4",
+        "css-gcpm-3.footnote-policy-clause-3f0b68e791ab"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.footnote-policy-clause-cca2516ebb1d",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-policy"
+      ],
+      "behaviour": "Rendering footnotes and footnote policy — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-policy",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-policy-clause-8011495bdc85",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-policy"
+      ],
+      "behaviour": "Rendering footnotes and footnote policy — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-policy",
+        "clause_index": 19,
+        "clause_sha256": "8011495bdc8548e309d4df3a1a6d4d1ded9fb3e0b7c05734f70fd162ad82daeb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-policy-clause-9d4c8c958175",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-policy"
+      ],
+      "behaviour": "Rendering footnotes and footnote policy — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-policy",
+        "clause_index": 21,
+        "clause_sha256": "9d4c8c95817559a2e1f553388f4cb08b265b84dd0aaa1831a6c34e9c8cb494c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-policy-clause-430436d4d388",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-policy"
+      ],
+      "behaviour": "Rendering footnotes and footnote policy — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-policy",
+        "clause_index": 23,
+        "clause_sha256": "430436d4d388e4fdb1e57f4bb502da90a916f5d0fa88ee136a2548ea0e054457"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-policy-clause-d5a8ae8309c4",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-policy"
+      ],
+      "behaviour": "Rendering footnotes and footnote policy — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-policy",
+        "clause_index": 24,
+        "clause_sha256": "d5a8ae8309c49341d9da53660a9a1c4b6df83a7a18130ea2b74b1f9dc9068500"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.footnote-policy-clause-3f0b68e791ab",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "footnote-policy"
+      ],
+      "behaviour": "Rendering footnotes and footnote policy — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "footnote-policy",
+        "clause_index": 25,
+        "clause_sha256": "3f0b68e791ab2f9801953a5675cf879f2781841e115a28b5de05cb474f1f5def"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.future",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "future"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Future directions.",
+      "locator": {
+        "section_id": "future",
+        "text_sha256": "6a2d4e37fe4e5fd1bd5fb51bc2864088106264d4c9d623fef11d7f51db056918"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.the-first-page-pseudo-element",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "the-first-page-pseudo-element"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selecting Pages.",
+      "locator": {
+        "section_id": "the-first-page-pseudo-element",
+        "text_sha256": "ba5e868c5b7906b974232a041a3c999d573d0d65df63448a9f7bd0ac58ba1146"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.document-page-selectors",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "document-page-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page Selectors.",
+      "locator": {
+        "section_id": "document-page-selectors",
+        "text_sha256": "154fc6173b81ce482eba03eeb7e3ffaf8a11765684968f3ea72d3646af558cdf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.document-sequence-selectors",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "document-sequence-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page groups.",
+      "locator": {
+        "section_id": "document-sequence-selectors",
+        "text_sha256": "219f8ffa801c67da2bc5801adfe040c1cac139606bb194eec42b35b49e138614"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.leaders",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "leaders"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Leaders (moved).",
+      "locator": {
+        "section_id": "leaders",
+        "text_sha256": "0e9a33294c28a069d6a22fcac744e1a44c0f67cbda6eb79ff25ab40eec29dc3b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.cross-references",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "cross-references"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cross-references (moved).",
+      "locator": {
+        "section_id": "cross-references",
+        "text_sha256": "0e9a33294c28a069d6a22fcac744e1a44c0f67cbda6eb79ff25ab40eec29dc3b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.bookmarks",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "bookmarks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bookmarks (moved).",
+      "locator": {
+        "section_id": "bookmarks",
+        "text_sha256": "0e9a33294c28a069d6a22fcac744e1a44c0f67cbda6eb79ff25ab40eec29dc3b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.former-wd-sections",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "former-wd-sections"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix A: Where Are They Now?.",
+      "locator": {
+        "section_id": "former-wd-sections",
+        "text_sha256": "da71296c4751544deef82e0a2900c01d78d28ce2cadf1abf9c26ad6af5715aed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.page-marks-and-bleed-area",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "page-marks-and-bleed-area"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page marks and bleed area.",
+      "locator": {
+        "section_id": "page-marks-and-bleed-area",
+        "text_sha256": "58a4a3bc4c2804d9ff0ef24767219ab786f3b248412cada1a39800b3b9bc658e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.cmyk-colors",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "cmyk-colors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CMYK colors.",
+      "locator": {
+        "section_id": "cmyk-colors",
+        "text_sha256": "0485674cb26c6bcc4de2be9b5f417d76abd66c81ac005ef4b39ef4224ada3fdc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.styling-blank-pages",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "styling-blank-pages"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Styling blank pages.",
+      "locator": {
+        "section_id": "styling-blank-pages",
+        "text_sha256": "4fd411f569293aa63f67b5ea44fdb7e520dfb039b954ceb7f8c81fd1e1de477a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.paged-presentations",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "paged-presentations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Paged presentations.",
+      "locator": {
+        "section_id": "paged-presentations",
+        "text_sha256": "e64e0342755e968357cfe12ffa5eae0e36ba178009283588f9cdb93b463c0922"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.navigation-between-pages",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "navigation-between-pages"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Navigation between pages.",
+      "locator": {
+        "section_id": "navigation-between-pages",
+        "text_sha256": "8bcfc5ba6424665413ebe06bdc695107bf4d1042c13d96409bd45629a16df7a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.page-floats",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "page-floats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page floats.",
+      "locator": {
+        "section_id": "page-floats",
+        "text_sha256": "bc983f00a1fb680130db42b31c637000f555c8eeaa31a9d3e5847ede5ce46759"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.selecting-columns-and-pages",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "selecting-columns-and-pages"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selecting columns and pages.",
+      "locator": {
+        "section_id": "selecting-columns-and-pages",
+        "text_sha256": "c053691b3836ba1ae847c8ac4a15a4883d61f34bd08dc4b27f0dc186e46d8c7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.ua-stylesheet",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "ua-stylesheet"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix B: Default UA Stylesheet.",
+      "locator": {
+        "section_id": "ua-stylesheet",
+        "text_sha256": "adb60cd3c3addfd2e53bd972bc3fe299b3726296e0c6fff7f766b17bbfb3a96e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.ua-stylesheet-clause-4999b3f7ce14"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.ua-stylesheet-clause-4999b3f7ce14",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "ua-stylesheet"
+      ],
+      "behaviour": "Appendix B: Default UA Stylesheet — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "ua-stylesheet",
+        "clause_index": 1,
+        "clause_sha256": "4999b3f7ce1481057615c97bef3bd83e2da00c9e8b64bb1b911c7a6d7b4743e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.privacy",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.security",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.w3c-conformance",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.w3c-conventions",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.w3c-conventions-clause-5c98c879f070",
+        "css-gcpm-3.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.w3c-conventions-clause-5c98c879f070",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.w3c-conformance-classes",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.w3c-conformance-classes-clause-ff408372426c",
+        "css-gcpm-3.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.w3c-partial",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.w3c-partial-clause-ef40c4aab200",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.w3c-conform-future-proofing",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.w3c-testing",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.w3c-testing-clause-1e0fff369221",
+        "css-gcpm-3.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.w3c-testing-clause-1e0fff369221",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.w3c-testing-clause-ae1210cf9643",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.property-index",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "5b511949c129f3118582c10e4830621c9d65cf99d974398a15e2cd7a62d17169"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.issues-index",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "5871c367839b7a0e4296d3c62007be3e543d983ffe60d26d12dbad2f19994590"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gcpm-3.issues-index-clause-cca2516ebb1d",
+        "css-gcpm-3.issues-index-clause-4b8cefc02e15",
+        "css-gcpm-3.issues-index-clause-a50187188e1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.issues-index-clause-cca2516ebb1d",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 15,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.issues-index-clause-4b8cefc02e15",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 20,
+        "clause_sha256": "4b8cefc02e153377ecb4bc945a3cd214a7d53fd308ab81f9679a0f4ff2741433"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.issues-index-clause-a50187188e1d",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 21,
+        "clause_sha256": "a50187188e1df6c42105c24e8d22f74721a02057e37ccd940824d26e349012cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gcpm-3.title",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Generated Content for Paged Media Module.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "02aa3085d5bb1ee31d05632dc81d3e96c5d154c82ed7ad214d9cb1a2fcca523d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.abstract",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "1ea69562ba43477905958b0c7c8f78b7ded5196733483fae3d71cb2a9e0eaf65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.sotd",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "5ef6644dc35db5522d6f7d8180fe66edc546259a5eae786cb11e6dbf71694e77"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.contents",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "184b73f331dad29b4ab782f50ba0aa49c926616f7781c14a78abeeb7726b917b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.changes",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix C: Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "9b8278de1fcc2860a54cc29c0d8abc762df2d700471106a6c1e370344b7b5882"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.acknowledgments",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "5009f886ce5a45c2b845d12bf5c642ba5371473a1a26881de43ec86b3b4e6d69"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.index",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.index-defined-here",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "a5b4c626e57f0383b2686170d2267fe3d819e4a7f4ada0963f404932560fd177"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.index-defined-elsewhere",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "6a8dcadb5d121917180adc9dd288aa692bbf8ee7ab1bf07ff643832cafce3bb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.references",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.normative",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "4d8b0d5eab54c0e4476ac9c2ce827733e7be84aba56e587cf869d899f082f8f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gcpm-3.informative",
+      "family": "css-gcpm-3",
+      "source_id": "css-gcpm-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "35f43e98ee6abc94c7dd0059d36bd03634ddb02612f32476706a265f417a9e54"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

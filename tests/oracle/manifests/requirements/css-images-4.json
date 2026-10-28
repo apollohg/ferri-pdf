@@ -1,0 +1,4450 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-images-4.image-values",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2D Image Values: the <image> type.",
+      "locator": {
+        "section_id": "image-values",
+        "text_sha256": "b7aba63bb7d04a2081d6487f8b02db5e218851165b2b5fd26eb957f03b34ad63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.image-values-clause-61b0b608ba55",
+        "css-images-4.image-values-clause-d5b6ecbe211c",
+        "css-images-4.image-values-clause-6e5ac9fc1e62"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.image-values-clause-61b0b608ba55",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-values"
+      ],
+      "behaviour": "2D Image Values: the <image> type — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-values",
+        "clause_index": 3,
+        "clause_sha256": "61b0b608ba55b9760f219af0a0e9d579f48146008152f91c76fe8dea25356326"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-values-clause-d5b6ecbe211c",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-values"
+      ],
+      "behaviour": "2D Image Values: the <image> type — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-values",
+        "clause_index": 4,
+        "clause_sha256": "d5b6ecbe211c2aed6a856d439c0b3b3f932602fa9e7a67b9e5e67b8cb1e7c4da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-values-clause-6e5ac9fc1e62",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-values"
+      ],
+      "behaviour": "2D Image Values: the <image> type — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-values",
+        "clause_index": 6,
+        "clause_sha256": "6e5ac9fc1e62b9c605420b49765fc324696f104ee18be306fa3b6cf2c2272026"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-file-formats",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-file-formats"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Image File Formats.",
+      "locator": {
+        "section_id": "image-file-formats",
+        "text_sha256": "1d1734e5b576c3e2195f87cfa87c970d941d7db440e5cfdc056e1885f2efe7eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.image-file-formats-clause-d00f40479739"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.image-file-formats-clause-d00f40479739",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-file-formats"
+      ],
+      "behaviour": "Image File Formats — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-file-formats",
+        "clause_index": 0,
+        "clause_sha256": "d00f40479739ddb612ad991f9368490656a739d6e841b3b59c97700888b1abc0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.url-notation",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "url-notation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Image References: the url() notation.",
+      "locator": {
+        "section_id": "url-notation",
+        "text_sha256": "879c995b2c5cc9570384c2e7189fb138da37ac626cc8d6f79005b715daad4c70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.fetching-images",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "fetching-images"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fetching External Images.",
+      "locator": {
+        "section_id": "fetching-images",
+        "text_sha256": "6391d9dc2403b22056e1992e59a08e90e0026ac6eb081aa8085c31b2013e4919"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.fetching-images-clause-6391d9dc2403"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.fetching-images-clause-6391d9dc2403",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "fetching-images"
+      ],
+      "behaviour": "Fetching External Images — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "fetching-images",
+        "clause_index": 0,
+        "clause_sha256": "6391d9dc2403b22056e1992e59a08e90e0026ac6eb081aa8085c31b2013e4919"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-set-notation",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-set-notation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resolution/Type Negotiation: the image-set() notation.",
+      "locator": {
+        "section_id": "image-set-notation",
+        "text_sha256": "4c69968c35e117474dd5556d3dc3ba1499b1bd22dd961e0e2f87da851683d6a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.image-set-notation-clause-111ce01f0c4d",
+        "css-images-4.image-set-notation-clause-5a8934077500",
+        "css-images-4.image-set-notation-clause-4a48e5ab4eb5",
+        "css-images-4.image-set-notation-clause-1b05681d0e91",
+        "css-images-4.image-set-notation-clause-90ce83d059ff",
+        "css-images-4.image-set-notation-clause-f7058a1cd44b",
+        "css-images-4.image-set-notation-clause-348f56b3f9fb",
+        "css-images-4.image-set-notation-clause-17c4ecabce1e",
+        "css-images-4.image-set-notation-clause-dd1cbfe71576",
+        "css-images-4.image-set-notation-clause-c54e330ddb95"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.image-set-notation-clause-111ce01f0c4d",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-set-notation"
+      ],
+      "behaviour": "Resolution/Type Negotiation: the image-set() notation — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-set-notation",
+        "clause_index": 0,
+        "clause_sha256": "111ce01f0c4d309c9baf5c942fdb13463e2b82dbb2d26cbc62f4bf8c440fb721"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-set-notation-clause-5a8934077500",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-set-notation"
+      ],
+      "behaviour": "Resolution/Type Negotiation: the image-set() notation — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-set-notation",
+        "clause_index": 4,
+        "clause_sha256": "5a8934077500303b67bccc6c4977aae3f6b9266c4506542a9057086c807bf29a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-set-notation-clause-4a48e5ab4eb5",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-set-notation"
+      ],
+      "behaviour": "Resolution/Type Negotiation: the image-set() notation — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-set-notation",
+        "clause_index": 8,
+        "clause_sha256": "4a48e5ab4eb517dd3b5ecf7b7b3e533ab5b4ec9e67952ca7423ea729b172e990"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-set-notation-clause-1b05681d0e91",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-set-notation"
+      ],
+      "behaviour": "Resolution/Type Negotiation: the image-set() notation — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-set-notation",
+        "clause_index": 11,
+        "clause_sha256": "1b05681d0e914f35208a8d7af6cd2117cc3a0cec8c6e8e4437932dc6260f804e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-set-notation-clause-90ce83d059ff",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-set-notation"
+      ],
+      "behaviour": "Resolution/Type Negotiation: the image-set() notation — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-set-notation",
+        "clause_index": 12,
+        "clause_sha256": "90ce83d059ff15feee7b0615eac89af16a0125794fd63ca62b4fa2bcecd609b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-set-notation-clause-f7058a1cd44b",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-set-notation"
+      ],
+      "behaviour": "Resolution/Type Negotiation: the image-set() notation — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-set-notation",
+        "clause_index": 18,
+        "clause_sha256": "f7058a1cd44b54df0e77292640c1429ad44615692a49f5ecaf26d3b0a3994e5d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-set-notation-clause-348f56b3f9fb",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-set-notation"
+      ],
+      "behaviour": "Resolution/Type Negotiation: the image-set() notation — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-set-notation",
+        "clause_index": 21,
+        "clause_sha256": "348f56b3f9fbaf4304924afa4d478a70ba458b2b4dae6cd4fd5d0d5132b2c781"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-set-notation-clause-17c4ecabce1e",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-set-notation"
+      ],
+      "behaviour": "Resolution/Type Negotiation: the image-set() notation — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-set-notation",
+        "clause_index": 57,
+        "clause_sha256": "17c4ecabce1e28365c9aa58ca3c3f1621480ebbfbd31b5238a80db7d74a98eb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-set-notation-clause-dd1cbfe71576",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-set-notation"
+      ],
+      "behaviour": "Resolution/Type Negotiation: the image-set() notation — normative clause 63, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-set-notation",
+        "clause_index": 62,
+        "clause_sha256": "dd1cbfe7157632f3a9dfa4a5aeea7c92957fb27215e706f07967b28b3754c9ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-set-notation-clause-c54e330ddb95",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-set-notation"
+      ],
+      "behaviour": "Resolution/Type Negotiation: the image-set() notation — normative clause 73, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-set-notation",
+        "clause_index": 72,
+        "clause_sha256": "c54e330ddb95dab7b92f47e44c350ececfe62acb2843b37fa821983f0f6fea1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-notation",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-notation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Image Fallbacks and Annotations: the image() notation.",
+      "locator": {
+        "section_id": "image-notation",
+        "text_sha256": "77f9d46175c34a0af99c63fcc7c61fce8f07b7f85f258861110f29806294541e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.image-notation-clause-a4d2cfeb1b97",
+        "css-images-4.image-notation-clause-663e5b0c57ae"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.image-notation-clause-a4d2cfeb1b97",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-notation"
+      ],
+      "behaviour": "Image Fallbacks and Annotations: the image() notation — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-notation",
+        "clause_index": 11,
+        "clause_sha256": "a4d2cfeb1b9738ee3fb9292146afad559773f4d47326517d0641cde71bedcd3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-notation-clause-663e5b0c57ae",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-notation"
+      ],
+      "behaviour": "Image Fallbacks and Annotations: the image() notation — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-notation",
+        "clause_index": 12,
+        "clause_sha256": "663e5b0c57ae13557514ae7b58b6f49fa61f9b1b8f9f7f8556095f47cf4b7194"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-fallbacks",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-fallbacks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Image Fallbacks.",
+      "locator": {
+        "section_id": "image-fallbacks",
+        "text_sha256": "46197713865c6cf7f163d6cbb4cb605889cff0c80316d7fa08875a702cd778e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.image-fallbacks-clause-00fc75fcb111",
+        "css-images-4.image-fallbacks-clause-437d28d1a9ee"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.image-fallbacks-clause-00fc75fcb111",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-fallbacks"
+      ],
+      "behaviour": "Image Fallbacks — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-fallbacks",
+        "clause_index": 0,
+        "clause_sha256": "00fc75fcb1119cba832f1f833469e273b7c578deaa33b6556de6bf07b0f5e6d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-fallbacks-clause-437d28d1a9ee",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-fallbacks"
+      ],
+      "behaviour": "Image Fallbacks — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-fallbacks",
+        "clause_index": 1,
+        "clause_sha256": "437d28d1a9eec7b4c32bca8007a63a185b607e4dea343ba2f37ca0a16b631fea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-fragments",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-fragments"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Image Fragments.",
+      "locator": {
+        "section_id": "image-fragments",
+        "text_sha256": "5652e726d19103012c32d78032880a1fa7afeb3d6ece0dcc4c7aff0405158e95"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.image-fragments-clause-f2182202ee2c",
+        "css-images-4.image-fragments-clause-e2cf1ba5c5e9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.image-fragments-clause-f2182202ee2c",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-fragments"
+      ],
+      "behaviour": "Image Fragments — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-fragments",
+        "clause_index": 3,
+        "clause_sha256": "f2182202ee2c341dbf8cd11eeaaa5780ee5c7406676385468c3402fbb49a8bbc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-fragments-clause-e2cf1ba5c5e9",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-fragments"
+      ],
+      "behaviour": "Image Fragments — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "image-fragments",
+        "clause_index": 6,
+        "clause_sha256": "e2cf1ba5c5e9c4c345f4101853151b45afa10def96b37d7bd75b7b35d045f0e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.color-images",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "color-images"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Solid-color Images.",
+      "locator": {
+        "section_id": "color-images",
+        "text_sha256": "91e83c97e7dc1dca4dec23ade997798267ed87b0028a38492d82782d25d33bf3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.bidi-images",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "bidi-images"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bidi-sensitive Images.",
+      "locator": {
+        "section_id": "bidi-images",
+        "text_sha256": "06b4085c608d553f96267747b55815fc8fa1a3b8ebc711272b44e9e52fda5906"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.bidi-images-clause-f7df8acb0784",
+        "css-images-4.bidi-images-clause-d9d8a6febd33"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.bidi-images-clause-f7df8acb0784",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "bidi-images"
+      ],
+      "behaviour": "Bidi-sensitive Images — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-images",
+        "clause_index": 0,
+        "clause_sha256": "f7df8acb0784666ccc21d7d6758ea6220b8bd05cc5e28f20a27660a205a05b0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.bidi-images-clause-d9d8a6febd33",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "bidi-images"
+      ],
+      "behaviour": "Bidi-sensitive Images — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "bidi-images",
+        "clause_index": 3,
+        "clause_sha256": "d9d8a6febd332560b287503a0390ca2e679d00f53efd7ebade65633f462d2fcd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.cross-fade-function",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Combining images: the cross-fade() notation.",
+      "locator": {
+        "section_id": "cross-fade-function",
+        "text_sha256": "e9e56ca7b6d81b53823e629e240251fc5c855ac94d298b485cb934f51af3dbff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.cross-fade-function-clause-e57c3af8043f",
+        "css-images-4.cross-fade-function-clause-e1f81e953266",
+        "css-images-4.cross-fade-function-clause-298dec9f10de"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.cross-fade-function-clause-e57c3af8043f",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-function"
+      ],
+      "behaviour": "Combining images: the cross-fade() notation — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "cross-fade-function",
+        "clause_index": 5,
+        "clause_sha256": "e57c3af8043f40239ec5d22706f965e1110c5a2639014bbee9d6477c73982cd3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.cross-fade-function-clause-e1f81e953266",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-function"
+      ],
+      "behaviour": "Combining images: the cross-fade() notation — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "cross-fade-function",
+        "clause_index": 6,
+        "clause_sha256": "e1f81e9532661923096130f3e8ab27ef76bc26123e15f239e422449e94e8e407"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.cross-fade-function-clause-298dec9f10de",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-function"
+      ],
+      "behaviour": "Combining images: the cross-fade() notation — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "cross-fade-function",
+        "clause_index": 10,
+        "clause_sha256": "298dec9f10de0ecdcd5e3273fb099f737692d6a504bc4e883d06c53ec919b921"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.cross-fade-sizing",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in cross-fade() Sizing.",
+      "locator": {
+        "section_id": "cross-fade-sizing",
+        "text_sha256": "5f4ab9f91b3682923a367cf5e8dc6f83f7d0e722254a196f3aa4a6cbe3a7f603"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.cross-fade-sizing-clause-f444ebcb0a8d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.cross-fade-sizing-clause-f444ebcb0a8d",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-sizing"
+      ],
+      "behaviour": "cross-fade() Sizing — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "cross-fade-sizing",
+        "clause_index": 13,
+        "clause_sha256": "f444ebcb0a8d3f96d5b3f76c7eeefca1de419274b9e6ea508399dce69d6e1681"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.cross-fade-painting",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-painting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in cross-fade() Painting.",
+      "locator": {
+        "section_id": "cross-fade-painting",
+        "text_sha256": "04df8de68e08b5fc948504590bce84c5482e6c2bd5b5e0387c0eb837ccf25f9c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.cross-fade-painting-clause-52708a6b6f83",
+        "css-images-4.cross-fade-painting-clause-591d791ca4f2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.cross-fade-painting-clause-52708a6b6f83",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-painting"
+      ],
+      "behaviour": "cross-fade() Painting — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "cross-fade-painting",
+        "clause_index": 17,
+        "clause_sha256": "52708a6b6f83a0da6dc8c43a2c309d42f54906e0dbcd0e07962f7ea800adb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.cross-fade-painting-clause-591d791ca4f2",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-painting"
+      ],
+      "behaviour": "cross-fade() Painting — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "cross-fade-painting",
+        "clause_index": 22,
+        "clause_sha256": "591d791ca4f225ff26e5cb55c02b12cf46e0b74f1b902b811ddb0ca4ea89ab28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.cross-fade-complex",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-complex"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Simplifying Complex cross-fade().",
+      "locator": {
+        "section_id": "cross-fade-complex",
+        "text_sha256": "07ba90e9e0a4bca6667b47e6c2b1d0938af5f825cf05c4f73794e561b908c326"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.cross-fade-complex-clause-993659dc482e",
+        "css-images-4.cross-fade-complex-clause-4088b0e115dd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.cross-fade-complex-clause-993659dc482e",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-complex"
+      ],
+      "behaviour": "Simplifying Complex cross-fade() — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "cross-fade-complex",
+        "clause_index": 0,
+        "clause_sha256": "993659dc482efad0ef0c947c0d2c346a42d60c8bd44a7742c2ed98919c03bf34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.cross-fade-complex-clause-4088b0e115dd",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "cross-fade-complex"
+      ],
+      "behaviour": "Simplifying Complex cross-fade() — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "cross-fade-complex",
+        "clause_index": 1,
+        "clause_sha256": "4088b0e115ddd88bd32762e7d0fe7063908eaeb18b3e887d729b6fd617605297"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.element-notation",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "element-notation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Using Elements as Images: the element() notation.",
+      "locator": {
+        "section_id": "element-notation",
+        "text_sha256": "986bccdae8c550a4c3b6dd4861268fb790df68f5f8c11acd17eb07795df77387"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.element-notation-clause-1dae5b5f6c4b",
+        "css-images-4.element-notation-clause-07e7b5674add",
+        "css-images-4.element-notation-clause-1d21dbb1f7e6",
+        "css-images-4.element-notation-clause-95032fd2a0c1",
+        "css-images-4.element-notation-clause-ab3618733adf",
+        "css-images-4.element-notation-clause-eaf7dbcb924f",
+        "css-images-4.element-notation-clause-2aa86e895362"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.element-notation-clause-1dae5b5f6c4b",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "element-notation"
+      ],
+      "behaviour": "Using Elements as Images: the element() notation — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-notation",
+        "clause_index": 1,
+        "clause_sha256": "1dae5b5f6c4bf79578f82948fff186fdff2fa19b6feab7ac738504c4da3bdf0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.element-notation-clause-07e7b5674add",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "element-notation"
+      ],
+      "behaviour": "Using Elements as Images: the element() notation — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-notation",
+        "clause_index": 16,
+        "clause_sha256": "07e7b5674add529c5e380fcc2024b985a027b44ba8c96f6249be2a885b4be7a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.element-notation-clause-1d21dbb1f7e6",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "element-notation"
+      ],
+      "behaviour": "Using Elements as Images: the element() notation — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-notation",
+        "clause_index": 17,
+        "clause_sha256": "1d21dbb1f7e6dc9da28d2542e45d0c7e6fe10f5459003170b4e4acf1d51be87f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.element-notation-clause-95032fd2a0c1",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "element-notation"
+      ],
+      "behaviour": "Using Elements as Images: the element() notation — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-notation",
+        "clause_index": 19,
+        "clause_sha256": "95032fd2a0c1eee50c900ccdff6b6fd0893c624f0e8d077641b52098f4ab2baa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.element-notation-clause-ab3618733adf",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "element-notation"
+      ],
+      "behaviour": "Using Elements as Images: the element() notation — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-notation",
+        "clause_index": 22,
+        "clause_sha256": "ab3618733adf823740ef7251bbc000cea28e52e8bda2a0faf4ed5ff0e988af06"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.element-notation-clause-eaf7dbcb924f",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "element-notation"
+      ],
+      "behaviour": "Using Elements as Images: the element() notation — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-notation",
+        "clause_index": 29,
+        "clause_sha256": "eaf7dbcb924fd54c59aa278bc9ab837e8feacc3a211082adf713302c9419b690"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.element-notation-clause-2aa86e895362",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "element-notation"
+      ],
+      "behaviour": "Using Elements as Images: the element() notation — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-notation",
+        "clause_index": 36,
+        "clause_sha256": "2aa86e89536235d10a4dc68f0ceac52d34fba0d6d830baad62ccbcd05500dfdf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.paint-sources",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "paint-sources"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Paint Sources.",
+      "locator": {
+        "section_id": "paint-sources",
+        "text_sha256": "34231e72bdc00d29c086edc0628e2f95693f50c4fd0c6eb0b133a5fbd2c2305e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.paint-sources-clause-468d7f6158ed",
+        "css-images-4.paint-sources-clause-40a096dcab04"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.paint-sources-clause-468d7f6158ed",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "paint-sources"
+      ],
+      "behaviour": "Paint Sources — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "paint-sources",
+        "clause_index": 6,
+        "clause_sha256": "468d7f6158ed2bd6044f98887ff09268d3c11a84deb47d2d8df29426dd349941"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.paint-sources-clause-40a096dcab04",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "paint-sources"
+      ],
+      "behaviour": "Paint Sources — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "paint-sources",
+        "clause_index": 7,
+        "clause_sha256": "40a096dcab0458f80c398fd065c881f31629f580a8199a0b6fa5befe42a2aedd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.elementsources",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "elementsources"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Using Out-Of-Document Sources: the ElementSources interface.",
+      "locator": {
+        "section_id": "elementsources",
+        "text_sha256": "1325aac3e688775cf8a4fcda8e00110894322de239ddcc76cadac4f3b5ff7144"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.elementsources-clause-744679dfe1a7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.elementsources-clause-744679dfe1a7",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "elementsources"
+      ],
+      "behaviour": "Using Out-Of-Document Sources: the ElementSources interface — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "elementsources",
+        "clause_index": 7,
+        "clause_sha256": "744679dfe1a7a876ed4d3bc0f597b042bb4cb30551e3c540d6dc1fc92fc2652a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.element-cycles",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "element-cycles"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cycle Detection.",
+      "locator": {
+        "section_id": "element-cycles",
+        "text_sha256": "7620fd98950f6028dc069cc9cd325ff45e704032f1e3246f396fd3cdf456ee50"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.element-cycles-clause-2acf2a63f300"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.element-cycles-clause-2acf2a63f300",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "element-cycles"
+      ],
+      "behaviour": "Cycle Detection — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "element-cycles",
+        "clause_index": 5,
+        "clause_sha256": "2acf2a63f300115706719709deba15d23dd112110d6e223fcf051367f481f3f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.gradients",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "gradients"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gradients.",
+      "locator": {
+        "section_id": "gradients",
+        "text_sha256": "ad2355b5b0df7730ed4340c246ae4fa55eb4abf4e2cd37e1ef96a948cc1b3f83"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.linear-gradients",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "linear-gradients"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Linear Gradients: the linear-gradient() notation.",
+      "locator": {
+        "section_id": "linear-gradients",
+        "text_sha256": "4352668477ca4015f1a6f5e4d2649fb336a57be6fa2be98e6233261f8300a086"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.linear-gradients-clause-96dffee6b0a0",
+        "css-images-4.linear-gradients-clause-100fb16e1abf",
+        "css-images-4.linear-gradients-clause-fd0d850b2fef"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.linear-gradients-clause-96dffee6b0a0",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "linear-gradients"
+      ],
+      "behaviour": "Linear Gradients: the linear-gradient() notation — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "linear-gradients",
+        "clause_index": 32,
+        "clause_sha256": "96dffee6b0a0f73448e7fc2b6b5edf99dc4000c60d3e9d3604eda2d4fa2e4149"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.linear-gradients-clause-100fb16e1abf",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "linear-gradients"
+      ],
+      "behaviour": "Linear Gradients: the linear-gradient() notation — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "linear-gradients",
+        "clause_index": 33,
+        "clause_sha256": "100fb16e1abf81bb8094baff71440125f991ae5d15212ba494ae1d6e40ebbd70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.linear-gradients-clause-fd0d850b2fef",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "linear-gradients"
+      ],
+      "behaviour": "Linear Gradients: the linear-gradient() notation — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "linear-gradients",
+        "clause_index": 35,
+        "clause_sha256": "fd0d850b2fef79235678cd3c8490e62361424b8cfc643116a41a659815a7483e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.radial-gradients",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "radial-gradients"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Radial Gradients: the radial-gradient() notation.",
+      "locator": {
+        "section_id": "radial-gradients",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.radial-color-interpolation",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "radial-color-interpolation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Adding <color-interpolation-method>.",
+      "locator": {
+        "section_id": "radial-color-interpolation",
+        "text_sha256": "9faf28e75323d3092d2074208d3510b4107ec2741011839b5e9001382c90a835"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.radial-color-interpolation-clause-96dffee6b0a0",
+        "css-images-4.radial-color-interpolation-clause-100fb16e1abf",
+        "css-images-4.radial-color-interpolation-clause-fd0d850b2fef"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.radial-color-interpolation-clause-96dffee6b0a0",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "radial-color-interpolation"
+      ],
+      "behaviour": "Adding <color-interpolation-method> — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "radial-color-interpolation",
+        "clause_index": 18,
+        "clause_sha256": "96dffee6b0a0f73448e7fc2b6b5edf99dc4000c60d3e9d3604eda2d4fa2e4149"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.radial-color-interpolation-clause-100fb16e1abf",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "radial-color-interpolation"
+      ],
+      "behaviour": "Adding <color-interpolation-method> — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "radial-color-interpolation",
+        "clause_index": 19,
+        "clause_sha256": "100fb16e1abf81bb8094baff71440125f991ae5d15212ba494ae1d6e40ebbd70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.radial-color-interpolation-clause-fd0d850b2fef",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "radial-color-interpolation"
+      ],
+      "behaviour": "Adding <color-interpolation-method> — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "radial-color-interpolation",
+        "clause_index": 21,
+        "clause_sha256": "fd0d850b2fef79235678cd3c8490e62361424b8cfc643116a41a659815a7483e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.radial-size",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "radial-size"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Expanding <radial-size>.",
+      "locator": {
+        "section_id": "radial-size",
+        "text_sha256": "61813976573dbd7842199d27ee04aff3efd29dcd0848b640757877b181400596"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.radial-size-clause-0a60b6375c9e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.radial-size-clause-0a60b6375c9e",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "radial-size"
+      ],
+      "behaviour": "Expanding <radial-size> — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "radial-size",
+        "clause_index": 2,
+        "clause_sha256": "0a60b6375c9ea7a46c0cc7d6002134ad91ed395c37a21501d111b946a0933fcd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.conic-gradients",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "conic-gradients"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conic Gradients: the conic-gradient() notation.",
+      "locator": {
+        "section_id": "conic-gradients",
+        "text_sha256": "267a4dda418671746cd05e27f0193f13d0ac5a7a6e2302f1980e41e1a9d17444"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.conic-gradients-clause-f3f7ebf2da73"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.conic-gradients-clause-f3f7ebf2da73",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "conic-gradients"
+      ],
+      "behaviour": "Conic Gradients: the conic-gradient() notation — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "conic-gradients",
+        "clause_index": 3,
+        "clause_sha256": "f3f7ebf2da73d67e4f00457181f2dff84f12d09f196c34f3e58d43138e302605"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.conic-gradient-syntax",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "conic-gradient-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in conic-gradient() Syntax.",
+      "locator": {
+        "section_id": "conic-gradient-syntax",
+        "text_sha256": "5f2672bb5406362fb90daeedb22442d6fbc3fe19f2e2789886adcb54e1337e4b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.conic-gradient-syntax-clause-96dffee6b0a0",
+        "css-images-4.conic-gradient-syntax-clause-100fb16e1abf",
+        "css-images-4.conic-gradient-syntax-clause-fd0d850b2fef",
+        "css-images-4.conic-gradient-syntax-clause-ef09f12758b1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.conic-gradient-syntax-clause-96dffee6b0a0",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "conic-gradient-syntax"
+      ],
+      "behaviour": "conic-gradient() Syntax — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "conic-gradient-syntax",
+        "clause_index": 23,
+        "clause_sha256": "96dffee6b0a0f73448e7fc2b6b5edf99dc4000c60d3e9d3604eda2d4fa2e4149"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.conic-gradient-syntax-clause-100fb16e1abf",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "conic-gradient-syntax"
+      ],
+      "behaviour": "conic-gradient() Syntax — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "conic-gradient-syntax",
+        "clause_index": 24,
+        "clause_sha256": "100fb16e1abf81bb8094baff71440125f991ae5d15212ba494ae1d6e40ebbd70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.conic-gradient-syntax-clause-fd0d850b2fef",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "conic-gradient-syntax"
+      ],
+      "behaviour": "conic-gradient() Syntax — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "conic-gradient-syntax",
+        "clause_index": 26,
+        "clause_sha256": "fd0d850b2fef79235678cd3c8490e62361424b8cfc643116a41a659815a7483e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.conic-gradient-syntax-clause-ef09f12758b1",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "conic-gradient-syntax"
+      ],
+      "behaviour": "conic-gradient() Syntax — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "conic-gradient-syntax",
+        "clause_index": 28,
+        "clause_sha256": "ef09f12758b1093b96b2aad6a933fa292044d27b619023e4798ccd8e8a0b7d6e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.conic-color-stops",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "conic-color-stops"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Placing Color Stops.",
+      "locator": {
+        "section_id": "conic-color-stops",
+        "text_sha256": "4eab3a27d71b14fe092b7a74aa52f175f554f53dc12929f3e337a3fd94045ae5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.conic-gradient-examples",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "conic-gradient-examples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conic Gradient Examples.",
+      "locator": {
+        "section_id": "conic-gradient-examples",
+        "text_sha256": "6e011ca9e7121dcfa94b34144e836623d1fd71ee546c0c930cba42952d89bdf7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.repeating-gradients",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "repeating-gradients"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Repeating Gradients: the repeating-linear-gradient(), repeating-radial-gradient(), and repeating-conic-gradient() notations.",
+      "locator": {
+        "section_id": "repeating-gradients",
+        "text_sha256": "624e8bf05ea0e52d07738689dcef71293b3007363bb5dc5a1474795bf536f241"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.gradient-colors",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "gradient-colors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Defining Gradient Color.",
+      "locator": {
+        "section_id": "gradient-colors",
+        "text_sha256": "94440a65880269a407f4809653f1c6d01891d6bf0666e26ed7855e58ed08ecdd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.color-stop-syntax",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "color-stop-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color Stop Lists.",
+      "locator": {
+        "section_id": "color-stop-syntax",
+        "text_sha256": "7f8419f8149da6777c85b2d0de6bbdf6cb80795fe073c2e11c17e9bfb082a26c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.color-stop-syntax-clause-d06c335b8f02"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.color-stop-syntax-clause-d06c335b8f02",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "color-stop-syntax"
+      ],
+      "behaviour": "Color Stop Lists — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-stop-syntax",
+        "clause_index": 19,
+        "clause_sha256": "d06c335b8f0244813adfb95142e4eadb3adae753eb8e37d2ec79e0a28b64bc29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.coloring-gradient-line",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "coloring-gradient-line"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Coloring the Gradient Line.",
+      "locator": {
+        "section_id": "coloring-gradient-line",
+        "text_sha256": "11d85823bb1e967e0e5c6725ec6e6b5c96ad6d02b3b0904d20ec2fa6bb3067d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.coloring-gradient-line-clause-d5ec06be1eb3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.coloring-gradient-line-clause-d5ec06be1eb3",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "coloring-gradient-line"
+      ],
+      "behaviour": "Coloring the Gradient Line — normative clause 74, located by its exact source hash.",
+      "locator": {
+        "section_id": "coloring-gradient-line",
+        "clause_index": 73,
+        "clause_sha256": "d5ec06be1eb34e8035c148f525f24ecbecc3814ce00655b564bfbddc2607adc1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.color-stop-fixup",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "color-stop-fixup"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color Stop “Fixup”.",
+      "locator": {
+        "section_id": "color-stop-fixup",
+        "text_sha256": "ca53f1d5793ce6fe53ba6d2bdab0cbfbdd3a3c31bb7093bb536983a74e803f4b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.color-stop-fixup-clause-fdb5cfe8be2c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.color-stop-fixup-clause-fdb5cfe8be2c",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "color-stop-fixup"
+      ],
+      "behaviour": "Color Stop “Fixup” — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-stop-fixup",
+        "clause_index": 0,
+        "clause_sha256": "fdb5cfe8be2c1ec31bc18ef1a0904bcd43b7a4f571b4ce954d5ccc19b6f98262"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.stripes",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "stripes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 1D Image Values: the <image-1D> type and stripes() notation.",
+      "locator": {
+        "section_id": "stripes",
+        "text_sha256": "3a9a1e99a6ff077f14a83c22f979d77a0f00c617e3ce2de1a9bc839d5d3ff256"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.stripes-clause-a9aa88ad376b",
+        "css-images-4.stripes-clause-c2799acdd048",
+        "css-images-4.stripes-clause-7ff2075ea83b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.stripes-clause-a9aa88ad376b",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "stripes"
+      ],
+      "behaviour": "1D Image Values: the <image-1D> type and stripes() notation — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "stripes",
+        "clause_index": 7,
+        "clause_sha256": "a9aa88ad376b7a81724fefe45160c3c71da3af3dcf6d0f2ee16ef277ed10e999"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.stripes-clause-c2799acdd048",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "stripes"
+      ],
+      "behaviour": "1D Image Values: the <image-1D> type and stripes() notation — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "stripes",
+        "clause_index": 12,
+        "clause_sha256": "c2799acdd048895a6061049910474601ee8af08ecc297fdb3b9dd64293feefd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.stripes-clause-7ff2075ea83b",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "stripes"
+      ],
+      "behaviour": "1D Image Values: the <image-1D> type and stripes() notation — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "stripes",
+        "clause_index": 13,
+        "clause_sha256": "7ff2075ea83bc4b7130315120dc5b9244ec96062b4e5a98e885ff2a17f99f1d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.sizing",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sizing Images and Objects in CSS.",
+      "locator": {
+        "section_id": "sizing",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.the-object-fit",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-object-fit"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sizing Objects: the object-fit property.",
+      "locator": {
+        "section_id": "the-object-fit",
+        "text_sha256": "38a2bf8cf3e4cb5dbb311b98e03f2a81af0922cc30d2275ef49f66aa0e570340"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.the-object-fit-clause-cca2516ebb1d",
+        "css-images-4.the-object-fit-clause-7f9e559f1cfe",
+        "css-images-4.the-object-fit-clause-47922d7b31c4",
+        "css-images-4.the-object-fit-clause-86a00e4f7a6f",
+        "css-images-4.the-object-fit-clause-0a3b482067fb",
+        "css-images-4.the-object-fit-clause-ad432b54d4b9",
+        "css-images-4.the-object-fit-clause-238aa34531a1",
+        "css-images-4.the-object-fit-clause-53ac9908b04b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.the-object-fit-clause-cca2516ebb1d",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-object-fit"
+      ],
+      "behaviour": "Sizing Objects: the object-fit property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-object-fit",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-object-fit-clause-7f9e559f1cfe",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-object-fit"
+      ],
+      "behaviour": "Sizing Objects: the object-fit property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-object-fit",
+        "clause_index": 17,
+        "clause_sha256": "7f9e559f1cfec97af853007056f46207a0a179d8d110d98c6ee9ec8d42b74466"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-object-fit-clause-47922d7b31c4",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-object-fit"
+      ],
+      "behaviour": "Sizing Objects: the object-fit property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-object-fit",
+        "clause_index": 21,
+        "clause_sha256": "47922d7b31c45c9e450958a4dee3388eb0c2175b49dea1eb77233cd13b7bcf86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-object-fit-clause-86a00e4f7a6f",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-object-fit"
+      ],
+      "behaviour": "Sizing Objects: the object-fit property — normative clause 205, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-object-fit",
+        "clause_index": 204,
+        "clause_sha256": "86a00e4f7a6fd0a21c51ffe4f0a3d1a053265c4c739bad4a31f971f8384ec729"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-object-fit-clause-0a3b482067fb",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-object-fit"
+      ],
+      "behaviour": "Sizing Objects: the object-fit property — normative clause 206, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-object-fit",
+        "clause_index": 205,
+        "clause_sha256": "0a3b482067fb9a4d1b592122f3e17d4b390d1687ba49e3495913e55ae4d9dc07"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-object-fit-clause-ad432b54d4b9",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-object-fit"
+      ],
+      "behaviour": "Sizing Objects: the object-fit property — normative clause 210, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-object-fit",
+        "clause_index": 209,
+        "clause_sha256": "ad432b54d4b9dba5d420b89823042938745e2ebdae632cf6f2b7b0d6d5f0bb50"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-object-fit-clause-238aa34531a1",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-object-fit"
+      ],
+      "behaviour": "Sizing Objects: the object-fit property — normative clause 211, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-object-fit",
+        "clause_index": 210,
+        "clause_sha256": "238aa34531a16448589e4d616f24c8481fe673d2987861f4a07446895c8d83f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-object-fit-clause-53ac9908b04b",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-object-fit"
+      ],
+      "behaviour": "Sizing Objects: the object-fit property — normative clause 212, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-object-fit",
+        "clause_index": 211,
+        "clause_sha256": "53ac9908b04bd4bd8b2328a35a5cb9703b13605820ee7ab020451669fce817d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.image-processing",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "image-processing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Image Processing.",
+      "locator": {
+        "section_id": "image-processing",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.the-image-resolution",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-image-resolution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overriding Image Resolutions: the image-resolution property.",
+      "locator": {
+        "section_id": "the-image-resolution",
+        "text_sha256": "cb64103d46108f506a0f152b82ee992b55bac5e6c59416e18dfba6e1e1a21c52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.the-image-resolution-clause-62b5806ed2b5",
+        "css-images-4.the-image-resolution-clause-cca2516ebb1d",
+        "css-images-4.the-image-resolution-clause-b00a656d92d9",
+        "css-images-4.the-image-resolution-clause-c814b5cbf2a3",
+        "css-images-4.the-image-resolution-clause-1e258ae582b0",
+        "css-images-4.the-image-resolution-clause-04c88010a57c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.the-image-resolution-clause-62b5806ed2b5",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-image-resolution"
+      ],
+      "behaviour": "Overriding Image Resolutions: the image-resolution property — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-image-resolution",
+        "clause_index": 0,
+        "clause_sha256": "62b5806ed2b582fc3a420342bde5263fafe56ab74309fa1de54cfdaa59cf3921"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-image-resolution-clause-cca2516ebb1d",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-image-resolution"
+      ],
+      "behaviour": "Overriding Image Resolutions: the image-resolution property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-image-resolution",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-image-resolution-clause-b00a656d92d9",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-image-resolution"
+      ],
+      "behaviour": "Overriding Image Resolutions: the image-resolution property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-image-resolution",
+        "clause_index": 18,
+        "clause_sha256": "b00a656d92d98d55bca8246be3ab9899b62c04ee47d7ea97d8c39bccc81d2544"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-image-resolution-clause-c814b5cbf2a3",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-image-resolution"
+      ],
+      "behaviour": "Overriding Image Resolutions: the image-resolution property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-image-resolution",
+        "clause_index": 30,
+        "clause_sha256": "c814b5cbf2a38b61605468d1a9ecb022c7258a3ef16b2568ce6c020ac19108f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-image-resolution-clause-1e258ae582b0",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-image-resolution"
+      ],
+      "behaviour": "Overriding Image Resolutions: the image-resolution property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-image-resolution",
+        "clause_index": 38,
+        "clause_sha256": "1e258ae582b0969f42342bece7dff620fc918d0ca1d4091d29f0f846ae80a406"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.the-image-resolution-clause-04c88010a57c",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "the-image-resolution"
+      ],
+      "behaviour": "Overriding Image Resolutions: the image-resolution property — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-image-resolution",
+        "clause_index": 39,
+        "clause_sha256": "04c88010a57cdb2096ce67570f1e609fcb336a88b39437e503bb44ac00997baa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolation",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interpolation.",
+      "locator": {
+        "section_id": "interpolation",
+        "text_sha256": "5d1d37914141ae57b08b7bfe05df2628eed1873dbc7a3fb6fcdf0d64cc1f3ccc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.interpolation-clause-bbeb74532248"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.interpolation-clause-bbeb74532248",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolation"
+      ],
+      "behaviour": "Interpolation — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolation",
+        "clause_index": 1,
+        "clause_sha256": "bbeb74532248bc486045345af8235309b63f6ed489af5372c8a189867083c829"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolating-images",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-images"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interpolating <image>.",
+      "locator": {
+        "section_id": "interpolating-images",
+        "text_sha256": "2037bfe6c658f413092bd7d4c56d96c11dd8cf4854c01839e5f485248d03a4d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.interpolating-image-combinations",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-image-combinations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interpolating cross-fade().",
+      "locator": {
+        "section_id": "interpolating-image-combinations",
+        "text_sha256": "23316004961503827a012fa74f782f0927070b6abd82ae94f592262386a8b99f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.interpolating-gradients",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-gradients"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interpolating <gradient>.",
+      "locator": {
+        "section_id": "interpolating-gradients",
+        "text_sha256": "c9f3857c9d6ec728cacb7ae19de97198b5b02e8c5625a59a6b55e9f1149104a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.interpolating-gradients-clause-32f1290f89d9",
+        "css-images-4.interpolating-gradients-clause-fd718fb644c6",
+        "css-images-4.interpolating-gradients-clause-0f9c742b9174",
+        "css-images-4.interpolating-gradients-clause-242e54a150d7",
+        "css-images-4.interpolating-gradients-clause-bbfb71e18d61",
+        "css-images-4.interpolating-gradients-clause-7318eb720005",
+        "css-images-4.interpolating-gradients-clause-ec35441735a9",
+        "css-images-4.interpolating-gradients-clause-55736101f8c6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.interpolating-gradients-clause-32f1290f89d9",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-gradients"
+      ],
+      "behaviour": "Interpolating <gradient> — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-gradients",
+        "clause_index": 2,
+        "clause_sha256": "32f1290f89d9b9ce54a2f463a9cacc480746786bcf41272e863e38734691fc58"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolating-gradients-clause-fd718fb644c6",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-gradients"
+      ],
+      "behaviour": "Interpolating <gradient> — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-gradients",
+        "clause_index": 4,
+        "clause_sha256": "fd718fb644c6b5833c215923c0c9a7e65e1496ee6e6a651aae8cb5704228e7c1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolating-gradients-clause-0f9c742b9174",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-gradients"
+      ],
+      "behaviour": "Interpolating <gradient> — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-gradients",
+        "clause_index": 8,
+        "clause_sha256": "0f9c742b9174817b4f7b83963895a868e5c72e51b6f163ad8add40bb600c8b1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolating-gradients-clause-242e54a150d7",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-gradients"
+      ],
+      "behaviour": "Interpolating <gradient> — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-gradients",
+        "clause_index": 16,
+        "clause_sha256": "242e54a150d713547437163f4d76efd27af3668f1474b166244aa2f28b9738d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolating-gradients-clause-bbfb71e18d61",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-gradients"
+      ],
+      "behaviour": "Interpolating <gradient> — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-gradients",
+        "clause_index": 17,
+        "clause_sha256": "bbfb71e18d61d85785fcaf781538d201065d97547256ca64a653fdf36ad0ed79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolating-gradients-clause-7318eb720005",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-gradients"
+      ],
+      "behaviour": "Interpolating <gradient> — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-gradients",
+        "clause_index": 18,
+        "clause_sha256": "7318eb720005f9ffdfbde49372bfedb5c099940ecd87df6bb6d86946d1607a2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolating-gradients-clause-ec35441735a9",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-gradients"
+      ],
+      "behaviour": "Interpolating <gradient> — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-gradients",
+        "clause_index": 22,
+        "clause_sha256": "ec35441735a907a98c6a482286589f484d70a215bd383e6bdac6f2ee6b29ae8d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolating-gradients-clause-55736101f8c6",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-gradients"
+      ],
+      "behaviour": "Interpolating <gradient> — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-gradients",
+        "clause_index": 28,
+        "clause_sha256": "55736101f8c6060e7e48a73e16764b419005ba8ca98b4d3b342f69625f4b5e9a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolating-stripes",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-stripes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interpolating stripes().",
+      "locator": {
+        "section_id": "interpolating-stripes",
+        "text_sha256": "ccb192a1c9306c942a0c8c1f7f5a8b67cceb33d180c0179222a6e176b19a42e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.interpolating-stripes-clause-67d98150d03c",
+        "css-images-4.interpolating-stripes-clause-4b18ddf59798",
+        "css-images-4.interpolating-stripes-clause-7f9577e8be29"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.interpolating-stripes-clause-67d98150d03c",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-stripes"
+      ],
+      "behaviour": "Interpolating stripes() — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-stripes",
+        "clause_index": 1,
+        "clause_sha256": "67d98150d03ce4d21ac1d7580c85339d3ea266aff0a46fa4ce2f630a7774e584"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolating-stripes-clause-4b18ddf59798",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-stripes"
+      ],
+      "behaviour": "Interpolating stripes() — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-stripes",
+        "clause_index": 3,
+        "clause_sha256": "4b18ddf5979848791c224d12bd6620f60bd9586cd02ba0b185c4f5c71da44601"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.interpolating-stripes-clause-7f9577e8be29",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "interpolating-stripes"
+      ],
+      "behaviour": "Interpolating stripes() — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-stripes",
+        "clause_index": 5,
+        "clause_sha256": "7f9577e8be29b512be297abcb07f5fd6c3c9a44abe0bf9434e6707c320f02d6f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.serialization",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serialization.",
+      "locator": {
+        "section_id": "serialization",
+        "text_sha256": "95ae5f38437584ee3177ec5ef5558258950a45c3e73401bc58f7df349881d5dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.serialization-clause-c05769201084"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.serialization-clause-c05769201084",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "serialization"
+      ],
+      "behaviour": "Serialization — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "serialization",
+        "clause_index": 4,
+        "clause_sha256": "c05769201084fea64787d26125684cb09193b184605417c5e7e489d5b506a2df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.deprecated",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "deprecated"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix A: Deprecated Features and Aliases.",
+      "locator": {
+        "section_id": "deprecated",
+        "text_sha256": "0d8b51de6b1366738f21a8da37c8c46fb05a3c4d80a10a4746c28ee385e9957c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.deprecated-clause-0d8b51de6b13"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.deprecated-clause-0d8b51de6b13",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "deprecated"
+      ],
+      "behaviour": "Appendix A: Deprecated Features and Aliases — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "deprecated",
+        "clause_index": 0,
+        "clause_sha256": "0d8b51de6b1366738f21a8da37c8c46fb05a3c4d80a10a4746c28ee385e9957c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.privacy",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "879c995b2c5cc9570384c2e7189fb138da37ac626cc8d6f79005b715daad4c70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.security",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "879c995b2c5cc9570384c2e7189fb138da37ac626cc8d6f79005b715daad4c70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.w3c-conformance",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.w3c-conventions",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.w3c-conventions-clause-5c98c879f070",
+        "css-images-4.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.w3c-conventions-clause-5c98c879f070",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.w3c-conformance-classes",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.w3c-conformance-classes-clause-ff408372426c",
+        "css-images-4.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.w3c-partial",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.w3c-partial-clause-ef40c4aab200",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.w3c-conform-future-proofing",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.w3c-testing",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-images-4.w3c-testing-clause-1e0fff369221",
+        "css-images-4.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.w3c-testing-clause-1e0fff369221",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.w3c-testing-clause-ae1210cf9643",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-images-4.property-index",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "ebfd5ae458e4ae4264b1f85e8eb0e3838485eb5180b1c375559218eba3f5a04d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.idl-index",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "dfa033db0b296c003f6e0ab31b7a8e122f2f0319bae5143bc56c66f391f28f26"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.issues-index",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "9761439c09e66a81671689a950c3f4fbcf35ebf433791c24cb137ee3104c11bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.import-ef0cdde643b4",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.csswg.org/css-images-5/.",
+      "unresolved_reference": "https://drafts.csswg.org/css-images-5/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-images-4.import-8cac7d115c27",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-images-4.title",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Images Module Level 4.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "a345071cc8fe7c973e03e731190bf42e6302cc7fc3b1561a7b06eb3c8d1e8c06"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.abstract",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "3e02a9559c8c3f014a93a443a113678887f09d518b472643de1738e671489730"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.sotd",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "14c4ab714b03f835c7d200ad0ff3cce9496c1a001f2cee5c3a76438ab73ebe4c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.contents",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "f440429b44d5b854df19d25b6826712b2b253964b05bdc9be7f0e00bd784a3b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.intro",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "9730cbe698f995302906a0a54c25b8f0008298240ba30a64478f40a41234ed56"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.values",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.color-interpolation",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "color-interpolation"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 3.1.1. Effects of color space on interpolation: examples.",
+      "locator": {
+        "section_id": "color-interpolation",
+        "text_sha256": "deb453e890fd5cec229647cadcb682c3c686a53fd05f344c1f5bd985e2f848ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.changes",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.changes-20230217",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "changes-20230217"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes Since the 17 February 2023 Working Draft.",
+      "locator": {
+        "section_id": "changes-20230217",
+        "text_sha256": "490d98d9dc717c063134b472430ff7827f963558f7ad0c67eeb29c25d4ea3e46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.changes-20170413",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "changes-20170413"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes Since the 13 April 2017 Working Draft.",
+      "locator": {
+        "section_id": "changes-20170413",
+        "text_sha256": "7b2db2c2a5f361375b70e3203fd45a8a2eb2839d7ee04a8e3c5f8cded80f13df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.changes-20120911",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "changes-20120911"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes Since the 11 September 2012 Working Draft.",
+      "locator": {
+        "section_id": "changes-20120911",
+        "text_sha256": "48be8f88422723c1ea73a651dc91b097c3bf11940db9dfc73e733d12b833f859"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.changes-3",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "changes-3"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes Since Level 3.",
+      "locator": {
+        "section_id": "changes-3",
+        "text_sha256": "8e077a59c5d275e83d0139b880885fe27f299aa8448696fbe2ff208de5d3a87c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.index",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.index-defined-here",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "1506ea9c9d2ff1ce7c225711240b7061629756915f599c817a1763bb8867f42f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.index-defined-elsewhere",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "73c45d96a1434094606026edad25fe92582cc067a0c9a802196d2cc8ea190116"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.references",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-images-4.informative",
+      "family": "css-images-4",
+      "source_id": "css-images-4",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "e8c084b4ce80a3751611fcaad655037d817e644169037475c5ffca05addc4724"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

@@ -1,0 +1,4411 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-cascade-5.intro",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "28480d5ae4fe7d767a0d078b900ed298ff71817009232977fb50db96a04ef8bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.intro-clause-cb00562c6a80",
+        "css-cascade-5.intro-clause-d4db83f7b54f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.intro-clause-cb00562c6a80",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Introduction — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "intro",
+        "clause_index": 1,
+        "clause_sha256": "cb00562c6a807f74b1c58ca850a850760a85acaf4b667987b5907d247f62915e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.intro-clause-d4db83f7b54f",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Introduction — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "intro",
+        "clause_index": 2,
+        "clause_sha256": "d4db83f7b54fc8a97254f7dc090b270276866288c66ac8524f677b2a62ae83fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.placement",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module Interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "ed65b6d43fda5518863391ead86fbe7784ebfe21f93b42b1d76f197be93f0ee2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.placement-clause-b59cfbe8cdb4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.placement-clause-b59cfbe8cdb4",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Module Interactions — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "placement",
+        "clause_index": 3,
+        "clause_sha256": "b59cfbe8cdb4373c5b13820d023661a7075c601266069575bbc0be3ed28c5ecd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.at-import",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "at-import"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Importing Style Sheets: the @import rule.",
+      "locator": {
+        "section_id": "at-import",
+        "text_sha256": "76c6e459c08b41c12167c55643c63caaa0035ee24a24da085d6adf7d97d87efc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.at-import-clause-aa17fcb835ab",
+        "css-cascade-5.at-import-clause-b75d2cf05ef4",
+        "css-cascade-5.at-import-clause-7b41a3547f86",
+        "css-cascade-5.at-import-clause-3071a89f7731",
+        "css-cascade-5.foundation-stylesheet-imports"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.at-import-clause-aa17fcb835ab",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "at-import"
+      ],
+      "behaviour": "Importing Style Sheets: the @import rule — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-import",
+        "clause_index": 0,
+        "clause_sha256": "aa17fcb835ab00220f208f34b490933bb465c6443d5bb16609648518b7020dc5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.at-import-clause-b75d2cf05ef4",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "at-import"
+      ],
+      "behaviour": "Importing Style Sheets: the @import rule — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-import",
+        "clause_index": 3,
+        "clause_sha256": "b75d2cf05ef4f1d318d6b3a03df045bf73589c9194e7c5aa77aa6df8ea8d0185"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.at-import-clause-7b41a3547f86",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "at-import"
+      ],
+      "behaviour": "Importing Style Sheets: the @import rule — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-import",
+        "clause_index": 6,
+        "clause_sha256": "7b41a3547f86e623d439f369b215daf9b228e38bbf35fa525a7fe5cc21a2af1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.at-import-clause-3071a89f7731",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "at-import"
+      ],
+      "behaviour": "Importing Style Sheets: the @import rule — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-import",
+        "clause_index": 18,
+        "clause_sha256": "3071a89f773187baae263f369103650746b95b38b46a134a0b5d2a2ad7c6bd3a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.conditional-import",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "conditional-import"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conditional @import Rules.",
+      "locator": {
+        "section_id": "conditional-import",
+        "text_sha256": "daac37e11e528e474ec9bf586a50db29d4acdd604799db32104c2b22387d6b49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.conditional-import-clause-ec8d1db1930d",
+        "css-cascade-5.conditional-import-clause-0431bfadfb96",
+        "css-cascade-5.foundation-stylesheet-imports"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.conditional-import-clause-ec8d1db1930d",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "conditional-import"
+      ],
+      "behaviour": "Conditional @import Rules — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "conditional-import",
+        "clause_index": 2,
+        "clause_sha256": "ec8d1db1930de0ae845e907ef3d4d744e9a4771bd3aabc7bc5cf334b01b6ed2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.conditional-import-clause-0431bfadfb96",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "conditional-import"
+      ],
+      "behaviour": "Conditional @import Rules — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "conditional-import",
+        "clause_index": 4,
+        "clause_sha256": "0431bfadfb96f3d39de2e0f282c10ebf9ff57f781c6ac9d0d15fc227a4a34961"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.import-processing",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "import-processing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Processing Stylesheet Imports.",
+      "locator": {
+        "section_id": "import-processing",
+        "text_sha256": "db26e037675c5c13220f63f2eca462311b29ca365b8070a7a1ea6059f761057c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.import-processing-clause-5cc932772d6f",
+        "css-cascade-5.foundation-stylesheet-imports"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.import-processing-clause-5cc932772d6f",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "import-processing"
+      ],
+      "behaviour": "Processing Stylesheet Imports — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "import-processing",
+        "clause_index": 0,
+        "clause_sha256": "5cc932772d6f4b3f35c9833de2c7c1dc46c4c1fa43f0964608af2f3bf7621f38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.content-type",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "content-type"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Content-Type of CSS Style Sheets.",
+      "locator": {
+        "section_id": "content-type",
+        "text_sha256": "7c33d409377627e10bdb501dc23a2fd1424991941491890d88c2d114a4ed4422"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.content-type-clause-0e30751a5abe",
+        "css-cascade-5.foundation-stylesheet-imports"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.content-type-clause-0e30751a5abe",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "content-type"
+      ],
+      "behaviour": "Content-Type of CSS Style Sheets — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "content-type",
+        "clause_index": 7,
+        "clause_sha256": "0e30751a5abe7ed23a088b97d151af1530acc26001ec9835d9cf9d186686c3a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.shorthand",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "shorthand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shorthand Properties.",
+      "locator": {
+        "section_id": "shorthand",
+        "text_sha256": "9e87bd524d1dd79a464a411381bfb1b503ee49c2d48378f0414aa86a4584a935"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.shorthand-clause-00162b36d640",
+        "css-cascade-5.shorthand-clause-e610a219bf7c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.shorthand-clause-00162b36d640",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "shorthand"
+      ],
+      "behaviour": "Shorthand Properties — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "shorthand",
+        "clause_index": 1,
+        "clause_sha256": "00162b36d640c484fabe97e80233f281ffbd518e73c66e20e37e17719a32c741"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.shorthand-clause-e610a219bf7c",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "shorthand"
+      ],
+      "behaviour": "Shorthand Properties — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "shorthand",
+        "clause_index": 8,
+        "clause_sha256": "e610a219bf7cd9199fc29e789da8bf76d864c85e5c949b11893aa5f53b2db457"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.aliasing",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "aliasing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Aliasing.",
+      "locator": {
+        "section_id": "aliasing",
+        "text_sha256": "46d8b030c5a2c557fa6ed94ae39b6a90d5c7ef299885fca0c4221859fd73567b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.aliasing-clause-d4769c68f376"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.aliasing-clause-d4769c68f376",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "aliasing"
+      ],
+      "behaviour": "Property Aliasing — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "aliasing",
+        "clause_index": 2,
+        "clause_sha256": "d4769c68f376234a01d7db71bf699396c6962f72563f1a5715543e70a9e123c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.all-shorthand",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "all-shorthand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resetting All Properties: the all property.",
+      "locator": {
+        "section_id": "all-shorthand",
+        "text_sha256": "ef5fa555e6484d3898dc029c72023441a714aa3640c8bce037e2d83fc88773ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.all-shorthand-clause-e956401c07c4",
+        "css-cascade-5.all-shorthand-clause-cca2516ebb1d",
+        "css-cascade-5.all-shorthand-clause-b605682449b4",
+        "css-cascade-5.all-shorthand-clause-0eef56998976",
+        "css-cascade-5.all-shorthand-clause-44531f5a9972",
+        "css-cascade-5.foundation-css-wide-defaulting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.all-shorthand-clause-e956401c07c4",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "all-shorthand"
+      ],
+      "behaviour": "Resetting All Properties: the all property — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "all-shorthand",
+        "clause_index": 3,
+        "clause_sha256": "e956401c07c4b43ecbeecbb9186e8c19e86656618297ecc0dfdb7da29607efa3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.all-shorthand-clause-cca2516ebb1d",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "all-shorthand"
+      ],
+      "behaviour": "Resetting All Properties: the all property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "all-shorthand",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.all-shorthand-clause-b605682449b4",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "all-shorthand"
+      ],
+      "behaviour": "Resetting All Properties: the all property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "all-shorthand",
+        "clause_index": 18,
+        "clause_sha256": "b605682449b452201247a40bd843b5e32b22d0931b988b04c128cef12adbd769"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.all-shorthand-clause-0eef56998976",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "all-shorthand"
+      ],
+      "behaviour": "Resetting All Properties: the all property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "all-shorthand",
+        "clause_index": 19,
+        "clause_sha256": "0eef56998976405b7485290bb59bea062772a0849aa006bf7a57de6bd8801002"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.all-shorthand-clause-44531f5a9972",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "all-shorthand"
+      ],
+      "behaviour": "Resetting All Properties: the all property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "all-shorthand",
+        "clause_index": 20,
+        "clause_sha256": "44531f5a99724fa1b74f22c3a5a530c99952989d7589c304680bc757841f98cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.value-stages",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "value-stages"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Processing.",
+      "locator": {
+        "section_id": "value-stages",
+        "text_sha256": "35f283b80a90b543cd3c9373fb3b9c0b0602959d154e622cef74bcbdeff0fc2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.value-stages-clause-2f92f45877e7",
+        "css-cascade-5.value-stages-clause-a65b9915cc8c",
+        "css-cascade-5.value-stages-clause-7b28836882cd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.value-stages-clause-2f92f45877e7",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "value-stages"
+      ],
+      "behaviour": "Value Processing — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "value-stages",
+        "clause_index": 0,
+        "clause_sha256": "2f92f45877e709009b6e06cdd1ca899fcfd66413935d127eccec73eecc190bc8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.value-stages-clause-a65b9915cc8c",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "value-stages"
+      ],
+      "behaviour": "Value Processing — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "value-stages",
+        "clause_index": 5,
+        "clause_sha256": "a65b9915cc8c088e6f035470925e166acca36569a0f6a74b9b2727e44ecb7f39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.value-stages-clause-7b28836882cd",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "value-stages"
+      ],
+      "behaviour": "Value Processing — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "value-stages",
+        "clause_index": 8,
+        "clause_sha256": "7b28836882cdf397ace361f4416546ef5e574c81a5c957a55891c9b292128228"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.declared",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "declared"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Declared Values.",
+      "locator": {
+        "section_id": "declared",
+        "text_sha256": "5c128d63be842b3c5f4d48e3f22f225a409d63e7f1c8e449e6425bcfda39ac21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.value-aliasing",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "value-aliasing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Aliasing.",
+      "locator": {
+        "section_id": "value-aliasing",
+        "text_sha256": "bf606084668efe0a67b4ae1b8c1c52631c6d084b8f5c6b0f6b77854bb1a36c05"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.cascaded",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "cascaded"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascaded Values.",
+      "locator": {
+        "section_id": "cascaded",
+        "text_sha256": "ba18655c17510f55583a67989dce2a4a6b5fa54e21d321ed4fb41a74c4256252"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.specified",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "specified"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specified Values.",
+      "locator": {
+        "section_id": "specified",
+        "text_sha256": "255a896a01259f019e64c509cdf70bf6364620ceee1deb8ff125430afc6687a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.specified-clause-8247b48caaae"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.specified-clause-8247b48caaae",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "specified"
+      ],
+      "behaviour": "Specified Values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "specified",
+        "clause_index": 1,
+        "clause_sha256": "8247b48caaae01924b6bb446f65fee014cf9204efec81a7e8262a854c3d1a117"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.computed",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "computed"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Computed Values.",
+      "locator": {
+        "section_id": "computed",
+        "text_sha256": "8db8d08a0e64e0b229a202497832613e3cec7ec3accd3bdac6d16b1c847f63c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.computed-clause-1084f8a0f139",
+        "css-cascade-5.computed-clause-570494ca7d90",
+        "css-cascade-5.computed-clause-eb3f3693b3f3",
+        "css-cascade-5.computed-clause-5e584838f928",
+        "css-cascade-5.computed-clause-15a5933668c2",
+        "css-cascade-5.computed-clause-2e4a769c280d",
+        "css-cascade-5.computed-clause-23777179c7d7",
+        "css-cascade-5.computed-clause-b86a7e13f666"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.computed-clause-1084f8a0f139",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "computed"
+      ],
+      "behaviour": "Computed Values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed",
+        "clause_index": 0,
+        "clause_sha256": "1084f8a0f13965a999ce8172aa12aff40af3dc8ced4e851900daef12a1c6e2a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.computed-clause-570494ca7d90",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "computed"
+      ],
+      "behaviour": "Computed Values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed",
+        "clause_index": 1,
+        "clause_sha256": "570494ca7d90dd3154a9b9bdfe3b27aded9ae477be43a18f293780e4a8f18b96"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.computed-clause-eb3f3693b3f3",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "computed"
+      ],
+      "behaviour": "Computed Values — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed",
+        "clause_index": 2,
+        "clause_sha256": "eb3f3693b3f38a6d3d5bcbb0057360f915b87e1cd72bfc1dec68e5df4598c02d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.computed-clause-5e584838f928",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "computed"
+      ],
+      "behaviour": "Computed Values — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed",
+        "clause_index": 3,
+        "clause_sha256": "5e584838f928a77fef762b5c0ebda4ac25927b07dc1a95bff8ab15a996d7c498"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.computed-clause-15a5933668c2",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "computed"
+      ],
+      "behaviour": "Computed Values — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed",
+        "clause_index": 4,
+        "clause_sha256": "15a5933668c220bd1324185fb0dbc3772d452b1bc445eb37a444c16836691c0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.computed-clause-2e4a769c280d",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "computed"
+      ],
+      "behaviour": "Computed Values — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed",
+        "clause_index": 5,
+        "clause_sha256": "2e4a769c280d539164f0320fa60996c40fb87c9e6a83c39017d12b77a7218e5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.computed-clause-23777179c7d7",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "computed"
+      ],
+      "behaviour": "Computed Values — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed",
+        "clause_index": 7,
+        "clause_sha256": "23777179c7d7a26435309183b9216a42e7b32c41b71514e3cf62a91b52f36510"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.computed-clause-b86a7e13f666",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "computed"
+      ],
+      "behaviour": "Computed Values — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed",
+        "clause_index": 8,
+        "clause_sha256": "b86a7e13f666679d232b0c45d7bd427323d7e21ade72a0f767f9e70487ea8d86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.used",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "used"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Used Values.",
+      "locator": {
+        "section_id": "used",
+        "text_sha256": "bd82032d3c4b3465f1272c4481266a4d2789c84ad5fad82968787512f04a769b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.used-clause-96f97ef92fc1",
+        "css-cascade-5.used-clause-65325b2cf433",
+        "css-cascade-5.used-clause-1b110b405fc8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.used-clause-96f97ef92fc1",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "used"
+      ],
+      "behaviour": "Used Values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "used",
+        "clause_index": 0,
+        "clause_sha256": "96f97ef92fc115571504b020d8f4329226e827187376f5190798c2f73d03bbbf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.used-clause-65325b2cf433",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "used"
+      ],
+      "behaviour": "Used Values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "used",
+        "clause_index": 1,
+        "clause_sha256": "65325b2cf43342cb5dbf73a46b073d3907504ff14c0bfa37ae80e8da17b72666"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.used-clause-1b110b405fc8",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "used"
+      ],
+      "behaviour": "Used Values — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "used",
+        "clause_index": 2,
+        "clause_sha256": "1b110b405fc8a1500d58a886c8c2e0f1ea02f77beb2cd9c9462ebbbcebb13049"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.applies-to",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "applies-to"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Applicable Properties.",
+      "locator": {
+        "section_id": "applies-to",
+        "text_sha256": "a4d46f0c810d1824cead08432893025b0d89e7fec4294a9d1c7a850b390c6d20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.applies-to-clause-24a45555a345"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.applies-to-clause-24a45555a345",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "applies-to"
+      ],
+      "behaviour": "Applicable Properties — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "applies-to",
+        "clause_index": 1,
+        "clause_sha256": "24a45555a345ba9dba903b8c2feaec5332b6f1be5e2070391ff049df343fe44c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.actual",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "actual"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Actual Values.",
+      "locator": {
+        "section_id": "actual",
+        "text_sha256": "d1d69fa7d0939daf87900d0dea57d84956a672eae25a98e6c368bb64d737cc1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.stages-examples",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "stages-examples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Examples.",
+      "locator": {
+        "section_id": "stages-examples",
+        "text_sha256": "a7de9a1bd34274226125c26bbfa9d2e85c0460d19f79d593e610a61d0bc75f37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.stages-examples-clause-22edaa34f875",
+        "css-cascade-5.stages-examples-clause-b8131d593478",
+        "css-cascade-5.stages-examples-clause-035300f3afee",
+        "css-cascade-5.stages-examples-clause-45457f48d9e6",
+        "css-cascade-5.stages-examples-clause-7cbf0c680f6d",
+        "css-cascade-5.stages-examples-clause-8b31e108d5c5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.stages-examples-clause-22edaa34f875",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "stages-examples"
+      ],
+      "behaviour": "Examples — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "stages-examples",
+        "clause_index": 4,
+        "clause_sha256": "22edaa34f8759ed3f8fac50d7189c775d864f00320b5d78025c41c6f5b4456d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.stages-examples-clause-b8131d593478",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "stages-examples"
+      ],
+      "behaviour": "Examples — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "stages-examples",
+        "clause_index": 17,
+        "clause_sha256": "b8131d593478dc7cecb2873d3d519c473eb93ead838f04f7f209cd629b3098a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.stages-examples-clause-035300f3afee",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "stages-examples"
+      ],
+      "behaviour": "Examples — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "stages-examples",
+        "clause_index": 18,
+        "clause_sha256": "035300f3afee55ae79b77ca5bc61ff29fc3c7abb56f751bd524fa331b50d8ee0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.stages-examples-clause-45457f48d9e6",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "stages-examples"
+      ],
+      "behaviour": "Examples — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "stages-examples",
+        "clause_index": 27,
+        "clause_sha256": "45457f48d9e6a296caf11413024910169bea68ab1c9fca7b583175deaff61d4d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.stages-examples-clause-7cbf0c680f6d",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "stages-examples"
+      ],
+      "behaviour": "Examples — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "stages-examples",
+        "clause_index": 33,
+        "clause_sha256": "7cbf0c680f6de4dbba55c8e2fa2c17749367eefb72b432c246f252478501a2dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.stages-examples-clause-8b31e108d5c5",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "stages-examples"
+      ],
+      "behaviour": "Examples — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "stages-examples",
+        "clause_index": 43,
+        "clause_sha256": "8b31e108d5c541ace4901cd81319144bcbe7dcaed8b024556948b89584907f67"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.fragments",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "fragments"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Per-Fragment Value Processing.",
+      "locator": {
+        "section_id": "fragments",
+        "text_sha256": "40820e61706c65048f36f321c595c6fc09d51ec86bf8f1fd02ae7c47619592e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.fragments-clause-7c5189b55f5f",
+        "css-cascade-5.fragments-clause-6730b4821017",
+        "css-cascade-5.fragments-clause-86f2814fe1b2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.fragments-clause-7c5189b55f5f",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "fragments"
+      ],
+      "behaviour": "Per-Fragment Value Processing — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "fragments",
+        "clause_index": 0,
+        "clause_sha256": "7c5189b55f5f64099c9f141e52a94b3e7722454b9d3563b6aa9424ae35864083"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.fragments-clause-6730b4821017",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "fragments"
+      ],
+      "behaviour": "Per-Fragment Value Processing — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "fragments",
+        "clause_index": 1,
+        "clause_sha256": "6730b482101726dee5d07efb8c671bfa0e811c07681f383eeb687480782dd688"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.fragments-clause-86f2814fe1b2",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "fragments"
+      ],
+      "behaviour": "Per-Fragment Value Processing — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "fragments",
+        "clause_index": 4,
+        "clause_sha256": "86f2814fe1b2108af739af8058b5137f093c7a4b540ef36a19ae794c4c4faa4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.filtering",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "filtering"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Filtering.",
+      "locator": {
+        "section_id": "filtering",
+        "text_sha256": "4d00b0813749cd7a7d93759537043ab9974b37106d5c26a9a66e806f3c6604aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.filtering-clause-d8796decdf3b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.filtering-clause-d8796decdf3b",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "filtering"
+      ],
+      "behaviour": "Filtering — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "filtering",
+        "clause_index": 0,
+        "clause_sha256": "d8796decdf3b03f8ee9ced5ccf43ad70dbc7195e68185ef65689a941db25d01a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.cascading",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "cascading"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascading.",
+      "locator": {
+        "section_id": "cascading",
+        "text_sha256": "ab824c1b96ee9f1625e14a62a8cf29f8820357b764abff5fc31aa813f4b1ed6f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.cascade-sort",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "cascade-sort"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascade Sorting Order.",
+      "locator": {
+        "section_id": "cascade-sort",
+        "text_sha256": "dbf7a68b2c2e9e412e7f375809858617d937614b71fe9f3c1d2f741e60fd6aa5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.foundation-cascade-origins"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.cascading-origins",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "cascading-origins"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascading Origins.",
+      "locator": {
+        "section_id": "cascading-origins",
+        "text_sha256": "8e0fdf81ade71a88e965996734ba95d7295fe35a4143b5b88c79df5ad7a823cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.cascading-origins-clause-a775efc8545c",
+        "css-cascade-5.foundation-cascade-origins"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.cascading-origins-clause-a775efc8545c",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "cascading-origins"
+      ],
+      "behaviour": "Cascading Origins — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "cascading-origins",
+        "clause_index": 7,
+        "clause_sha256": "a775efc8545cb282277732b3f51b7c6feef2131620fd6c47259d15eaa4e2b2e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.importance",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "importance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Important Declarations: the !important annotation.",
+      "locator": {
+        "section_id": "importance",
+        "text_sha256": "01c917e36de28c5042a102f4fbddd83bda1eb4d1eaf1a6cc0779b33056d7623e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.foundation-cascade-origins"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.layering",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layering"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascade Layers.",
+      "locator": {
+        "section_id": "layering",
+        "text_sha256": "4078b1ed0ef76906b32a1d8dd8c53d58c1447b5a6240cad36230b65db24423b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.layering-clause-92ba42432d5d",
+        "css-cascade-5.foundation-cascade-layers"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.layering-clause-92ba42432d5d",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layering"
+      ],
+      "behaviour": "Cascade Layers — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "layering",
+        "clause_index": 1,
+        "clause_sha256": "92ba42432d5d076fd9a0830ae3ec413569090157abe1997b65091260bdc60e67"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.layer-declaration",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layer-declaration"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Declaring Cascade Layers.",
+      "locator": {
+        "section_id": "layer-declaration",
+        "text_sha256": "8e6d5cbc79e77a9939987eaa5a40a37809cecc06be3990d574ccb808f4d74644"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.foundation-cascade-layers"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.layer-names",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layer-names"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layer Naming and Nesting.",
+      "locator": {
+        "section_id": "layer-names",
+        "text_sha256": "538b226dd0fcecaef76c6ae6c0bfb64c58276763d00047c381cfd9a6c73f9e65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.layer-names-clause-a0fb8582d489",
+        "css-cascade-5.foundation-cascade-layers"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.layer-names-clause-a0fb8582d489",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layer-names"
+      ],
+      "behaviour": "Layer Naming and Nesting — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "layer-names",
+        "clause_index": 22,
+        "clause_sha256": "a0fb8582d489380446536874933a53e123203163e7c33cbb6ff9ac0428dea18d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.unnamed-layers",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "unnamed-layers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Anonymous Layers.",
+      "locator": {
+        "section_id": "unnamed-layers",
+        "text_sha256": "51f9dd06bdfa08dc45a8b8128270fee9e00eb98cce86fd325af7d8971aea74ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.unnamed-layers-clause-3e8301305995",
+        "css-cascade-5.foundation-cascade-layers"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.unnamed-layers-clause-3e8301305995",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "unnamed-layers"
+      ],
+      "behaviour": "Anonymous Layers — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "unnamed-layers",
+        "clause_index": 10,
+        "clause_sha256": "3e8301305995d693e634d783901202845fa1b820dda436c305cd1cc6ceff90c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.layer-ordering",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layer-ordering"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layer Ordering.",
+      "locator": {
+        "section_id": "layer-ordering",
+        "text_sha256": "47aa1c2c646dc551b2aefec230ad36e9f9e0c5b784aa3a8ae0952d48a8a99b52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.foundation-cascade-layers"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.at-layer",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "at-layer"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Declaring Layers Inline: the @layer rule.",
+      "locator": {
+        "section_id": "at-layer",
+        "text_sha256": "e7528cb8555ae32d64ace5fd69ca8d32c7a7ff9ef2f43ed20d9d75f08a35cd69"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.foundation-cascade-layers"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.layer-block",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layer-block"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Assigning Styles Inline: the @layer block at-rule.",
+      "locator": {
+        "section_id": "layer-block",
+        "text_sha256": "b246575e1ef4aa51c340ddbea2b624c7762e147ecda43ac5f3d6251d4ac58401"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.foundation-cascade-layers"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.layer-empty",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layer-empty"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Declaring Without Styles: the @layer statement at-rule.",
+      "locator": {
+        "section_id": "layer-empty",
+        "text_sha256": "078afa74f747eccad139862763dcb637674285718bae95cbc3031d44afec326e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.layer-empty-clause-541b8a03e944",
+        "css-cascade-5.layer-empty-clause-edf2f8c1390c",
+        "css-cascade-5.foundation-cascade-layers"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.layer-empty-clause-541b8a03e944",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layer-empty"
+      ],
+      "behaviour": "Declaring Without Styles: the @layer statement at-rule — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "layer-empty",
+        "clause_index": 3,
+        "clause_sha256": "541b8a03e944bfada86c958c826185a7e9990079eea1015eaf94ecbeb8ecfc77"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.layer-empty-clause-edf2f8c1390c",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layer-empty"
+      ],
+      "behaviour": "Declaring Without Styles: the @layer statement at-rule — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "layer-empty",
+        "clause_index": 9,
+        "clause_sha256": "edf2f8c1390c5b57576fb251cda3dacbcb61693ff8288e9ba5c4bf80d72fc3b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.preshint",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "preshint"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Precedence of Non-CSS Presentational Hints.",
+      "locator": {
+        "section_id": "preshint",
+        "text_sha256": "248305e4d0dcb156fc197a5f042157706fbbbd6e060417b5113eef2f7c51a50b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.preshint-clause-45b21d774e70",
+        "css-cascade-5.preshint-clause-d32fc3c0e499",
+        "css-cascade-5.preshint-clause-8998b9be295c",
+        "css-cascade-5.foundation-cascade-origins"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.preshint-clause-45b21d774e70",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "preshint"
+      ],
+      "behaviour": "Precedence of Non-CSS Presentational Hints — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "preshint",
+        "clause_index": 0,
+        "clause_sha256": "45b21d774e70724819f7d89a0a8dd9e7bdb690efd4fb62b478509abd4308be55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.preshint-clause-d32fc3c0e499",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "preshint"
+      ],
+      "behaviour": "Precedence of Non-CSS Presentational Hints — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "preshint",
+        "clause_index": 1,
+        "clause_sha256": "d32fc3c0e499bbbea234d54ca24de215f75f45283899072ccb81b56da8ab344c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.preshint-clause-8998b9be295c",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "preshint"
+      ],
+      "behaviour": "Precedence of Non-CSS Presentational Hints — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "preshint",
+        "clause_index": 2,
+        "clause_sha256": "8998b9be295ce419a7bdcead7939f91ba5324c6e57af8fe1aa955db7af4b41af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.defaulting",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "defaulting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Defaulting.",
+      "locator": {
+        "section_id": "defaulting",
+        "text_sha256": "aa617097f465e6620104cf6d4c29a1a7ce31817deb42bdd2e98b5c9222353e9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.defaulting-clause-aa617097f465"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.defaulting-clause-aa617097f465",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "defaulting"
+      ],
+      "behaviour": "Defaulting — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "defaulting",
+        "clause_index": 0,
+        "clause_sha256": "aa617097f465e6620104cf6d4c29a1a7ce31817deb42bdd2e98b5c9222353e9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.initial-values",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "initial-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Initial Values.",
+      "locator": {
+        "section_id": "initial-values",
+        "text_sha256": "d8c028e13688a269dd9b1ad973e76288c2b52fcac2e7fc358f20e6cc382dc88e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.initial-values-clause-d8c028e13688",
+        "css-cascade-5.foundation-css-wide-defaulting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.initial-values-clause-d8c028e13688",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "initial-values"
+      ],
+      "behaviour": "Initial Values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial-values",
+        "clause_index": 0,
+        "clause_sha256": "d8c028e13688a269dd9b1ad973e76288c2b52fcac2e7fc358f20e6cc382dc88e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.inheriting",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "inheriting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inheritance.",
+      "locator": {
+        "section_id": "inheriting",
+        "text_sha256": "ca7b0321eae898067b7014cac3084c3d04de509a2865a099a82d353b93da247b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.inheriting-clause-f87aec6f8716",
+        "css-cascade-5.inheriting-clause-622d8fefebce",
+        "css-cascade-5.inheriting-clause-e64bef469b90",
+        "css-cascade-5.foundation-css-wide-defaulting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.inheriting-clause-f87aec6f8716",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "inheriting"
+      ],
+      "behaviour": "Inheritance — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "inheriting",
+        "clause_index": 0,
+        "clause_sha256": "f87aec6f87165f6df69a05d13e8915718ea773ae834c3d3724133f6d83fc4ec2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.inheriting-clause-622d8fefebce",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "inheriting"
+      ],
+      "behaviour": "Inheritance — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "inheriting",
+        "clause_index": 1,
+        "clause_sha256": "622d8fefebce4fe778e1029e42badfaa97aa6a4ee85f4565e7e122fecccbd360"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.inheriting-clause-e64bef469b90",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "inheriting"
+      ],
+      "behaviour": "Inheritance — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "inheriting",
+        "clause_index": 3,
+        "clause_sha256": "e64bef469b9017b78db2bddb92f0cce6d59524f6f4aa48373c47870b87f270ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.defaulting-keywords",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "defaulting-keywords"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Explicit Defaulting.",
+      "locator": {
+        "section_id": "defaulting-keywords",
+        "text_sha256": "2c5e093dccd7ab75f57ba98ccd235c105ee48c3556b6b943ceb026555f5bb94a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.foundation-css-wide-defaulting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.initial",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "initial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resetting a Property: the initial keyword.",
+      "locator": {
+        "section_id": "initial",
+        "text_sha256": "edfdfa2d66df9c84a273eb65b7c4be04e453bed7e0d756d69fa4a63e83c4364f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.initial-clause-edfdfa2d66df",
+        "css-cascade-5.foundation-css-wide-defaulting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.initial-clause-edfdfa2d66df",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "initial"
+      ],
+      "behaviour": "Resetting a Property: the initial keyword — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "initial",
+        "clause_index": 0,
+        "clause_sha256": "edfdfa2d66df9c84a273eb65b7c4be04e453bed7e0d756d69fa4a63e83c4364f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.inherit",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "inherit"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Explicit Inheritance: the inherit keyword.",
+      "locator": {
+        "section_id": "inherit",
+        "text_sha256": "bba65251a80f835b05c356bda9f7b051663d8d5e65f23af8f3efe5ee38c43293"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.inherit-clause-bba65251a80f",
+        "css-cascade-5.foundation-css-wide-defaulting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.inherit-clause-bba65251a80f",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "inherit"
+      ],
+      "behaviour": "Explicit Inheritance: the inherit keyword — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "inherit",
+        "clause_index": 0,
+        "clause_sha256": "bba65251a80f835b05c356bda9f7b051663d8d5e65f23af8f3efe5ee38c43293"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.inherit-initial",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "inherit-initial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Erasing All Declarations: the unset keyword.",
+      "locator": {
+        "section_id": "inherit-initial",
+        "text_sha256": "7fcf5c507ebd42642e779ce7f145e58ea3c744c0eb03fc0c93066629e0771436"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.inherit-initial-clause-7fcf5c507ebd",
+        "css-cascade-5.foundation-css-wide-defaulting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.inherit-initial-clause-7fcf5c507ebd",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "inherit-initial"
+      ],
+      "behaviour": "Erasing All Declarations: the unset keyword — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "inherit-initial",
+        "clause_index": 0,
+        "clause_sha256": "7fcf5c507ebd42642e779ce7f145e58ea3c744c0eb03fc0c93066629e0771436"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.default",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "default"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rolling Back Cascade Origins: the revert keyword.",
+      "locator": {
+        "section_id": "default",
+        "text_sha256": "a7407ebc169be09fafadeeef162e08859e15283bb76b4e08eb667cf86ccadff0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.foundation-css-wide-defaulting",
+        "css-cascade-5.foundation-layer-rollback"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.revert-layer",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "revert-layer"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rolling Back Cascade Layers: the revert-layer keyword.",
+      "locator": {
+        "section_id": "revert-layer",
+        "text_sha256": "5ed36d446d73664fb1c58a745e9272b97ad3acf72953f5d82169dacf9876315b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.foundation-layer-rollback"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.layer-apis",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layer-apis"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layer APIs.",
+      "locator": {
+        "section_id": "layer-apis",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.extensions-to-cssimportrule-interface",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "extensions-to-cssimportrule-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extensions to the CSSImportRule interface.",
+      "locator": {
+        "section_id": "extensions-to-cssimportrule-interface",
+        "text_sha256": "84dd8b36f96b05ce1b4ca2ba83b7b4a4109491681848eae4dc3cc803da468324"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.the-csslayerblockrule-interface",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "the-csslayerblockrule-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSSLayerBlockRule interface.",
+      "locator": {
+        "section_id": "the-csslayerblockrule-interface",
+        "text_sha256": "bedcbce4e00895e966bdd618d28e06a8a2be040f8a3a9c2f8dd77371e2b26442"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.the-csslayerstatementrule-interface",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "the-csslayerstatementrule-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSSLayerStatementRule interface.",
+      "locator": {
+        "section_id": "the-csslayerstatementrule-interface",
+        "text_sha256": "6a3cb8e4f184347541dcf7f7d8aa01817e98bc705d9e2a050b015d44c9798976"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.additions-l4",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "additions-l4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Additions Since Level 4.",
+      "locator": {
+        "section_id": "additions-l4",
+        "text_sha256": "e3688a0a75cd0d88b33b23fb9bc55a081a2b46daf4f2d5dcaf0ab10414fbec14"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.additions-l3",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "additions-l3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Additions Since Level 3.",
+      "locator": {
+        "section_id": "additions-l3",
+        "text_sha256": "9c5237bb8eab4c5feae73dd134e13a97e31bdcde6caaf3e6ef3715364682f5e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.priv-sec",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy and Security Considerations.",
+      "locator": {
+        "section_id": "priv-sec",
+        "text_sha256": "a9106fa2ccfe191daacefd6e173b0c84e104d5fe29aa24bcdd74cdd3ad542b25"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.priv-sec-clause-ade0b5db06da",
+        "css-cascade-5.priv-sec-clause-8106e52379f1",
+        "css-cascade-5.priv-sec-clause-5e3e7bbb457c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.priv-sec-clause-ade0b5db06da",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Privacy and Security Considerations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "priv-sec",
+        "clause_index": 0,
+        "clause_sha256": "ade0b5db06da7ae9ff4c1eda1e09abbac4cce9907c594640c494843ec94e794e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.priv-sec-clause-8106e52379f1",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Privacy and Security Considerations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "priv-sec",
+        "clause_index": 2,
+        "clause_sha256": "8106e52379f1c413861babbf36b29261a57b8b0aaccaa6f8febe4d5d0d2d0c49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.priv-sec-clause-5e3e7bbb457c",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Privacy and Security Considerations — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "priv-sec",
+        "clause_index": 6,
+        "clause_sha256": "5e3e7bbb457c71ac5b3dc0cc3dd25b44b845d2dba289fab141cfff034930e4f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-conformance",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.w3c-conventions",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.w3c-conventions-clause-5c98c879f070",
+        "css-cascade-5.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.w3c-conventions-clause-5c98c879f070",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-conformance-classes",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.w3c-conformance-classes-clause-ff408372426c",
+        "css-cascade-5.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-partial",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.w3c-partial-clause-ef40c4aab200",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-conform-future-proofing",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.w3c-testing",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.w3c-testing-clause-1e0fff369221",
+        "css-cascade-5.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.w3c-testing-clause-1e0fff369221",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-testing-clause-ae1210cf9643",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-cr-exit-criteria",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "text_sha256": "ea0a5ace75e19fa54ec81aab3d687488b310e82b95d0c255036ac873cd04c4be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+        "css-cascade-5.w3c-cr-exit-criteria-clause-ea752775913a",
+        "css-cascade-5.w3c-cr-exit-criteria-clause-b7d363ab42db",
+        "css-cascade-5.w3c-cr-exit-criteria-clause-b67129724911",
+        "css-cascade-5.w3c-cr-exit-criteria-clause-08b9699622d8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-cr-exit-criteria-clause-ea752775913a",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-cr-exit-criteria-clause-b7d363ab42db",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-cr-exit-criteria-clause-b67129724911",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.w3c-cr-exit-criteria-clause-08b9699622d8",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 18,
+        "clause_sha256": "08b9699622d8adc141296b48ca2c3b91ce0136d669fbb88e0a7580ce9a6cb924"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.property-index",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "378ac93696026ef4657d0f42f26be5c8608ae6b572088abe30778da8363938e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.property-index-clause-e956401c07c4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.property-index-clause-e956401c07c4",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 10,
+        "clause_sha256": "e956401c07c4b43ecbeecbb9186e8c19e86656618297ecc0dfdb7da29607efa3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.idl-index",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "a6c323a3914f22a8b08a0a0685805590018565e498b715534c6f727f81380470"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.issues-index",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "15cefe48b71bac744d4572759c2190082b48a656f4ffea8268b6791f618208cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-cascade-5.issues-index-clause-89cfca1d5460",
+        "css-cascade-5.issues-index-clause-f6cb6c43acda",
+        "css-cascade-5.issues-index-clause-97789b5d5c2d",
+        "css-cascade-5.issues-index-clause-79b71fac619f",
+        "css-cascade-5.issues-index-clause-b5b6bcb897c7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.issues-index-clause-89cfca1d5460",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 40,
+        "clause_sha256": "89cfca1d54606c54990af2293517a3a8ae930e55d9de5f42e16051e5d734b43d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.issues-index-clause-f6cb6c43acda",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 47,
+        "clause_sha256": "f6cb6c43acda5ebcab98044d3532f4450966fb299125907d21644b6548beceaa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.issues-index-clause-97789b5d5c2d",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 56,
+        "clause_sha256": "97789b5d5c2d973a640fd0e0b4f3352b22763c803355e0fffec28ae4046092e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.issues-index-clause-79b71fac619f",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 64, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 63,
+        "clause_sha256": "79b71fac619fea4d14118d407ab933724d66c569204865aea5d9aeb7bd4c86af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.issues-index-clause-b5b6bcb897c7",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 158, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 157,
+        "clause_sha256": "b5b6bcb897c71e9ef0e41e450a9c58bed4c007951249e8229c9022be456ff6e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-cascade-5.import-8cac7d115c27",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-cascade-5.title",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Cascading and Inheritance Level 5.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "c7b2a0ab75e382c493d20e53372b16c4ffebf004c42d850c523586cd4123bd22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.abstract",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "d068327505ddbd748741582484ca66bf862899de2899f61e128cb214d706d30d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.status",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "cbade9a0c3a594e440bf687b541ac9b1a59132707c676aca8c49528266dfa159"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.contents",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "835f2538023a0acb14755f941581c8d312131d9953294cc3d5637f6a139406bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.changes",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.changes-2021-10",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "changes-2021-10"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9.1. Changes since the 15 Oct 2021 Working Draft.",
+      "locator": {
+        "section_id": "changes-2021-10",
+        "text_sha256": "610bcf4e35298dd2d3fe1c10e7c0a742786fb4d52f5f80c4e809448fc2646f1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.changes-2021-08",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "changes-2021-08"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9.2. Changes since the 29 August 2021 Working Draft.",
+      "locator": {
+        "section_id": "changes-2021-08",
+        "text_sha256": "2a25ba8ddbfa9353fbf0530d4ff0b1e36cdfcb96336803fe3d748a38e333e921"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.changes-2021-06",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "changes-2021-06"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9.3. Changes since the 8 June 2021 Working Draft.",
+      "locator": {
+        "section_id": "changes-2021-06",
+        "text_sha256": "8236349fe1bd886ff7c49ab9343c314f284684a5f8fc36e3c0d85fe5bff8ae45"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.changes-2021-03",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "changes-2021-03"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9.4. Changes since the 19 March 2021 Working Draft.",
+      "locator": {
+        "section_id": "changes-2021-03",
+        "text_sha256": "166e20c5f3ce4918af8f076f94e7e6e118b428e2bb3ac1750a8cc382e556ad8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.changes-2021-01",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "changes-2021-01"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9.5. Changes since the 19 January 2021 Working Draft.",
+      "locator": {
+        "section_id": "changes-2021-01",
+        "text_sha256": "849a242a62fae1775d12621545c9e69be4dc792c6eade6da7881825a06ce7abb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.changes-2",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "changes-2"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9.8. Additions Since Level 2.",
+      "locator": {
+        "section_id": "changes-2",
+        "text_sha256": "256a5213fe7ed2d0662baac768c1975d1256debcb65b744757847713038c3ea1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.acknowledgments",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "3cc7a1b23ca82c81b2ee2585ac3675036cb7d3eb51de790ef812ed67e87c75fa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.index",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.index-defined-here",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "fb474ebd48984d6a1fde32bfccc6bacdea62ab746380a82e8020c447efd79064"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.index-defined-elsewhere",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "0e60e0b558eb042653837e6b30be1215c9b9ee857f4845422b7ca9dcf130a01b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.references",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.informative",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "110b6f8115c7da9daae0902b79fa250f879462c8d7122c3bba9a7a85e50afc0b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-cascade-5.foundation-stylesheet-imports",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "at-import",
+        "conditional-import",
+        "import-processing",
+        "content-type"
+      ],
+      "behaviour": "Expand imports in cascade order with conditions, layers, final URL bases and media types.",
+      "locator": {
+        "section_id": "at-import",
+        "text_sha256": "76c6e459c08b41c12167c55643c63caaa0035ee24a24da085d6adf7d97d87efc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    },
+    {
+      "id": "css-cascade-5.foundation-cascade-origins",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "cascade-sort",
+        "cascading-origins",
+        "importance",
+        "preshint"
+      ],
+      "behaviour": "Order UA/user/author origins, importance and presentational hints in the common cascade.",
+      "locator": {
+        "section_id": "cascade-sort",
+        "text_sha256": "dbf7a68b2c2e9e412e7f375809858617d937614b71fe9f3c1d2f741e60fd6aa5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    },
+    {
+      "id": "css-cascade-5.foundation-css-wide-defaulting",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "all-shorthand",
+        "initial-values",
+        "inheriting",
+        "defaulting-keywords",
+        "initial",
+        "inherit",
+        "inherit-initial",
+        "default"
+      ],
+      "behaviour": "Apply initial/inherit/unset/revert/all through one initial/inheritance path.",
+      "locator": {
+        "section_id": "all-shorthand",
+        "text_sha256": "ef5fa555e6484d3898dc029c72023441a714aa3640c8bce037e2d83fc88773ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    },
+    {
+      "id": "css-cascade-5.foundation-cascade-layers",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "layering",
+        "layer-declaration",
+        "layer-names",
+        "unnamed-layers",
+        "layer-ordering",
+        "at-layer",
+        "layer-block",
+        "layer-empty"
+      ],
+      "behaviour": "Order nested/named/anonymous layers including import layers and unlayered declarations.",
+      "locator": {
+        "section_id": "layering",
+        "text_sha256": "4078b1ed0ef76906b32a1d8dd8c53d58c1447b5a6240cad36230b65db24423b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    },
+    {
+      "id": "css-cascade-5.foundation-layer-rollback",
+      "family": "css-cascade-5",
+      "source_id": "css-cascade-5",
+      "sections": [
+        "revert-layer",
+        "default"
+      ],
+      "behaviour": "Retain candidates needed for revert and revert-layer.",
+      "locator": {
+        "section_id": "revert-layer",
+        "text_sha256": "5ed36d446d73664fb1c58a745e9272b97ad3acf72953f5d82169dacf9876315b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    }
+  ]
+}

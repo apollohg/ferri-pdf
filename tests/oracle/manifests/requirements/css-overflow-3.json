@@ -1,0 +1,2618 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-overflow-3.intro",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "e8612313a94c9d39715cc59012431ea62da20a6dddacee6531ce36a7549524c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.values",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.placement",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module Interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "25e6765971ccbc82683067b8d6f7c8f06b6df5b03b78130f5871383c163a7601"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.overflow-concepts",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-concepts"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow Concepts and Terminology.",
+      "locator": {
+        "section_id": "overflow-concepts",
+        "text_sha256": "6501e363650c1f52d40970201b83e53ada3f9785f5c405bb12a723ced45f49ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.overflow-concepts-clause-81c4c971a6a2",
+        "css-overflow-3.overflow-concepts-clause-4e9be50d4e0c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.overflow-concepts-clause-81c4c971a6a2",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-concepts"
+      ],
+      "behaviour": "Overflow Concepts and Terminology — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-concepts",
+        "clause_index": 0,
+        "clause_sha256": "81c4c971a6a2d95f38c5c3ede0ec030b67937175c4ff2e19684d0d11135a7be5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-concepts-clause-4e9be50d4e0c",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-concepts"
+      ],
+      "behaviour": "Overflow Concepts and Terminology — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-concepts",
+        "clause_index": 1,
+        "clause_sha256": "4e9be50d4e0c53df749370a7eae147397934d6ae0295f4e5524336a55b7c90c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.ink",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "ink"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ink Overflow.",
+      "locator": {
+        "section_id": "ink",
+        "text_sha256": "f64d17beeca6d325ffd2a2c315ed3ddc7e9c5a9721409d06bad2c9d71109a998"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.scrollable",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scrollable Overflow.",
+      "locator": {
+        "section_id": "scrollable",
+        "text_sha256": "de0d788d8d32236e21da054ecca8b01e82aafd69c7a69220c299bc6435431dd6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.scrollable-clause-74549aa6f788",
+        "css-overflow-3.scrollable-clause-eb11d5c065fe",
+        "css-overflow-3.scrollable-clause-9f04f34966af"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.scrollable-clause-74549aa6f788",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollable"
+      ],
+      "behaviour": "Scrollable Overflow — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollable",
+        "clause_index": 11,
+        "clause_sha256": "74549aa6f788aa73aca6a0b4c653f4d6d65e7ef132b861baa21cc6e2945c6c36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scrollable-clause-eb11d5c065fe",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollable"
+      ],
+      "behaviour": "Scrollable Overflow — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollable",
+        "clause_index": 12,
+        "clause_sha256": "eb11d5c065feea2fed569f8824da8c033aadc5ac7731f14d17016df43c8f0217"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scrollable-clause-9f04f34966af",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollable"
+      ],
+      "behaviour": "Scrollable Overflow — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollable",
+        "clause_index": 15,
+        "clause_sha256": "9f04f34966afc680103423b70f1f61f5d4ebddd5b5b394b5d274b17a37f763d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scrolling",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrolling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scrolling Overflow.",
+      "locator": {
+        "section_id": "scrolling",
+        "text_sha256": "09eb093657e2a08136437a201ac8739493dcc3b59bdd0b5360d1819f5efaacb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.scrolling-clause-25c45e9daaca",
+        "css-overflow-3.scrolling-clause-339ae88dc97a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.scrolling-clause-25c45e9daaca",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrolling"
+      ],
+      "behaviour": "Scrolling Overflow — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrolling",
+        "clause_index": 5,
+        "clause_sha256": "25c45e9daaca8d36e9b2ede8b48a141df0d9b9d1d788d75dca74cb40614dbd12"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scrolling-clause-339ae88dc97a",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrolling"
+      ],
+      "behaviour": "Scrolling Overflow — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrolling",
+        "clause_index": 7,
+        "clause_sha256": "339ae88dc97a67670c08cd6f0fa599dd3a43ce93ae06160521bafade837e8630"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-properties",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scrolling and Clipping Overflow.",
+      "locator": {
+        "section_id": "overflow-properties",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.overflow-control",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-control"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Managing Overflow: the overflow-x, overflow-y, and overflow properties.",
+      "locator": {
+        "section_id": "overflow-control",
+        "text_sha256": "d89efce920a275e72a8b5feb8756c0ba92c706b43563520e331b2542a198aceb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.overflow-control-clause-cca2516ebb1d",
+        "css-overflow-3.overflow-control-clause-fbbc96111d1d",
+        "css-overflow-3.overflow-control-clause-daaf20db1c5f",
+        "css-overflow-3.overflow-control-clause-955cdf7b97b3",
+        "css-overflow-3.overflow-control-clause-1a6eb7f0b4f0",
+        "css-overflow-3.overflow-control-clause-5cdb39b4c80b",
+        "css-overflow-3.overflow-control-clause-c3973a7329a5",
+        "css-overflow-3.overflow-control-clause-6ca5f441ea02",
+        "css-overflow-3.overflow-control-clause-9799dbe02163"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.overflow-control-clause-cca2516ebb1d",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-control"
+      ],
+      "behaviour": "Managing Overflow: the overflow-x, overflow-y, and overflow properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-control",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-control-clause-fbbc96111d1d",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-control"
+      ],
+      "behaviour": "Managing Overflow: the overflow-x, overflow-y, and overflow properties — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-control",
+        "clause_index": 46,
+        "clause_sha256": "fbbc96111d1dd97409071f96087c102af5c06d77354be3d8cd50cc8ef0421900"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-control-clause-daaf20db1c5f",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-control"
+      ],
+      "behaviour": "Managing Overflow: the overflow-x, overflow-y, and overflow properties — normative clause 51, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-control",
+        "clause_index": 50,
+        "clause_sha256": "daaf20db1c5f7e5b2536ccdf8a8417aea91c3f96b40f47ca1fd41796603a9e75"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-control-clause-955cdf7b97b3",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-control"
+      ],
+      "behaviour": "Managing Overflow: the overflow-x, overflow-y, and overflow properties — normative clause 53, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-control",
+        "clause_index": 52,
+        "clause_sha256": "955cdf7b97b344d85bb5609546d2eb5450773682e63a192f1196d0fde31ce6da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-control-clause-1a6eb7f0b4f0",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-control"
+      ],
+      "behaviour": "Managing Overflow: the overflow-x, overflow-y, and overflow properties — normative clause 56, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-control",
+        "clause_index": 55,
+        "clause_sha256": "1a6eb7f0b4f0fdc4bff8b0d3cb379358fc287f1b1c7517426fdde13c17a708cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-control-clause-5cdb39b4c80b",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-control"
+      ],
+      "behaviour": "Managing Overflow: the overflow-x, overflow-y, and overflow properties — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-control",
+        "clause_index": 56,
+        "clause_sha256": "5cdb39b4c80b496f9ac5cefbe24641e5aaf12eb60587fb303b53c771576c916f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-control-clause-c3973a7329a5",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-control"
+      ],
+      "behaviour": "Managing Overflow: the overflow-x, overflow-y, and overflow properties — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-control",
+        "clause_index": 57,
+        "clause_sha256": "c3973a7329a50e5de8d720e8b3a28d03f4d60304e45cb2a61fdef577d6e47cbd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-control-clause-6ca5f441ea02",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-control"
+      ],
+      "behaviour": "Managing Overflow: the overflow-x, overflow-y, and overflow properties — normative clause 59, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-control",
+        "clause_index": 58,
+        "clause_sha256": "6ca5f441ea02ca080b5749abe46929c0f3ac7e270e5c6aca8bd2ff690e65b92d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-control-clause-9799dbe02163",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-control"
+      ],
+      "behaviour": "Managing Overflow: the overflow-x, overflow-y, and overflow properties — normative clause 60, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-control",
+        "clause_index": 59,
+        "clause_sha256": "9799dbe021636a5b169ce2f3430c6d7c5d4305240dc877c84a892d35d48f524e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scroll-visibility",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scroll-visibility"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interaction of visibility and overflow.",
+      "locator": {
+        "section_id": "scroll-visibility",
+        "text_sha256": "e6797f0534f878d5f36651fef47c88065734388c6fc1cc2abc80721fd7a83443"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.scroll-visibility-clause-41bda2b42a10",
+        "css-overflow-3.scroll-visibility-clause-796ccdffd35a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.scroll-visibility-clause-41bda2b42a10",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scroll-visibility"
+      ],
+      "behaviour": "Interaction of visibility and overflow — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "scroll-visibility",
+        "clause_index": 0,
+        "clause_sha256": "41bda2b42a109ce237a95ba5c114c0fb004833b96c81163750c7cbc91d2ccce0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scroll-visibility-clause-796ccdffd35a",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scroll-visibility"
+      ],
+      "behaviour": "Interaction of visibility and overflow — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "scroll-visibility",
+        "clause_index": 1,
+        "clause_sha256": "796ccdffd35a3cef5656554c860840ec0099c651214f57e54afea407478bb926"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.corner-clipping",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "corner-clipping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interaction of border-radius and overflow.",
+      "locator": {
+        "section_id": "corner-clipping",
+        "text_sha256": "506e27479e4c7b5aa9b87c9dfba9415c36be4ad69d6d19b3a9729fec5cec9293"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.static-media",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "static-media"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow in Print and Other Static Media.",
+      "locator": {
+        "section_id": "static-media",
+        "text_sha256": "eedf251b628a696a0a0fb5fa47bf79b7ecadc87ea5ee1c60f09d9157ae8f2e1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.static-media-clause-5bd82ff7971f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.static-media-clause-5bd82ff7971f",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "static-media"
+      ],
+      "behaviour": "Overflow in Print and Other Static Media — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "static-media",
+        "clause_index": 0,
+        "clause_sha256": "5bd82ff7971f5278042fded5f511654d9f64a94ba99ac8301ab29510feb5f32a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-clip-margin",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-clip-margin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Expanding Clipping Bounds: the overflow-clip-margin property.",
+      "locator": {
+        "section_id": "overflow-clip-margin",
+        "text_sha256": "1168509880f9c463abfd2f79a907d831f879c47efe0c317264b51c941fa862ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.overflow-clip-margin-clause-cca2516ebb1d",
+        "css-overflow-3.overflow-clip-margin-clause-02a5b51f0dd5",
+        "css-overflow-3.overflow-clip-margin-clause-07e1aab95e53",
+        "css-overflow-3.overflow-clip-margin-clause-f9333058356f",
+        "css-overflow-3.overflow-clip-margin-clause-b556ade01229"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.overflow-clip-margin-clause-cca2516ebb1d",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-clip-margin"
+      ],
+      "behaviour": "Expanding Clipping Bounds: the overflow-clip-margin property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-clip-margin",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-clip-margin-clause-02a5b51f0dd5",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-clip-margin"
+      ],
+      "behaviour": "Expanding Clipping Bounds: the overflow-clip-margin property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-clip-margin",
+        "clause_index": 13,
+        "clause_sha256": "02a5b51f0dd52950d5deaeff33fe9585d3dd032877ea595fb1956e97dcf2a4df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-clip-margin-clause-07e1aab95e53",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-clip-margin"
+      ],
+      "behaviour": "Expanding Clipping Bounds: the overflow-clip-margin property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-clip-margin",
+        "clause_index": 24,
+        "clause_sha256": "07e1aab95e530e221b741f2d1d0ae1a0bebcb3250579665b180f30943658b70a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-clip-margin-clause-f9333058356f",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-clip-margin"
+      ],
+      "behaviour": "Expanding Clipping Bounds: the overflow-clip-margin property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-clip-margin",
+        "clause_index": 27,
+        "clause_sha256": "f9333058356fc58d9e31323aa5b8c44cc5093b841c2a4889df4f252c65b2495c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-clip-margin-clause-b556ade01229",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-clip-margin"
+      ],
+      "behaviour": "Expanding Clipping Bounds: the overflow-clip-margin property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-clip-margin",
+        "clause_index": 28,
+        "clause_sha256": "b556ade01229c7dcca6f84d084b8b3735a2e940878aaf818fab987f76e8a93ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-propagation",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-propagation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow Viewport Propagation.",
+      "locator": {
+        "section_id": "overflow-propagation",
+        "text_sha256": "719a0f402c3a56371ceaf314206fb622007a9a9a078369aac451ed6a76807494"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.overflow-propagation-clause-0c1241d87abb",
+        "css-overflow-3.overflow-propagation-clause-fdaffaadb0c0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.overflow-propagation-clause-0c1241d87abb",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-propagation"
+      ],
+      "behaviour": "Overflow Viewport Propagation — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-propagation",
+        "clause_index": 0,
+        "clause_sha256": "0c1241d87abbe9f8462f166412ca15d723de5eb34e1f1328524e9e91acf827fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.overflow-propagation-clause-fdaffaadb0c0",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "overflow-propagation"
+      ],
+      "behaviour": "Overflow Viewport Propagation — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow-propagation",
+        "clause_index": 3,
+        "clause_sha256": "fdaffaadb0c00bd0723c9962fe855e7e9a957ae4cc5262b5bec126d5d8917b5f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.smooth-scrolling",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "smooth-scrolling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Smooth Scrolling: the scroll-behavior Property.",
+      "locator": {
+        "section_id": "smooth-scrolling",
+        "text_sha256": "a83478fed2645587bb683b31d0e8a68d3e65eb854e0a5d6e1a6b7b07764a3b80"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.smooth-scrolling-clause-cca2516ebb1d",
+        "css-overflow-3.smooth-scrolling-clause-4402cb1d00b2",
+        "css-overflow-3.smooth-scrolling-clause-3f5512b58857"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.smooth-scrolling-clause-cca2516ebb1d",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "smooth-scrolling"
+      ],
+      "behaviour": "Smooth Scrolling: the scroll-behavior Property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "smooth-scrolling",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.smooth-scrolling-clause-4402cb1d00b2",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "smooth-scrolling"
+      ],
+      "behaviour": "Smooth Scrolling: the scroll-behavior Property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "smooth-scrolling",
+        "clause_index": 23,
+        "clause_sha256": "4402cb1d00b2df4b6ea834b3b39c8514733dd6b2f5d4ffbce901be826389c204"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.smooth-scrolling-clause-3f5512b58857",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "smooth-scrolling"
+      ],
+      "behaviour": "Smooth Scrolling: the scroll-behavior Property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "smooth-scrolling",
+        "clause_index": 24,
+        "clause_sha256": "3f5512b58857340257ba85bd61e065b7cdaecb134c138677945557637c63bcdb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scrollbar-layout",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollbar-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scrollbars and Layout.",
+      "locator": {
+        "section_id": "scrollbar-layout",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.scrollbar-sizing",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollbar-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scrollbar Contributions to Sizing.",
+      "locator": {
+        "section_id": "scrollbar-sizing",
+        "text_sha256": "f5d0d75f5587f31f5c25d2a8d7ea82bf736ec4d43962554459087527eddf61dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.scrollbar-sizing-clause-c61871133bab",
+        "css-overflow-3.scrollbar-sizing-clause-dcf39b0b84f4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.scrollbar-sizing-clause-c61871133bab",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollbar-sizing"
+      ],
+      "behaviour": "Scrollbar Contributions to Sizing — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-sizing",
+        "clause_index": 3,
+        "clause_sha256": "c61871133bab14a62639ad78b6946249827f8889d21ad7e06d5a90990f1f3a1b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scrollbar-sizing-clause-dcf39b0b84f4",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollbar-sizing"
+      ],
+      "behaviour": "Scrollbar Contributions to Sizing — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-sizing",
+        "clause_index": 6,
+        "clause_sha256": "dcf39b0b84f431899992616a7ae9e3fb99110a2c0cda51cab2287060d4010fc6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scrollbar-gutter-property",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollbar-gutter-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Reserving space for the scrollbar: the scrollbar-gutter property.",
+      "locator": {
+        "section_id": "scrollbar-gutter-property",
+        "text_sha256": "824e03ec76cf7793ac81eb77187b22e476870b6aaf1a414f2be93260179adb47"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.scrollbar-gutter-property-clause-cca2516ebb1d",
+        "css-overflow-3.scrollbar-gutter-property-clause-f3fefc332a80",
+        "css-overflow-3.scrollbar-gutter-property-clause-e50990e16780",
+        "css-overflow-3.scrollbar-gutter-property-clause-67df19ea7229",
+        "css-overflow-3.scrollbar-gutter-property-clause-9810543d94a7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.scrollbar-gutter-property-clause-cca2516ebb1d",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollbar-gutter-property"
+      ],
+      "behaviour": "Reserving space for the scrollbar: the scrollbar-gutter property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-gutter-property",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scrollbar-gutter-property-clause-f3fefc332a80",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollbar-gutter-property"
+      ],
+      "behaviour": "Reserving space for the scrollbar: the scrollbar-gutter property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-gutter-property",
+        "clause_index": 34,
+        "clause_sha256": "f3fefc332a80985b6058527f63ce4d826309cecfb4f66450561dd3008fad6567"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scrollbar-gutter-property-clause-e50990e16780",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollbar-gutter-property"
+      ],
+      "behaviour": "Reserving space for the scrollbar: the scrollbar-gutter property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-gutter-property",
+        "clause_index": 35,
+        "clause_sha256": "e50990e16780002850be1a5e1ad3794fc5e979bdbf4c90aa27134ae4f4882820"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scrollbar-gutter-property-clause-67df19ea7229",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollbar-gutter-property"
+      ],
+      "behaviour": "Reserving space for the scrollbar: the scrollbar-gutter property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-gutter-property",
+        "clause_index": 36,
+        "clause_sha256": "67df19ea72294ef01f9732a4d3678c9a222c2e65ff0b986a12ad0924ebe7084e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.scrollbar-gutter-property-clause-9810543d94a7",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "scrollbar-gutter-property"
+      ],
+      "behaviour": "Reserving space for the scrollbar: the scrollbar-gutter property — normative clause 63, located by its exact source hash.",
+      "locator": {
+        "section_id": "scrollbar-gutter-property",
+        "clause_index": 62,
+        "clause_sha256": "9810543d94a7b6826aa8787a2c8916a15bd051483e991a4cc8514517d5807f7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.auto-ellipsis",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "auto-ellipsis"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Automatic Ellipses.",
+      "locator": {
+        "section_id": "auto-ellipsis",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.text-overflow",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "text-overflow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow Ellipsis: the text-overflow property.",
+      "locator": {
+        "section_id": "text-overflow",
+        "text_sha256": "6d2fab0d9a9168ec106e6a65a4067d2a6b9828f4c4d75108470d1399a3efafba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.text-overflow-clause-cca2516ebb1d",
+        "css-overflow-3.text-overflow-clause-57928ea2ab51",
+        "css-overflow-3.text-overflow-clause-5c069a62a139",
+        "css-overflow-3.text-overflow-clause-7ebd5286818b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.text-overflow-clause-cca2516ebb1d",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "text-overflow"
+      ],
+      "behaviour": "Overflow Ellipsis: the text-overflow property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-overflow",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.text-overflow-clause-57928ea2ab51",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "text-overflow"
+      ],
+      "behaviour": "Overflow Ellipsis: the text-overflow property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-overflow",
+        "clause_index": 23,
+        "clause_sha256": "57928ea2ab51b7f514a1532f7d6f5eaeeccb1fdfda8173412a94fb473d833d47"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.text-overflow-clause-5c069a62a139",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "text-overflow"
+      ],
+      "behaviour": "Overflow Ellipsis: the text-overflow property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-overflow",
+        "clause_index": 24,
+        "clause_sha256": "5c069a62a1390fb003e7f4c8e95855e16ff9c40ab46ddd1a162e81b08b5c484d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.text-overflow-clause-7ebd5286818b",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "text-overflow"
+      ],
+      "behaviour": "Overflow Ellipsis: the text-overflow property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-overflow",
+        "clause_index": 25,
+        "clause_sha256": "7ebd5286818b0e384c8a82de267ce187f8305bb5b6fa2fbc804041fd6e075b7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.bidi-ellipsis",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "bidi-ellipsis"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bidi ellipsis examples.",
+      "locator": {
+        "section_id": "bidi-ellipsis",
+        "text_sha256": "5c678bdd0099720cf856a4085da7168c7146e771e51ca7477c85e3057cf17a4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.ellipsing-details",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "ellipsing-details"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ellipsing details.",
+      "locator": {
+        "section_id": "ellipsing-details",
+        "text_sha256": "346030ac36497f1994819d41d83c65e4582d4bd290c0a4e33def323fb4050b59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.ellipsing-details-clause-6b926cc7c84f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.ellipsing-details-clause-6b926cc7c84f",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "ellipsing-details"
+      ],
+      "behaviour": "ellipsing details — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "ellipsing-details",
+        "clause_index": 0,
+        "clause_sha256": "6b926cc7c84f5eafc2d7c3f3d88fb4a2b2be3b4b9bf019b4fbbcc9b6d502e0cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.ellipsis-interaction",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "ellipsis-interaction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in user interaction with ellipsis.",
+      "locator": {
+        "section_id": "ellipsis-interaction",
+        "text_sha256": "e103b3af3a20baede4f705519f4b4efe777564b46eeb6328789c559b8e45971c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.ellipsis-interaction-clause-6644383eef72"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.ellipsis-interaction-clause-6644383eef72",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "ellipsis-interaction"
+      ],
+      "behaviour": "user interaction with ellipsis — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "ellipsis-interaction",
+        "clause_index": 1,
+        "clause_sha256": "6644383eef723ac48002c49a38cc4850f68103050a33bdacf7b102dc917bd13a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.text-overflow-examples",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "text-overflow-examples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in text-overflow examples.",
+      "locator": {
+        "section_id": "text-overflow-examples",
+        "text_sha256": "37c2385bc96a958d2653c5f6b928a1c93c3a52d07e3e065eef8702fd2f1387e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.ellipsis-scrolling",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "ellipsis-scrolling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ellipsis interaction with scrolling interfaces.",
+      "locator": {
+        "section_id": "ellipsis-scrolling",
+        "text_sha256": "87328a67185159f700d759bfaebba34404a281d3485b07a432fc5f38890a1180"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.ellipsis-scrolling-clause-a7cb4b7c8c8d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.ellipsis-scrolling-clause-a7cb4b7c8c8d",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "ellipsis-scrolling"
+      ],
+      "behaviour": "ellipsis interaction with scrolling interfaces — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "ellipsis-scrolling",
+        "clause_index": 2,
+        "clause_sha256": "a7cb4b7c8c8d57e754525031f4b730c28f9e40703910c98c06b33778a207fc9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.priv",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "priv"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix A. Privacy Considerations.",
+      "locator": {
+        "section_id": "priv",
+        "text_sha256": "546cdfa34e298dfe0b4ec2ddd3f91a12f3cc44ca31ee4ac61f3e041811323fc1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.sec",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix B. Security Considerations.",
+      "locator": {
+        "section_id": "sec",
+        "text_sha256": "169addd7ced5c3053a472b57dfdf40591af92f667e7d75e41f98022aee445ca0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.w3c-conformance",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.w3c-conventions",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.w3c-conventions-clause-5c98c879f070",
+        "css-overflow-3.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.w3c-conventions-clause-5c98c879f070",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.w3c-conformance-classes",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.w3c-conformance-classes-clause-ff408372426c",
+        "css-overflow-3.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.w3c-partial",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.w3c-partial-clause-ef40c4aab200",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.w3c-conform-future-proofing",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.w3c-testing",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.w3c-testing-clause-1e0fff369221",
+        "css-overflow-3.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.w3c-testing-clause-1e0fff369221",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.w3c-testing-clause-ae1210cf9643",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.property-index",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "6aba75c31b7568535a8e3668a6d433935c7f8e59603e82bfd60dba94c38364eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-overflow-3.property-index-clause-bea81231cd1c",
+        "css-overflow-3.property-index-clause-02a5b51f0dd5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.property-index-clause-bea81231cd1c",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 35,
+        "clause_sha256": "bea81231cd1c4666e6dc5948110f10bbc6df232f268c10794aa5dca5a5737ce3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.property-index-clause-02a5b51f0dd5",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 37,
+        "clause_sha256": "02a5b51f0dd52950d5deaeff33fe9585d3dd032877ea595fb1956e97dcf2a4df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-overflow-3.issues-index",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "3181e214cc32b77849589a29761095717290bcce736974ccd078ae2d07d66d8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.title",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Overflow Module Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "16e3b5a37cde84e062e684187c58c52103232c1f0834f3872491ff470adf6c54"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.abstract",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "0868cfbae7648ff91302e2891fbc04dface7ec53c32ff0550b921484b1dc57c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.sotd",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "fb37a88cd6c60385f2e7cf84637d168ed1be143d68803371c1b744bd6bcc1def"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.contents",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "c2be4bea355b836e2c6af555be1241c3fe8810ab15e4e56a1026a6e605f226aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.changes",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix C. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "13497628ba980426638e57092dc5d8f8f4057a4c8e02231e391ca180ad053d38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.acknowledgments",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "b07c2ab980f58fbd7c1ade89bd51f5ec6bca6e4a920d4789a80316735083aac7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.index",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.index-defined-here",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "2a8a473498b22fc8aa49a0a928719ff9a94835623c274ddefcf88720441e25b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.index-defined-elsewhere",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "2ea44d312dd29a7cb07c76860cd358ebde8dfa18711c6b692b18df0d0676cbcf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.references",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.normative",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "4ad2bcf24e46ba231e5cd51345ac9e62cf3ecab6a7dc93a9ccb1482fda09ea2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-overflow-3.informative",
+      "family": "css-overflow-3",
+      "source_id": "css-overflow-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "9074edc76f8850cad85d0b3bfc77ae154428b60dd597d8e1dddaf6f12ce08967"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

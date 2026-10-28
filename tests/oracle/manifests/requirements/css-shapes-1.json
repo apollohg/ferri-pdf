@@ -1,0 +1,4682 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-shapes-1.relation-to-box-model-and-float-behavior",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "relation-to-box-model-and-float-behavior"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relation to the box model and float behavior.",
+      "locator": {
+        "section_id": "relation-to-box-model-and-float-behavior",
+        "text_sha256": "5c3a7e75d3c3cb338551ec18a56a2e1c847f7aad762f984a7e506e4b054af3e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.relation-to-box-model-and-float-behavior-clause-b23e54368b7e",
+        "css-shapes-1.relation-to-box-model-and-float-behavior-clause-31daa0acbee0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.relation-to-box-model-and-float-behavior-clause-b23e54368b7e",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "relation-to-box-model-and-float-behavior"
+      ],
+      "behaviour": "Relation to the box model and float behavior — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "relation-to-box-model-and-float-behavior",
+        "clause_index": 0,
+        "clause_sha256": "b23e54368b7e56782d15fd21fc88d544e07e1f9715aacee667babf309ea81a98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.relation-to-box-model-and-float-behavior-clause-31daa0acbee0",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "relation-to-box-model-and-float-behavior"
+      ],
+      "behaviour": "Relation to the box model and float behavior — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "relation-to-box-model-and-float-behavior",
+        "clause_index": 12,
+        "clause_sha256": "31daa0acbee052d2ffe0f782d44aa998089c4e33b9fee1526cb75291a7901d8b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-functions",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-functions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Basic Shapes.",
+      "locator": {
+        "section_id": "basic-shape-functions",
+        "text_sha256": "cac6f1bc2b01d34ec9386a70e165552c5c635e22d5e7a2270bfdd752cb1949d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Supported Shapes.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "text_sha256": "e48fe7f8d9efdd9a946b2ca3af041632ab3d5c265efba8bceae9bc7ea59b4a21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.supported-basic-shapes-clause-a9048a8bc32a",
+        "css-shapes-1.supported-basic-shapes-clause-cba8c828eae5",
+        "css-shapes-1.supported-basic-shapes-clause-fa912fd2e4e8",
+        "css-shapes-1.supported-basic-shapes-clause-074fc17dec02",
+        "css-shapes-1.supported-basic-shapes-clause-26df8efed0b7",
+        "css-shapes-1.supported-basic-shapes-clause-8755b2f1fb9d",
+        "css-shapes-1.supported-basic-shapes-clause-3d4d3148ba0f",
+        "css-shapes-1.supported-basic-shapes-clause-65af5de7b632",
+        "css-shapes-1.supported-basic-shapes-clause-e4168bca7918",
+        "css-shapes-1.supported-basic-shapes-clause-64c75e2cdb6e",
+        "css-shapes-1.supported-basic-shapes-clause-b48d7e3d6052",
+        "css-shapes-1.supported-basic-shapes-clause-72ba097071b1",
+        "css-shapes-1.supported-basic-shapes-clause-fbee23e621df",
+        "css-shapes-1.supported-basic-shapes-clause-6c63c23f0202",
+        "css-shapes-1.supported-basic-shapes-clause-b85bc28bbf42",
+        "css-shapes-1.supported-basic-shapes-clause-f93d1308c8d2",
+        "css-shapes-1.supported-basic-shapes-clause-f30da0e8568e",
+        "css-shapes-1.supported-basic-shapes-clause-7359d45a03fc",
+        "css-shapes-1.supported-basic-shapes-clause-729a16a758e7",
+        "css-shapes-1.supported-basic-shapes-clause-b3e3c40e57d0",
+        "css-shapes-1.supported-basic-shapes-clause-62b8810e2d29",
+        "css-shapes-1.supported-basic-shapes-clause-692bc2e668a0",
+        "css-shapes-1.supported-basic-shapes-clause-b15a59b4fafa",
+        "css-shapes-1.supported-basic-shapes-clause-3ebd2b20e714",
+        "css-shapes-1.supported-basic-shapes-clause-804c726b92de",
+        "css-shapes-1.supported-basic-shapes-clause-7fc5f5380b1b",
+        "css-shapes-1.supported-basic-shapes-clause-36e9d18c3792",
+        "css-shapes-1.supported-basic-shapes-clause-d2c35392ac36",
+        "css-shapes-1.supported-basic-shapes-clause-84996dcd876c",
+        "css-shapes-1.supported-basic-shapes-clause-f5885f7751c0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-a9048a8bc32a",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 7,
+        "clause_sha256": "a9048a8bc32a2722706e726ac4d4cc4ac168ee82a527c38c32f23050543b14ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-cba8c828eae5",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 8,
+        "clause_sha256": "cba8c828eae50a39bd9e62260fa80322ed1357491405b56ffa3b9f8c9368c733"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-fa912fd2e4e8",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 10,
+        "clause_sha256": "fa912fd2e4e803cfbaec11b3ded480d0934a839b80d34f88c6becd9cad7c96c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-074fc17dec02",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 15,
+        "clause_sha256": "074fc17dec023bb689d600c2142bc22f38466eb5e5204ff9862d8d31f3dae139"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-26df8efed0b7",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 16,
+        "clause_sha256": "26df8efed0b7d7aa87ea94a87c0c08e2aae2d8fdce4200088f9d86cd86735646"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-8755b2f1fb9d",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 18,
+        "clause_sha256": "8755b2f1fb9d11c767b45c47acad7cb1ff656b9198bc6b0fabb8582a9cf5eb58"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-3d4d3148ba0f",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 25,
+        "clause_sha256": "3d4d3148ba0f24645b5c32d128b5be292a6fc4fdeb86501f03ef607a26e040f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-65af5de7b632",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 26,
+        "clause_sha256": "65af5de7b63248b6e3905d1c905954b293e43d3cfc979bbfb0913a1c6da40077"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-e4168bca7918",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 28,
+        "clause_sha256": "e4168bca7918ce6053b3e72a2d45ffaf04e6b1c1047b436c6be1c54f8a3fc87f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-64c75e2cdb6e",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 32,
+        "clause_sha256": "64c75e2cdb6ef9f32404578860a51f214e77d6a2b06d3c0b029124f031ca0c73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-b48d7e3d6052",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 34,
+        "clause_sha256": "b48d7e3d60526e7c227784165f593c583b3239a499b4bccec1c14821be0c1eb5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-72ba097071b1",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 35,
+        "clause_sha256": "72ba097071b181b2de013855d541214a6296e5dd4f69cad1fbc01f69dba72acc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-fbee23e621df",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 36,
+        "clause_sha256": "fbee23e621df6e4603e98486215f218ee79cc8ce83f7421550e6dfbed56acccf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-6c63c23f0202",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 38,
+        "clause_sha256": "6c63c23f02028595ec85b9b68e170bd3382ec2ea58104b5edb4d687e0a85ca98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-b85bc28bbf42",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 44,
+        "clause_sha256": "b85bc28bbf42ff32cc98eb74cfa1ea5f2461a5f599872eb112ce0b6432a6a1f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-f93d1308c8d2",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 45,
+        "clause_sha256": "f93d1308c8d2947c791ff7b8e0349ec15e5b95ff1f3858d34b41095aeb0792d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-f30da0e8568e",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 47,
+        "clause_sha256": "f30da0e8568e43872feee8e13551374b230e23a58cd27cdc8eb2a156b489f84e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-7359d45a03fc",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 53, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 52,
+        "clause_sha256": "7359d45a03fcf4383a7070e4a264e38545f04e1f02cb99ef5f7a5ec077444d7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-729a16a758e7",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 54, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 53,
+        "clause_sha256": "729a16a758e717a293f3578c16f1939861616478ff3d603ad74ac2c5fc8e3663"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-b3e3c40e57d0",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 56,
+        "clause_sha256": "b3e3c40e57d037c85507d94b3b27e4238e00f222ad5233d27410de38a8e6f11f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-62b8810e2d29",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 57,
+        "clause_sha256": "62b8810e2d292824725a09abda70cb5611f9dc5387a0ee89772f3b12f754198a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-692bc2e668a0",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 59, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 58,
+        "clause_sha256": "692bc2e668a04a78dc2b43cd3c2bfe6ee03258a107193a28cf0b07e4efc09191"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-b15a59b4fafa",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 60,
+        "clause_sha256": "b15a59b4fafa063d9c9d88591dc44e986a6a5fbebf83de2a6e1bf216066c8da3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-3ebd2b20e714",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 63, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 62,
+        "clause_sha256": "3ebd2b20e71483ca2d6e66a6187eb6268fdf539462c7034a68c1a695bb9f4646"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-804c726b92de",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 65, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 64,
+        "clause_sha256": "804c726b92dea75785993af2426bded069609d704ca00e3d603c622f1e036ed8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-7fc5f5380b1b",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 67, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 66,
+        "clause_sha256": "7fc5f5380b1bcabc677f9f6fdab9d9056798ff636d823805d2f3888638fda1c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-36e9d18c3792",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 68, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 67,
+        "clause_sha256": "36e9d18c37927c72a7070d1f7333c16f017b700a4c1984ccbeed5d7480015506"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-d2c35392ac36",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 69, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 68,
+        "clause_sha256": "d2c35392ac3602d8b141c36c0e8f92a111e2559fc3f22793968d5685edac3f76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-84996dcd876c",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 70, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 69,
+        "clause_sha256": "84996dcd876c875063c353da64f6ad063d2ac57e3d436274ffd216bd73f174bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.supported-basic-shapes-clause-f5885f7751c0",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "supported-basic-shapes"
+      ],
+      "behaviour": "Supported Shapes — normative clause 72, located by its exact source hash.",
+      "locator": {
+        "section_id": "supported-basic-shapes",
+        "clause_index": 71,
+        "clause_sha256": "f5885f7751c0393f098579c3a806b0b3b9d1b49a2ede9979bdf9c3c5e595c2ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-function",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The shape() Function.",
+      "locator": {
+        "section_id": "shape-function",
+        "text_sha256": "9ff00be606af077e00c9dd701a00b5aa5d2171c9de2bed223e10d3c7024413ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.shape-function-clause-2775390d52ca",
+        "css-shapes-1.shape-function-clause-692adc09767b",
+        "css-shapes-1.shape-function-clause-a039a2b19b88",
+        "css-shapes-1.shape-function-clause-cc22b3d19b72",
+        "css-shapes-1.shape-function-clause-3e5a2095dea9",
+        "css-shapes-1.shape-function-clause-fb5b2bd403aa",
+        "css-shapes-1.shape-function-clause-218b768a2ed7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.shape-function-clause-2775390d52ca",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-function"
+      ],
+      "behaviour": "The shape() Function — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-function",
+        "clause_index": 13,
+        "clause_sha256": "2775390d52ca2b1fcde4df3c12562ffda41bc9c6dd65e58f1ee6a9c6cfb1b9f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-function-clause-692adc09767b",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-function"
+      ],
+      "behaviour": "The shape() Function — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-function",
+        "clause_index": 14,
+        "clause_sha256": "692adc09767b085f85ad05c47a833480292adc3037e5c844c7012907ece49b3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-function-clause-a039a2b19b88",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-function"
+      ],
+      "behaviour": "The shape() Function — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-function",
+        "clause_index": 51,
+        "clause_sha256": "a039a2b19b882c1a30a267b28f4b5545c33a1ad471f4ea900752d079d1595e6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-function-clause-cc22b3d19b72",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-function"
+      ],
+      "behaviour": "The shape() Function — normative clause 54, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-function",
+        "clause_index": 53,
+        "clause_sha256": "cc22b3d19b72438a39fd7518fdafdfef0d1bd487cc3a23f60694122665ab040a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-function-clause-3e5a2095dea9",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-function"
+      ],
+      "behaviour": "The shape() Function — normative clause 55, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-function",
+        "clause_index": 54,
+        "clause_sha256": "3e5a2095dea96c147540a0ad07ca83b7a4cf0ec225176949e729e780df44a239"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-function-clause-fb5b2bd403aa",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-function"
+      ],
+      "behaviour": "The shape() Function — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-function",
+        "clause_index": 57,
+        "clause_sha256": "fb5b2bd403aafef9be1f01e42bfbd6f50b7d7bd0db83d3d17225325918ab06ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-function-clause-218b768a2ed7",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-function"
+      ],
+      "behaviour": "The shape() Function — normative clause 59, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-function",
+        "clause_index": 58,
+        "clause_sha256": "218b768a2ed76c3a2b7d9e9b9d4b1daae5e8f1e1b17f28cd62f7fad46c344f24"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-examples",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-examples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Using shape() to create responsive, parametric speech bubble.",
+      "locator": {
+        "section_id": "shape-examples",
+        "text_sha256": "1a3e90f972a99adad180ccfd4be27f12995d3883e5acd1445340277db5a04cca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.interpolating-shape",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "interpolating-shape"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interpolating the shape() Function.",
+      "locator": {
+        "section_id": "interpolating-shape",
+        "text_sha256": "28179702c7d5197703a49deb109f6f3226e5092302ae49a293d77983ed7e9389"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.interpolating-shape-clause-d72cfe5cb1a6",
+        "css-shapes-1.interpolating-shape-clause-2f31689219d2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.interpolating-shape-clause-d72cfe5cb1a6",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "interpolating-shape"
+      ],
+      "behaviour": "Interpolating the shape() Function — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-shape",
+        "clause_index": 2,
+        "clause_sha256": "d72cfe5cb1a600d6d358442ed31dc733b37b0554a7d670fbc26a762be49a162f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.interpolating-shape-clause-2f31689219d2",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "interpolating-shape"
+      ],
+      "behaviour": "Interpolating the shape() Function — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolating-shape",
+        "clause_index": 3,
+        "clause_sha256": "2f31689219d2f382a89d70d48a45173585cee5e1e0ffe999bc0ed19e7fbe11c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Computed Values of Basic Shapes.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "text_sha256": "520c12d969c6f1585a2cfd3d69dc106bdf6b1de558495f22c8a85878d0575383"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.basic-shape-computed-values-clause-51968e141505",
+        "css-shapes-1.basic-shape-computed-values-clause-edc397781665",
+        "css-shapes-1.basic-shape-computed-values-clause-9c0fe23a0428",
+        "css-shapes-1.basic-shape-computed-values-clause-e5ddc572ce83",
+        "css-shapes-1.basic-shape-computed-values-clause-3b06b1dd37cc",
+        "css-shapes-1.basic-shape-computed-values-clause-a79b5726e22e",
+        "css-shapes-1.basic-shape-computed-values-clause-72ba097071b1",
+        "css-shapes-1.basic-shape-computed-values-clause-b85bc28bbf42",
+        "css-shapes-1.basic-shape-computed-values-clause-a9048a8bc32a",
+        "css-shapes-1.basic-shape-computed-values-clause-d2c35392ac36",
+        "css-shapes-1.basic-shape-computed-values-clause-62b8810e2d29",
+        "css-shapes-1.basic-shape-computed-values-clause-3d4d3148ba0f",
+        "css-shapes-1.basic-shape-computed-values-clause-074fc17dec02",
+        "css-shapes-1.basic-shape-computed-values-clause-e5276d16ce32",
+        "css-shapes-1.basic-shape-computed-values-clause-42de6cd36104"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-51968e141505",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 0,
+        "clause_sha256": "51968e141505301cba91af917b11d1de2d7ba83ca9c0dbc9177910d019f05de5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-edc397781665",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 2,
+        "clause_sha256": "edc3977816650357c80244552ceaf9bc76b4acbbc4c4c4c4f2c80405b017f476"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-9c0fe23a0428",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 3,
+        "clause_sha256": "9c0fe23a0428525ca25fc5001ec5f5795c5e95f12c59ad352dc245ebb6e37247"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-e5ddc572ce83",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 6,
+        "clause_sha256": "e5ddc572ce83e84e701a7daba98a8af518d6de9e12253c1cc75bf56d103daa94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-3b06b1dd37cc",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 7,
+        "clause_sha256": "3b06b1dd37cc4e01dfb5ef264526510a748459ed4a18bfecd65a576fe5b3d92f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-a79b5726e22e",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 8,
+        "clause_sha256": "a79b5726e22ece63259392ef98f79502fe50a72eab6ca35937d2964b013cdb7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-72ba097071b1",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 9,
+        "clause_sha256": "72ba097071b181b2de013855d541214a6296e5dd4f69cad1fbc01f69dba72acc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-b85bc28bbf42",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 10,
+        "clause_sha256": "b85bc28bbf42ff32cc98eb74cfa1ea5f2461a5f599872eb112ce0b6432a6a1f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-a9048a8bc32a",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 11,
+        "clause_sha256": "a9048a8bc32a2722706e726ac4d4cc4ac168ee82a527c38c32f23050543b14ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-d2c35392ac36",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 12,
+        "clause_sha256": "d2c35392ac3602d8b141c36c0e8f92a111e2559fc3f22793968d5685edac3f76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-62b8810e2d29",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 13,
+        "clause_sha256": "62b8810e2d292824725a09abda70cb5611f9dc5387a0ee89772f3b12f754198a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-3d4d3148ba0f",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 14,
+        "clause_sha256": "3d4d3148ba0f24645b5c32d128b5be292a6fc4fdeb86501f03ef607a26e040f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-074fc17dec02",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 15,
+        "clause_sha256": "074fc17dec023bb689d600c2142bc22f38466eb5e5204ff9862d8d31f3dae139"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-e5276d16ce32",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 16,
+        "clause_sha256": "e5276d16ce320b7ce1cc0eb058dcfc8c01a91a6bb863d3f6e8d6ef8d12dd5e6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-computed-values-clause-42de6cd36104",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-computed-values"
+      ],
+      "behaviour": "Computed Values of Basic Shapes — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-computed-values",
+        "clause_index": 17,
+        "clause_sha256": "42de6cd361041b4d0755707c9a688ca55cf600c48a7fd7819390b43620480fff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-serialization",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serialization of Basic Shapes.",
+      "locator": {
+        "section_id": "basic-shape-serialization",
+        "text_sha256": "906230bd032dced838cc4b41855b472ce6333d19c464d960c470adfa328c0e43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.basic-shape-serialization-clause-518ab0dae32e",
+        "css-shapes-1.basic-shape-serialization-clause-c5713ae128f2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-serialization-clause-518ab0dae32e",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-serialization"
+      ],
+      "behaviour": "Serialization of Basic Shapes — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-serialization",
+        "clause_index": 0,
+        "clause_sha256": "518ab0dae32e73386b7a74f92c1a5e6e92cc76aeacecfb890765cc38bfdee777"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-serialization-clause-c5713ae128f2",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-serialization"
+      ],
+      "behaviour": "Serialization of Basic Shapes — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-serialization",
+        "clause_index": 1,
+        "clause_sha256": "c5713ae128f22c95171a19f98c07a90636cb31f0a608a54549f0b9e014c2c998"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-interpolation",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-interpolation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interpolation of Basic Shapes.",
+      "locator": {
+        "section_id": "basic-shape-interpolation",
+        "text_sha256": "63a6554e96609cb7b4932ae13731abf2d17e8625faa57bd55cd55ed0e0e2c676"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.basic-shape-interpolation-clause-3206cea11665",
+        "css-shapes-1.basic-shape-interpolation-clause-81a601714997"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-interpolation-clause-3206cea11665",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-interpolation"
+      ],
+      "behaviour": "Interpolation of Basic Shapes — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-interpolation",
+        "clause_index": 0,
+        "clause_sha256": "3206cea11665b529c7d5727c39104e86b1cc7f41cba824c1f9ad286d120914c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.basic-shape-interpolation-clause-81a601714997",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "basic-shape-interpolation"
+      ],
+      "behaviour": "Interpolation of Basic Shapes — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "basic-shape-interpolation",
+        "clause_index": 1,
+        "clause_sha256": "81a601714997a69fd1e90e06c4dad8d7809daedb83f00b1232210f6c4c552bb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shapes-from-image",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shapes-from-image"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shapes from Image.",
+      "locator": {
+        "section_id": "shapes-from-image",
+        "text_sha256": "7e740282d710a134464d3298a779c3a31bf52935ea17cddaa1307584ba2b3750"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.shapes-from-image-clause-d357238d8d5c",
+        "css-shapes-1.shapes-from-image-clause-e5ddc572ce83",
+        "css-shapes-1.shapes-from-image-clause-c818f65dbaa1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.shapes-from-image-clause-d357238d8d5c",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shapes-from-image"
+      ],
+      "behaviour": "Shapes from Image — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "shapes-from-image",
+        "clause_index": 0,
+        "clause_sha256": "d357238d8d5cf378ed4ade0a342d3b6f5dde85d359d6708bdaea09f3e371d409"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shapes-from-image-clause-e5ddc572ce83",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shapes-from-image"
+      ],
+      "behaviour": "Shapes from Image — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "shapes-from-image",
+        "clause_index": 14,
+        "clause_sha256": "e5ddc572ce83e84e701a7daba98a8af518d6de9e12253c1cc75bf56d103daa94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shapes-from-image-clause-c818f65dbaa1",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shapes-from-image"
+      ],
+      "behaviour": "Shapes from Image — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "shapes-from-image",
+        "clause_index": 15,
+        "clause_sha256": "c818f65dbaa19eb433f3459f5233402c01b0304aae08d273336894922254cd90"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shapes-from-box-values",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shapes-from-box-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shapes from Box Values.",
+      "locator": {
+        "section_id": "shapes-from-box-values",
+        "text_sha256": "db61c4419e3997e5efbab3b57c978a687037c86815b5a0cdb350dd56230660df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.declaring-shapes",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "declaring-shapes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Declaring Shapes.",
+      "locator": {
+        "section_id": "declaring-shapes",
+        "text_sha256": "a3259ec62463631d1c5458056c94b2f7aa7c9d9c5ccf3e2d28c761b9d5df6a04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Float Area Shape: the shape-outside property.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "text_sha256": "82d2ebe510971770d2a56552404b1892c490690eb39e38d967344b4e6b2b5c83"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.shape-outside-property-clause-cca2516ebb1d",
+        "css-shapes-1.shape-outside-property-clause-1952b3ce8681",
+        "css-shapes-1.shape-outside-property-clause-4011d8e33c21",
+        "css-shapes-1.shape-outside-property-clause-40b5b6d734aa",
+        "css-shapes-1.shape-outside-property-clause-9e1bfa0bbb5e",
+        "css-shapes-1.shape-outside-property-clause-a79b5726e22e",
+        "css-shapes-1.shape-outside-property-clause-e7b3e16da5d3",
+        "css-shapes-1.shape-outside-property-clause-142af95f6a3d",
+        "css-shapes-1.shape-outside-property-clause-8145f4cab551",
+        "css-shapes-1.shape-outside-property-clause-959b27b31810",
+        "css-shapes-1.shape-outside-property-clause-33307a871de2",
+        "css-shapes-1.shape-outside-property-clause-cd7d56585458",
+        "css-shapes-1.shape-outside-property-clause-2d355dfa3c90",
+        "css-shapes-1.shape-outside-property-clause-66883663afcf",
+        "css-shapes-1.shape-outside-property-clause-fc0fe2fa44c8",
+        "css-shapes-1.shape-outside-property-clause-db0fee191af7",
+        "css-shapes-1.shape-outside-property-clause-351c0a7bb159",
+        "css-shapes-1.shape-outside-property-clause-79a95181ffb3",
+        "css-shapes-1.shape-outside-property-clause-6a534f5f748a",
+        "css-shapes-1.shape-outside-property-clause-854185939c52",
+        "css-shapes-1.shape-outside-property-clause-38be53e0a482",
+        "css-shapes-1.shape-outside-property-clause-02ea279a6b54",
+        "css-shapes-1.shape-outside-property-clause-363edf9ba617",
+        "css-shapes-1.shape-outside-property-clause-e5276d16ce32",
+        "css-shapes-1.shape-outside-property-clause-42de6cd36104",
+        "css-shapes-1.shape-outside-property-clause-0846884a668b",
+        "css-shapes-1.shape-outside-property-clause-4bbcc45f776d",
+        "css-shapes-1.shape-outside-property-clause-d9471b638e8c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-cca2516ebb1d",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-1952b3ce8681",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 13,
+        "clause_sha256": "1952b3ce8681bfcccc6bbb6c80388c45d5cd8c06be56bdb3b72d3c7fd6c368ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-4011d8e33c21",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 21,
+        "clause_sha256": "4011d8e33c21bf0b70236ffc0d8b28b2339fe37cec31a3f1b02f550b73478c55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-40b5b6d734aa",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 23,
+        "clause_sha256": "40b5b6d734aac9aa035b299ea6c5d6d1b5ba5b583901248e4966c8f7eb1b62a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-9e1bfa0bbb5e",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 25,
+        "clause_sha256": "9e1bfa0bbb5e0962250303d8942835e7a8fd930a42dd74e5575a112043111e16"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-a79b5726e22e",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 29,
+        "clause_sha256": "a79b5726e22ece63259392ef98f79502fe50a72eab6ca35937d2964b013cdb7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-e7b3e16da5d3",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 30,
+        "clause_sha256": "e7b3e16da5d33f4735945af9e1950289f33d40c543dab33ce14449b82a1ee8e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-142af95f6a3d",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 33,
+        "clause_sha256": "142af95f6a3d5aeae8fa2438f39275da4e9455a8ee831ab0f2afca1bc5e7e2ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-8145f4cab551",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 34,
+        "clause_sha256": "8145f4cab5510425526b7a76d4102641cde960c9fcb43cc413aba3861484cba2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-959b27b31810",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 35,
+        "clause_sha256": "959b27b3181033166cbd2f39145562375048cf1cb7c67699b86eff1784442a2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-33307a871de2",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 36,
+        "clause_sha256": "33307a871de28b69e09ac717517647d1ef81c13018e95e2919bfaf30c7bd96f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-cd7d56585458",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 37,
+        "clause_sha256": "cd7d565854587ea50b29971233d8c1504b9327de574f0fb5caef5a2fca57d5f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-2d355dfa3c90",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 38,
+        "clause_sha256": "2d355dfa3c90d097de14671972df3be3bb984d9d922e498c1561f87537f6ea82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-66883663afcf",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 39,
+        "clause_sha256": "66883663afcf59b007a90d9c6e3e7fbb60ff3aef33b46973a89bc83994b6a53b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-fc0fe2fa44c8",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 40,
+        "clause_sha256": "fc0fe2fa44c8bd6bc3f8a90d073a85cd5d8213cc76228965e12ee38fc5093f5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-db0fee191af7",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 41,
+        "clause_sha256": "db0fee191af7bc0a8d1cea0feaab7a342842799c4e7df273dfe3d940d5880b19"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-351c0a7bb159",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 42,
+        "clause_sha256": "351c0a7bb159cc92f8617cf425ef3722cff6a7c593f8cb31bd295a93ecb3c5a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-79a95181ffb3",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 43,
+        "clause_sha256": "79a95181ffb34c76b5ae57951e41e8131a4f26cc870017f5e2fd11a8f66603c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-6a534f5f748a",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 44,
+        "clause_sha256": "6a534f5f748af38f4429122c508158447bf2798bc817abfcff03e76ebc8039e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-854185939c52",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 45,
+        "clause_sha256": "854185939c52b0007098f52e91a24f1de07fb63b3c1161b48966d49f8f5a7449"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-38be53e0a482",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 46,
+        "clause_sha256": "38be53e0a482a82c5900b84f61fc605076bb379ed079149f0db5e73ab585a91c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-02ea279a6b54",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 47,
+        "clause_sha256": "02ea279a6b5448e4a63ec7b1624e3d0dfd96c632a5052b514524a67c8456399e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-363edf9ba617",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 53, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 52,
+        "clause_sha256": "363edf9ba617fcb1c17f752e547de38ddb93bda6fb645386142bcc3e08977972"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-e5276d16ce32",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 288, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 287,
+        "clause_sha256": "e5276d16ce320b7ce1cc0eb058dcfc8c01a91a6bb863d3f6e8d6ef8d12dd5e6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-42de6cd36104",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 289, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 288,
+        "clause_sha256": "42de6cd361041b4d0755707c9a688ca55cf600c48a7fd7819390b43620480fff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-0846884a668b",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 323, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 322,
+        "clause_sha256": "0846884a668bc5f4dbf4bb51bb03fa7e07a7c7f66ce0a9fbf28d66c400b64e2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-4bbcc45f776d",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 345, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 344,
+        "clause_sha256": "4bbcc45f776dd611eebcc935325a9757d097135e72b1dc8db22fb1dd0e260917"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-outside-property-clause-d9471b638e8c",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-outside-property"
+      ],
+      "behaviour": "Float Area Shape: the shape-outside property — normative clause 346, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-outside-property",
+        "clause_index": 345,
+        "clause_sha256": "d9471b638e8c2dafea010373b581b6a1457054ede79a39269c62a1571576fb60"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-image-threshold-property",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-image-threshold-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Choosing Image Pixels: the shape-image-threshold property.",
+      "locator": {
+        "section_id": "shape-image-threshold-property",
+        "text_sha256": "7c314591e5451484e2144e0fd556f8d9a0877a414bda5ecb56350c1f33912c99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.shape-image-threshold-property-clause-cca2516ebb1d",
+        "css-shapes-1.shape-image-threshold-property-clause-e5ddc572ce83",
+        "css-shapes-1.shape-image-threshold-property-clause-c818f65dbaa1",
+        "css-shapes-1.shape-image-threshold-property-clause-2731c401ea6b",
+        "css-shapes-1.shape-image-threshold-property-clause-47b47e50296d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.shape-image-threshold-property-clause-cca2516ebb1d",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-image-threshold-property"
+      ],
+      "behaviour": "Choosing Image Pixels: the shape-image-threshold property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-image-threshold-property",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-image-threshold-property-clause-e5ddc572ce83",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-image-threshold-property"
+      ],
+      "behaviour": "Choosing Image Pixels: the shape-image-threshold property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-image-threshold-property",
+        "clause_index": 23,
+        "clause_sha256": "e5ddc572ce83e84e701a7daba98a8af518d6de9e12253c1cc75bf56d103daa94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-image-threshold-property-clause-c818f65dbaa1",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-image-threshold-property"
+      ],
+      "behaviour": "Choosing Image Pixels: the shape-image-threshold property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-image-threshold-property",
+        "clause_index": 24,
+        "clause_sha256": "c818f65dbaa19eb433f3459f5233402c01b0304aae08d273336894922254cd90"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-image-threshold-property-clause-2731c401ea6b",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-image-threshold-property"
+      ],
+      "behaviour": "Choosing Image Pixels: the shape-image-threshold property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-image-threshold-property",
+        "clause_index": 30,
+        "clause_sha256": "2731c401ea6bfe8bb72d73ce1bba3fdc1b00434f200f0cd8acc2062c8efabd1b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-image-threshold-property-clause-47b47e50296d",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-image-threshold-property"
+      ],
+      "behaviour": "Choosing Image Pixels: the shape-image-threshold property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-image-threshold-property",
+        "clause_index": 31,
+        "clause_sha256": "47b47e50296d747632b24730680d8d4febacdf011a77cc4cc65f59fd8a23c093"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-margin-property",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-margin-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Expanding a Shape: the shape-margin property.",
+      "locator": {
+        "section_id": "shape-margin-property",
+        "text_sha256": "b1ab81475ba7cc5d71663a7d764bc0340e8a043b718c85314c8640bfb50d97a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.shape-margin-property-clause-c5067751f2db",
+        "css-shapes-1.shape-margin-property-clause-cca2516ebb1d",
+        "css-shapes-1.shape-margin-property-clause-7b603efbca19",
+        "css-shapes-1.shape-margin-property-clause-72a285280f7d",
+        "css-shapes-1.shape-margin-property-clause-3b06b1dd37cc",
+        "css-shapes-1.shape-margin-property-clause-4cd938d72f6d",
+        "css-shapes-1.shape-margin-property-clause-d348c24533dc",
+        "css-shapes-1.shape-margin-property-clause-3ea7b6449857"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.shape-margin-property-clause-c5067751f2db",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-margin-property"
+      ],
+      "behaviour": "Expanding a Shape: the shape-margin property — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-margin-property",
+        "clause_index": 1,
+        "clause_sha256": "c5067751f2db52cada4adb20ac6c197d1f406e1d07fad07f3303d891838a8695"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-margin-property-clause-cca2516ebb1d",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-margin-property"
+      ],
+      "behaviour": "Expanding a Shape: the shape-margin property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-margin-property",
+        "clause_index": 15,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-margin-property-clause-7b603efbca19",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-margin-property"
+      ],
+      "behaviour": "Expanding a Shape: the shape-margin property — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-margin-property",
+        "clause_index": 16,
+        "clause_sha256": "7b603efbca199d8772d0b2476d8df9aca5ae8d107f888eaad0835d47d81d027f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-margin-property-clause-72a285280f7d",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-margin-property"
+      ],
+      "behaviour": "Expanding a Shape: the shape-margin property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-margin-property",
+        "clause_index": 24,
+        "clause_sha256": "72a285280f7d425f4f469a8c5fd3d9a7259151140db5d9157b429f0dfb828607"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-margin-property-clause-3b06b1dd37cc",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-margin-property"
+      ],
+      "behaviour": "Expanding a Shape: the shape-margin property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-margin-property",
+        "clause_index": 29,
+        "clause_sha256": "3b06b1dd37cc4e01dfb5ef264526510a748459ed4a18bfecd65a576fe5b3d92f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-margin-property-clause-4cd938d72f6d",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-margin-property"
+      ],
+      "behaviour": "Expanding a Shape: the shape-margin property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-margin-property",
+        "clause_index": 30,
+        "clause_sha256": "4cd938d72f6db69b0f21714d24f28cf99d5fa59ff3fc9ce7fb96d95d98bb9d4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-margin-property-clause-d348c24533dc",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-margin-property"
+      ],
+      "behaviour": "Expanding a Shape: the shape-margin property — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-margin-property",
+        "clause_index": 48,
+        "clause_sha256": "d348c24533dc783c637748e7ab023a2ef1358f656390efed81f189b8fe5bbf27"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.shape-margin-property-clause-3ea7b6449857",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "shape-margin-property"
+      ],
+      "behaviour": "Expanding a Shape: the shape-margin property — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "shape-margin-property",
+        "clause_index": 49,
+        "clause_sha256": "3ea7b6449857d18087cf8d84b765323357028fa42e567515c64ad059eec936ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.privacy",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "5c29076b1243d88d5dfdd9048d1b3e0c26eb15d1cc00ac88081a80a7f70d153d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.security",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "613e673286b7d14813d53d6a52e0809c3d0eb0bafeb63fc866f7dc41d41a6f2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.20221115",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20221115"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Since 15 November 2022.",
+      "locator": {
+        "section_id": "20221115",
+        "text_sha256": "0a1e25271fd25828be9fd219b2d1b5cd0931ec298250834a72633593889a84a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.20221115-clause-d25f2ed0abe9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.20221115-clause-d25f2ed0abe9",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20221115"
+      ],
+      "behaviour": "Since 15 November 2022 — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "20221115",
+        "clause_index": 12,
+        "clause_sha256": "d25f2ed0abe90973f790759267980930769696373a08185b09dcdb8d2c388e30"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.20140320",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20140320"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Since March 20th 2014.",
+      "locator": {
+        "section_id": "20140320",
+        "text_sha256": "3f4caa5b1da3a1b970406a7bfb865ee5cdcab020a52d21e3a145989a150dce38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.20140320-clause-055e67d6142c",
+        "css-shapes-1.20140320-clause-8247391005c8",
+        "css-shapes-1.20140320-clause-53f77bd67aeb",
+        "css-shapes-1.20140320-clause-79cbbd9bac89",
+        "css-shapes-1.20140320-clause-69f7eab3d75d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.20140320-clause-055e67d6142c",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20140320"
+      ],
+      "behaviour": "Since March 20th 2014 — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "20140320",
+        "clause_index": 0,
+        "clause_sha256": "055e67d6142cca56fb0f9e42a7a4271e32729d0477cef0bb17e620ab06e264cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.20140320-clause-8247391005c8",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20140320"
+      ],
+      "behaviour": "Since March 20th 2014 — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "20140320",
+        "clause_index": 5,
+        "clause_sha256": "8247391005c8cf372374640c157085536c9ce6612e253dbb48c2d7ceb865edae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.20140320-clause-53f77bd67aeb",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20140320"
+      ],
+      "behaviour": "Since March 20th 2014 — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "20140320",
+        "clause_index": 6,
+        "clause_sha256": "53f77bd67aeb71ac9564e1eedd0b6939502829b560e02e9e3ffc723810522766"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.20140320-clause-79cbbd9bac89",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20140320"
+      ],
+      "behaviour": "Since March 20th 2014 — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "20140320",
+        "clause_index": 14,
+        "clause_sha256": "79cbbd9bac896cc86bb543f8530fea0d3bc4601e2f21006375e5c0a304a90b43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.20140320-clause-69f7eab3d75d",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20140320"
+      ],
+      "behaviour": "Since March 20th 2014 — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "20140320",
+        "clause_index": 16,
+        "clause_sha256": "69f7eab3d75d502ab46535d4a1b1d999de0d0657c9ea1d1b6f11139530432465"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.20140211",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20140211"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Since February 11th 2014.",
+      "locator": {
+        "section_id": "20140211",
+        "text_sha256": "6e5692c8eed37b690a13300038a82ef360d6d12bb08b44da829a2a674a3221da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.20131203",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20131203"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Since December 3rd 2013.",
+      "locator": {
+        "section_id": "20131203",
+        "text_sha256": "88419e0faa92dc38eeb40233b709e05c580a7a06106d251dff25e6b781f148ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.20131203-clause-8808a880d3db"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.20131203-clause-8808a880d3db",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20131203"
+      ],
+      "behaviour": "Since December 3rd 2013 — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "20131203",
+        "clause_index": 0,
+        "clause_sha256": "8808a880d3db99b3f667f33b59cbe33070dcfce3614ccbfb2094eadac059fb7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.20130620",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20130620"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Since June 20th 2013.",
+      "locator": {
+        "section_id": "20130620",
+        "text_sha256": "3588f5d1403738ee3986b611cbb15d1b15281baa299c7a6affc951cc87c267c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.20130620-clause-5dae5518cb79",
+        "css-shapes-1.20130620-clause-79d9d55f0f7e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.20130620-clause-5dae5518cb79",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20130620"
+      ],
+      "behaviour": "Since June 20th 2013 — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "20130620",
+        "clause_index": 12,
+        "clause_sha256": "5dae5518cb798e3d3017f12c3ff08f42ca3f2b04eabfec677e055d17fd905f26"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.20130620-clause-79d9d55f0f7e",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20130620"
+      ],
+      "behaviour": "Since June 20th 2013 — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "20130620",
+        "clause_index": 13,
+        "clause_sha256": "79d9d55f0f7e40fb46a8e3590af2370dfb50790caa13490f0e16f90727a1d671"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.20120503",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20120503"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Since May 3rd 2012.",
+      "locator": {
+        "section_id": "20120503",
+        "text_sha256": "123166f49e27135c686277d8513abb74c847803f39da49c3d6ea6605d97d9ab3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.20111213",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "20111213"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Since December 13th 2011.",
+      "locator": {
+        "section_id": "20111213",
+        "text_sha256": "26ec0b2a54b93de3b1e7da939ee3878211a3c9942686e262a8fbc4994046a3b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.w3c-conformance",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.w3c-conventions",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.w3c-conventions-clause-5c98c879f070",
+        "css-shapes-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.w3c-conformance-classes",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-shapes-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.w3c-partial",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.w3c-conform-future-proofing",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.w3c-testing",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.w3c-testing-clause-1e0fff369221",
+        "css-shapes-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.w3c-cr-exit-criteria",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+        "css-shapes-1.w3c-cr-exit-criteria-clause-ea752775913a",
+        "css-shapes-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+        "css-shapes-1.w3c-cr-exit-criteria-clause-b67129724911",
+        "css-shapes-1.w3c-cr-exit-criteria-clause-833729d43f23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.w3c-cr-exit-criteria-clause-ea752775913a",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.w3c-cr-exit-criteria-clause-b67129724911",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.w3c-cr-exit-criteria-clause-833729d43f23",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 10,
+        "clause_sha256": "833729d43f239b3deb57bcaaf1c29d2f077e86aad8b396f8458fa182e4db8d99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.property-index",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "e5d7aa7a03826043cc53294cdc15c25fb802220c384d95099e40c918681bddb0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shapes-1.property-index-clause-674d5fa645b0",
+        "css-shapes-1.property-index-clause-7b603efbca19",
+        "css-shapes-1.property-index-clause-1952b3ce8681"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.property-index-clause-674d5fa645b0",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 15,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.property-index-clause-7b603efbca19",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 26,
+        "clause_sha256": "7b603efbca199d8772d0b2476d8df9aca5ae8d107f888eaad0835d47d81d027f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.property-index-clause-1952b3ce8681",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 35,
+        "clause_sha256": "1952b3ce8681bfcccc6bbb6c80388c45d5cd8c06be56bdb3b72d3c7fd6c368ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shapes-1.title",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Shapes Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "b1ac2acc3ad895982d3535e9ae63e10b140cb6af5850ecdf7ee2b5bfcfec5fd8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.abstract",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "aeea2fcf309c52a8b3939850d92b714d915e33bc0b252945148652e778de2b66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.sotd",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "4485c18b22bc2c287af37fbf4fe8d005104647459eb952eb9f15ade17b0fcfcb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.contents",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "ab2953be5b70c2a450d80e21426a5f4778b97b29820bab2f910f0d09d9faa072"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.intro",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "cfb0bb164281bcc9c6effd4498255415431c43d40135f7fdec4164d6098a7955"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.module-interactions",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "module-interactions"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Module Interactions.",
+      "locator": {
+        "section_id": "module-interactions",
+        "text_sha256": "b022e0bbb8a5cae78981bacc6372b93cffceae1873d7ac5faea90dc9c7f53b4d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.values",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.2. Values.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.terminology",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.3. Terminology.",
+      "locator": {
+        "section_id": "terminology",
+        "text_sha256": "f805cb7c893ee85cc1a3956a0712e1aff050af672ba6dea77a995fc57cac5b7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.acknowledgments",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "c0824c58f7420557b1f7e62fb02e10fc1c89a9734a4d3cf0bbb282216e134bad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.change-log",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "change-log"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Change Log.",
+      "locator": {
+        "section_id": "change-log",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.index",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.index-defined-here",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "11adf7f29e29307d05da84563221a6741a6e035c208ab69301b1f1bad6cd6682"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.index-defined-elsewhere",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "5afc507f495c83c645bc37cade84c6d89f67711c0ce401c0feb05c740070fc55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.references",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.normative",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "4dddeb96e134c3fcd1351f6ab904e93ec8929b86e735bb27593993b1db9e5741"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shapes-1.informative",
+      "family": "css-shapes-1",
+      "source_id": "css-shapes-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "e3c9014c2e862583276b51d2d2bf0252915498d7262adfe44026f689d40ce998"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

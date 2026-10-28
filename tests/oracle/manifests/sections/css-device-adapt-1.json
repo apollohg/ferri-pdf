@@ -1,0 +1,390 @@
+{
+  "schema_version": 1,
+  "source_id": "css-device-adapt-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Viewport Module Level 1",
+      "level": 1,
+      "text_sha256": "67f6cc172e83320574f3dec2fa79db2260bd2d444a617517e96dbe88d21d26c1",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "639f036cb5a891d94c895b60a7493dcd1122e327416f7f483f6494a805ca6d46",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "30128861af6bcf4c1c5e7c3a21a03bbeb324b899e50ca817a68578caef32b6e1",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "b5965c721e84e43e57acb59f275d7cd0358d8994698fe8e19e843c46dc9ab2c6",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "d360b6dce7b149a9d24a442304a51b37e19449c6a3a6557b1fed5be8b98c4417",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "the-viewport",
+      "title": "2. The viewport",
+      "level": 2,
+      "text_sha256": "7f50bffddec9b55ef4e5973b0af05a3034ad69152a045218d5f1347e09bc0a3b",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.the-viewport",
+          "css-device-adapt-1.the-viewport-clause-95cd9fd33654",
+          "css-device-adapt-1.the-viewport-clause-f767c882a7d1",
+          "css-device-adapt-1.the-viewport-clause-89fca7e63cc5"
+        ]
+      }
+    },
+    {
+      "id": "viewport-meta",
+      "title": "3. Viewport <meta> element",
+      "level": 2,
+      "text_sha256": "2b5eb1f6edd36a88587c2deb3d1cebfaf01f99993275ba781f2e2f9bcb923430",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.viewport-meta"
+        ]
+      }
+    },
+    {
+      "id": "meta-properties",
+      "title": "3.1. Properties",
+      "level": 3,
+      "text_sha256": "137059a814a0ddedf8088e271658a6884b40f79cb301acedff08cc2829a3852f",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.meta-properties"
+        ]
+      }
+    },
+    {
+      "id": "parsing-algorithm",
+      "title": "3.2. Parsing algorithm",
+      "level": 3,
+      "text_sha256": "3787a8f1413077b37da050631f81855849763f02de6a8bebfa1c8346df8ce68f",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.parsing-algorithm",
+          "css-device-adapt-1.parsing-algorithm-clause-c26a332c752f",
+          "css-device-adapt-1.parsing-algorithm-clause-8fba9211416f",
+          "css-device-adapt-1.parsing-algorithm-clause-c03f480e642f"
+        ]
+      }
+    },
+    {
+      "id": "extend-to-zoom",
+      "title": "3.3. extend-to-zoom",
+      "level": 3,
+      "text_sha256": "b62f733575c642b9c9d560d06ac9454486e7b3891c2b823c4b29fbb18a878851",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.extend-to-zoom"
+        ]
+      }
+    },
+    {
+      "id": "interactive-widget-section",
+      "title": "3.4. interactive-widget",
+      "level": 3,
+      "text_sha256": "b1ba0805c674d0991ac01e5f53c6358ce139bff2f8bf846e0c3cb6cc085f4df3",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.interactive-widget-section",
+          "css-device-adapt-1.interactive-widget-section-clause-99301f4d5ff8",
+          "css-device-adapt-1.interactive-widget-section-clause-7ac7a63a134b",
+          "css-device-adapt-1.interactive-widget-section-clause-35215a42f4eb",
+          "css-device-adapt-1.interactive-widget-section-clause-f0b403709afd"
+        ]
+      }
+    },
+    {
+      "id": "interaction-with-virtualkeyboard-overlayscontent",
+      "title": "3.4.1. Interaction with virtualKeyboard.overlaysContent",
+      "level": 4,
+      "text_sha256": "36b1f7dc5773cdfc36ec107b2a49a494ca42f31fc184ca919e8e4a7151c01fa7",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.interaction-with-virtualkeyboard-overlayscontent",
+          "css-device-adapt-1.interaction-with-virtualkeyboard-overlayscontent-clause-135ff14bf2bd",
+          "css-device-adapt-1.interaction-with-virtualkeyboard-overlayscontent-clause-2f4ad9be33b9",
+          "css-device-adapt-1.interaction-with-virtualkeyboard-overlayscontent-clause-889dda1317c1"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Appendix A. Changes",
+      "level": 2,
+      "text_sha256": "9a2def4ee299e63f63fcc9dc6132e0c04cecb9b09c90fd45d2abca30a78f068b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "since-the-29-march-2016-working-draft",
+      "title": "Since the 29 March 2016 Working Draft",
+      "level": 3,
+      "text_sha256": "1bde9ba8593420aef32b7fca42687e369da47f500b70f0472850580cff9cb26c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.since-the-29-march-2016-working-draft"
+        ]
+      }
+    },
+    {
+      "id": "since-the-15-september-2011-first-public-working-draft",
+      "title": "Since the 15 September 2011 First Public Working Draft.",
+      "level": 3,
+      "text_sha256": "ac86020660690826a356c50e310cfbb6fa88393a1b310bc80d3d9368891da31d",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.since-the-15-september-2011-first-public-working-draft"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.w3c-conventions",
+          "css-device-adapt-1.w3c-conventions-clause-5c98c879f070",
+          "css-device-adapt-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.w3c-conformance-classes",
+          "css-device-adapt-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-device-adapt-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.w3c-partial",
+          "css-device-adapt-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.w3c-testing",
+          "css-device-adapt-1.w3c-testing-clause-1e0fff369221",
+          "css-device-adapt-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "f8ed24de2842ccf9bd7cd40b164cee2a53480757e898995c011df611fb9d4ab7",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "74c4b54618a191920201bfbb3d3ea38aa32b026b5c9739515dbbecbbb6355fb5",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "783aad9bae505ac9da5aebc530d2e10f414fa16ad4eb3288f6b4302edb7f0873",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.import-bb804e8353e4"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "03d5d5cde051d0e62bb2a044488849d465b9cef021eb2d7a94d090bd52d998f2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "73afbc5f32bcd52fdd0547ecf82fc45d89fb5a91be963a2c5dac2986901c63e5",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-device-adapt-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

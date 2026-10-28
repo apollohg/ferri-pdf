@@ -1,0 +1,646 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-visufx.q11-0",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "q11.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 11 Visual effects.",
+      "locator": {
+        "section_id": "q11.0",
+        "text_sha256": "e146746f5443e87fffe6b57a50e83d49177f45c6415758ef5fbd74fe46b144d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visufx.overflow-clipping",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow-clipping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow and clipping.",
+      "locator": {
+        "section_id": "overflow-clipping",
+        "text_sha256": "48a2da5a81600dfce4108439c5c6de69a9370c6538d7eee80968dc662e27cab1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visufx.overflow",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow: the 'overflow' property.",
+      "locator": {
+        "section_id": "overflow",
+        "text_sha256": "d6c67bb7f69471daf26b27a35813edc189e3cbcd46f0fa307c66239355320663"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visufx.overflow-clause-8561c4967f86",
+        "css21-visufx.overflow-clause-cca2516ebb1d",
+        "css21-visufx.overflow-clause-26573c45d869",
+        "css21-visufx.overflow-clause-51f80d6b411a",
+        "css21-visufx.overflow-clause-00ff22f576b9",
+        "css21-visufx.overflow-clause-d7bb61b5c55f",
+        "css21-visufx.overflow-clause-10c82295cf23",
+        "css21-visufx.overflow-clause-3834bdd7e8bd",
+        "css21-visufx.overflow-clause-a305e7bc0bac",
+        "css21-visufx.overflow-clause-62e346cbb8a0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visufx.overflow-clause-8561c4967f86",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Overflow: the 'overflow' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow",
+        "clause_index": 2,
+        "clause_sha256": "8561c4967f86545ad0d1f4a45972d4498e4a6d5daa8e3319835aa706c0d999e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.overflow-clause-cca2516ebb1d",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Overflow: the 'overflow' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.overflow-clause-26573c45d869",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Overflow: the 'overflow' property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow",
+        "clause_index": 15,
+        "clause_sha256": "26573c45d86913ae981759a771556cd337eb99e943d2ee357302d784f2a599af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.overflow-clause-51f80d6b411a",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Overflow: the 'overflow' property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow",
+        "clause_index": 19,
+        "clause_sha256": "51f80d6b411a445aa0cfb92c3c059bc3a5d29d29433a5f52db1825451897705c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.overflow-clause-00ff22f576b9",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Overflow: the 'overflow' property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow",
+        "clause_index": 21,
+        "clause_sha256": "00ff22f576b94c2249b327fbf0a64aba7fda1426d3d08654e3cbf44637a062d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.overflow-clause-d7bb61b5c55f",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Overflow: the 'overflow' property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow",
+        "clause_index": 23,
+        "clause_sha256": "d7bb61b5c55faba91d1c49f40d818ca31a69b27db7aa32ae3dd496b7af8a89de"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.overflow-clause-10c82295cf23",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Overflow: the 'overflow' property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow",
+        "clause_index": 25,
+        "clause_sha256": "10c82295cf235226dcf068819b29f48a81c136a83c139306be6905020a7d0988"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.overflow-clause-3834bdd7e8bd",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Overflow: the 'overflow' property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow",
+        "clause_index": 26,
+        "clause_sha256": "3834bdd7e8bd60b46a7a6fe06641c8afa3041ef30544d050233873ee1fe80aaa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.overflow-clause-a305e7bc0bac",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Overflow: the 'overflow' property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow",
+        "clause_index": 32,
+        "clause_sha256": "a305e7bc0bac81542d9b891d082b4529a6e43e7ae98e44909e1b4cba58445dd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.overflow-clause-62e346cbb8a0",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Overflow: the 'overflow' property — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "overflow",
+        "clause_index": 43,
+        "clause_sha256": "62e346cbb8a0e8e8fec212dbb42150e7ef39afa310fa0a5e11275aa4c7b3b4bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.clipping",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "clipping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Clipping: the 'clip' property.",
+      "locator": {
+        "section_id": "clipping",
+        "text_sha256": "209fd8363fb6b6b2c46a4cf6b54edab5eabc82f8eff8e7a4cb6f697b403fbe71"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visufx.clipping-clause-905c37e8b2dc",
+        "css21-visufx.clipping-clause-cca2516ebb1d",
+        "css21-visufx.clipping-clause-ea6f4c2d4232",
+        "css21-visufx.clipping-clause-e51f9da51610",
+        "css21-visufx.clipping-clause-75b2c71ae8c7",
+        "css21-visufx.clipping-clause-44119dac367a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visufx.clipping-clause-905c37e8b2dc",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "clipping"
+      ],
+      "behaviour": "Clipping: the 'clip' property — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "clipping",
+        "clause_index": 3,
+        "clause_sha256": "905c37e8b2dcd04aef6d5432e187ee0464d00b33c76e0d810482403182f1f140"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.clipping-clause-cca2516ebb1d",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "clipping"
+      ],
+      "behaviour": "Clipping: the 'clip' property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "clipping",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.clipping-clause-ea6f4c2d4232",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "clipping"
+      ],
+      "behaviour": "Clipping: the 'clip' property — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "clipping",
+        "clause_index": 16,
+        "clause_sha256": "ea6f4c2d42329f6ca1db0edce344e65708d1b3e65429002fc457809feffd9729"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.clipping-clause-e51f9da51610",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "clipping"
+      ],
+      "behaviour": "Clipping: the 'clip' property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "clipping",
+        "clause_index": 21,
+        "clause_sha256": "e51f9da51610af96aed5239970b42488989f4aba4d463506fa41c425d95b4edf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.clipping-clause-75b2c71ae8c7",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "clipping"
+      ],
+      "behaviour": "Clipping: the 'clip' property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "clipping",
+        "clause_index": 22,
+        "clause_sha256": "75b2c71ae8c70fbd0b4fd04f3c354dfbf70aca72d693a259db2949d6c49b63f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.clipping-clause-44119dac367a",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "clipping"
+      ],
+      "behaviour": "Clipping: the 'clip' property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "clipping",
+        "clause_index": 32,
+        "clause_sha256": "44119dac367aa86c8a03519fb00573f3804e397a15d21d4c2ebaa654e2d08a4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.visibility",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "visibility"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Visibility: the 'visibility' property.",
+      "locator": {
+        "section_id": "visibility",
+        "text_sha256": "bfa2b8d82620cea63b145544842d78ff21e972f1d4ac43915bb1ed1a5c3f3a37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visufx.visibility-clause-a98320c2910c",
+        "css21-visufx.visibility-clause-cca2516ebb1d",
+        "css21-visufx.visibility-clause-75bc4e621348"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visufx.visibility-clause-a98320c2910c",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "visibility"
+      ],
+      "behaviour": "Visibility: the 'visibility' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "visibility",
+        "clause_index": 2,
+        "clause_sha256": "a98320c2910cb105e03c95ad81e73c46c605876c2add8942232cf06891f6c798"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.visibility-clause-cca2516ebb1d",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "visibility"
+      ],
+      "behaviour": "Visibility: the 'visibility' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "visibility",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visufx.visibility-clause-75bc4e621348",
+      "family": "css21-visufx",
+      "source_id": "css21-visufx",
+      "sections": [
+        "visibility"
+      ],
+      "behaviour": "Visibility: the 'visibility' property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "visibility",
+        "clause_index": 15,
+        "clause_sha256": "75bc4e6213485cbac1e1aeb8eb2549894404e8a9af896bed37a41ecf47cbef20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    }
+  ]
+}

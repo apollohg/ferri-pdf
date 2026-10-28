@@ -1,0 +1,406 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-cmap",
+  "sections": [
+    {
+      "id": "cmap--character-to-glyph-index-mapping-table",
+      "title": "cmap — Character to Glyph Index Mapping Table",
+      "level": 1,
+      "text_sha256": "214e1897aecdbc0fa38663f3c48b975638d01ca841f95852449b42b2f24c1245",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.cmap-character-to-glyph-index-mapping-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "table-overview",
+      "title": "Table overview",
+      "level": 2,
+      "text_sha256": "0ddcb8a506ce13a0251e8ad8f427a994b4348b59525f734188f2926653f26b13",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.table-overview",
+          "opentype-cmap.table-overview-clause-c83d779ce93f",
+          "opentype-cmap.table-overview-clause-b7d4ffdb9b10"
+        ]
+      }
+    },
+    {
+      "id": "cmap-header",
+      "title": "'cmap' Header",
+      "level": 2,
+      "text_sha256": "7f6097c500b3f3b686c8ffc83536c1de2763ef389c1bcda5f275a69a5f150ae1",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.cmap-header"
+        ]
+      }
+    },
+    {
+      "id": "encoding-records-and-encodings",
+      "title": "Encoding records and encodings",
+      "level": 2,
+      "text_sha256": "28765c3eab5303c1a82ed867e2e9e935cf9ccd63cce922b5d772af2995e60c40",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.encoding-records-and-encodings",
+          "opentype-cmap.encoding-records-and-encodings-clause-a0a0895a0628",
+          "opentype-cmap.encoding-records-and-encodings-clause-80f95d685162",
+          "opentype-cmap.encoding-records-and-encodings-clause-521981eab1d1",
+          "opentype-cmap.encoding-records-and-encodings-clause-8900b13075dd",
+          "opentype-cmap.encoding-records-and-encodings-clause-2181b456f02c"
+        ]
+      }
+    },
+    {
+      "id": "platform-ids",
+      "title": "Platform IDs",
+      "level": 3,
+      "text_sha256": "b3e5592f863c785d07c9b8e8a9ab3c45b833afc6050e6f33b1559db1acc5886d",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.platform-ids",
+          "opentype-cmap.platform-ids-clause-cb977ac5957a"
+        ]
+      }
+    },
+    {
+      "id": "unicode-platform-platform-id--0",
+      "title": "Unicode platform (platform ID = 0)",
+      "level": 3,
+      "text_sha256": "929f6f23a3daeb90d5cb2154faa51fb619eed65899878ea4ebe4ba5615af7964",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.unicode-platform-platform-id-0",
+          "opentype-cmap.unicode-platform-platform-id-0-clause-fa2a4f3b4f25",
+          "opentype-cmap.unicode-platform-platform-id-0-clause-d796d7352af2",
+          "opentype-cmap.unicode-platform-platform-id-0-clause-21cb4a5f01a6"
+        ]
+      }
+    },
+    {
+      "id": "macintosh-platform-platform-id--1",
+      "title": "Macintosh platform (platform ID = 1)",
+      "level": 3,
+      "text_sha256": "94373511474c971627392b1ebab8477a7c155ccd9167d4878ab8ae902119b712",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.macintosh-platform-platform-id-1",
+          "opentype-cmap.macintosh-platform-platform-id-1-clause-94373511474c"
+        ]
+      }
+    },
+    {
+      "id": "iso-platform-platform-id--2",
+      "title": "ISO platform (platform ID = 2)",
+      "level": 3,
+      "text_sha256": "af9bc62b554fce37ebe886027f5145baaced73f4d9ed72b9ebe0762dd9f78db2",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.iso-platform-platform-id-2"
+        ]
+      }
+    },
+    {
+      "id": "windows-platform-platform-id--3",
+      "title": "Windows platform (platform ID = 3)",
+      "level": 3,
+      "text_sha256": "5c49771ec8b407a2e31bad4b4a049f1e0591a22c48257fd10d2cda3a74cf7298",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.windows-platform-platform-id-3",
+          "opentype-cmap.windows-platform-platform-id-3-clause-db78a2a90e47",
+          "opentype-cmap.windows-platform-platform-id-3-clause-4999a397d04a",
+          "opentype-cmap.windows-platform-platform-id-3-clause-4b4eaaba38f0",
+          "opentype-cmap.windows-platform-platform-id-3-clause-e82724c7ed5f"
+        ]
+      }
+    },
+    {
+      "id": "custom-platform-platform-id--4-and-otf-windows-nt-compatibility-mapping",
+      "title": "Custom platform (platform ID = 4) and OTF Windows NT compatibility mapping",
+      "level": 3,
+      "text_sha256": "c69483403a7ddfd6acb00706d98bf67a9611094b62adf8c35ab9b0be6b8d46e9",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.custom-platform-platform-id-4-and-otf-windows-nt-compatibility-mapping",
+          "opentype-cmap.custom-platform-platform-id-4-and-otf-windows-nt-compatibility-mapping-clause-6f3e02633bff",
+          "opentype-cmap.custom-platform-platform-id-4-and-otf-windows-nt-compatibility-mapping-clause-6ca44d397ef2",
+          "opentype-cmap.custom-platform-platform-id-4-and-otf-windows-nt-compatibility-mapping-clause-7dd60ce24c04"
+        ]
+      }
+    },
+    {
+      "id": "cmap-subtable-formats",
+      "title": "'cmap' subtable formats",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.cmap-subtable-formats"
+        ]
+      }
+    },
+    {
+      "id": "use-of-the-language-field-in-cmap-subtables",
+      "title": "Use of the language field in 'cmap' subtables",
+      "level": 3,
+      "text_sha256": "f848016c5dd4b209b54c875d1c98805b145a21519f77c515c343b86f7339a2bf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.use-of-the-language-field-in-cmap-subtables",
+          "opentype-cmap.use-of-the-language-field-in-cmap-subtables-clause-f848016c5dd4"
+        ]
+      }
+    },
+    {
+      "id": "format-0-byte-encoding-table",
+      "title": "Format 0: Byte encoding table",
+      "level": 3,
+      "text_sha256": "13df3ad1433bcc2322f176550b16eb181576031913aa69cb786a88648c6ab401",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.format-0-byte-encoding-table",
+          "opentype-cmap.format-0-byte-encoding-table-clause-e85d1e64ec3f"
+        ]
+      }
+    },
+    {
+      "id": "format-2-high-byte-mapping-through-table",
+      "title": "Format 2: High byte mapping through table",
+      "level": 3,
+      "text_sha256": "414d268bf2a1f4fdbb720144ab9e9b9376d13ca19f4920f17363b53401829a13",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.format-2-high-byte-mapping-through-table",
+          "opentype-cmap.format-2-high-byte-mapping-through-table-clause-c60bebb9705d"
+        ]
+      }
+    },
+    {
+      "id": "format-4-segment-mapping-to-delta-values",
+      "title": "Format 4: Segment mapping to delta values",
+      "level": 3,
+      "text_sha256": "48aec18a5300ffaa3cf142421edfa4c4bf74e491a738ab99a2ac8934e88772fc",
+      "clause_count": 87,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.format-4-segment-mapping-to-delta-values",
+          "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-57035492d86c",
+          "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-1ec1936ae024",
+          "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-e0853f5b1ab7",
+          "opentype-cmap.format-4-segment-mapping-to-delta-values-clause-ed2de1cc5f5d"
+        ]
+      }
+    },
+    {
+      "id": "format-6-trimmed-table-mapping",
+      "title": "Format 6: Trimmed table mapping",
+      "level": 3,
+      "text_sha256": "d5275e8699219101c7aae5c5c4a5660e1b585d1d9e4ceadc515d05dd424a6a31",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.format-6-trimmed-table-mapping"
+        ]
+      }
+    },
+    {
+      "id": "format-8-mixed-16-bit-and-32-bit-coverage",
+      "title": "Format 8: mixed 16-bit and 32-bit coverage",
+      "level": 3,
+      "text_sha256": "7f00ca64e23aea64584fae1074923e9d95dafe85fe99b1a974422bb914b5a506",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.format-8-mixed-16-bit-and-32-bit-coverage",
+          "opentype-cmap.format-8-mixed-16-bit-and-32-bit-coverage-clause-4a522eb7ec67",
+          "opentype-cmap.format-8-mixed-16-bit-and-32-bit-coverage-clause-c1e1719307fd",
+          "opentype-cmap.format-8-mixed-16-bit-and-32-bit-coverage-clause-1cf8b7cc6325"
+        ]
+      }
+    },
+    {
+      "id": "format-10-trimmed-array",
+      "title": "Format 10: Trimmed array",
+      "level": 3,
+      "text_sha256": "b699cf6ff4ce4464fe4582aaade71e01ce003a1b81029a5b57368df3fee6be68",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.format-10-trimmed-array"
+        ]
+      }
+    },
+    {
+      "id": "format-12-segmented-coverage",
+      "title": "Format 12: Segmented coverage",
+      "level": 3,
+      "text_sha256": "7bd9360935b06ac08a7be8b5f33753b2e4bc53a46be95f4394de94dfddde3047",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.format-12-segmented-coverage",
+          "opentype-cmap.format-12-segmented-coverage-clause-2ededb14e593",
+          "opentype-cmap.format-12-segmented-coverage-clause-0af076adf7f8"
+        ]
+      }
+    },
+    {
+      "id": "format-13-many-to-one-range-mappings",
+      "title": "Format 13: Many-to-one range mappings",
+      "level": 3,
+      "text_sha256": "596205354ff2ef1dbcdda368d9fceeb524920f5dd756d64edb5165b6da2ac045",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.format-13-many-to-one-range-mappings"
+        ]
+      }
+    },
+    {
+      "id": "format-14-unicode-variation-sequences",
+      "title": "Format 14: Unicode variation sequences",
+      "level": 3,
+      "text_sha256": "64c14689148c64bd22f0fb0905902eea0709008273a5e032a7db87a4e61dc16e",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.format-14-unicode-variation-sequences",
+          "opentype-cmap.format-14-unicode-variation-sequences-clause-8201bf91c602"
+        ]
+      }
+    },
+    {
+      "id": "default-uvs-table",
+      "title": "Default UVS table",
+      "level": 4,
+      "text_sha256": "3c14eabf24fccb1ad7109df981a9b95b40cdf25bf91806981dc0926fa8840e83",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.default-uvs-table",
+          "opentype-cmap.default-uvs-table-clause-ad9ecfce4232",
+          "opentype-cmap.default-uvs-table-clause-b40f705fa52e",
+          "opentype-cmap.default-uvs-table-clause-325ffad3009e"
+        ]
+      }
+    },
+    {
+      "id": "non-default-uvs-table",
+      "title": "Non-Default UVS table",
+      "level": 4,
+      "text_sha256": "e582df774bd49f822444d8f4013090ba3ac54eafa8c29d3210c4cd8b84c7d688",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.non-default-uvs-table",
+          "opentype-cmap.non-default-uvs-table-clause-9b97436f2eeb"
+        ]
+      }
+    },
+    {
+      "id": "example",
+      "title": "Example",
+      "level": 4,
+      "text_sha256": "5096a7344789006b0b5ee27f3bc6560a7b8b5970a9de39d0c9ddb41352cef3c9",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.example"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "3eb25b59e14381d11045c4430465c544fb0a9c44ecad8beae369fc9d1fea3786",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cmap.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

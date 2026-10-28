@@ -1,0 +1,633 @@
+{
+  "schema_version": 1,
+  "source_id": "css-text-decor-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Text Decoration Module Level 3",
+      "level": 1,
+      "text_sha256": "ab8f368ff4d88f7532a8268840f39d2760c27534be695cc8f934eb6cfed3274e",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "fae775f9897c068c3689b7ea820db5f36dc221b047d9c97c9d44326113f87f8c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "fe6b9fa138290bc8b787a6c81e9367b337c3b3f53a788ffceae09e68dd461b07",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "14709ba46815d5ea5d8f7b621d8fe0359f65d9d404c6a456ae3c3e794c715ac7",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "efdc4363c9550701db5032aeb5e29ea309fd570289eeaf21bed6bc7219e366f1",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "d121bbbd7b18ab97880cf64545341c77502386ba612c4febd8b4c6c549743b83",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.placement"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.values"
+        ]
+      }
+    },
+    {
+      "id": "terms",
+      "title": "1.3. Terminology",
+      "level": 3,
+      "text_sha256": "169c8aa35d2e2e9906dd4b377903d5599f81faa75e76174515342179dc50019e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.terms"
+        ]
+      }
+    },
+    {
+      "id": "line-decoration",
+      "title": "2. Line Decoration: Underline, Overline, and Strike-Through",
+      "level": 2,
+      "text_sha256": "bd16c867b8add5409fa18beb6aef203f375f6ca20808b0bf1a5c1d771bb0794c",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.line-decoration",
+          "css-text-decor-3.line-decoration-clause-ad382a344cf8",
+          "css-text-decor-3.line-decoration-clause-f732e6839627",
+          "css-text-decor-3.line-decoration-clause-549e15e69480"
+        ]
+      }
+    },
+    {
+      "id": "text-decoration-line-property",
+      "title": "2.1. Text Decoration Lines: the text-decoration-line property",
+      "level": 3,
+      "text_sha256": "a12628d63e987c01f5551e5460eb70ba2e2a1fdf5168c58e7cb9111fd81304a4",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.text-decoration-line-property",
+          "css-text-decor-3.text-decoration-line-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "text-decoration-style-property",
+      "title": "2.2. Text Decoration Style: the text-decoration-style property",
+      "level": 3,
+      "text_sha256": "74675a9f14956262deb14aa1dfe159c8d6c0d439d9f8ccff28ebd523a15012c2",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.text-decoration-style-property",
+          "css-text-decor-3.text-decoration-style-property-clause-cca2516ebb1d",
+          "css-text-decor-3.text-decoration-style-property-clause-0dd5dd798f33",
+          "css-text-decor-3.text-decoration-style-property-clause-0cf77e7fda1e"
+        ]
+      }
+    },
+    {
+      "id": "text-decoration-color-property",
+      "title": "2.3. Text Decoration Color: the text-decoration-color property",
+      "level": 3,
+      "text_sha256": "489ddb9defd1a572ef0c254c34c458ed099e75e6af259427893c37f4c15f945b",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.text-decoration-color-property",
+          "css-text-decor-3.text-decoration-color-property-clause-cca2516ebb1d",
+          "css-text-decor-3.text-decoration-color-property-clause-dee972826276",
+          "css-text-decor-3.text-decoration-color-property-clause-e104a6560eec",
+          "css-text-decor-3.text-decoration-color-property-clause-4fe3860940e8"
+        ]
+      }
+    },
+    {
+      "id": "text-decoration-property",
+      "title": "2.4. Text Decoration Shorthand: the text-decoration property",
+      "level": 3,
+      "text_sha256": "90c8e988ca0b62beb93c39924c45ba316cd46661ee4955ebb30ce7aeb61c5e3a",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.text-decoration-property",
+          "css-text-decor-3.text-decoration-property-clause-cca2516ebb1d",
+          "css-text-decor-3.text-decoration-property-clause-6a9abb2701e1",
+          "css-text-decor-3.text-decoration-property-clause-f3bee36ee41a",
+          "css-text-decor-3.text-decoration-property-clause-837b6163566f"
+        ]
+      }
+    },
+    {
+      "id": "text-underline-position-property",
+      "title": "2.5. Text Underline Position: the text-underline-position property",
+      "level": 3,
+      "text_sha256": "4dfa18e288229bd8dbe3885dfddb690e1c080afaeac06463f5da743f2dd8a667",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.text-underline-position-property",
+          "css-text-decor-3.text-underline-position-property-clause-cca2516ebb1d",
+          "css-text-decor-3.text-underline-position-property-clause-e7533c94a472",
+          "css-text-decor-3.text-underline-position-property-clause-e7a36791d999",
+          "css-text-decor-3.text-underline-position-property-clause-d7b763bb5e84",
+          "css-text-decor-3.text-underline-position-property-clause-dda3bb305021",
+          "css-text-decor-3.text-underline-position-property-clause-8c72b68947d4",
+          "css-text-decor-3.text-underline-position-property-clause-ec2b3b41e7ae",
+          "css-text-decor-3.text-underline-position-property-clause-c4fb590682df",
+          "css-text-decor-3.text-underline-position-property-clause-3bd0ed9cd9f5"
+        ]
+      }
+    },
+    {
+      "id": "emphasis-marks",
+      "title": "3. Emphasis Marks",
+      "level": 2,
+      "text_sha256": "089b65bd21e7ca688ab4b989b5df4e8abdfb83f8877d1d92e20510b46fb50873",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.emphasis-marks"
+        ]
+      }
+    },
+    {
+      "id": "text-emphasis-style-property",
+      "title": "3.1. Emphasis Mark Style: the text-emphasis-style property",
+      "level": 3,
+      "text_sha256": "a3f64c140f3201695a52aec2636152533cd244e9b6d4a2d4d3561691f6550bbd",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.text-emphasis-style-property",
+          "css-text-decor-3.text-emphasis-style-property-clause-cca2516ebb1d",
+          "css-text-decor-3.text-emphasis-style-property-clause-1368cce03212",
+          "css-text-decor-3.text-emphasis-style-property-clause-6f19790feade",
+          "css-text-decor-3.text-emphasis-style-property-clause-9ef22b80d3ea"
+        ]
+      }
+    },
+    {
+      "id": "text-emphasis-color-property",
+      "title": "3.2. Emphasis Mark Color: the text-emphasis-color property",
+      "level": 3,
+      "text_sha256": "3442703f88ebde0fc6c4a7fcd6196c7f716e327ecae6d188a920d9e49f74aa29",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.text-emphasis-color-property",
+          "css-text-decor-3.text-emphasis-color-property-clause-cca2516ebb1d",
+          "css-text-decor-3.text-emphasis-color-property-clause-dee972826276",
+          "css-text-decor-3.text-emphasis-color-property-clause-dee19a78f35e"
+        ]
+      }
+    },
+    {
+      "id": "text-emphasis-property",
+      "title": "3.3. Emphasis Mark Shorthand: the text-emphasis property",
+      "level": 3,
+      "text_sha256": "6c821bf2606e0fe988a8df7019835a55dd364be714e67bff4bb4ffe0bfc0e325",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.text-emphasis-property",
+          "css-text-decor-3.text-emphasis-property-clause-cca2516ebb1d",
+          "css-text-decor-3.text-emphasis-property-clause-d02c2d0da293",
+          "css-text-decor-3.text-emphasis-property-clause-31291c482d41"
+        ]
+      }
+    },
+    {
+      "id": "text-emphasis-position-property",
+      "title": "3.4. Emphasis Mark Position: the text-emphasis-position property",
+      "level": 3,
+      "text_sha256": "0a4bc880bbdad92ca8a052d8343a2d4f0cc3b03995c9af57cbc90c55ee8273a0",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.text-emphasis-position-property",
+          "css-text-decor-3.text-emphasis-position-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "text-shadow-property",
+      "title": "4. Text Shadows: the text-shadow property",
+      "level": 2,
+      "text_sha256": "80bf1fe33adb722a81e229ebd9038ee5f6e501c624031d43302c30e47676e248",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.text-shadow-property",
+          "css-text-decor-3.text-shadow-property-clause-cca2516ebb1d",
+          "css-text-decor-3.text-shadow-property-clause-a3715795960c",
+          "css-text-decor-3.text-shadow-property-clause-78ba1409c3d4",
+          "css-text-decor-3.text-shadow-property-clause-91dd14d338df"
+        ]
+      }
+    },
+    {
+      "id": "painting",
+      "title": "5. Painting Text Decorations",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.painting"
+        ]
+      }
+    },
+    {
+      "id": "painting-order",
+      "title": "5.1. Painting Order of Text Decorations",
+      "level": 3,
+      "text_sha256": "1592727537afcb5ddf49191d12f0842048493c09a3dd9362b30b23f16bb44e6b",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.painting-order"
+        ]
+      }
+    },
+    {
+      "id": "overflow",
+      "title": "5.2. Overflow of Text Decorations",
+      "level": 3,
+      "text_sha256": "aa32d4ca62c7fb018bce0fa053388d450cdf0035e8133db6b3d2f1acc7f75d9f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.overflow"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "Appendix A: Acknowledgements",
+      "level": 2,
+      "text_sha256": "fb801ad1384cfc45e3c0498fafb575e0ad909e8dd0a9ae110537fa8f6b9c864e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "default-stylesheet",
+      "title": "Appendix B: Default UA Stylesheet",
+      "level": 2,
+      "text_sha256": "3196ecad4edeca111849572670b76a9120d5de47fa0daea340eec32aba4435c8",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.default-stylesheet",
+          "css-text-decor-3.default-stylesheet-clause-4bb708f5f80e"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Appendix C: Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-2019",
+      "title": "Changes since the August 2019 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "9ff38f22fceb8a9354aad9316a7631f03ef16b0d25c2eabaf7c41a8a2533f33d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.changes-2019"
+        ]
+      }
+    },
+    {
+      "id": "changes-2018",
+      "title": "Changes since the July 2018 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "f7977b4f0d5dcd65c8afac3c0157be993a2d537bb242a3eeb08b05f0f7ff3500",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.changes-2018"
+        ]
+      }
+    },
+    {
+      "id": "changes-2013",
+      "title": "Changes since the August 2013 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "446cf5fad1a0621ec214274a1604a24406ec440659eb9a36434f971ef0295cf5",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.changes-2013"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.w3c-conventions",
+          "css-text-decor-3.w3c-conventions-clause-5c98c879f070",
+          "css-text-decor-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.w3c-conformance-classes",
+          "css-text-decor-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-text-decor-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.w3c-partial",
+          "css-text-decor-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.w3c-testing",
+          "css-text-decor-3.w3c-testing-clause-1e0fff369221",
+          "css-text-decor-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.w3c-cr-exit-criteria",
+          "css-text-decor-3.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-text-decor-3.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-text-decor-3.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-text-decor-3.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-text-decor-3.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "c66149be42014b0c8a9974152d57e6c303337000d688f94d28bc9ce1273f118c",
+      "clause_count": 109,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "2f597ff85ae119c905e91b1aa0114df294acbd98c764c5da482588208ac8cd04",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "70103a8923a435abff0345750a3d5575ca67df8a55a292c354671db402b9a637",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "cd9727cefd9a85406f638d5f001b2360c841a58c39c4eaa0fe0046ff320280fa",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "01c1c505af2b0858904f8e3dbe46e923f5c8c7e400fc353235bc8217953781b1",
+      "clause_count": 99,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.property-index",
+          "css-text-decor-3.property-index-clause-4b59fe755d34",
+          "css-text-decor-3.property-index-clause-dee972826276",
+          "css-text-decor-3.property-index-clause-a3715795960c"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "73073582fd8ab28d0c184d53293b1fb23ae6a831ad96760278cd9f1c63aeb117",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-text-decor-3.issues-index"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-ui",
+  "sections": [
+    {
+      "id": "q18.0",
+      "title": "18 User interface",
+      "level": 1,
+      "text_sha256": "e47984d551746f165dd5396206bc3c5543975e4128ba3b8fc89ab5250466a589",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-ui.q18-0"
+        ]
+      }
+    },
+    {
+      "id": "cursor-props",
+      "title": "18.1 Cursors: the 'cursor' property",
+      "level": 2,
+      "text_sha256": "661836128110b990efa7e1b0b8be0fd573fe4b134c28710a3413093a52fd968d",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-ui.cursor-props",
+          "css21-ui.cursor-props-clause-797eda7da1de",
+          "css21-ui.cursor-props-clause-cca2516ebb1d",
+          "css21-ui.cursor-props-clause-86a0835e3fe8",
+          "css21-ui.cursor-props-clause-76092990cfac",
+          "css21-ui.cursor-props-clause-9c07ed556a30",
+          "css21-ui.cursor-props-clause-0eda1d4ccdc6"
+        ]
+      }
+    },
+    {
+      "id": "system-colors",
+      "title": "18.2 System Colors",
+      "level": 2,
+      "text_sha256": "f187d0da5d2fe427ec42ac3cac02302d53d542fc990e18f2173152940392e16f",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-ui.system-colors",
+          "css21-ui.system-colors-clause-fec0d0ca8fd1"
+        ]
+      }
+    },
+    {
+      "id": "system-fonts",
+      "title": "18.3 User preferences for fonts",
+      "level": 2,
+      "text_sha256": "75ce864c162ee016bf0d071599f39906161a0bef598280e9728b0b9ac2f8c0f8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-ui.system-fonts"
+        ]
+      }
+    },
+    {
+      "id": "x2",
+      "title": "18.4 Dynamic outlines: the 'outline' property",
+      "level": 2,
+      "text_sha256": "e42a3543f46632542cbfd8d58a686b7d09010247c5ffc9ca0561b124587302e3",
+      "clause_count": 83,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-ui.x2",
+          "css21-ui.x2-clause-98999c7ceab9",
+          "css21-ui.x2-clause-cca2516ebb1d",
+          "css21-ui.x2-clause-fea4ea2cc03b",
+          "css21-ui.x2-clause-c749dff961ef",
+          "css21-ui.x2-clause-d59ff219b376",
+          "css21-ui.x2-clause-4f055adcb2a5",
+          "css21-ui.x2-clause-501ec4469bfa",
+          "css21-ui.x2-clause-2bb374a6e8c2",
+          "css21-ui.x2-clause-7a39c11d8232",
+          "css21-ui.x2-clause-85aa74564232",
+          "css21-ui.x2-clause-a6d5e0b8869d",
+          "css21-ui.x2-clause-12b5e4767233"
+        ]
+      }
+    },
+    {
+      "id": "outline-focus",
+      "title": "18.4.1 Outlines and the focus",
+      "level": 3,
+      "text_sha256": "4e0955f7b3ed12bfbfed267ba6c91e482653918968270ee2c9bd88eb11e191ef",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-ui.outline-focus",
+          "css21-ui.outline-focus-clause-0c68f32af628"
+        ]
+      }
+    },
+    {
+      "id": "magnification",
+      "title": "18.5 Magnification",
+      "level": 2,
+      "text_sha256": "813fb48c0ee06cd521ea151a889dbe30b831d70968745d0c09d0f101719197ba",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-ui.magnification",
+          "css21-ui.magnification-clause-1799e51158c5",
+          "css21-ui.magnification-clause-38d4f76ce20d"
+        ]
+      }
+    }
+  ]
+}

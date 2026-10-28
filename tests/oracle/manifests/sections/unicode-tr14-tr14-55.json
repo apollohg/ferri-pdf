@@ -1,0 +1,1431 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode-tr14-tr14-55",
+  "sections": [
+    {
+      "id": "heading-c1e12f048325",
+      "title": "Unicode® Standard Annex #14",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-c1e12f048325"
+        ]
+      }
+    },
+    {
+      "id": "heading-86cf37324aad",
+      "title": "Unicode Line Breaking Algorithm",
+      "level": 1,
+      "text_sha256": "97f4f47e6e0dfa086000bd0932239de6bd62f28bf19db9ea907674c3a1021b82",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-86cf37324aad"
+        ]
+      }
+    },
+    {
+      "id": "heading-562e5643bfd0",
+      "title": "Summary",
+      "level": 4,
+      "text_sha256": "f20424b055af70e3127db1957adb57c944f9ed6555d17776f42848fd43968d49",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-562e5643bfd0",
+          "unicode-tr14-tr14-55.heading-562e5643bfd0-clause-f20424b055af"
+        ]
+      }
+    },
+    {
+      "id": "heading-b67e4e63a5c4",
+      "title": "Status",
+      "level": 4,
+      "text_sha256": "969770954d10eb10c58c417e62f0aeb8ceca31b93e33871538ad4b7096754f2f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-b67e4e63a5c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-35d8550f521f",
+      "title": "Contents",
+      "level": 4,
+      "text_sha256": "8aff814e00d07e6faea29516020e5b41ef05916fcbd9b909f024ec879ac05ad1",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-35d8550f521f",
+          "unicode-tr14-tr14-55.heading-35d8550f521f-clause-ded723085b92"
+        ]
+      }
+    },
+    {
+      "id": "Scope",
+      "title": "1 Overview and Scope",
+      "level": 2,
+      "text_sha256": "e425f97899d272a4fb6226b73d3c0f8cdfb1e28f93ce9b67798bf784e6af0cff",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.scope",
+          "unicode-tr14-tr14-55.scope-clause-21a312fdb104",
+          "unicode-tr14-tr14-55.scope-clause-8f34a01bfa3d",
+          "unicode-tr14-tr14-55.scope-clause-cb3d35e17bdf",
+          "unicode-tr14-tr14-55.scope-clause-6e1442e90a81",
+          "unicode-tr14-tr14-55.scope-clause-88561a39d518",
+          "unicode-tr14-tr14-55.scope-clause-1cb65e787a54"
+        ]
+      }
+    },
+    {
+      "id": "Definitions",
+      "title": "2 Definitions",
+      "level": 2,
+      "text_sha256": "31b809247b211c3dde55f20ef488d3b47b573b92c1bbdedf84d0f3fb786b3793",
+      "clause_count": 238,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.definitions",
+          "unicode-tr14-tr14-55.definitions-clause-f8d58d15d032",
+          "unicode-tr14-tr14-55.definitions-clause-793ffd5e5d82",
+          "unicode-tr14-tr14-55.definitions-clause-17c72118d465",
+          "unicode-tr14-tr14-55.definitions-clause-e4ef1819d1a8"
+        ]
+      }
+    },
+    {
+      "id": "Introduction",
+      "title": "3 Introduction",
+      "level": 2,
+      "text_sha256": "17ddfccd6a671972c24a3960e5181b9740abaa9dd01967415b906ccab3a0c9c9",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.introduction",
+          "unicode-tr14-tr14-55.introduction-clause-236e2a67b63f",
+          "unicode-tr14-tr14-55.introduction-clause-630b1fcf5aac",
+          "unicode-tr14-tr14-55.introduction-clause-4e0a7047becb"
+        ]
+      }
+    },
+    {
+      "id": "BreakOpportunities",
+      "title": "3.1 Determining Line Break Opportunities",
+      "level": 3,
+      "text_sha256": "0353282b60b556d1660dc648a27ae7d6c18b42c195eef8b87f064358e97f2412",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.breakopportunities",
+          "unicode-tr14-tr14-55.breakopportunities-clause-54374cc738ce"
+        ]
+      }
+    },
+    {
+      "id": "Conformance",
+      "title": "4 Conformance",
+      "level": 2,
+      "text_sha256": "a082f47515cbad4ed93c3337fbcd9f744f76754aa7320c6dc0c56d1106eae757",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.conformance",
+          "unicode-tr14-tr14-55.conformance-clause-2ae9aafa4d3d",
+          "unicode-tr14-tr14-55.conformance-clause-fbd215ad07ab",
+          "unicode-tr14-tr14-55.conformance-clause-2115f271cceb"
+        ]
+      }
+    },
+    {
+      "id": "ConfRequirements",
+      "title": "4.1 Conformance Requirements",
+      "level": 3,
+      "text_sha256": "2b576bb1e0233ae9ee776c7ffd90751af8b7eda06f3b205a78b74f28bf818b2f",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.confrequirements",
+          "unicode-tr14-tr14-55.confrequirements-clause-11de298bd010",
+          "unicode-tr14-tr14-55.confrequirements-clause-3aef17a7b1ed",
+          "unicode-tr14-tr14-55.confrequirements-clause-0437f54e1f68",
+          "unicode-tr14-tr14-55.confrequirements-clause-cdc7ce887f90",
+          "unicode-tr14-tr14-55.confrequirements-clause-5592c573022f"
+        ]
+      }
+    },
+    {
+      "id": "Properties",
+      "title": "5 Line Breaking Properties",
+      "level": 2,
+      "text_sha256": "7e8e53a4238bcee2c76590e439340c2c9d7f7cfa628c6b71aaa5952e44c27c73",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.properties",
+          "unicode-tr14-tr14-55.properties-clause-5297248bed50",
+          "unicode-tr14-tr14-55.properties-clause-f5ae439cb64c"
+        ]
+      }
+    },
+    {
+      "id": "heading-6938d89b01bc",
+      "title": "Data File",
+      "level": 4,
+      "text_sha256": "99eeae5aeefae936785931366acf32bb317b01675bdb3849e9841fa5788f7584",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-6938d89b01bc"
+        ]
+      }
+    },
+    {
+      "id": "heading-93d2e0d11e52",
+      "title": "Future Updates",
+      "level": 4,
+      "text_sha256": "e1292fabf26d4c8b9815cd9bb8e118db016019bac0f4a39729d5163dd207741f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-93d2e0d11e52",
+          "unicode-tr14-tr14-55.heading-93d2e0d11e52-clause-e1292fabf26d"
+        ]
+      }
+    },
+    {
+      "id": "DescriptionOfProperties",
+      "title": "5.1 Description of Line Breaking Properties",
+      "level": 3,
+      "text_sha256": "a7a5d2c27512ff2254ddc4bc8d2fdfda2bb61b963ab4ea8ef3e1acb40e395a86",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.descriptionofproperties"
+        ]
+      }
+    },
+    {
+      "id": "AI",
+      "title": "AI: Ambiguous (Alphabetic or Ideograph)",
+      "level": 3,
+      "text_sha256": "6a47e2e66f37dfcf33a19670ef0a004b883be262ba70617995356df3408e09e7",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.ai",
+          "unicode-tr14-tr14-55.ai-clause-e622aabcecf2",
+          "unicode-tr14-tr14-55.ai-clause-36a0a55985de",
+          "unicode-tr14-tr14-55.ai-clause-4aa85babeb6a",
+          "unicode-tr14-tr14-55.ai-clause-b98122209bf1"
+        ]
+      }
+    },
+    {
+      "id": "AK",
+      "title": "AK: Aksara",
+      "level": 3,
+      "text_sha256": "d45d1277288ceda3511443ae1b6a1ebf424460f238c13414d05237fc2e059f20",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.ak"
+        ]
+      }
+    },
+    {
+      "id": "AL",
+      "title": "AL: Ordinary Alphabetic and Symbol Characters",
+      "level": 3,
+      "text_sha256": "ca68e00e5cb13f9108baf1a6682f88cdd6b531fc6ad07dc99e4a5451d57e670d",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.al",
+          "unicode-tr14-tr14-55.al-clause-270bf6a8e83a"
+        ]
+      }
+    },
+    {
+      "id": "AP",
+      "title": "AP: Aksara Pre-Base",
+      "level": 3,
+      "text_sha256": "73ceaff6e7ccaf59cf724cfdd1e860f1835a23d558298f6cc381f0f3bd707a43",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.ap"
+        ]
+      }
+    },
+    {
+      "id": "AS",
+      "title": "AS: Aksara Start",
+      "level": 3,
+      "text_sha256": "dd27c13bce61dff8b22abc060c0f208a002f9f21397ee84b1b2871a438541a50",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.as"
+        ]
+      }
+    },
+    {
+      "id": "BA",
+      "title": "BA: Break After",
+      "level": 3,
+      "text_sha256": "07d12d49df2273d6adbf8073ecf2e5569eb4f4f1cd78e8ce39c51b9fa691674c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.ba"
+        ]
+      }
+    },
+    {
+      "id": "heading-76e2e26e23f8",
+      "title": "Breaking Spaces",
+      "level": 4,
+      "text_sha256": "aa11da4e94cf5b9e4c425bfacc613995e9c70ab26d1f390c2e55c6d53987e6fc",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-76e2e26e23f8"
+        ]
+      }
+    },
+    {
+      "id": "heading-d66d23136bfb",
+      "title": "Tabs",
+      "level": 4,
+      "text_sha256": "2dcc2e61ffe4d1d956b41aeacdd9160efa0c5a3982a9f6e11d91a5ffd445f034",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-d66d23136bfb"
+        ]
+      }
+    },
+    {
+      "id": "heading-d80ed6e4c43a",
+      "title": "Conditional Hyphens",
+      "level": 4,
+      "text_sha256": "fc46c211f2472526aa2f51441b174a1f340d95b2ab9958a9be64e4aab76453da",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-d80ed6e4c43a"
+        ]
+      }
+    },
+    {
+      "id": "heading-b64d93516b5a",
+      "title": "Visible Word Dividers",
+      "level": 4,
+      "text_sha256": "3ee4ba256e4eed7caf4639006824aec9dcbb47405a2e1eb0873c96f15d145fd9",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-b64d93516b5a"
+        ]
+      }
+    },
+    {
+      "id": "heading-6c4e3994659e",
+      "title": "Historic Word Separators",
+      "level": 4,
+      "text_sha256": "b11148c7ce7e08b5294e8d124df11d2236ef151a3c14ce02f6c42c2cb68c1036",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-6c4e3994659e"
+        ]
+      }
+    },
+    {
+      "id": "heading-e699c0aff6b3",
+      "title": "Dandas",
+      "level": 4,
+      "text_sha256": "28881b2b736935a297b500df3fd16b3fe007760a275664fd711d9dd9878fd1b3",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-e699c0aff6b3"
+        ]
+      }
+    },
+    {
+      "id": "heading-c54826d5e888",
+      "title": "Tibetan",
+      "level": 4,
+      "text_sha256": "955c0dc6b7528112bd550a597a6f9b6bac63ba537da60f10d9de5c2ad8443768",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-c54826d5e888"
+        ]
+      }
+    },
+    {
+      "id": "heading-e1e7df005039",
+      "title": "Other Terminating Punctuation",
+      "level": 4,
+      "text_sha256": "337e9fca4d2f9ccc5accf69ba2c439a5af21ee3d7578e54ba3baa78f480f8858",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-e1e7df005039"
+        ]
+      }
+    },
+    {
+      "id": "heading-0dd2aba599d2",
+      "title": "Letters Attached to Orthographic Syllables",
+      "level": 4,
+      "text_sha256": "647f809727964a39100213997e24055a7c02d06d5c4dab107a95e16343713048",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-0dd2aba599d2",
+          "unicode-tr14-tr14-55.heading-0dd2aba599d2-clause-ccf890633739"
+        ]
+      }
+    },
+    {
+      "id": "BB",
+      "title": "BB: Break Before",
+      "level": 3,
+      "text_sha256": "ea97cde9735bd2140f9cf9ebc77e2e7080ee8d457d287f43158a846971c44d0a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.bb"
+        ]
+      }
+    },
+    {
+      "id": "heading-6453dd2bf2e7",
+      "title": "Dictionary Use",
+      "level": 4,
+      "text_sha256": "897ab75faa0195c13d48df8a205abf3f142919a9dd2afa5a903bfa4d0d4cae1b",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-6453dd2bf2e7",
+          "unicode-tr14-tr14-55.heading-6453dd2bf2e7-clause-ee4b829d3416"
+        ]
+      }
+    },
+    {
+      "id": "heading-bc4a9b86ea36",
+      "title": "Tibetan and Phags-Pa Head Letters",
+      "level": 4,
+      "text_sha256": "dd31df93bb36efdaf7af7a7b3a6cf83aa688a1db65ee24599583fd9e530b420e",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-bc4a9b86ea36"
+        ]
+      }
+    },
+    {
+      "id": "heading-41a6ea842dd1",
+      "title": "Mongolian",
+      "level": 4,
+      "text_sha256": "de0fd330bb30cec314c677b64d690c9cd7de7ade90a1960049f9d208567a134b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-41a6ea842dd1",
+          "unicode-tr14-tr14-55.heading-41a6ea842dd1-clause-3e659d5ac34c"
+        ]
+      }
+    },
+    {
+      "id": "B2",
+      "title": "B2: Break Opportunity Before and After",
+      "level": 3,
+      "text_sha256": "2bcff1740a97eed32e2755a4a179a082b7d2ea33dd4f29e5ba6f77b7cb744f90",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.b2",
+          "unicode-tr14-tr14-55.b2-clause-db75ed776baa"
+        ]
+      }
+    },
+    {
+      "id": "BK",
+      "title": "BK: Mandatory Break (Non-tailorable)",
+      "level": 3,
+      "text_sha256": "a212d83f3e7c0c143161e8d02572af4c19b0784bba2940b04f4c934a13c52be1",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.bk",
+          "unicode-tr14-tr14-55.bk-clause-33748fef9ee0"
+        ]
+      }
+    },
+    {
+      "id": "heading-e2267e8235bc",
+      "title": "Newline Function (NLF)",
+      "level": 4,
+      "text_sha256": "308b2097836d35be04616b937246fa0e04577b6b517b16a9cbe1d709648010a0",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-e2267e8235bc"
+        ]
+      }
+    },
+    {
+      "id": "CB",
+      "title": "CB: Contingent Break Opportunity",
+      "level": 3,
+      "text_sha256": "2decb6f76a07fb92b0fff7d9adb1859d5b6084fb0ee9e648df2be44058fda082",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.cb"
+        ]
+      }
+    },
+    {
+      "id": "CJ",
+      "title": "CJ: Conditional Japanese Starter",
+      "level": 3,
+      "text_sha256": "b95e4d24a194edfd0c0e337db097e87dc6e7dce5e81731195017148a2be2277c",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.cj"
+        ]
+      }
+    },
+    {
+      "id": "CL",
+      "title": "CL: Close Punctuation",
+      "level": 3,
+      "text_sha256": "4877f4794bd16f97f36b185572c389a68efd1439c692ac259959620546762684",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.cl",
+          "unicode-tr14-tr14-55.cl-clause-159ee54e8289"
+        ]
+      }
+    },
+    {
+      "id": "CM",
+      "title": "CM: Combining Mark (Non-tailorable)",
+      "level": 3,
+      "text_sha256": "ece0adf108f71be3b18d597976eddae203b8f8ac9bb28081e9f5b5f5543147d8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.cm"
+        ]
+      }
+    },
+    {
+      "id": "heading-e3c7bd0f4217",
+      "title": "Combining Characters",
+      "level": 4,
+      "text_sha256": "19321f7ae15768b2ba9d92ef24557503f646b1db72fccfd4870d66a69a7c90a5",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-e3c7bd0f4217",
+          "unicode-tr14-tr14-55.heading-e3c7bd0f4217-clause-2bee9561fc05",
+          "unicode-tr14-tr14-55.heading-e3c7bd0f4217-clause-9091cb898167"
+        ]
+      }
+    },
+    {
+      "id": "heading-7a160ea2cc90",
+      "title": "Control and Formatting Characters",
+      "level": 4,
+      "text_sha256": "001df3da7250fdf6855d3ea5b23e42bdc3f95981a49c725ef03a8671fbf1d7ad",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-7a160ea2cc90",
+          "unicode-tr14-tr14-55.heading-7a160ea2cc90-clause-d1281e851f71",
+          "unicode-tr14-tr14-55.heading-7a160ea2cc90-clause-64617a921926"
+        ]
+      }
+    },
+    {
+      "id": "CP",
+      "title": "CP: Closing Parenthesis",
+      "level": 3,
+      "text_sha256": "fd5f4ef91d97e893ea3c6d2042f3401642ad1ae633cded6928638597d45155b5",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.cp"
+        ]
+      }
+    },
+    {
+      "id": "CR",
+      "title": "CR: Carriage Return (Non-tailorable)",
+      "level": 3,
+      "text_sha256": "94dba4f377f2eda14a9505edf33b88157170d1f6a5c0cb93a643828bbc804399",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.cr",
+          "unicode-tr14-tr14-55.cr-clause-09c20e1e831b"
+        ]
+      }
+    },
+    {
+      "id": "EB",
+      "title": "EB: Emoji Base",
+      "level": 3,
+      "text_sha256": "2f60e55cf2e2d963ab2db1cc56093cdc63da8fe2bbc9d3da5a4207da7cd91c7c",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.eb"
+        ]
+      }
+    },
+    {
+      "id": "EM",
+      "title": "EM: Emoji Modifier",
+      "level": 3,
+      "text_sha256": "bf4266977b466f649d9a33d909011928ffd0a2b1b15e43f0455e74794b3c9c5d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.em"
+        ]
+      }
+    },
+    {
+      "id": "EX",
+      "title": "EX: Exclamation/Interrogation",
+      "level": 3,
+      "text_sha256": "910747a6dfb0eef36d5ba41abf70c861287a01aea709a3dae5fbd87c1bc7cf96",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.ex"
+        ]
+      }
+    },
+    {
+      "id": "GL",
+      "title": "GL: Non-breaking (“Glue”) (Non-tailorable)",
+      "level": 3,
+      "text_sha256": "58684d97d8082d3286eb3a73ccc3129689dcb6b505988d5209caa41c0dbf4a4c",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.gl",
+          "unicode-tr14-tr14-55.gl-clause-b5d6a0d7d974",
+          "unicode-tr14-tr14-55.gl-clause-f567e2972285"
+        ]
+      }
+    },
+    {
+      "id": "H2",
+      "title": "H2: Hangul LV Syllable",
+      "level": 3,
+      "text_sha256": "8cb0d3e092b4c998c3d79dc26412561e1b5a5f7455d94455805421aa39947e5c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.h2"
+        ]
+      }
+    },
+    {
+      "id": "H3",
+      "title": "H3: Hangul LVT Syllable",
+      "level": 3,
+      "text_sha256": "c07390125cda1bd664b4a8b42e24113ed93ccb6c5567a894d74131f0b6a8488f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.h3"
+        ]
+      }
+    },
+    {
+      "id": "HH",
+      "title": "HH: Unambiguous Hyphen",
+      "level": 3,
+      "text_sha256": "eb642e30b30d0432b6d0331f3234fb27bf9fd9a576c92e1ca573be0e3b510501",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.hh"
+        ]
+      }
+    },
+    {
+      "id": "HY",
+      "title": "HY: Hyphen",
+      "level": 3,
+      "text_sha256": "09da3b9b1ab8ab826af7ba277001f6e09ff6c6e5332a407866388df5b55f25c2",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.hy",
+          "unicode-tr14-tr14-55.hy-clause-bde78609f008"
+        ]
+      }
+    },
+    {
+      "id": "ID",
+      "title": "ID: Ideographic",
+      "level": 3,
+      "text_sha256": "46d7cd79e84456dd8d337864b28031dfd6b71ac7c30faf69292d68077d062129",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.id"
+        ]
+      }
+    },
+    {
+      "id": "heading-76db7ee9d90d",
+      "title": "Korean",
+      "level": 4,
+      "text_sha256": "a4298aa9ca2801c294db9b2bd3ee421b4ffe516d1c0c6f70011a3c1c38754a47",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-76db7ee9d90d"
+        ]
+      }
+    },
+    {
+      "id": "heading-a9fc07e5e5dc",
+      "title": "Symbols",
+      "level": 4,
+      "text_sha256": "e2363896399f755fa4acab02f81e49e965d2f0daa5466aef4536a57d87c08bf9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-a9fc07e5e5dc"
+        ]
+      }
+    },
+    {
+      "id": "HL",
+      "title": "HL: Hebrew Letter",
+      "level": 3,
+      "text_sha256": "75b97d8dff27a715a01950e2d5fcf11fd6546528cda6e240477ea4068c6d78bc",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.hl"
+        ]
+      }
+    },
+    {
+      "id": "IN",
+      "title": "IN: Inseparable Characters",
+      "level": 3,
+      "text_sha256": "8bcb42a65ff8c52019ea902a7d111e7503f3cd1eb79e5068852fb8dafcbacb1c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.in"
+        ]
+      }
+    },
+    {
+      "id": "heading-a242382c992b",
+      "title": "Leaders",
+      "level": 4,
+      "text_sha256": "223022ab2f4dbeeb3f238ee87e38fca27b2882a46dc9ce0e0d002523a4f4dea9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.heading-a242382c992b"
+        ]
+      }
+    },
+    {
+      "id": "IS",
+      "title": "IS: Infix Numeric Separator",
+      "level": 3,
+      "text_sha256": "3ab32201a3f816d95a228281c4de71028b9fcf60a83cbee1bf74aa3d4dd7d473",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.is"
+        ]
+      }
+    },
+    {
+      "id": "JL",
+      "title": "JL: Hangul L Jamo",
+      "level": 3,
+      "text_sha256": "a7795591750ca0e06cdf6a5ebe041cc2db371254f660ed8a6b9d686c30ddcc8f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.jl"
+        ]
+      }
+    },
+    {
+      "id": "JT",
+      "title": "JT: Hangul T Jamo",
+      "level": 3,
+      "text_sha256": "a018e831df1bf9479b40d719146a5854214fa91f96859e1f88ef179344613bf5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.jt"
+        ]
+      }
+    },
+    {
+      "id": "JV",
+      "title": "JV: Hangul V Jamo",
+      "level": 3,
+      "text_sha256": "6e91d5022ef263406797058c151654b74fa0a4f49635434a3364b16cd5689da5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.jv"
+        ]
+      }
+    },
+    {
+      "id": "LF",
+      "title": "LF: Line Feed (Non-tailorable)",
+      "level": 3,
+      "text_sha256": "87e3c77c4ff2be09ea775d12a585bddf33bd543f8acd8fa9920aae9da1c78a82",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.lf"
+        ]
+      }
+    },
+    {
+      "id": "NL",
+      "title": "NL: Next Line (Non-tailorable)",
+      "level": 3,
+      "text_sha256": "76207f0bceb6b032a9beb1b8bd0cb01aa196ed2f68b0f6fb598b2254d43a832b",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.nl",
+          "unicode-tr14-tr14-55.nl-clause-a7dfb2529ac2"
+        ]
+      }
+    },
+    {
+      "id": "NS",
+      "title": "NS: Nonstarters",
+      "level": 3,
+      "text_sha256": "b8333798ddefe69c373e73d1dfac29f346d8ae22a922ed99619020e4e85b5bab",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.ns"
+        ]
+      }
+    },
+    {
+      "id": "NU",
+      "title": "NU: Numeric",
+      "level": 3,
+      "text_sha256": "0b3e256cc37019d365dda0ea1cb35fa8466b97b45f9cddde88dc014a022f1f8f",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.nu"
+        ]
+      }
+    },
+    {
+      "id": "OP",
+      "title": "OP: Open Punctuation",
+      "level": 3,
+      "text_sha256": "c82d05aa07016427028f95a8f22db6507dc38bd5e78cbbad0beacc29ab546b7b",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.op",
+          "unicode-tr14-tr14-55.op-clause-5ed5ff429aa1"
+        ]
+      }
+    },
+    {
+      "id": "PO",
+      "title": "PO: Postfix Numeric",
+      "level": 3,
+      "text_sha256": "bb2854b57b558d591a9abc1529ef22ad270a00443b04f56749f401e862e90673",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.po",
+          "unicode-tr14-tr14-55.po-clause-158e33d7adf7"
+        ]
+      }
+    },
+    {
+      "id": "PR",
+      "title": "PR: Prefix Numeric",
+      "level": 3,
+      "text_sha256": "1a90f2e9ffab347bcc878c10a5f905c8d2b625784aa7a107d5794a47df35e4ea",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.pr",
+          "unicode-tr14-tr14-55.pr-clause-a4cdd97ff080"
+        ]
+      }
+    },
+    {
+      "id": "QU",
+      "title": "QU: Quotation",
+      "level": 3,
+      "text_sha256": "680ec705063b04b301da38d7f048b32f49baee48800cb3769828e4cbf0bcfc34",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.qu"
+        ]
+      }
+    },
+    {
+      "id": "RI",
+      "title": "RI: Regional Indicator",
+      "level": 3,
+      "text_sha256": "3fc03419c2b8f4911e44a5075b9fc5443790f0b3f734412ef66f0218b7010c2b",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.ri"
+        ]
+      }
+    },
+    {
+      "id": "SA",
+      "title": "SA: Complex-Context Dependent (South East Asian)",
+      "level": 3,
+      "text_sha256": "e9713e660d4b860f6f97989b99b9437799d82c0ed1f1c5571a68ee777741b89c",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.sa",
+          "unicode-tr14-tr14-55.sa-clause-1c8fe71d82a5",
+          "unicode-tr14-tr14-55.sa-clause-ad052c1919bc"
+        ]
+      }
+    },
+    {
+      "id": "SG",
+      "title": "SG: Surrogate (Non-tailorable)",
+      "level": 3,
+      "text_sha256": "2b97d8c4cd4333b9d7001dc3c6d946ab97f6d31c20d848de130bf6f355b98553",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.sg",
+          "unicode-tr14-tr14-55.sg-clause-d02846cb07d1",
+          "unicode-tr14-tr14-55.sg-clause-4f2cb4c6adb8"
+        ]
+      }
+    },
+    {
+      "id": "SP",
+      "title": "SP: Space (Non-tailorable)",
+      "level": 3,
+      "text_sha256": "e83263e94cafd33fbc6bec8cf0d32482da0ddcaa2ed5079da547b8b762a52501",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.sp"
+        ]
+      }
+    },
+    {
+      "id": "SY",
+      "title": "SY: Symbols Allowing Break After",
+      "level": 3,
+      "text_sha256": "310f90719a65dc5dfd62fab5db0c1e326ab6b75f21d84a1f19e5461137be627c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.sy"
+        ]
+      }
+    },
+    {
+      "id": "VF",
+      "title": "VF: Virama Final",
+      "level": 3,
+      "text_sha256": "678163ce37bb97581deb06d39a19a770f14e790c56cac0459cbbcc0733b37fbb",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.vf"
+        ]
+      }
+    },
+    {
+      "id": "VI",
+      "title": "VI: Virama",
+      "level": 3,
+      "text_sha256": "abd4ed88a7735583bf8692e4a310bd06e738cb74300a75f5a9036321595acddb",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.vi"
+        ]
+      }
+    },
+    {
+      "id": "WJ",
+      "title": "WJ: Word Joiner (Non-tailorable)",
+      "level": 3,
+      "text_sha256": "fa5290997bbf5dc6cb8d197a92e624c9fb785ef9aa2cc56303483d4d42057505",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.wj"
+        ]
+      }
+    },
+    {
+      "id": "XX",
+      "title": "XX: Unknown",
+      "level": 3,
+      "text_sha256": "eb0562e9061185bb52001e33e5405fe9dd59b35deb4ee51f32f17bf9d4788b91",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.xx",
+          "unicode-tr14-tr14-55.xx-clause-2572076b5fd2",
+          "unicode-tr14-tr14-55.xx-clause-b532ced7b6a6"
+        ]
+      }
+    },
+    {
+      "id": "ZW",
+      "title": "ZW: Zero Width Space (Non-tailorable)",
+      "level": 3,
+      "text_sha256": "0736713e45aa04144b6c044dd776d97cb8f885bdef7287045959268324c96093",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.zw"
+        ]
+      }
+    },
+    {
+      "id": "ZWJ",
+      "title": "ZWJ: Zero Width Joiner (Non-tailorable)",
+      "level": 3,
+      "text_sha256": "262c34cda2d58c71b80fd8c3c4a72c152278802abb55b74787fa09dc81d2a034",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.zwj"
+        ]
+      }
+    },
+    {
+      "id": "Dictionary",
+      "title": "5.2 Dictionary Usage",
+      "level": 3,
+      "text_sha256": "75f6e40160629bf164301082e2fb507b9b5ff31515711a5af97c2487b649c26e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.dictionary"
+        ]
+      }
+    },
+    {
+      "id": "Hyphen",
+      "title": "5.3 Use of Hyphen",
+      "level": 3,
+      "text_sha256": "93c648ecf9ebe344d66db70f12b9f13f19f98576191cdd454e09adb4e3301b0c",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.hyphen",
+          "unicode-tr14-tr14-55.hyphen-clause-c21d12ae40ca"
+        ]
+      }
+    },
+    {
+      "id": "SoftHyphen",
+      "title": "5.4 Use of Soft Hyphen",
+      "level": 3,
+      "text_sha256": "24704fc90ba0fd7c2592ce488e2535bd3570c4d230a40c39cdf33545b2120a24",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.softhyphen",
+          "unicode-tr14-tr14-55.softhyphen-clause-767349a55643",
+          "unicode-tr14-tr14-55.softhyphen-clause-cbac1f660080",
+          "unicode-tr14-tr14-55.softhyphen-clause-4c31656d6c48"
+        ]
+      }
+    },
+    {
+      "id": "DoubleHyphen",
+      "title": "5.5 Use of Double Hyphen",
+      "level": 3,
+      "text_sha256": "bd16ae86e2c96a33b8540e5c17b08759a9d777751727401c0b960bde2cb9ce66",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.doublehyphen"
+        ]
+      }
+    },
+    {
+      "id": "TibetanLinebreaking",
+      "title": "5.6 Tibetan Line Breaking",
+      "level": 3,
+      "text_sha256": "5b140952b05e8c2e71016fb42cd25581da4e58a760261a6769059e793edb0061",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.tibetanlinebreaking",
+          "unicode-tr14-tr14-55.tibetanlinebreaking-clause-3ac04a19fbaf"
+        ]
+      }
+    },
+    {
+      "id": "WordSeparators",
+      "title": "5.7 Word Separator Characters",
+      "level": 3,
+      "text_sha256": "8231bb517051fc2265ec456216cb5857340b7c389b0e22e4d6402923b1907894",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.wordseparators",
+          "unicode-tr14-tr14-55.wordseparators-clause-2e33c91382f8",
+          "unicode-tr14-tr14-55.wordseparators-clause-47eb576a2c9c"
+        ]
+      }
+    },
+    {
+      "id": "Algorithm",
+      "title": "6 Line Breaking Algorithm",
+      "level": 2,
+      "text_sha256": "9258f0f90910569153d459c03ae10fab78d28d21ccc38e72db2f156d23234b2b",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.algorithm",
+          "unicode-tr14-tr14-55.algorithm-clause-a59160052988",
+          "unicode-tr14-tr14-55.algorithm-clause-56f8d5348f88",
+          "unicode-tr14-tr14-55.algorithm-clause-41aa697c07cf"
+        ]
+      }
+    },
+    {
+      "id": "BreakingRules",
+      "title": "6.1 Non-tailorable Line Breaking Rules",
+      "level": 3,
+      "text_sha256": "8032ab19b72b18fb437097fa27aad9f95c4cf21cc66cf301e21eb439bde376ba",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.breakingrules",
+          "unicode-tr14-tr14-55.breakingrules-clause-1f7083b35f9f",
+          "unicode-tr14-tr14-55.breakingrules-clause-e14807211e6f",
+          "unicode-tr14-tr14-55.breakingrules-clause-9e9c35f0f663",
+          "unicode-tr14-tr14-55.breakingrules-clause-9a93b1efd817"
+        ]
+      }
+    },
+    {
+      "id": "TailorableBreakingRules",
+      "title": "6.2 Tailorable Line Breaking Rules",
+      "level": 3,
+      "text_sha256": "6afc80084d48c383f404c7345fe72fdb3f3331b1e9f174d71e98954bf050c403",
+      "clause_count": 128,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.tailorablebreakingrules",
+          "unicode-tr14-tr14-55.tailorablebreakingrules-clause-69f4ec5757bb",
+          "unicode-tr14-tr14-55.tailorablebreakingrules-clause-fcf6a1bed349",
+          "unicode-tr14-tr14-55.tailorablebreakingrules-clause-ce4de476bba2"
+        ]
+      }
+    },
+    {
+      "id": "PairBasedImplementation",
+      "title": "7 Deleted",
+      "level": 2,
+      "text_sha256": "e4b8185159fff79daf213c5351838c2f8513e7f3fad5d01a42b63137c6385362",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.pairbasedimplementation"
+        ]
+      }
+    },
+    {
+      "id": "Customization",
+      "title": "8 Customization",
+      "level": 2,
+      "text_sha256": "0b60ab129f860c6afe8bf037a2aef3796107d74b74a3e74da0181e026df0910f",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.customization",
+          "unicode-tr14-tr14-55.customization-clause-3cd27b9603e6"
+        ]
+      }
+    },
+    {
+      "id": "Tailoring",
+      "title": "8.1 Types of Tailoring",
+      "level": 3,
+      "text_sha256": "de2aded6ac965c863b8cc56515989bf6a9ec37e3fc0ba3d7016a11edb4c67ae0",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.tailoring",
+          "unicode-tr14-tr14-55.tailoring-clause-7d7c187d4820",
+          "unicode-tr14-tr14-55.tailoring-clause-8ec9635e1c50"
+        ]
+      }
+    },
+    {
+      "id": "Examples",
+      "title": "8.2 Examples of Customization",
+      "level": 3,
+      "text_sha256": "24a0601168f0fd9391c06d0ede936b471cc3d9bbc076fbb52bb2b895bcb2e29f",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.examples",
+          "unicode-tr14-tr14-55.examples-clause-f522aeccab8b",
+          "unicode-tr14-tr14-55.examples-clause-5ecfb8dac4f8"
+        ]
+      }
+    },
+    {
+      "id": "ImplementationNotes",
+      "title": "9 Implementation Notes",
+      "level": 2,
+      "text_sha256": "c7c4373d20e8e101a80421efe5a790e53906b8a52ba5786273a2d35c8807858d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.implementationnotes"
+        ]
+      }
+    },
+    {
+      "id": "RegExCombining",
+      "title": "9.1 Combining Marks in Regular Expression-Based Implementations",
+      "level": 3,
+      "text_sha256": "5c354ec137335ebbca357291949b952d9777a0153aec3dbdf93c4cbadf5c8efc",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.regexcombining",
+          "unicode-tr14-tr14-55.regexcombining-clause-d53ccff6190f"
+        ]
+      }
+    },
+    {
+      "id": "LegacySpace",
+      "title": "9.2 Legacy Support for Space Character as Base for Combining Marks",
+      "level": 3,
+      "text_sha256": "e0d26e3b05f8b4a52a780933423db5ae00e60cd180e39cf3ab4508320c982114",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.legacyspace",
+          "unicode-tr14-tr14-55.legacyspace-clause-dda9ada650a8",
+          "unicode-tr14-tr14-55.legacyspace-clause-2d03d185169f"
+        ]
+      }
+    },
+    {
+      "id": "Testing",
+      "title": "10 Testing",
+      "level": 2,
+      "text_sha256": "adfdf7e6349a2e6f63fb57f5ba2093fc6db6adf5a8b70d4d5cc1cc9f72fd19f0",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.testing"
+        ]
+      }
+    },
+    {
+      "id": "History",
+      "title": "11 History",
+      "level": 2,
+      "text_sha256": "d23275428f6d34e40f7e81f139f104bb6182cff3fd76a8c293dcc1eeed0d939a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.history",
+          "unicode-tr14-tr14-55.history-clause-cda2281b7e0b",
+          "unicode-tr14-tr14-55.history-clause-1e7e816edef7",
+          "unicode-tr14-tr14-55.history-clause-cda122ac9c32",
+          "unicode-tr14-tr14-55.history-clause-6c050e611c31"
+        ]
+      }
+    },
+    {
+      "id": "References",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "523ed6f1b3c0ad5b141536cbe877cc012728f7471dfe8879f96f9e52fec998ed",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.references"
+        ]
+      }
+    },
+    {
+      "id": "Acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "3dea001a0c9197722c882eb89aa69a83be3fd77932bedd499e3aef7cc8ef4ea8",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "Modifications",
+      "title": "Modifications",
+      "level": 2,
+      "text_sha256": "881170176611ed1489cf12d780c9554a2853c5b5019ff4c58f897dea5ebbf862",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr14-tr14-55.modifications",
+          "unicode-tr14-tr14-55.modifications-clause-5be5b43ece0e"
+        ]
+      }
+    }
+  ]
+}

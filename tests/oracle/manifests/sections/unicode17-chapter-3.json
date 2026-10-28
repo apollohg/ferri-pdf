@@ -1,0 +1,1074 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-3",
+  "sections": [
+    {
+      "id": "G769",
+      "title": "Conformance",
+      "level": 1,
+      "text_sha256": "704ef90a47c47877933674fae470fb757b0708eb36e01122389cea6ef2aad326",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.g769"
+        ]
+      }
+    },
+    {
+      "id": "heading-e850fa185447",
+      "title": "3.1 Versions of the Unicode Standard",
+      "level": 2,
+      "text_sha256": "098583af645b3c757e499d112fd0a13272b1b1e5b9b2926a83a36110d4080f39",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-e850fa185447",
+          "unicode17-chapter-3.heading-e850fa185447-clause-952129fb56a7"
+        ]
+      }
+    },
+    {
+      "id": "heading-fc5500f00ebf",
+      "title": "3.1.1 Stability",
+      "level": 3,
+      "text_sha256": "2095caf7506f70311c099e08a67e7e7732ef9f1e4a5b88c575c89dee98d64f74",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-fc5500f00ebf"
+        ]
+      }
+    },
+    {
+      "id": "heading-cbcdbb82956a",
+      "title": "3.1.2 Version Numbering",
+      "level": 3,
+      "text_sha256": "dfd3aa9ca7c25f383315ab56761f2daf1df9a25fe63f11704798540dd3bf1e2b",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-cbcdbb82956a"
+        ]
+      }
+    },
+    {
+      "id": "heading-b9f365b63235",
+      "title": "3.1.3 Errata and Corrigenda",
+      "level": 3,
+      "text_sha256": "968a8fab5a311ab538a89028e0a60ef3e68ebabe6ca4480ebbe02895fd809d04",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-b9f365b63235"
+        ]
+      }
+    },
+    {
+      "id": "heading-4b32f51a810d",
+      "title": "3.1.4 References to the Unicode Standard",
+      "level": 3,
+      "text_sha256": "c6a23d6e0cafdd59f09f20f5032581f9acda8270e53ac663e300a030d28839fb",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-4b32f51a810d"
+        ]
+      }
+    },
+    {
+      "id": "heading-88271b9d9a89",
+      "title": "3.1.5 Precision in Version Citation",
+      "level": 3,
+      "text_sha256": "4a9f22f94949f322b81c1121f7fc4aa6f2acdcb102423010d414fcb896b631cf",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-88271b9d9a89",
+          "unicode17-chapter-3.heading-88271b9d9a89-clause-80dd2d64401e"
+        ]
+      }
+    },
+    {
+      "id": "heading-a550edd23fae",
+      "title": "3.1.6 References to Unicode Character Properties",
+      "level": 3,
+      "text_sha256": "aab9a973994c8ea0cb9aa863e6e1b91d7eeddaec74d2362807afe4c3ecfe6916",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-a550edd23fae"
+        ]
+      }
+    },
+    {
+      "id": "heading-bb9ab779efe2",
+      "title": "3.1.7 References to Unicode Algorithms",
+      "level": 3,
+      "text_sha256": "cf5a5f59c6dc9271afd80710388487c6ac017e59cbd2f3f950e192631e049c09",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-bb9ab779efe2",
+          "unicode17-chapter-3.heading-bb9ab779efe2-clause-670839c70c3a",
+          "unicode17-chapter-3.heading-bb9ab779efe2-clause-0aaf6a4beb65",
+          "unicode17-chapter-3.heading-bb9ab779efe2-clause-0456825eb08b",
+          "unicode17-chapter-3.heading-bb9ab779efe2-clause-602a0e2afcc6",
+          "unicode17-chapter-3.heading-bb9ab779efe2-clause-44d62428aafc",
+          "unicode17-chapter-3.heading-bb9ab779efe2-clause-8ea56f3abf53"
+        ]
+      }
+    },
+    {
+      "id": "heading-5aaa9c0de083",
+      "title": "3.2 Conformance Requirements",
+      "level": 2,
+      "text_sha256": "0320fcf097ef292e268db525233e76f9e86b0383c5ed186bcf3282e30f66aecf",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-5aaa9c0de083"
+        ]
+      }
+    },
+    {
+      "id": "heading-a068d48a1d80",
+      "title": "3.2.1 Code Points Unassigned to Abstract Characters",
+      "level": 3,
+      "text_sha256": "0c7feb1f52ec7e8edcf22c5f6202a6cc586fcf1910d46eaed9bcdda62b5c7ffd",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-a068d48a1d80",
+          "unicode17-chapter-3.heading-a068d48a1d80-clause-086966f10a3a",
+          "unicode17-chapter-3.heading-a068d48a1d80-clause-dd43b80f045e",
+          "unicode17-chapter-3.heading-a068d48a1d80-clause-34ca4e303d8c",
+          "unicode17-chapter-3.heading-a068d48a1d80-clause-decc6b4c0896"
+        ]
+      }
+    },
+    {
+      "id": "heading-ece6b69aa915",
+      "title": "3.2.2 Interpretation",
+      "level": 3,
+      "text_sha256": "2309000d93acbaf6b5942c4d9dea2c06f7396faddd9973ccc4d22f39ba22ae2e",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-ece6b69aa915",
+          "unicode17-chapter-3.heading-ece6b69aa915-clause-16b62feb62f5",
+          "unicode17-chapter-3.heading-ece6b69aa915-clause-60107c224599",
+          "unicode17-chapter-3.heading-ece6b69aa915-clause-5acae923faa9",
+          "unicode17-chapter-3.heading-ece6b69aa915-clause-188f990df9b4"
+        ]
+      }
+    },
+    {
+      "id": "heading-2ac8c6858b10",
+      "title": "3.2.3 Modification",
+      "level": 3,
+      "text_sha256": "fcd65b3de93a390ff50f61be76e9f64d924f23a42e440b819d8511a53800d2c9",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-2ac8c6858b10",
+          "unicode17-chapter-3.heading-2ac8c6858b10-clause-f9b70b65156e",
+          "unicode17-chapter-3.heading-2ac8c6858b10-clause-c3377a45f67a",
+          "unicode17-chapter-3.heading-2ac8c6858b10-clause-4f02477dd631"
+        ]
+      }
+    },
+    {
+      "id": "heading-8c639137b92f",
+      "title": "3.2.4 Character Encoding Forms",
+      "level": 3,
+      "text_sha256": "7ff771918724a2e67c1383806f395c87fd525864148bbc6cb97dfa6455d01400",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-8c639137b92f",
+          "unicode17-chapter-3.heading-8c639137b92f-clause-74a141b3acf7",
+          "unicode17-chapter-3.heading-8c639137b92f-clause-af3710836182",
+          "unicode17-chapter-3.heading-8c639137b92f-clause-1de99d93e642",
+          "unicode17-chapter-3.heading-8c639137b92f-clause-2ed221dec452",
+          "unicode17-chapter-3.heading-8c639137b92f-clause-a9d56298b7c8"
+        ]
+      }
+    },
+    {
+      "id": "heading-c8fcd719dd5b",
+      "title": "3.2.5 Character Encoding Schemes",
+      "level": 3,
+      "text_sha256": "927f96136043a4b72749fec506995fea9fd4d5af7eb09d8e38597c7d97bdf492",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-c8fcd719dd5b",
+          "unicode17-chapter-3.heading-c8fcd719dd5b-clause-eafd028aa6f6"
+        ]
+      }
+    },
+    {
+      "id": "heading-ff1b4785665b",
+      "title": "3.2.6 Bidirectional Text",
+      "level": 3,
+      "text_sha256": "839f00c621afd19058f269e2e6e0ca0ca51982c43e306ca72552758fbf6b236f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-ff1b4785665b",
+          "unicode17-chapter-3.heading-ff1b4785665b-clause-a7a97374101b",
+          "unicode17-chapter-3.heading-ff1b4785665b-clause-f09b3c49e451"
+        ]
+      }
+    },
+    {
+      "id": "heading-0234a6257a64",
+      "title": "3.2.7 Normalization Forms",
+      "level": 3,
+      "text_sha256": "fc8a286dd24ded83710cdb8a15013a5dc45d3231d54c245889a05714f3227c9c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-0234a6257a64",
+          "unicode17-chapter-3.heading-0234a6257a64-clause-ca24d984df5c",
+          "unicode17-chapter-3.heading-0234a6257a64-clause-b016c30405d4",
+          "unicode17-chapter-3.heading-0234a6257a64-clause-0d55187fb99b",
+          "unicode17-chapter-3.heading-0234a6257a64-clause-e16c5d77dc7b"
+        ]
+      }
+    },
+    {
+      "id": "heading-0343b35b6df2",
+      "title": "3.2.8 Normative References",
+      "level": 3,
+      "text_sha256": "d3aeacbd6a7388fdd31e6863dcd00110d9c369628a44a76bdae252802884eedc",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-0343b35b6df2"
+        ]
+      }
+    },
+    {
+      "id": "heading-e48aa8b73ae0",
+      "title": "3.2.9 Unicode Algorithms",
+      "level": 3,
+      "text_sha256": "361d6a14bfcf760abea534a543cef7e5d8ba186ea5e55cb7d8957e509259d095",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-e48aa8b73ae0",
+          "unicode17-chapter-3.heading-e48aa8b73ae0-clause-133a25d6c734",
+          "unicode17-chapter-3.heading-e48aa8b73ae0-clause-6284ff9c3e96",
+          "unicode17-chapter-3.heading-e48aa8b73ae0-clause-1426909447b6",
+          "unicode17-chapter-3.heading-e48aa8b73ae0-clause-87e6b896f94d",
+          "unicode17-chapter-3.heading-e48aa8b73ae0-clause-b27dc67f9c34"
+        ]
+      }
+    },
+    {
+      "id": "heading-859885af8244",
+      "title": "3.2.10 Default Casing Algorithms",
+      "level": 3,
+      "text_sha256": "f40b80957e9e8b5906476a22ed1b3534a1292e5f8a078f29761750a85c9c5fa9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-859885af8244",
+          "unicode17-chapter-3.heading-859885af8244-clause-782e2c0654d1"
+        ]
+      }
+    },
+    {
+      "id": "heading-6305ffb91bfc",
+      "title": "3.2.11 Unicode Standard Annexes",
+      "level": 3,
+      "text_sha256": "e8e3164846191947455f3f703b3bec0858f8cba7778ac4ba16bc6fd1828d995d",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-6305ffb91bfc",
+          "unicode17-chapter-3.heading-6305ffb91bfc-clause-bd41d661f577",
+          "unicode17-chapter-3.heading-6305ffb91bfc-clause-5b718dd27e5d"
+        ]
+      }
+    },
+    {
+      "id": "heading-d3ce4562a7ac",
+      "title": "3.3 Semantics",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-d3ce4562a7ac"
+        ]
+      }
+    },
+    {
+      "id": "heading-657f79344185",
+      "title": "3.3.1 Definitions",
+      "level": 3,
+      "text_sha256": "c953e356ada06ed56343508a012b4cab566a2b14b00e988421d5a73ce3bd5442",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-657f79344185"
+        ]
+      }
+    },
+    {
+      "id": "heading-d54ea6c88e1f",
+      "title": "3.3.2 Character Identity and Semantics",
+      "level": 3,
+      "text_sha256": "2fa0c05440c76874c17b2d93094c034860164243883d4a9a8b8f633c9d71b22f",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-d54ea6c88e1f",
+          "unicode17-chapter-3.heading-d54ea6c88e1f-clause-9ddb7602ce26",
+          "unicode17-chapter-3.heading-d54ea6c88e1f-clause-53d4603e7866",
+          "unicode17-chapter-3.heading-d54ea6c88e1f-clause-e0c5b134c277",
+          "unicode17-chapter-3.heading-d54ea6c88e1f-clause-fdf4644aae76"
+        ]
+      }
+    },
+    {
+      "id": "heading-5f50656315f9",
+      "title": "3.4 Characters and Encoding",
+      "level": 2,
+      "text_sha256": "5dea3d2baeea2ceccd82fa196b37232e86ba4d3c1e0ca1b01bd45272866cdf6f",
+      "clause_count": 104,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-5f50656315f9",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-665258038514",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-4855b8c6e18a",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-5313156464c0",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-d4c5fa4da446",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-8c524ba3ecf3",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-edf955d79582",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-8eb861a308c0",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-600b211c065a",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-d364b5237e53",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-338b8d40f811",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-1142c9b2c3af",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-90fe4901c735",
+          "unicode17-chapter-3.heading-5f50656315f9-clause-aeea75044acc"
+        ]
+      }
+    },
+    {
+      "id": "heading-a6acca871445",
+      "title": "3.5 Properties",
+      "level": 2,
+      "text_sha256": "81e07a66f8b38a1be0d1ce041b014b4368d198b284aa3887aa585633d27db591",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-a6acca871445"
+        ]
+      }
+    },
+    {
+      "id": "heading-18bcf31a5e08",
+      "title": "3.5.1 Types of Properties",
+      "level": 3,
+      "text_sha256": "22698c0719371a639b7e35c874b119cb2db41342bda2693387ace08c8e3f7c83",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-18bcf31a5e08",
+          "unicode17-chapter-3.heading-18bcf31a5e08-clause-89569e5d3801"
+        ]
+      }
+    },
+    {
+      "id": "heading-41593ae35aa3",
+      "title": "3.5.2 Property Values",
+      "level": 3,
+      "text_sha256": "4db172817de340f928269a6fae9f982c5363aeb261c266f5f45e465ea0d95aaa",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-41593ae35aa3"
+        ]
+      }
+    },
+    {
+      "id": "heading-7b40cc3b42ea",
+      "title": "3.5.3 Default Property Values",
+      "level": 3,
+      "text_sha256": "0bcac433aa3a7e75172f6474d56bd3ce68578a4f6593ef6b9cac87a174cb1ea5",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-7b40cc3b42ea",
+          "unicode17-chapter-3.heading-7b40cc3b42ea-clause-206cfd472d65",
+          "unicode17-chapter-3.heading-7b40cc3b42ea-clause-ac3b653bec89",
+          "unicode17-chapter-3.heading-7b40cc3b42ea-clause-897643d93603"
+        ]
+      }
+    },
+    {
+      "id": "heading-97fad4a74edc",
+      "title": "3.5.4 Classification of Properties by Their Values",
+      "level": 3,
+      "text_sha256": "fcbbd7a9cbf8aa6eab8b1a79c63232eddb7dd4cfde67f71c70e88b4f08b7b33d",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-97fad4a74edc",
+          "unicode17-chapter-3.heading-97fad4a74edc-clause-9af037e280b3"
+        ]
+      }
+    },
+    {
+      "id": "heading-dd8c6bdace9a",
+      "title": "3.5.5 Property Status",
+      "level": 3,
+      "text_sha256": "f31c0c836d8d1852aad1793ed0ae24f95d7bfc22abdff776f3a83d7a8407f2e4",
+      "clause_count": 78,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-dd8c6bdace9a",
+          "unicode17-chapter-3.heading-dd8c6bdace9a-clause-50a6bda3507c",
+          "unicode17-chapter-3.heading-dd8c6bdace9a-clause-0e0cee8b3c0e",
+          "unicode17-chapter-3.heading-dd8c6bdace9a-clause-4c33de9cb3e9",
+          "unicode17-chapter-3.heading-dd8c6bdace9a-clause-772b3867b56e"
+        ]
+      }
+    },
+    {
+      "id": "heading-5d60b54c5155",
+      "title": "3.5.6 Context Dependence",
+      "level": 3,
+      "text_sha256": "18eb7cf8a94e2bdda22b866718e09493eb1f0304bf5dbffc1290ca105f46be3b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-5d60b54c5155"
+        ]
+      }
+    },
+    {
+      "id": "heading-d30436b380c0",
+      "title": "3.5.7 Stability of Properties",
+      "level": 3,
+      "text_sha256": "034ef79b02a4ee5aca2dc7c6d5e8849ea801a60e6ca88debbf463aab98338435",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-d30436b380c0",
+          "unicode17-chapter-3.heading-d30436b380c0-clause-c35865cdd19c",
+          "unicode17-chapter-3.heading-d30436b380c0-clause-85b39fd18a32",
+          "unicode17-chapter-3.heading-d30436b380c0-clause-415e12fbed66"
+        ]
+      }
+    },
+    {
+      "id": "heading-1f33811b2583",
+      "title": "3.5.8 Simple and Derived Properties",
+      "level": 3,
+      "text_sha256": "8ba9c7e2d27acc340925e71d72e9be4ee7d693c2e11845edfe70fffe5518a817",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-1f33811b2583",
+          "unicode17-chapter-3.heading-1f33811b2583-clause-86f619aee748"
+        ]
+      }
+    },
+    {
+      "id": "heading-ef0b418c8421",
+      "title": "3.5.9 Property Aliases",
+      "level": 3,
+      "text_sha256": "c55fa517b11e1bfff81a29b1199fb115654d3bd1ec29fbd264dc28e76f13a9c5",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-ef0b418c8421"
+        ]
+      }
+    },
+    {
+      "id": "heading-1981278b1c3d",
+      "title": "3.5.10 Private Use",
+      "level": 3,
+      "text_sha256": "1672f84a362e9cc58edc5857086403780d20a26664947919829b9afea9164b6d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-1981278b1c3d"
+        ]
+      }
+    },
+    {
+      "id": "heading-e8f516142850",
+      "title": "3.6 Combination",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-e8f516142850"
+        ]
+      }
+    },
+    {
+      "id": "heading-15c031ef059c",
+      "title": "3.6.1 Combining Character Sequences",
+      "level": 3,
+      "text_sha256": "50b4da10b16d894d3749b7202653581e46c0cd50f0dbfa01f29e329fbc7a457f",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-15c031ef059c",
+          "unicode17-chapter-3.heading-15c031ef059c-clause-a42bc51fb3a2"
+        ]
+      }
+    },
+    {
+      "id": "heading-7e993bad7284",
+      "title": "3.6.2 Grapheme Clusters",
+      "level": 3,
+      "text_sha256": "614e9b43e06a80fd0bbbb4435365117cb4fcf565082524704e51b7707db8776d",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-7e993bad7284",
+          "unicode17-chapter-3.heading-7e993bad7284-clause-27de54af322f"
+        ]
+      }
+    },
+    {
+      "id": "heading-4246078ec4aa",
+      "title": "3.6.3 Application of Combining Marks",
+      "level": 3,
+      "text_sha256": "e0e781d9b42aa5f1a3d12e37aefff14166646848f3d06200e2754e609dd63641",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-4246078ec4aa",
+          "unicode17-chapter-3.heading-4246078ec4aa-clause-dd668bdfa4fd",
+          "unicode17-chapter-3.heading-4246078ec4aa-clause-ffe6ca8dfac7",
+          "unicode17-chapter-3.heading-4246078ec4aa-clause-a93fafa9f87b",
+          "unicode17-chapter-3.heading-4246078ec4aa-clause-1a3e4092c65d",
+          "unicode17-chapter-3.heading-4246078ec4aa-clause-80400d2c4f29",
+          "unicode17-chapter-3.heading-4246078ec4aa-clause-9a625cbfe1dc"
+        ]
+      }
+    },
+    {
+      "id": "heading-f4514dc3700f",
+      "title": "3.7 Decomposition",
+      "level": 2,
+      "text_sha256": "d6644c9b18df7841891d4ebef3593776f6ad30d25c2fc6abce73f6f49bd4ff1d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-f4514dc3700f"
+        ]
+      }
+    },
+    {
+      "id": "heading-000e34eba199",
+      "title": "3.7.1 Compatibility Decomposition",
+      "level": 3,
+      "text_sha256": "1f0c363dc3a277eec2232a32610cd93d5dc2f8046f19fe25703329ad88d98c36",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-000e34eba199",
+          "unicode17-chapter-3.heading-000e34eba199-clause-0e06d5a2f9de"
+        ]
+      }
+    },
+    {
+      "id": "heading-cdd9b709edf5",
+      "title": "3.7.2 Canonical Decomposition",
+      "level": 3,
+      "text_sha256": "094ce06d8630c039118e49df1c212e301ca5789e2b96cf438654c1eec2a268ee",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-cdd9b709edf5",
+          "unicode17-chapter-3.heading-cdd9b709edf5-clause-6d44052daa6f"
+        ]
+      }
+    },
+    {
+      "id": "heading-d292d8f0a2c6",
+      "title": "3.8 Surrogates",
+      "level": 2,
+      "text_sha256": "e5c066046a19dc965af86f5ae75ff6baa81ac83e306a905a8ea095a6525b9067",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-d292d8f0a2c6"
+        ]
+      }
+    },
+    {
+      "id": "heading-8c3e62409e1a",
+      "title": "3.9 Unicode Encoding Forms",
+      "level": 2,
+      "text_sha256": "d5409f463167f3a0b6012a7e88ee2aa09799a663b41a4df279cd57b103f2d557",
+      "clause_count": 85,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-8c3e62409e1a",
+          "unicode17-chapter-3.heading-8c3e62409e1a-clause-8ef81bef9c46",
+          "unicode17-chapter-3.heading-8c3e62409e1a-clause-7da79960f969",
+          "unicode17-chapter-3.heading-8c3e62409e1a-clause-4f3b108406e7",
+          "unicode17-chapter-3.heading-8c3e62409e1a-clause-703a06aba348",
+          "unicode17-chapter-3.heading-8c3e62409e1a-clause-befad9509719",
+          "unicode17-chapter-3.heading-8c3e62409e1a-clause-981988e81135"
+        ]
+      }
+    },
+    {
+      "id": "heading-0263dc5fd662",
+      "title": "3.9.1 UTF-32",
+      "level": 3,
+      "text_sha256": "dc34bf4ac36098ca9bae70478b6a64fde1aca6384ec42c0a1150c40a175a9ab5",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-0263dc5fd662"
+        ]
+      }
+    },
+    {
+      "id": "heading-e3214bd0732b",
+      "title": "3.9.2 UTF-16",
+      "level": 3,
+      "text_sha256": "65d412c5f056499a43917b4853ee9021e530fce796b543419311d24cb00bbac0",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-e3214bd0732b"
+        ]
+      }
+    },
+    {
+      "id": "heading-f0aa91249fde",
+      "title": "3.9.3 UTF-8",
+      "level": 3,
+      "text_sha256": "1a6fd8104c8742556c947af02c4fab97719cda9e9444261dea8893176d1f71f8",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-f0aa91249fde"
+        ]
+      }
+    },
+    {
+      "id": "heading-e8f11267e559",
+      "title": "3.9.4 Encoding Form Conversion",
+      "level": 3,
+      "text_sha256": "e4a5802913d53f3c73861ddb041825ee5fecbcadad19d19051aee2ab7af768f0",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-e8f11267e559",
+          "unicode17-chapter-3.heading-e8f11267e559-clause-f6eb7e70feed"
+        ]
+      }
+    },
+    {
+      "id": "heading-75e2d49a7374",
+      "title": "3.9.5 Constraints on Conversion Processes",
+      "level": 3,
+      "text_sha256": "2e03aea52a2b6c341671e29115bf70ca58dc8b5a7525d746d2e362fe3312878c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-75e2d49a7374",
+          "unicode17-chapter-3.heading-75e2d49a7374-clause-e7eaceebadfa",
+          "unicode17-chapter-3.heading-75e2d49a7374-clause-f3d74059d567",
+          "unicode17-chapter-3.heading-75e2d49a7374-clause-1757a95cfef1"
+        ]
+      }
+    },
+    {
+      "id": "heading-a873df062a0b",
+      "title": "3.9.6 U+FFFD Substitution of Maximal Subparts",
+      "level": 3,
+      "text_sha256": "220f51449ff26824f05d8b53d7321576c54b8091e552fc9794aa6220ef1709a9",
+      "clause_count": 94,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-a873df062a0b"
+        ]
+      }
+    },
+    {
+      "id": "heading-64c5094eb895",
+      "title": "3.10 Unicode Encoding Schemes",
+      "level": 2,
+      "text_sha256": "ff786a00d2cf6dfb218a7fd340ebc73b5f4245bb02f72d34be251f8c1b482d18",
+      "clause_count": 94,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-64c5094eb895",
+          "unicode17-chapter-3.heading-64c5094eb895-clause-cecced670043",
+          "unicode17-chapter-3.heading-64c5094eb895-clause-15d90095efc2",
+          "unicode17-chapter-3.heading-64c5094eb895-clause-1cec7a7e0c91"
+        ]
+      }
+    },
+    {
+      "id": "heading-66c05db7092a",
+      "title": "3.11 Normalization Forms",
+      "level": 2,
+      "text_sha256": "6a53d56cc48f1095de58b1dde3fc2ce7f2f3f0f175cdef19da0196fc22681ddc",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-66c05db7092a",
+          "unicode17-chapter-3.heading-66c05db7092a-clause-1e23d46bd983",
+          "unicode17-chapter-3.heading-66c05db7092a-clause-06e0c11212f4",
+          "unicode17-chapter-3.heading-66c05db7092a-clause-b008287568fa"
+        ]
+      }
+    },
+    {
+      "id": "heading-c50a1bb311bd",
+      "title": "3.11.1 Normalization Stability",
+      "level": 3,
+      "text_sha256": "41f0bc9856dc1a6afcced2081080d911c0a795ec945fb7ad42d30a7889078184",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-c50a1bb311bd",
+          "unicode17-chapter-3.heading-c50a1bb311bd-clause-41f0bc9856dc"
+        ]
+      }
+    },
+    {
+      "id": "heading-548fe5ff1cda",
+      "title": "3.11.2 Combining Classes",
+      "level": 3,
+      "text_sha256": "a5be7303cb1884b33510c9ae9b7680546b73dac0d218d1433d77acdc10efadca",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-548fe5ff1cda",
+          "unicode17-chapter-3.heading-548fe5ff1cda-clause-1dcee3f4f15a",
+          "unicode17-chapter-3.heading-548fe5ff1cda-clause-493221e7e4cc",
+          "unicode17-chapter-3.heading-548fe5ff1cda-clause-f3d0b15e7b66",
+          "unicode17-chapter-3.heading-548fe5ff1cda-clause-348ba1f27b72",
+          "unicode17-chapter-3.heading-548fe5ff1cda-clause-cea39db33251"
+        ]
+      }
+    },
+    {
+      "id": "heading-1d394b4f464b",
+      "title": "3.11.3 Specification of Unicode Normalization Forms",
+      "level": 3,
+      "text_sha256": "de2d23b97a7444285840f483521fb738667ac8c90e1f74e3267689f56b1066ed",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-1d394b4f464b"
+        ]
+      }
+    },
+    {
+      "id": "heading-de2360195e17",
+      "title": "3.11.4 Starters",
+      "level": 3,
+      "text_sha256": "8f52e98b1e851909b265c363d2d3eecc0a0ff12d8b38769f2ea202d1421d15df",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-de2360195e17",
+          "unicode17-chapter-3.heading-de2360195e17-clause-7663f85a5722"
+        ]
+      }
+    },
+    {
+      "id": "heading-85320bb1c365",
+      "title": "3.11.5 Canonical Ordering Algorithm",
+      "level": 3,
+      "text_sha256": "010c48533b55178361d5e64ef6bb74d26f0f87f194e2c01a3fe8e3d634f50f94",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-85320bb1c365",
+          "unicode17-chapter-3.heading-85320bb1c365-clause-539334656d62",
+          "unicode17-chapter-3.heading-85320bb1c365-clause-6a7c979a2874",
+          "unicode17-chapter-3.heading-85320bb1c365-clause-ebe4421ed323"
+        ]
+      }
+    },
+    {
+      "id": "heading-24653d1811f6",
+      "title": "3.11.6 Canonical Composition Algorithm",
+      "level": 3,
+      "text_sha256": "1786e924950c0c567112fd2a19eb267f1578e2a88dfdd4bbb24aa0f9c4b0da8d",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-24653d1811f6",
+          "unicode17-chapter-3.heading-24653d1811f6-clause-f6990d114a3e",
+          "unicode17-chapter-3.heading-24653d1811f6-clause-2302b8439bfc",
+          "unicode17-chapter-3.heading-24653d1811f6-clause-48e5f4cae7ed",
+          "unicode17-chapter-3.heading-24653d1811f6-clause-83942cdc23fa",
+          "unicode17-chapter-3.heading-24653d1811f6-clause-ce15573e8f77",
+          "unicode17-chapter-3.heading-24653d1811f6-clause-b23fff8b131b"
+        ]
+      }
+    },
+    {
+      "id": "heading-cb35368392fa",
+      "title": "3.11.7 Definition of Normalization Forms",
+      "level": 3,
+      "text_sha256": "521baae18c03c7df9e0b290afc82713e5a39ea1914480992dbad1e63fcb6ea31",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-cb35368392fa",
+          "unicode17-chapter-3.heading-cb35368392fa-clause-abaff41e7c0e",
+          "unicode17-chapter-3.heading-cb35368392fa-clause-7d57349d5808"
+        ]
+      }
+    },
+    {
+      "id": "heading-423c1487b395",
+      "title": "3.12 Conjoining Jamo Behavior",
+      "level": 2,
+      "text_sha256": "69845df4a313e2395095fd86f73fb698c8fe3a8652aa618946c99d86c99c4905",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-423c1487b395",
+          "unicode17-chapter-3.heading-423c1487b395-clause-78eb2a26e3ad"
+        ]
+      }
+    },
+    {
+      "id": "heading-bf4da14bd468",
+      "title": "3.12.1 Definitions",
+      "level": 3,
+      "text_sha256": "2782a9d138ddc3e4bebf3436b3a1c7ea8eaf3557515080d76f0091852f41f38c",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-bf4da14bd468",
+          "unicode17-chapter-3.heading-bf4da14bd468-clause-c58e576f029d",
+          "unicode17-chapter-3.heading-bf4da14bd468-clause-916ef29d1f07"
+        ]
+      }
+    },
+    {
+      "id": "heading-c7b6af75b3dc",
+      "title": "3.12.2 Hangul Syllable Decomposition",
+      "level": 3,
+      "text_sha256": "6f0460fc6dce0cf3aa7e5f2fab6454127a9f904297cf3dd041929f20e5990a8e",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-c7b6af75b3dc",
+          "unicode17-chapter-3.heading-c7b6af75b3dc-clause-d137539bdfdb",
+          "unicode17-chapter-3.heading-c7b6af75b3dc-clause-35cf7588f0c8",
+          "unicode17-chapter-3.heading-c7b6af75b3dc-clause-c07eac1b664e",
+          "unicode17-chapter-3.heading-c7b6af75b3dc-clause-49d5c3e43e2b"
+        ]
+      }
+    },
+    {
+      "id": "heading-fecb07a03add",
+      "title": "3.12.3 Hangul Syllable Composition",
+      "level": 3,
+      "text_sha256": "68a70b92b523df7ce6ff91c7c20e1fa0d48d45fa3f735cd955e4579f19a4ce8c",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-fecb07a03add",
+          "unicode17-chapter-3.heading-fecb07a03add-clause-188b6b653cd6",
+          "unicode17-chapter-3.heading-fecb07a03add-clause-a75b469cc754",
+          "unicode17-chapter-3.heading-fecb07a03add-clause-da484f16132c"
+        ]
+      }
+    },
+    {
+      "id": "heading-99bcaa4c47d1",
+      "title": "3.12.4 Hangul Syllable Name Generation",
+      "level": 3,
+      "text_sha256": "48a57e3c59a517e23f2795beb2a1f676736191188cd3df5ed5cd4e67669b0171",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-99bcaa4c47d1",
+          "unicode17-chapter-3.heading-99bcaa4c47d1-clause-5f8f019b062b"
+        ]
+      }
+    },
+    {
+      "id": "heading-057904982b76",
+      "title": "3.12.5 Sample Code for Hangul Algorithms",
+      "level": 3,
+      "text_sha256": "415a681ba7431d7bf8ea04bf024fcd4d752e0a3a4adce3f19f5445d5f211601b",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-057904982b76",
+          "unicode17-chapter-3.heading-057904982b76-clause-7ebd7c5a0799",
+          "unicode17-chapter-3.heading-057904982b76-clause-73e218d773d5",
+          "unicode17-chapter-3.heading-057904982b76-clause-8eb0098c0c3a"
+        ]
+      }
+    },
+    {
+      "id": "heading-add25a4919c8",
+      "title": "3.13 Default Case Algorithms",
+      "level": 2,
+      "text_sha256": "ada560dd375c74810e9bdff39d56f08584ee5a7303c55a2dc2840866d48d544c",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-add25a4919c8"
+        ]
+      }
+    },
+    {
+      "id": "heading-d4d1c52f2ffc",
+      "title": "3.13.1 Definitions",
+      "level": 3,
+      "text_sha256": "1a03d2c7045a33c3a239ecfb1ed54a1edac8be50ac4e634fc000b44fc8763a03",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-d4d1c52f2ffc"
+        ]
+      }
+    },
+    {
+      "id": "heading-61f686ceda3d",
+      "title": "3.13.2 Default Case Conversion",
+      "level": 3,
+      "text_sha256": "299ce7a82afffc1f10540f2a9c4192f4e5e1a07db723e9981359a9bc43348ce8",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-61f686ceda3d"
+        ]
+      }
+    },
+    {
+      "id": "heading-a903e23413ca",
+      "title": "3.13.3 Default Case Folding",
+      "level": 3,
+      "text_sha256": "909d46b245069d250a2e7224367a1da49dca4b355766d77f444f6e1dae1bfdaf",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-a903e23413ca",
+          "unicode17-chapter-3.heading-a903e23413ca-clause-67ba1732981b"
+        ]
+      }
+    },
+    {
+      "id": "heading-ac0a653acd96",
+      "title": "3.13.4 Default Case Detection",
+      "level": 3,
+      "text_sha256": "7c1b656435c97e6aee10f116d0c2390f8cc5a60a0fa240f2d760efa82ae48d50",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-ac0a653acd96"
+        ]
+      }
+    },
+    {
+      "id": "heading-640d4714b8ae",
+      "title": "3.13.5 Default Caseless Matching",
+      "level": 3,
+      "text_sha256": "1a978bf021fdd3a6df1ecf90d3bd6f88d474a41192c08c5925c4f9bd0bf65255",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-3.heading-640d4714b8ae",
+          "unicode17-chapter-3.heading-640d4714b8ae-clause-bc9a09b23e0a",
+          "unicode17-chapter-3.heading-640d4714b8ae-clause-b40de9cbb777",
+          "unicode17-chapter-3.heading-640d4714b8ae-clause-40ed9796c28a",
+          "unicode17-chapter-3.heading-640d4714b8ae-clause-f0099b1c3c7a"
+        ]
+      }
+    }
+  ]
+}

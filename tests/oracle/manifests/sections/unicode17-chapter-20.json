@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-20",
+  "sections": [
+    {
+      "id": "G26398",
+      "title": "Americas",
+      "level": 1,
+      "text_sha256": "24d60db318617b2a00acaacdefff8a259a06bee39258be7c2c019095d3657fdc",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.g26398"
+        ]
+      }
+    },
+    {
+      "id": "heading-67fc68195695",
+      "title": "20.1 Cherokee",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.heading-67fc68195695"
+        ]
+      }
+    },
+    {
+      "id": "heading-2be024d9c335",
+      "title": "20.1.1 Cherokee: U+13A0–U+13FF",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.heading-2be024d9c335"
+        ]
+      }
+    },
+    {
+      "id": "heading-47392ae40e95",
+      "title": "Cherokee Supplement: U+AB70–U+ABBF",
+      "level": 3,
+      "text_sha256": "b3e8e176ae123e9179cb629b90143d4a81a0edee5df88eed04790d3d9dc3ae76",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.heading-47392ae40e95"
+        ]
+      }
+    },
+    {
+      "id": "heading-b1035f1c521c",
+      "title": "20.2 Canadian Aboriginal Syllabics",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.heading-b1035f1c521c"
+        ]
+      }
+    },
+    {
+      "id": "heading-4363f36db112",
+      "title": "20.2.1 Unified Canadian Aboriginal Syllabics: U+1400–U+167F",
+      "level": 3,
+      "text_sha256": "85575c0946a2f6b3c8a5f5fb4b086558ecaf95c43e52af4a31d77d10c7d53c6e",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.heading-4363f36db112"
+        ]
+      }
+    },
+    {
+      "id": "heading-6098b9590fa5",
+      "title": "20.2.2 Unified Canadian Aboriginal Syllabics Extended: U+18B0–U+18FF",
+      "level": 3,
+      "text_sha256": "e96e4e374db14a2c6c50d624f8d05f3021d4bb15055f9c3fb470808e7c89d25c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.heading-6098b9590fa5"
+        ]
+      }
+    },
+    {
+      "id": "heading-7bfcdb9b3b06",
+      "title": "20.2.3 Unified Canadian Aboriginal Syllabics Extended-A: U+11AB0–U+11ABF",
+      "level": 3,
+      "text_sha256": "16a92b1e6712a3b39a3d9fe04377333a74bef45a213d16ff314a94d3616ad5b4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.heading-7bfcdb9b3b06"
+        ]
+      }
+    },
+    {
+      "id": "heading-e8051af20a49",
+      "title": "20.3 Osage",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.heading-e8051af20a49"
+        ]
+      }
+    },
+    {
+      "id": "heading-754412fa7990",
+      "title": "20.3.1 Osage: U+104B0–U+104FF",
+      "level": 3,
+      "text_sha256": "ad48ec4798c0a103b94f0f006d58b7e708af11e91e953d4bbce015be950d68d7",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.heading-754412fa7990"
+        ]
+      }
+    },
+    {
+      "id": "heading-438061172b8f",
+      "title": "20.4 Deseret",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.heading-438061172b8f"
+        ]
+      }
+    },
+    {
+      "id": "heading-f21af828c6dc",
+      "title": "20.4.1 Deseret: U+10400–U+1044F",
+      "level": 3,
+      "text_sha256": "b6082e75fb8b7dddc54af1091eaa6987324d5ca0946f038ec0361c8551ec1d86",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-20.heading-f21af828c6dc"
+        ]
+      }
+    }
+  ]
+}

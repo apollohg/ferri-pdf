@@ -1,0 +1,3359 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-anchor-position-1.intro",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "6d281d0e874ee6003ed9240b08567f03229e1fc50151813090ca3188f4c62bc1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.values",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "197521b99f95aa18b6ab315000e2775c91a14b75fd90ef034871f00c29b11b39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.determining",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "determining"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Determining the Anchor.",
+      "locator": {
+        "section_id": "determining",
+        "text_sha256": "e4c3c4f0d3f332692266315556e1df6f5b5700fc6454b26483369637ddcb8249"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.name",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "name"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Creating an Anchor: the anchor-name property.",
+      "locator": {
+        "section_id": "name",
+        "text_sha256": "917769ff57169173e5acbba7b68ebbc6352aaeca4002ad142a93656448015818"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.name-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.name-clause-cca2516ebb1d",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "name"
+      ],
+      "behaviour": "Creating an Anchor: the anchor-name property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "name",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-scope",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-scope"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scoping Anchor Names: the anchor-scope property.",
+      "locator": {
+        "section_id": "anchor-scope",
+        "text_sha256": "ec327095ba4a4b08f44d6ab003bd24c130a5465f841e5a916025af04febac0f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.anchor-scope-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-scope-clause-cca2516ebb1d",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-scope"
+      ],
+      "behaviour": "Scoping Anchor Names: the anchor-scope property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-scope",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.target",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "target"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Finding an Anchor.",
+      "locator": {
+        "section_id": "target",
+        "text_sha256": "92733e11a2fd7a03564eb2eff81c4e1508a3cbda671a7e301d5632f53d1f8eca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.target-clause-5170faa923af",
+        "css-anchor-position-1.target-clause-c8105f83b66a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.target-clause-5170faa923af",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "target"
+      ],
+      "behaviour": "Finding an Anchor — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "target",
+        "clause_index": 0,
+        "clause_sha256": "5170faa923afc637d91f296bc4f312381504fcd927bc55d22cf7732200b1411d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.target-clause-c8105f83b66a",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "target"
+      ],
+      "behaviour": "Finding an Anchor — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "target",
+        "clause_index": 10,
+        "clause_sha256": "c8105f83b66a7c2c5d8bcf6c1c524f766e7ceed24665a4582f68b1d5fe7c6124"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-anchor",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-anchor"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default Anchors: the position-anchor property.",
+      "locator": {
+        "section_id": "position-anchor",
+        "text_sha256": "f11db240a43da85f974da8093f6fe110731ae51b96c40dc9a10af73248433d10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.position-anchor-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-anchor-clause-cca2516ebb1d",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-anchor"
+      ],
+      "behaviour": "Default Anchors: the position-anchor property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-anchor",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.implicit",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "implicit"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implicit Anchor Elements.",
+      "locator": {
+        "section_id": "implicit",
+        "text_sha256": "449944f733e58a2063a32b8e6d2a09c8b36057fd3d5dcccb87de1f06a9458e49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-relevance",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-relevance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Anchor Relevance.",
+      "locator": {
+        "section_id": "anchor-relevance",
+        "text_sha256": "4e71e60f39e92769f01d5851d7bb05c915ce625e88573621348a2d6bcfb614ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.anchor-relevance-clause-da775d4b419c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-relevance-clause-da775d4b419c",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-relevance"
+      ],
+      "behaviour": "Anchor Relevance — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-relevance",
+        "clause_index": 0,
+        "clause_sha256": "da775d4b419cf12152faa6c89a7644de897425318b8e9fbbc146bbb263c39c09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.positioning",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "positioning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Anchor-Based Positioning.",
+      "locator": {
+        "section_id": "positioning",
+        "text_sha256": "31067075228704bd57c7df65522ada4b0d79c9c25a7dcdb5e24a3179e12104fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-area",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-area"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The position-area Property.",
+      "locator": {
+        "section_id": "position-area",
+        "text_sha256": "a04dc006eac3c87e525e38eacf72627fdc0490986938be7ce3f79fb84008b8c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.position-area-clause-cca2516ebb1d",
+        "css-anchor-position-1.position-area-clause-97b386609b4e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-area-clause-cca2516ebb1d",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-area"
+      ],
+      "behaviour": "The position-area Property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-area",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-area-clause-97b386609b4e",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-area"
+      ],
+      "behaviour": "The position-area Property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-area",
+        "clause_index": 13,
+        "clause_sha256": "97b386609b4ee9db56ed02d9b319fd76823464f02013c779d5d5ed38c2e5447a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-area-grid-resolution",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-area-grid-resolution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resolving the Position Area Grid.",
+      "locator": {
+        "section_id": "position-area-grid-resolution",
+        "text_sha256": "78e909859f916301f4ee3220daee38273c49bcaa5189d1a0541e07b4c76b8976"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-area-syntax",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-area-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Syntax of <position-area> Values.",
+      "locator": {
+        "section_id": "position-area-syntax",
+        "text_sha256": "b03b2d5473b8d77b38b488ca22ebffc7780318d6d00dd17e19a1ff16bee26553"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-area-computed",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-area-computed"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Computed Value and Serialization of <position-area>.",
+      "locator": {
+        "section_id": "position-area-computed",
+        "text_sha256": "dc004d4f453cc87d963938b80c2cdab695d3099b96c9cd5db7d3cf754ed31f27"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.position-area-computed-clause-dc004d4f453c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-area-computed-clause-dc004d4f453c",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-area-computed"
+      ],
+      "behaviour": "Computed Value and Serialization of <position-area> — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-area-computed",
+        "clause_index": 0,
+        "clause_sha256": "dc004d4f453cc87d963938b80c2cdab695d3099b96c9cd5db7d3cf754ed31f27"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-pos",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-pos"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Anchor-relative Insets: the anchor() function.",
+      "locator": {
+        "section_id": "anchor-pos",
+        "text_sha256": "96a5a0f78fd68735bef1208d458ac9b2fe9ef8635f9e4504600226ad434ac632"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.anchor-pos-clause-be52144f85d4",
+        "css-anchor-position-1.anchor-pos-clause-e557b92e1277",
+        "css-anchor-position-1.anchor-pos-clause-2d4a18f75ce2",
+        "css-anchor-position-1.anchor-pos-clause-de54a0892873",
+        "css-anchor-position-1.anchor-pos-clause-a15c2f4cd3a9",
+        "css-anchor-position-1.anchor-pos-clause-dc021e5f5d0f",
+        "css-anchor-position-1.anchor-pos-clause-9473cbf8ec50",
+        "css-anchor-position-1.anchor-pos-clause-5d00c5c552b9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-pos-clause-be52144f85d4",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-pos"
+      ],
+      "behaviour": "Anchor-relative Insets: the anchor() function — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-pos",
+        "clause_index": 0,
+        "clause_sha256": "be52144f85d401113575c188849f8630908e6dc568a1fcfdd50aedf74933d796"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-pos-clause-e557b92e1277",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-pos"
+      ],
+      "behaviour": "Anchor-relative Insets: the anchor() function — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-pos",
+        "clause_index": 38,
+        "clause_sha256": "e557b92e1277ac91eec438f14d6791c30a1cfafb3a5cc0d9126f24876a35a9fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-pos-clause-2d4a18f75ce2",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-pos"
+      ],
+      "behaviour": "Anchor-relative Insets: the anchor() function — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-pos",
+        "clause_index": 40,
+        "clause_sha256": "2d4a18f75ce26183a06ce7dda75752994db90099710dc5192689c993e7442af2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-pos-clause-de54a0892873",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-pos"
+      ],
+      "behaviour": "Anchor-relative Insets: the anchor() function — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-pos",
+        "clause_index": 41,
+        "clause_sha256": "de54a08928731aa27b5ff4f421d1348d8b03c1806ef67e197d4efcc63d92f61d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-pos-clause-a15c2f4cd3a9",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-pos"
+      ],
+      "behaviour": "Anchor-relative Insets: the anchor() function — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-pos",
+        "clause_index": 42,
+        "clause_sha256": "a15c2f4cd3a96154f7234bacf59253d220fbf49aea8ee01e85dc8eff4c17b621"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-pos-clause-dc021e5f5d0f",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-pos"
+      ],
+      "behaviour": "Anchor-relative Insets: the anchor() function — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-pos",
+        "clause_index": 43,
+        "clause_sha256": "dc021e5f5d0f4431a9fad37d1296ee3706cda60c774b4cf65a7c6adcd4527a2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-pos-clause-9473cbf8ec50",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-pos"
+      ],
+      "behaviour": "Anchor-relative Insets: the anchor() function — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-pos",
+        "clause_index": 47,
+        "clause_sha256": "9473cbf8ec502444fd30c61960103600707675a26529ec8e01d8a3c81a39f0d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-pos-clause-5d00c5c552b9",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-pos"
+      ],
+      "behaviour": "Anchor-relative Insets: the anchor() function — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-pos",
+        "clause_index": 48,
+        "clause_sha256": "5d00c5c552b97099433e4f0b277d5495bbfcf633f3e6b34985b7eb83df174527"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-resolution",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-resolution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resolution of anchor().",
+      "locator": {
+        "section_id": "anchor-resolution",
+        "text_sha256": "6279e9ebf0425a01918c3fd92863b07060b938a82dca3935d89f20c387f16dde"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.anchor-resolution-clause-f42a49cb75c3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-resolution-clause-f42a49cb75c3",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-resolution"
+      ],
+      "behaviour": "Resolution of anchor() — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-resolution",
+        "clause_index": 7,
+        "clause_sha256": "f42a49cb75c36ae58bd6014da7204488f214909348b1e74ebb03c635afe95d61"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.scroll",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "scroll"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Taking Scroll Into Account.",
+      "locator": {
+        "section_id": "scroll",
+        "text_sha256": "6e0f74b05ec705da3acf99fe941e6faeec7ac521d0c31be6999c5f044ef9d6ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.scroll-clause-ee656ea98e1f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.scroll-clause-ee656ea98e1f",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "scroll"
+      ],
+      "behaviour": "Taking Scroll Into Account — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "scroll",
+        "clause_index": 8,
+        "clause_sha256": "ee656ea98e1fb6eda0f9996cf042da0ff9b0ae964c932edd4fceaa4d30f63b1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.alignment",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Anchor-Based Alignment.",
+      "locator": {
+        "section_id": "alignment",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-area-alignment",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-area-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Area-specific Default Alignment.",
+      "locator": {
+        "section_id": "position-area-alignment",
+        "text_sha256": "d913166105587fac7b380d4f3706acb39ee8c9ec61a08a45059b4dfc895769ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-center",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-center"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Centering on the Anchor: the anchor-center alignment value.",
+      "locator": {
+        "section_id": "anchor-center",
+        "text_sha256": "8fe51a740d14d4bce3fdfa3de2c914acad2f1ea34b1fd2acc4d7381f06e1fffa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.anchor-center-clause-b75b262ee58a",
+        "css-anchor-position-1.anchor-center-clause-175a69c387b1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-center-clause-b75b262ee58a",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-center"
+      ],
+      "behaviour": "Centering on the Anchor: the anchor-center alignment value — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-center",
+        "clause_index": 9,
+        "clause_sha256": "b75b262ee58ab5f64fa577c43503a398538a9eceb829ed16db034f3ef2013b6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-center-clause-175a69c387b1",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-center"
+      ],
+      "behaviour": "Centering on the Anchor: the anchor-center alignment value — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-center",
+        "clause_index": 11,
+        "clause_sha256": "175a69c387b1426cfde2c2a19b8a21ced15caaddb11520b625ce4be5965707ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.sizing",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Anchor-Based Sizing.",
+      "locator": {
+        "section_id": "sizing",
+        "text_sha256": "12e8c9bb17740a7866b844545653cb5db9b681a91bbf923d19a3128e0ce13e5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.sizing-clause-12e8c9bb1774"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.sizing-clause-12e8c9bb1774",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "sizing"
+      ],
+      "behaviour": "Anchor-Based Sizing — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing",
+        "clause_index": 0,
+        "clause_sha256": "12e8c9bb17740a7866b844545653cb5db9b681a91bbf923d19a3128e0ce13e5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-size-fn",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-size-fn"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The anchor-size() Function.",
+      "locator": {
+        "section_id": "anchor-size-fn",
+        "text_sha256": "916e4511b2fc568a323e2d9341db7041ac35de1431b9a5e0931becdf1cdf056c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.anchor-size-fn-clause-efd203fbd33b",
+        "css-anchor-position-1.anchor-size-fn-clause-1398634eb491"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-size-fn-clause-efd203fbd33b",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-size-fn"
+      ],
+      "behaviour": "The anchor-size() Function — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-size-fn",
+        "clause_index": 8,
+        "clause_sha256": "efd203fbd33b5b138d6dd94a71f56ccfb97d37299a9c75a62a379b0c161e2dc0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-size-fn-clause-1398634eb491",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-size-fn"
+      ],
+      "behaviour": "The anchor-size() Function — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-size-fn",
+        "clause_index": 9,
+        "clause_sha256": "1398634eb491ffbe3aa79a0309312758976981d0db26e2fdc7b0317dd8bd8711"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-size-resolution",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-size-resolution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Resolution of anchor-size().",
+      "locator": {
+        "section_id": "anchor-size-resolution",
+        "text_sha256": "0de5c480e36c0c8d205dac37e8c106e3e0688b102484d8eceb70882f4724709a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.anchor-size-resolution-clause-2b595ff08e00"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.anchor-size-resolution-clause-2b595ff08e00",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "anchor-size-resolution"
+      ],
+      "behaviour": "Resolution of anchor-size() — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "anchor-size-resolution",
+        "clause_index": 5,
+        "clause_sha256": "2b595ff08e0034e0bc9124fdc51e9165ebef19f0399d1977a469c99fece7fe52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.fallback",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "fallback"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow Management.",
+      "locator": {
+        "section_id": "fallback",
+        "text_sha256": "f5b3ddf66392bae668dad6e7a2a6e47a787c5bc6c5fdad04110c600fe7d0a52f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-try-fallbacks",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-try-fallbacks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Giving Fallback Options: the position-try-fallbacks property.",
+      "locator": {
+        "section_id": "position-try-fallbacks",
+        "text_sha256": "5186960c1a7c71e13447871538e9b363b6c4ca01dfea0bf9cf2d49a22a5fb495"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.position-try-fallbacks-clause-cca2516ebb1d",
+        "css-anchor-position-1.position-try-fallbacks-clause-a094886e3569",
+        "css-anchor-position-1.position-try-fallbacks-clause-5ba18244b2b7",
+        "css-anchor-position-1.position-try-fallbacks-clause-2b88a844ecc8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-try-fallbacks-clause-cca2516ebb1d",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-try-fallbacks"
+      ],
+      "behaviour": "Giving Fallback Options: the position-try-fallbacks property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-try-fallbacks",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-try-fallbacks-clause-a094886e3569",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-try-fallbacks"
+      ],
+      "behaviour": "Giving Fallback Options: the position-try-fallbacks property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-try-fallbacks",
+        "clause_index": 17,
+        "clause_sha256": "a094886e356913c9c8d4fb92220d2399f5384c101807f744c09ec21354fefc7d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-try-fallbacks-clause-5ba18244b2b7",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-try-fallbacks"
+      ],
+      "behaviour": "Giving Fallback Options: the position-try-fallbacks property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-try-fallbacks",
+        "clause_index": 18,
+        "clause_sha256": "5ba18244b2b76115628e24a52b40991a2db7a195964bfb347220ba7c4fc6f5df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-try-fallbacks-clause-2b88a844ecc8",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-try-fallbacks"
+      ],
+      "behaviour": "Giving Fallback Options: the position-try-fallbacks property — normative clause 55, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-try-fallbacks",
+        "clause_index": 54,
+        "clause_sha256": "2b88a844ecc8f88d2409955c3a53a9d07e2761008cb5a7928e6609c9446ed947"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-try-order-property",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-try-order-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Determining Fallback Order: the position-try-order property.",
+      "locator": {
+        "section_id": "position-try-order-property",
+        "text_sha256": "a197f324364f2e4b242930426cc1350ec212603c405d9d8dfe10ee4347c4c0d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.position-try-order-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-try-order-property-clause-cca2516ebb1d",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-try-order-property"
+      ],
+      "behaviour": "Determining Fallback Order: the position-try-order property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-try-order-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-try-prop",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-try-prop"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The position-try Shorthand.",
+      "locator": {
+        "section_id": "position-try-prop",
+        "text_sha256": "5602f07f8e7ee3e67d6e1110496391f9f2ffccbf50fdd5bb269c0527176eae46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.position-try-prop-clause-cca2516ebb1d",
+        "css-anchor-position-1.position-try-prop-clause-d37d77340553",
+        "css-anchor-position-1.position-try-prop-clause-d20987c1cd5c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-try-prop-clause-cca2516ebb1d",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-try-prop"
+      ],
+      "behaviour": "The position-try Shorthand — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-try-prop",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-try-prop-clause-d37d77340553",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-try-prop"
+      ],
+      "behaviour": "The position-try Shorthand — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-try-prop",
+        "clause_index": 17,
+        "clause_sha256": "d37d77340553db00523065f17ff88e6d33c2968389a7af1c5a63ebbd16207d4c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-try-prop-clause-d20987c1cd5c",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-try-prop"
+      ],
+      "behaviour": "The position-try Shorthand — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-try-prop",
+        "clause_index": 18,
+        "clause_sha256": "d20987c1cd5caa97cea11471dacf0c3edf915ea3ae68cff0c9c323eacc376efa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.fallback-rule",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "fallback-rule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The @position-try Rule.",
+      "locator": {
+        "section_id": "fallback-rule",
+        "text_sha256": "8887f39303d005170c5f83c020f066ac2fa3a951de6c265061cfabc1897f10db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.fallback-rule-clause-282bf2a7a00d",
+        "css-anchor-position-1.fallback-rule-clause-e355880de0bb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.fallback-rule-clause-282bf2a7a00d",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "fallback-rule"
+      ],
+      "behaviour": "The @position-try Rule — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "fallback-rule",
+        "clause_index": 17,
+        "clause_sha256": "282bf2a7a00d66bb2fe4c0be9eadf4a7256a7b5b01ee869d5e8b9ec1c71b267c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.fallback-rule-clause-e355880de0bb",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "fallback-rule"
+      ],
+      "behaviour": "The @position-try Rule — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "fallback-rule",
+        "clause_index": 20,
+        "clause_sha256": "e355880de0bb5cfe910228c4ec2fdb408406541e6b173037b33e0a6e57c12078"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.fallback-apply",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "fallback-apply"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Applying Position Fallback.",
+      "locator": {
+        "section_id": "fallback-apply",
+        "text_sha256": "5ddb60691a6c97297d3f3b5ab7e98ddb7c83f383e2d61fb2a9a3c3019cdedbe9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.fallback-apply-clause-ca887d2506eb",
+        "css-anchor-position-1.fallback-apply-clause-e6f972f823a8",
+        "css-anchor-position-1.fallback-apply-clause-821317787649"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.fallback-apply-clause-ca887d2506eb",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "fallback-apply"
+      ],
+      "behaviour": "Applying Position Fallback — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "fallback-apply",
+        "clause_index": 0,
+        "clause_sha256": "ca887d2506eb3fe3c6bfe6a09afcde9d8d5b3bd5bc2aa2ac587cc14424ef2c10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.fallback-apply-clause-e6f972f823a8",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "fallback-apply"
+      ],
+      "behaviour": "Applying Position Fallback — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "fallback-apply",
+        "clause_index": 1,
+        "clause_sha256": "e6f972f823a8736f29acc9548ef064529d0dc723f94e5c2e0753e040953045fa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.fallback-apply-clause-821317787649",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "fallback-apply"
+      ],
+      "behaviour": "Applying Position Fallback — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "fallback-apply",
+        "clause_index": 2,
+        "clause_sha256": "8213177876492ee5722d6b13df455edbd6456e71ca1e089d004893a6c34ff110"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.statefulness",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "statefulness"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Maintaining and Clearing Fallback Choices.",
+      "locator": {
+        "section_id": "statefulness",
+        "text_sha256": "4657f8b2d09f4c5dec120ac776f182bfdf7643f884719f0d32260c690f6de3d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.statefulness-clause-86a4cc3185f3",
+        "css-anchor-position-1.statefulness-clause-c0cabf2818ca",
+        "css-anchor-position-1.statefulness-clause-462d413e1104",
+        "css-anchor-position-1.statefulness-clause-28cd54519311"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.statefulness-clause-86a4cc3185f3",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "statefulness"
+      ],
+      "behaviour": "Maintaining and Clearing Fallback Choices — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "statefulness",
+        "clause_index": 1,
+        "clause_sha256": "86a4cc3185f37347c9f291758531124cfa5ef4fa0d8a39d47cb107dfee46cf7d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.statefulness-clause-c0cabf2818ca",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "statefulness"
+      ],
+      "behaviour": "Maintaining and Clearing Fallback Choices — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "statefulness",
+        "clause_index": 3,
+        "clause_sha256": "c0cabf2818ca5024c8a995bfa34fb63b68e95a91b4ff368234242bc432980aeb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.statefulness-clause-462d413e1104",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "statefulness"
+      ],
+      "behaviour": "Maintaining and Clearing Fallback Choices — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "statefulness",
+        "clause_index": 5,
+        "clause_sha256": "462d413e110463243e648e9639e114e658ac02f76d71f3f5239cea4aea2fd368"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.statefulness-clause-28cd54519311",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "statefulness"
+      ],
+      "behaviour": "Maintaining and Clearing Fallback Choices — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "statefulness",
+        "clause_index": 9,
+        "clause_sha256": "28cd54519311d6f660e45ed94d455e58433d82bbf258fdbd3d0dd136737f8bd1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.last-successful-recording",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "last-successful-recording"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Recording the last successful position option.",
+      "locator": {
+        "section_id": "last-successful-recording",
+        "text_sha256": "807dbb644705fba420aa287c39124e7885cf5befc9614d0a613baa2c016923ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.applying-options",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "applying-options"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Applying Position Options.",
+      "locator": {
+        "section_id": "applying-options",
+        "text_sha256": "52b33f90d47fc313d89f1700c360c723166d1703ffbf636a097fad6aaf57578f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.applying-options-clause-afa27eff84f3",
+        "css-anchor-position-1.applying-options-clause-1c93aa80aa5c",
+        "css-anchor-position-1.applying-options-clause-f07d5087dbdc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.applying-options-clause-afa27eff84f3",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "applying-options"
+      ],
+      "behaviour": "Applying Position Options — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "applying-options",
+        "clause_index": 0,
+        "clause_sha256": "afa27eff84f3f7ee66437baeb1e6ff211df844ac2b0a7cf047810e8277b05da5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.applying-options-clause-1c93aa80aa5c",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "applying-options"
+      ],
+      "behaviour": "Applying Position Options — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "applying-options",
+        "clause_index": 2,
+        "clause_sha256": "1c93aa80aa5c4ea46ff3fa8002d559a3c41fde5d0d43f9a940705e85e72a02ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.applying-options-clause-f07d5087dbdc",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "applying-options"
+      ],
+      "behaviour": "Applying Position Options — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "applying-options",
+        "clause_index": 11,
+        "clause_sha256": "f07d5087dbdc21a3355813adde605c91d12e0145561084b33a5c7d9b98c6a618"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-visibility",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-visibility"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conditional Hiding: the position-visibility property.",
+      "locator": {
+        "section_id": "position-visibility",
+        "text_sha256": "c6f94342b3b83c3607c2d679a9701ded7b8cf2584d68f1ee57cb7a8c411e206d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.position-visibility-clause-cca2516ebb1d",
+        "css-anchor-position-1.position-visibility-clause-11364c529844",
+        "css-anchor-position-1.position-visibility-clause-ce581caa76e0",
+        "css-anchor-position-1.position-visibility-clause-85007fd4d745",
+        "css-anchor-position-1.position-visibility-clause-d64d3105de54",
+        "css-anchor-position-1.position-visibility-clause-5308affaaf3f",
+        "css-anchor-position-1.position-visibility-clause-7a0c0dfe7606"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.position-visibility-clause-cca2516ebb1d",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-visibility"
+      ],
+      "behaviour": "Conditional Hiding: the position-visibility property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-visibility",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-visibility-clause-11364c529844",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-visibility"
+      ],
+      "behaviour": "Conditional Hiding: the position-visibility property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-visibility",
+        "clause_index": 22,
+        "clause_sha256": "11364c52984448b53c60e3d5fb378da9fb4cf8a021625f143926c1684883d574"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-visibility-clause-ce581caa76e0",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-visibility"
+      ],
+      "behaviour": "Conditional Hiding: the position-visibility property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-visibility",
+        "clause_index": 23,
+        "clause_sha256": "ce581caa76e0249e801faee4407fccc86942f2e553c1cdc2c2b1e816df7c475c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-visibility-clause-85007fd4d745",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-visibility"
+      ],
+      "behaviour": "Conditional Hiding: the position-visibility property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-visibility",
+        "clause_index": 25,
+        "clause_sha256": "85007fd4d74551a4c786fcb2fe8b8dfc31a9d7255dcf5a7074f919480af3605a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-visibility-clause-d64d3105de54",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-visibility"
+      ],
+      "behaviour": "Conditional Hiding: the position-visibility property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-visibility",
+        "clause_index": 31,
+        "clause_sha256": "d64d3105de5441f4d9abf38fe6c7ff4da9d6ebeec109a6b5c715ec9c4f19d07e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-visibility-clause-5308affaaf3f",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-visibility"
+      ],
+      "behaviour": "Conditional Hiding: the position-visibility property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-visibility",
+        "clause_index": 35,
+        "clause_sha256": "5308affaaf3f02048aa7139721967b3f6d3e691dba334b53253014b020ccfaf0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.position-visibility-clause-7a0c0dfe7606",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "position-visibility"
+      ],
+      "behaviour": "Conditional Hiding: the position-visibility property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "position-visibility",
+        "clause_index": 36,
+        "clause_sha256": "7a0c0dfe76061c3d95506ee39ac6ffa6be8bdc035eaf933e76233c26d4bdd2e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.accessibility",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "accessibility"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Accessibility Implications.",
+      "locator": {
+        "section_id": "accessibility",
+        "text_sha256": "b2ca2af0a2d8834fca3334892c60271cfa8e68d59c51bebef2d8db685a479857"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.accessibility-clause-a7abe4d5637d",
+        "css-anchor-position-1.accessibility-clause-75d839f58c50",
+        "css-anchor-position-1.accessibility-clause-fd2930b9d798"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.accessibility-clause-a7abe4d5637d",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "accessibility"
+      ],
+      "behaviour": "Accessibility Implications — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "accessibility",
+        "clause_index": 0,
+        "clause_sha256": "a7abe4d5637d30d3c1be67541064b885ca9070e9735099af5c0113bd776cdf7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.accessibility-clause-75d839f58c50",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "accessibility"
+      ],
+      "behaviour": "Accessibility Implications — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "accessibility",
+        "clause_index": 2,
+        "clause_sha256": "75d839f58c5005f8708bafdbccc181883a08c1090b63a38362d8948cd5fde79a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.accessibility-clause-fd2930b9d798",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "accessibility"
+      ],
+      "behaviour": "Accessibility Implications — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "accessibility",
+        "clause_index": 6,
+        "clause_sha256": "fd2930b9d79883cf86043d9420ced99ac5b95a2cb964918f4a7909af34b37813"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.interfaces",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "interfaces"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in DOM Interfaces.",
+      "locator": {
+        "section_id": "interfaces",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.om-position-try",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "om-position-try"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSSPositionTryRule interface.",
+      "locator": {
+        "section_id": "om-position-try",
+        "text_sha256": "d76ca4f2f60c69b5e3d7651af5f3fa3802527ce82a1fe98f3a5888a559abbd94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.om-position-try-clause-c79267dc992f",
+        "css-anchor-position-1.om-position-try-clause-2523ef4433ef"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.om-position-try-clause-c79267dc992f",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "om-position-try"
+      ],
+      "behaviour": "The CSSPositionTryRule interface — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "om-position-try",
+        "clause_index": 3,
+        "clause_sha256": "c79267dc992f454bec36bbefe66b138eab559ac53b1c1fb16bb26be2496b1ddf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.om-position-try-clause-2523ef4433ef",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "om-position-try"
+      ],
+      "behaviour": "The CSSPositionTryRule interface — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "om-position-try",
+        "clause_index": 4,
+        "clause_sha256": "2523ef4433ef114c1fb9db50f878023bb07c3b8d1f4193dba5e7ad5e7d2fa8b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.interleaving",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "interleaving"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix: Style & Layout Interleaving.",
+      "locator": {
+        "section_id": "interleaving",
+        "text_sha256": "d2c619b0e47dd7786c0df9523a379fc37a8b1a310e81d56a8748414a711ec41c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.interleaving-clause-0758f7aec098",
+        "css-anchor-position-1.interleaving-clause-4a6003a6c0a5",
+        "css-anchor-position-1.interleaving-clause-f2763192153f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.interleaving-clause-0758f7aec098",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "interleaving"
+      ],
+      "behaviour": "Appendix: Style & Layout Interleaving — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "interleaving",
+        "clause_index": 0,
+        "clause_sha256": "0758f7aec0988138ef3577faa83e230ef7e064abd6d0e68f930742600cb60c07"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.interleaving-clause-4a6003a6c0a5",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "interleaving"
+      ],
+      "behaviour": "Appendix: Style & Layout Interleaving — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "interleaving",
+        "clause_index": 1,
+        "clause_sha256": "4a6003a6c0a5c1f25da53f9d1c764c000663f02c0370df598c919c6b9d68c3c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.interleaving-clause-f2763192153f",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "interleaving"
+      ],
+      "behaviour": "Appendix: Style & Layout Interleaving — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "interleaving",
+        "clause_index": 2,
+        "clause_sha256": "f2763192153f4faf834e69b345cd341c2d7174f6f708d9de2e454d5b6cf24b9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.sec",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "sec",
+        "text_sha256": "705cc95c276f6b0c620b65e3a87661fb558deff98998b482086bbc27afee0699"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.priv",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "priv"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "priv",
+        "text_sha256": "06cdae12566cb4848cd9baff3fcd5c40fd163be46f5d179570c36d6303524e0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-conformance",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-conventions",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.w3c-conventions-clause-5c98c879f070",
+        "css-anchor-position-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-conformance-classes",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-anchor-position-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-partial",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-conform-future-proofing",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-testing",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-anchor-position-1.w3c-testing-clause-1e0fff369221",
+        "css-anchor-position-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-anchor-position-1.property-index",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "ebffc8f3e9e6ba3db9f8c86290dd5472e9dd7e041fa147e36dfdeb76fe0a304b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.idl-index",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "144f04c5b4b4e3471a4f2bcce5dc221c0a0122098885249c71d4db66db4a8ca6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.issues-index",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "4f70ec9b722d35eefa22c28060fd154f8c78961d7ba82501e0383d23e0c9e542"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.import-08a458136010",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.csswg.org/css-shadow-1/.",
+      "unresolved_reference": "https://drafts.csswg.org/css-shadow-1/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-anchor-position-1.import-6e81d496e6aa",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://streams.spec.whatwg.org/.",
+      "unresolved_reference": "https://streams.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-anchor-position-1.import-8cac7d115c27",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-anchor-position-1.title",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Anchor Positioning Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "4b2337c8f6795ffc1b7e7e0448860f9940ad7067e5b97b1b1ac7eeea7603a4d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.abstract",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "5ada3a0899eeb6514532e5784acb6ce3e323bd668522d4df8458e48a482890d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.sotd",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "82b5a304f2774cca82545d3c5100349de331c0f3744581206f683e120016ad2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.contents",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "99d263dd2d0b5aa69a8fd5d6a2ce56d425279e4f01489b2048995d98c2897506"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.changes",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 12. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e5871775aadb7459714669bf3412c2f476b31a76c23419f46536662c95bcc083"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.index",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.index-defined-here",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "b3342ea8b96d706389fea5717767313e77ff3d099ded1f5ce10daadba65baa1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.index-defined-elsewhere",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "aa9fcb80f061c8ca10f1b294ce4fd151b38b57152bb20a0ca86aff694a73d4fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.references",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-anchor-position-1.informative",
+      "family": "css-anchor-position-1",
+      "source_id": "css-anchor-position-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "06008bc04ed2e90437126d56134b7d9f30612a9c3b78d7f01d470e8ea2a8e025"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

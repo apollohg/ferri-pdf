@@ -1,0 +1,2781 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-visudet.q10-0",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "q10.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 10 Visual formatting model details.",
+      "locator": {
+        "section_id": "q10.0",
+        "text_sha256": "c1dc50157a73375619824193870d783745ab38b31bbcd03b7e9cb4cf3222d3be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.containing-block-details",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "containing-block-details"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Definition of \"containing block\".",
+      "locator": {
+        "section_id": "containing-block-details",
+        "text_sha256": "1ab3153825481b1f64d3d3c13919eb579d46f7b4bad62119616fa458937076af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.the-width-property",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "the-width-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Content width: the 'width' property.",
+      "locator": {
+        "section_id": "the-width-property",
+        "text_sha256": "3dd026badf09affba3d45d2c15b712087bfc94f36706c7b696062cbb7037f67e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.the-width-property-clause-4d0ddff73888",
+        "css21-visudet.the-width-property-clause-cca2516ebb1d",
+        "css21-visudet.the-width-property-clause-82baf0b293da"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.the-width-property-clause-4d0ddff73888",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "the-width-property"
+      ],
+      "behaviour": "Content width: the 'width' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-width-property",
+        "clause_index": 2,
+        "clause_sha256": "4d0ddff7388831ff4f8a8e90b62020216f0f742c51d4ff9c95c06165bbc47f57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.the-width-property-clause-cca2516ebb1d",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "the-width-property"
+      ],
+      "behaviour": "Content width: the 'width' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-width-property",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.the-width-property-clause-82baf0b293da",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "the-width-property"
+      ],
+      "behaviour": "Content width: the 'width' property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-width-property",
+        "clause_index": 17,
+        "clause_sha256": "82baf0b293da94235a644e3958f0ca372a3578d9ee7f1c9b361abcb3e0167891"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.computing-widths-and-margins",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "Computing_widths_and_margins"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Calculating widths and margins.",
+      "locator": {
+        "section_id": "Computing_widths_and_margins",
+        "text_sha256": "2e1a44017f624be0164c952d8b5c795a8cc6a791083bcde5f8e1d14d2d6421bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.computing-widths-and-margins-clause-276b06fa148e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.computing-widths-and-margins-clause-276b06fa148e",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "Computing_widths_and_margins"
+      ],
+      "behaviour": "Calculating widths and margins — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Computing_widths_and_margins",
+        "clause_index": 0,
+        "clause_sha256": "276b06fa148e4d31a1a71d68d582b424d1d740d2ab0bc921eccb74580e1237f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-width",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline, non-replaced elements.",
+      "locator": {
+        "section_id": "inline-width",
+        "text_sha256": "a0c27b5223df712ccfcf7777d87029924edc7c986fbcd1cb5d5469c42fd3d980"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.inline-width-clause-a0c27b5223df"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.inline-width-clause-a0c27b5223df",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-width"
+      ],
+      "behaviour": "Inline, non-replaced elements — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-width",
+        "clause_index": 0,
+        "clause_sha256": "a0c27b5223df712ccfcf7777d87029924edc7c986fbcd1cb5d5469c42fd3d980"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-width",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline, replaced elements.",
+      "locator": {
+        "section_id": "inline-replaced-width",
+        "text_sha256": "fc6a009632c92bce1fb06c3fcc791d4559d0cecedc84e4ab5be30c5e939a2f6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.inline-replaced-width-clause-a42d54fc7606",
+        "css21-visudet.inline-replaced-width-clause-bf183d30b267",
+        "css21-visudet.inline-replaced-width-clause-4c8c01aab0c9",
+        "css21-visudet.inline-replaced-width-clause-d203e14e28e1",
+        "css21-visudet.inline-replaced-width-clause-01ab0d8a3e77",
+        "css21-visudet.inline-replaced-width-clause-42d71e6594ef"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-width-clause-a42d54fc7606",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-width"
+      ],
+      "behaviour": "Inline, replaced elements — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-replaced-width",
+        "clause_index": 0,
+        "clause_sha256": "a42d54fc7606f60006c46a7002eb24807ba36c8d76d5c7ba227b381f92f41101"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-width-clause-bf183d30b267",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-width"
+      ],
+      "behaviour": "Inline, replaced elements — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-replaced-width",
+        "clause_index": 1,
+        "clause_sha256": "bf183d30b26742cf74effe1c1626cb86b52389d2e00890401515e05fcef6ac55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-width-clause-4c8c01aab0c9",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-width"
+      ],
+      "behaviour": "Inline, replaced elements — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-replaced-width",
+        "clause_index": 2,
+        "clause_sha256": "4c8c01aab0c98f5bcfdcc884785acdda244f24bbb9dcdde03c3461ee840d8ad5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-width-clause-d203e14e28e1",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-width"
+      ],
+      "behaviour": "Inline, replaced elements — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-replaced-width",
+        "clause_index": 4,
+        "clause_sha256": "d203e14e28e1a2cf2a04841639568d6b0cda8139a109d475410edfddc404e398"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-width-clause-01ab0d8a3e77",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-width"
+      ],
+      "behaviour": "Inline, replaced elements — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-replaced-width",
+        "clause_index": 5,
+        "clause_sha256": "01ab0d8a3e7780b372866dccab9c3602eb7f825bd521b9c2a7c10847707dbc76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-width-clause-42d71e6594ef",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-width"
+      ],
+      "behaviour": "Inline, replaced elements — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-replaced-width",
+        "clause_index": 6,
+        "clause_sha256": "42d71e6594efe0a41477522ac0ec3975ff2d684f7150c9669d24edf7b89d957c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.blockwidth",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "blockwidth"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block-level, non-replaced elements in normal flow.",
+      "locator": {
+        "section_id": "blockwidth",
+        "text_sha256": "3ce30ceef173b9b81eaf4bded0ef17b66cbe7d48082d7e5b1d00054d03268a63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.blockwidth-clause-8a718da563c2",
+        "css21-visudet.blockwidth-clause-208f7d9248ae"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.blockwidth-clause-8a718da563c2",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "blockwidth"
+      ],
+      "behaviour": "Block-level, non-replaced elements in normal flow — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "blockwidth",
+        "clause_index": 0,
+        "clause_sha256": "8a718da563c27543a6f4172dd3bab5c9e92dc4044593fae57b329edc5ade6403"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.blockwidth-clause-208f7d9248ae",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "blockwidth"
+      ],
+      "behaviour": "Block-level, non-replaced elements in normal flow — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "blockwidth",
+        "clause_index": 3,
+        "clause_sha256": "208f7d9248ae43d01f339405b81d8a94da4f74044a1a1f95f8eb2a1a791cbeb6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.block-replaced-width",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "block-replaced-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block-level, replaced elements in normal flow.",
+      "locator": {
+        "section_id": "block-replaced-width",
+        "text_sha256": "60fd24f566d6685d7e17fa1975acf6b85567a1525f2ec28b70316cc1dbef45e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.float-width",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "float-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Floating, non-replaced elements.",
+      "locator": {
+        "section_id": "float-width",
+        "text_sha256": "a3d32fc126a38e35e42230a5a778791a0ea4ef0754ec84ef930dd2fc8ac23a74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.float-width-clause-a4b3c7982ca5",
+        "css21-visudet.float-width-clause-da6a23daaad7",
+        "css21-visudet.float-width-clause-76b28ef020eb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.float-width-clause-a4b3c7982ca5",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "float-width"
+      ],
+      "behaviour": "Floating, non-replaced elements — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-width",
+        "clause_index": 0,
+        "clause_sha256": "a4b3c7982ca522f7884992e012fef7bfb8663643cb5896dff5b946796a6e5c97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.float-width-clause-da6a23daaad7",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "float-width"
+      ],
+      "behaviour": "Floating, non-replaced elements — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-width",
+        "clause_index": 1,
+        "clause_sha256": "da6a23daaad722fc9ee1a8112dd466fdb5444415c902777a01cffc3022be6ae4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.float-width-clause-76b28ef020eb",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "float-width"
+      ],
+      "behaviour": "Floating, non-replaced elements — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-width",
+        "clause_index": 2,
+        "clause_sha256": "76b28ef020eb465dcc19b2657c88fd547d6f1f6d3ed6360b399ec30796bd9e0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.float-replaced-width",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "float-replaced-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Floating, replaced elements.",
+      "locator": {
+        "section_id": "float-replaced-width",
+        "text_sha256": "edff6f0cb2b54f9d9442dbe06a50bbf54a6d439d65550d5d999567f271ffe399"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.float-replaced-width-clause-edff6f0cb2b5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.float-replaced-width-clause-edff6f0cb2b5",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "float-replaced-width"
+      ],
+      "behaviour": "Floating, replaced elements — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "float-replaced-width",
+        "clause_index": 0,
+        "clause_sha256": "edff6f0cb2b54f9d9442dbe06a50bbf54a6d439d65550d5d999567f271ffe399"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.abs-non-replaced-width",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "abs-non-replaced-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Absolutely positioned, non-replaced elements.",
+      "locator": {
+        "section_id": "abs-non-replaced-width",
+        "text_sha256": "dd7343e6eef7ce86aea2069eead76723c7ce53e7afa7d60d4e9e0dbcd2cc3cb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.abs-non-replaced-width-clause-a39aeeca4999",
+        "css21-visudet.abs-non-replaced-width-clause-1653f815f2ac",
+        "css21-visudet.abs-non-replaced-width-clause-12b9485142a8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.abs-non-replaced-width-clause-a39aeeca4999",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "abs-non-replaced-width"
+      ],
+      "behaviour": "Absolutely positioned, non-replaced elements — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "abs-non-replaced-width",
+        "clause_index": 1,
+        "clause_sha256": "a39aeeca4999e54ecdf562eee1995eb00db166744a4bfc958f0b9664ce88c816"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.abs-non-replaced-width-clause-1653f815f2ac",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "abs-non-replaced-width"
+      ],
+      "behaviour": "Absolutely positioned, non-replaced elements — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "abs-non-replaced-width",
+        "clause_index": 5,
+        "clause_sha256": "1653f815f2ac73d7553604c4f9f25aa11f241946524c6379205e896f97c5eb34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.abs-non-replaced-width-clause-12b9485142a8",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "abs-non-replaced-width"
+      ],
+      "behaviour": "Absolutely positioned, non-replaced elements — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "abs-non-replaced-width",
+        "clause_index": 17,
+        "clause_sha256": "12b9485142a8e2af60c2e6a5c731de05349a600c9f388d1f352c3b808cb82d10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.abs-replaced-width",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "abs-replaced-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Absolutely positioned, replaced elements.",
+      "locator": {
+        "section_id": "abs-replaced-width",
+        "text_sha256": "a4657b2591acab744d32db406cc9032563cdfa28936c35e5bbbe88e1649ebabc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.abs-replaced-width-clause-4190a4af0742"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.abs-replaced-width-clause-4190a4af0742",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "abs-replaced-width"
+      ],
+      "behaviour": "Absolutely positioned, replaced elements — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "abs-replaced-width",
+        "clause_index": 4,
+        "clause_sha256": "4190a4af0742c51c3854bafda4c0ac9c9e5300fd5a05f9a9288dd30da29a3f36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inlineblock-width",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inlineblock-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'Inline-block', non-replaced elements in normal flow.",
+      "locator": {
+        "section_id": "inlineblock-width",
+        "text_sha256": "b83a858736e016012072cea523d7b94033690b5d0435bf0af351c9f66fdd89b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.inlineblock-width-clause-a42d54fc7606"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.inlineblock-width-clause-a42d54fc7606",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inlineblock-width"
+      ],
+      "behaviour": "'Inline-block', non-replaced elements in normal flow — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "inlineblock-width",
+        "clause_index": 1,
+        "clause_sha256": "a42d54fc7606f60006c46a7002eb24807ba36c8d76d5c7ba227b381f92f41101"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inlineblock-replaced-width",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inlineblock-replaced-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'Inline-block', replaced elements in normal flow.",
+      "locator": {
+        "section_id": "inlineblock-replaced-width",
+        "text_sha256": "1e09dc8a65203f04ca1aab513231548d4c770b92cf8e26b20000769fc0c36f0c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.min-max-widths",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Minimum and maximum widths: 'min-width' and 'max-width'. The min-width initial value is controlled by css-sizing-3#min-size-properties (auto), not the older zero default.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "text_sha256": "aff00e56f7cc075ae8323bc9c45e8ad0ef09c55cab809acb5de43a2d0ea74b4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.min-max-widths-clause-865415d4b5ca",
+        "css21-visudet.min-max-widths-clause-cca2516ebb1d",
+        "css21-visudet.min-max-widths-clause-acfa51e42122",
+        "css21-visudet.min-max-widths-clause-0c131ddddaca",
+        "css21-visudet.min-max-widths-clause-3b966cc44ce2",
+        "css21-visudet.min-max-widths-clause-f2068ce3e3e9",
+        "css21-visudet.min-max-widths-clause-8cfdaf833a9b",
+        "css21-visudet.min-max-widths-clause-3f77e1d1eacd",
+        "css21-visudet.min-max-widths-clause-aa6111d4b27a",
+        "css21-visudet.min-max-widths-clause-e87fb74b7a6c",
+        "css21-visudet.min-max-widths-clause-8af0d2a3a6de",
+        "css21-visudet.min-max-widths-clause-951610855e1a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-865415d4b5ca",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 2,
+        "clause_sha256": "865415d4b5ca56068ccda4a0cbc701ef0ed14ab2100e70df747b44944555d355"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-cca2516ebb1d",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-acfa51e42122",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 14,
+        "clause_sha256": "acfa51e42122512d80f51ce5d5309b256fa41634b7d91c13108ae0a2c5623223"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-0c131ddddaca",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 18,
+        "clause_sha256": "0c131ddddaca25cc19f353b8df0b1679fb39af0df397f50feaf43a525629bbb9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-3b966cc44ce2",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 31,
+        "clause_sha256": "3b966cc44ce29854f8308f6796cea27b02b7710d3f2e6a4b66d45210ca9ceada"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-f2068ce3e3e9",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 40,
+        "clause_sha256": "f2068ce3e3e9d5966bfbef7a4bbaad21dd001b5f1c511f5ba4c7d2ca8293c74c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-8cfdaf833a9b",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 42,
+        "clause_sha256": "8cfdaf833a9b57e40547757120b9e97fd4a8dd6bdf840e6b3601627c2e77f4b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-3f77e1d1eacd",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 43,
+        "clause_sha256": "3f77e1d1eacd1a5dc78ee5788437dd221a27cfbe3b95dff40031d5b603deb090"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-aa6111d4b27a",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 44,
+        "clause_sha256": "aa6111d4b27a81d596e587236bd0299f61042c047cf938dd5dd5c7c6780e7247"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-e87fb74b7a6c",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 45,
+        "clause_sha256": "e87fb74b7a6cfce3e590084ff72486f782095777b03839e19bb6853f779265b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-8af0d2a3a6de",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 48,
+        "clause_sha256": "8af0d2a3a6def3bd7d11827ec0a648383dddadcbae2816b7dda9fbd1ef04cafd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-widths-clause-951610855e1a",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-widths"
+      ],
+      "behaviour": "Minimum and maximum widths: 'min-width' and 'max-width' — normative clause 86, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-widths",
+        "clause_index": 85,
+        "clause_sha256": "951610855e1a5a36c0d267da773ba4190e043d18f6fd2a95ee42b299162de811"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.the-height-property",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "the-height-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Content height: the 'height' property.",
+      "locator": {
+        "section_id": "the-height-property",
+        "text_sha256": "cfdcdffbc19859682831a2ca182e8aa398db7ccfb32641f693955113bcc01b7d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.the-height-property-clause-4d0ddff73888",
+        "css21-visudet.the-height-property-clause-cca2516ebb1d",
+        "css21-visudet.the-height-property-clause-c8f0fea5740c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.the-height-property-clause-4d0ddff73888",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "the-height-property"
+      ],
+      "behaviour": "Content height: the 'height' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-height-property",
+        "clause_index": 2,
+        "clause_sha256": "4d0ddff7388831ff4f8a8e90b62020216f0f742c51d4ff9c95c06165bbc47f57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.the-height-property-clause-cca2516ebb1d",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "the-height-property"
+      ],
+      "behaviour": "Content height: the 'height' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-height-property",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.the-height-property-clause-c8f0fea5740c",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "the-height-property"
+      ],
+      "behaviour": "Content height: the 'height' property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-height-property",
+        "clause_index": 17,
+        "clause_sha256": "c8f0fea5740c5fa16aa836fadc4ae1fa87342e9eee197946f5a1fa3569679450"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.computing-heights-and-margins",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "Computing_heights_and_margins"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Calculating heights and margins.",
+      "locator": {
+        "section_id": "Computing_heights_and_margins",
+        "text_sha256": "795551f1462006d25abea48d5c71532740fdc1457100b2de095242f932a635b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.computing-heights-and-margins-clause-796e96fec509"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.computing-heights-and-margins-clause-796e96fec509",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "Computing_heights_and_margins"
+      ],
+      "behaviour": "Calculating heights and margins — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Computing_heights_and_margins",
+        "clause_index": 0,
+        "clause_sha256": "796e96fec509b2fdf57acb043660b7522943cc52c8de9c765696b57974c504ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-non-replaced",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-non-replaced"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline, non-replaced elements.",
+      "locator": {
+        "section_id": "inline-non-replaced",
+        "text_sha256": "fe3d4339e5f391267225f58c7b0b86bbd6cd06957f6cb981005681cf2bc55911"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.inline-non-replaced-clause-40cec6f2fbca"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.inline-non-replaced-clause-40cec6f2fbca",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-non-replaced"
+      ],
+      "behaviour": "Inline, non-replaced elements — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-non-replaced",
+        "clause_index": 0,
+        "clause_sha256": "40cec6f2fbcaebb0f5f2c380937f80fd4d96dacfa3319ec22a6060548d5826e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-height",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline replaced elements, block-level replaced elements in normal flow, 'inline-block' replaced elements in normal flow and floating replaced elements.",
+      "locator": {
+        "section_id": "inline-replaced-height",
+        "text_sha256": "01c2ca4afb12f0ab2c70ad09fa029d068daa95df5f96d9807ee59dec06d3b042"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.inline-replaced-height-clause-033636c79b0e",
+        "css21-visudet.inline-replaced-height-clause-220069a175fe",
+        "css21-visudet.inline-replaced-height-clause-dc0081145e68",
+        "css21-visudet.inline-replaced-height-clause-cb5907dd2981"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-height-clause-033636c79b0e",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-height"
+      ],
+      "behaviour": "Inline replaced elements, block-level replaced elements in normal flow, 'inline-block' replaced elements in normal flow and floating replaced elements — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-replaced-height",
+        "clause_index": 1,
+        "clause_sha256": "033636c79b0e2685850807a94060e6b8d5dbae14ef13c39913f62a4dcf68a5dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-height-clause-220069a175fe",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-height"
+      ],
+      "behaviour": "Inline replaced elements, block-level replaced elements in normal flow, 'inline-block' replaced elements in normal flow and floating replaced elements — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-replaced-height",
+        "clause_index": 2,
+        "clause_sha256": "220069a175feb9e793183e0186b02cbac76e25dfa4f47ca143773e71d9ad64bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-height-clause-dc0081145e68",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-height"
+      ],
+      "behaviour": "Inline replaced elements, block-level replaced elements in normal flow, 'inline-block' replaced elements in normal flow and floating replaced elements — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-replaced-height",
+        "clause_index": 4,
+        "clause_sha256": "dc0081145e682378449fd9a4ee39d1859e5257c03be6a9a36a7eeb6f55d33c09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.inline-replaced-height-clause-cb5907dd2981",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "inline-replaced-height"
+      ],
+      "behaviour": "Inline replaced elements, block-level replaced elements in normal flow, 'inline-block' replaced elements in normal flow and floating replaced elements — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "inline-replaced-height",
+        "clause_index": 5,
+        "clause_sha256": "cb5907dd298187850548defa3bfc503686efcb7ecb3b629855988f1a7fe941c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.normal-block",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "normal-block"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block-level non-replaced elements in normal flow when 'overflow' computes to 'visible'.",
+      "locator": {
+        "section_id": "normal-block",
+        "text_sha256": "5b7d99cb5e472558b1fe82d95822574b83b4506a2e395155bffcc8f702fa9b1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.normal-block-clause-bed0c206e80b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.normal-block-clause-bed0c206e80b",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "normal-block"
+      ],
+      "behaviour": "Block-level non-replaced elements in normal flow when 'overflow' computes to 'visible' — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "normal-block",
+        "clause_index": 7,
+        "clause_sha256": "bed0c206e80bf025332a7c0a6f51b794fe1aef4566c83bfe65153a767b61b4f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.abs-non-replaced-height",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "abs-non-replaced-height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Absolutely positioned, non-replaced elements.",
+      "locator": {
+        "section_id": "abs-non-replaced-height",
+        "text_sha256": "6b579af5f8ce42a49fb15e88249375f2e626b50cac23f72e504c626c5fcad853"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.abs-non-replaced-height-clause-1f5272bb211b",
+        "css21-visudet.abs-non-replaced-height-clause-2230b21209d5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.abs-non-replaced-height-clause-1f5272bb211b",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "abs-non-replaced-height"
+      ],
+      "behaviour": "Absolutely positioned, non-replaced elements — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "abs-non-replaced-height",
+        "clause_index": 0,
+        "clause_sha256": "1f5272bb211b00190efa3c6c4272a450a76676d419bff4a01e10c683e8ae007c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.abs-non-replaced-height-clause-2230b21209d5",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "abs-non-replaced-height"
+      ],
+      "behaviour": "Absolutely positioned, non-replaced elements — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "abs-non-replaced-height",
+        "clause_index": 3,
+        "clause_sha256": "2230b21209d599fe5a0e6fe08059ce9157f038978bc7cbda2223f394fd48cfa6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.abs-replaced-height",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "abs-replaced-height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Absolutely positioned, replaced elements.",
+      "locator": {
+        "section_id": "abs-replaced-height",
+        "text_sha256": "e42a94cf25265bc3978b6fda7a8b8c2dd008a051b295aaa06bebe220f18383ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.abs-replaced-height-clause-21c8a802a32c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.abs-replaced-height-clause-21c8a802a32c",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "abs-replaced-height"
+      ],
+      "behaviour": "Absolutely positioned, replaced elements — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "abs-replaced-height",
+        "clause_index": 4,
+        "clause_sha256": "21c8a802a32c80f7755ef3ca1ff2b544446562641331410b5b8fde9cc4b97060"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.block-root-margin",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "block-root-margin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Complicated cases.",
+      "locator": {
+        "section_id": "block-root-margin",
+        "text_sha256": "04c9f12b50191c34432326f1b104b4104c5154895efd8f8389bf6ecc31767cc3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.root-height",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "root-height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 'Auto' heights for block formatting context roots.",
+      "locator": {
+        "section_id": "root-height",
+        "text_sha256": "0f6090a0394aa7c544f842450d1df81f9f7b961015cc4744b18accf38f1d67ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.root-height-clause-5204fe39c177",
+        "css21-visudet.root-height-clause-aecc8e6ddb66"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.root-height-clause-5204fe39c177",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "root-height"
+      ],
+      "behaviour": "'Auto' heights for block formatting context roots — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "root-height",
+        "clause_index": 0,
+        "clause_sha256": "5204fe39c17734104087aafd4ceaf083d56488b7c844a77b4ec4d8046135d4fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.root-height-clause-aecc8e6ddb66",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "root-height"
+      ],
+      "behaviour": "'Auto' heights for block formatting context roots — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "root-height",
+        "clause_index": 3,
+        "clause_sha256": "aecc8e6ddb6678b4945b5344556ffb8aa57e0d99049d52b6ffdd5f9c5faee233"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Minimum and maximum heights: 'min-height' and 'max-height'. The min-height initial value is controlled by css-sizing-3#min-size-properties (auto), not the older zero default.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "text_sha256": "70b350ac1eab3a08443eaee2590e65b5fb44533fb7929df6b757dac33081635f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.min-max-heights-clause-865415d4b5ca",
+        "css21-visudet.min-max-heights-clause-cca2516ebb1d",
+        "css21-visudet.min-max-heights-clause-cd0b0cc83c9d",
+        "css21-visudet.min-max-heights-clause-0c131ddddaca",
+        "css21-visudet.min-max-heights-clause-6b7bd8885be8",
+        "css21-visudet.min-max-heights-clause-b8d13a434b1c",
+        "css21-visudet.min-max-heights-clause-627a3bf645a2",
+        "css21-visudet.min-max-heights-clause-a846c47dd97d",
+        "css21-visudet.min-max-heights-clause-cfa06451030e",
+        "css21-visudet.min-max-heights-clause-a3127e8bf271",
+        "css21-visudet.min-max-heights-clause-2f25f01c2e03",
+        "css21-visudet.min-max-heights-clause-453c2a237b91"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-865415d4b5ca",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 3,
+        "clause_sha256": "865415d4b5ca56068ccda4a0cbc701ef0ed14ab2100e70df747b44944555d355"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-cca2516ebb1d",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-cd0b0cc83c9d",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 15,
+        "clause_sha256": "cd0b0cc83c9d6095d786666dce0ed93b473c17842bb8f07bf003d41cad562c16"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-0c131ddddaca",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 19,
+        "clause_sha256": "0c131ddddaca25cc19f353b8df0b1679fb39af0df397f50feaf43a525629bbb9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-6b7bd8885be8",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 32,
+        "clause_sha256": "6b7bd8885be8bb155fc9defbd05bf990d5e4e5991a7ff3be92434b4ac9dd8a71"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-b8d13a434b1c",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 34,
+        "clause_sha256": "b8d13a434b1cca1d6df2fc86097f4ef5ac8c0cba112e8bbbab879597b8db6beb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-627a3bf645a2",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 41,
+        "clause_sha256": "627a3bf645a21c56940856c3ea5e2d58052ddb905903a64885edbc2caed931dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-a846c47dd97d",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 43,
+        "clause_sha256": "a846c47dd97d3cb3a169e7be98dba34d258dbc92197ebc63c78c65611b564b4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-cfa06451030e",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 44,
+        "clause_sha256": "cfa06451030e2d84b4c40dbc7675f11a404a60491d75394f3a65beeea863b727"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-a3127e8bf271",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 45,
+        "clause_sha256": "a3127e8bf271d22a18b3ba341dca93a13e0c92ed20da3acda7c73a066c01c8f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-2f25f01c2e03",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 46,
+        "clause_sha256": "2f25f01c2e03c54cb21ff89b539466cd40c1745981b397cd48dd181185a76ec1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.min-max-heights-clause-453c2a237b91",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "min-max-heights"
+      ],
+      "behaviour": "Minimum and maximum heights: 'min-height' and 'max-height' — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-max-heights",
+        "clause_index": 47,
+        "clause_sha256": "453c2a237b91de958acf30d048c9d8bc2517f12cae25d8c1cf7afaa94d8b0f8b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.line-height",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "line-height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line height calculations: the 'line-height' and 'vertical-align' properties.",
+      "locator": {
+        "section_id": "line-height",
+        "text_sha256": "332c2c0577a8bdea0e5ffb36b30f05f9d8c7d07e8fd2771de361226c7ee2376c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.line-height-clause-e4dd2f31b497"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.line-height-clause-e4dd2f31b497",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "line-height"
+      ],
+      "behaviour": "Line height calculations: the 'line-height' and 'vertical-align' properties — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height",
+        "clause_index": 2,
+        "clause_sha256": "e4dd2f31b497d07da4c060c3fead56aaf5ab5b7c37b482a782df3f2f05f54010"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Leading and half-leading.",
+      "locator": {
+        "section_id": "leading",
+        "text_sha256": "30d7d1b42240a224d200ff8f68dcfb4a339d0051fa07a25f1bd67f8d7cd9fda2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-visudet.leading-clause-629f7381a270",
+        "css21-visudet.leading-clause-81783b6eb9fb",
+        "css21-visudet.leading-clause-89df53177862",
+        "css21-visudet.leading-clause-8552fba22a91",
+        "css21-visudet.leading-clause-cca2516ebb1d",
+        "css21-visudet.leading-clause-0693d99b5e5d",
+        "css21-visudet.leading-clause-2dac8d89d629",
+        "css21-visudet.leading-clause-e2eda3d1b2d8",
+        "css21-visudet.leading-clause-4a29bc59947e",
+        "css21-visudet.leading-clause-d928b6191c3c",
+        "css21-visudet.leading-clause-3727149fd846",
+        "css21-visudet.leading-clause-6fc61f8d7139",
+        "css21-visudet.leading-clause-e38914ddcda6",
+        "css21-visudet.leading-clause-06850fdcbe25",
+        "css21-visudet.leading-clause-9e0656c35814"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-visudet.leading-clause-629f7381a270",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 1,
+        "clause_sha256": "629f7381a2702ac5698c2b3b3a04601c02e19c4f2131b9e3dd4a970aff5968b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-81783b6eb9fb",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 5,
+        "clause_sha256": "81783b6eb9fb38738ae4db19435d0b6941add9d17d40533b1bd2e130993492dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-89df53177862",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 7,
+        "clause_sha256": "89df531778624b2f6a2f558b1e3f318bec8887720028a0464b3212a57a44dbe3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-8552fba22a91",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 10,
+        "clause_sha256": "8552fba22a9177a37edb494667eebe6080169e96cf6bcbd01ad84ee3f8fe4e3a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-cca2516ebb1d",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 21,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-0693d99b5e5d",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 26,
+        "clause_sha256": "0693d99b5e5d9cd280366849efa5fb72cbce988f4143841fff8f39669a6990d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-2dac8d89d629",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 28,
+        "clause_sha256": "2dac8d89d6292b514f6134d357707985a76b6d0c025a8222fe2ad7dd0ce24f42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-e2eda3d1b2d8",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 32,
+        "clause_sha256": "e2eda3d1b2d83b29ed1dce86e6f48c95de4a0ca4e754a06861fcfa871c6748d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-4a29bc59947e",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 34,
+        "clause_sha256": "4a29bc59947e859b2713665d5d1e02c21f18b24be2e3f3ff3e541937964f6316"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-d928b6191c3c",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 41,
+        "clause_sha256": "d928b6191c3c7e89b727efe6007b133b676ef903102cde161eca2f9e73255f32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-3727149fd846",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 43,
+        "clause_sha256": "3727149fd846c3c06eedafa693bff2627779b251d3929ccf5b3ab92a71823fed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-6fc61f8d7139",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 60, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 59,
+        "clause_sha256": "6fc61f8d7139b2ace6ea631e970082e15619db3b8dc8898337307a26c851c682"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-e38914ddcda6",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 77, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 76,
+        "clause_sha256": "e38914ddcda6371c0a915c5c6f1c7be54c07a4a07ec8c30793287e8dd6931f97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-06850fdcbe25",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 83, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 82,
+        "clause_sha256": "06850fdcbe2557fc6abd667b5da988c61d0b2e2cdc2bc8510c7461b0ab009c26"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-visudet.leading-clause-9e0656c35814",
+      "family": "css21-visudet",
+      "source_id": "css21-visudet",
+      "sections": [
+        "leading"
+      ],
+      "behaviour": "Leading and half-leading — normative clause 85, located by its exact source hash.",
+      "locator": {
+        "section_id": "leading",
+        "clause_index": 84,
+        "clause_sha256": "9e0656c35814deda496fdc0042fda095f72e502b7c6d570d645367e090d8e11f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    }
+  ]
+}

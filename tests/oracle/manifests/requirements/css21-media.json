@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-media.q7-0",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "q7.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 7 Media types.",
+      "locator": {
+        "section_id": "q7.0",
+        "text_sha256": "9aa99f624a8e355e1d16e8a59d806d557fbc0ebff00f34476daed0afa643043a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-media.media-intro",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "media-intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction to media types.",
+      "locator": {
+        "section_id": "media-intro",
+        "text_sha256": "9e3a96180227f0c57a914d208548d0c31799e9177459c44fd441ffc103681a30"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-media.media-sheets",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "media-sheets"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying media-dependent style sheets.",
+      "locator": {
+        "section_id": "media-sheets",
+        "text_sha256": "94631f98924cfde8cb8ae26097869325f5f49c250286dae7c10bdfcb9663bd0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-media.at-media-rule",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "at-media-rule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The @media rule.",
+      "locator": {
+        "section_id": "at-media-rule",
+        "text_sha256": "6311f95e46d423a57cbed12b6af036dd9595f4afb62b97e5f6be02989b3794b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-media.at-media-rule-clause-dc5eed0fdee1",
+        "css21-media.at-media-rule-clause-b855c3acbc23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-media.at-media-rule-clause-dc5eed0fdee1",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "at-media-rule"
+      ],
+      "behaviour": "The @media rule — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-media-rule",
+        "clause_index": 0,
+        "clause_sha256": "dc5eed0fdee136fad7d7e960ebd2bef35972536944aeede69b1c9680eba7dcc6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-media.at-media-rule-clause-b855c3acbc23",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "at-media-rule"
+      ],
+      "behaviour": "The @media rule — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-media-rule",
+        "clause_index": 2,
+        "clause_sha256": "b855c3acbc2361b946693fc1260e7f60ff5003c6cf036b2552fd6eb9741c92e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-media.media-types",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "media-types"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Recognized media types.",
+      "locator": {
+        "section_id": "media-types",
+        "text_sha256": "c4920b184dd8755f6b8c320ec72598eea395a9f59906f4e3d0010e06e1a67f5b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-media.media-types-clause-1eb96cc96bbe",
+        "css21-media.media-types-clause-244497aea3d5",
+        "css21-media.media-types-clause-78b56223249c",
+        "css21-media.media-types-clause-db9404e2f9b7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-media.media-types-clause-1eb96cc96bbe",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "media-types"
+      ],
+      "behaviour": "Recognized media types — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-types",
+        "clause_index": 18,
+        "clause_sha256": "1eb96cc96bbe099b2423f2da2e865ceac0d66f5c7ddf5339d11d9d173de8eb98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-media.media-types-clause-244497aea3d5",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "media-types"
+      ],
+      "behaviour": "Recognized media types — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-types",
+        "clause_index": 23,
+        "clause_sha256": "244497aea3d53dad2ed1e90eacaa86a252d5fd391f677856c10d19c0b3de3fb6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-media.media-types-clause-78b56223249c",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "media-types"
+      ],
+      "behaviour": "Recognized media types — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-types",
+        "clause_index": 28,
+        "clause_sha256": "78b56223249cffcb85c2974fe8d68ae44f3b9e087a80f8274274fd93d285825b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-media.media-types-clause-db9404e2f9b7",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "media-types"
+      ],
+      "behaviour": "Recognized media types — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-types",
+        "clause_index": 29,
+        "clause_sha256": "db9404e2f9b723c1c9c88298e21d36fd6d288fdccdfcb3dfbbf93c0d6f5d0fdd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-media.media-groups",
+      "family": "css21-media",
+      "source_id": "css21-media",
+      "sections": [
+        "media-groups"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.3.1 Media groups.",
+      "locator": {
+        "section_id": "media-groups",
+        "text_sha256": "702791da01c9a55dd6c589b3ea781aa6e4107e147ad833bba2cc0328de7bdeee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

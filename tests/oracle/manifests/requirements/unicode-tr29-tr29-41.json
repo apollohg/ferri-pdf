@@ -1,0 +1,1656 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "unicode-tr29-tr29-41.heading-a72eb40d2903",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "heading-a72eb40d2903"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unicode® Standard Annex #29.",
+      "locator": {
+        "section_id": "heading-a72eb40d2903",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.heading-1c5e77c4bb90",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "heading-1c5e77c4bb90"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unicode Text Segmentation.",
+      "locator": {
+        "section_id": "heading-1c5e77c4bb90",
+        "text_sha256": "c77ba085273641c3d99a97b56ad4f2762906a70cbd7d926270e2cf1c3d34d8d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.heading-562e5643bfd0",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "heading-562e5643bfd0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Summary.",
+      "locator": {
+        "section_id": "heading-562e5643bfd0",
+        "text_sha256": "3336b051267477f6d9e094a7ea8f31d4c713b4992de65029c88bb06fc871faf7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.heading-b67e4e63a5c4",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "heading-b67e4e63a5c4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Status.",
+      "locator": {
+        "section_id": "heading-b67e4e63a5c4",
+        "text_sha256": "969770954d10eb10c58c417e62f0aeb8ceca31b93e33871538ad4b7096754f2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.heading-35d8550f521f",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "heading-35d8550f521f"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Contents.",
+      "locator": {
+        "section_id": "heading-35d8550f521f",
+        "text_sha256": "4491a4cce91e6e883809f1b7c892c39b2ecba3f2f22fa21c298ef798cf7b3a90"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.introduction",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 1 Introduction.",
+      "locator": {
+        "section_id": "Introduction",
+        "text_sha256": "9a02e4e1fef889a24ce9146ff7284bc07c7679431eb3b585d99692122344dba4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.introduction-clause-f025b637dbbb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.introduction-clause-f025b637dbbb",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Introduction"
+      ],
+      "behaviour": "1 Introduction — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Introduction",
+        "clause_index": 4,
+        "clause_sha256": "f025b637dbbb8fc8b8f6e220efaa6fe2de63975e692090a773fe7f69252fff26"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.notation",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Notation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Notation.",
+      "locator": {
+        "section_id": "Notation",
+        "text_sha256": "ec40362d20ca57ec4c5b78548de0d8f96d30cda6915269c8e326d5042373b0a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.rule-constraints",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Rule_Constraints"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rule Constraints.",
+      "locator": {
+        "section_id": "Rule_Constraints",
+        "text_sha256": "4c062ad2e9bb48fc0e73c54a291f5e056469bd26bd7fa62750e5e58e139891d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.rule-constraints-clause-f032c5da5666",
+        "unicode-tr29-tr29-41.rule-constraints-clause-9ceae32ed533"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.rule-constraints-clause-f032c5da5666",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Rule_Constraints"
+      ],
+      "behaviour": "Rule Constraints — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Rule_Constraints",
+        "clause_index": 4,
+        "clause_sha256": "f032c5da56667471bb428a55f42f12aef56de5766cd839bbf30aa121f02e9792"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.rule-constraints-clause-9ceae32ed533",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Rule_Constraints"
+      ],
+      "behaviour": "Rule Constraints — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "Rule_Constraints",
+        "clause_index": 6,
+        "clause_sha256": "9ceae32ed533a5f309221d8f3e4a5671bbdf1da327f66049ef9ddddd2010a11d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.conformance",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 2 Conformance.",
+      "locator": {
+        "section_id": "Conformance",
+        "text_sha256": "abcc4243365e4dbb4af66d4c6a4911b7a8e082b86df264694105d1e9d4a5e636"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.conformance-clause-69598bf66b11"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.conformance-clause-69598bf66b11",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "2 Conformance — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 1,
+        "clause_sha256": "69598bf66b11d7ec832e19e5f6c099339040dbe97bef8599c3c7798a142f0fbe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-boundaries",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_Boundaries"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 3 Grapheme Cluster Boundaries.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_Boundaries",
+        "text_sha256": "c0d12bf47464ad9877dcc9371c25ecf850a48c7113c86f94502b7e1e8d8ffae8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-d7e2bb5feba2",
+        "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-6262d7846cd8",
+        "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-294d1f6577c7",
+        "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-461f94c90a6b",
+        "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-ee3de90f79b2",
+        "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-8f71168a9ffe",
+        "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-10251512e56d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-d7e2bb5feba2",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_Boundaries"
+      ],
+      "behaviour": "3 Grapheme Cluster Boundaries — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_Boundaries",
+        "clause_index": 1,
+        "clause_sha256": "d7e2bb5feba2fd8c9909d83f69766313879261c46bacef6b7eb3a5e9ebc99761"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-6262d7846cd8",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_Boundaries"
+      ],
+      "behaviour": "3 Grapheme Cluster Boundaries — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_Boundaries",
+        "clause_index": 5,
+        "clause_sha256": "6262d7846cd82006b817e3cce4ebbe3eda17395303fa479a4de09fa0e7bfe2d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-294d1f6577c7",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_Boundaries"
+      ],
+      "behaviour": "3 Grapheme Cluster Boundaries — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_Boundaries",
+        "clause_index": 6,
+        "clause_sha256": "294d1f6577c799cf0bb9c1ec32204bbea7f3fc6c745c8b9ca17e7ede9b97223e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-461f94c90a6b",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_Boundaries"
+      ],
+      "behaviour": "3 Grapheme Cluster Boundaries — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_Boundaries",
+        "clause_index": 60,
+        "clause_sha256": "461f94c90a6b44eaa0fb86bcdda31bff1aa38d613fc9f8fca256d566196d1092"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-ee3de90f79b2",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_Boundaries"
+      ],
+      "behaviour": "3 Grapheme Cluster Boundaries — normative clause 62, located by its exact source hash.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_Boundaries",
+        "clause_index": 61,
+        "clause_sha256": "ee3de90f79b2bf865186ea33c72ad3b1e457142a91ae9f830184d91a6d23cd1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-8f71168a9ffe",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_Boundaries"
+      ],
+      "behaviour": "3 Grapheme Cluster Boundaries — normative clause 69, located by its exact source hash.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_Boundaries",
+        "clause_index": 68,
+        "clause_sha256": "8f71168a9ffef4a6b37e91c185b10bc6ee6a4e9d4ff5d5a7398620da09f98c62"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-boundaries-clause-10251512e56d",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_Boundaries"
+      ],
+      "behaviour": "3 Grapheme Cluster Boundaries — normative clause 71, located by its exact source hash.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_Boundaries",
+        "clause_index": 70,
+        "clause_sha256": "10251512e56d2d6d0cb21b2f9cca1e43ff25f745a5c8ac7c4c1e8e5b61b3c3a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.default-grapheme-cluster-table",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Default_Grapheme_Cluster_Table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default Grapheme Cluster Boundary Specification.",
+      "locator": {
+        "section_id": "Default_Grapheme_Cluster_Table",
+        "text_sha256": "9ba2618f2bc9d578bba498556e101e52929a2dfdcadf2f7f4e671ac9ad07b159"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.default-grapheme-cluster-table-clause-d0399fccea0d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.default-grapheme-cluster-table-clause-d0399fccea0d",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Default_Grapheme_Cluster_Table"
+      ],
+      "behaviour": "Default Grapheme Cluster Boundary Specification — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Default_Grapheme_Cluster_Table",
+        "clause_index": 0,
+        "clause_sha256": "d0399fccea0d3157bc867e0c59db11d6ac21cc402bc6d773ccd66130a826dfc7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-boundary-rules",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_Boundary_Rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grapheme Cluster Boundary Rules.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_Boundary_Rules",
+        "text_sha256": "7af01a9cf927c96ea9657937927fcfd1ad6fde1e0534b72647ddc5d6ebfe2d94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.grapheme-cluster-boundary-rules-clause-24b005b3a79d",
+        "unicode-tr29-tr29-41.grapheme-cluster-boundary-rules-clause-2cb0cd368511"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-boundary-rules-clause-24b005b3a79d",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_Boundary_Rules"
+      ],
+      "behaviour": "Grapheme Cluster Boundary Rules — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_Boundary_Rules",
+        "clause_index": 0,
+        "clause_sha256": "24b005b3a79df9b702c54d0836c5efa400724d44cc720ee24477390c84bee745"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-boundary-rules-clause-2cb0cd368511",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_Boundary_Rules"
+      ],
+      "behaviour": "Grapheme Cluster Boundary Rules — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_Boundary_Rules",
+        "clause_index": 8,
+        "clause_sha256": "2cb0cd368511c22191e323dcdf2e798bc6ca2756d1ea3d6d3409a52c17baa65a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.word-boundaries",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Word_Boundaries"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 4 Word Boundaries.",
+      "locator": {
+        "section_id": "Word_Boundaries",
+        "text_sha256": "1deb10a39cd070392206cf3c3e94cbb20f2a3d3ed7e089469b4c944836ce85c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.word-boundaries-clause-ff106763f362"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.word-boundaries-clause-ff106763f362",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Word_Boundaries"
+      ],
+      "behaviour": "4 Word Boundaries — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "Word_Boundaries",
+        "clause_index": 25,
+        "clause_sha256": "ff106763f362e1326671446c8eaa8e1ba27a4e7c5609280db2275a4ded451afd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.default-word-boundaries",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Default_Word_Boundaries"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default Word Boundary Specification.",
+      "locator": {
+        "section_id": "Default_Word_Boundaries",
+        "text_sha256": "68e3d763eebc806f69744c0f0344aff7a0f724fc8b03b9efa075fe8e8f5649af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.default-word-boundaries-clause-19e6ea4b67ba"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.default-word-boundaries-clause-19e6ea4b67ba",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Default_Word_Boundaries"
+      ],
+      "behaviour": "Default Word Boundary Specification — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Default_Word_Boundaries",
+        "clause_index": 0,
+        "clause_sha256": "19e6ea4b67ba9cbe5fb6f1b235e9598060ebb2742676c08faf8dce11f6a2fe34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.word-boundary-rules",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Word_Boundary_Rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Word Boundary Rules.",
+      "locator": {
+        "section_id": "Word_Boundary_Rules",
+        "text_sha256": "2374b89d0c6d0c4b85d863b4afe8388f6f024a16a4d2e690d49d97616d56ba5e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.word-boundary-rules-clause-965609183625",
+        "unicode-tr29-tr29-41.word-boundary-rules-clause-ba059a1caa82",
+        "unicode-tr29-tr29-41.word-boundary-rules-clause-83df3e482bec",
+        "unicode-tr29-tr29-41.word-boundary-rules-clause-8a9ecc545c1c",
+        "unicode-tr29-tr29-41.word-boundary-rules-clause-61894c028602"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.word-boundary-rules-clause-965609183625",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Word_Boundary_Rules"
+      ],
+      "behaviour": "Word Boundary Rules — normative clause 124, located by its exact source hash.",
+      "locator": {
+        "section_id": "Word_Boundary_Rules",
+        "clause_index": 123,
+        "clause_sha256": "9656091836253058986d26121a10525de82137bc732a675c02fc0d4b8a251e5d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.word-boundary-rules-clause-ba059a1caa82",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Word_Boundary_Rules"
+      ],
+      "behaviour": "Word Boundary Rules — normative clause 126, located by its exact source hash.",
+      "locator": {
+        "section_id": "Word_Boundary_Rules",
+        "clause_index": 125,
+        "clause_sha256": "ba059a1caa82fdc59bf3dee5cbd50dc46f03d3255aeb8c3176aeea311cbd0f84"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.word-boundary-rules-clause-83df3e482bec",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Word_Boundary_Rules"
+      ],
+      "behaviour": "Word Boundary Rules — normative clause 144, located by its exact source hash.",
+      "locator": {
+        "section_id": "Word_Boundary_Rules",
+        "clause_index": 143,
+        "clause_sha256": "83df3e482becefe9d7248a718f7dafc99bdd056b994e647a6e062c49f12fb054"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.word-boundary-rules-clause-8a9ecc545c1c",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Word_Boundary_Rules"
+      ],
+      "behaviour": "Word Boundary Rules — normative clause 152, located by its exact source hash.",
+      "locator": {
+        "section_id": "Word_Boundary_Rules",
+        "clause_index": 151,
+        "clause_sha256": "8a9ecc545c1ce3905962ddf4dc89627b347feac3b5be5f78e3d453001e8f6efd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.word-boundary-rules-clause-61894c028602",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Word_Boundary_Rules"
+      ],
+      "behaviour": "Word Boundary Rules — normative clause 157, located by its exact source hash.",
+      "locator": {
+        "section_id": "Word_Boundary_Rules",
+        "clause_index": 156,
+        "clause_sha256": "61894c0286023a13bed381cf132635d213a285afa19db0961dc9614779d15828"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.name-validation",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Name_Validation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Name Validation.",
+      "locator": {
+        "section_id": "Name_Validation",
+        "text_sha256": "44d8c700807d28088e533f5b391b179f89e6d50e97384693f9dcd2575639eb41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.name-validation-clause-be2b27f69b86",
+        "unicode-tr29-tr29-41.name-validation-clause-4b6f0f231dbf"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.name-validation-clause-be2b27f69b86",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Name_Validation"
+      ],
+      "behaviour": "Name Validation — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Name_Validation",
+        "clause_index": 0,
+        "clause_sha256": "be2b27f69b86edc8a18dea1f17b0d0d8bb44ddc39d62f40ecef235ca71f8fa0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.name-validation-clause-4b6f0f231dbf",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Name_Validation"
+      ],
+      "behaviour": "Name Validation — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "Name_Validation",
+        "clause_index": 3,
+        "clause_sha256": "4b6f0f231dbff9a1635aa83aacae57e1a23dc136dc6563003b363109da601f9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.sentence-boundaries",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Sentence_Boundaries"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 5 Sentence Boundaries.",
+      "locator": {
+        "section_id": "Sentence_Boundaries",
+        "text_sha256": "08804b86fa34fc4019dad03e68ef9e0d22ceccd4d2437344430075fbfbcb72e3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.default-sentence-boundaries",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Default_Sentence_Boundaries"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default Sentence Boundary Specification.",
+      "locator": {
+        "section_id": "Default_Sentence_Boundaries",
+        "text_sha256": "55d9105da92995cd078cf4c6e928d1fdd765daccc973e2ebc9989fddd8d67871"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.default-sentence-boundaries-clause-927334525a75"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.default-sentence-boundaries-clause-927334525a75",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Default_Sentence_Boundaries"
+      ],
+      "behaviour": "Default Sentence Boundary Specification — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Default_Sentence_Boundaries",
+        "clause_index": 0,
+        "clause_sha256": "927334525a750e5cc8c00ce447f7ac8793b8163756876cbc45471f36a5028907"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.sentence-boundary-rules",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Sentence_Boundary_Rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sentence Boundary Rules.",
+      "locator": {
+        "section_id": "Sentence_Boundary_Rules",
+        "text_sha256": "d84b4d806e82b5e05dad97909f02a152d6203d336106e540276cc391c21ef1b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.sentence-boundary-rules-clause-659c949e4f59"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.sentence-boundary-rules-clause-659c949e4f59",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Sentence_Boundary_Rules"
+      ],
+      "behaviour": "Sentence Boundary Rules — normative clause 67, located by its exact source hash.",
+      "locator": {
+        "section_id": "Sentence_Boundary_Rules",
+        "clause_index": 66,
+        "clause_sha256": "659c949e4f59e57a3a6e81c4941fb3495205c924cf5fe7a4827e4c7279ea795d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.implementation-notes",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Implementation_Notes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 6 Implementation Notes.",
+      "locator": {
+        "section_id": "Implementation_Notes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.normalization",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Normalization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Normalization.",
+      "locator": {
+        "section_id": "Normalization",
+        "text_sha256": "8e3be46448a132543062f0b997362cc1ba5e07e74b40204c7772ee7b19b28b1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.normalization-clause-e09b70985ee7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.normalization-clause-e09b70985ee7",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Normalization"
+      ],
+      "behaviour": "Normalization — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Normalization",
+        "clause_index": 0,
+        "clause_sha256": "e09b70985ee7e7993e09f01a5e41505812d2ebf38f3c18dffe0e1c251a1a9ec7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-and-format-rules",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_and_Format_Rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Replacing Ignore Rules.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_and_Format_Rules",
+        "text_sha256": "242859f31e20776af6e0d240f31472bb2fca7dc3e20d155f6ae2d60525569c98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.grapheme-cluster-and-format-rules-clause-891f03908047",
+        "unicode-tr29-tr29-41.grapheme-cluster-and-format-rules-clause-d7278e636aee"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-and-format-rules-clause-891f03908047",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_and_Format_Rules"
+      ],
+      "behaviour": "Replacing Ignore Rules — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_and_Format_Rules",
+        "clause_index": 0,
+        "clause_sha256": "891f03908047693a5d3bcaa41b7f5cb6844ed814c98099531edf62e9b72122d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.grapheme-cluster-and-format-rules-clause-d7278e636aee",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Grapheme_Cluster_and_Format_Rules"
+      ],
+      "behaviour": "Replacing Ignore Rules — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "Grapheme_Cluster_and_Format_Rules",
+        "clause_index": 27,
+        "clause_sha256": "d7278e636aeec4eaeea4c3c58e35cbb2ac4877fab4f1d90f106edffea30bb1ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.state-machines",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "State_Machines"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in State Machines.",
+      "locator": {
+        "section_id": "State_Machines",
+        "text_sha256": "4db85a1f393793930c65de88160a0b8ae60a74e7fd1d8664c2bad6767c321d10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.state-machines-clause-886140119105"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.state-machines-clause-886140119105",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "State_Machines"
+      ],
+      "behaviour": "State Machines — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "State_Machines",
+        "clause_index": 0,
+        "clause_sha256": "886140119105fb0ed76eb7de35c56cfca24c71d69ae1ad544c95fc0eecda9bb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.random-access",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Random_Access"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Random Access.",
+      "locator": {
+        "section_id": "Random_Access",
+        "text_sha256": "e4004fe9abb78b486747b38ee7b62d5feda5bd84f35be26fb3bbf3b17ac5717e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode-tr29-tr29-41.random-access-clause-62118b468d14"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.random-access-clause-62118b468d14",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Random_Access"
+      ],
+      "behaviour": "Random Access — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Random_Access",
+        "clause_index": 2,
+        "clause_sha256": "62118b468d14ca785d0864263dfa60357a29614f24d59feba60af392fd510dfe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.tailoring",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Tailoring"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tailoring.",
+      "locator": {
+        "section_id": "Tailoring",
+        "text_sha256": "3e93eb18e378eadb739e981fc6774c24136dc8bf65210b9cd37d0db7a400fccc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.testing",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 7 Testing.",
+      "locator": {
+        "section_id": "Testing",
+        "text_sha256": "bda38b638ed938d97d3a72d1de751401611bb782e037fe92a8709e5463051945"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.hangul-syllable-boundary-determination",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Hangul_Syllable_Boundary_Determination"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 8 Hangul Syllable Boundary Determination.",
+      "locator": {
+        "section_id": "Hangul_Syllable_Boundary_Determination",
+        "text_sha256": "e9ced17e0fd644e76036c54f34aa10b73040b5b9622eb4ecfa7422785cafbccd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.standard-korean-syllables",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Standard_Korean_Syllables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Standard Korean Syllables.",
+      "locator": {
+        "section_id": "Standard_Korean_Syllables",
+        "text_sha256": "82b3cd01d3b280f8307327bc87946c328162ce6e0e63f0943273bfd41ed33bd8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.transforming-into-sks",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Transforming_Into_SKS"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Transforming into Standard Korean Syllables.",
+      "locator": {
+        "section_id": "Transforming_Into_SKS",
+        "text_sha256": "b5d461ec071b1773aa356b6d6659cf37e0d4eac5fe8a27e8fd4fa1b5956cbebf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.modifications",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Modifications"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Modifications.",
+      "locator": {
+        "section_id": "Modifications",
+        "text_sha256": "59e3df51f7ce304c784883667c2d217742b34321fb1f2df960fe04f0090a7b10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.heading-58da3e4d2808",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "heading-58da3e4d2808"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Revision 41.",
+      "locator": {
+        "section_id": "heading-58da3e4d2808",
+        "text_sha256": "0a6970b3322fef1fc5919ac3c4a3a16eef460d20925754574b1e119494ffafbb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.acknowledgments",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "Acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "Acknowledgments",
+        "text_sha256": "5f804a5c6fc834b3595560ae424ffb030e55164746f26bf929eeff8773c5b21c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode-tr29-tr29-41.references",
+      "family": "unicode-tr29-tr29-41",
+      "source_id": "unicode-tr29-tr29-41",
+      "sections": [
+        "References"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "References",
+        "text_sha256": "8e262b530dd9dea23efac0eca37ae00f8a40d4b1be2872783d65ad768734b47a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

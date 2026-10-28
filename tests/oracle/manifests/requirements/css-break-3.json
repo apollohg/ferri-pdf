@@ -1,0 +1,2724 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-break-3.heading-7679f64b1c41",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "heading-7679f64b1c41"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Fragmentation Module Level 3.",
+      "locator": {
+        "section_id": "heading-7679f64b1c41",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.subtitle",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "subtitle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Candidate Recommendation, 4 December 2018.",
+      "locator": {
+        "section_id": "subtitle",
+        "text_sha256": "af1ae9e6e21ae45d4d3439ba92d01efbea14dbe653db76b420dc7ce410c00de2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.fragmentation-model",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "fragmentation-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fragmentation Model and Terminology.",
+      "locator": {
+        "section_id": "fragmentation-model",
+        "text_sha256": "c52deefd85f6d315b7f6fa998fec4cba98db1f58ef5006ae0417a81496008f2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.fragmentation-model-clause-bbec598f7606",
+        "css-break-3.fragmentation-model-clause-2bc87c44538c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.fragmentation-model-clause-bbec598f7606",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "fragmentation-model"
+      ],
+      "behaviour": "Fragmentation Model and Terminology — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "fragmentation-model",
+        "clause_index": 15,
+        "clause_sha256": "bbec598f7606b322f2245da8436ac2459763feef1436b5d57bac11745e347e0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.fragmentation-model-clause-2bc87c44538c",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "fragmentation-model"
+      ],
+      "behaviour": "Fragmentation Model and Terminology — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "fragmentation-model",
+        "clause_index": 16,
+        "clause_sha256": "2bc87c44538cd7e97486f6986f03f5edeaf16c28d5c2650a7d6894c2c2fe9a31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.parallel-flows",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "parallel-flows"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Parallel Fragmentation Flows.",
+      "locator": {
+        "section_id": "parallel-flows",
+        "text_sha256": "c136bc9cd80421e56dc0af9dee4e12bea5ea8c3190cd4ed5ca1e0125afc91e29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.parallel-flows-clause-5a00ad86fc7d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.parallel-flows-clause-5a00ad86fc7d",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "parallel-flows"
+      ],
+      "behaviour": "Parallel Fragmentation Flows — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "parallel-flows",
+        "clause_index": 0,
+        "clause_sha256": "5a00ad86fc7dd2a2427307035f02b7a39320df49dd10b79cac4681d563f5ace6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.nested-flows",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "nested-flows"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Nested Fragmentation Flows.",
+      "locator": {
+        "section_id": "nested-flows",
+        "text_sha256": "88a5db0fc3e7429d853a5beb8a66fe53c7737c22e55f9d93fb655b11ea860a0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.breaking-controls",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "breaking-controls"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Controlling Breaks.",
+      "locator": {
+        "section_id": "breaking-controls",
+        "text_sha256": "6b8d13ba905e688285680886add55ae116f00ae8af53b65a84252f29f1107cc3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.breaking-controls-clause-a63684466cde"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.breaking-controls-clause-a63684466cde",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "breaking-controls"
+      ],
+      "behaviour": "Controlling Breaks — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "breaking-controls",
+        "clause_index": 0,
+        "clause_sha256": "a63684466cde7632ac3d30b5f71f8683633f62eedf07067319c7be469d327a59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.break-between",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-between"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Breaks Between Boxes: the break-before and break-after properties.",
+      "locator": {
+        "section_id": "break-between",
+        "text_sha256": "9aa4c38dc4272c8dbcd518b07bb3e6d3103c820faa8a9d4cd2426e152b0d07d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.break-between-clause-cca2516ebb1d",
+        "css-break-3.break-between-clause-c013bce3ce52",
+        "css-break-3.break-between-clause-7fbabad7568e",
+        "css-break-3.break-between-clause-ee1d4975770c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.break-between-clause-cca2516ebb1d",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-between"
+      ],
+      "behaviour": "Breaks Between Boxes: the break-before and break-after properties — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-between",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.break-between-clause-c013bce3ce52",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-between"
+      ],
+      "behaviour": "Breaks Between Boxes: the break-before and break-after properties — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-between",
+        "clause_index": 19,
+        "clause_sha256": "c013bce3ce527b3d5795e41a535b9443b7145ec04a65c246fed54d4abf6d00ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.break-between-clause-7fbabad7568e",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-between"
+      ],
+      "behaviour": "Breaks Between Boxes: the break-before and break-after properties — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-between",
+        "clause_index": 20,
+        "clause_sha256": "7fbabad7568ee0c878dda23a800e3ba776c7ae01f387f2a3b698155b73777f20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.break-between-clause-ee1d4975770c",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-between"
+      ],
+      "behaviour": "Breaks Between Boxes: the break-before and break-after properties — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-between",
+        "clause_index": 21,
+        "clause_sha256": "ee1d4975770c14a3e2f9e87ea11609a271fafce0305cba2f39f6414a818d2923"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.generic-break-values",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "generic-break-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Generic Break Values.",
+      "locator": {
+        "section_id": "generic-break-values",
+        "text_sha256": "a15e49828aca76f8abba72f98ae79306a019144ec08805a8c7279092edd56375"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.page-break-values",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "page-break-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page Break Values.",
+      "locator": {
+        "section_id": "page-break-values",
+        "text_sha256": "2787499c799aa38b2c9efc1823a9154eb59d795b8ab50d2915a0cbe30ee7cb53"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.column-break-values",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "column-break-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Column Break Values.",
+      "locator": {
+        "section_id": "column-break-values",
+        "text_sha256": "6d4c9013620a3a1dd88e349f71b87d18b0c83a2492136916321fd715f1b818c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.region-break-values",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "region-break-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Region Break Values.",
+      "locator": {
+        "section_id": "region-break-values",
+        "text_sha256": "5cb6f1e2f98069079ae850749b7aef5a2b1a60ce32cfb084c7cb4ec83b42e315"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.break-propagation",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-propagation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Child→Parent Break Propagation.",
+      "locator": {
+        "section_id": "break-propagation",
+        "text_sha256": "3407ab4e5e1515d56b613f66ef191ddc569a5bf5c6d9b353ab808a2ca691d43a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.break-propagation-clause-faa15d1d01e5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.break-propagation-clause-faa15d1d01e5",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-propagation"
+      ],
+      "behaviour": "Child→Parent Break Propagation — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-propagation",
+        "clause_index": 2,
+        "clause_sha256": "faa15d1d01e586603343d91d15aa7d56ef3609c4fe4f3d690d11016036a6a9c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.break-within",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-within"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Breaks Within Boxes: the break-inside property.",
+      "locator": {
+        "section_id": "break-within",
+        "text_sha256": "58dbca8ab7e3a9a2ca99ce7938a8101f1db5d9f491afc6b2d56d18ad742acbcc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.break-within-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.break-within-clause-cca2516ebb1d",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-within"
+      ],
+      "behaviour": "Breaks Within Boxes: the break-inside property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-within",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.widows-orphans",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "widows-orphans"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Breaks Between Lines: orphans, widows.",
+      "locator": {
+        "section_id": "widows-orphans",
+        "text_sha256": "c2e76facd7266215fa1021de2d53cabc0fc07cc7f8e86c33541cd35172a9f470"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.widows-orphans-clause-cca2516ebb1d",
+        "css-break-3.widows-orphans-clause-f06e4ffd6df2",
+        "css-break-3.widows-orphans-clause-ef66b0942091",
+        "css-break-3.widows-orphans-clause-6e87aa75d55c",
+        "css-break-3.widows-orphans-clause-f636fd6bda95"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "fixed-every-page",
+        "latin",
+        "overflow-axes",
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.widows-orphans-clause-cca2516ebb1d",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "widows-orphans"
+      ],
+      "behaviour": "Breaks Between Lines: orphans, widows — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "widows-orphans",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.widows-orphans-clause-f06e4ffd6df2",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "widows-orphans"
+      ],
+      "behaviour": "Breaks Between Lines: orphans, widows — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "widows-orphans",
+        "clause_index": 19,
+        "clause_sha256": "f06e4ffd6df2d91d1753c4a9204ac873e7fa1b24eb9af171378b9fdced6a777d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.widows-orphans-clause-ef66b0942091",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "widows-orphans"
+      ],
+      "behaviour": "Breaks Between Lines: orphans, widows — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "widows-orphans",
+        "clause_index": 20,
+        "clause_sha256": "ef66b0942091381141266c1733ae183231a0e8eb917c8b4754fc4c894b976ece"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.widows-orphans-clause-6e87aa75d55c",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "widows-orphans"
+      ],
+      "behaviour": "Breaks Between Lines: orphans, widows — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "widows-orphans",
+        "clause_index": 21,
+        "clause_sha256": "6e87aa75d55cd71a02afd5dd8939aa0f76d07d1b8c3b372f5b8bafafee2c2dc7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.widows-orphans-clause-f636fd6bda95",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "widows-orphans"
+      ],
+      "behaviour": "Breaks Between Lines: orphans, widows — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "widows-orphans",
+        "clause_index": 22,
+        "clause_sha256": "f636fd6bda955b44acc70f0df397662305e8ccb09870222bf82e21d13d1ab8e5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.page-break-properties",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "page-break-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page Break Aliases: the page-break-before, page-break-after, and page-break-inside properties.",
+      "locator": {
+        "section_id": "page-break-properties",
+        "text_sha256": "082706e9adf4580e3f462bcb24e18a753b1505d6e8dcab7e880940508ef4cf55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.page-break-properties-clause-d6f57e25962c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.page-break-properties-clause-d6f57e25962c",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "page-break-properties"
+      ],
+      "behaviour": "Page Break Aliases: the page-break-before, page-break-after, and page-break-inside properties — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "page-break-properties",
+        "clause_index": 0,
+        "clause_sha256": "d6f57e25962c1df62306822f0f54c13f4978f7083deccd2c4264d0875ca192be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.breaking-rules",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "breaking-rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rules for Breaking.",
+      "locator": {
+        "section_id": "breaking-rules",
+        "text_sha256": "e1e8f3655b90e7e318ef38ec456956671feb8785f0b3a717cd7ece7a2a13e699"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.breaking-rules-clause-eb132e9549f7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.breaking-rules-clause-eb132e9549f7",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "breaking-rules"
+      ],
+      "behaviour": "Rules for Breaking — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "breaking-rules",
+        "clause_index": 0,
+        "clause_sha256": "eb132e9549f7b50de7971667f780e5654c6961d1a32c5bb291c204e159de4e89"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.possible-breaks",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "possible-breaks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Possible Break Points.",
+      "locator": {
+        "section_id": "possible-breaks",
+        "text_sha256": "e30997baaf7aa0cd36d41ce648641effea40524059c0fb6816b65c2c499eda73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.possible-breaks-clause-4cf5e27e929c",
+        "css-break-3.possible-breaks-clause-e64e9af7559f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.possible-breaks-clause-4cf5e27e929c",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "possible-breaks"
+      ],
+      "behaviour": "Possible Break Points — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "possible-breaks",
+        "clause_index": 12,
+        "clause_sha256": "4cf5e27e929c66dbe1d7a05224da8e94b8dbfde3613d106ce21cbac900a35309"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.possible-breaks-clause-e64e9af7559f",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "possible-breaks"
+      ],
+      "behaviour": "Possible Break Points — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "possible-breaks",
+        "clause_index": 15,
+        "clause_sha256": "e64e9af7559fd4bbc7a647c04a4fde362b27a29c40f0f35fc3ddad855d303613"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.break-types",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-types"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Types of Breaks.",
+      "locator": {
+        "section_id": "break-types",
+        "text_sha256": "067a0812dc067892ebf75cf0dc3db8fb17bdb11985178220ccb6813f39446320"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.forced-breaks",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "forced-breaks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Forced Breaks.",
+      "locator": {
+        "section_id": "forced-breaks",
+        "text_sha256": "1e7d97455f853d18562b3d67de5c3afa8e2a778eb4a0c4ef01ab8223c5bf0e8c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.forced-breaks-clause-94116be42997"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.forced-breaks-clause-94116be42997",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "forced-breaks"
+      ],
+      "behaviour": "Forced Breaks — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "forced-breaks",
+        "clause_index": 2,
+        "clause_sha256": "94116be4299754c81e2a68582c7b0867e74395a5147490d9bd04049ee2914367"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.unforced-breaks",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "unforced-breaks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unforced Breaks.",
+      "locator": {
+        "section_id": "unforced-breaks",
+        "text_sha256": "e30e36108090ed8930c40fe1ae030d2aea827f9aeef112e2f6eea43b14642f5f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.unforced-breaks-clause-5e0ad8132a0f",
+        "css-break-3.unforced-breaks-clause-3deef732c5cf",
+        "css-break-3.unforced-breaks-clause-41c72e63582b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.unforced-breaks-clause-5e0ad8132a0f",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "unforced-breaks"
+      ],
+      "behaviour": "Unforced Breaks — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "unforced-breaks",
+        "clause_index": 9,
+        "clause_sha256": "5e0ad8132a0f93fd0eb9b09a43de21af556d1cbf899d96984c29785ad52dd6ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.unforced-breaks-clause-3deef732c5cf",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "unforced-breaks"
+      ],
+      "behaviour": "Unforced Breaks — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "unforced-breaks",
+        "clause_index": 11,
+        "clause_sha256": "3deef732c5cfce4587fe2bbfc62a34e4866ed178768d140c466e6219e830961f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.unforced-breaks-clause-41c72e63582b",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "unforced-breaks"
+      ],
+      "behaviour": "Unforced Breaks — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "unforced-breaks",
+        "clause_index": 12,
+        "clause_sha256": "41c72e63582bf0e5ed7194333781c6bd3f042f77be6adee92972e81f3f4785da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.best-breaks",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "best-breaks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Optimizing Unforced Breaks.",
+      "locator": {
+        "section_id": "best-breaks",
+        "text_sha256": "25269505ff94d7993dfbd7f8dc4fec7b480db6e7c0c6c1305d6fdd1df47ca311"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.best-breaks-clause-04051cf28755",
+        "css-break-3.best-breaks-clause-8d5e8077bece",
+        "css-break-3.best-breaks-clause-8d27c0b90e83",
+        "css-break-3.best-breaks-clause-65f749a30899",
+        "css-break-3.best-breaks-clause-26b28a0a96a1",
+        "css-break-3.best-breaks-clause-c46efe66e09b",
+        "css-break-3.best-breaks-clause-ce4fc8a0982a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.best-breaks-clause-04051cf28755",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "best-breaks"
+      ],
+      "behaviour": "Optimizing Unforced Breaks — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-breaks",
+        "clause_index": 0,
+        "clause_sha256": "04051cf287557c2a539fd2b9d9e5ad60908b2f405faa7f1d682ecb3598795ce6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.best-breaks-clause-8d5e8077bece",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "best-breaks"
+      ],
+      "behaviour": "Optimizing Unforced Breaks — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-breaks",
+        "clause_index": 5,
+        "clause_sha256": "8d5e8077bece5c1e80d36f24608cc805642981c5a5b0e72819e0d7a499f8dc8f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.best-breaks-clause-8d27c0b90e83",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "best-breaks"
+      ],
+      "behaviour": "Optimizing Unforced Breaks — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-breaks",
+        "clause_index": 6,
+        "clause_sha256": "8d27c0b90e8366e1eb6d826fa4cfbbcab7582b2a6a02f3bcdc8a400af5e125b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.best-breaks-clause-65f749a30899",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "best-breaks"
+      ],
+      "behaviour": "Optimizing Unforced Breaks — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-breaks",
+        "clause_index": 7,
+        "clause_sha256": "65f749a30899c2791a0fd108c8ac03bf41c359a0e2105de2827c9fc4bbab1bf4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.best-breaks-clause-26b28a0a96a1",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "best-breaks"
+      ],
+      "behaviour": "Optimizing Unforced Breaks — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-breaks",
+        "clause_index": 9,
+        "clause_sha256": "26b28a0a96a1667dce549242c20bacd319a06367d56ee61d32e7a09f2d7604e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.best-breaks-clause-c46efe66e09b",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "best-breaks"
+      ],
+      "behaviour": "Optimizing Unforced Breaks — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-breaks",
+        "clause_index": 10,
+        "clause_sha256": "c46efe66e09bdd999db1dd9631a3d66dc99ad8a71a4e27454ac40f3be2c675fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.best-breaks-clause-ce4fc8a0982a",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "best-breaks"
+      ],
+      "behaviour": "Optimizing Unforced Breaks — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "best-breaks",
+        "clause_index": 11,
+        "clause_sha256": "ce4fc8a0982ac3f2dadaef7041d1d1aa7d14f9d3178607e2f62f7ae2f5779b55"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.breaking-boxes",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "breaking-boxes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Box Model for Breaking.",
+      "locator": {
+        "section_id": "breaking-boxes",
+        "text_sha256": "006caa8f4e9d9dcc958bff408dee80b8e1c5841232f4642b74e520177fa6aab5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.varying-size-boxes",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "varying-size-boxes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Breaking into Varying-size Fragmentainers.",
+      "locator": {
+        "section_id": "varying-size-boxes",
+        "text_sha256": "f2ba49a2da771ee51051373a7b0306568f42639132bc6054f54c7e7ea9b73452"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.varying-size-boxes-clause-874a7417e5f9",
+        "css-break-3.varying-size-boxes-clause-ba86821e89f4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "fixed-every-page",
+        "latin",
+        "overflow-axes",
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.varying-size-boxes-clause-874a7417e5f9",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "varying-size-boxes"
+      ],
+      "behaviour": "Breaking into Varying-size Fragmentainers — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "varying-size-boxes",
+        "clause_index": 2,
+        "clause_sha256": "874a7417e5f9dfc8b5d7473adb9caba0df275c7c492398d60351c00ed4d7f284"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.varying-size-boxes-clause-ba86821e89f4",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "varying-size-boxes"
+      ],
+      "behaviour": "Breaking into Varying-size Fragmentainers — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "varying-size-boxes",
+        "clause_index": 4,
+        "clause_sha256": "ba86821e89f4e8204c38784e0a9983331533c1d14c0e5bd6a860a3709ee1c061"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.break-margins",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-margins"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Adjoining Margins at Breaks.",
+      "locator": {
+        "section_id": "break-margins",
+        "text_sha256": "2f88ee9907a40ef3a7f12d734d688e198330f41c5e1cdda545c7b338576e86d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "fixed-every-page",
+        "latin",
+        "overflow-axes",
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.box-splitting",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "box-splitting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Splitting Boxes.",
+      "locator": {
+        "section_id": "box-splitting",
+        "text_sha256": "ffd95ff437c03b8e8b764ab9e8d5ac73dcff9ea598229784da058cf7f70a03a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.break-decoration",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-decoration"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fragmented Borders and Backgrounds: the box-decoration-break property.",
+      "locator": {
+        "section_id": "break-decoration",
+        "text_sha256": "c8b495ba52b7b01078216a01d83ae03b5d50b497724060761878370569c3e68e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.break-decoration-clause-cca2516ebb1d",
+        "css-break-3.break-decoration-clause-ca5389241396",
+        "css-break-3.break-decoration-clause-41166a84bc53",
+        "css-break-3.break-decoration-clause-381fd1918239"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.break-decoration-clause-cca2516ebb1d",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-decoration"
+      ],
+      "behaviour": "Fragmented Borders and Backgrounds: the box-decoration-break property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-decoration",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.break-decoration-clause-ca5389241396",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-decoration"
+      ],
+      "behaviour": "Fragmented Borders and Backgrounds: the box-decoration-break property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-decoration",
+        "clause_index": 29,
+        "clause_sha256": "ca5389241396b516303081b3ea171828cc5c8f37282da7375d56c97d8edce655"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.break-decoration-clause-41166a84bc53",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-decoration"
+      ],
+      "behaviour": "Fragmented Borders and Backgrounds: the box-decoration-break property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-decoration",
+        "clause_index": 31,
+        "clause_sha256": "41166a84bc53a0dad0e4bdde13261d2b0c97e2188990c82f9703bb69bcd69849"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.break-decoration-clause-381fd1918239",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "break-decoration"
+      ],
+      "behaviour": "Fragmented Borders and Backgrounds: the box-decoration-break property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "break-decoration",
+        "clause_index": 32,
+        "clause_sha256": "381fd1918239dd5388a6132eed7ded790b802c470b32ae725e0e9db29fa811b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.joining-boxes",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "joining-boxes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Joining Boxes for slice.",
+      "locator": {
+        "section_id": "joining-boxes",
+        "text_sha256": "80f722daf9e718b89f864e6cf9556ef3e3030ca53735bc151f445db6d2e86933"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.transforms",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "transforms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Transforms, Positioning, and Pagination.",
+      "locator": {
+        "section_id": "transforms",
+        "text_sha256": "e25dfc400d2344ce971c8f710fd8c177a1c84639b3c9e076c5553c25c1c47d51"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.transforms-clause-4df5a3416a7a",
+        "css-break-3.transforms-clause-bdd7dee1edba",
+        "css-break-3.transforms-clause-318292b36b79"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.transforms-clause-4df5a3416a7a",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "transforms"
+      ],
+      "behaviour": "Transforms, Positioning, and Pagination — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "transforms",
+        "clause_index": 0,
+        "clause_sha256": "4df5a3416a7a67332280cc3622b590ce6a3ea94b6f73a6154a4c07caf9f3504b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.transforms-clause-bdd7dee1edba",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "transforms"
+      ],
+      "behaviour": "Transforms, Positioning, and Pagination — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "transforms",
+        "clause_index": 3,
+        "clause_sha256": "bdd7dee1edba083c06bb43659328830f5138383592ce956526e2057db2006b32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.transforms-clause-318292b36b79",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "transforms"
+      ],
+      "behaviour": "Transforms, Positioning, and Pagination — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "transforms",
+        "clause_index": 4,
+        "clause_sha256": "318292b36b79fe0868c0c70c0c41605b5bc707da0809e68fec7b9278f6cdf632"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.conformance",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.document-conventions",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "document-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "document-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.document-conventions-clause-5c98c879f070",
+        "css-break-3.document-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.document-conventions-clause-5c98c879f070",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "document-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "document-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.document-conventions-clause-33a5ed16a48d",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "document-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "document-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.conform-classes",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "conform-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "conform-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.conform-classes-clause-ff408372426c",
+        "css-break-3.conform-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.conform-classes-clause-ff408372426c",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "conform-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.conform-classes-clause-d9976214330c",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "conform-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.conform-responsible",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "conform-responsible"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Requirements for Responsible Implementation of CSS.",
+      "locator": {
+        "section_id": "conform-responsible",
+        "text_sha256": "63e281f28ed2ebefafb560d6716cfc98d63caa0f55f4ae36a918cca31886f4b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.conform-partial",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "conform-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial Implementations.",
+      "locator": {
+        "section_id": "conform-partial",
+        "text_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.conform-partial-clause-db223ebb5aec"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.conform-partial-clause-db223ebb5aec",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "conform-partial"
+      ],
+      "behaviour": "Partial Implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-partial",
+        "clause_index": 0,
+        "clause_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.conform-future-proofing",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.conform-testing",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "conform-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of CR-level Features.",
+      "locator": {
+        "section_id": "conform-testing",
+        "text_sha256": "85a2aab62de157ff88eb104ecdbf2c4c32e685f5fa12638fd5357bdf89415d2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.conform-testing-clause-003938d8c19a",
+        "css-break-3.conform-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.conform-testing-clause-003938d8c19a",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "conform-testing"
+      ],
+      "behaviour": "Implementations of CR-level Features — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-testing",
+        "clause_index": 0,
+        "clause_sha256": "003938d8c19a7542e7b704d552edf8474ca7c592719839b92ffb1c28c24763ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.conform-testing-clause-ae1210cf9643",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "conform-testing"
+      ],
+      "behaviour": "Implementations of CR-level Features — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "conform-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.cr-exit-criteria",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "cr-exit-criteria",
+        "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.cr-exit-criteria-clause-057d9e0b4ff8",
+        "css-break-3.cr-exit-criteria-clause-ea752775913a",
+        "css-break-3.cr-exit-criteria-clause-b7d363ab42db",
+        "css-break-3.cr-exit-criteria-clause-b67129724911",
+        "css-break-3.cr-exit-criteria-clause-833729d43f23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.cr-exit-criteria-clause-ea752775913a",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.cr-exit-criteria-clause-b7d363ab42db",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.cr-exit-criteria-clause-b67129724911",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.cr-exit-criteria-clause-833729d43f23",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "cr-exit-criteria",
+        "clause_index": 10,
+        "clause_sha256": "833729d43f239b3deb57bcaaf1c29d2f077e86aad8b396f8458fa182e4db8d99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.property-index",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "6f58ec61a14ea92faf9d26d6ea332092c8d0ee8749f8c3db8a37cef43b87d2c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-break-3.property-index-clause-4b59fe755d34"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.property-index-clause-4b59fe755d34",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 57,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-break-3.abstract",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "870d78663259505e461b74883d3bf97da16114cd7d5f9fe9118ac3f57dd6c4bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.status",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "9824755ec1cc7ef8fc53830370a50aac08d61e9df18f4da4c837585eea7b3b8b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.contents",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "e446a8e3cfd03f277fe2a98c4dac8b1e127c9c3736af8779e64682e432a372ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.intro",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "187bcd346c2fb967d25d8d17c1f21eccff252ba67f40d40273ed95af1e1ffc41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.placement",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Module Interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "179dacb03457fd7ee8fb3109f7f12198c0d129edb58cee9a816f129b0262681f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.values",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.2. Values.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "ce95ada029a04f04ce9b60ede63384f4245a97d6e663ff002b02bad6f7a7d12a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.changes",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "867352ad0f0e53ab243e6f0898c00c51c6f03cc662c2d303e188757d8c7ef72b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.acknowledgments",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "f147a0edc9e4f82334c6f09b18b347c3122889a0931cec285b9f63bee4ed1b9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.index",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.index-defined-here",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "e5c9f95da606ae06153c2dffd1d60ac890454b1dea79169bd1e6b53157c95836"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.index-defined-elsewhere",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "d8259787ba2699186d13e65a418e82df92ea797b903e574677c512c2cb03b447"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.references",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.normative",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "1c6e3da21ecf5555c9d0a7a8d283a4be91e0d89bd20d8f3391e3d887f4f28f65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-break-3.informative",
+      "family": "css-break-3",
+      "source_id": "css-break-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "1a4b7475a9609f304c99c94dd6c11f336b1456b1b05695658498da849e71193a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

@@ -1,0 +1,2121 @@
+{
+  "schema_version": 1,
+  "source_id": "css-color-4",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Color Module Level 4",
+      "level": 1,
+      "text_sha256": "5f8c3e4367532186d2b9acc686225ef29d1309fe48c211c91fc31883ff9bb6e2",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "459fdcea90b0bc26c1e6ea0cbc77eeb0eb5747c0e903baa2e4d1b62895460758",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "6ce70d1ca8f89599105165d53ec6d1e43bb0e5476247c1f7e431ea83e6813fb7",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "52e863c7c11844e87389de0d8e2871896f1cd42d0f0ebf31aafe08ca60b69241",
+      "clause_count": 144,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "d84de883a593ed7ef168d831ad3788a1a2e2ca918411b5360229e31091b3ec10",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.introduction"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.values"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "2. Color Terminology",
+      "level": 2,
+      "text_sha256": "672c56447e6d31c1f99923d8381e9f6fca0ce47cd6797c42da89109edc1dce4e",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.terminology",
+          "css-color-4.terminology-clause-c8b78792e10d",
+          "css-color-4.terminology-clause-2b3dab70460b",
+          "css-color-4.terminology-clause-1973f976b17f"
+        ]
+      }
+    },
+    {
+      "id": "applying-color",
+      "title": "3. Applying Color in CSS",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.applying-color"
+        ]
+      }
+    },
+    {
+      "id": "accessibility",
+      "title": "3.1. Accessibility and Conveying Information By Color",
+      "level": 3,
+      "text_sha256": "1fb1707c640e923c40dad3bf2fc9a230933f9dd5316ec7542b70e78be0aafe78",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.accessibility",
+          "css-color-4.accessibility-clause-d12380c00a0d"
+        ]
+      }
+    },
+    {
+      "id": "the-color-property",
+      "title": "3.2. Foreground Color: the color property",
+      "level": 3,
+      "text_sha256": "45d313f0d7cbd720ee59298cb0549b17c71632c94e17240d8e86a14d8dd40879",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.the-color-property",
+          "css-color-4.the-color-property-clause-cca2516ebb1d",
+          "css-color-4.the-color-property-clause-a3a776b881f2",
+          "css-color-4.the-color-property-clause-010646c7f2a7"
+        ]
+      }
+    },
+    {
+      "id": "transparency",
+      "title": "3.3. Transparency: the opacity property",
+      "level": 3,
+      "text_sha256": "d81bfd4253c396f2e16868e8be4322458bfa5f9c5023de5b304c68fbd0aa2b84",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.transparency",
+          "css-color-4.transparency-clause-cca2516ebb1d",
+          "css-color-4.transparency-clause-922862c9433a",
+          "css-color-4.transparency-clause-1d5d16a8d01d",
+          "css-color-4.transparency-clause-2c54ab555375"
+        ]
+      }
+    },
+    {
+      "id": "tagged-images",
+      "title": "3.4. Color Space of Tagged Images",
+      "level": 3,
+      "text_sha256": "56b9325208ea1250d71db732eac63a21ea87b56965e860061312ea229652e08a",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.tagged-images",
+          "css-color-4.tagged-images-clause-07d3cbeaa5a5",
+          "css-color-4.tagged-images-clause-1b0d01ec45ca",
+          "css-color-4.tagged-images-clause-9db79baa9c6e"
+        ]
+      }
+    },
+    {
+      "id": "untagged",
+      "title": "3.5. Color Spaces of Untagged Colors",
+      "level": 3,
+      "text_sha256": "d528a0e5e2f6c8348925ea518b35e0ef030b6dd93e1f321b404fcdd3fc0fed9f",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.untagged",
+          "css-color-4.untagged-clause-7c1442ff1231",
+          "css-color-4.untagged-clause-1dee0dc08ebd"
+        ]
+      }
+    },
+    {
+      "id": "color-type",
+      "title": "4. Representing Colors: the <color> type",
+      "level": 2,
+      "text_sha256": "8b3abdc1997d8602ebc5b378f7ffc2ff2554c2d32f758f0e86202220705fe190",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-type"
+        ]
+      }
+    },
+    {
+      "id": "color-syntax",
+      "title": "4.1. The <color> syntax",
+      "level": 3,
+      "text_sha256": "a040924b307628acfaa1ba8d42205e019c8320ff236a65d76de57cef08a4da4e",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-syntax",
+          "css-color-4.color-syntax-clause-2b39d597620b",
+          "css-color-4.color-syntax-clause-16b42461cbb2"
+        ]
+      }
+    },
+    {
+      "id": "color-syntax-modern",
+      "title": "4.1.1. Modern (Space-separated) Color Function Syntax",
+      "level": 4,
+      "text_sha256": "4ac28562ac6fbd4298397148c234ea3c3bd554bd4f64c9fa876a09cf091f62ae",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-syntax-modern",
+          "css-color-4.color-syntax-modern-clause-b4229f88c638"
+        ]
+      }
+    },
+    {
+      "id": "color-syntax-legacy",
+      "title": "4.1.2. Legacy (Comma-separated) Color Function Syntax",
+      "level": 4,
+      "text_sha256": "eb0ab31990c5822cae51f19a5054a2e362b106fa945828c0dffdb73f0f19c17c",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-syntax-legacy",
+          "css-color-4.color-syntax-legacy-clause-0d4fc8fac064",
+          "css-color-4.color-syntax-legacy-clause-0a1d88953ac8",
+          "css-color-4.color-syntax-legacy-clause-e39f544d2473"
+        ]
+      }
+    },
+    {
+      "id": "alpha-syntax",
+      "title": "4.2. Representing Transparency in Colors: the <alpha-value> syntax",
+      "level": 3,
+      "text_sha256": "e50484e31b9e2742cb5649f6f803e7680066c97e256e09e16834b5cdc689128a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.alpha-syntax",
+          "css-color-4.alpha-syntax-clause-c097e7dcffa3"
+        ]
+      }
+    },
+    {
+      "id": "hue-syntax",
+      "title": "4.3. Representing Cylindrical-coordinate Hues: the <hue> syntax",
+      "level": 3,
+      "text_sha256": "fafa2d5cb5ae076221560ae6e17b4608232d29c429455a335e451732abe413e5",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.hue-syntax"
+        ]
+      }
+    },
+    {
+      "id": "missing",
+      "title": "4.4. “Missing” Color Components and the none Keyword",
+      "level": 3,
+      "text_sha256": "488e335427194254e684cfd2e147d37a959ff5ddec4d34ab1a1efa17070e1ccd",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.missing",
+          "css-color-4.missing-clause-2d595906f48c"
+        ]
+      }
+    },
+    {
+      "id": "powerless",
+      "title": "4.4.1. “Powerless” Color Components",
+      "level": 4,
+      "text_sha256": "b26fdc01e38be87de2e331af5f60106d6cbf3b5e567e0bc8f84d6d9c62213513",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.powerless",
+          "css-color-4.powerless-clause-a4142fa745d3",
+          "css-color-4.powerless-clause-e6bba252fcb0"
+        ]
+      }
+    },
+    {
+      "id": "parse-color",
+      "title": "4.5. Parsing a <color> Value",
+      "level": 3,
+      "text_sha256": "4f7aec837f79679ba17159b437c4396d520b468474c18a39a190b0e4cfc29da4",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.parse-color",
+          "css-color-4.parse-color-clause-eed402530d75",
+          "css-color-4.parse-color-clause-53c7af36455e"
+        ]
+      }
+    },
+    {
+      "id": "numeric-srgb",
+      "title": "5. sRGB Colors",
+      "level": 2,
+      "text_sha256": "3269bf05f11626afd3bd14356fba6b05e4d2f811398cdc3b65b97b0c00d85624",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.numeric-srgb"
+        ]
+      }
+    },
+    {
+      "id": "rgb-functions",
+      "title": "5.1. The RGB functions: rgb() and rgba()",
+      "level": 3,
+      "text_sha256": "bbb40347d8850c6cbdfe72926bc92b44ef9b63959e904817a81a99c024c27542",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.rgb-functions",
+          "css-color-4.rgb-functions-clause-f104407db3d0",
+          "css-color-4.rgb-functions-clause-978ecf49f647",
+          "css-color-4.rgb-functions-clause-e6f6605511c4"
+        ]
+      }
+    },
+    {
+      "id": "hex-notation",
+      "title": "5.2. The RGB Hexadecimal Notations: #RRGGBB",
+      "level": 3,
+      "text_sha256": "4692c361d0c15778ad4fee09f1638bf5cc07f1bdca641867fe6eb412c5d482fc",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.hex-notation"
+        ]
+      }
+    },
+    {
+      "id": "color-keywords",
+      "title": "6. Color Keywords",
+      "level": 2,
+      "text_sha256": "89b7c876daab4d45d548293988cd2f7b4954ff4d125cdcd42e5c062f61996abf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-keywords"
+        ]
+      }
+    },
+    {
+      "id": "named-colors",
+      "title": "6.1. Named Colors",
+      "level": 3,
+      "text_sha256": "132e07fb19fc305d34d5f8396ba02c482b781fa320251d602f0a0b6406484091",
+      "clause_count": 457,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.named-colors",
+          "css-color-4.named-colors-clause-d8faee39b0ab"
+        ]
+      }
+    },
+    {
+      "id": "css-system-colors",
+      "title": "6.2. System Colors",
+      "level": 3,
+      "text_sha256": "261f0c06c961597bd22c75d467beccb91da344a906d73671048ecabe128071ba",
+      "clause_count": 91,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.css-system-colors",
+          "css-color-4.css-system-colors-clause-26ab56021119",
+          "css-color-4.css-system-colors-clause-f541f2c2dfc3",
+          "css-color-4.css-system-colors-clause-30675d632c1b",
+          "css-color-4.css-system-colors-clause-9878d6e6561a",
+          "css-color-4.css-system-colors-clause-c67d4f885683",
+          "css-color-4.css-system-colors-clause-65a896839910"
+        ]
+      }
+    },
+    {
+      "id": "transparent-color",
+      "title": "6.3. The transparent keyword",
+      "level": 3,
+      "text_sha256": "a25a2b745b02418d3d563720a06c36c87a21d2d4871795232b424037cfb457fb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.transparent-color"
+        ]
+      }
+    },
+    {
+      "id": "currentcolor-color",
+      "title": "6.4. The currentcolor keyword",
+      "level": 3,
+      "text_sha256": "9721fc9bfe6b06cba78524a0275c1724e4d5ef8066fa6baa5b61ab14d38dd815",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.currentcolor-color"
+        ]
+      }
+    },
+    {
+      "id": "the-hsl-notation",
+      "title": "7. HSL Colors: hsl() and hsla() functions",
+      "level": 2,
+      "text_sha256": "ca68b288bfe69d008a68c82d91975d95f5c0dcfccba85ec9b887c675a143e1ab",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.the-hsl-notation",
+          "css-color-4.the-hsl-notation-clause-b83ad401d960",
+          "css-color-4.the-hsl-notation-clause-e2ba636dc5fe"
+        ]
+      }
+    },
+    {
+      "id": "hsl-to-rgb",
+      "title": "7.1. Converting HSL Colors to sRGB",
+      "level": 3,
+      "text_sha256": "063fbdf86cbe998e92d1937ea4af39792de466acece0383cd4c24643e27417da",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.hsl-to-rgb",
+          "css-color-4.hsl-to-rgb-clause-3467d708e535"
+        ]
+      }
+    },
+    {
+      "id": "rgb-to-hsl",
+      "title": "7.2. Converting sRGB Colors to HSL",
+      "level": 3,
+      "text_sha256": "a91b7ab605ae5020acb0d660fe8b3fc487c1d1ac883c629ae239e3e9032790d4",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.rgb-to-hsl"
+        ]
+      }
+    },
+    {
+      "id": "hsl-examples",
+      "title": "7.3. Examples of HSL Colors",
+      "level": 3,
+      "text_sha256": "1e14be356c623cb477fea2722f33339f1b9a14ff14a67aa557c72820c3fd46ad",
+      "clause_count": 219,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.hsl-examples"
+        ]
+      }
+    },
+    {
+      "id": "the-hwb-notation",
+      "title": "8. HWB Colors: hwb() function",
+      "level": 2,
+      "text_sha256": "5a60934384bd29d8aedf37385068db15208daaf2cbfb7c3bf057d456ce26f471",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.the-hwb-notation",
+          "css-color-4.the-hwb-notation-clause-e86b94cd7247",
+          "css-color-4.the-hwb-notation-clause-716fa201ab9d",
+          "css-color-4.the-hwb-notation-clause-d3f3edf80e05"
+        ]
+      }
+    },
+    {
+      "id": "hwb-to-rgb",
+      "title": "8.1. Converting HWB Colors to sRGB",
+      "level": 3,
+      "text_sha256": "888ad92d092a2f224b496c1b653c2729ed44fcb7538400d27ceb1d2b6cde8f1c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.hwb-to-rgb",
+          "css-color-4.hwb-to-rgb-clause-bd7d3efd1b2b"
+        ]
+      }
+    },
+    {
+      "id": "rgb-to-hwb",
+      "title": "8.2. Converting sRGB Colors to HWB",
+      "level": 3,
+      "text_sha256": "f17df98b4cb4b41c57ade5d29eabb5a48d571101252f761a48675a61468c9ea6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.rgb-to-hwb",
+          "css-color-4.rgb-to-hwb-clause-c3ec9e22205f"
+        ]
+      }
+    },
+    {
+      "id": "hwb-examples",
+      "title": "8.3. Examples of HWB Colors",
+      "level": 3,
+      "text_sha256": "33bf17340ca74d48a37646b303ebb15027c94f1cb37cf9d5d3bc88ed46cef310",
+      "clause_count": 169,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.hwb-examples"
+        ]
+      }
+    },
+    {
+      "id": "lab-colors",
+      "title": "9. Device-independent Colors: CIE Lab and LCH, Oklab and OkLCh",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.lab-colors"
+        ]
+      }
+    },
+    {
+      "id": "cie-lab",
+      "title": "9.1. CIE Lab and LCH",
+      "level": 3,
+      "text_sha256": "125dc1c1f44f6de81048bce4b7f5900ff7b9074fc7bea2f1a9cb2e7bce10d84d",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.cie-lab"
+        ]
+      }
+    },
+    {
+      "id": "ok-lab",
+      "title": "9.2. Oklab and OkLCh",
+      "level": 3,
+      "text_sha256": "1e579d68b0c8cccc31f6d2779059719bb730aeffa482bc62549dfd4263d407ae",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.ok-lab"
+        ]
+      }
+    },
+    {
+      "id": "specifying-lab-lch",
+      "title": "9.3. Specifying Lab and LCH: the lab() and lch() functional notations",
+      "level": 3,
+      "text_sha256": "340d68ce2e715d8ea287a847e4e7a72435515b6d2976459de438c3752b543e4b",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.specifying-lab-lch",
+          "css-color-4.specifying-lab-lch-clause-418581ed310c",
+          "css-color-4.specifying-lab-lch-clause-797fb8864424"
+        ]
+      }
+    },
+    {
+      "id": "specifying-oklab-oklch",
+      "title": "9.4. Specifying Oklab and OkLCh: the oklab() and oklch() functional notations",
+      "level": 3,
+      "text_sha256": "8cebcec31819955ff68845d7b0a05a3f7c3ff356753be71f85309fe1e8de37b7",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.specifying-oklab-oklch",
+          "css-color-4.specifying-oklab-oklch-clause-edfe792b7055",
+          "css-color-4.specifying-oklab-oklch-clause-d5345d465d12"
+        ]
+      }
+    },
+    {
+      "id": "lab-to-lch",
+      "title": "9.5. Converting Lab or Oklab colors to LCH or OkLCh colors",
+      "level": 3,
+      "text_sha256": "675e22987028444fa51796263d6675d8dd718156ad1a11e81cc17bcd9dfab7dc",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.lab-to-lch"
+        ]
+      }
+    },
+    {
+      "id": "lch-to-lab",
+      "title": "9.6. Converting LCH or OkLCh colors to Lab or Oklab colors",
+      "level": 3,
+      "text_sha256": "8c7fdfcac7026192bb4cb3f5d5fb7b1099fa3bf37dce8232eb71a0b64af93997",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.lch-to-lab"
+        ]
+      }
+    },
+    {
+      "id": "predefined",
+      "title": "10. Predefined Color Spaces",
+      "level": 2,
+      "text_sha256": "f4a0864793ba5715b265d4fb6d4af193adce7e9385b21c1c55621c3ab75d01df",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.predefined"
+        ]
+      }
+    },
+    {
+      "id": "color-function",
+      "title": "10.1. Specifying Predefined Colors: the color() function",
+      "level": 3,
+      "text_sha256": "40d6c36fc66000fd14250511fc62553cfdb0eb83403ef0bc18bec2454da767eb",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-function",
+          "css-color-4.color-function-clause-f50d1a57fa9a",
+          "css-color-4.color-function-clause-e9f92f1868a0",
+          "css-color-4.color-function-clause-0ca55aa2e918",
+          "css-color-4.color-function-clause-256288e07ccf",
+          "css-color-4.color-function-clause-023071ea8dcb",
+          "css-color-4.color-function-clause-f88f2c088d6d",
+          "css-color-4.color-function-clause-ab02f8dabaa4"
+        ]
+      }
+    },
+    {
+      "id": "predefined-sRGB",
+      "title": "10.2. The Predefined sRGB Color Space: the sRGB keyword",
+      "level": 3,
+      "text_sha256": "f44a03c194bb38fd885d682edb49effbbcbb04afd9b9de7c032d021ee7c1a2a1",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.predefined-srgb"
+        ]
+      }
+    },
+    {
+      "id": "predefined-sRGB-linear",
+      "title": "10.3. The Predefined Linear-Light sRGB Color Space: the srgb-linear keyword",
+      "level": 3,
+      "text_sha256": "de67414633e8550f80a5f248f8142a8a2e44e7b1563d6a65cb6ca5885b6a6997",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.predefined-srgb-linear",
+          "css-color-4.predefined-srgb-linear-clause-840e84899436",
+          "css-color-4.predefined-srgb-linear-clause-0bb03b01c0bc",
+          "css-color-4.predefined-srgb-linear-clause-adb5f84886a3"
+        ]
+      }
+    },
+    {
+      "id": "predefined-display-p3",
+      "title": "10.4. The Predefined Display P3 Color Space: the display-p3 keyword",
+      "level": 3,
+      "text_sha256": "f850526f78b4f5272ff6a6c56aa09d2412686d4a3e73592652d84396afe50ed2",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.predefined-display-p3"
+        ]
+      }
+    },
+    {
+      "id": "predefined-display-p3-linear",
+      "title": "10.5. The Predefined Linear-Light Display P3 Color Space: the display-p3-linear keyword",
+      "level": 3,
+      "text_sha256": "ecb1766edf7d12cf7731ce9103fa30ccc26db5ab863672f5611cc38b4d583b12",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.predefined-display-p3-linear",
+          "css-color-4.predefined-display-p3-linear-clause-3f4d2fbdbd9b",
+          "css-color-4.predefined-display-p3-linear-clause-385507c3ccff",
+          "css-color-4.predefined-display-p3-linear-clause-fd97bc9b97b6"
+        ]
+      }
+    },
+    {
+      "id": "predefined-a98-rgb",
+      "title": "10.6. The Predefined A98 RGB Color Space: the a98-rgb keyword",
+      "level": 3,
+      "text_sha256": "acb40d95834340e4b4bfd68f54023add8117d8efa4bbebcf6d489ea0d20de954",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.predefined-a98-rgb"
+        ]
+      }
+    },
+    {
+      "id": "predefined-prophoto-rgb",
+      "title": "10.7. The Predefined ProPhoto RGB Color Space: the prophoto-rgb keyword",
+      "level": 3,
+      "text_sha256": "b48c7d5cc49426947d0eb9f0b8ee224f806f23b4e4214cb7ffe3b837062998d5",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.predefined-prophoto-rgb"
+        ]
+      }
+    },
+    {
+      "id": "predefined-rec2020",
+      "title": "10.8. The Predefined ITU-R BT.2020-2 Color Space: the rec2020 keyword",
+      "level": 3,
+      "text_sha256": "1c008fc895ede965e085f143f54866e3dd7b412f199102a40a734f36b0b71319",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.predefined-rec2020",
+          "css-color-4.predefined-rec2020-clause-12ecf885de28",
+          "css-color-4.predefined-rec2020-clause-a9eb5765d3e7"
+        ]
+      }
+    },
+    {
+      "id": "predefined-xyz",
+      "title": "10.9. The Predefined CIE XYZ Color Spaces: the xyz-d50, xyz-d65, and xyz keywords",
+      "level": 3,
+      "text_sha256": "08adf589476ac2d27f8c9bc632a33e680c150d04f78a2f3d22c73a479e3183b6",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.predefined-xyz",
+          "css-color-4.predefined-xyz-clause-85afe1634332",
+          "css-color-4.predefined-xyz-clause-111786857174"
+        ]
+      }
+    },
+    {
+      "id": "predefined-to-lab-oklab",
+      "title": "10.10. Converting Predefined Color Spaces to Lab or Oklab",
+      "level": 3,
+      "text_sha256": "edecfe5bfec434de973f92071418c36ffeb15e5c5dfaf7b70132605146201f7e",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.predefined-to-lab-oklab"
+        ]
+      }
+    },
+    {
+      "id": "oklab-lab-to-predefined",
+      "title": "10.11. Converting Lab or Oklab to Predefined RGB Color Spaces",
+      "level": 3,
+      "text_sha256": "9ed89f62bc4a1a5a054c48a34a72fab2c4aa24d2a9ff72c6396ba73f437d534f",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.oklab-lab-to-predefined"
+        ]
+      }
+    },
+    {
+      "id": "predefined-to-predefined",
+      "title": "10.12. Converting Between Predefined RGB Color Spaces",
+      "level": 3,
+      "text_sha256": "6c4d4b5470282da02f05c67b71c996e6d7699ef168b5e20bed58c3f2a4b1215b",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.predefined-to-predefined"
+        ]
+      }
+    },
+    {
+      "id": "alpha",
+      "title": "10.13. Simple Alpha Compositing",
+      "level": 3,
+      "text_sha256": "fd9886ddc4cf75808c950cb2b061222f78fee372667eca15914d831c9d887a89",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.alpha",
+          "css-color-4.alpha-clause-fd9886ddc4cf"
+        ]
+      }
+    },
+    {
+      "id": "color-conversion",
+      "title": "11. Converting Colors",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-conversion"
+        ]
+      }
+    },
+    {
+      "id": "color-convert-intro",
+      "title": "11.1. Introduction to Converting Colors",
+      "level": 3,
+      "text_sha256": "4b4d44d087a8e5d64b7cdfc67bcf2b11d0be80ae1e4e6d143c4ef4fe3145f51b",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-convert-intro"
+        ]
+      }
+    },
+    {
+      "id": "color-convert-algorithm",
+      "title": "11.2. Algorithm for Converting Colors",
+      "level": 3,
+      "text_sha256": "29286061ced9c42507936e53cad0db0b552f11617373cf57f1d2abf92758de51",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-convert-algorithm",
+          "css-color-4.color-convert-algorithm-clause-917f2c4f91ce"
+        ]
+      }
+    },
+    {
+      "id": "comparing-color-values",
+      "title": "12. Comparing <color> Values",
+      "level": 2,
+      "text_sha256": "2d6d0fe9cd23581594803bfdba89b472f9955d24c63a0c34e65b61b8d7922223",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.comparing-color-values",
+          "css-color-4.comparing-color-values-clause-cc0f1603337f",
+          "css-color-4.comparing-color-values-clause-722fb7fbd25a",
+          "css-color-4.comparing-color-values-clause-ae09485d258f",
+          "css-color-4.comparing-color-values-clause-fbd987fb8743"
+        ]
+      }
+    },
+    {
+      "id": "interpolation",
+      "title": "13. Color Interpolation",
+      "level": 2,
+      "text_sha256": "1526591cd5af6df1dd81981c19234d63559222ae90549c7ad4fb8d79412601f4",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.interpolation",
+          "css-color-4.interpolation-clause-011d7ab1fd7e",
+          "css-color-4.interpolation-clause-f53838750610",
+          "css-color-4.interpolation-clause-1242d0458147",
+          "css-color-4.interpolation-clause-9a103fbfeb85",
+          "css-color-4.interpolation-clause-98f72659d357",
+          "css-color-4.interpolation-clause-dcbf2b5821c2"
+        ]
+      }
+    },
+    {
+      "id": "component-wise-linear-interpolation",
+      "title": "13.1. Component-wise Linear Interpolation",
+      "level": 3,
+      "text_sha256": "a0f8131ca3b8fde0ecb06672cfed84b08173201c90f88bd8592cd529b1c28695",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.component-wise-linear-interpolation"
+        ]
+      }
+    },
+    {
+      "id": "interpolation-space",
+      "title": "13.2. Color Space for Interpolation",
+      "level": 3,
+      "text_sha256": "ec615328af6f0e4a3c4377344f7182bf218e1c2095cff27b4670224bfb79923e",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.interpolation-space",
+          "css-color-4.interpolation-space-clause-8d47c65b9d53",
+          "css-color-4.interpolation-space-clause-008ea4b970aa",
+          "css-color-4.interpolation-space-clause-5327cdc7f4c2",
+          "css-color-4.interpolation-space-clause-682f127107b7",
+          "css-color-4.interpolation-space-clause-2a8432d11fe8"
+        ]
+      }
+    },
+    {
+      "id": "interpolation-missing",
+      "title": "13.3. Interpolating with Missing Components",
+      "level": 3,
+      "text_sha256": "ad0361aa06b10b6b66d30c70d5c64514802a22026433a9fd5e6800fca8192ae1",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.interpolation-missing",
+          "css-color-4.interpolation-missing-clause-9101469f2225",
+          "css-color-4.interpolation-missing-clause-6b7de69323fa",
+          "css-color-4.interpolation-missing-clause-1d91d24bbd59"
+        ]
+      }
+    },
+    {
+      "id": "interpolation-alpha",
+      "title": "13.4. Interpolating with Alpha",
+      "level": 3,
+      "text_sha256": "54b14459ef7235ad62d8dbf815dd005081e5e4211521f7dcf4f6919b1e844255",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.interpolation-alpha"
+        ]
+      }
+    },
+    {
+      "id": "hue-interpolation",
+      "title": "13.5. Hue Interpolation",
+      "level": 3,
+      "text_sha256": "fe00779a28dc9246c1bceac074c2d289fdc147b6232db8ca1fce1fdb0a5111bb",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.hue-interpolation",
+          "css-color-4.hue-interpolation-clause-9dcfd14f6f0e"
+        ]
+      }
+    },
+    {
+      "id": "hue-shorter",
+      "title": "13.5.1. shorter",
+      "level": 4,
+      "text_sha256": "05934e65e14385796e2a87088b9162e927a7d053b2b9bd35baca1c33096871d5",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.hue-shorter"
+        ]
+      }
+    },
+    {
+      "id": "hue-longer",
+      "title": "13.5.2. longer",
+      "level": 4,
+      "text_sha256": "03b6504fccf530a5966ecf8c9c53e5cb1656788851bb8d2e3596a3334c22cd8b",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.hue-longer"
+        ]
+      }
+    },
+    {
+      "id": "hue-increasing",
+      "title": "13.5.3. increasing",
+      "level": 4,
+      "text_sha256": "18894969d28bfc71edead27f2b120cd9e6c31b31148a6d8bce4e142e2c00ab92",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.hue-increasing"
+        ]
+      }
+    },
+    {
+      "id": "hue-decreasing",
+      "title": "13.5.4. decreasing",
+      "level": 4,
+      "text_sha256": "60bac4d2570dbdd27d0d210c972063b42e3b9bb080d2a99a0580ce5c4b18378f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.hue-decreasing"
+        ]
+      }
+    },
+    {
+      "id": "gamut-mapping",
+      "title": "14. Gamut Mapping",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.gamut-mapping"
+        ]
+      }
+    },
+    {
+      "id": "gamut-mapping-intro",
+      "title": "14.1. An Introduction to Gamut Mapping",
+      "level": 3,
+      "text_sha256": "935731607f4d1f507ff6f6f90b27eb4c72a84f181218fded79b62e6bd970836a",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.gamut-mapping-intro",
+          "css-color-4.gamut-mapping-intro-clause-88ebdd001f45"
+        ]
+      }
+    },
+    {
+      "id": "GM-clip",
+      "title": "14.1.1. Clipping",
+      "level": 4,
+      "text_sha256": "9b7fac9763207750637df8fdba8f04607dcf8853b0c9cb36df3882fbe9e432d8",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.gm-clip",
+          "css-color-4.gm-clip-clause-bd441160133e"
+        ]
+      }
+    },
+    {
+      "id": "GM-closest",
+      "title": "14.1.2. Closest Color (MINDE)",
+      "level": 4,
+      "text_sha256": "14611620d59244989aedd4c9b38c56ed35e9c7b2070f78238f7ed9cbb987d427",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.gm-closest"
+        ]
+      }
+    },
+    {
+      "id": "GM-chroma",
+      "title": "14.1.3. Chroma Reduction",
+      "level": 4,
+      "text_sha256": "78bde177316b9fa3b3c38bdd0cf67a1d3af0db5503b9b46668b32c55c9a1022c",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.gm-chroma"
+        ]
+      }
+    },
+    {
+      "id": "GM-excessive-reduction",
+      "title": "14.1.4. Excessive Chroma Reduction",
+      "level": 4,
+      "text_sha256": "701c57601494cbb4ed374f715d48c2792c6adab51d2dc1b20ca5a37dcf7df201",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.gm-excessive-reduction"
+        ]
+      }
+    },
+    {
+      "id": "GM-chroma-local-MINDE",
+      "title": "14.1.5. Chroma Reduction with Local Clipping",
+      "level": 4,
+      "text_sha256": "ff1043bfbc78fa012e825dd266db38b9c6e1a4cbb4b12539849df33bf196f543",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.gm-chroma-local-minde",
+          "css-color-4.gm-chroma-local-minde-clause-0cc9e5dd1d72"
+        ]
+      }
+    },
+    {
+      "id": "GM-hue-curvature",
+      "title": "14.1.6. Deviations from Perceptual Uniformity: Hue Curvature",
+      "level": 4,
+      "text_sha256": "567f351f89b858ba1447fc898ebd9abb23daa03f7970a0b5d4eccce56ff21c96",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.gm-hue-curvature"
+        ]
+      }
+    },
+    {
+      "id": "css-gamut-mapping",
+      "title": "14.2. CSS Gamut Mapping to an RGB Destination",
+      "level": 3,
+      "text_sha256": "4846ad29618bdde819602650d4a5d51577adb2b69fd25b8351c2a95ee80c3393",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.css-gamut-mapping",
+          "css-color-4.css-gamut-mapping-clause-da3dcf5f277f"
+        ]
+      }
+    },
+    {
+      "id": "GMA-Binary-local-MINDE",
+      "title": "14.2.1. Binary Search Gamut Mapping with Local MINDE",
+      "level": 4,
+      "text_sha256": "016cd66411bec77c4fecc0a7260378e27c946d1720465645774f3b05e5eed511",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.gma-binary-local-minde",
+          "css-color-4.gma-binary-local-minde-clause-3fdc35d2a93c",
+          "css-color-4.gma-binary-local-minde-clause-f8725824c725"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-binsearch",
+      "title": "14.2.2. Sample Pseudocode for the Binary Search Gamut Mapping with Local MINDE",
+      "level": 4,
+      "text_sha256": "ece463f2b6798ebee6671363a7cabbfe9a7fc7470d8a0bf43962412fe6fdd780",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.pseudo-binsearch",
+          "css-color-4.pseudo-binsearch-clause-48dc248bc7a0"
+        ]
+      }
+    },
+    {
+      "id": "GMA-EdgeSeeker",
+      "title": "14.2.3. The EdgeSeeker Gamut Mapping",
+      "level": 4,
+      "text_sha256": "8e077dc5094c12be592f59d4f4591beaf04990cfd2498f8a24f3d3308d78450a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.gma-edgeseeker",
+          "css-color-4.gma-edgeseeker-clause-7bbba35a9cea",
+          "css-color-4.gma-edgeseeker-clause-f37e7181f046"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-edgeseeker",
+      "title": "14.2.4. Sample Pseudocode for the EdgeSeeker Gamut Mapping",
+      "level": 4,
+      "text_sha256": "ca0737323570d61e5f859e01bb997a8de8fefe40deb8615021f59b8ec9004e11",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.pseudo-edgeseeker",
+          "css-color-4.pseudo-edgeseeker-clause-089f5694e7c0",
+          "css-color-4.pseudo-edgeseeker-clause-1dbd9e5af5cd"
+        ]
+      }
+    },
+    {
+      "id": "GMA-Raytrace",
+      "title": "14.2.5. The Ray Trace Gamut Mapping",
+      "level": 4,
+      "text_sha256": "c070315bff296eed1b5b54e667a17bf561fb9f0dcf632fcf20707f00471476b4",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.gma-raytrace",
+          "css-color-4.gma-raytrace-clause-029574e8135b",
+          "css-color-4.gma-raytrace-clause-4955ca739595"
+        ]
+      }
+    },
+    {
+      "id": "pseudo-raytrace",
+      "title": "14.2.6. Sample Pseudocode for the Ray Trace Gamut Mapping",
+      "level": 4,
+      "text_sha256": "227a35f4fd9a24c105fad680a63daf875c9a1669789aa90ff5cfbaa44dd0a350",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.pseudo-raytrace"
+        ]
+      }
+    },
+    {
+      "id": "raytrace-footnotes",
+      "title": "14.2.6.1. Footnotes for Ray Trace algorithm",
+      "level": 5,
+      "text_sha256": "955f8f0a748c1f205fd4e417597221c52526524b92b2866dbf747cd72bf66a66",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.raytrace-footnotes",
+          "css-color-4.raytrace-footnotes-clause-6b59db70b0e2",
+          "css-color-4.raytrace-footnotes-clause-c1e03074d710",
+          "css-color-4.raytrace-footnotes-clause-617b087d0ed8"
+        ]
+      }
+    },
+    {
+      "id": "resolving-color-values",
+      "title": "15. Resolving <color> Values",
+      "level": 2,
+      "text_sha256": "1c4a7e1d518831766868e3f35f59ff74c5483d48f0dc40e872bf7a6cf244df46",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.resolving-color-values",
+          "css-color-4.resolving-color-values-clause-ab0381adcfa0"
+        ]
+      }
+    },
+    {
+      "id": "resolving-sRGB-values",
+      "title": "15.1. Resolving sRGB values",
+      "level": 3,
+      "text_sha256": "d59336857213a2d952a8a454271ecd0ceaadedebdcf566355f9fede97776a490",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.resolving-srgb-values",
+          "css-color-4.resolving-srgb-values-clause-467b8537b462",
+          "css-color-4.resolving-srgb-values-clause-3e6d982c31ea",
+          "css-color-4.resolving-srgb-values-clause-a3eddf9064d8"
+        ]
+      }
+    },
+    {
+      "id": "resolving-lab-lch-values",
+      "title": "15.2. Resolving Lab and LCH values",
+      "level": 3,
+      "text_sha256": "8ea800cd4162ce9c359dab94acd500d89e0b8fecb366493ddefb15b37b9a8e08",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.resolving-lab-lch-values",
+          "css-color-4.resolving-lab-lch-values-clause-f2691cf374ee",
+          "css-color-4.resolving-lab-lch-values-clause-a3eddf9064d8"
+        ]
+      }
+    },
+    {
+      "id": "resolving-oklab-oklch-values",
+      "title": "15.3. Resolving Oklab and OkLCh values",
+      "level": 3,
+      "text_sha256": "4f835357d1c9091dfa606373fd82305cecc878d9317ab75d64d02274078e82c4",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.resolving-oklab-oklch-values",
+          "css-color-4.resolving-oklab-oklch-values-clause-5d48f243db73",
+          "css-color-4.resolving-oklab-oklch-values-clause-a3eddf9064d8"
+        ]
+      }
+    },
+    {
+      "id": "resolving-color-function-values",
+      "title": "15.4. Resolving values of the color() function",
+      "level": 3,
+      "text_sha256": "937accefcfd8ab3bc014e5d3dd8d8d01728aa1140d392e28bc5e556262001c3e",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.resolving-color-function-values",
+          "css-color-4.resolving-color-function-values-clause-099fabf6588b",
+          "css-color-4.resolving-color-function-values-clause-a3eddf9064d8",
+          "css-color-4.resolving-color-function-values-clause-5aa237965a39"
+        ]
+      }
+    },
+    {
+      "id": "resolving-other-colors",
+      "title": "15.5. Resolving other colors",
+      "level": 3,
+      "text_sha256": "55e5181552596d42d2afc75866ab1b16373a01bbf0ba7b0e2cf40a08b1b7d072",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.resolving-other-colors",
+          "css-color-4.resolving-other-colors-clause-2359d20a4e60",
+          "css-color-4.resolving-other-colors-clause-6bdd04d6a05f",
+          "css-color-4.resolving-other-colors-clause-a5f11197f61d",
+          "css-color-4.resolving-other-colors-clause-73ff9b7aa040",
+          "css-color-4.resolving-other-colors-clause-0c685c5c760f",
+          "css-color-4.resolving-other-colors-clause-4ec252dec87c",
+          "css-color-4.resolving-other-colors-clause-842bc99221cd"
+        ]
+      }
+    },
+    {
+      "id": "serializing-color-values",
+      "title": "16. Serializing <color> Values",
+      "level": 2,
+      "text_sha256": "56015adeb6c60a15bb947c9aa083aa02effc1fd316becde4f67965fe8abe70a6",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.serializing-color-values",
+          "css-color-4.serializing-color-values-clause-b9e33bcb07f2",
+          "css-color-4.serializing-color-values-clause-96d528a0149e",
+          "css-color-4.serializing-color-values-clause-3c8e5bb85e5e"
+        ]
+      }
+    },
+    {
+      "id": "serializing-alpha-values",
+      "title": "16.1. Serializing alpha values",
+      "level": 3,
+      "text_sha256": "b203cb0e6be6d345464757f218e8faa1639a83c45abdd82e00b237ceb4e71873",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.serializing-alpha-values"
+        ]
+      }
+    },
+    {
+      "id": "serializing-legacy-alpha-values",
+      "title": "16.1.1. Serializing legacy alpha values",
+      "level": 4,
+      "text_sha256": "10ed85e17b17152f1c516ef670e703dc94f5cec0d420898f29fc58c17eae3d46",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.serializing-legacy-alpha-values",
+          "css-color-4.serializing-legacy-alpha-values-clause-62a7045ff4a9"
+        ]
+      }
+    },
+    {
+      "id": "serializing-modern-alpha-values",
+      "title": "16.1.2. Serializing modern alpha values",
+      "level": 4,
+      "text_sha256": "55b47b52a2f21a21864a17cfca44268b0546a26fbfda3c414ffe2a1d4f23758a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.serializing-modern-alpha-values",
+          "css-color-4.serializing-modern-alpha-values-clause-918772a6c1e7",
+          "css-color-4.serializing-modern-alpha-values-clause-a15510eae4e4",
+          "css-color-4.serializing-modern-alpha-values-clause-afb8bbddd780",
+          "css-color-4.serializing-modern-alpha-values-clause-7f53ac8c27b3",
+          "css-color-4.serializing-modern-alpha-values-clause-7f3af16a8fab"
+        ]
+      }
+    },
+    {
+      "id": "serializing-sRGB-values",
+      "title": "16.2. Serializing sRGB values",
+      "level": 3,
+      "text_sha256": "6d22f18c52ddcf00a8be89566026e5336df529b4d5a57adfcab87e269b4a4d44",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.serializing-srgb-values",
+          "css-color-4.serializing-srgb-values-clause-d72f0acfa6fd",
+          "css-color-4.serializing-srgb-values-clause-5dec98a7179a",
+          "css-color-4.serializing-srgb-values-clause-97096582ed0c"
+        ]
+      }
+    },
+    {
+      "id": "HTML-compatible-serialization-of-srgb",
+      "title": "16.2.1. HTML-compatible serialization of sRGB values",
+      "level": 4,
+      "text_sha256": "845c1a124ed513e1bfcc1ae2a4532eead18d4145f158e17f07d46103c51518ef",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.html-compatible-serialization-of-srgb"
+        ]
+      }
+    },
+    {
+      "id": "css-serialization-of-srgb",
+      "title": "16.2.2. CSS serialization of sRGB values",
+      "level": 4,
+      "text_sha256": "978a25611d6c7df099965f777272fad96c66977711caa3efe3717dcdb0c58d09",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.css-serialization-of-srgb",
+          "css-color-4.css-serialization-of-srgb-clause-dca5b1fe2c57",
+          "css-color-4.css-serialization-of-srgb-clause-ffce755cd0f8",
+          "css-color-4.css-serialization-of-srgb-clause-46deb338b9b8"
+        ]
+      }
+    },
+    {
+      "id": "serializing-lab-lch",
+      "title": "16.3. Serializing Lab and LCH values",
+      "level": 3,
+      "text_sha256": "6cb1543c630d51d26298d59e2909a22de0b460b0f7def06b77aae69c2a7f5f1e",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.serializing-lab-lch",
+          "css-color-4.serializing-lab-lch-clause-2a639a7f38c7",
+          "css-color-4.serializing-lab-lch-clause-aa1012dc1019",
+          "css-color-4.serializing-lab-lch-clause-2d2e6f98b2c8",
+          "css-color-4.serializing-lab-lch-clause-be1428528462",
+          "css-color-4.serializing-lab-lch-clause-9afcae9dd3e2"
+        ]
+      }
+    },
+    {
+      "id": "serializing-oklab-oklch",
+      "title": "16.4. Serializing Oklab and OkLCh values",
+      "level": 3,
+      "text_sha256": "0a525b8585c8d3624a1d44ab3c51a479cc786cf7fbdbee56ff50f9ab3abc705b",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.serializing-oklab-oklch",
+          "css-color-4.serializing-oklab-oklch-clause-12c957ee4511",
+          "css-color-4.serializing-oklab-oklch-clause-83bf71cdb8af",
+          "css-color-4.serializing-oklab-oklch-clause-2d2e6f98b2c8",
+          "css-color-4.serializing-oklab-oklch-clause-f6d3a005ec3f",
+          "css-color-4.serializing-oklab-oklch-clause-7b55567e2320"
+        ]
+      }
+    },
+    {
+      "id": "serializing-color-function-values",
+      "title": "16.5. Serializing values of the color() function",
+      "level": 3,
+      "text_sha256": "b1395b844455f3c6fb6862f42e08e283fbe8020d5184ddec224526e6fd642388",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.serializing-color-function-values",
+          "css-color-4.serializing-color-function-values-clause-5afe57d691c1",
+          "css-color-4.serializing-color-function-values-clause-8623cc52672b",
+          "css-color-4.serializing-color-function-values-clause-2d2e6f98b2c8",
+          "css-color-4.serializing-color-function-values-clause-5704dd491554",
+          "css-color-4.serializing-color-function-values-clause-affec012d7cc",
+          "css-color-4.serializing-color-function-values-clause-236cfb6c09ef",
+          "css-color-4.serializing-color-function-values-clause-fd8315cd1b5c"
+        ]
+      }
+    },
+    {
+      "id": "serializing-other-colors",
+      "title": "16.6. Serializing other colors",
+      "level": 3,
+      "text_sha256": "b491060d8e2887e2236b1178fe5f6dcd01febdcef166dbc9c342acd844b5848c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.serializing-other-colors",
+          "css-color-4.serializing-other-colors-clause-cf45b4dc38d3"
+        ]
+      }
+    },
+    {
+      "id": "serializing-opacity-values",
+      "title": "17. Serializing <opacity-value>",
+      "level": 2,
+      "text_sha256": "692cd4c678585b3784af13d351eda8ac839f24d1eaba33c950b19803e44e082f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.serializing-opacity-values",
+          "css-color-4.serializing-opacity-values-clause-6c96890b5ebb",
+          "css-color-4.serializing-opacity-values-clause-b44fd04f38ef",
+          "css-color-4.serializing-opacity-values-clause-70d8668be150"
+        ]
+      }
+    },
+    {
+      "id": "sample",
+      "title": "18. Default Style Rules",
+      "level": 2,
+      "text_sha256": "859d614940f5eebd65ee5fbb9669e83bf862dc59b829c5f822461d1440c8ba6b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.sample"
+        ]
+      }
+    },
+    {
+      "id": "color-conversion-code",
+      "title": "19. Sample code for Color Conversions",
+      "level": 2,
+      "text_sha256": "2126012e7813f0d6b73b0dd1999c4b37ffd658e1a118d4827c8873a82fdc6d34",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-conversion-code"
+        ]
+      }
+    },
+    {
+      "id": "color-difference-code",
+      "title": "20. Color Difference Formulae",
+      "level": 2,
+      "text_sha256": "17668814fd4f1d5744b1a1558cc10dde6ae3f19049db4cdea5fbaff5303a0149",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-difference-code"
+        ]
+      }
+    },
+    {
+      "id": "color-differences-intro",
+      "title": "20.1. Introduction to Color Difference metrics.",
+      "level": 3,
+      "text_sha256": "0db80f8dfe6a75a264bc84ff0cbc41e473b0283bd4d39047987350c2d850d635",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-differences-intro"
+        ]
+      }
+    },
+    {
+      "id": "color-difference-2000",
+      "title": "20.2. ΔE2000",
+      "level": 3,
+      "text_sha256": "9d27f05fc323a778d866a7fb458a44911164b4e2d5c9ad6ad1ae3a160e7a2d5c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-difference-2000"
+        ]
+      }
+    },
+    {
+      "id": "color-difference-OK",
+      "title": "20.3. ΔEOK",
+      "level": 3,
+      "text_sha256": "7b32d27375fb4f8d1ff39010174a15a8a4f6fbc070310fa96a10cfefa7091677",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-difference-ok"
+        ]
+      }
+    },
+    {
+      "id": "color-difference-OK2",
+      "title": "20.4. ΔEOK2",
+      "level": 3,
+      "text_sha256": "a52477e2f562e228a9658ef16462d7a4c3d3961ab86f26c2a0fa2b603be27bb5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-difference-ok2"
+        ]
+      }
+    },
+    {
+      "id": "color-difference-OK2r",
+      "title": "20.5. ΔEOKr2",
+      "level": 3,
+      "text_sha256": "bd0b70bbba1e0ac5c615a7627123082af487953c58f314d23882f3782176b662",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.color-difference-ok2r"
+        ]
+      }
+    },
+    {
+      "id": "deprecated-system-colors",
+      "title": "Appendix A: Deprecated CSS System Colors",
+      "level": 2,
+      "text_sha256": "f53d0d72b0683f86944a66025c740e58e4f1f804194a423b4f9dc83aba628f8d",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.deprecated-system-colors",
+          "css-color-4.deprecated-system-colors-clause-964f05b4f62a"
+        ]
+      }
+    },
+    {
+      "id": "quirky-color",
+      "title": "Appendix B: Deprecated Quirky Hex Colors",
+      "level": 2,
+      "text_sha256": "a5055302ab0aa6cb4bd6c475bdd75daaefe8e3539bf394bb50cb998e03538a1e",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.quirky-color",
+          "css-color-4.quirky-color-clause-adf7c29266e1",
+          "css-color-4.quirky-color-clause-c4662d952427",
+          "css-color-4.quirky-color-clause-4612ba01315f",
+          "css-color-4.quirky-color-clause-6f272900ff20",
+          "css-color-4.quirky-color-clause-b6587dc2f09b",
+          "css-color-4.quirky-color-clause-cf9e50edb63f"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "e65607e3ada68b7b9dad0b9e47073381dce7cba6af6662c70ac307cf8e635535",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20250424",
+      "title": "Changes since the Candidate Recommendation Draft of 24 April 2025",
+      "level": 3,
+      "text_sha256": "e11157c574adff7b1d36987c76989c930c6912e71b64557822c286b05dac1f84",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-20250424"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20240213",
+      "title": "Changes since the Candidate Recommendation Draft of 13 Feb 2024",
+      "level": 3,
+      "text_sha256": "0d92dc9ff02ff2e2d0aaa68f70b3a466e28c1408b09609b8ab4ea0221a024970",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-20240213"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20221101",
+      "title": "Changes since the Candidate Recommendation Draft of 1 November 2022",
+      "level": 3,
+      "text_sha256": "39ff06a3d47e198f3ba1fcb45e544744aca53950298c761f7cae8146ed1c2d1b",
+      "clause_count": 76,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-20221101"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20220705",
+      "title": "Changes since the Candidate Recommendation of 5 July 2022",
+      "level": 3,
+      "text_sha256": "7999444bb27b303ace3e26f159fb70075c507a8bfbc6f2f9f45fdf8cc5b5c2c4",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-20220705"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20220628",
+      "title": "Changes since the Working Draft of 28 June 2022",
+      "level": 3,
+      "text_sha256": "f4b90a392a7e3d8c42d96d3f6f8bd77c5cc7895adba19e3f1fc8da6b1bb53a1e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-20220628"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20220428",
+      "title": "Changes since the Working Draft of 28 April 2022",
+      "level": 3,
+      "text_sha256": "bf6df8ee35e44ce40c47e09bf3b37feb3bf271690590cf77131d1348fef19dbb",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-20220428"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20211215",
+      "title": "Changes since the Working Draft of 15 December 2021",
+      "level": 3,
+      "text_sha256": "2a253fd0ac304798c956474a686dc609c76677895c7296ae56ca127f10f19f89",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-20211215"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20210601",
+      "title": "Changes since the Working Draft of 1 June 2021",
+      "level": 3,
+      "text_sha256": "25b98b2a5d99bb8f3e9e1a389825f804746b6406fca58e41794921ab914f0577",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-20210601"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20201112",
+      "title": "Changes since the Working Draft of 12 November 2020",
+      "level": 3,
+      "text_sha256": "f20da05b0da2bf6d06a3db2def19a72124839116ea290a7eccf8bf479837b038",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-20201112"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20191105",
+      "title": "Changes since Working Draft of 5 November 2019",
+      "level": 3,
+      "text_sha256": "ea0e7774e6ce2677d8472e30e29237920cf30024f79c6bebe5a6baab64e4f065",
+      "clause_count": 69,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-20191105"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-20160705",
+      "title": "Changes since Working Draft of 05 July 2016",
+      "level": 3,
+      "text_sha256": "fec3211b19cf253f836fba32e703c28573fc838a5e857c7db524520ee35b684c",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-20160705"
+        ]
+      }
+    },
+    {
+      "id": "changes-from-3",
+      "title": "Changes from Colors 3",
+      "level": 3,
+      "text_sha256": "c02f30224a049052f97995c9d6234cc91ee3bc57264b851805f7ebb73ebbf99a",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.changes-from-3"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "21. Security Considerations",
+      "level": 2,
+      "text_sha256": "fa9e68dc45041a2b7b25f4d34a3b5090bc7e8cf815719934e25c429bea1f3109",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.security"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "22. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "0c893b86ebaf8c91177dd5f95cdf5f092a6f040b75721745d877b5e368d27a0f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.privacy"
+        ]
+      }
+    },
+    {
+      "id": "a11y-sec",
+      "title": "23. Accessibility Considerations",
+      "level": 2,
+      "text_sha256": "0164087ba4bfd554696a81cb8f65b9bc6c318f021dc5b0f73bd979d1ba3aada7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.a11y-sec"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.w3c-conventions",
+          "css-color-4.w3c-conventions-clause-5c98c879f070",
+          "css-color-4.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.w3c-conformance-classes",
+          "css-color-4.w3c-conformance-classes-clause-ff408372426c",
+          "css-color-4.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.w3c-partial",
+          "css-color-4.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.w3c-testing",
+          "css-color-4.w3c-testing-clause-1e0fff369221",
+          "css-color-4.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.w3c-cr-exit-criteria",
+          "css-color-4.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-color-4.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-color-4.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-color-4.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-color-4.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "cba4a8ec6953360b73902cb7eac39f7860945c00f54c410ec608063901d3e897",
+      "clause_count": 328,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "c9e16be967aa00dda6768146144dbe9c9af5af049b07f9645bdef6cab9f4a574",
+      "clause_count": 85,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "ab80853db55fab2aac1376d15232509dee13e44ddcf74c65ef10cb2de84282e6",
+      "clause_count": 68,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.import-2b7efaad46be",
+          "css-color-4.import-433fbe8b79ce",
+          "css-color-4.import-646507221192",
+          "css-color-4.import-24811992df62",
+          "css-color-4.import-625d719ac7c1",
+          "css-color-4.import-49ecb481009c",
+          "css-color-4.import-0a036eb29115",
+          "css-color-4.import-be295297b265",
+          "css-color-4.import-c726ac947ac0",
+          "css-color-4.import-dfdd4bc68ddf",
+          "css-color-4.import-8008721b3da8",
+          "css-color-4.import-51de5ef01d71",
+          "css-color-4.import-9121a87b762e"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "08543edc63569855ba6203f06ec18f0c65017f0ca324f2c9ded885e28dec0df1",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "47a44e0fd2899b51489c4298609d56d74b818928b251c14a4e2f0332875739ae",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-color-4.property-index",
+          "css-color-4.property-index-clause-4b59fe755d34",
+          "css-color-4.property-index-clause-a3a776b881f2"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1392 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-env-1.intro",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "0c247b405b0af98034bb1574cebbda00db533dc4ad10e74df0605a722c238ff4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-env-1.intro-clause-ca81664296da"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.intro-clause-ca81664296da",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Introduction — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "intro",
+        "clause_index": 9,
+        "clause_sha256": "ca81664296da06722acc5c49a411685ece03d1a5773d09cdedf51f26d3eb0c9a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.environment",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "environment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Environment Variables.",
+      "locator": {
+        "section_id": "environment",
+        "text_sha256": "2ab1d84eb8e217cceb5c19e50e863f6d3a5fc24cb34978f639905d17c8379053"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-env-1.environment-clause-e9f521b413a6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.environment-clause-e9f521b413a6",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "environment"
+      ],
+      "behaviour": "Environment Variables — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "environment",
+        "clause_index": 3,
+        "clause_sha256": "e9f521b413a6d4c8427d39b3aa81ae82f12e799204fcdb4c77c9bc462f928b15"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.safe-area-insets",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "safe-area-insets"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Safe area inset variables.",
+      "locator": {
+        "section_id": "safe-area-insets",
+        "text_sha256": "027aae5fd3cb6e0a9fc163b20c12a63769d4e288f5ce157b64cb071c62fc4a18"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-env-1.safe-area-insets-clause-19c9d51eade1",
+        "css-env-1.safe-area-insets-clause-c5701eebb61d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.safe-area-insets-clause-19c9d51eade1",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "safe-area-insets"
+      ],
+      "behaviour": "Safe area inset variables — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "safe-area-insets",
+        "clause_index": 14,
+        "clause_sha256": "19c9d51eade122fe5053cca87066ab25aaa69b9b3e8697cf7c4d4b141b9c1e20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.safe-area-insets-clause-c5701eebb61d",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "safe-area-insets"
+      ],
+      "behaviour": "Safe area inset variables — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "safe-area-insets",
+        "clause_index": 15,
+        "clause_sha256": "c5701eebb61de09b472045ba54b51ad8dc81b33a45a6373310992d7f3bac77ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.safe-area-max-insets",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "safe-area-max-insets"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Safe area maximum inset variables.",
+      "locator": {
+        "section_id": "safe-area-max-insets",
+        "text_sha256": "b486fb59f7bd538fcf2a25d6d28c6699ad349d6ba7db2fd9336b0bfee2cc08ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.viewport-segments",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "viewport-segments"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Viewport segment variables.",
+      "locator": {
+        "section_id": "viewport-segments",
+        "text_sha256": "36109968f0e1739e1bc3f406a53d49a28ec84f0bc988ebff69aa73edcbb3a435"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-env-1.viewport-segments-clause-dd30252b0e74",
+        "css-env-1.viewport-segments-clause-de29b5e738b6",
+        "css-env-1.viewport-segments-clause-029fb556b7d8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.viewport-segments-clause-dd30252b0e74",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "viewport-segments"
+      ],
+      "behaviour": "Viewport segment variables — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "viewport-segments",
+        "clause_index": 22,
+        "clause_sha256": "dd30252b0e74d45e5184b095788d4d703fde63a4e7c181c673ede3f51a6ce82c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.viewport-segments-clause-de29b5e738b6",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "viewport-segments"
+      ],
+      "behaviour": "Viewport segment variables — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "viewport-segments",
+        "clause_index": 23,
+        "clause_sha256": "de29b5e738b6279121fec4ac63432b1730df11f09431b9137d11f2bd36876d70"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.viewport-segments-clause-029fb556b7d8",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "viewport-segments"
+      ],
+      "behaviour": "Viewport segment variables — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "viewport-segments",
+        "clause_index": 24,
+        "clause_sha256": "029fb556b7d899fa574bfb712265382033fc5bbf12182066c4cf83ef25768b4b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.text-zoom",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "text-zoom"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Preferred Text Zoom.",
+      "locator": {
+        "section_id": "text-zoom",
+        "text_sha256": "62d32d33a76ae2f56f694ebff86d95f2f2081a3bb8989af892917d4817adc4ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-env-1.text-zoom-clause-5fe7d3235ee1",
+        "css-env-1.text-zoom-clause-8674d8d225fe",
+        "css-env-1.text-zoom-clause-23240f9bb794"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.text-zoom-clause-5fe7d3235ee1",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "text-zoom"
+      ],
+      "behaviour": "Preferred Text Zoom — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-zoom",
+        "clause_index": 6,
+        "clause_sha256": "5fe7d3235ee1b01e7c20c256cbefb12cb0f126feadf9f3f58f38e0e476edc6b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.text-zoom-clause-8674d8d225fe",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "text-zoom"
+      ],
+      "behaviour": "Preferred Text Zoom — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-zoom",
+        "clause_index": 8,
+        "clause_sha256": "8674d8d225feba684c25438bb225b4d4d0eb7105847a4d1f6aea6b8c4f245d1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.text-zoom-clause-23240f9bb794",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "text-zoom"
+      ],
+      "behaviour": "Preferred Text Zoom — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-zoom",
+        "clause_index": 13,
+        "clause_sha256": "23240f9bb794facfc10b2cf90f135b2c4ab7284c3512945b286369f77abad5a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.env-function",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "env-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Using Environment Variables: the env() notation.",
+      "locator": {
+        "section_id": "env-function",
+        "text_sha256": "6374b77898e2804af277bd692aed8175cb900064d71890bd043945b50bd1bb64"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-env-1.env-function-clause-7139b198c467",
+        "css-env-1.env-function-clause-9d0bfccef937",
+        "css-env-1.env-function-clause-65ae67b3ccea",
+        "css-env-1.env-function-clause-78933f5d4d91",
+        "css-env-1.env-function-clause-ed389b65b489",
+        "css-env-1.env-function-clause-4ab2a3d8cb4c",
+        "css-env-1.env-function-clause-e4282cbd85ba"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.env-function-clause-7139b198c467",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "env-function"
+      ],
+      "behaviour": "Using Environment Variables: the env() notation — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "env-function",
+        "clause_index": 3,
+        "clause_sha256": "7139b198c4679b643b9c43207798b45b8edc7d903a70f406405292564515c033"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.env-function-clause-9d0bfccef937",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "env-function"
+      ],
+      "behaviour": "Using Environment Variables: the env() notation — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "env-function",
+        "clause_index": 5,
+        "clause_sha256": "9d0bfccef937e6c0adc695f978516ee23512848c3cf75755c5e9fb718cdfee4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.env-function-clause-65ae67b3ccea",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "env-function"
+      ],
+      "behaviour": "Using Environment Variables: the env() notation — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "env-function",
+        "clause_index": 7,
+        "clause_sha256": "65ae67b3ccea1996fe0e99baab11170e159ae5694cffcf2b1a5491879d9c2ba9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.env-function-clause-78933f5d4d91",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "env-function"
+      ],
+      "behaviour": "Using Environment Variables: the env() notation — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "env-function",
+        "clause_index": 11,
+        "clause_sha256": "78933f5d4d91a3b702de68bfa05f6ec3f97db51866b603efa3c124059bca9e8c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.env-function-clause-ed389b65b489",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "env-function"
+      ],
+      "behaviour": "Using Environment Variables: the env() notation — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "env-function",
+        "clause_index": 12,
+        "clause_sha256": "ed389b65b48925855a8afba082e116f3cb8cd127c521cd72e2b8177bc478b0cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.env-function-clause-4ab2a3d8cb4c",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "env-function"
+      ],
+      "behaviour": "Using Environment Variables: the env() notation — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "env-function",
+        "clause_index": 17,
+        "clause_sha256": "4ab2a3d8cb4c9d68a9cabcf011d60f8a10f0033b1dad62e58c81a943401893a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.env-function-clause-e4282cbd85ba",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "env-function"
+      ],
+      "behaviour": "Using Environment Variables: the env() notation — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "env-function",
+        "clause_index": 19,
+        "clause_sha256": "e4282cbd85ba1b2cd66165b0fce7f45f4944e0e6332479d45d3c018d967c2ec5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.env-in-shorthands",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "env-in-shorthands"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Environment Variables in Shorthand Properties.",
+      "locator": {
+        "section_id": "env-in-shorthands",
+        "text_sha256": "21868e8eed106f4075815675418f427a5079ad0f5a4c5d613b38701c060ad9fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.priv",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "priv"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "priv",
+        "text_sha256": "d672b5dd046fcebe7fae6edab8bc9f6612b25864fc8e4e8fab6dcc39d2c4105a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.sec",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "sec",
+        "text_sha256": "70ae785a63118fb637ce2f20ab4177552f481bd093f94bcef68b129126d93269"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.w3c-conformance",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.w3c-conventions",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-env-1.w3c-conventions-clause-5c98c879f070",
+        "css-env-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.w3c-conformance-classes",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-env-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-env-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.w3c-partial",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-env-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.w3c-conform-future-proofing",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.w3c-testing",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-env-1.w3c-testing-clause-1e0fff369221",
+        "css-env-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.issues-index",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "8d69549584d3582ac15db8d3c784504cbb16521735bb539961a3c84e654ab667"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-env-1.issues-index-clause-7139b198c467",
+        "css-env-1.issues-index-clause-9d0bfccef937",
+        "css-env-1.issues-index-clause-65ae67b3ccea"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.issues-index-clause-7139b198c467",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 0,
+        "clause_sha256": "7139b198c4679b643b9c43207798b45b8edc7d903a70f406405292564515c033"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.issues-index-clause-9d0bfccef937",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 2,
+        "clause_sha256": "9d0bfccef937e6c0adc695f978516ee23512848c3cf75755c5e9fb718cdfee4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.issues-index-clause-65ae67b3ccea",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 4,
+        "clause_sha256": "65ae67b3ccea1996fe0e99baab11170e159ae5694cffcf2b1a5491879d9c2ba9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-env-1.import-709148d9fced",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.csswg.org/css-size-adjust-1/.",
+      "unresolved_reference": "https://drafts.csswg.org/css-size-adjust-1/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-env-1.title",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Environment Variables Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "54ab8da93181bc46c8cb9e841cf73ab2ace6cd5df6d406b30342c89a0ae44068"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.abstract",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "945e83b4f654852e62b288c03a786c78904a85b659ec2592f1da054413a702bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.sotd",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "cdff88370cd01db15d0ea0dd34b41df4ab3eadb73d6a48e8b619b5478fe7ec99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.contents",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "0839a39aea6034d00f911e29f1b257d15d6d660d5ee03812dfbaf66d0130ca1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.index",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.index-defined-here",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "f67c4badd4aed5f26cb31b58557fe26e97f288e657fe9a9d8b52e49d3cfd4b12"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.index-defined-elsewhere",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "35664cf219f3ff96247be6864b485b9d12adfa2648e78074890c1cf52c71a819"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-env-1.references",
+      "family": "css-env-1",
+      "source_id": "css-env-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

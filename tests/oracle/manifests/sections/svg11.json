@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "source_id": "svg11",
+  "sections": [
+    {
+      "id": "pagetitle",
+      "title": "Scalable Vector Graphics (SVG) 1.1 (Second Edition)",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg11.pagetitle"
+        ]
+      }
+    },
+    {
+      "id": "pagesubtitle",
+      "title": "W3C Recommendation 16 August 2011",
+      "level": 2,
+      "text_sha256": "58955267777c3531a344f234e7e5a8b124af968c6e0627a9e15b76a8bb0049d0",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg11.pagesubtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "35f43c00bb956aa897fe4893f19b9d361253a802428e85a37cb9d8d8b021ad2b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg11.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "1cbd956beceb512db473e8c93575dab1bd6b60691aec216df034177337c57db1",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg11.status"
+        ]
+      }
+    },
+    {
+      "id": "AvailableLanguages",
+      "title": "Available languages",
+      "level": 3,
+      "text_sha256": "3e6d2280c3be940ee64856ea306f799b2c9140b86dc765232fbdf6262c8ae309",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg11.availablelanguages"
+        ]
+      }
+    },
+    {
+      "id": "minitoc",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "b97f70e3d269e0ba2564258e5ef6611fa5fe98d68b0847b38de46d1d776ea442",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg11.minitoc"
+        ]
+      }
+    },
+    {
+      "id": "Acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "89cfe85e79c8341972b6264d2f7c40d024d2d25c35bdc2258e186eddbcf4f1de",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg11.acknowledgments"
+        ]
+      }
+    }
+  ]
+}

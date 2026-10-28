@@ -1,0 +1,1002 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode-tr9-tr9-51",
+  "sections": [
+    {
+      "id": "heading-53c1dc8bfeb2",
+      "title": "Unicode® Standard Annex #9",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-53c1dc8bfeb2"
+        ]
+      }
+    },
+    {
+      "id": "heading-28fe67c09aab",
+      "title": "Unicode Bidirectional Algorithm",
+      "level": 1,
+      "text_sha256": "b83a3aa3f58dfeea68d35d6ed91025da54dfedf2f837dcf62d1317b61d7769b4",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-28fe67c09aab"
+        ]
+      }
+    },
+    {
+      "id": "heading-562e5643bfd0",
+      "title": "Summary",
+      "level": 4,
+      "text_sha256": "da13a46ada629ccdbd795a8d2b2f8a9a7eec21ba45cecdf303d6f96116ce3470",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-562e5643bfd0"
+        ]
+      }
+    },
+    {
+      "id": "heading-b67e4e63a5c4",
+      "title": "Status",
+      "level": 4,
+      "text_sha256": "969770954d10eb10c58c417e62f0aeb8ceca31b93e33871538ad4b7096754f2f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-b67e4e63a5c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-35d8550f521f",
+      "title": "Contents",
+      "level": 4,
+      "text_sha256": "65e11749ebd419bcc92732ae3bb50016907531ed379d41acca56cad8731cb53c",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-35d8550f521f",
+          "unicode-tr9-tr9-51.heading-35d8550f521f-clause-c9920616e076"
+        ]
+      }
+    },
+    {
+      "id": "3.1_Bidirectional_Behavior",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "dae0c74f5581cb2230c2cc817e7d5599226306f5d0fc54e3ff349021501acc3c",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.3-1-bidirectional-behavior",
+          "unicode-tr9-tr9-51.3-1-bidirectional-behavior-clause-7539cb20b94d",
+          "unicode-tr9-tr9-51.3-1-bidirectional-behavior-clause-324585bf7225",
+          "unicode-tr9-tr9-51.3-1-bidirectional-behavior-clause-2032bb769423"
+        ]
+      }
+    },
+    {
+      "id": "Directional_Formatting_Codes",
+      "title": "2 Directional Formatting Characters",
+      "level": 2,
+      "text_sha256": "bd4d1c3ab74e4246be4617042a57805b0a438c6b6ebf10d68c097ed279886116",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.directional-formatting-codes",
+          "unicode-tr9-tr9-51.directional-formatting-codes-clause-476a3a297fb5",
+          "unicode-tr9-tr9-51.directional-formatting-codes-clause-733b05f5d778"
+        ]
+      }
+    },
+    {
+      "id": "Explicit_Directional_Embedding",
+      "title": "2.1 Explicit Directional Embeddings",
+      "level": 3,
+      "text_sha256": "098c137a7ae0afeabdd4348d74cca483adedaab6ad36a63c4b05f09dd89e561d",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.explicit-directional-embedding"
+        ]
+      }
+    },
+    {
+      "id": "Explicit_Directional_Overrides",
+      "title": "2.2 Explicit Directional Overrides",
+      "level": 3,
+      "text_sha256": "f97c6e691cf6c67e28536ae602aba63d84feb77f40f7d5e0017bc44257b146b2",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.explicit-directional-overrides",
+          "unicode-tr9-tr9-51.explicit-directional-overrides-clause-e800f1cd8a82",
+          "unicode-tr9-tr9-51.explicit-directional-overrides-clause-a35cc0deec91"
+        ]
+      }
+    },
+    {
+      "id": "Terminating_Explicit_Directional_Code",
+      "title": "2.3 Terminating Explicit Directional Embeddings and Overrides",
+      "level": 3,
+      "text_sha256": "4b201863bb93a577c209e939e9803f6478564036de648d85d6fe68b9c587bd55",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.terminating-explicit-directional-code",
+          "unicode-tr9-tr9-51.terminating-explicit-directional-code-clause-d51c4076e209"
+        ]
+      }
+    },
+    {
+      "id": "Explicit_Directional_Isolates",
+      "title": "2.4 Explicit Directional Isolates",
+      "level": 3,
+      "text_sha256": "096cd97ebf26ac9e8aa8a3ed4f9c8429688d1289edb83e6a833badf43e32c3a7",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.explicit-directional-isolates",
+          "unicode-tr9-tr9-51.explicit-directional-isolates-clause-150b144ebb09"
+        ]
+      }
+    },
+    {
+      "id": "Terminating_Explicit_Directional_Isolates",
+      "title": "2.5 Terminating Explicit Directional Isolates",
+      "level": 3,
+      "text_sha256": "dbf38d9e7b73006058b700f240b7136f18927b0b63430ed92d49c1e7c41f7164",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.terminating-explicit-directional-isolates",
+          "unicode-tr9-tr9-51.terminating-explicit-directional-isolates-clause-d51c4076e209"
+        ]
+      }
+    },
+    {
+      "id": "Implicit_Directional_Marks",
+      "title": "2.6 Implicit Directional Marks",
+      "level": 3,
+      "text_sha256": "d9ebc84875eef665241b605b8b50bba01a9714f0b6a190a509944450894125ae",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.implicit-directional-marks",
+          "unicode-tr9-tr9-51.implicit-directional-marks-clause-039422aaee29"
+        ]
+      }
+    },
+    {
+      "id": "Markup_And_Formatting",
+      "title": "2.7 Markup and Formatting Characters",
+      "level": 3,
+      "text_sha256": "5708780297d828a54df95c425e7872837c477b5cab6b83fa22a384a9d605e935",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.markup-and-formatting",
+          "unicode-tr9-tr9-51.markup-and-formatting-clause-4dd9fb65b575",
+          "unicode-tr9-tr9-51.markup-and-formatting-clause-0f96b4c3a360",
+          "unicode-tr9-tr9-51.markup-and-formatting-clause-5a724ad77556",
+          "unicode-tr9-tr9-51.markup-and-formatting-clause-1f4692bf3406"
+        ]
+      }
+    },
+    {
+      "id": "Basic_Display_Algorithm",
+      "title": "3 Basic Display Algorithm",
+      "level": 2,
+      "text_sha256": "6722dc733345a58155215141bbd2bf73db0ea4713080f72f64a58d446f4a258f",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.basic-display-algorithm",
+          "unicode-tr9-tr9-51.basic-display-algorithm-clause-db971863e931",
+          "unicode-tr9-tr9-51.basic-display-algorithm-clause-63a0c8795254",
+          "unicode-tr9-tr9-51.basic-display-algorithm-clause-b6835d2835d9"
+        ]
+      }
+    },
+    {
+      "id": "Definitions",
+      "title": "3.1 Definitions",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.definitions"
+        ]
+      }
+    },
+    {
+      "id": "Basics",
+      "title": "3.1.1 Basics",
+      "level": 3,
+      "text_sha256": "96becaf20e6302ee5c245e1f484b06737b3ee99b36f3f694fd464ec6229736ce",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.basics",
+          "unicode-tr9-tr9-51.basics-clause-bb4e626bf6f4",
+          "unicode-tr9-tr9-51.basics-clause-1ef54208bd44"
+        ]
+      }
+    },
+    {
+      "id": "heading-e41faa137938",
+      "title": "Example",
+      "level": 4,
+      "text_sha256": "0f43ac07a8f1ca37e968571879eabca4578f2c27d7e8c3fde1f9ec07095aad98",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-e41faa137938"
+        ]
+      }
+    },
+    {
+      "id": "Matching_Explicit_Directional_Formatting_Characters",
+      "title": "3.1.2 Matching Explicit Directional Formatting Characters",
+      "level": 3,
+      "text_sha256": "72d12a23f17b2d6305e9e31cd9a497c618d555055a166fcd3fe2f38dacbdc5e2",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters",
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters-clause-2ff95c87c84c",
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters-clause-10bf7116de3f",
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters-clause-8e180ebfc4c1",
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters-clause-49ee83a229d7",
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters-clause-aa81a3f65d60",
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters-clause-2d1849ca41c1",
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters-clause-c9ead47c3d9b",
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters-clause-bdd9529b5633",
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters-clause-44975a7ab016",
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters-clause-d9673e78da6d",
+          "unicode-tr9-tr9-51.matching-explicit-directional-formatting-characters-clause-121e74ef749d"
+        ]
+      }
+    },
+    {
+      "id": "heading-61888409c7ef",
+      "title": "Example 1",
+      "level": 4,
+      "text_sha256": "3a4c874995ea7ce2ee21d30b9a8c525e1968b3463bcc0e768989de35539673c6",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-61888409c7ef"
+        ]
+      }
+    },
+    {
+      "id": "heading-7a04e22f7ead",
+      "title": "Example 2",
+      "level": 4,
+      "text_sha256": "a8caaed72ae004240c93bbc49258ad0f66f68359881ae7c789afacbc29008193",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-7a04e22f7ead"
+        ]
+      }
+    },
+    {
+      "id": "heading-38c4ebb63931",
+      "title": "Example 3",
+      "level": 4,
+      "text_sha256": "ec4f8d0af38a330061f118fbdcdda224488a1f0869973069171ae846078241ab",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-38c4ebb63931",
+          "unicode-tr9-tr9-51.heading-38c4ebb63931-clause-cd483a0dc407"
+        ]
+      }
+    },
+    {
+      "id": "Paired_Brackets",
+      "title": "3.1.3 Paired Brackets",
+      "level": 3,
+      "text_sha256": "35623756a313c2f399394ee7cda1a7c9c9d0bc27b23f207e57630c3f5a1a57f6",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.paired-brackets",
+          "unicode-tr9-tr9-51.paired-brackets-clause-f704301ab683"
+        ]
+      }
+    },
+    {
+      "id": "heading-5ad309336c50",
+      "title": "Examples of bracket pairs",
+      "level": 4,
+      "text_sha256": "f79d088356cb4c4894e8f3babac7b5e57c2313eaa31ca3c4fc277e1c9d9aa1a7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-5ad309336c50"
+        ]
+      }
+    },
+    {
+      "id": "Additional_Abbreviations",
+      "title": "3.1.4 Additional Abbreviations",
+      "level": 3,
+      "text_sha256": "14a129e0d9f024675ccffabd9caece526df159bc08f44d6927c477f1d04cc3f8",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.additional-abbreviations",
+          "unicode-tr9-tr9-51.additional-abbreviations-clause-0d5bc834a6c0"
+        ]
+      }
+    },
+    {
+      "id": "Bidirectional_Character_Types",
+      "title": "3.2 Bidirectional Character Types",
+      "level": 3,
+      "text_sha256": "26af31b3fce9c9c732ab39630cfd857e97a568df2a7dcafee16461c23d350cca",
+      "clause_count": 85,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.bidirectional-character-types",
+          "unicode-tr9-tr9-51.bidirectional-character-types-clause-a5fc365eaa8d",
+          "unicode-tr9-tr9-51.bidirectional-character-types-clause-236dca134841",
+          "unicode-tr9-tr9-51.bidirectional-character-types-clause-71934a027530",
+          "unicode-tr9-tr9-51.bidirectional-character-types-clause-a0fbf578ff7e"
+        ]
+      }
+    },
+    {
+      "id": "Resolving_Embedding_Levels",
+      "title": "3.3 Resolving Embedding Levels",
+      "level": 3,
+      "text_sha256": "6e3ef31149cdbdbed65a4b588322bcba8993c1c4c41791013d99605cd26cefcd",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.resolving-embedding-levels",
+          "unicode-tr9-tr9-51.resolving-embedding-levels-clause-e70721fcdc22",
+          "unicode-tr9-tr9-51.resolving-embedding-levels-clause-e13f43d198e7",
+          "unicode-tr9-tr9-51.resolving-embedding-levels-clause-70f936d27631",
+          "unicode-tr9-tr9-51.resolving-embedding-levels-clause-c26c498f0bf2"
+        ]
+      }
+    },
+    {
+      "id": "The_Paragraph_Level",
+      "title": "3.3.1 The Paragraph Level",
+      "level": 3,
+      "text_sha256": "85d734262675639405894a8de7604dfa618ddabd79508d82296f1337e8509e8a",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.the-paragraph-level",
+          "unicode-tr9-tr9-51.the-paragraph-level-clause-94ba605a0920",
+          "unicode-tr9-tr9-51.the-paragraph-level-clause-5e54d6ea17a3",
+          "unicode-tr9-tr9-51.the-paragraph-level-clause-34114285c4f6",
+          "unicode-tr9-tr9-51.the-paragraph-level-clause-336a75b25f4e",
+          "unicode-tr9-tr9-51.the-paragraph-level-clause-f17dbf2e400f"
+        ]
+      }
+    },
+    {
+      "id": "Explicit_Levels_and_Directions",
+      "title": "3.3.2 Explicit Levels and Directions",
+      "level": 3,
+      "text_sha256": "b62f07855e5e1e8511a67e3e1c4b7ee67f2a1a9f57156ed1ea129352540c403f",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.explicit-levels-and-directions",
+          "unicode-tr9-tr9-51.explicit-levels-and-directions-clause-1aec232059c0",
+          "unicode-tr9-tr9-51.explicit-levels-and-directions-clause-69e444e63b1c",
+          "unicode-tr9-tr9-51.explicit-levels-and-directions-clause-53ba4295b205",
+          "unicode-tr9-tr9-51.explicit-levels-and-directions-clause-d64cfb392456"
+        ]
+      }
+    },
+    {
+      "id": "heading-225b1e1e47c0",
+      "title": "Explicit Embeddings",
+      "level": 4,
+      "text_sha256": "ffde5e6cb1f2d3fbfc123eb5c52a742ccb5a043f9fc600e902c221a32618d7d5",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-225b1e1e47c0",
+          "unicode-tr9-tr9-51.heading-225b1e1e47c0-clause-c0659dff885d",
+          "unicode-tr9-tr9-51.heading-225b1e1e47c0-clause-8906139f61bb"
+        ]
+      }
+    },
+    {
+      "id": "heading-296a43994b6b",
+      "title": "Explicit Overrides",
+      "level": 4,
+      "text_sha256": "f6e2c296151b8b5ea59850e948807f2ae9861e2388836986fc869075fef67448",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-296a43994b6b",
+          "unicode-tr9-tr9-51.heading-296a43994b6b-clause-186ea98269bb",
+          "unicode-tr9-tr9-51.heading-296a43994b6b-clause-d4cd703540a5"
+        ]
+      }
+    },
+    {
+      "id": "heading-377418188d1d",
+      "title": "Isolates",
+      "level": 4,
+      "text_sha256": "f11c8d577364ec028005fc77b4b96222a30ecb684369016bd527b06182b0cfc3",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-377418188d1d",
+          "unicode-tr9-tr9-51.heading-377418188d1d-clause-f70a7f5f566c",
+          "unicode-tr9-tr9-51.heading-377418188d1d-clause-15e5eae23034"
+        ]
+      }
+    },
+    {
+      "id": "heading-a283baf7cd53",
+      "title": "Non-formatting characters",
+      "level": 4,
+      "text_sha256": "4acfefc5911fc1f1e6daf1578d3cf686d1b1039b6185ede720f5b5cc85761516",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-a283baf7cd53"
+        ]
+      }
+    },
+    {
+      "id": "heading-3f0cb3c20602",
+      "title": "Terminating Isolates",
+      "level": 4,
+      "text_sha256": "5e62f4d69994460562baddbc7e4c48e61a1cc85bcd558dbe833dd3464ed98373",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-3f0cb3c20602",
+          "unicode-tr9-tr9-51.heading-3f0cb3c20602-clause-1d39bfd3b6d4",
+          "unicode-tr9-tr9-51.heading-3f0cb3c20602-clause-19f40bd8b2fa",
+          "unicode-tr9-tr9-51.heading-3f0cb3c20602-clause-727e578f603d",
+          "unicode-tr9-tr9-51.heading-3f0cb3c20602-clause-b46cd10d301a"
+        ]
+      }
+    },
+    {
+      "id": "heading-a8566a9732c6",
+      "title": "Terminating Embeddings and Overrides",
+      "level": 4,
+      "text_sha256": "473972e571f3bb71d89f8fa23aa28c27eb43080454cce2091ea74cfca42e5cf2",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-a8566a9732c6",
+          "unicode-tr9-tr9-51.heading-a8566a9732c6-clause-03b943b557a9",
+          "unicode-tr9-tr9-51.heading-a8566a9732c6-clause-7f14755ad2b0"
+        ]
+      }
+    },
+    {
+      "id": "heading-0f6fb69fb56f",
+      "title": "End of Paragraph",
+      "level": 4,
+      "text_sha256": "affd65c67f2411af2ceee030cb997ad525144e146e9d9854bbc7286e5af4fc30",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-0f6fb69fb56f"
+        ]
+      }
+    },
+    {
+      "id": "Preparations_for_Implicit_Processing",
+      "title": "3.3.3 Preparations for Implicit Processing",
+      "level": 3,
+      "text_sha256": "d0dd5798213dfc86093ad2b57adf03850b3344015d97364bd218f5327f4e3767",
+      "clause_count": 87,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.preparations-for-implicit-processing",
+          "unicode-tr9-tr9-51.preparations-for-implicit-processing-clause-adc6282a4b61",
+          "unicode-tr9-tr9-51.preparations-for-implicit-processing-clause-bcca37361bb6",
+          "unicode-tr9-tr9-51.preparations-for-implicit-processing-clause-d6766001b561",
+          "unicode-tr9-tr9-51.preparations-for-implicit-processing-clause-4278828ab4ad",
+          "unicode-tr9-tr9-51.preparations-for-implicit-processing-clause-2e900bc0f1d2",
+          "unicode-tr9-tr9-51.preparations-for-implicit-processing-clause-d2cba002bcd0",
+          "unicode-tr9-tr9-51.preparations-for-implicit-processing-clause-c291d5e55f24",
+          "unicode-tr9-tr9-51.preparations-for-implicit-processing-clause-83ea48e5f6f5"
+        ]
+      }
+    },
+    {
+      "id": "Resolving_Weak_Types",
+      "title": "3.3.4 Resolving Weak Types",
+      "level": 3,
+      "text_sha256": "c027c617beaa5583522bc290fea10fc9b545cee4e12d0169d859ea7bbdc38c84",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.resolving-weak-types",
+          "unicode-tr9-tr9-51.resolving-weak-types-clause-dfa24e44d2d6",
+          "unicode-tr9-tr9-51.resolving-weak-types-clause-02a65fbb690e"
+        ]
+      }
+    },
+    {
+      "id": "Resolving_Neutral_Types",
+      "title": "3.3.5 Resolving Neutral and Isolate Formatting Types",
+      "level": 3,
+      "text_sha256": "ed838a24c2bf000390c7226bbe5bcde73fdacecfc537ddb7f7eb59f22ce022a3",
+      "clause_count": 110,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.resolving-neutral-types",
+          "unicode-tr9-tr9-51.resolving-neutral-types-clause-2d629a04ebda",
+          "unicode-tr9-tr9-51.resolving-neutral-types-clause-811fbc912b40",
+          "unicode-tr9-tr9-51.resolving-neutral-types-clause-1d2d76d1f07d",
+          "unicode-tr9-tr9-51.resolving-neutral-types-clause-c56f2ed55c36",
+          "unicode-tr9-tr9-51.resolving-neutral-types-clause-8503ab81d15b",
+          "unicode-tr9-tr9-51.resolving-neutral-types-clause-124c7f1a7ee6",
+          "unicode-tr9-tr9-51.resolving-neutral-types-clause-b210fc0d2b4e",
+          "unicode-tr9-tr9-51.resolving-neutral-types-clause-2f93318c5e60",
+          "unicode-tr9-tr9-51.resolving-neutral-types-clause-6804094ac5f6",
+          "unicode-tr9-tr9-51.resolving-neutral-types-clause-8b48e8a13ea1"
+        ]
+      }
+    },
+    {
+      "id": "Resolving_Implicit_Levels",
+      "title": "3.3.6 Resolving Implicit Levels",
+      "level": 3,
+      "text_sha256": "57e1c49d1c23acf4fdc9fb1e4b36fa451909f09ec814ef91a8de61f09bf91979",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.resolving-implicit-levels",
+          "unicode-tr9-tr9-51.resolving-implicit-levels-clause-4dc2b091a0fa"
+        ]
+      }
+    },
+    {
+      "id": "Reordering_Resolved_Levels",
+      "title": "3.4 Reordering Resolved Levels",
+      "level": 3,
+      "text_sha256": "1e946cfdf14e9938efbfbeb0e4fcdc50c3ae43cf35977d20326b14c092ea3419",
+      "clause_count": 70,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.reordering-resolved-levels",
+          "unicode-tr9-tr9-51.reordering-resolved-levels-clause-6e0da4edc787",
+          "unicode-tr9-tr9-51.reordering-resolved-levels-clause-2481a37b43f2"
+        ]
+      }
+    },
+    {
+      "id": "Shaping",
+      "title": "3.5 Shaping",
+      "level": 3,
+      "text_sha256": "440c1211c8677b0e51c6e0d28cb0c6c07cf9dbfd9c08863238280a886d4290cc",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.shaping",
+          "unicode-tr9-tr9-51.shaping-clause-00de83c39983"
+        ]
+      }
+    },
+    {
+      "id": "Shaping_and_line_breaking",
+      "title": "3.5.1 Shaping and Line Breaking",
+      "level": 3,
+      "text_sha256": "f16d2211d3c5c58e1cbc1af5a8ed8aa4a5b975f9fddbf7fc5243fe3584928a5e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.shaping-and-line-breaking",
+          "unicode-tr9-tr9-51.shaping-and-line-breaking-clause-f2ee0276119b",
+          "unicode-tr9-tr9-51.shaping-and-line-breaking-clause-6d516eae7f7b"
+        ]
+      }
+    },
+    {
+      "id": "Conformance",
+      "title": "4 Bidirectional Conformance",
+      "level": 2,
+      "text_sha256": "b2c0adb5108bcf3ec659e2053c3828b24119004d902aa812116172a890ddbc97",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.conformance",
+          "unicode-tr9-tr9-51.conformance-clause-3812bcd6847f",
+          "unicode-tr9-tr9-51.conformance-clause-e936530410b7",
+          "unicode-tr9-tr9-51.conformance-clause-1d01dcaf3579"
+        ]
+      }
+    },
+    {
+      "id": "Boundary_Neutrals",
+      "title": "4.1 Boundary Neutrals",
+      "level": 3,
+      "text_sha256": "092f1290b3ae33a9e8a0d054c43e5f47d575ee02ff4ad0402fd9549fb7abc4d8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.boundary-neutrals",
+          "unicode-tr9-tr9-51.boundary-neutrals-clause-092f1290b3ae"
+        ]
+      }
+    },
+    {
+      "id": "Explicit_Formatting_Codes",
+      "title": "4.2 Explicit Formatting Characters",
+      "level": 3,
+      "text_sha256": "636768ba77db0c0e4e466382359a755b7f404bf21b7bcb69361e111629087ff2",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.explicit-formatting-codes",
+          "unicode-tr9-tr9-51.explicit-formatting-codes-clause-6132a18bcf3f",
+          "unicode-tr9-tr9-51.explicit-formatting-codes-clause-cc7400afe991",
+          "unicode-tr9-tr9-51.explicit-formatting-codes-clause-df518c5d2779"
+        ]
+      }
+    },
+    {
+      "id": "Higher-Level_Protocols",
+      "title": "4.3 Higher-Level Protocols",
+      "level": 3,
+      "text_sha256": "ba27729ca72ec835ec60abe4e7d6a7a0a0e4dbda0cc6af69b2350895f50bc531",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.higher-level-protocols",
+          "unicode-tr9-tr9-51.higher-level-protocols-clause-333978de9563",
+          "unicode-tr9-tr9-51.higher-level-protocols-clause-db7c8d1a3b30",
+          "unicode-tr9-tr9-51.higher-level-protocols-clause-e954924d5b1c",
+          "unicode-tr9-tr9-51.higher-level-protocols-clause-e0f791a5688e",
+          "unicode-tr9-tr9-51.higher-level-protocols-clause-293617eb33a9"
+        ]
+      }
+    },
+    {
+      "id": "HL4Example1",
+      "title": "4.3.1 HL4 Example 1 for XML",
+      "level": 3,
+      "text_sha256": "5154f1b1a3593d5cf0b52328f3e2928d0f9d81bf4f94c7ec986160f24324da3d",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.hl4example1",
+          "unicode-tr9-tr9-51.hl4example1-clause-0d5390451cf6"
+        ]
+      }
+    },
+    {
+      "id": "HL4Example2",
+      "title": "4.3.2 HL4 Example 2 for Program Text",
+      "level": 3,
+      "text_sha256": "402554d0577770907644840b6bc6922d079159d82e5a2afec3d754ef890dcb0d",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.hl4example2"
+        ]
+      }
+    },
+    {
+      "id": "HL4Example3",
+      "title": "4.3.3 HL4 Example 3 for URLs",
+      "level": 3,
+      "text_sha256": "e657be9f287ad0af393cefe73c5d14d4c1e3f86a6c32e00c9e91ebeac881e8fb",
+      "clause_count": 131,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.hl4example3",
+          "unicode-tr9-tr9-51.hl4example3-clause-5555bb6d895f"
+        ]
+      }
+    },
+    {
+      "id": "Bidi_Conformance_Testing",
+      "title": "4.4 Bidirectional Conformance Testing",
+      "level": 3,
+      "text_sha256": "fdc6529900022cfe54fcc400c15a651841c0fb2df56a53c140a4a46a7ac0af24",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.bidi-conformance-testing",
+          "unicode-tr9-tr9-51.bidi-conformance-testing-clause-fdc652990002"
+        ]
+      }
+    },
+    {
+      "id": "Implementation_Notes",
+      "title": "5 Implementation Notes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.implementation-notes"
+        ]
+      }
+    },
+    {
+      "id": "Reference_Code",
+      "title": "5.1 Reference Code",
+      "level": 3,
+      "text_sha256": "9aaf856d179691147d425c99d6f22a4daeb07d7355eba56b0be8e513e18c7fc5",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.reference-code",
+          "unicode-tr9-tr9-51.reference-code-clause-7a06f8cd33fa",
+          "unicode-tr9-tr9-51.reference-code-clause-638c2f54da2c",
+          "unicode-tr9-tr9-51.reference-code-clause-5443fcaa77ec"
+        ]
+      }
+    },
+    {
+      "id": "Retaining_Format_Codes",
+      "title": "5.2 Retaining BNs and Explicit Formatting Characters",
+      "level": 3,
+      "text_sha256": "ff9b1c12913a50aada3475a281b5343b4b4f79da97d42fcf695114aa2c52e0a1",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.retaining-format-codes",
+          "unicode-tr9-tr9-51.retaining-format-codes-clause-b9d4fcfacbe3",
+          "unicode-tr9-tr9-51.retaining-format-codes-clause-54167d896960",
+          "unicode-tr9-tr9-51.retaining-format-codes-clause-a64a2ab531c8"
+        ]
+      }
+    },
+    {
+      "id": "Usage",
+      "title": "6 Usage",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.usage"
+        ]
+      }
+    },
+    {
+      "id": "Joiners",
+      "title": "6.1 Joiners",
+      "level": 3,
+      "text_sha256": "07568d4233c4d9b5d3a2b22e5e9740258c5dc99e79edb74cb46141fa66daedba",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.joiners",
+          "unicode-tr9-tr9-51.joiners-clause-903935c972a1",
+          "unicode-tr9-tr9-51.joiners-clause-3d674a676e84"
+        ]
+      }
+    },
+    {
+      "id": "bk3",
+      "title": "6.2 Vertical Text",
+      "level": 3,
+      "text_sha256": "c303db40f92073e67e0a881635701eb685104bd862a81cfea8ceaaf3c0e27f18",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.bk3",
+          "unicode-tr9-tr9-51.bk3-clause-2261bab23048",
+          "unicode-tr9-tr9-51.bk3-clause-fba0919b6800"
+        ]
+      }
+    },
+    {
+      "id": "Formatting",
+      "title": "6.3 Formatting",
+      "level": 3,
+      "text_sha256": "969f5af1fe71639e1bf9a72be89050673585bed34d4bfd7c9f400594ecfc58f3",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.formatting",
+          "unicode-tr9-tr9-51.formatting-clause-03dea448a08a"
+        ]
+      }
+    },
+    {
+      "id": "Separators",
+      "title": "6.4 Separating Punctuation Marks",
+      "level": 3,
+      "text_sha256": "f4fb4e4480b6345011393f69149d412ff8b553c59368445e8df675f631bd7c98",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.separators"
+        ]
+      }
+    },
+    {
+      "id": "Conversion_to_Plain_Text",
+      "title": "6.5 Conversion to Plain Text",
+      "level": 3,
+      "text_sha256": "85023c71a6c4588f4a3533e2aa5c0211721b1b15f20231b32e08b00a154db3cc",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.conversion-to-plain-text",
+          "unicode-tr9-tr9-51.conversion-to-plain-text-clause-53292463c953",
+          "unicode-tr9-tr9-51.conversion-to-plain-text-clause-8220d5526eef"
+        ]
+      }
+    },
+    {
+      "id": "Mirroring",
+      "title": "7 Mirroring",
+      "level": 2,
+      "text_sha256": "c7b4939ae4ac1f15fcfdcc0fa5fba650959ae0a1005d2081ed18f306acec7be9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.mirroring",
+          "unicode-tr9-tr9-51.mirroring-clause-bcbcc19fa6c3",
+          "unicode-tr9-tr9-51.mirroring-clause-a7fb1a2f9ac3"
+        ]
+      }
+    },
+    {
+      "id": "Migrating_from_2.0_to_3.0",
+      "title": "Migration Issues",
+      "level": 2,
+      "text_sha256": "4713e250d2c6f859d06a84ee9edaa8aa6c99a81324dbed17772d18c65666d533",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.migrating-from-2-0-to-3-0",
+          "unicode-tr9-tr9-51.migrating-from-2-0-to-3-0-clause-0876bf9d92bf",
+          "unicode-tr9-tr9-51.migrating-from-2-0-to-3-0-clause-428bd37364a8",
+          "unicode-tr9-tr9-51.migrating-from-2-0-to-3-0-clause-1716881c300e",
+          "unicode-tr9-tr9-51.migrating-from-2-0-to-3-0-clause-be9d5775fc8d"
+        ]
+      }
+    },
+    {
+      "id": "section_reorg",
+      "title": "Section Reorganization",
+      "level": 3,
+      "text_sha256": "291ed9f7250fc90fd69fa3f58ce23d052ec667a149c4e424f07f42c7d5034a43",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.section-reorg"
+        ]
+      }
+    },
+    {
+      "id": "Acknowledgements",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "3a2e4fc42a51e56aeea330cd62cc94b4b8c767a7f6dee68dbfac140c1ebff325",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "References",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "8e262b530dd9dea23efac0eca37ae00f8a40d4b1be2872783d65ad768734b47a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.references"
+        ]
+      }
+    },
+    {
+      "id": "Modifications",
+      "title": "Modifications",
+      "level": 2,
+      "text_sha256": "082fcef6bfae96a79a0dcc3d49e1c62e117661cc64b2eadd932b82dcda3876b2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.modifications"
+        ]
+      }
+    },
+    {
+      "id": "heading-d8626f085eb5",
+      "title": "Revision 51",
+      "level": 3,
+      "text_sha256": "77d0121fa30eb86b10ae96e4b5724b9b667d86c2167ce5620f4f43de4f574dbb",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr9-tr9-51.heading-d8626f085eb5",
+          "unicode-tr9-tr9-51.heading-d8626f085eb5-clause-5be5b43ece0e"
+        ]
+      }
+    }
+  ]
+}

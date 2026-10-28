@@ -1,0 +1,751 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode-tr15-tr15-51",
+  "sections": [
+    {
+      "id": "heading-6cecfc667411",
+      "title": "Unicode® Standard Annex #15",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-6cecfc667411"
+        ]
+      }
+    },
+    {
+      "id": "heading-74ea86d3f58c",
+      "title": "Unicode Normalization Forms",
+      "level": 1,
+      "text_sha256": "18ae380a9c586e9830ea13aecb4f24db6042cf395951d8aa842a47f86d0544c3",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-74ea86d3f58c"
+        ]
+      }
+    },
+    {
+      "id": "heading-562e5643bfd0",
+      "title": "Summary",
+      "level": 4,
+      "text_sha256": "092cc57061a9dc719159d1a845ea439e7fc2142c72552cad72726a01112d5105",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-562e5643bfd0"
+        ]
+      }
+    },
+    {
+      "id": "heading-b67e4e63a5c4",
+      "title": "Status",
+      "level": 4,
+      "text_sha256": "969770954d10eb10c58c417e62f0aeb8ceca31b93e33871538ad4b7096754f2f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-b67e4e63a5c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-35d8550f521f",
+      "title": "Contents",
+      "level": 4,
+      "text_sha256": "c220c43392224f3847a5d7dac68707cae47d5d34f5c106e7d21d813b64d579a0",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-35d8550f521f"
+        ]
+      }
+    },
+    {
+      "id": "Introduction",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "913d9b66feb6ad82472b97615cf28bb09515b15213c957d61cafd147160e0552",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.introduction",
+          "unicode-tr15-tr15-51.introduction-clause-0a9fbf2e74b4"
+        ]
+      }
+    },
+    {
+      "id": "Canon_Compat_Equivalence",
+      "title": "1.1 Canonical and Compatibility Equivalence",
+      "level": 3,
+      "text_sha256": "961fd3d305f6e6dd8598a6e16788776103bc784c2d4cc9ee0c395a47c742ecdb",
+      "clause_count": 83,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.canon-compat-equivalence",
+          "unicode-tr15-tr15-51.canon-compat-equivalence-clause-d65f301566f5",
+          "unicode-tr15-tr15-51.canon-compat-equivalence-clause-cdbd3c3f08ad"
+        ]
+      }
+    },
+    {
+      "id": "Norm_Forms",
+      "title": "1.2 Normalization Forms",
+      "level": 3,
+      "text_sha256": "9b64e591b6026d1bf1b56992583ddc6c197124f9d2bcdc6f22e7dee93296bc01",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.norm-forms",
+          "unicode-tr15-tr15-51.norm-forms-clause-05f351b221ae",
+          "unicode-tr15-tr15-51.norm-forms-clause-f5e6f50901a3"
+        ]
+      }
+    },
+    {
+      "id": "Description_Norm",
+      "title": "1.3 Description of the Normalization Process",
+      "level": 3,
+      "text_sha256": "09c069204e1a241d0495d847474e13edba72dea904baf6a1bf5de9c2b3c5906d",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.description-norm",
+          "unicode-tr15-tr15-51.description-norm-clause-a3c93c27654d",
+          "unicode-tr15-tr15-51.description-norm-clause-94806733ce55",
+          "unicode-tr15-tr15-51.description-norm-clause-817a9b1cccd7",
+          "unicode-tr15-tr15-51.description-norm-clause-742ae9437c6f",
+          "unicode-tr15-tr15-51.description-norm-clause-c93d6c9456e7"
+        ]
+      }
+    },
+    {
+      "id": "Concatenation",
+      "title": "1.4 Concatenation of Normalized Strings",
+      "level": 3,
+      "text_sha256": "b7ffad9f94d93796b69beae084d155c660cca724fa690cff5bcc506954f89798",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.concatenation"
+        ]
+      }
+    },
+    {
+      "id": "Notation",
+      "title": "2 Notation",
+      "level": 2,
+      "text_sha256": "12e88d8284bd3408b3e792e1957a5b328b907f009dd5039a6a022dc5d7bfc9ab",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.notation"
+        ]
+      }
+    },
+    {
+      "id": "Versioning",
+      "title": "3 Versioning and Stability",
+      "level": 2,
+      "text_sha256": "812ce511751143b8dfd13d601fb0d8f388f2b79903babc4d60a157db10b869db",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.versioning",
+          "unicode-tr15-tr15-51.versioning-clause-2fd871af7d27",
+          "unicode-tr15-tr15-51.versioning-clause-afc25410aa4e",
+          "unicode-tr15-tr15-51.versioning-clause-000b18711032"
+        ]
+      }
+    },
+    {
+      "id": "Conformance",
+      "title": "4 Conformance",
+      "level": 2,
+      "text_sha256": "661e8562a2be4dc4677e3061901a64b8c346c1c3ba66ecaff08e2145e4dec1b9",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.conformance",
+          "unicode-tr15-tr15-51.conformance-clause-305145ff12cd",
+          "unicode-tr15-tr15-51.conformance-clause-8b3e5e9e7943",
+          "unicode-tr15-tr15-51.conformance-clause-f263295029f3",
+          "unicode-tr15-tr15-51.conformance-clause-07fcce5b14f0",
+          "unicode-tr15-tr15-51.conformance-clause-9acb5111a32a",
+          "unicode-tr15-tr15-51.conformance-clause-3385ef9caec4",
+          "unicode-tr15-tr15-51.conformance-clause-33a1a646665a",
+          "unicode-tr15-tr15-51.conformance-clause-f99d8bbbae02"
+        ]
+      }
+    },
+    {
+      "id": "Primary_Exclusion_List_Table",
+      "title": "5 Composition Exclusion",
+      "level": 2,
+      "text_sha256": "7a7bb3f63d4f56a6ea4a2c895aa37495cac0ff11526c75c6f2cc148e403e966d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.primary-exclusion-list-table",
+          "unicode-tr15-tr15-51.primary-exclusion-list-table-clause-a665e4840af0",
+          "unicode-tr15-tr15-51.primary-exclusion-list-table-clause-bb3c29ed93c9"
+        ]
+      }
+    },
+    {
+      "id": "Exclusion_Types",
+      "title": "5.1 Composition Exclusion Types",
+      "level": 3,
+      "text_sha256": "6198af9ec031b3f442bcda63b657f3b3824b11976c84c007b35d3aa2b63e2925",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.exclusion-types",
+          "unicode-tr15-tr15-51.exclusion-types-clause-6198af9ec031"
+        ]
+      }
+    },
+    {
+      "id": "heading-8f0f062a78ee",
+      "title": "Script-specific Exclusions",
+      "level": 4,
+      "text_sha256": "65949064e2d9e1f97cfce8570d4a5a12e947e663ec967c1a73a2f186eef0fc8a",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-8f0f062a78ee",
+          "unicode-tr15-tr15-51.heading-8f0f062a78ee-clause-e265b11bd80b",
+          "unicode-tr15-tr15-51.heading-8f0f062a78ee-clause-6a11b0960ddf"
+        ]
+      }
+    },
+    {
+      "id": "heading-33d090ce0a3b",
+      "title": "Post Composition Version Exclusions",
+      "level": 4,
+      "text_sha256": "c88bb1d16b4e0771fa8061373836ad2526c54de0ec141f7692b8d3d365b79c40",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-33d090ce0a3b",
+          "unicode-tr15-tr15-51.heading-33d090ce0a3b-clause-e265b11bd80b",
+          "unicode-tr15-tr15-51.heading-33d090ce0a3b-clause-f1394c2218a3"
+        ]
+      }
+    },
+    {
+      "id": "heading-2e6085ef5f21",
+      "title": "Singleton Exclusions",
+      "level": 4,
+      "text_sha256": "2bf7d52d770029ce16c0bc27cbe3ae8a006506584e59cbe11fbfc20fce759c37",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-2e6085ef5f21",
+          "unicode-tr15-tr15-51.heading-2e6085ef5f21-clause-f506e3437ccc"
+        ]
+      }
+    },
+    {
+      "id": "heading-0e5a0384d773",
+      "title": "Non-starter Decomposition Exclusions",
+      "level": 4,
+      "text_sha256": "7f6796410d6c8bab51f35193ef4a97837443f5d76cd2b800cd139a5dc72ce929",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-0e5a0384d773",
+          "unicode-tr15-tr15-51.heading-0e5a0384d773-clause-2b6b5d38ab11"
+        ]
+      }
+    },
+    {
+      "id": "Exclusion_Data_File",
+      "title": "5.2 Composition Exclusion Data Files",
+      "level": 3,
+      "text_sha256": "86b561197ec22e3bad6191f371b31035b2794e9ff8cd92e9e22fe607554e4eb9",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.exclusion-data-file",
+          "unicode-tr15-tr15-51.exclusion-data-file-clause-e0c3a689b356"
+        ]
+      }
+    },
+    {
+      "id": "Examples",
+      "title": "6 Examples and Charts",
+      "level": 2,
+      "text_sha256": "ad384caeb5563a62d8200639f4c76efbf644ee6ef607c7806a262473376a654e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.examples"
+        ]
+      }
+    },
+    {
+      "id": "heading-faadb1466551",
+      "title": "Basic Examples",
+      "level": 4,
+      "text_sha256": "e1846edf7973647b8853fa9e66e2bf824883d9ac701f12a07b05a96fd261ded7",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-faadb1466551"
+        ]
+      }
+    },
+    {
+      "id": "heading-f1fc9907b886",
+      "title": "Effect of Compatibility Decompositions",
+      "level": 4,
+      "text_sha256": "cbf02282fc64a9c45cc35e756fd0a573a7753f80d4521f9767578c6e7d257f52",
+      "clause_count": 100,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-f1fc9907b886"
+        ]
+      }
+    },
+    {
+      "id": "Design_Goals",
+      "title": "7 Design Goals",
+      "level": 2,
+      "text_sha256": "57b83fdcac99d0bfcb7a89f6f8b133579aa3fa5d1ed19c2b913f3346e1d0643e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.design-goals"
+        ]
+      }
+    },
+    {
+      "id": "heading-c0beaa88818c",
+      "title": "Goal 1: Uniqueness",
+      "level": 4,
+      "text_sha256": "d73fa80eaf569f947ea3f39a32a00d73f14f4a84264102df7d4b126091577c76",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-c0beaa88818c"
+        ]
+      }
+    },
+    {
+      "id": "heading-497016e38097",
+      "title": "Goal 2: Stability",
+      "level": 4,
+      "text_sha256": "fbf17bba5553c1952231e9c503f0c48515eb48438f2b16e01a31606347db16c3",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-497016e38097",
+          "unicode-tr15-tr15-51.heading-497016e38097-clause-30c740c8e6a7"
+        ]
+      }
+    },
+    {
+      "id": "heading-2aae8b101769",
+      "title": "Goal 3: Efficiency",
+      "level": 4,
+      "text_sha256": "34bc8721d2abfa47822d076d991950dab744a986db3bfcc606a9be62263b4cec",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-2aae8b101769",
+          "unicode-tr15-tr15-51.heading-2aae8b101769-clause-e3fba00d55fe"
+        ]
+      }
+    },
+    {
+      "id": "Legacy_Encodings",
+      "title": "8 Legacy Encodings",
+      "level": 2,
+      "text_sha256": "c115167e46ec929bc7c1f23ae5e0def884b5f329382b350794dd5589deea4aa0",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.legacy-encodings"
+        ]
+      }
+    },
+    {
+      "id": "Detecting_Normalization_Forms",
+      "title": "9 Detecting Normalization Forms",
+      "level": 2,
+      "text_sha256": "7c337a546e0e94ea8c6ebdc188984ae28b441d1d2dcf6443c408c0296d00f81e",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.detecting-normalization-forms",
+          "unicode-tr15-tr15-51.detecting-normalization-forms-clause-93480e5a9a27",
+          "unicode-tr15-tr15-51.detecting-normalization-forms-clause-aeb654dca795",
+          "unicode-tr15-tr15-51.detecting-normalization-forms-clause-8ad39066a3c4"
+        ]
+      }
+    },
+    {
+      "id": "Stable_Code_Points",
+      "title": "9.1 Stable Code Points",
+      "level": 3,
+      "text_sha256": "ecb64b66a2c8684d5e76e30fdb2691491c6bf0bb8f4ef7c8793d2caeb64a573f",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.stable-code-points"
+        ]
+      }
+    },
+    {
+      "id": "Canonical_Equivalence",
+      "title": "10 Respecting Canonical Equivalence",
+      "level": 2,
+      "text_sha256": "642944cc2f58e0a2d5ef5d0051c71f944e5e17c69ef4dc37c45d44e3fc079c0d",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.canonical-equivalence",
+          "unicode-tr15-tr15-51.canonical-equivalence-clause-760042d33509",
+          "unicode-tr15-tr15-51.canonical-equivalence-clause-3138f25d5d51",
+          "unicode-tr15-tr15-51.canonical-equivalence-clause-06c3ffba4030",
+          "unicode-tr15-tr15-51.canonical-equivalence-clause-0d681e6091fb",
+          "unicode-tr15-tr15-51.canonical-equivalence-clause-ac21dd487c49"
+        ]
+      }
+    },
+    {
+      "id": "Stability_Prior_to_Unicode41",
+      "title": "11 Stability Prior to Unicode 4.1",
+      "level": 2,
+      "text_sha256": "a4a8392c8d6e74af8998af78d0904fc4fdcc1387addee72f255c22b7e5a69e34",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.stability-prior-to-unicode41"
+        ]
+      }
+    },
+    {
+      "id": "Stability_of_Normalized_Forms",
+      "title": "11.1 Stability of Normalized Forms",
+      "level": 3,
+      "text_sha256": "7df327448bc7956258bec41af417d98f66cf2b76fdd9214fd506a07cc62e107d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.stability-of-normalized-forms"
+        ]
+      }
+    },
+    {
+      "id": "Stability_of_the_Normalization_Process",
+      "title": "11.2 Stability of the Normalization Process",
+      "level": 3,
+      "text_sha256": "7dfc36e5639d11b0fce62fb3e887c2b9d8abbf8733fac3cc1c4f08557ce92cb7",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.stability-of-the-normalization-process"
+        ]
+      }
+    },
+    {
+      "id": "Guaranteeing_Process_Stability",
+      "title": "11.3 Guaranteeing Process Stability",
+      "level": 3,
+      "text_sha256": "5651f87b433dd102eeacc30f06e09d23e289084ff2aa2a4b3716c44968fdca1c",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.guaranteeing-process-stability",
+          "unicode-tr15-tr15-51.guaranteeing-process-stability-clause-c81332b950e2",
+          "unicode-tr15-tr15-51.guaranteeing-process-stability-clause-2eca02a70e20",
+          "unicode-tr15-tr15-51.guaranteeing-process-stability-clause-573edbc87474"
+        ]
+      }
+    },
+    {
+      "id": "Forbidding_Characters",
+      "title": "11.4 Forbidding Characters",
+      "level": 3,
+      "text_sha256": "b97f23840a83f2e3c9e8dc0f48cfa5cc1037aafc6073097f71d6650e16d8f02b",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.forbidding-characters"
+        ]
+      }
+    },
+    {
+      "id": "Corrigendum_5_Sequences",
+      "title": "11.5 Corrigendum 5 Sequences",
+      "level": 3,
+      "text_sha256": "dfe66acaf33fe829042cf489caa4ebe96cbd0c752f8556ad9837bc2545b7b41a",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.corrigendum-5-sequences",
+          "unicode-tr15-tr15-51.corrigendum-5-sequences-clause-583766ed700a"
+        ]
+      }
+    },
+    {
+      "id": "Stabilized_Strings",
+      "title": "12 Stabilized Strings",
+      "level": 2,
+      "text_sha256": "5202a7985dd504ce02c28c938609fb2395548fe83a9efe13c2d248672c5ea1e0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.stabilized-strings",
+          "unicode-tr15-tr15-51.stabilized-strings-clause-5202a7985dd5"
+        ]
+      }
+    },
+    {
+      "id": "Normalization_Process_for_Stabilized_Strings",
+      "title": "12.1 Normalization Process for Stabilized Strings",
+      "level": 3,
+      "text_sha256": "689c29747401137350b4de19f533c95daad90c79944b74a7c7c81abe62810245",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.normalization-process-for-stabilized-strings",
+          "unicode-tr15-tr15-51.normalization-process-for-stabilized-strings-clause-7b20e0e89bb6",
+          "unicode-tr15-tr15-51.normalization-process-for-stabilized-strings-clause-cf0e9f824937",
+          "unicode-tr15-tr15-51.normalization-process-for-stabilized-strings-clause-137646fa6b60",
+          "unicode-tr15-tr15-51.normalization-process-for-stabilized-strings-clause-010e834c330f"
+        ]
+      }
+    },
+    {
+      "id": "Stream_Safe_Text_Format",
+      "title": "13 Stream-Safe Text Format",
+      "level": 2,
+      "text_sha256": "0f82f143b0e0cc29bf7ad21092ca9479816ad88d0161141fb5b3f7104bd4b98a",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.stream-safe-text-format",
+          "unicode-tr15-tr15-51.stream-safe-text-format-clause-399a873a30df",
+          "unicode-tr15-tr15-51.stream-safe-text-format-clause-a92957616f98",
+          "unicode-tr15-tr15-51.stream-safe-text-format-clause-e04507aef9e7",
+          "unicode-tr15-tr15-51.stream-safe-text-format-clause-8e361685f799"
+        ]
+      }
+    },
+    {
+      "id": "Buffering_with_Unicode_Normalization",
+      "title": "13.1 Buffering with Unicode Normalization",
+      "level": 3,
+      "text_sha256": "7a6e2caef992417aa9f5846cabd8e14c7810350a58f69bb56b39316c9d1840ef",
+      "clause_count": 111,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.buffering-with-unicode-normalization",
+          "unicode-tr15-tr15-51.buffering-with-unicode-normalization-clause-5df3bc619380"
+        ]
+      }
+    },
+    {
+      "id": "Implementation_Notes",
+      "title": "14 Implementation Notes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.implementation-notes"
+        ]
+      }
+    },
+    {
+      "id": "Optimization_Strategies",
+      "title": "14.1 Optimization Strategies",
+      "level": 3,
+      "text_sha256": "f5acded1d9f792270f2fa9892fb3ed36a5ad87b1467f8de2fd7d6b5e2301a129",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.optimization-strategies",
+          "unicode-tr15-tr15-51.optimization-strategies-clause-4ba05fda1a55"
+        ]
+      }
+    },
+    {
+      "id": "NFC_QC_Optimization",
+      "title": "14.1.1 Quick Check for NFC",
+      "level": 4,
+      "text_sha256": "93390b58fcb83487c8722bd428ff186ee360a9810c3bfcb47e562a836e2f1e9e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.nfc-qc-optimization"
+        ]
+      }
+    },
+    {
+      "id": "NFC_Table_Optimization",
+      "title": "14.1.2 Optimizing Tables for NFC Composition",
+      "level": 4,
+      "text_sha256": "65989c74717c29f3bb267879d3202ead7abcf7599cdc278f84d540c586a76798",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.nfc-table-optimization"
+        ]
+      }
+    },
+    {
+      "id": "NFD_Table_Optimization",
+      "title": "14.1.3 Optimizing Tables for NFD Quick Check",
+      "level": 4,
+      "text_sha256": "07886b0063c4dfb4f41210ec75cc434403e4b130de0cde723bec67bd834926f6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.nfd-table-optimization"
+        ]
+      }
+    },
+    {
+      "id": "Hangul_Composition",
+      "title": "14.1.4 Hangul Decomposition and Composition",
+      "level": 4,
+      "text_sha256": "f2bd05f5cef83c98656521f4e66032fa72f9832d7e32c190352f288f7b8fc5d0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.hangul-composition"
+        ]
+      }
+    },
+    {
+      "id": "Code_Sample",
+      "title": "14.2 Code Samples",
+      "level": 3,
+      "text_sha256": "bbe3d5bba66ce5f29f570baced44c3d31ebcf94eef80973dab2f8512224eabac",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.code-sample"
+        ]
+      }
+    },
+    {
+      "id": "Intellectual_Property_Annex",
+      "title": "Appendix A: Intellectual Property Considerations",
+      "level": 2,
+      "text_sha256": "fecf31e4a62c134d20fc6c79e26c617b652e034b91b6720620aef7066080fc0d",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.intellectual-property-annex"
+        ]
+      }
+    },
+    {
+      "id": "Acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "7e8cd1d7604cff1f48dbd146899463dd847cac18d0ecb0b57abc37bb0c55fbca",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "References",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "8e262b530dd9dea23efac0eca37ae00f8a40d4b1be2872783d65ad768734b47a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.references"
+        ]
+      }
+    },
+    {
+      "id": "Modifications",
+      "title": "Modifications",
+      "level": 2,
+      "text_sha256": "082fcef6bfae96a79a0dcc3d49e1c62e117661cc64b2eadd932b82dcda3876b2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.modifications"
+        ]
+      }
+    },
+    {
+      "id": "heading-966556df66cf",
+      "title": "Revision 51 [KW]",
+      "level": 3,
+      "text_sha256": "1a784836fd8d2c6e01594d1e64b89be07fa7c49a29de4eca1df5016964ce02ea",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr15-tr15-51.heading-966556df66cf"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,863 @@
+{
+  "schema_version": 1,
+  "source_id": "css-images-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Images Module Level 3",
+      "level": 1,
+      "text_sha256": "ecca17108ed9340fdb8d71660fdba9acdc8dda8e9db144f0aaec48a252366c89",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "5aabe1a67eec038d9ee16e49c5574298798be06a6bcb4c4f3d73d934494184f3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "0cb10b2bdaecf91b9cc92e6daaa33b6f19cf970f179d1892e2ef26f7fdea3ab1",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "37a9d33a0ea9c2a8386119501e598b26f2dc2cad1b34a93dec0650d4ed9da08b",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "dd7cf1257550a13b9b2b019370da88c93159b902251bedbc9d1e75ee6284ce9c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.intro",
+          "css-images-3.intro-clause-9b96385c004d"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "fb650d581b5b2c54b0efc9d3131854cd20df15f53dff74a5b01034157a7da9cb",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.placement",
+          "css-images-3.placement-clause-aa6072964b9d"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "25fc4f9bd82a056c8b661b6bd9a5ea5922d9c349a2ff48bb759e1d47b4f6ff8e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.values"
+        ]
+      }
+    },
+    {
+      "id": "image-values",
+      "title": "2. Image Values: the <image> type",
+      "level": 2,
+      "text_sha256": "e4b24c628ce7c6ca850baf728058b18258ca524a30ab1b601850675ec65bac3f",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.image-values",
+          "css-images-3.image-values-clause-61b0b608ba55",
+          "css-images-3.image-values-clause-d5b6ecbe211c",
+          "css-images-3.image-values-clause-6e5ac9fc1e62"
+        ]
+      }
+    },
+    {
+      "id": "url-notation",
+      "title": "2.1. Image References: the url() notation",
+      "level": 3,
+      "text_sha256": "2e6b7b75e1a611b5178b491e1065e5805dd8389c802995c6ac32e940c52615f4",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.url-notation",
+          "css-images-3.url-notation-clause-58fee2a67b49"
+        ]
+      }
+    },
+    {
+      "id": "ambiguous-urls",
+      "title": "2.1.1. Ambiguous Reference-or-Image URLs",
+      "level": 4,
+      "text_sha256": "66c745d8a2a39bdd240e5f3235ea619ffd2abb3306caf20c54997f0db2ff6145",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.ambiguous-urls",
+          "css-images-3.ambiguous-urls-clause-66906d8f265f",
+          "css-images-3.ambiguous-urls-clause-01ec632fc0ac"
+        ]
+      }
+    },
+    {
+      "id": "url-metadata",
+      "title": "2.1.2. Image Metadata",
+      "level": 4,
+      "text_sha256": "3b8b32fc41406ff3ed56423dba73d6be5405768e2c4e8bfe1ae457a8fbe01e1a",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.url-metadata",
+          "css-images-3.url-metadata-clause-be7b77a8c7b0",
+          "css-images-3.url-metadata-clause-a77fab865426",
+          "css-images-3.url-metadata-clause-e5fa643ac01d",
+          "css-images-3.url-metadata-clause-fabececb5514"
+        ]
+      }
+    },
+    {
+      "id": "gradients",
+      "title": "3. Gradients",
+      "level": 2,
+      "text_sha256": "ec5573e801e98da4d1f737ff822577d358cc02670b4e4f14b094e698af8d529a",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.gradients"
+        ]
+      }
+    },
+    {
+      "id": "linear-gradients",
+      "title": "3.1. Linear Gradients: the linear-gradient() notation",
+      "level": 3,
+      "text_sha256": "cc8ead288fed6166bbce67627606b71f14b42a55fbced29a8b9773082b397243",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.linear-gradients"
+        ]
+      }
+    },
+    {
+      "id": "linear-gradient-syntax",
+      "title": "3.1.1. linear-gradient() syntax",
+      "level": 4,
+      "text_sha256": "0d7654a9dc2bd2c6062ae5307363cbc97cd915607a68bc126d7da73040ba4a5d",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.linear-gradient-syntax",
+          "css-images-3.linear-gradient-syntax-clause-78fb75e11b4c",
+          "css-images-3.linear-gradient-syntax-clause-ff6ae535a203",
+          "css-images-3.linear-gradient-syntax-clause-ee34e1fa2813",
+          "css-images-3.linear-gradient-syntax-clause-42288aa1d4a9"
+        ]
+      }
+    },
+    {
+      "id": "linear-gradient-examples",
+      "title": "3.1.2. Linear Gradient Examples",
+      "level": 4,
+      "text_sha256": "14da4a94b4b73fbdc0f88565ddf25b0356441c1447b31e5961061da0a640c3c3",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.linear-gradient-examples"
+        ]
+      }
+    },
+    {
+      "id": "radial-gradients",
+      "title": "3.2. Radial Gradients: the radial-gradient() notation",
+      "level": 3,
+      "text_sha256": "64b1b214c9269a88efb42aa553131d40c6aa0ea769d05980062c1d4ed5d4ec3d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.radial-gradients"
+        ]
+      }
+    },
+    {
+      "id": "radial-gradient-syntax",
+      "title": "3.2.1. radial-gradient() Syntax",
+      "level": 4,
+      "text_sha256": "c740b1038944903bd34dc5fea1f2a1e77d2aa03a85c64fec1fd0e3e8a83e7745",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.radial-gradient-syntax",
+          "css-images-3.radial-gradient-syntax-clause-239de047d12d",
+          "css-images-3.radial-gradient-syntax-clause-341eb7253dc6",
+          "css-images-3.radial-gradient-syntax-clause-3e5fa388ee62"
+        ]
+      }
+    },
+    {
+      "id": "radial-color-stops",
+      "title": "3.2.2. Placing Color Stops",
+      "level": 4,
+      "text_sha256": "b95b005d713bffc96c4fffc37a269222b17f311c9b6a1b1c381dcd5cba5ecad1",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.radial-color-stops"
+        ]
+      }
+    },
+    {
+      "id": "degenerate-radials",
+      "title": "3.2.3. Degenerate Radial Gradients",
+      "level": 4,
+      "text_sha256": "afce968a11c67cfb5cfc33d4eea017a2e847413a06c2b7383bce9066a95082ca",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.degenerate-radials",
+          "css-images-3.degenerate-radials-clause-68a5f45a4ea4",
+          "css-images-3.degenerate-radials-clause-e184c0489294"
+        ]
+      }
+    },
+    {
+      "id": "radial-gradient-examples",
+      "title": "3.2.4. Radial Gradient Examples",
+      "level": 4,
+      "text_sha256": "1b7570ecc2efcf431eeca73435f7864b68c45ca4fadbc5cbd25f0165e00dba64",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.radial-gradient-examples"
+        ]
+      }
+    },
+    {
+      "id": "repeating-gradients",
+      "title": "3.3. Repeating Gradients: the repeating-linear-gradient() and repeating-radial-gradient() notations",
+      "level": 3,
+      "text_sha256": "949796c292c7b7e22ab9cfaa374b24ed7e03777c8d647e976f9f25f5489f65de",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.repeating-gradients",
+          "css-images-3.repeating-gradients-clause-0e581dded45a",
+          "css-images-3.repeating-gradients-clause-2a18266fca03",
+          "css-images-3.repeating-gradients-clause-3926a8cff554",
+          "css-images-3.repeating-gradients-clause-c40078887bd8"
+        ]
+      }
+    },
+    {
+      "id": "gradient-colors",
+      "title": "3.4. Defining Gradient Color",
+      "level": 3,
+      "text_sha256": "94440a65880269a407f4809653f1c6d01891d6bf0666e26ed7855e58ed08ecdd",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.gradient-colors"
+        ]
+      }
+    },
+    {
+      "id": "color-stop-syntax",
+      "title": "3.4.1. Color Stop Lists",
+      "level": 4,
+      "text_sha256": "7edb92f234b0d1ee98fc50782f4f409a6365abaa0349dfe2ac3ab5fde24d75b8",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.color-stop-syntax",
+          "css-images-3.color-stop-syntax-clause-d06c335b8f02"
+        ]
+      }
+    },
+    {
+      "id": "coloring-gradient-line",
+      "title": "3.4.2. Coloring the Gradient Line",
+      "level": 4,
+      "text_sha256": "abe8a0d31d1eee647dd2944d59724e9f90cea7a0337b889312890db485c5be36",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.coloring-gradient-line",
+          "css-images-3.coloring-gradient-line-clause-d5ec06be1eb3"
+        ]
+      }
+    },
+    {
+      "id": "color-stop-fixup",
+      "title": "3.4.3. Color Stop “Fixup”",
+      "level": 4,
+      "text_sha256": "e62427454d5871c1870170cb4852d16d0555ea82a03caec524f2df70b8cacee6",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.color-stop-fixup",
+          "css-images-3.color-stop-fixup-clause-fdb5cfe8be2c"
+        ]
+      }
+    },
+    {
+      "id": "sizing",
+      "title": "4. Sizing Images and Objects in CSS",
+      "level": 2,
+      "text_sha256": "6dfdebde87c95ba0c2e7d22acca9775853df0d7c00584ccf327625e451c5149d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.sizing"
+        ]
+      }
+    },
+    {
+      "id": "sizing-terms",
+      "title": "4.1. Object-Sizing Terminology",
+      "level": 3,
+      "text_sha256": "7b27e3728ae50d070088321b570b0ccc5c83098dd8506571580d03a689dd3026",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.sizing-terms"
+        ]
+      }
+    },
+    {
+      "id": "object-negotiation",
+      "title": "4.2. CSS⇋Object Negotiation",
+      "level": 3,
+      "text_sha256": "dd8c3af512a2a0c37b991c4f7d8af9d3a2f82a58127784bbb781cd3dc0207c6d",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.object-negotiation",
+          "css-images-3.object-negotiation-clause-51185a825aaa"
+        ]
+      }
+    },
+    {
+      "id": "concrete-size-resolution",
+      "title": "4.3. Concrete Object Size Resolution",
+      "level": 3,
+      "text_sha256": "a765d70c064aeefdaca7a99af0cdf7442487dee14d355eeeb505154b70d92a5b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.concrete-size-resolution",
+          "css-images-3.concrete-size-resolution-clause-a765d70c064a"
+        ]
+      }
+    },
+    {
+      "id": "default-sizing",
+      "title": "4.3.1. Default Sizing Algorithm",
+      "level": 4,
+      "text_sha256": "e29cd3b13c2a6cb8a6538eb9165cbbfdee34d1d182b00bf4f2530e25110e7207",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.default-sizing",
+          "css-images-3.default-sizing-clause-8eef16687fa8",
+          "css-images-3.default-sizing-clause-0562c4918bc7",
+          "css-images-3.default-sizing-clause-ae871a77142a"
+        ]
+      }
+    },
+    {
+      "id": "cover-contain",
+      "title": "4.3.2. Cover and Contain Constraint Sizing",
+      "level": 4,
+      "text_sha256": "d85f4b7955ba0a1867f79b3780cf13c8979388f24e3156789cf2305e7a9822c1",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.cover-contain"
+        ]
+      }
+    },
+    {
+      "id": "object-sizing-examples",
+      "title": "4.4. Examples of CSS Object Sizing",
+      "level": 3,
+      "text_sha256": "388e710850e862d27cf11306fc0c42114c27ec0678ded9cc77d6d492628dfbb1",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.object-sizing-examples",
+          "css-images-3.object-sizing-examples-clause-13052c174a3c",
+          "css-images-3.object-sizing-examples-clause-a50fcb1d5419",
+          "css-images-3.object-sizing-examples-clause-6c923a609c85",
+          "css-images-3.object-sizing-examples-clause-1818460528e7"
+        ]
+      }
+    },
+    {
+      "id": "the-object-fit",
+      "title": "4.5. Sizing Objects: the object-fit property",
+      "level": 3,
+      "text_sha256": "e36364d22ec07d0212ed52d4571b419fa37563080db16027bac4545e25036992",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.the-object-fit",
+          "css-images-3.the-object-fit-clause-cca2516ebb1d",
+          "css-images-3.the-object-fit-clause-7f9e559f1cfe",
+          "css-images-3.the-object-fit-clause-47922d7b31c4",
+          "css-images-3.the-object-fit-clause-ad432b54d4b9",
+          "css-images-3.the-object-fit-clause-9e993e70940b",
+          "css-images-3.the-object-fit-clause-a9dfcc9a30e6"
+        ]
+      }
+    },
+    {
+      "id": "the-object-position",
+      "title": "4.6. Positioning Objects: the object-position property",
+      "level": 3,
+      "text_sha256": "94a3783469816b8a458dee81ca80f2a0240ba17c97ea4b5fa1abb54bd4dc1a26",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.the-object-position",
+          "css-images-3.the-object-position-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "image-processing",
+      "title": "5. Image Processing",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.image-processing"
+        ]
+      }
+    },
+    {
+      "id": "the-image-orientation",
+      "title": "5.1. Orienting an Image on the Page: the image-orientation property",
+      "level": 3,
+      "text_sha256": "c614a190c675256c9ad364338ff241ec981ee4a198940caa190e35ec9ad4552a",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.the-image-orientation",
+          "css-images-3.the-image-orientation-clause-cca2516ebb1d",
+          "css-images-3.the-image-orientation-clause-334beb015266",
+          "css-images-3.the-image-orientation-clause-04d477ca23da",
+          "css-images-3.the-image-orientation-clause-b1cd0a9771fa",
+          "css-images-3.the-image-orientation-clause-94c81ef82584",
+          "css-images-3.the-image-orientation-clause-f0d25750d07c"
+        ]
+      }
+    },
+    {
+      "id": "the-image-rendering",
+      "title": "5.2. Determining How To Scale an Image: the image-rendering property",
+      "level": 3,
+      "text_sha256": "f7c4101525ad6b3ba534791d4fe4e7cbcec33c78f889929c0d54146fd463eb2e",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.the-image-rendering",
+          "css-images-3.the-image-rendering-clause-cca2516ebb1d",
+          "css-images-3.the-image-rendering-clause-7333d02d814b",
+          "css-images-3.the-image-rendering-clause-156e3e312e93",
+          "css-images-3.the-image-rendering-clause-28c987c8e081",
+          "css-images-3.the-image-rendering-clause-b32880df03ce",
+          "css-images-3.the-image-rendering-clause-3dbb47bd58e3",
+          "css-images-3.the-image-rendering-clause-90366613ca73",
+          "css-images-3.the-image-rendering-clause-049eff40a034",
+          "css-images-3.the-image-rendering-clause-384aacd344d6",
+          "css-images-3.the-image-rendering-clause-5a8f6531e9a7",
+          "css-images-3.the-image-rendering-clause-6d83291c8698",
+          "css-images-3.the-image-rendering-clause-f5a3ba0b0f0c"
+        ]
+      }
+    },
+    {
+      "id": "interpolation",
+      "title": "6. Interpolation",
+      "level": 2,
+      "text_sha256": "f179fc4ad647404822c2a6e426d9b6a43474ea73f0d05506ceffb90e084a4eaa",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.interpolation",
+          "css-images-3.interpolation-clause-cb7b4f2b3ed5",
+          "css-images-3.interpolation-clause-136737709706"
+        ]
+      }
+    },
+    {
+      "id": "serialization",
+      "title": "7. Serialization",
+      "level": 2,
+      "text_sha256": "2ceb5bfec0c8f38d818889d906987b4a276fc8d497420015f9519603a9337a66",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.serialization",
+          "css-images-3.serialization-clause-c05769201084"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "546cdfa34e298dfe0b4ec2ddd3f91a12f3cc44ca31ee4ac61f3e041811323fc1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "efcccbbdb2ee6d0cb0ace2505c5587225c546a157025a3c2278902f7b2a75fce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.security"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "e79a20864aa982043e4f955272687f4dc7e44c3d8ccb442c1c10d200ccd2b9eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20191010",
+      "title": "Changes Since the 10 October 2019 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "98e11c6b8d74dc1e043ce3cb4f2ed67a5aa93ab9fffe4423afee317841b34105",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.changes-20191010"
+        ]
+      }
+    },
+    {
+      "id": "changes-20120407",
+      "title": "Changes Since the 17 April 2012 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "d44ad99d992b9bd6c742f81741fa835385a0c90509edafb6eaf58b4e23724766",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.changes-20120407"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.w3c-conventions",
+          "css-images-3.w3c-conventions-clause-5c98c879f070",
+          "css-images-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.w3c-conformance-classes",
+          "css-images-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-images-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.w3c-partial",
+          "css-images-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.w3c-testing",
+          "css-images-3.w3c-testing-clause-1e0fff369221",
+          "css-images-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.w3c-cr-exit-criteria",
+          "css-images-3.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-images-3.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-images-3.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-images-3.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-images-3.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "7198dbfa1866ccda821559d66d55fb446c340b2ff1f1ab037263c1622b7169b8",
+      "clause_count": 80,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "ecee0636f7319864156849caf0549f43bb50c2d8aef9c9a636777a742c1295b7",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "81532ee8ddc96c054f4f4096512dce559734d38b16baf1b07ae12a4c86855e39",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "547b3bf8f0242c3fb8fcd39e2058dd3198b4a98862b69e8941dd7485d858dd09",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "45dffaa48ee321c277d57c3b609120acc9eaff575ee6e6f5e973dd1bebd45e8c",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.property-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "42ff80494af8af1e3c5dfb77a4ca034a3d09ad7223e95ae6ad62a643c914225f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-images-3.issues-index"
+        ]
+      }
+    }
+  ]
+}

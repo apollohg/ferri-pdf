@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-rec-css2-20110607",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-rec-css2-20110607.title"
+        ]
+      }
+    },
+    {
+      "id": "W3C-doctype",
+      "title": "W3C Recommendation 07 June 2011, edited in place 12 April 2016 to point to new work, edited in place 07 December 2021 to correct markup.",
+      "level": 2,
+      "text_sha256": "bf12d32d515c3826058a252ce9052fa6c6e0a73fd7e67843a7fa0b4d3f91f428",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-rec-css2-20110607.w3c-doctype"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "fbc0fcedf658b75a9f4091c6d7c41e520670ea9d4132791634f02f53c617492e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-rec-css2-20110607.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "b79d6ce16305d76af1c16237640ded4b178c80ba943053784adceca5dfdcedb8",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-rec-css2-20110607.status"
+        ]
+      }
+    },
+    {
+      "id": "minitoc",
+      "title": "Quick Table of Contents",
+      "level": 2,
+      "text_sha256": "3a639af034587d5597cf4a7746d6079a08f0710e8866160bddb5031fcb320695",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-rec-css2-20110607.minitoc"
+        ]
+      }
+    },
+    {
+      "id": "toc",
+      "title": "Full Table of Contents",
+      "level": 2,
+      "text_sha256": "cffe6978446fdfa851878b66d2464ecd959f1349d0e5edcf622ca86a7f13fbde",
+      "clause_count": 842,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-rec-css2-20110607.toc",
+          "css21-rec-css2-20110607.toc-clause-c4291a798bbe",
+          "css21-rec-css2-20110607.toc-clause-eeeb79dd53a5",
+          "css21-rec-css2-20110607.toc-clause-1690ea7386d2",
+          "css21-rec-css2-20110607.toc-clause-5e0758efa953",
+          "css21-rec-css2-20110607.toc-clause-7d29c3bcaf2e",
+          "css21-rec-css2-20110607.toc-clause-c39fb49d4b8a",
+          "css21-rec-css2-20110607.toc-clause-94d5c1d27cf8",
+          "css21-rec-css2-20110607.toc-clause-2d47d0a37f2f",
+          "css21-rec-css2-20110607.toc-clause-9ce172d752f2",
+          "css21-rec-css2-20110607.toc-clause-27270c9b48b9",
+          "css21-rec-css2-20110607.toc-clause-f667c6279cc1",
+          "css21-rec-css2-20110607.toc-clause-8e38225d7ded"
+        ]
+      }
+    }
+  ]
+}

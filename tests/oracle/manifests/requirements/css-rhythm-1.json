@@ -1,0 +1,1952 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-rhythm-1.intro",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "5258447c7507e1f0db986ca6041ce08f028d59d05eab936560b5cc6dffba3cf5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.eastasia",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "eastasia"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in East Asian Casual Vertical Rhythms.",
+      "locator": {
+        "section_id": "eastasia",
+        "text_sha256": "7f424e9b92e49734978a73e1dc760670cc8c957f8dd76499beb39d8391da0604"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.eastasia-clause-dc66ed53b803",
+        "css-rhythm-1.eastasia-clause-182fb6381c62"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.eastasia-clause-dc66ed53b803",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "eastasia"
+      ],
+      "behaviour": "East Asian Casual Vertical Rhythms — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "eastasia",
+        "clause_index": 5,
+        "clause_sha256": "dc66ed53b80351f372c380c9bcf7f1a2d3cac352800c22850072ac5ad0e3d85e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.eastasia-clause-182fb6381c62",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "eastasia"
+      ],
+      "behaviour": "East Asian Casual Vertical Rhythms — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "eastasia",
+        "clause_index": 8,
+        "clause_sha256": "182fb6381c620df62cde3a1c30d6103391aee4617d8198f09d08e11815a8db9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.values",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.block-height",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Adjusting Block-level Box Heights.",
+      "locator": {
+        "section_id": "block-height",
+        "text_sha256": "4b9ddbf3d5e23552afba3362b33476fcfaa74ffcd87308f8e3e3e55e6eab76e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.block-height-clause-ea20310934bb",
+        "css-rhythm-1.block-height-clause-d0b8a3db0975"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.block-height-clause-ea20310934bb",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-height"
+      ],
+      "behaviour": "Adjusting Block-level Box Heights — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-height",
+        "clause_index": 1,
+        "clause_sha256": "ea20310934bbe47c3d4af4cdb7380e683b1f9cc88699ee27314f83cb3a2490b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-height-clause-d0b8a3db0975",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-height"
+      ],
+      "behaviour": "Adjusting Block-level Box Heights — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-height",
+        "clause_index": 3,
+        "clause_sha256": "d0b8a3db09758a9fe1e7794680e989e620ce3c2f3e6bdf24444ef62bbbdfd4ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-size",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-size"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying the Step Size: the block-step-size property.",
+      "locator": {
+        "section_id": "block-step-size",
+        "text_sha256": "27aa6f7b7f89ff1147c3246e8816e9782df37362c96bcb6d336c231fdf3dd111"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.block-step-size-clause-cca2516ebb1d",
+        "css-rhythm-1.block-step-size-clause-fffddde06e7c",
+        "css-rhythm-1.block-step-size-clause-28b220e0c533",
+        "css-rhythm-1.block-step-size-clause-df9b713dcc5b",
+        "css-rhythm-1.block-step-size-clause-6b400a40668e",
+        "css-rhythm-1.block-step-size-clause-4abb301ea2dc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.block-step-size-clause-cca2516ebb1d",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-size"
+      ],
+      "behaviour": "Specifying the Step Size: the block-step-size property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-size",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-size-clause-fffddde06e7c",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-size"
+      ],
+      "behaviour": "Specifying the Step Size: the block-step-size property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-size",
+        "clause_index": 29,
+        "clause_sha256": "fffddde06e7cb1af957c45ef7b1352850882192df78d003cde4ef594bb9433f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-size-clause-28b220e0c533",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-size"
+      ],
+      "behaviour": "Specifying the Step Size: the block-step-size property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-size",
+        "clause_index": 30,
+        "clause_sha256": "28b220e0c53310c130affdad4b358dc7341733bac3e7a20e9534ac9eb70b3e27"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-size-clause-df9b713dcc5b",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-size"
+      ],
+      "behaviour": "Specifying the Step Size: the block-step-size property — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-size",
+        "clause_index": 41,
+        "clause_sha256": "df9b713dcc5ba4eb03e3937c4a0ac0b91ac47f5c9a7c05a992a492c068970449"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-size-clause-6b400a40668e",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-size"
+      ],
+      "behaviour": "Specifying the Step Size: the block-step-size property — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-size",
+        "clause_index": 47,
+        "clause_sha256": "6b400a40668ebe1c103da2465ce730d9b6be77b6a01f5ff6c3e2eb0af9828d36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-size-clause-4abb301ea2dc",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-size"
+      ],
+      "behaviour": "Specifying the Step Size: the block-step-size property — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-size",
+        "clause_index": 48,
+        "clause_sha256": "4abb301ea2dca470bb18cbf8a46b74776a2cd081923d5a76e4b5518a68d01750"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-insert",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-insert"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying the Spacing Type: the block-step-insert property.",
+      "locator": {
+        "section_id": "block-step-insert",
+        "text_sha256": "74bca1b64cb17f700bc38eefc55e7eb3803d3d22918176c0e9faa98d388ba75b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.block-step-insert-clause-cca2516ebb1d",
+        "css-rhythm-1.block-step-insert-clause-8fd57d238f09",
+        "css-rhythm-1.block-step-insert-clause-006ff8b93a4b",
+        "css-rhythm-1.block-step-insert-clause-ab1191faefea"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.block-step-insert-clause-cca2516ebb1d",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-insert"
+      ],
+      "behaviour": "Specifying the Spacing Type: the block-step-insert property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-insert",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-insert-clause-8fd57d238f09",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-insert"
+      ],
+      "behaviour": "Specifying the Spacing Type: the block-step-insert property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-insert",
+        "clause_index": 17,
+        "clause_sha256": "8fd57d238f09da07fdb0a6c1d35c57e89da2eb90593f7ea3ab3dfe5f9e6c4614"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-insert-clause-006ff8b93a4b",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-insert"
+      ],
+      "behaviour": "Specifying the Spacing Type: the block-step-insert property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-insert",
+        "clause_index": 18,
+        "clause_sha256": "006ff8b93a4bd73abeea815e1964384f62590525ca843dc11ff8bd030064471e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-insert-clause-ab1191faefea",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-insert"
+      ],
+      "behaviour": "Specifying the Spacing Type: the block-step-insert property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-insert",
+        "clause_index": 28,
+        "clause_sha256": "ab1191faefea8154aec3a7498dcd91311cce5cee8e5adcf3cfdd41f529f8ea54"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-align",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-align"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying Alignment: the block-step-align property.",
+      "locator": {
+        "section_id": "block-step-align",
+        "text_sha256": "afa8ef28efb5dac2accb475385ba82c9b80d684b5d0fed6965658f0a632da014"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.block-step-align-clause-cca2516ebb1d",
+        "css-rhythm-1.block-step-align-clause-354b886cb8e0",
+        "css-rhythm-1.block-step-align-clause-5514614de6d8",
+        "css-rhythm-1.block-step-align-clause-d53264e30a2a",
+        "css-rhythm-1.block-step-align-clause-0704b0d5228a",
+        "css-rhythm-1.block-step-align-clause-9362f7d2fa9c",
+        "css-rhythm-1.block-step-align-clause-d3a62dee4abb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.block-step-align-clause-cca2516ebb1d",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-align"
+      ],
+      "behaviour": "Specifying Alignment: the block-step-align property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-align",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-align-clause-354b886cb8e0",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-align"
+      ],
+      "behaviour": "Specifying Alignment: the block-step-align property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-align",
+        "clause_index": 17,
+        "clause_sha256": "354b886cb8e05a5f8c79d7b3e4ef90843e3247627f04db9112a9047f64d3a815"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-align-clause-5514614de6d8",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-align"
+      ],
+      "behaviour": "Specifying Alignment: the block-step-align property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-align",
+        "clause_index": 18,
+        "clause_sha256": "5514614de6d84d84b434d3d5ed992db2c7380036f9990a7f97a080a4c9a82c0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-align-clause-d53264e30a2a",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-align"
+      ],
+      "behaviour": "Specifying Alignment: the block-step-align property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-align",
+        "clause_index": 30,
+        "clause_sha256": "d53264e30a2ab3fc0023db8abe4e8ae82e4bf3df54af06e75707a6eec3cd10a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-align-clause-0704b0d5228a",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-align"
+      ],
+      "behaviour": "Specifying Alignment: the block-step-align property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-align",
+        "clause_index": 31,
+        "clause_sha256": "0704b0d5228ae0254c7e9903db1f5aea0485b177e2986ed0d2decbcabc99fab6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-align-clause-9362f7d2fa9c",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-align"
+      ],
+      "behaviour": "Specifying Alignment: the block-step-align property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-align",
+        "clause_index": 32,
+        "clause_sha256": "9362f7d2fa9ce20622ad2f46e0e9c021b1972f93c8d1a570103856cf677f9e90"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-align-clause-d3a62dee4abb",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-align"
+      ],
+      "behaviour": "Specifying Alignment: the block-step-align property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-align",
+        "clause_index": 33,
+        "clause_sha256": "d3a62dee4abbc85056367d742e7c5728e8e0bd8bc49e6ec4e2ed030b71803746"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-round",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-round"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rounding Method: the block-step-round property.",
+      "locator": {
+        "section_id": "block-step-round",
+        "text_sha256": "00d3cfd22717d1755f5fcd73c36cde1f8905d5a6d2cfddb36384b58a1c7ec197"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.block-step-round-clause-cca2516ebb1d",
+        "css-rhythm-1.block-step-round-clause-7a6c1e9c14f0",
+        "css-rhythm-1.block-step-round-clause-bce5fbf31a6a",
+        "css-rhythm-1.block-step-round-clause-8018d43ec6d8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.block-step-round-clause-cca2516ebb1d",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-round"
+      ],
+      "behaviour": "Rounding Method: the block-step-round property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-round",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-round-clause-7a6c1e9c14f0",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-round"
+      ],
+      "behaviour": "Rounding Method: the block-step-round property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-round",
+        "clause_index": 17,
+        "clause_sha256": "7a6c1e9c14f018f7761e1e3bb5c3d24dca53c02ac89133b17e08f1f456576273"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-round-clause-bce5fbf31a6a",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-round"
+      ],
+      "behaviour": "Rounding Method: the block-step-round property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-round",
+        "clause_index": 18,
+        "clause_sha256": "bce5fbf31a6ac8365e5d36f7e467c5c5c2e40ef0bb264ee5a8b28e4c8504160a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-round-clause-8018d43ec6d8",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step-round"
+      ],
+      "behaviour": "Rounding Method: the block-step-round property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step-round",
+        "clause_index": 28,
+        "clause_sha256": "8018d43ec6d81688660fdbf4626c055b5029364ef96d8910dab4a1436ade8492"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block Step Adjustment Shorthand: the block-step shorthand.",
+      "locator": {
+        "section_id": "block-step",
+        "text_sha256": "656e199cc0b0d67fbbd255059609c26a666c9c296be2c2620477d401593ca6d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.block-step-clause-cca2516ebb1d",
+        "css-rhythm-1.block-step-clause-e79eba635134",
+        "css-rhythm-1.block-step-clause-23674371b5f7",
+        "css-rhythm-1.block-step-clause-90d79f08638f",
+        "css-rhythm-1.block-step-clause-901bcde11622"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.block-step-clause-cca2516ebb1d",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step"
+      ],
+      "behaviour": "Block Step Adjustment Shorthand: the block-step shorthand — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-clause-e79eba635134",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step"
+      ],
+      "behaviour": "Block Step Adjustment Shorthand: the block-step shorthand — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step",
+        "clause_index": 17,
+        "clause_sha256": "e79eba635134bd80ea8cac9d4461c462d8d3b8e45ce558c4e6eecd3014d6c0f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-clause-23674371b5f7",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step"
+      ],
+      "behaviour": "Block Step Adjustment Shorthand: the block-step shorthand — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step",
+        "clause_index": 18,
+        "clause_sha256": "23674371b5f79ee2d4aceb22440709a998c6f0dea2a75b08328807939f230006"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-clause-90d79f08638f",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step"
+      ],
+      "behaviour": "Block Step Adjustment Shorthand: the block-step shorthand — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step",
+        "clause_index": 20,
+        "clause_sha256": "90d79f08638f1eee822c1a86efbc274978448726b0403c1261b2bd66a9b1f76c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.block-step-clause-901bcde11622",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "block-step"
+      ],
+      "behaviour": "Block Step Adjustment Shorthand: the block-step shorthand — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "block-step",
+        "clause_index": 22,
+        "clause_sha256": "901bcde11622accd1d64c790319be9a6e34c9b4b7acdb48c64ac8f56ffeb55bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.line-height-step",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "line-height-step"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Adjusting Line Box Heights: the line-height-step property.",
+      "locator": {
+        "section_id": "line-height-step",
+        "text_sha256": "ed7fd3872510fa4e82e144383debb927f33d0b4d80428db886c906b158baa008"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.line-height-step-clause-cca2516ebb1d",
+        "css-rhythm-1.line-height-step-clause-c395c62e6704",
+        "css-rhythm-1.line-height-step-clause-91f0200c515a",
+        "css-rhythm-1.line-height-step-clause-e32198fca447"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.line-height-step-clause-cca2516ebb1d",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "line-height-step"
+      ],
+      "behaviour": "Adjusting Line Box Heights: the line-height-step property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height-step",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.line-height-step-clause-c395c62e6704",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "line-height-step"
+      ],
+      "behaviour": "Adjusting Line Box Heights: the line-height-step property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height-step",
+        "clause_index": 17,
+        "clause_sha256": "c395c62e6704df1c49e2bd620b95579c9afcc11838153139c35f841a0b8e485d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.line-height-step-clause-91f0200c515a",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "line-height-step"
+      ],
+      "behaviour": "Adjusting Line Box Heights: the line-height-step property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height-step",
+        "clause_index": 18,
+        "clause_sha256": "91f0200c515a47cb9f1685290c7e4553bc4bda9f5ad7865fc17edc5f59b33253"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.line-height-step-clause-e32198fca447",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "line-height-step"
+      ],
+      "behaviour": "Adjusting Line Box Heights: the line-height-step property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-height-step",
+        "clause_index": 25,
+        "clause_sha256": "e32198fca4477406ccc09e027cfbe53eb74f0047506e80addccc92f45b6c5053"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.privacy",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "babe59204df04747ccb9d9ebc82e7e3be880939b9cb1bd3b9a8f7e9caefad1da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.security",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "94c08e43fb969ed5f048a71a18ba3dff2c70bcc14f27dd711c8b50e45fb7e862"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.w3c-conformance",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.w3c-conventions",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.w3c-conventions-clause-5c98c879f070",
+        "css-rhythm-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.w3c-conformance-classes",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-rhythm-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.w3c-partial",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.w3c-conform-future-proofing",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.w3c-testing",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.w3c-testing-clause-1e0fff369221",
+        "css-rhythm-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.property-index",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "401979fae677bf2e88a5a47eac0f9f6e4fec2022e9e883b4aa3e55f05004c410"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-rhythm-1.property-index-clause-4b59fe755d34"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.property-index-clause-4b59fe755d34",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 51,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-rhythm-1.issues-index",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "62e335f7a26d4b8f5dc3ae3f3cbd4ec428e7fa09705fc54d80a3235a78519045"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.title",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Rhythmic Sizing Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "73a640d796277fda3edaa6905912b7e660df1e87f1f8bbbe10bf60e67d94d944"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.abstract",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "fd61967f99d65081b7e67f1249eade1974b22589f43084022bf0fe4186d9680c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.sotd",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "3fecf0f425f05e656338a79c2d95e4fc28203408559e029b6d712faadc333b7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.contents",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "1154e55a5b0aecc1884c6195a555ee3fc373dfa8ec48e5c687ef82d59fb10588"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.acks",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "acks"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 6. Acknowledgments.",
+      "locator": {
+        "section_id": "acks",
+        "text_sha256": "352d51370e45862f6eb55326a1cdcdccde1efa1cd317077f9e95367f972cf59f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.changes",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "98b136e492b6e572b36ef333eb6eeeac0d66fd901177d5f3775aa5318d115cd2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.index",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.index-defined-here",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "26f6457f879bb32c9947852102a662cb2d321623b0c3d724b82607e0b0e5b02e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.index-defined-elsewhere",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "bd856de03314d7a9906570f7d6f85871e1ed089349a01566ffc3b579603863e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.references",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.normative",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "f9e33c4256d324cbdd99e22accbaf344f13ef14f8f62fc598ea7e0f62ea96490"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-rhythm-1.informative",
+      "family": "css-rhythm-1",
+      "source_id": "css-rhythm-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "050cf45fdbe7059b71ca6a419ee30be63ae50e7f373b5a08e91569037fcc9389"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

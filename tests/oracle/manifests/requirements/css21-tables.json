@@ -1,0 +1,2165 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-tables.q17-0",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "q17.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 17 Tables.",
+      "locator": {
+        "section_id": "q17.0",
+        "text_sha256": "280a4168b8b8b21bc354b1d430472a2e2a0e113031b967ebfaf5b48133c3f843"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.tables-intro",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "tables-intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction to tables.",
+      "locator": {
+        "section_id": "tables-intro",
+        "text_sha256": "fa42ff8bf581b580cf52bbe3da6a317f35392189bc2650d9aaf1ac37dd3105eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.tables-intro-clause-20ce95fc60b9",
+        "css21-tables.tables-intro-clause-83b6f7796db1",
+        "css21-tables.tables-intro-clause-8ecce21cbfed",
+        "css21-tables.tables-intro-clause-87a5ec51b537"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.tables-intro-clause-20ce95fc60b9",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "tables-intro"
+      ],
+      "behaviour": "Introduction to tables — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "tables-intro",
+        "clause_index": 0,
+        "clause_sha256": "20ce95fc60b91710aca58be7c8fe588d0234fe4e06b881805b9c7454184df7a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.tables-intro-clause-83b6f7796db1",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "tables-intro"
+      ],
+      "behaviour": "Introduction to tables — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "tables-intro",
+        "clause_index": 1,
+        "clause_sha256": "83b6f7796db1e3f27b9111bb7bd8017de2c00b9388f812c49771672239a76bb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.tables-intro-clause-8ecce21cbfed",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "tables-intro"
+      ],
+      "behaviour": "Introduction to tables — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "tables-intro",
+        "clause_index": 3,
+        "clause_sha256": "8ecce21cbfed4262d2f527b0d15767e775d6831c07edbb7f69a8fa6bb393c6d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.tables-intro-clause-87a5ec51b537",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "tables-intro"
+      ],
+      "behaviour": "Introduction to tables — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "tables-intro",
+        "clause_index": 8,
+        "clause_sha256": "87a5ec51b537ad0d7ed9ef075d088e549c066608a3a87329ab622b88f69c03d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.table-display",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "table-display"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSS table model.",
+      "locator": {
+        "section_id": "table-display",
+        "text_sha256": "17718b82d21536943d6f223fe008e76f6b8b44c3afdebfb79622d7120eccadc6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.table-display-clause-dfc59f1aeef9",
+        "css21-tables.table-display-clause-2795921f278e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.table-display-clause-dfc59f1aeef9",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "table-display"
+      ],
+      "behaviour": "The CSS table model — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-display",
+        "clause_index": 2,
+        "clause_sha256": "dfc59f1aeef9a8c172f74a56da7459a5b95317be56c6240a9fa0045430e8db67"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.table-display-clause-2795921f278e",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "table-display"
+      ],
+      "behaviour": "The CSS table model — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-display",
+        "clause_index": 27,
+        "clause_sha256": "2795921f278e906b7e7b7bb1c95e642b54540e3d057be4b0907c80726e7b1032"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.anonymous-boxes",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "anonymous-boxes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Anonymous table objects.",
+      "locator": {
+        "section_id": "anonymous-boxes",
+        "text_sha256": "57d2b76c7ccf06084b657a1f48cce551511bcddc7f62d1c03589675bf6e4c91e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.anonymous-boxes-clause-ba51c8a2020c",
+        "css21-tables.anonymous-boxes-clause-5adefd8f5251",
+        "css21-tables.anonymous-boxes-clause-f8e24e165ced",
+        "css21-tables.anonymous-boxes-clause-8b965975397f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.anonymous-boxes-clause-ba51c8a2020c",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "anonymous-boxes"
+      ],
+      "behaviour": "Anonymous table objects — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "anonymous-boxes",
+        "clause_index": 0,
+        "clause_sha256": "ba51c8a2020cbbae7e82fc27bb98a0cb1bd48703a97d2c7da5e1e43b2dd2683d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.anonymous-boxes-clause-5adefd8f5251",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "anonymous-boxes"
+      ],
+      "behaviour": "Anonymous table objects — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "anonymous-boxes",
+        "clause_index": 14,
+        "clause_sha256": "5adefd8f525192d615ddc4649e3be01cc794757756fc93ac985e9c31ab6dc577"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.anonymous-boxes-clause-f8e24e165ced",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "anonymous-boxes"
+      ],
+      "behaviour": "Anonymous table objects — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "anonymous-boxes",
+        "clause_index": 26,
+        "clause_sha256": "f8e24e165cedbe0dc61137514f717ff7bd34f22e3f4280629fd295a581b125f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.anonymous-boxes-clause-8b965975397f",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "anonymous-boxes"
+      ],
+      "behaviour": "Anonymous table objects — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "anonymous-boxes",
+        "clause_index": 40,
+        "clause_sha256": "8b965975397ff11a7098626bfd38e2d23b62008092bf9b1bf1559b79ac60dc3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.columns",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "columns"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Columns.",
+      "locator": {
+        "section_id": "columns",
+        "text_sha256": "752f1e3faada30acfb2fc0aef75b6ed2d9db98905a1f06bf4a4a841f5dcde4ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.columns-clause-daea671cdb2e",
+        "css21-tables.columns-clause-c1fa640224ca",
+        "css21-tables.columns-clause-1d8c897c8b59"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.columns-clause-daea671cdb2e",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "columns"
+      ],
+      "behaviour": "Columns — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "columns",
+        "clause_index": 3,
+        "clause_sha256": "daea671cdb2e36369d4116d6a6f517ce3742ca1079f5dca1cca945cb08e1a684"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.columns-clause-c1fa640224ca",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "columns"
+      ],
+      "behaviour": "Columns — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "columns",
+        "clause_index": 10,
+        "clause_sha256": "c1fa640224ca67c056302f61f2994a1d4c868953f949c45fd38cbeb7b35a3c49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.columns-clause-1d8c897c8b59",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "columns"
+      ],
+      "behaviour": "Columns — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "columns",
+        "clause_index": 12,
+        "clause_sha256": "1d8c897c8b5923d6562bd4167d346a4a69c13f2f10de9aa7e945939a06fa36a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.model",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tables in the visual formatting model.",
+      "locator": {
+        "section_id": "model",
+        "text_sha256": "2653cbf6f451a3e2bc0ab9dbf94788d37bc8ad5395c09d231a46a8210207dbbe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.model-clause-c450ad99c43b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.model-clause-c450ad99c43b",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "model"
+      ],
+      "behaviour": "Tables in the visual formatting model — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "model",
+        "clause_index": 3,
+        "clause_sha256": "c450ad99c43b36e50b83b5d7055f1a042ceb91792a50d38d01290292b55274b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.caption-position",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "caption-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Caption position and alignment.",
+      "locator": {
+        "section_id": "caption-position",
+        "text_sha256": "c8869495728cfe56298ef5bbe996b8095a9cab3b3ee0970df4ba9aef52272017"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.caption-position-clause-bcc7c9a39177",
+        "css21-tables.caption-position-clause-cca2516ebb1d",
+        "css21-tables.caption-position-clause-ae459ffdd322"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.caption-position-clause-bcc7c9a39177",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "caption-position"
+      ],
+      "behaviour": "Caption position and alignment — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "caption-position",
+        "clause_index": 2,
+        "clause_sha256": "bcc7c9a391770d07be8b087ca31c6837e0d3b16b79d775d2716409dd7c3994fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.caption-position-clause-cca2516ebb1d",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "caption-position"
+      ],
+      "behaviour": "Caption position and alignment — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "caption-position",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.caption-position-clause-ae459ffdd322",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "caption-position"
+      ],
+      "behaviour": "Caption position and alignment — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "caption-position",
+        "clause_index": 15,
+        "clause_sha256": "ae459ffdd322317585a6b54406de5f68b011a7fd285df790563a294852aa6620"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.table-layout",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "table-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Visual layout of table contents.",
+      "locator": {
+        "section_id": "table-layout",
+        "text_sha256": "d7df5ecb2428fcc8e5b2f195aeaad9344d7ff9d73f9af3f8fa23a53b68e23414"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.table-layout-clause-11e6e5d3f2fc",
+        "css21-tables.table-layout-clause-56cc5bd03bac"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.table-layout-clause-11e6e5d3f2fc",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "table-layout"
+      ],
+      "behaviour": "Visual layout of table contents — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-layout",
+        "clause_index": 6,
+        "clause_sha256": "11e6e5d3f2fc01bd105ace76ebd3aca6e4c3ecc6043c5de44e14e384a06b5432"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.table-layout-clause-56cc5bd03bac",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "table-layout"
+      ],
+      "behaviour": "Visual layout of table contents — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "table-layout",
+        "clause_index": 7,
+        "clause_sha256": "56cc5bd03bacb153049033aae9519aa9bf95c9547832e7e62f7d6baaa6184352"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.table-layers",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "table-layers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Table layers and transparency.",
+      "locator": {
+        "section_id": "table-layers",
+        "text_sha256": "3e7e3fd40536d12820d802705cf0f4f7d203e0574e68482e7c1fca91ad2f5e3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.width-layout",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "width-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Table width algorithms: the 'table-layout' property.",
+      "locator": {
+        "section_id": "width-layout",
+        "text_sha256": "8aab9983f24d396cbb3108e687cc0315f0d51bc1dd179afdcec7a9f061099a29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.width-layout-clause-9fde2b09e25d",
+        "css21-tables.width-layout-clause-603130df9000",
+        "css21-tables.width-layout-clause-8a6de76c36a0",
+        "css21-tables.width-layout-clause-cca2516ebb1d",
+        "css21-tables.width-layout-clause-2d50d12c9f53",
+        "css21-tables.width-layout-clause-bccc5536aed4",
+        "css21-tables.width-layout-clause-49fdf3248918",
+        "css21-tables.width-layout-clause-7e284559bd11",
+        "css21-tables.width-layout-clause-2147a4df6790"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.width-layout-clause-9fde2b09e25d",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "width-layout"
+      ],
+      "behaviour": "Table width algorithms: the 'table-layout' property — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "width-layout",
+        "clause_index": 0,
+        "clause_sha256": "9fde2b09e25d50f294648dbb601149f5f1bdf06c4cb51d3b68e91d94b1c07b49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.width-layout-clause-603130df9000",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "width-layout"
+      ],
+      "behaviour": "Table width algorithms: the 'table-layout' property — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "width-layout",
+        "clause_index": 1,
+        "clause_sha256": "603130df90009a3503adeaffc8e5745217809e8e8bf2ed80c04f5fdf3ccd3449"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.width-layout-clause-8a6de76c36a0",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "width-layout"
+      ],
+      "behaviour": "Table width algorithms: the 'table-layout' property — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "width-layout",
+        "clause_index": 5,
+        "clause_sha256": "8a6de76c36a06801b6851de79f59118a985a8abddb1c1ed6c7fb89281dad2310"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.width-layout-clause-cca2516ebb1d",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "width-layout"
+      ],
+      "behaviour": "Table width algorithms: the 'table-layout' property — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "width-layout",
+        "clause_index": 16,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.width-layout-clause-2d50d12c9f53",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "width-layout"
+      ],
+      "behaviour": "Table width algorithms: the 'table-layout' property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "width-layout",
+        "clause_index": 17,
+        "clause_sha256": "2d50d12c9f536502367c7629e8e39541e2c35fb0194082522ad500b92bbaf8b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.width-layout-clause-bccc5536aed4",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "width-layout"
+      ],
+      "behaviour": "Table width algorithms: the 'table-layout' property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "width-layout",
+        "clause_index": 18,
+        "clause_sha256": "bccc5536aed4c253c83f02eb969bccfec53e5f29a5664bdc9c17b524fcfa8023"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.width-layout-clause-49fdf3248918",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "width-layout"
+      ],
+      "behaviour": "Table width algorithms: the 'table-layout' property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "width-layout",
+        "clause_index": 20,
+        "clause_sha256": "49fdf3248918c86e39fa963f93c07f9438ed20ff380f38e5514c2cbbde55e199"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.width-layout-clause-7e284559bd11",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "width-layout"
+      ],
+      "behaviour": "Table width algorithms: the 'table-layout' property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "width-layout",
+        "clause_index": 23,
+        "clause_sha256": "7e284559bd116b1de59338da6b7875d4658b96f88290dbe794392dabb4ee03ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.width-layout-clause-2147a4df6790",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "width-layout"
+      ],
+      "behaviour": "Table width algorithms: the 'table-layout' property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "width-layout",
+        "clause_index": 24,
+        "clause_sha256": "2147a4df6790e1fe921ce035c94511dcbbe6deb0222aa1e1b82e60758f8332d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.fixed-table-layout",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "fixed-table-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fixed table layout.",
+      "locator": {
+        "section_id": "fixed-table-layout",
+        "text_sha256": "d391d9cb32cc663f08df2c3a7425b9adbf665837112b490b56785858e5652526"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.fixed-table-layout-clause-8c50832dafe4",
+        "css21-tables.fixed-table-layout-clause-5499a18e34cc",
+        "css21-tables.fixed-table-layout-clause-e0513f510a7b",
+        "css21-tables.fixed-table-layout-clause-ed48501499f6",
+        "css21-tables.fixed-table-layout-clause-017e07a97c16"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.fixed-table-layout-clause-8c50832dafe4",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "fixed-table-layout"
+      ],
+      "behaviour": "Fixed table layout — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "fixed-table-layout",
+        "clause_index": 0,
+        "clause_sha256": "8c50832dafe48048ddad2000a3db10678a4e7d9ff5b46b0ecf415ba0d9c4ec14"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.fixed-table-layout-clause-5499a18e34cc",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "fixed-table-layout"
+      ],
+      "behaviour": "Fixed table layout — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "fixed-table-layout",
+        "clause_index": 1,
+        "clause_sha256": "5499a18e34cc60d0248fc9c38ad5ec4f70ff520d3a3587a6bbba2482aaf0177a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.fixed-table-layout-clause-e0513f510a7b",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "fixed-table-layout"
+      ],
+      "behaviour": "Fixed table layout — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "fixed-table-layout",
+        "clause_index": 5,
+        "clause_sha256": "e0513f510a7b53742807615c9e382d8b9e2908fded16fd69f571c7d2e99226b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.fixed-table-layout-clause-ed48501499f6",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "fixed-table-layout"
+      ],
+      "behaviour": "Fixed table layout — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "fixed-table-layout",
+        "clause_index": 9,
+        "clause_sha256": "ed48501499f672f7f8a817103519a0cfb556349f24766fb732931289673fdaeb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.fixed-table-layout-clause-017e07a97c16",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "fixed-table-layout"
+      ],
+      "behaviour": "Fixed table layout — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "fixed-table-layout",
+        "clause_index": 10,
+        "clause_sha256": "017e07a97c16ce83549cc7942d2dc81e6232f6e40c78ff077a8ad313f2b5e568"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.auto-table-layout",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "auto-table-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Automatic table layout.",
+      "locator": {
+        "section_id": "auto-table-layout",
+        "text_sha256": "d4f37fe8746f2ba87dcfc87573abce5c7a2b436504b661eae2e7071f8d32bf53"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.auto-table-layout-clause-5c571a93b6b1",
+        "css21-tables.auto-table-layout-clause-fe7e02f3dc2c",
+        "css21-tables.auto-table-layout-clause-63c4dc8064d3",
+        "css21-tables.auto-table-layout-clause-8d85a0ad82c5",
+        "css21-tables.auto-table-layout-clause-4a482b0bfcb1",
+        "css21-tables.auto-table-layout-clause-0c7781d7e629",
+        "css21-tables.auto-table-layout-clause-d904be51a23d",
+        "css21-tables.auto-table-layout-clause-d37d55f92fbe"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.auto-table-layout-clause-5c571a93b6b1",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "auto-table-layout"
+      ],
+      "behaviour": "Automatic table layout — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "auto-table-layout",
+        "clause_index": 0,
+        "clause_sha256": "5c571a93b6b1cd5f1df123ed2777cbd68a0d206c74e29f31c0dde3de23f69c4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.auto-table-layout-clause-fe7e02f3dc2c",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "auto-table-layout"
+      ],
+      "behaviour": "Automatic table layout — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "auto-table-layout",
+        "clause_index": 1,
+        "clause_sha256": "fe7e02f3dc2cf90ee40333ecdaca50e62a4df70b0cd553ce8b666dec9bca854c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.auto-table-layout-clause-63c4dc8064d3",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "auto-table-layout"
+      ],
+      "behaviour": "Automatic table layout — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "auto-table-layout",
+        "clause_index": 4,
+        "clause_sha256": "63c4dc8064d3a2cf2ad7edfa9c26d8d4d919096d85da870ce6edbf99fa87e1c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.auto-table-layout-clause-8d85a0ad82c5",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "auto-table-layout"
+      ],
+      "behaviour": "Automatic table layout — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "auto-table-layout",
+        "clause_index": 9,
+        "clause_sha256": "8d85a0ad82c5403613e267f1572256ae196c4b75538163ef474bb0e6f2f5926e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.auto-table-layout-clause-4a482b0bfcb1",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "auto-table-layout"
+      ],
+      "behaviour": "Automatic table layout — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "auto-table-layout",
+        "clause_index": 18,
+        "clause_sha256": "4a482b0bfcb17aafcbb90186b68e219bc5f9d3ef51584d74d02620e12d75bf3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.auto-table-layout-clause-0c7781d7e629",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "auto-table-layout"
+      ],
+      "behaviour": "Automatic table layout — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "auto-table-layout",
+        "clause_index": 19,
+        "clause_sha256": "0c7781d7e629e3de75177ac69f494c1d9b786ee46ca0e4bf64ab294b399829d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.auto-table-layout-clause-d904be51a23d",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "auto-table-layout"
+      ],
+      "behaviour": "Automatic table layout — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "auto-table-layout",
+        "clause_index": 20,
+        "clause_sha256": "d904be51a23dfbf8b3679f3134be6ff858908f0f68981371cff543cbdc80392c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.auto-table-layout-clause-d37d55f92fbe",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "auto-table-layout"
+      ],
+      "behaviour": "Automatic table layout — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "auto-table-layout",
+        "clause_index": 21,
+        "clause_sha256": "d37d55f92fbed98b3a8369b1fff5d3e884f9b35c1047e2c56415d2d54b62b120"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.height-layout",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "height-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Table height algorithms.",
+      "locator": {
+        "section_id": "height-layout",
+        "text_sha256": "942a943f6fd17287f571c89578df1bb9c1e5fa5a5067ac9d737fff7aba2ad7dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.height-layout-clause-ddddec439243",
+        "css21-tables.height-layout-clause-87935a5214e4",
+        "css21-tables.height-layout-clause-0d1a146a07d6",
+        "css21-tables.height-layout-clause-df8e18887d8d",
+        "css21-tables.height-layout-clause-1bcfcdf64858"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.height-layout-clause-ddddec439243",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "height-layout"
+      ],
+      "behaviour": "Table height algorithms — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "height-layout",
+        "clause_index": 2,
+        "clause_sha256": "ddddec439243c5a92c07153a16e33f480e3439f5b6a1274bce6efc217e958a9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.height-layout-clause-87935a5214e4",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "height-layout"
+      ],
+      "behaviour": "Table height algorithms — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "height-layout",
+        "clause_index": 3,
+        "clause_sha256": "87935a5214e40f5ffb9d839657d7af94d6d3f3bf5104c4651f768bb03720f32e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.height-layout-clause-0d1a146a07d6",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "height-layout"
+      ],
+      "behaviour": "Table height algorithms — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "height-layout",
+        "clause_index": 4,
+        "clause_sha256": "0d1a146a07d648a03a6de5d6877c44bc7bcfabfab6ac4d8af1ed9a39f44d01e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.height-layout-clause-df8e18887d8d",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "height-layout"
+      ],
+      "behaviour": "Table height algorithms — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "height-layout",
+        "clause_index": 15,
+        "clause_sha256": "df8e18887d8d1c700c261e9ca9fa101925ceeadbe0b552d9370f0542b58cea01"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.height-layout-clause-1bcfcdf64858",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "height-layout"
+      ],
+      "behaviour": "Table height algorithms — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "height-layout",
+        "clause_index": 29,
+        "clause_sha256": "1bcfcdf64858b1f1346f9841bb8699ad50f73f871e29610a24f917920837e513"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.column-alignment",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "column-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Horizontal alignment in a column.",
+      "locator": {
+        "section_id": "column-alignment",
+        "text_sha256": "53563a030c9ee7fb6f55a91a008665e3fbf6e385fd757e25722050253f4efa04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.dynamic-effects",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "dynamic-effects"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dynamic row and column effects.",
+      "locator": {
+        "section_id": "dynamic-effects",
+        "text_sha256": "26361d655f33382851f5d214e326102b1fd31a9bae2ad5ba8b8719f490ef1138"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.borders",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "borders"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Borders.",
+      "locator": {
+        "section_id": "borders",
+        "text_sha256": "4c9cc67373bb6b7de62aadfd021decec4a948f63d764b1f5907b238d3060e41b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.borders-clause-2570ffb91bac",
+        "css21-tables.borders-clause-cca2516ebb1d",
+        "css21-tables.borders-clause-605545fca48c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.borders-clause-2570ffb91bac",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "borders"
+      ],
+      "behaviour": "Borders — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "borders",
+        "clause_index": 3,
+        "clause_sha256": "2570ffb91bac82452672896b90fbab14d340faffd45dcb993e0eb2cfc24889fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.borders-clause-cca2516ebb1d",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "borders"
+      ],
+      "behaviour": "Borders — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "borders",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.borders-clause-605545fca48c",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "borders"
+      ],
+      "behaviour": "Borders — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "borders",
+        "clause_index": 17,
+        "clause_sha256": "605545fca48ca13608b1e608b7e79160ca11809f4eb5d4730e158a58efe8b3eb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.separated-borders",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "separated-borders"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The separated borders model.",
+      "locator": {
+        "section_id": "separated-borders",
+        "text_sha256": "2f2ec744797737da0c2c789942d80d835390a0c20b362d8e365073b7dffd834c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.separated-borders-clause-cd45c0829af6",
+        "css21-tables.separated-borders-clause-cca2516ebb1d",
+        "css21-tables.separated-borders-clause-c077a18e4110",
+        "css21-tables.separated-borders-clause-677762ba9d3a",
+        "css21-tables.separated-borders-clause-a1d31bff5c24"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.separated-borders-clause-cd45c0829af6",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "separated-borders"
+      ],
+      "behaviour": "The separated borders model — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "separated-borders",
+        "clause_index": 2,
+        "clause_sha256": "cd45c0829af6256ada8c717fce4513b629a9dc41939646e0d6893e7ee344084c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.separated-borders-clause-cca2516ebb1d",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "separated-borders"
+      ],
+      "behaviour": "The separated borders model — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "separated-borders",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.separated-borders-clause-c077a18e4110",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "separated-borders"
+      ],
+      "behaviour": "The separated borders model — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "separated-borders",
+        "clause_index": 20,
+        "clause_sha256": "c077a18e4110cec737b1bc09fc09e7dcef106a367c030419e4407d5bb9dcc5c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.separated-borders-clause-677762ba9d3a",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "separated-borders"
+      ],
+      "behaviour": "The separated borders model — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "separated-borders",
+        "clause_index": 26,
+        "clause_sha256": "677762ba9d3a5b6713fa8c249a234fb79b0407f037c5c4d4bb3d19b3441602a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.separated-borders-clause-a1d31bff5c24",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "separated-borders"
+      ],
+      "behaviour": "The separated borders model — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "separated-borders",
+        "clause_index": 27,
+        "clause_sha256": "a1d31bff5c24ff9b656c4226217bef98ff0c72fed7bf8315d3160c4d43a22a1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.empty-cells",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "empty-cells"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Borders and Backgrounds around empty cells: the 'empty-cells' property.",
+      "locator": {
+        "section_id": "empty-cells",
+        "text_sha256": "257d414fd7259bd1858a1cc4da6529acb66cf7065c1190ba3b9d2ca60c35aec7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.empty-cells-clause-b551928efad9",
+        "css21-tables.empty-cells-clause-cca2516ebb1d",
+        "css21-tables.empty-cells-clause-b870c2ff25ad"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.empty-cells-clause-b551928efad9",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "empty-cells"
+      ],
+      "behaviour": "Borders and Backgrounds around empty cells: the 'empty-cells' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "empty-cells",
+        "clause_index": 2,
+        "clause_sha256": "b551928efad944b83dc746ac213faa3535918d4e2127e591e7f330b1c0369e03"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.empty-cells-clause-cca2516ebb1d",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "empty-cells"
+      ],
+      "behaviour": "Borders and Backgrounds around empty cells: the 'empty-cells' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "empty-cells",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.empty-cells-clause-b870c2ff25ad",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "empty-cells"
+      ],
+      "behaviour": "Borders and Backgrounds around empty cells: the 'empty-cells' property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "empty-cells",
+        "clause_index": 23,
+        "clause_sha256": "b870c2ff25adcdb52712e77b34813046472d683daaa9269c0287a67538b44c64"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.collapsing-borders",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "collapsing-borders"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The collapsing border model.",
+      "locator": {
+        "section_id": "collapsing-borders",
+        "text_sha256": "373ee97ec6588d3067dde0a7d1eb917035f00cd96b4167e0aebc3b901af255a0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-tables.collapsing-borders-clause-530de86df78f",
+        "css21-tables.collapsing-borders-clause-5ffea4d91125",
+        "css21-tables.collapsing-borders-clause-42cd3ed29f31"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.collapsing-borders-clause-530de86df78f",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "collapsing-borders"
+      ],
+      "behaviour": "The collapsing border model — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "collapsing-borders",
+        "clause_index": 1,
+        "clause_sha256": "530de86df78ffe8b184ee2e3b31842d7d0f9e58117b9c020585cdd6401a84477"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.collapsing-borders-clause-5ffea4d91125",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "collapsing-borders"
+      ],
+      "behaviour": "The collapsing border model — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "collapsing-borders",
+        "clause_index": 5,
+        "clause_sha256": "5ffea4d9112542377aacb398e94738d749c1325090541557e2ce067ab2526847"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.collapsing-borders-clause-42cd3ed29f31",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "collapsing-borders"
+      ],
+      "behaviour": "The collapsing border model — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "collapsing-borders",
+        "clause_index": 6,
+        "clause_sha256": "42cd3ed29f31ca44ae13b8443da34919fad8ba7804c15aa5ffcf4632b5c0b3c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-tables.border-conflict-resolution",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "border-conflict-resolution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Border conflict resolution.",
+      "locator": {
+        "section_id": "border-conflict-resolution",
+        "text_sha256": "8c1c0250c6aafb60c275ec56da51f719ebff86b443d8b78ae0bde6d693dbdcef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-tables.table-border-styles",
+      "family": "css21-tables",
+      "source_id": "css21-tables",
+      "sections": [
+        "table-border-styles"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Border styles.",
+      "locator": {
+        "section_id": "table-border-styles",
+        "text_sha256": "5c7d14377d4d140374cda05781fdfa260633307076e9700eb3da6f59e8c822a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

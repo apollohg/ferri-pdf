@@ -1,0 +1,685 @@
+{
+  "schema_version": 1,
+  "source_id": "mimesniff",
+  "sections": [
+    {
+      "id": "title",
+      "title": "MIME Sniffing (Commit ba4b3c385b9765ddfe4a994e2bb89e0ab96068e2)",
+      "level": 1,
+      "text_sha256": "0e9da06201129072f20eaf10f8c5341a63c735db3c31870130f14d86e49ef71a",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "24687d47aec5466b61ebd7ef2b47cbc54bae9bc8b2c60f48a453160b48861d31",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.abstract"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "b4d73be3db187400412e3b0afbe084172391adef750e1556ace95a2e6e4a63b8",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "e884e0ba1260414d36679d815fce515e8840fe977a880ee6997f8ebc52335175",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.introduction",
+          "mimesniff.introduction-clause-af7252ea23ce"
+        ]
+      }
+    },
+    {
+      "id": "conformance-requirements",
+      "title": "2. Conformance requirements",
+      "level": 2,
+      "text_sha256": "3d1810e2b769cb2e7e984c38dc358e0f50d88d8392fe002dd1736555a31e964b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.conformance-requirements",
+          "mimesniff.conformance-requirements-clause-50a8763235c3",
+          "mimesniff.conformance-requirements-clause-b8046db42d97"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "3. Terminology",
+      "level": 2,
+      "text_sha256": "cdb35123d8b65c29bf3aa6135de3be987a5a8796454fc0a4d71c137002b8a3bc",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.terminology"
+        ]
+      }
+    },
+    {
+      "id": "understanding-mime-types",
+      "title": "4. MIME types",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.understanding-mime-types"
+        ]
+      }
+    },
+    {
+      "id": "mime-type-representation",
+      "title": "4.1. MIME type representation",
+      "level": 3,
+      "text_sha256": "bc8094bd30760905529685e48a96b9076506aeb138565fd0fac5f39e4968acdb",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.mime-type-representation"
+        ]
+      }
+    },
+    {
+      "id": "mime-type-miscellaneous",
+      "title": "4.2. MIME type miscellaneous",
+      "level": 3,
+      "text_sha256": "0cfae3c87bd5f7d0a1b9393b95a170cca807e50e22284b1fb1c5a7ab1f4ae2c8",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.mime-type-miscellaneous",
+          "mimesniff.mime-type-miscellaneous-clause-768f80f7282e"
+        ]
+      }
+    },
+    {
+      "id": "mime-type-writing",
+      "title": "4.3. MIME type writing",
+      "level": 3,
+      "text_sha256": "f120cac9636ba92c96e2c28d0b559f065a0d9f95c13332606fa842cac05f695b",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.mime-type-writing"
+        ]
+      }
+    },
+    {
+      "id": "parsing-a-mime-type",
+      "title": "4.4. Parsing a MIME type",
+      "level": 3,
+      "text_sha256": "0fef6e4a09d830836f1ecc752df376171d2e8c89a9a259b230e4e8f3a22f75e0",
+      "clause_count": 71,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.parsing-a-mime-type"
+        ]
+      }
+    },
+    {
+      "id": "serializing-a-mime-type",
+      "title": "4.5. Serializing a MIME type",
+      "level": 3,
+      "text_sha256": "d416a74c0f1e74d264d87040adff98dd2195d6485b6cb9006557a20e07382cfd",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.serializing-a-mime-type"
+        ]
+      }
+    },
+    {
+      "id": "mime-type-groups",
+      "title": "4.6. MIME type groups",
+      "level": 3,
+      "text_sha256": "3be977861f8ff4a2f88f90a0f3696126252c7a1475765a389e14fd8922c9729c",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.mime-type-groups"
+        ]
+      }
+    },
+    {
+      "id": "handling-a-resource",
+      "title": "5. Handling a resource",
+      "level": 2,
+      "text_sha256": "698043bb81ade8aa24d80686caf8c0115d46191b183ce102ec4d5fbb4a5c6fc9",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.handling-a-resource",
+          "mimesniff.handling-a-resource-clause-b7e943cffaf5",
+          "mimesniff.handling-a-resource-clause-1ad3fb4a3378",
+          "mimesniff.handling-a-resource-clause-d1736066d423",
+          "mimesniff.handling-a-resource-clause-14b7657128a4",
+          "mimesniff.handling-a-resource-clause-050b12e09228"
+        ]
+      }
+    },
+    {
+      "id": "interpreting-the-resource-metadata",
+      "title": "5.1. Interpreting the resource metadata",
+      "level": 3,
+      "text_sha256": "8f7ce8b9b26d720e26f9243ea33e71d04d0ea5ac2f57ca2c83fa6bfed72bd374",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.interpreting-the-resource-metadata",
+          "mimesniff.interpreting-the-resource-metadata-clause-5b5e38d6bc43",
+          "mimesniff.interpreting-the-resource-metadata-clause-332830f21f17",
+          "mimesniff.interpreting-the-resource-metadata-clause-c673292b97cc",
+          "mimesniff.interpreting-the-resource-metadata-clause-227cbef08baa",
+          "mimesniff.interpreting-the-resource-metadata-clause-c0f5c953cec0",
+          "mimesniff.interpreting-the-resource-metadata-clause-b3af3152b06f"
+        ]
+      }
+    },
+    {
+      "id": "reading-the-resource-header",
+      "title": "5.2. Reading the resource header",
+      "level": 3,
+      "text_sha256": "a9dda87e4ab2567b1507eaacc3968c9f15d9e605f6b478ea99576d4e3f4c9ce8",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.reading-the-resource-header",
+          "mimesniff.reading-the-resource-header-clause-ec27783420b9",
+          "mimesniff.reading-the-resource-header-clause-67024bfa37b1"
+        ]
+      }
+    },
+    {
+      "id": "matching-a-mime-type-pattern",
+      "title": "6. Matching a MIME type pattern",
+      "level": 2,
+      "text_sha256": "83ecb055ec82f37e8f320f352e8b889b5113bc85b06bd4c5be657c26b546c5a6",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.matching-a-mime-type-pattern",
+          "mimesniff.matching-a-mime-type-pattern-clause-2e70654e9ba9",
+          "mimesniff.matching-a-mime-type-pattern-clause-967aa6be2762",
+          "mimesniff.matching-a-mime-type-pattern-clause-9451b59065e0",
+          "mimesniff.matching-a-mime-type-pattern-clause-6d85d845c179"
+        ]
+      }
+    },
+    {
+      "id": "matching-an-image-type-pattern",
+      "title": "6.1. Matching an image type pattern",
+      "level": 3,
+      "text_sha256": "84c1e1286f42ad25351407032e7b11cef365ea3d80967690f34eb429f19c1bc9",
+      "clause_count": 54,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.matching-an-image-type-pattern",
+          "mimesniff.matching-an-image-type-pattern-clause-bd803a1eed97",
+          "mimesniff.matching-an-image-type-pattern-clause-c81f77499f5b",
+          "mimesniff.matching-an-image-type-pattern-clause-271cbfe00955",
+          "mimesniff.matching-an-image-type-pattern-clause-5a60e7ab64b5"
+        ]
+      }
+    },
+    {
+      "id": "matching-an-audio-or-video-type-pattern",
+      "title": "6.2. Matching an audio or video type pattern",
+      "level": 3,
+      "text_sha256": "3aa0719a8d0edc45c28b684c620f1ddd337c7692f4b3403e2b40416024e7a3ab",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.matching-an-audio-or-video-type-pattern",
+          "mimesniff.matching-an-audio-or-video-type-pattern-clause-ec7dc3d2b491",
+          "mimesniff.matching-an-audio-or-video-type-pattern-clause-c81f77499f5b",
+          "mimesniff.matching-an-audio-or-video-type-pattern-clause-271cbfe00955",
+          "mimesniff.matching-an-audio-or-video-type-pattern-clause-5a60e7ab64b5"
+        ]
+      }
+    },
+    {
+      "id": "signature-for-mp4",
+      "title": "6.2.1. Signature for MP4",
+      "level": 4,
+      "text_sha256": "12d0d574fe98fb0d44293bf12975e0035cfd982ea01de0b275ca3ad7b738b756",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.signature-for-mp4",
+          "mimesniff.signature-for-mp4-clause-b3fa7880a7bd"
+        ]
+      }
+    },
+    {
+      "id": "signature-for-webm",
+      "title": "6.2.2. Signature for WebM",
+      "level": 4,
+      "text_sha256": "947e6bb962466f4edb9b18f355cd61a523bf338091dd77e92aec62874b429531",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.signature-for-webm",
+          "mimesniff.signature-for-webm-clause-9bb0a0b1027e",
+          "mimesniff.signature-for-webm-clause-a6052bcb6d7a"
+        ]
+      }
+    },
+    {
+      "id": "signature-for-mp3-without-id3",
+      "title": "6.2.3. Signature for MP3 without ID3",
+      "level": 4,
+      "text_sha256": "bf23015895d1d4af24434b3a494941e3c28616f3373d69252cf5d9f778f1c148",
+      "clause_count": 110,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.signature-for-mp3-without-id3",
+          "mimesniff.signature-for-mp3-without-id3-clause-b6e39149dab8"
+        ]
+      }
+    },
+    {
+      "id": "matching-a-font-type-pattern",
+      "title": "6.3. Matching a font type pattern",
+      "level": 3,
+      "text_sha256": "44af18ebf074119dd615d78375f0d3ac66159983310e4a92414bb4bb89aa91b9",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.matching-a-font-type-pattern",
+          "mimesniff.matching-a-font-type-pattern-clause-b10e338ac443",
+          "mimesniff.matching-a-font-type-pattern-clause-c81f77499f5b",
+          "mimesniff.matching-a-font-type-pattern-clause-271cbfe00955",
+          "mimesniff.matching-a-font-type-pattern-clause-5a60e7ab64b5"
+        ]
+      }
+    },
+    {
+      "id": "matching-an-archive-type-pattern",
+      "title": "6.4. Matching an archive type pattern",
+      "level": 3,
+      "text_sha256": "a13e844187050ff345cc78bc6521f8e188039e8506a903777258fa0aeb3b0e63",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.matching-an-archive-type-pattern",
+          "mimesniff.matching-an-archive-type-pattern-clause-5953ed2af86f",
+          "mimesniff.matching-an-archive-type-pattern-clause-c81f77499f5b",
+          "mimesniff.matching-an-archive-type-pattern-clause-271cbfe00955",
+          "mimesniff.matching-an-archive-type-pattern-clause-5a60e7ab64b5"
+        ]
+      }
+    },
+    {
+      "id": "determining-the-computed-mime-type-of-a-resource",
+      "title": "7. Determining the computed MIME type of a resource",
+      "level": 2,
+      "text_sha256": "018ccfc7b3b1e9dd0708232caa3ece6972e86bf4d0ab487302cf34eb1c10515d",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.determining-the-computed-mime-type-of-a-resource",
+          "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-c2c0cd475e34",
+          "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-3d00978ad352",
+          "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-dba57c1a360d",
+          "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-fbb003ea2321",
+          "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-0a1bcde85afd",
+          "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-1e4eafa280c1",
+          "mimesniff.determining-the-computed-mime-type-of-a-resource-clause-fb5540c888e3"
+        ]
+      }
+    },
+    {
+      "id": "identifying-a-resource-with-an-unknown-mime-type",
+      "title": "7.1. Identifying a resource with an unknown MIME type",
+      "level": 3,
+      "text_sha256": "e5b25b211c5e332c76cf4c76c630a16690b646e825d7e06cb394f17176d0e151",
+      "clause_count": 159,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-4655895c2e5a",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-62da10b38d4b",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-47ca08e2d453",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-971a1a165f31",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-5a60e7ab64b5",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-c1a08a10bdc7",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-c81f77499f5b",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-a24cf9429e36",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-37949429375d",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-f6a1ead7ff57",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-993b4246804f",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-ceb3849037af",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-7f563ff97bc1",
+          "mimesniff.identifying-a-resource-with-an-unknown-mime-type-clause-b99f0cfadeaf"
+        ]
+      }
+    },
+    {
+      "id": "sniffing-a-mislabeled-binary-resource",
+      "title": "7.2. Sniffing a mislabeled binary resource",
+      "level": 3,
+      "text_sha256": "b3dba96c3f18cffe341f6e5f217ab14a2d893ed96ab621559cbeb27354eb4816",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.sniffing-a-mislabeled-binary-resource",
+          "mimesniff.sniffing-a-mislabeled-binary-resource-clause-11d767e9c989",
+          "mimesniff.sniffing-a-mislabeled-binary-resource-clause-097973a0de90",
+          "mimesniff.sniffing-a-mislabeled-binary-resource-clause-a4a0363fa4b3",
+          "mimesniff.sniffing-a-mislabeled-binary-resource-clause-d75d0e68b66a",
+          "mimesniff.sniffing-a-mislabeled-binary-resource-clause-ad0f1a19d4a0"
+        ]
+      }
+    },
+    {
+      "id": "context-specific-sniffing",
+      "title": "8. Context-specific sniffing",
+      "level": 2,
+      "text_sha256": "5829073c3fb985ac54567ef17e0c71f731ab999f3762a5f975b03bf0371854db",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.context-specific-sniffing",
+          "mimesniff.context-specific-sniffing-clause-d13ec8917945",
+          "mimesniff.context-specific-sniffing-clause-359b46c90790"
+        ]
+      }
+    },
+    {
+      "id": "sniffing-in-a-browsing-context",
+      "title": "8.1. Sniffing in a browsing context",
+      "level": 3,
+      "text_sha256": "b1cb1d6472d6342504582a34d216101a4b0e8bf21469563077e3ac50450717ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.sniffing-in-a-browsing-context",
+          "mimesniff.sniffing-in-a-browsing-context-clause-b1cb1d6472d6"
+        ]
+      }
+    },
+    {
+      "id": "sniffing-in-an-image-context",
+      "title": "8.2. Sniffing in an image context",
+      "level": 3,
+      "text_sha256": "3d4b54ff87a4f8ad9f76d63695b0283b499cc29ae7816239a8daf53a2cc45443",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.sniffing-in-an-image-context",
+          "mimesniff.sniffing-in-an-image-context-clause-210caa63dc6b",
+          "mimesniff.sniffing-in-an-image-context-clause-377ed23db648",
+          "mimesniff.sniffing-in-an-image-context-clause-3048107d9796",
+          "mimesniff.sniffing-in-an-image-context-clause-b0150e84cf97",
+          "mimesniff.sniffing-in-an-image-context-clause-fb5540c888e3"
+        ]
+      }
+    },
+    {
+      "id": "sniffing-in-an-audio-or-video-context",
+      "title": "8.3. Sniffing in an audio or video context",
+      "level": 3,
+      "text_sha256": "5398a3b822680eb797ab43d3a136e89eb7881112a88dcdcaeffb362593afb6d9",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.sniffing-in-an-audio-or-video-context",
+          "mimesniff.sniffing-in-an-audio-or-video-context-clause-b602560d8799",
+          "mimesniff.sniffing-in-an-audio-or-video-context-clause-377ed23db648",
+          "mimesniff.sniffing-in-an-audio-or-video-context-clause-1422d2e2e6e3",
+          "mimesniff.sniffing-in-an-audio-or-video-context-clause-a918306969fe",
+          "mimesniff.sniffing-in-an-audio-or-video-context-clause-fb5540c888e3"
+        ]
+      }
+    },
+    {
+      "id": "sniffing-in-a-plugin-context",
+      "title": "8.4. Sniffing in a plugin context",
+      "level": 3,
+      "text_sha256": "4824b6bfe5621abe670d4e07dcf6638e66345f36527a4d6b61b1f90271a48304",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.sniffing-in-a-plugin-context",
+          "mimesniff.sniffing-in-a-plugin-context-clause-ae459ac1d551",
+          "mimesniff.sniffing-in-a-plugin-context-clause-25beb3262edb",
+          "mimesniff.sniffing-in-a-plugin-context-clause-fb5540c888e3"
+        ]
+      }
+    },
+    {
+      "id": "sniffing-in-a-style-context",
+      "title": "8.5. Sniffing in a style context",
+      "level": 3,
+      "text_sha256": "813a127a4725d3082d000757799d7d80cf3a0af5261112585bfb8b1dabdd8215",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.sniffing-in-a-style-context",
+          "mimesniff.sniffing-in-a-style-context-clause-c728157c5d86",
+          "mimesniff.sniffing-in-a-style-context-clause-fb5540c888e3"
+        ]
+      }
+    },
+    {
+      "id": "sniffing-in-a-script-context",
+      "title": "8.6. Sniffing in a script context",
+      "level": 3,
+      "text_sha256": "40a4b6b61fc001dc4142cbd1c9443afed2618fafcd76344bdbec88478ed27afe",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.sniffing-in-a-script-context",
+          "mimesniff.sniffing-in-a-script-context-clause-82790875db61",
+          "mimesniff.sniffing-in-a-script-context-clause-fb5540c888e3"
+        ]
+      }
+    },
+    {
+      "id": "sniffing-in-a-font-context",
+      "title": "8.7. Sniffing in a font context",
+      "level": 3,
+      "text_sha256": "45842203c4f674f9518d016f0588916b556835fe290fe6018cf13eb4edb8dd00",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.sniffing-in-a-font-context",
+          "mimesniff.sniffing-in-a-font-context-clause-049db749849e",
+          "mimesniff.sniffing-in-a-font-context-clause-377ed23db648",
+          "mimesniff.sniffing-in-a-font-context-clause-6c088d6f568f",
+          "mimesniff.sniffing-in-a-font-context-clause-9734093781ef",
+          "mimesniff.sniffing-in-a-font-context-clause-fb5540c888e3"
+        ]
+      }
+    },
+    {
+      "id": "sniffing-in-a-text-track-context",
+      "title": "8.8. Sniffing in a text track context",
+      "level": 3,
+      "text_sha256": "9e70818bd49933457b2beabdab77e3d18a7d414ce9a3525c31046656bca887be",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.sniffing-in-a-text-track-context",
+          "mimesniff.sniffing-in-a-text-track-context-clause-9e70818bd499"
+        ]
+      }
+    },
+    {
+      "id": "sniffing-in-a-cache-manifest-context",
+      "title": "8.9. Sniffing in a cache manifest context",
+      "level": 3,
+      "text_sha256": "e557f9415ebb95baf5f38ec648dd3e83683043b0aa5b8adaf001554dff28ae39",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.sniffing-in-a-cache-manifest-context",
+          "mimesniff.sniffing-in-a-cache-manifest-context-clause-e557f9415ebb"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "959f52f571d897437e1ccf22a74969f3aca52d6775e2d9ba40fc7952713e84ca",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "ipr",
+      "title": "Intellectual property rights",
+      "level": 2,
+      "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.ipr"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "6b6699d2b8701de6cf5fce773bd67ec649819ba5f85b9590d8004f8e026c44d5",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "837e9ee42662146ea7f0c8e522957f74b32a86d727378d0ad343e6dd2582403e",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "527bc7045a55e27f454c1f5c5b7debe3477228c9b36f478de147e19ed364cc7d",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.import-ed9aa80cc32c"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "cdcd6d7e2beaccf5dbf0950506c86693b3919aa264e22948f6817b072a66d170",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "mimesniff.informative"
+        ]
+      }
+    }
+  ]
+}

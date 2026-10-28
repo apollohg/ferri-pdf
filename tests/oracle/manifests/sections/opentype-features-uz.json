@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-features-uz",
+  "sections": [
+    {
+      "id": "registered-features-descriptions-and-implementations-u--z",
+      "title": "Registered Features: Descriptions and Implementations (u – z)",
+      "level": 1,
+      "text_sha256": "4ad70da87e858bed578393bbd9e0e94dcc1fc7f95fc7ad9a3a4cb9dd0f8c2017",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.registered-features-descriptions-and-implementations-u-z"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "tag-unic",
+      "title": "Tag: 'unic'",
+      "level": 2,
+      "text_sha256": "423491690a06bfd26309ea7922eacf4d2dc61b8cefaea9ee636aaacb390402c0",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-unic",
+          "opentype-features-uz.tag-unic-clause-529bb023650c"
+        ]
+      }
+    },
+    {
+      "id": "tag-valt",
+      "title": "Tag: 'valt'",
+      "level": 2,
+      "text_sha256": "f4fd0931d91933d6c4d022f4893742e999a376cb7029b4ea4498d9ca92275020",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-valt",
+          "opentype-features-uz.tag-valt-clause-1870bd66cb90",
+          "opentype-features-uz.tag-valt-clause-b716b2f824e7",
+          "opentype-features-uz.tag-valt-clause-4356ef4c9a8f",
+          "opentype-features-uz.tag-valt-clause-50649ca5805d"
+        ]
+      }
+    },
+    {
+      "id": "tag-vapk",
+      "title": "Tag: 'vapk'",
+      "level": 2,
+      "text_sha256": "51b19fb1b010a017268056efc029f60e78d787e6d2ce5a88d965388dc17b9581",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-vapk",
+          "opentype-features-uz.tag-vapk-clause-3e27e432ab4e",
+          "opentype-features-uz.tag-vapk-clause-b9822ae38e9a",
+          "opentype-features-uz.tag-vapk-clause-45f882717d38"
+        ]
+      }
+    },
+    {
+      "id": "tag-vatu",
+      "title": "Tag: 'vatu'",
+      "level": 2,
+      "text_sha256": "f2b4886ae1082a1f4323d02123af93525b12aa054acc8dd3c14e05bd71616be2",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-vatu",
+          "opentype-features-uz.tag-vatu-clause-22274df35fc7",
+          "opentype-features-uz.tag-vatu-clause-c892378d6960",
+          "opentype-features-uz.tag-vatu-clause-8ddda34b34a2",
+          "opentype-features-uz.tag-vatu-clause-24e1091af689"
+        ]
+      }
+    },
+    {
+      "id": "tag-vchw",
+      "title": "Tag: 'vchw'",
+      "level": 2,
+      "text_sha256": "defec5744db6dd1abed9aeed57f554dc1940bb810489fbd2c0b744d16380495a",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-vchw",
+          "opentype-features-uz.tag-vchw-clause-cdd81d039ec1",
+          "opentype-features-uz.tag-vchw-clause-3b7f46d40fb1",
+          "opentype-features-uz.tag-vchw-clause-2d379c9fe23e"
+        ]
+      }
+    },
+    {
+      "id": "tag-vert",
+      "title": "Tag: 'vert'",
+      "level": 2,
+      "text_sha256": "5bed367e03f5939ad5cb204916b5189cd39be914956c7e029341966ae274740a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-vert",
+          "opentype-features-uz.tag-vert-clause-1d8529f3bf20",
+          "opentype-features-uz.tag-vert-clause-b716b2f824e7",
+          "opentype-features-uz.tag-vert-clause-3b89e1c276ab",
+          "opentype-features-uz.tag-vert-clause-930efbe797bf",
+          "opentype-features-uz.tag-vert-clause-571b80182ea9"
+        ]
+      }
+    },
+    {
+      "id": "tag-vhal",
+      "title": "Tag: 'vhal'",
+      "level": 2,
+      "text_sha256": "922f478fdd45b9eb7ae4211e855dfd3be7f2de1a13b8806f9a5551da0c9cfe23",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-vhal",
+          "opentype-features-uz.tag-vhal-clause-759fb8089a5d",
+          "opentype-features-uz.tag-vhal-clause-7bf7a732b9da"
+        ]
+      }
+    },
+    {
+      "id": "tag-vjmo",
+      "title": "Tag: 'vjmo'",
+      "level": 2,
+      "text_sha256": "a0953cfae4205e7f686a86591eb9de7f5b65dd2f82cf8729553832e14ea49259",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-vjmo",
+          "opentype-features-uz.tag-vjmo-clause-8a7e36523402",
+          "opentype-features-uz.tag-vjmo-clause-c892378d6960",
+          "opentype-features-uz.tag-vjmo-clause-8ddda34b34a2"
+        ]
+      }
+    },
+    {
+      "id": "tag-vkna",
+      "title": "Tag: 'vkna'",
+      "level": 2,
+      "text_sha256": "5003e053b1637f382a89a87771f2059887466e190fd33b9071c78944732e9991",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-vkna",
+          "opentype-features-uz.tag-vkna-clause-529bb023650c"
+        ]
+      }
+    },
+    {
+      "id": "tag-vkrn",
+      "title": "Tag: 'vkrn'",
+      "level": 2,
+      "text_sha256": "c7598bc437cc064fc79295cd7452e37444362c4391d6c5a104f8d109dd5155b2",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-vkrn",
+          "opentype-features-uz.tag-vkrn-clause-9267e04064b7",
+          "opentype-features-uz.tag-vkrn-clause-c37b9a9cba7f",
+          "opentype-features-uz.tag-vkrn-clause-89b0875312fb",
+          "opentype-features-uz.tag-vkrn-clause-f56a7a4ab75b",
+          "opentype-features-uz.tag-vkrn-clause-c445cccd3eee",
+          "opentype-features-uz.tag-vkrn-clause-5abeb44668d7",
+          "opentype-features-uz.tag-vkrn-clause-0346ace0495c",
+          "opentype-features-uz.tag-vkrn-clause-84028abdfbb6",
+          "opentype-features-uz.tag-vkrn-clause-328e5e91e316"
+        ]
+      }
+    },
+    {
+      "id": "tag-vpal",
+      "title": "Tag: 'vpal'",
+      "level": 2,
+      "text_sha256": "7ca9873c280efa8fab13993e8f1202463cb6a90a9d8fe29f1827b167a8cdc51d",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-vpal",
+          "opentype-features-uz.tag-vpal-clause-d6e364e68e38",
+          "opentype-features-uz.tag-vpal-clause-e8c1f9efb5c0",
+          "opentype-features-uz.tag-vpal-clause-28e13f8e262f",
+          "opentype-features-uz.tag-vpal-clause-efd4bbfd544f"
+        ]
+      }
+    },
+    {
+      "id": "tag-vrt2",
+      "title": "Tag: 'vrt2'",
+      "level": 2,
+      "text_sha256": "d0265359311e447791c2f0ba5efc5fae100a54b805ee3561a39d9accde44f313",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-vrt2",
+          "opentype-features-uz.tag-vrt2-clause-c5a45b58c17b",
+          "opentype-features-uz.tag-vrt2-clause-c02e1eed5c5d",
+          "opentype-features-uz.tag-vrt2-clause-525bcd6fc830",
+          "opentype-features-uz.tag-vrt2-clause-d3189437ab21",
+          "opentype-features-uz.tag-vrt2-clause-642f2df46f8c"
+        ]
+      }
+    },
+    {
+      "id": "tag-vrtr",
+      "title": "Tag: 'vrtr'",
+      "level": 2,
+      "text_sha256": "5708622cd4b13d05de178bd499d3192b845a918e1bf9636ea85313d313b07393",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-vrtr",
+          "opentype-features-uz.tag-vrtr-clause-2a846792d5f1",
+          "opentype-features-uz.tag-vrtr-clause-3418acb5f8b3",
+          "opentype-features-uz.tag-vrtr-clause-bf30972588b3",
+          "opentype-features-uz.tag-vrtr-clause-3b48f0a304c3",
+          "opentype-features-uz.tag-vrtr-clause-917d57adb4c5"
+        ]
+      }
+    },
+    {
+      "id": "tag-zero",
+      "title": "Tag: 'zero'",
+      "level": 2,
+      "text_sha256": "adcd4018cc3eed0c1a6ac062f192aafde12f3a34d875999a961dce0ff97f477a",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.tag-zero"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "4e2297f79525355aa3dc07756ae4ae6ba350dc012790f96133dc9fdbf48db6d0",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-features-uz.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

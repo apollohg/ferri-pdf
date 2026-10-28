@@ -1,0 +1,2913 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "unicode17-chapter-2.g78",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "G78"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in General Structure.",
+      "locator": {
+        "section_id": "G78",
+        "text_sha256": "4797bf06aa3f0265e4cdde36066f12b5d2d7f1a3b31ea282c9cac0ed2f46eaa3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-ec07f5a57579",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-ec07f5a57579"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Architectural Context.",
+      "locator": {
+        "section_id": "heading-ec07f5a57579",
+        "text_sha256": "8872c5ca534eb5526cb7156deca5a469275626bc6124aea12548e72ecead45a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-ffda87cbd7f1",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-ffda87cbd7f1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Basic Text Processes.",
+      "locator": {
+        "section_id": "heading-ffda87cbd7f1",
+        "text_sha256": "133c211ba90e9bd89ff659f314984f612b3f3227ddadea061d581f29493fbd12"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-e6e007203f68",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-e6e007203f68"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Elements, Characters, and Text Processes.",
+      "locator": {
+        "section_id": "heading-e6e007203f68",
+        "text_sha256": "d47e10c20acc28a48088828dba49b457cc6ca91c9bb1729067e2c20a9b8727fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-e6e007203f68-clause-4445e40665f2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-e6e007203f68-clause-4445e40665f2",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-e6e007203f68"
+      ],
+      "behaviour": "Text Elements, Characters, and Text Processes — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-e6e007203f68",
+        "clause_index": 4,
+        "clause_sha256": "4445e40665f2e30e6a193df8abe77f90d14d6f0291e216b468f1273596644a46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-5b7aa320c607",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-5b7aa320c607"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Processes and Encoding.",
+      "locator": {
+        "section_id": "heading-5b7aa320c607",
+        "text_sha256": "948ed3a09d49e14f6bc66565e5b82a9724bd16db836c69c0663d31ead67d710d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-5b7aa320c607-clause-050b87354d0e",
+        "unicode17-chapter-2.heading-5b7aa320c607-clause-2a97823bbeb8",
+        "unicode17-chapter-2.heading-5b7aa320c607-clause-7857f20ea86a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-5b7aa320c607-clause-050b87354d0e",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-5b7aa320c607"
+      ],
+      "behaviour": "Text Processes and Encoding — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-5b7aa320c607",
+        "clause_index": 1,
+        "clause_sha256": "050b87354d0e25f2f19e1bf6d6eccaa253dae373d3f7e0830120e5cf49184e01"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-5b7aa320c607-clause-2a97823bbeb8",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-5b7aa320c607"
+      ],
+      "behaviour": "Text Processes and Encoding — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-5b7aa320c607",
+        "clause_index": 4,
+        "clause_sha256": "2a97823bbeb89a2bb5cc917a1eeef6c3d23c44f44a01597d6438bb0928d4573b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-5b7aa320c607-clause-7857f20ea86a",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-5b7aa320c607"
+      ],
+      "behaviour": "Text Processes and Encoding — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-5b7aa320c607",
+        "clause_index": 5,
+        "clause_sha256": "7857f20ea86aaafef4a3516f85649df3434317e2b4fedaaa9a0c0c9897eaa524"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-a791caff3877",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-a791caff3877"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unicode Design Principles.",
+      "locator": {
+        "section_id": "heading-a791caff3877",
+        "text_sha256": "536af6801c43b6504f7e0203222283be0ddf0bb70c98ab4a9f2e4405cba98fc6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-7b4ab3feb033",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-7b4ab3feb033"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Universality.",
+      "locator": {
+        "section_id": "heading-7b4ab3feb033",
+        "text_sha256": "bb36e1e7eb2089ea24665e6f053d4eab86f3e2f40a1bbea0fc22642a422b26c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-0296931c28bc",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-0296931c28bc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Efficiency.",
+      "locator": {
+        "section_id": "heading-0296931c28bc",
+        "text_sha256": "66474b3cdb0b4e9a9eff0ad3ab45635ff960723f7859d693d7c3fcdc4bf25668"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-bf0b0308eb1a",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-bf0b0308eb1a"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Characters, Not Glyphs.",
+      "locator": {
+        "section_id": "heading-bf0b0308eb1a",
+        "text_sha256": "c4af0299987a89ab086e1fa04f644268cf513f6ee7a124a40a173885cbdbb423"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-50037badbefe",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-50037badbefe"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Semantics.",
+      "locator": {
+        "section_id": "heading-50037badbefe",
+        "text_sha256": "0d01ebe64f478e03716a60e57342a42b69be87d1cd16347709ab093f6eb4365f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-50037badbefe-clause-c14d45a6fd0d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-50037badbefe-clause-c14d45a6fd0d",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-50037badbefe"
+      ],
+      "behaviour": "Semantics — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-50037badbefe",
+        "clause_index": 1,
+        "clause_sha256": "c14d45a6fd0dce13809e93e55b6380c0b350f354198e0bf1d7f4ecbb42a75e33"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-b90b242bd95b",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-b90b242bd95b"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Plain Text.",
+      "locator": {
+        "section_id": "heading-b90b242bd95b",
+        "text_sha256": "fbbd76171af9aa1c05d9d1d8fc7772b6d560f2c6355b97dc9ce07f7655627815"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-b90b242bd95b-clause-f02526b09d80",
+        "unicode17-chapter-2.heading-b90b242bd95b-clause-1f532b09d558"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-b90b242bd95b-clause-f02526b09d80",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-b90b242bd95b"
+      ],
+      "behaviour": "Plain Text — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-b90b242bd95b",
+        "clause_index": 8,
+        "clause_sha256": "f02526b09d8000dbba5c063cd50b6e8d5e0f682c29fb5379bb00e0aa125fd932"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-b90b242bd95b-clause-1f532b09d558",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-b90b242bd95b"
+      ],
+      "behaviour": "Plain Text — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-b90b242bd95b",
+        "clause_index": 9,
+        "clause_sha256": "1f532b09d5584b569a4cf64853eca51a20164d5f69439e1da5f1f1fc9b10d297"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-0955e949d60b",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-0955e949d60b"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Logical Order.",
+      "locator": {
+        "section_id": "heading-0955e949d60b",
+        "text_sha256": "595ce08a4162c2f495708a61d5bb24c70f9472c0b4da11539ea4ad54fcbf1410"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-0955e949d60b-clause-5bb6230dcc36",
+        "unicode17-chapter-2.heading-0955e949d60b-clause-7f4fdefeebc1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-0955e949d60b-clause-5bb6230dcc36",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-0955e949d60b"
+      ],
+      "behaviour": "Logical Order — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-0955e949d60b",
+        "clause_index": 0,
+        "clause_sha256": "5bb6230dcc367d8d3b1b8506188b50f93df4a3c664708c68548a39c0c23efdc7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-0955e949d60b-clause-7f4fdefeebc1",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-0955e949d60b"
+      ],
+      "behaviour": "Logical Order — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-0955e949d60b",
+        "clause_index": 3,
+        "clause_sha256": "7f4fdefeebc1481083e2e6b8273cc9d79823e3d09250609abc41a55eef0228a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-5bbb74afcba8",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-5bbb74afcba8"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unification.",
+      "locator": {
+        "section_id": "heading-5bbb74afcba8",
+        "text_sha256": "365f8074f3a73f5ad1008e3868599d3307b911fcb5c2a3bfd8b8b2ff1a2a8f59"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-3a676747bd2b",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-3a676747bd2b"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dynamic Composition.",
+      "locator": {
+        "section_id": "heading-3a676747bd2b",
+        "text_sha256": "8ab211092ddf875073e4225bc48da2b3654fcd05a257fffb2e1fa2feaf92cb97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-aefc54387f7f",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-aefc54387f7f"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stability.",
+      "locator": {
+        "section_id": "heading-aefc54387f7f",
+        "text_sha256": "cdec8d15a91cb68d0c49387aa5017d78e1e10d78274ad107b51ea3cfb403e87a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-aefc54387f7f-clause-b0960b3e842e",
+        "unicode17-chapter-2.heading-aefc54387f7f-clause-c6e8ff0a8d26"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-aefc54387f7f-clause-b0960b3e842e",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-aefc54387f7f"
+      ],
+      "behaviour": "Stability — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-aefc54387f7f",
+        "clause_index": 0,
+        "clause_sha256": "b0960b3e842e958b80c073df4dff2d5fc36422a4a3335a43292a89f13d4e6bec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-aefc54387f7f-clause-c6e8ff0a8d26",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-aefc54387f7f"
+      ],
+      "behaviour": "Stability — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-aefc54387f7f",
+        "clause_index": 1,
+        "clause_sha256": "c6e8ff0a8d26de17be274d1e26f17d486b6a3dfeb83d59ce10505aacdc46c66f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-608acd829391",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-608acd829391"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Convertibility.",
+      "locator": {
+        "section_id": "heading-608acd829391",
+        "text_sha256": "91e9b405a0585d05650aa368cdb1f5dde9d6ed74b04d2e1bd241d4cb802fafbc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-608acd829391-clause-47817bda3d41"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-608acd829391-clause-47817bda3d41",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-608acd829391"
+      ],
+      "behaviour": "Convertibility — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-608acd829391",
+        "clause_index": 1,
+        "clause_sha256": "47817bda3d413450a7c8ea1145df959ae9618a20a066cbd0e49d27f4ca7af8f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-82e77c69b463",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-82e77c69b463"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Compatibility Characters.",
+      "locator": {
+        "section_id": "heading-82e77c69b463",
+        "text_sha256": "188f7eb2ecf461c97292aa92cae2429710d99d8bf57028bc4a1aa0f27a4b39bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-82e77c69b463-clause-62986ce05313",
+        "unicode17-chapter-2.heading-82e77c69b463-clause-d8eb2cc388bb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-82e77c69b463-clause-62986ce05313",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-82e77c69b463"
+      ],
+      "behaviour": "Compatibility Characters — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-82e77c69b463",
+        "clause_index": 2,
+        "clause_sha256": "62986ce053132ffc536ee239b272d586416c581ca5ece4186a53db23dce9c385"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-82e77c69b463-clause-d8eb2cc388bb",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-82e77c69b463"
+      ],
+      "behaviour": "Compatibility Characters — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-82e77c69b463",
+        "clause_index": 7,
+        "clause_sha256": "d8eb2cc388bb4a089c73805b9f18164d0238ad65b70dde8abd711793ecea37d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-ca13247a1e4b",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-ca13247a1e4b"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Compatibility Variants.",
+      "locator": {
+        "section_id": "heading-ca13247a1e4b",
+        "text_sha256": "46d3a6817c8521f48342ffb2d9560dcd62177fe0b08f556389b1f8e7af073e3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-c69c68f0b0d2",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-c69c68f0b0d2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Compatibility Decomposable Characters.",
+      "locator": {
+        "section_id": "heading-c69c68f0b0d2",
+        "text_sha256": "8306018973e8598eaee740116695c2039d1f44130b1d25f9b92dd07efbd9cf5e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-c69c68f0b0d2-clause-02748eb35ebb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-c69c68f0b0d2-clause-02748eb35ebb",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-c69c68f0b0d2"
+      ],
+      "behaviour": "Compatibility Decomposable Characters — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-c69c68f0b0d2",
+        "clause_index": 9,
+        "clause_sha256": "02748eb35ebb6f1ae389ddc23c16f63487c06043def9349ddd17c8d67401f03c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-1230c083e445",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-1230c083e445"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Code Points and Characters.",
+      "locator": {
+        "section_id": "heading-1230c083e445",
+        "text_sha256": "71a1c0c049ccba1cef33a36970320a00dbe60b2b5761443628638b9e6c095c7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-a248d85037ff",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-a248d85037ff"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Types of Code Points.",
+      "locator": {
+        "section_id": "heading-a248d85037ff",
+        "text_sha256": "7c62a3cf5afa33f8f30ba2f4f2d15009ae23616495e09acb653f0bd8a2315e12"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-1950814ed817",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-1950814ed817"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Encoding Forms.",
+      "locator": {
+        "section_id": "heading-1950814ed817",
+        "text_sha256": "7bfaff902aa038efd296573f157dd9a040b29e629833dfe7a5e4c2eef3aa8502"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-1950814ed817-clause-0c9cd793ce53",
+        "unicode17-chapter-2.heading-1950814ed817-clause-aa74dafb904f",
+        "unicode17-chapter-2.heading-1950814ed817-clause-209da4af9b83"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-1950814ed817-clause-0c9cd793ce53",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-1950814ed817"
+      ],
+      "behaviour": "Encoding Forms — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-1950814ed817",
+        "clause_index": 0,
+        "clause_sha256": "0c9cd793ce53d01f8fe9693c5d5009e860701f2da6256258f23ba11af6d6fdbb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-1950814ed817-clause-aa74dafb904f",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-1950814ed817"
+      ],
+      "behaviour": "Encoding Forms — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-1950814ed817",
+        "clause_index": 3,
+        "clause_sha256": "aa74dafb904fc29bf0a3418e6a003a2521374b790f9fa37097416fe86c9eba25"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-1950814ed817-clause-209da4af9b83",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-1950814ed817"
+      ],
+      "behaviour": "Encoding Forms — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-1950814ed817",
+        "clause_index": 8,
+        "clause_sha256": "209da4af9b83e807a616ca2d6debb00ce5c1a5a006258aee9b7fe56010ff931d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-ec85f3e908eb",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-ec85f3e908eb"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UTF-32.",
+      "locator": {
+        "section_id": "heading-ec85f3e908eb",
+        "text_sha256": "78914287c4a444217d307a3b62a4374d229de86a7c536b43adb841a4a941cb67"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-88b985d6232b",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-88b985d6232b"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UTF-16.",
+      "locator": {
+        "section_id": "heading-88b985d6232b",
+        "text_sha256": "94bf140dba3dd4fbf427b4c06c0836dbed43f94ba0c1327f020dd7f935c1a7ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-8bf42f9ab0a1",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-8bf42f9ab0a1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in UTF-8.",
+      "locator": {
+        "section_id": "heading-8bf42f9ab0a1",
+        "text_sha256": "675e9feead1b6dd5eac07c5fe4dee8b8dc2bbb843dcbf0f4f51fd1cc3250174d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-8bf42f9ab0a1-clause-b36c54bf8014",
+        "unicode17-chapter-2.heading-8bf42f9ab0a1-clause-c789d2aadecf",
+        "unicode17-chapter-2.heading-8bf42f9ab0a1-clause-dc6ae36596f1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-8bf42f9ab0a1-clause-b36c54bf8014",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-8bf42f9ab0a1"
+      ],
+      "behaviour": "UTF-8 — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-8bf42f9ab0a1",
+        "clause_index": 1,
+        "clause_sha256": "b36c54bf80141d550a4805874a190ba2796391863eb00c80391c87207e6123fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-8bf42f9ab0a1-clause-c789d2aadecf",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-8bf42f9ab0a1"
+      ],
+      "behaviour": "UTF-8 — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-8bf42f9ab0a1",
+        "clause_index": 5,
+        "clause_sha256": "c789d2aadecf55d22df034bd42956afd10f57f1eff53f5da2ec5c480f280ecaa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-8bf42f9ab0a1-clause-dc6ae36596f1",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-8bf42f9ab0a1"
+      ],
+      "behaviour": "UTF-8 — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-8bf42f9ab0a1",
+        "clause_index": 6,
+        "clause_sha256": "dc6ae36596f167acfa09eb62185fad04231f2f5e20a7d83839415e88d7d0a9b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-00ef1a603bd2",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-00ef1a603bd2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Encoding Schemes.",
+      "locator": {
+        "section_id": "heading-00ef1a603bd2",
+        "text_sha256": "07e31c7470078a8d49b5cfbe8e000dec5fefd86f70ec9876ebf1204ead5b151b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-00ef1a603bd2-clause-03dde4b5e498",
+        "unicode17-chapter-2.heading-00ef1a603bd2-clause-e9a3f5e8913f",
+        "unicode17-chapter-2.heading-00ef1a603bd2-clause-ebf90955d30a",
+        "unicode17-chapter-2.heading-00ef1a603bd2-clause-fff77524ec7d",
+        "unicode17-chapter-2.heading-00ef1a603bd2-clause-7481b41cb0d2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-00ef1a603bd2-clause-03dde4b5e498",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-00ef1a603bd2"
+      ],
+      "behaviour": "Encoding Schemes — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-00ef1a603bd2",
+        "clause_index": 1,
+        "clause_sha256": "03dde4b5e4982dc6e4f3dc61da155deaf2a68492ac68aa882966ee6e6cd001b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-00ef1a603bd2-clause-e9a3f5e8913f",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-00ef1a603bd2"
+      ],
+      "behaviour": "Encoding Schemes — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-00ef1a603bd2",
+        "clause_index": 4,
+        "clause_sha256": "e9a3f5e8913f2428c63a706b8be511964f72aa85f1b2454ba74e548e7543dd3b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-00ef1a603bd2-clause-ebf90955d30a",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-00ef1a603bd2"
+      ],
+      "behaviour": "Encoding Schemes — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-00ef1a603bd2",
+        "clause_index": 29,
+        "clause_sha256": "ebf90955d30ab2c691320e0c5ec1277216ad8f7b8d9c97c83628f3c1e3c74545"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-00ef1a603bd2-clause-fff77524ec7d",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-00ef1a603bd2"
+      ],
+      "behaviour": "Encoding Schemes — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-00ef1a603bd2",
+        "clause_index": 30,
+        "clause_sha256": "fff77524ec7da67678a0562e18adf4417c1fd657be39b8d837bc070dff26af87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-00ef1a603bd2-clause-7481b41cb0d2",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-00ef1a603bd2"
+      ],
+      "behaviour": "Encoding Schemes — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-00ef1a603bd2",
+        "clause_index": 33,
+        "clause_sha256": "7481b41cb0d2ab5a9bf42b389bd2116ab278ed3a2459d80959bec821fc60cec4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-cc668fc24543",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-cc668fc24543"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unicode Strings.",
+      "locator": {
+        "section_id": "heading-cc668fc24543",
+        "text_sha256": "af1b579c0d5ceb9c94a9c2cb367bf02c76d275b7f98a3a9e4c839fe16fd26940"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-cc668fc24543-clause-f5767c9a04f2",
+        "unicode17-chapter-2.heading-cc668fc24543-clause-e1d0c7bd69d8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-cc668fc24543-clause-f5767c9a04f2",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-cc668fc24543"
+      ],
+      "behaviour": "Unicode Strings — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-cc668fc24543",
+        "clause_index": 1,
+        "clause_sha256": "f5767c9a04f281cfdb1a2813872f71e892cc8d3f5dddce4bd39034416fa1ef18"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-cc668fc24543-clause-e1d0c7bd69d8",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-cc668fc24543"
+      ],
+      "behaviour": "Unicode Strings — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-cc668fc24543",
+        "clause_index": 3,
+        "clause_sha256": "e1d0c7bd69d844f7fe01a9743c102eb739bc1fb255fda4dbf4547c7c1d2fe87b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-c3eb45597f50",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-c3eb45597f50"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unicode Allocation.",
+      "locator": {
+        "section_id": "heading-c3eb45597f50",
+        "text_sha256": "b49d883df375921957a2c78f03744448fce7795cd617ed5a8dfc4f0b2e7ee00b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-1cfcefafecfb",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-1cfcefafecfb"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Planes.",
+      "locator": {
+        "section_id": "heading-1cfcefafecfb",
+        "text_sha256": "e9a4d9c1dacb854799d0c3091cd9d23269d493b7cdb96bf1d5a22567a793c677"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-dc376dade1d7",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-dc376dade1d7"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Allocation Areas and Blocks.",
+      "locator": {
+        "section_id": "heading-dc376dade1d7",
+        "text_sha256": "62b774c06c71b8a8dd76515fb1e68033a4fb5d75c54423feabff0339b97e0244"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-dc376dade1d7-clause-c2c4b310059b",
+        "unicode17-chapter-2.heading-dc376dade1d7-clause-8c8a1ddd9c33",
+        "unicode17-chapter-2.heading-dc376dade1d7-clause-86e287d9445b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-dc376dade1d7-clause-c2c4b310059b",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-dc376dade1d7"
+      ],
+      "behaviour": "Allocation Areas and Blocks — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-dc376dade1d7",
+        "clause_index": 2,
+        "clause_sha256": "c2c4b310059b590904db1b2159ed870cd802c419477f77fd9789c5eac490d2e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-dc376dade1d7-clause-8c8a1ddd9c33",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-dc376dade1d7"
+      ],
+      "behaviour": "Allocation Areas and Blocks — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-dc376dade1d7",
+        "clause_index": 7,
+        "clause_sha256": "8c8a1ddd9c33b377ab8a3af53167db5f5529802085166204073d4442bca45cfb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-dc376dade1d7-clause-86e287d9445b",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-dc376dade1d7"
+      ],
+      "behaviour": "Allocation Areas and Blocks — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-dc376dade1d7",
+        "clause_index": 9,
+        "clause_sha256": "86e287d9445b79e9b68e8b1fbdb2bb3e93c9a8794ca37652a49870d3d6acb0a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-46ec613f8561",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-46ec613f8561"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Assignment of Code Points.",
+      "locator": {
+        "section_id": "heading-46ec613f8561",
+        "text_sha256": "7fd4d82f7728ace7eeb5a4b71c99d4928a60e9317ebd19403ca633f5778bf4be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-46ec613f8561-clause-188ab7edd261"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-46ec613f8561-clause-188ab7edd261",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-46ec613f8561"
+      ],
+      "behaviour": "Assignment of Code Points — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-46ec613f8561",
+        "clause_index": 6,
+        "clause_sha256": "188ab7edd2617029e6bf1c20d7d72d88d6703faa44e4a26517d3e3fd440c53db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-923bb4f1ca81",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-923bb4f1ca81"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Details of Allocation.",
+      "locator": {
+        "section_id": "heading-923bb4f1ca81",
+        "text_sha256": "38f38efd119b852ab34ac7bc1353e9538ea51ad7175900b1769d2cc030248db2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-7f02308070ea",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-7f02308070ea"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Plane 0 (BMP).",
+      "locator": {
+        "section_id": "heading-7f02308070ea",
+        "text_sha256": "e2be5f3214e1cb78f65873f6dc14fda32296b08fef26c226f20caf3230d30794"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-84aa4465680f",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-84aa4465680f"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Plane 1 (SMP).",
+      "locator": {
+        "section_id": "heading-84aa4465680f",
+        "text_sha256": "2454cfb7175340400b91d264abf050f20d7a39f970cdc81fb515f07cadb83dfd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-74f6035f3108",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-74f6035f3108"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Plane 2 (SIP).",
+      "locator": {
+        "section_id": "heading-74f6035f3108",
+        "text_sha256": "1f5b628acb3c9e1e1344c59eb132550d27baac1fd1b79120a84d6cbe783abb36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-74f6035f3108-clause-1f5b628acb3c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-74f6035f3108-clause-1f5b628acb3c",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-74f6035f3108"
+      ],
+      "behaviour": "Plane 2 (SIP) — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-74f6035f3108",
+        "clause_index": 0,
+        "clause_sha256": "1f5b628acb3c9e1e1344c59eb132550d27baac1fd1b79120a84d6cbe783abb36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-8af11ca9f219",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-8af11ca9f219"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Plane 3 (TIP).",
+      "locator": {
+        "section_id": "heading-8af11ca9f219",
+        "text_sha256": "5b85d53c6bd7430cb2304aad71f1561d9a6f2d14f750fcaaf573af721256d733"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-16d7ecc6f581",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-16d7ecc6f581"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Other Planes.",
+      "locator": {
+        "section_id": "heading-16d7ecc6f581",
+        "text_sha256": "482ec5902cd2b7404a6c362fc7cb8ebdadf65a769827b2af64109620bd555789"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-05bc3936fce0",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-05bc3936fce0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Writing Direction.",
+      "locator": {
+        "section_id": "heading-05bc3936fce0",
+        "text_sha256": "d26b687f3f45f14df816f5b7119d415ea24ee1ea88c6cea4e12ae016a70c4aca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-05bc3936fce0-clause-c9d55ea3ab40"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-05bc3936fce0-clause-c9d55ea3ab40",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-05bc3936fce0"
+      ],
+      "behaviour": "Writing Direction — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-05bc3936fce0",
+        "clause_index": 1,
+        "clause_sha256": "c9d55ea3ab405f8e47e92d541f903cbe669009c5db2d7d5cc8b522915aa307d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-ce8b24e3054a",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-ce8b24e3054a"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Combining Characters.",
+      "locator": {
+        "section_id": "heading-ce8b24e3054a",
+        "text_sha256": "39715c7dcafe9d79a9252f525d924a810974425c1ad7b022948b11ca307a6881"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-c60d895be463",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-c60d895be463"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sequence of Base Characters and Combining Characters.",
+      "locator": {
+        "section_id": "heading-c60d895be463",
+        "text_sha256": "e675d2e758e22435d4e19be5bc7a9826546d26dd171b8a3f838d9ebf08b47c3a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-0630c6453ee8",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-0630c6453ee8"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Multiple Combining Characters.",
+      "locator": {
+        "section_id": "heading-0630c6453ee8",
+        "text_sha256": "ab582a89d613497201779b627c85dcf01b1d2bedfb30d3e6706f479ca2733644"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-0630c6453ee8-clause-2514062aee88",
+        "unicode17-chapter-2.heading-0630c6453ee8-clause-c2782fa1276d",
+        "unicode17-chapter-2.heading-0630c6453ee8-clause-32659fb19d1a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-0630c6453ee8-clause-2514062aee88",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-0630c6453ee8"
+      ],
+      "behaviour": "Multiple Combining Characters — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-0630c6453ee8",
+        "clause_index": 1,
+        "clause_sha256": "2514062aee886d31a9e48a3c87347fe9b3eefb4ec019d355f40f0878d87ebb2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-0630c6453ee8-clause-c2782fa1276d",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-0630c6453ee8"
+      ],
+      "behaviour": "Multiple Combining Characters — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-0630c6453ee8",
+        "clause_index": 29,
+        "clause_sha256": "c2782fa1276db37869af82822b123acb134cd609bb908daa0987c4a5035b0a8a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-0630c6453ee8-clause-32659fb19d1a",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-0630c6453ee8"
+      ],
+      "behaviour": "Multiple Combining Characters — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-0630c6453ee8",
+        "clause_index": 43,
+        "clause_sha256": "32659fb19d1a6f6d28175bf7eb068ad1b98626268cd2ca3af4d9eba5bc7951aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-5eef4c453a78",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-5eef4c453a78"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Ligated Multiple Base Characters.",
+      "locator": {
+        "section_id": "heading-5eef4c453a78",
+        "text_sha256": "e9d645fda0e8fce45fa3bd4f78ab465773e93ff821cf7a167e365c571ad1fd57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-5eef4c453a78-clause-14c5ad69ec5f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-5eef4c453a78-clause-14c5ad69ec5f",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-5eef4c453a78"
+      ],
+      "behaviour": "Ligated Multiple Base Characters — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-5eef4c453a78",
+        "clause_index": 0,
+        "clause_sha256": "14c5ad69ec5fa6a1945b58ce395bf39beeb0ce2ed0428c9f1050ed813d44a438"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-21645abee434",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-21645abee434"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Exhibiting Nonspacing Marks in Isolation.",
+      "locator": {
+        "section_id": "heading-21645abee434",
+        "text_sha256": "c79751c9bb5c8d09a3bfc488c206979103fbaec9705f9ecfa6b12b704a74e86a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-b15f6b3d8ec3",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-b15f6b3d8ec3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in “Characters” and Grapheme Clusters.",
+      "locator": {
+        "section_id": "heading-b15f6b3d8ec3",
+        "text_sha256": "d404261a4fd6949af0d817ece6c6e08fd8fb4b9cfef7ed92c227923037089fd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-b15f6b3d8ec3-clause-0f062005d343"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-b15f6b3d8ec3-clause-0f062005d343",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-b15f6b3d8ec3"
+      ],
+      "behaviour": "“Characters” and Grapheme Clusters — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-b15f6b3d8ec3",
+        "clause_index": 1,
+        "clause_sha256": "0f062005d343ce21dd4fcdbfbf381590cd600e13b47cce17c3f88873139be249"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-615b61e26dc0",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-615b61e26dc0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Equivalent Sequences.",
+      "locator": {
+        "section_id": "heading-615b61e26dc0",
+        "text_sha256": "8dacb52f6235b5aab2852cdd1c9504f42090685d737466bfec1f04a00e0b787a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-615b61e26dc0-clause-3dcc77012ab1",
+        "unicode17-chapter-2.heading-615b61e26dc0-clause-c508200a8f69"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-615b61e26dc0-clause-3dcc77012ab1",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-615b61e26dc0"
+      ],
+      "behaviour": "Equivalent Sequences — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-615b61e26dc0",
+        "clause_index": 0,
+        "clause_sha256": "3dcc77012ab192a2412f3e5181fb19e21d44de7e3561a5e16ea91efcd0deb0b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-615b61e26dc0-clause-c508200a8f69",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-615b61e26dc0"
+      ],
+      "behaviour": "Equivalent Sequences — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-615b61e26dc0",
+        "clause_index": 1,
+        "clause_sha256": "c508200a8f69696ad07aee6a719fe0762a559b6a3f8a401efe3cc4aefc19b22b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-a7f1e1f50832",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-a7f1e1f50832"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Normalization.",
+      "locator": {
+        "section_id": "heading-a7f1e1f50832",
+        "text_sha256": "61f98110a663cecbbfcb059003ab6de0b06ff1bba935f55d99563496b82afc5d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-a7f1e1f50832-clause-8a1578460143"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-a7f1e1f50832-clause-8a1578460143",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-a7f1e1f50832"
+      ],
+      "behaviour": "Normalization — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-a7f1e1f50832",
+        "clause_index": 0,
+        "clause_sha256": "8a1578460143fa87f0f204d7e3369bf850b814851a43f528757c04a555e0c314"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-80c6672e2184",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-80c6672e2184"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Decompositions.",
+      "locator": {
+        "section_id": "heading-80c6672e2184",
+        "text_sha256": "44876182aba9d654f2d5dd34f381dda6ec5934e9c55dae677a3f1f37eedaa567"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-80c6672e2184-clause-2c433259fada",
+        "unicode17-chapter-2.heading-80c6672e2184-clause-97b06d7f904c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-80c6672e2184-clause-2c433259fada",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-80c6672e2184"
+      ],
+      "behaviour": "Decompositions — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-80c6672e2184",
+        "clause_index": 1,
+        "clause_sha256": "2c433259fadac5753a84786819eb2db8568e581261022e5f483a2ce4634900b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-80c6672e2184-clause-97b06d7f904c",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-80c6672e2184"
+      ],
+      "behaviour": "Decompositions — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-80c6672e2184",
+        "clause_index": 7,
+        "clause_sha256": "97b06d7f904cf481a1b4f3bfb38e7ad19186884dba4d658f7ed895640668caa7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-f62bb2ef4cd7",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-f62bb2ef4cd7"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-decomposition of Certain Diacritics.",
+      "locator": {
+        "section_id": "heading-f62bb2ef4cd7",
+        "text_sha256": "d4084607000754418a87425d3609ba11360f0d2408cc40d81aedb4e1fb1dff5e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-f62bb2ef4cd7-clause-128d87c4d276"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-f62bb2ef4cd7-clause-128d87c4d276",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-f62bb2ef4cd7"
+      ],
+      "behaviour": "Non-decomposition of Certain Diacritics — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-f62bb2ef4cd7",
+        "clause_index": 6,
+        "clause_sha256": "128d87c4d276b8e1e4cba57f5c35bd7d2f6f28e808c39ad644ae3dead69e6270"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-1487c93581cf",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-1487c93581cf"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Special Characters.",
+      "locator": {
+        "section_id": "heading-1487c93581cf",
+        "text_sha256": "4a0d0fd91a07e16089883b92265ed2e7a30d82a99719039217533dfc3f5bcab3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-cc758f4c36e2",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-cc758f4c36e2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Special Noncharacter Code Points.",
+      "locator": {
+        "section_id": "heading-cc758f4c36e2",
+        "text_sha256": "b8fb462eda67f6ae1191a852ccc79ca9f52b5d644b45e252efa466f08c3c97f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-f199bfabf638",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-f199bfabf638"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Byte Order Mark (BOM).",
+      "locator": {
+        "section_id": "heading-f199bfabf638",
+        "text_sha256": "b0b367d55189c3e03902ab74f91a785493b282b2bd67f2abd0a6932d610640cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-39d47bd06136",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-39d47bd06136"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layout and Format Control Characters.",
+      "locator": {
+        "section_id": "heading-39d47bd06136",
+        "text_sha256": "0b9f360cf36c8feea8848a169c4c0bb54325cf9df8c4d325cb27bf6a0d13707b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-aaeb31dd20ca",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-aaeb31dd20ca"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Replacement Character.",
+      "locator": {
+        "section_id": "heading-aaeb31dd20ca",
+        "text_sha256": "9b9ecd435cb4b412a6d98a6e5fd74fd1bd96c9d4c02b10fc170cdc8fe6217175"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-70a62fe64f0b",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-70a62fe64f0b"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Control Codes.",
+      "locator": {
+        "section_id": "heading-70a62fe64f0b",
+        "text_sha256": "b086cd6dc4fea6c63b6f162139e744a4eadc92f0ea398e82fffa104af368d168"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-70a62fe64f0b-clause-b086cd6dc4fe"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-70a62fe64f0b-clause-b086cd6dc4fe",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-70a62fe64f0b"
+      ],
+      "behaviour": "Control Codes — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-70a62fe64f0b",
+        "clause_index": 0,
+        "clause_sha256": "b086cd6dc4fea6c63b6f162139e744a4eadc92f0ea398e82fffa104af368d168"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-a92842c5d9d4",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-a92842c5d9d4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conforming to the Unicode Standard.",
+      "locator": {
+        "section_id": "heading-a92842c5d9d4",
+        "text_sha256": "a39ced2dba0573d0c56c62a48109a080456677ca44d6d9e92565ea72ea3cb841"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-a92842c5d9d4-clause-eee3de48105b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-a92842c5d9d4-clause-eee3de48105b",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-a92842c5d9d4"
+      ],
+      "behaviour": "Conforming to the Unicode Standard — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-a92842c5d9d4",
+        "clause_index": 0,
+        "clause_sha256": "eee3de48105b19050991726d551e731377706cb55c5280eb9720a9fefd3283b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-acb08419af7e",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-acb08419af7e"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Characteristics of Conformant Implementations.",
+      "locator": {
+        "section_id": "heading-acb08419af7e",
+        "text_sha256": "1772d73d512d4892f425de2015ba7aa5e130c193c8de0d86bb2f6af0775acca6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-acb08419af7e-clause-a6061ca47dc6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-acb08419af7e-clause-a6061ca47dc6",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-acb08419af7e"
+      ],
+      "behaviour": "Characteristics of Conformant Implementations — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-acb08419af7e",
+        "clause_index": 8,
+        "clause_sha256": "a6061ca47dc62c3de4551035cabf9e3959164d0d5b4f6d16b936c09517066825"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-075ed49878f3",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-075ed49878f3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unacceptable Behavior.",
+      "locator": {
+        "section_id": "heading-075ed49878f3",
+        "text_sha256": "e06005efbe65f24aa10ceb0dcbbcf4d3668c058ca85fd49217f7fd66fc34efba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-075ed49878f3-clause-d09b06506a23",
+        "unicode17-chapter-2.heading-075ed49878f3-clause-9eb7cbe6a681"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-075ed49878f3-clause-d09b06506a23",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-075ed49878f3"
+      ],
+      "behaviour": "Unacceptable Behavior — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-075ed49878f3",
+        "clause_index": 4,
+        "clause_sha256": "d09b06506a23bcf1de85cfd50af254f0f3b50301a52f188eb2e04530764df35c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-075ed49878f3-clause-9eb7cbe6a681",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-075ed49878f3"
+      ],
+      "behaviour": "Unacceptable Behavior — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-075ed49878f3",
+        "clause_index": 6,
+        "clause_sha256": "9eb7cbe6a681d8574c3c4b739b5583bf1bc9791cc3f423115b007b36c2c40b44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-a303eb46a665",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-a303eb46a665"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Acceptable Behavior.",
+      "locator": {
+        "section_id": "heading-a303eb46a665",
+        "text_sha256": "f240b8e026e2fee53469b975c2e0f037f489290ee2c38894b0da76ab673d47c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-2.heading-a303eb46a665-clause-df5e6d3cec6c",
+        "unicode17-chapter-2.heading-a303eb46a665-clause-168f2009f65a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-a303eb46a665-clause-df5e6d3cec6c",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-a303eb46a665"
+      ],
+      "behaviour": "Acceptable Behavior — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-a303eb46a665",
+        "clause_index": 11,
+        "clause_sha256": "df5e6d3cec6c8184ec57d0f1a4b80d084fa898cdb092fc9524942d818cd40da9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-a303eb46a665-clause-168f2009f65a",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-a303eb46a665"
+      ],
+      "behaviour": "Acceptable Behavior — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-a303eb46a665",
+        "clause_index": 12,
+        "clause_sha256": "168f2009f65acfa128e04ff577343ce754a3ad0cb1a000240443114d2ccdd158"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-2.heading-aa43ccc00373",
+      "family": "unicode17-chapter-2",
+      "source_id": "unicode17-chapter-2",
+      "sections": [
+        "heading-aa43ccc00373"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Supported Subsets.",
+      "locator": {
+        "section_id": "heading-aa43ccc00373",
+        "text_sha256": "fa9b6303293b068de829efbfa82a58d5c894bb277b32eb69f55702114a2c37ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

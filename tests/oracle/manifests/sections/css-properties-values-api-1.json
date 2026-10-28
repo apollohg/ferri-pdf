@@ -1,0 +1,837 @@
+{
+  "schema_version": 1,
+  "source_id": "css-properties-values-api-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Properties and Values API Level 1",
+      "level": 1,
+      "text_sha256": "dd8c13ca14e0a4cd3f9156ebc849921fcdc750b45ff559aaefe923a9c06b651a",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "f2650b1025f99d8d96d9755a0489024fd6cbb95a83d19f27709a3da93ad12fc7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "bdff3ccdd766bbfecb9bc0d1ab35cbb9d2a647b7dcef483ea7786bc365c80b8f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "8c7fb9506eeeac2286c3c11be0d477d349ca2d1e93fe71f41f7f7762d579459d",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "b01818b792a018478ca18a4c3b49e4db5dd507e6cf428846c5a1288983727cad",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.intro",
+          "css-properties-values-api-1.intro-clause-8bdecd8709f7",
+          "css-properties-values-api-1.intro-clause-caa46a5897d8"
+        ]
+      }
+    },
+    {
+      "id": "behavior-of-custom-properties",
+      "title": "2. Registered Custom Properties",
+      "level": 2,
+      "text_sha256": "67144a1ae464a26a6bd9341fa7daca5fa43e9c8bcd2614ed020644b2d547d054",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.behavior-of-custom-properties",
+          "css-properties-values-api-1.behavior-of-custom-properties-clause-474ffccefbff"
+        ]
+      }
+    },
+    {
+      "id": "determining-registration",
+      "title": "2.1. Determining the Registration",
+      "level": 3,
+      "text_sha256": "0995eaf1076cf1f203865291d0ac802beb6cdfa7fb1e429df8ab9a0b77ed406b",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.determining-registration",
+          "css-properties-values-api-1.determining-registration-clause-063a1a54c1d8",
+          "css-properties-values-api-1.determining-registration-clause-97970f22d6dc"
+        ]
+      }
+    },
+    {
+      "id": "parsing-custom-properties",
+      "title": "2.2. Parse-Time Behavior",
+      "level": 3,
+      "text_sha256": "c141d128dc51ea5b176cc8983c59ef2d9b7b74afcc9ef17939036e0a012e9da4",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.parsing-custom-properties",
+          "css-properties-values-api-1.parsing-custom-properties-clause-b578939f8fa0",
+          "css-properties-values-api-1.parsing-custom-properties-clause-83ba59850644",
+          "css-properties-values-api-1.parsing-custom-properties-clause-3d705b433a54",
+          "css-properties-values-api-1.parsing-custom-properties-clause-0c0b6f971dee"
+        ]
+      }
+    },
+    {
+      "id": "specified-value",
+      "title": "2.3. Specified Value-Time Behavior",
+      "level": 3,
+      "text_sha256": "db5e9354a57491df2b7d92feab8e3ccc790167fb27281d7c6a4aa5ad0f60ff59",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.specified-value",
+          "css-properties-values-api-1.specified-value-clause-db5e9354a574"
+        ]
+      }
+    },
+    {
+      "id": "calculation-of-computed-values",
+      "title": "2.4. Computed Value-Time Behavior",
+      "level": 3,
+      "text_sha256": "d1f7a3ec7ecbdd52272a45a740229cafaf7c0dec571567798cac1cab3a44cad0",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.calculation-of-computed-values",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-4b74e58418aa",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-f8772b42403e",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-712597c2dff4",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-a03ea2e184c0",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-496310e9fb0c",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-671ddec96552",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-4d4cd7f1a556",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-f40598613817",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-1b53319172cd",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-0f841485dadb",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-dd78c5388461",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-fb98b6679642",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-d783674b7431",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-8f2be7d76cbe",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-eccc38865986",
+          "css-properties-values-api-1.calculation-of-computed-values-clause-395e7c317672"
+        ]
+      }
+    },
+    {
+      "id": "animation-behavior-of-custom-properties",
+      "title": "2.5. Animation Behavior",
+      "level": 3,
+      "text_sha256": "9b68fe059bd3af0157b232152c1a3c4f21b4fd636685f1c687617b700df9c8d1",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.animation-behavior-of-custom-properties",
+          "css-properties-values-api-1.animation-behavior-of-custom-properties-clause-e839b7a1baea",
+          "css-properties-values-api-1.animation-behavior-of-custom-properties-clause-0f3db4a5412e"
+        ]
+      }
+    },
+    {
+      "id": "conditional-rules",
+      "title": "2.6. Conditional Rules",
+      "level": 3,
+      "text_sha256": "3cf16296a82170eb61f7b860dab481ee36b80389b8c6a3ff668bc0bf13455812",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.conditional-rules",
+          "css-properties-values-api-1.conditional-rules-clause-30617e76dbc5"
+        ]
+      }
+    },
+    {
+      "id": "substitution",
+      "title": "2.7. Substitution via var()",
+      "level": 3,
+      "text_sha256": "6307af72eb91157487424622f4ef9d9987116212cc808ab787706e459db704cc",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.substitution",
+          "css-properties-values-api-1.substitution-clause-a90802a42bf9",
+          "css-properties-values-api-1.substitution-clause-31e60e865323",
+          "css-properties-values-api-1.substitution-clause-10ba0cd733b9"
+        ]
+      }
+    },
+    {
+      "id": "fallbacks-in-var-references",
+      "title": "2.7.1. Fallbacks In var() References",
+      "level": 4,
+      "text_sha256": "08c8ab9f60e9a3382799ad8077963a83cbe8a027b333edee7ec758e5621254a6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.fallbacks-in-var-references",
+          "css-properties-values-api-1.fallbacks-in-var-references-clause-d9ac7d8ceb0d"
+        ]
+      }
+    },
+    {
+      "id": "dependency-cycles",
+      "title": "2.7.2. Dependency Cycles via Relative Units",
+      "level": 4,
+      "text_sha256": "36f852a523cab009868791f4c497a00e1ce025051b9bf20b534860345d09d1e8",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.dependency-cycles"
+        ]
+      }
+    },
+    {
+      "id": "shadow-dom",
+      "title": "2.8. Shadow DOM",
+      "level": 3,
+      "text_sha256": "59c570e8355736485f342ea1513e1a2e02c65ea661e1b56862dd0d8b754a3b71",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.shadow-dom",
+          "css-properties-values-api-1.shadow-dom-clause-04bf9b4514b3",
+          "css-properties-values-api-1.shadow-dom-clause-be207a818dd5",
+          "css-properties-values-api-1.shadow-dom-clause-26fe1c4068f1",
+          "css-properties-values-api-1.shadow-dom-clause-b4ab091a202b"
+        ]
+      }
+    },
+    {
+      "id": "at-property-rule",
+      "title": "3. The @property Rule",
+      "level": 2,
+      "text_sha256": "fcc6d2ed0d8f0111db18e4e4a02e1e9bc5efc7fd810a80fa74681d6baf2ab522",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.at-property-rule",
+          "css-properties-values-api-1.at-property-rule-clause-2d9c0e7e2905",
+          "css-properties-values-api-1.at-property-rule-clause-d43c038d71fd"
+        ]
+      }
+    },
+    {
+      "id": "the-syntax-descriptor",
+      "title": "3.1. The syntax Descriptor",
+      "level": 3,
+      "text_sha256": "fdc25b34fc54308e471403ab4e6cb03aa8602a06ff2b6d91143d8e7a00d2eb44",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.the-syntax-descriptor",
+          "css-properties-values-api-1.the-syntax-descriptor-clause-55d034f72a5c",
+          "css-properties-values-api-1.the-syntax-descriptor-clause-3d42af8389f5",
+          "css-properties-values-api-1.the-syntax-descriptor-clause-d3d56864114e",
+          "css-properties-values-api-1.the-syntax-descriptor-clause-3c0141a4d4bf"
+        ]
+      }
+    },
+    {
+      "id": "inherits-descriptor",
+      "title": "3.2. The inherits Descriptor",
+      "level": 3,
+      "text_sha256": "2f93af937186c1f9b063230ec75a6832cd582d8a2b81806e5f7e68d0597f914a",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.inherits-descriptor",
+          "css-properties-values-api-1.inherits-descriptor-clause-91bb20e7ef68",
+          "css-properties-values-api-1.inherits-descriptor-clause-b91fb7e0fef9",
+          "css-properties-values-api-1.inherits-descriptor-clause-b4be5e65a8c3"
+        ]
+      }
+    },
+    {
+      "id": "initial-value-descriptor",
+      "title": "3.3. The initial-value Descriptor",
+      "level": 3,
+      "text_sha256": "5adc649b5f130917ad19aba0c2225d958f18632f7e58065902a92e61586d6971",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.initial-value-descriptor",
+          "css-properties-values-api-1.initial-value-descriptor-clause-ba846e365cb2",
+          "css-properties-values-api-1.initial-value-descriptor-clause-48b99517ad32",
+          "css-properties-values-api-1.initial-value-descriptor-clause-90d328981ea4",
+          "css-properties-values-api-1.initial-value-descriptor-clause-cb479ca58658",
+          "css-properties-values-api-1.initial-value-descriptor-clause-1e8256b79944",
+          "css-properties-values-api-1.initial-value-descriptor-clause-c6f2c5617492",
+          "css-properties-values-api-1.initial-value-descriptor-clause-e04fea1819f1",
+          "css-properties-values-api-1.initial-value-descriptor-clause-bc6826fc261e"
+        ]
+      }
+    },
+    {
+      "id": "registering-custom-properties",
+      "title": "4. Registering Custom Properties in JS",
+      "level": 2,
+      "text_sha256": "9280336b4e8567158eb9bc194ff87a049b8ef460383e32824e86c60d4132ed70",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.registering-custom-properties",
+          "css-properties-values-api-1.registering-custom-properties-clause-819165db042b"
+        ]
+      }
+    },
+    {
+      "id": "the-registerproperty-function",
+      "title": "4.1. The registerProperty() Function",
+      "level": 3,
+      "text_sha256": "ec10f9cc481e7e60d990ba7b9788e670fbf03e3ad83ca3a03ae9ae5a4c8e8bc0",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.the-registerproperty-function",
+          "css-properties-values-api-1.the-registerproperty-function-clause-a01057fc222a",
+          "css-properties-values-api-1.the-registerproperty-function-clause-58d0929a28ae",
+          "css-properties-values-api-1.the-registerproperty-function-clause-54a3af8c1f91",
+          "css-properties-values-api-1.the-registerproperty-function-clause-8d4e3396e14c",
+          "css-properties-values-api-1.the-registerproperty-function-clause-350740065c35",
+          "css-properties-values-api-1.the-registerproperty-function-clause-f080ead07755",
+          "css-properties-values-api-1.the-registerproperty-function-clause-c8c66e06cc61",
+          "css-properties-values-api-1.the-registerproperty-function-clause-9d9643366b22",
+          "css-properties-values-api-1.the-registerproperty-function-clause-27756ee8b29f",
+          "css-properties-values-api-1.the-registerproperty-function-clause-ca02815b1782",
+          "css-properties-values-api-1.the-registerproperty-function-clause-617b35057ce2",
+          "css-properties-values-api-1.the-registerproperty-function-clause-ba010f2f30ad",
+          "css-properties-values-api-1.the-registerproperty-function-clause-a1947d13009b",
+          "css-properties-values-api-1.the-registerproperty-function-clause-2334be6b3343",
+          "css-properties-values-api-1.the-registerproperty-function-clause-6e83f1256954",
+          "css-properties-values-api-1.the-registerproperty-function-clause-bfa1f0171adc",
+          "css-properties-values-api-1.the-registerproperty-function-clause-cedf27c5a6da"
+        ]
+      }
+    },
+    {
+      "id": "the-propertydefinition-dictionary",
+      "title": "4.2. The PropertyDefinition Dictionary",
+      "level": 3,
+      "text_sha256": "a3c9b35bd078d3db77e41c4ffeb1972ac273b2426595a5f6804c5cfd60db9549",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.the-propertydefinition-dictionary",
+          "css-properties-values-api-1.the-propertydefinition-dictionary-clause-ce8af77b416b",
+          "css-properties-values-api-1.the-propertydefinition-dictionary-clause-ad81e1776d79"
+        ]
+      }
+    },
+    {
+      "id": "syntax-strings",
+      "title": "5. Syntax Strings",
+      "level": 2,
+      "text_sha256": "40abf7703ca78d0713ea719fc8aee1fba87d6f2100ad8e03250134ca5fc94f88",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.syntax-strings",
+          "css-properties-values-api-1.syntax-strings-clause-9d89c3ba8704",
+          "css-properties-values-api-1.syntax-strings-clause-6915d4729350"
+        ]
+      }
+    },
+    {
+      "id": "supported-names",
+      "title": "5.1. Supported Names",
+      "level": 3,
+      "text_sha256": "4a09d74a3f490f944eba20ac44b2b9daec5c077aeafc7964db4f6d82572de68f",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.supported-names"
+        ]
+      }
+    },
+    {
+      "id": "multipliers",
+      "title": "5.2. The '+' and '#' Multipliers",
+      "level": 3,
+      "text_sha256": "1979e437f68761d5ac1abc4163bd5f442eb9f109d1cad3a3dd2ae15c4b5e57a7",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.multipliers",
+          "css-properties-values-api-1.multipliers-clause-0b94c3387dfe",
+          "css-properties-values-api-1.multipliers-clause-4a4811426c65"
+        ]
+      }
+    },
+    {
+      "id": "combinator",
+      "title": "5.3. The '|' Combinator",
+      "level": 3,
+      "text_sha256": "b995d6f4ef1d6d1cad4f1bd7850bef560df5e2f625bb29bcb28763e90ee1aa34",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.combinator"
+        ]
+      }
+    },
+    {
+      "id": "parsing-syntax",
+      "title": "5.4. Parsing The Syntax String",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.parsing-syntax"
+        ]
+      }
+    },
+    {
+      "id": "parsing-definitions",
+      "title": "5.4.1. Definitions",
+      "level": 4,
+      "text_sha256": "651284e39c05efdf986456c865dda897f1102847f41621bdbbcd49a7fa2e368c",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.parsing-definitions"
+        ]
+      }
+    },
+    {
+      "id": "consume-syntax-definition",
+      "title": "5.4.2. Consume a Syntax Definition",
+      "level": 4,
+      "text_sha256": "ebce08a436bc1e298e0584924afe4e57c858cafc36c7e961d45c4f3f18b9f080",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.consume-syntax-definition"
+        ]
+      }
+    },
+    {
+      "id": "consume-syntax-component",
+      "title": "5.4.3. Consume a Syntax Component",
+      "level": 4,
+      "text_sha256": "7608babd84338c115204cca97d3005b65dd3c377487d513cc9cef192d38a78e5",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.consume-syntax-component"
+        ]
+      }
+    },
+    {
+      "id": "consume-data-type-name",
+      "title": "5.4.4. Consume a Data Type Name",
+      "level": 4,
+      "text_sha256": "b7320944803d935b299fc4b950618459706ebd07a92514f31c7a8ac493a5d531",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.consume-data-type-name",
+          "css-properties-values-api-1.consume-data-type-name-clause-b920465cc120"
+        ]
+      }
+    },
+    {
+      "id": "cssom",
+      "title": "6. CSSOM",
+      "level": 2,
+      "text_sha256": "273369d147e6bc271a0f4f83c2c3402313d40f8e754a71c5996ddeeaaf96bc08",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.cssom"
+        ]
+      }
+    },
+    {
+      "id": "the-css-property-rule-interface",
+      "title": "6.1. The CSSPropertyRule Interface",
+      "level": 3,
+      "text_sha256": "3910fb8d38dad62c5495fa6806bd594730dce123e4d6b35232c3d4adfbed4e83",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.the-css-property-rule-interface",
+          "css-properties-values-api-1.the-css-property-rule-interface-clause-ed0d5c48972c"
+        ]
+      }
+    },
+    {
+      "id": "css-style-value-reification",
+      "title": "6.2. CSSStyleValue Reification",
+      "level": 3,
+      "text_sha256": "ab308694c4a6a6fa61762c55d18a5cae6ccbde23c58921eeccfae89c6334e9e8",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.css-style-value-reification",
+          "css-properties-values-api-1.css-style-value-reification-clause-2f52bef1b5d8"
+        ]
+      }
+    },
+    {
+      "id": "examples",
+      "title": "7. Examples",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.examples"
+        ]
+      }
+    },
+    {
+      "id": "example-1",
+      "title": "7.1. Example 1: Using custom properties to add animation behavior",
+      "level": 3,
+      "text_sha256": "178c088d9647a48e59c154ec9a41f8f84f4128067e82e127220ca7d0787d669c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.example-1"
+        ]
+      }
+    },
+    {
+      "id": "example-2",
+      "title": "7.2. Example 2: Using @property to register a property",
+      "level": 3,
+      "text_sha256": "c88c087304a140732ec4d56777cfff6a7c874abbd29374f870a83472716edeb7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.example-2"
+        ]
+      }
+    },
+    {
+      "id": "security-considerations",
+      "title": "8. Security Considerations",
+      "level": 2,
+      "text_sha256": "a730cf04f3085a21aee77d83511a4a769610473998a413943ae29344acc3ed84",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.security-considerations"
+        ]
+      }
+    },
+    {
+      "id": "privacy-considerations",
+      "title": "9. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "6274a3d99950e02de466a8b5d9a51d9c22505c00c3497c7bc4b4159d8a76ee64",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.privacy-considerations"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "10. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20201013",
+      "title": "10.1. Changes since the Working Draft of 13 October 2020",
+      "level": 3,
+      "text_sha256": "71f1b04def3ffb60768ab1679e05729ddeb2560dbff682e7ce515af69865d537",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.changes-20201013"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.w3c-conventions",
+          "css-properties-values-api-1.w3c-conventions-clause-5c98c879f070",
+          "css-properties-values-api-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.w3c-conformance-classes",
+          "css-properties-values-api-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-properties-values-api-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.w3c-partial",
+          "css-properties-values-api-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.w3c-testing",
+          "css-properties-values-api-1.w3c-testing-clause-1e0fff369221",
+          "css-properties-values-api-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "a4826619a6810147c8aa2b0490a54b8ba8e3e18eaded52a0031a83903df91c73",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "fba69840df8b6e2c32b5c5f58cb74afc3e2c0e2bc3c6f57a17950e984bb40e43",
+      "clause_count": 129,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "4635de01fe3f3ab7051e1748af29a5dc338f98c094f489fe3ac9df9822bcf396",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "b285487e99e39856a81bbfa03e6430d98658d3f809898b6e905426c945d4bef5",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "547c4769772c9ff811e57bf39809cc6f1c1e6380af2bb402096c995db2287df6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.property-index"
+        ]
+      }
+    },
+    {
+      "id": "property-descriptor-table",
+      "title": "@property Descriptors",
+      "level": 3,
+      "text_sha256": "384ff30e18b7091ac1d9b2173488c2abecdf95e94d58214492ed0130c5dbd1ac",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.property-descriptor-table",
+          "css-properties-values-api-1.property-descriptor-table-clause-4d23bd30e265"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "3291ee43576039e1e9391998b79e394396202a704d32cb63a8e05c046f879463",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-properties-values-api-1.idl-index",
+          "css-properties-values-api-1.idl-index-clause-e53aae5277e8"
+        ]
+      }
+    }
+  ]
+}

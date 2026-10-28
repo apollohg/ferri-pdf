@@ -1,0 +1,5112 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-backgrounds-3.introduction",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "61288e0f7c04c1694a603036ca5a9a449fa6ce9f3ad3d08955cccfcc1ac562d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.placement",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module Interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "7de99a15449434e2c50521ceaa78de33697133355e4b448e1230fe55b0caec2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.placement-clause-743ae330ac1f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.placement-clause-743ae330ac1f",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Module Interactions — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "placement",
+        "clause_index": 1,
+        "clause_sha256": "743ae330ac1fbbfc918a6ab3a44f49b261679ea1f31e82c86c4879ade38eeaae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.values",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "6a8c697e2e3e2b223e8f880f9c8524e873db319131cf7bb23b69c6ad7ae11130"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.backgrounds",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "backgrounds"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Backgrounds.",
+      "locator": {
+        "section_id": "backgrounds",
+        "text_sha256": "760c783f7b14804279809bc1035015f33ed7f877b0449295cd3cc6b1d5d2d16f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.layering",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "layering"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layering Multiple Background Images.",
+      "locator": {
+        "section_id": "layering",
+        "text_sha256": "612f8d3dbf6d60b4110d463dd8ca81e5b48d9646f94424efeb9714928f784406"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.layering-clause-d8ad6888d7d8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.layering-clause-d8ad6888d7d8",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "layering"
+      ],
+      "behaviour": "Layering Multiple Background Images — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "layering",
+        "clause_index": 1,
+        "clause_sha256": "d8ad6888d7d89a330d6fe70a506b2edf661b24e9a04bfcf4ad066463da19728b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-color",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Base Color: the background-color property.",
+      "locator": {
+        "section_id": "background-color",
+        "text_sha256": "da9c2d36cdf70151e4f5b53fccd38ffa5a5c4ffc7474de261da8e0aa88f4997f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.background-color-clause-cca2516ebb1d",
+        "css-backgrounds-3.background-color-clause-dee972826276",
+        "css-backgrounds-3.background-color-clause-61cfe0fe6729"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.background-color-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-color"
+      ],
+      "behaviour": "Base Color: the background-color property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-color",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-color-clause-dee972826276",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-color"
+      ],
+      "behaviour": "Base Color: the background-color property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-color",
+        "clause_index": 13,
+        "clause_sha256": "dee972826276164f75b2c71903996f1f1ea46b319fbdea6895683953135c8b1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-color-clause-61cfe0fe6729",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-color"
+      ],
+      "behaviour": "Base Color: the background-color property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-color",
+        "clause_index": 20,
+        "clause_sha256": "61cfe0fe6729366e51ada1e09adcd2c637b04fefec202c55f18e7c9f0e25a557"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-image",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-image"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Image Sources: the background-image property.",
+      "locator": {
+        "section_id": "background-image",
+        "text_sha256": "6ccfac4d89c92b40b0f47184b3e6bed1c45f1c054ac9ec62535c935a7b249677"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.background-image-clause-cca2516ebb1d",
+        "css-backgrounds-3.background-image-clause-1a8d2092da1b",
+        "css-backgrounds-3.background-image-clause-3576d8200f7a",
+        "css-backgrounds-3.background-image-clause-755f70c24191",
+        "css-backgrounds-3.background-image-clause-9518f7bfb303"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.background-image-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-image"
+      ],
+      "behaviour": "Image Sources: the background-image property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-image",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-image-clause-1a8d2092da1b",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-image"
+      ],
+      "behaviour": "Image Sources: the background-image property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-image",
+        "clause_index": 21,
+        "clause_sha256": "1a8d2092da1ba9b192c854d489b9a3c419294be464ec8f1028f52d04820ac4f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-image-clause-3576d8200f7a",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-image"
+      ],
+      "behaviour": "Image Sources: the background-image property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-image",
+        "clause_index": 22,
+        "clause_sha256": "3576d8200f7a8ecddf232e9f17c8a44157f519ca11f392c4f7bac4f69eb5efd0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-image-clause-755f70c24191",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-image"
+      ],
+      "behaviour": "Image Sources: the background-image property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-image",
+        "clause_index": 23,
+        "clause_sha256": "755f70c241914cc76f8cc30eb323fc66659abfe985eccaeaa8f125caf7db6321"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-image-clause-9518f7bfb303",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-image"
+      ],
+      "behaviour": "Image Sources: the background-image property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-image",
+        "clause_index": 27,
+        "clause_sha256": "9518f7bfb3031d4c8fc0e58fee4ef82454a65a27c0f8af8d1ec1b35791db545c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-repeat",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-repeat"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tiling Images: the background-repeat property.",
+      "locator": {
+        "section_id": "background-repeat",
+        "text_sha256": "ba0ecb6ee919fcba2185f47b74df032cad5e13b248a088a1ca9422ededf73600"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.background-repeat-clause-cca2516ebb1d",
+        "css-backgrounds-3.background-repeat-clause-f94a6b4a6adc",
+        "css-backgrounds-3.background-repeat-clause-c507e2cbbd52"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.background-repeat-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-repeat"
+      ],
+      "behaviour": "Tiling Images: the background-repeat property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-repeat",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-repeat-clause-f94a6b4a6adc",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-repeat"
+      ],
+      "behaviour": "Tiling Images: the background-repeat property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-repeat",
+        "clause_index": 36,
+        "clause_sha256": "f94a6b4a6adc1759332c5bb3e6f4374361cfe60624bf54fc9d2d0b3d4f8e8480"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-repeat-clause-c507e2cbbd52",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-repeat"
+      ],
+      "behaviour": "Tiling Images: the background-repeat property — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-repeat",
+        "clause_index": 45,
+        "clause_sha256": "c507e2cbbd523361667077b17844043cebfbb54e896cb604388363bf9be3741e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-attachment",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-attachment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Affixing Images: the background-attachment property.",
+      "locator": {
+        "section_id": "background-attachment",
+        "text_sha256": "6b8b464afcdbb248e1437117c6233311c25725435ec7e9245e0a3ad2b372086a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.background-attachment-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.background-attachment-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-attachment"
+      ],
+      "behaviour": "Affixing Images: the background-attachment property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-attachment",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-position",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Positioning Images: the background-position property.",
+      "locator": {
+        "section_id": "background-position",
+        "text_sha256": "fd6f13672ff8a2d0ad9dd71fd07207050992ecd37f4bf4979db9841d61fdef10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.background-position-clause-cca2516ebb1d",
+        "css-backgrounds-3.background-position-clause-6d0b031eb636",
+        "css-backgrounds-3.background-position-clause-281d35545631",
+        "css-backgrounds-3.background-position-clause-7d2e444c6cd5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.background-position-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-position"
+      ],
+      "behaviour": "Positioning Images: the background-position property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-position",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-position-clause-6d0b031eb636",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-position"
+      ],
+      "behaviour": "Positioning Images: the background-position property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-position",
+        "clause_index": 13,
+        "clause_sha256": "6d0b031eb6362765441ceb11c11089bbb400d57e6507477d761eb45983c1698e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-position-clause-281d35545631",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-position"
+      ],
+      "behaviour": "Positioning Images: the background-position property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-position",
+        "clause_index": 22,
+        "clause_sha256": "281d3554563156bfd340eefb6aea5ea3394177b726dea8e1230086e074dc6cd8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-position-clause-7d2e444c6cd5",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-position"
+      ],
+      "behaviour": "Positioning Images: the background-position property — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-position",
+        "clause_index": 43,
+        "clause_sha256": "7d2e444c6cd531bf0a3f8ffdc22f111eea44f52f901f1e9b8c12acb80df396c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.bg-position-serialization",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "bg-position-serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serialization of background-position values.",
+      "locator": {
+        "section_id": "bg-position-serialization",
+        "text_sha256": "d1181616c5f87d72bb78c59bdee05a963607d041ad551aa2f645b119f9b242ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.bg-position-serialization-clause-d1181616c5f8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.bg-position-serialization-clause-d1181616c5f8",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "bg-position-serialization"
+      ],
+      "behaviour": "Serialization of background-position values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "bg-position-serialization",
+        "clause_index": 0,
+        "clause_sha256": "d1181616c5f87d72bb78c59bdee05a963607d041ad551aa2f645b119f9b242ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-clip",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-clip"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Painting Area: the background-clip property.",
+      "locator": {
+        "section_id": "background-clip",
+        "text_sha256": "f73d196a4f2c9a5a196e4eebf4bf42c56705f09a973623ef26727d67cae79142"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.background-clip-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.background-clip-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-clip"
+      ],
+      "behaviour": "Painting Area: the background-clip property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-clip",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-origin",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-origin"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Positioning Area: the background-origin property.",
+      "locator": {
+        "section_id": "background-origin",
+        "text_sha256": "b4f8737119cb8ea04094958eb2a65a36320c2173be02551b3c487996e7ca8883"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.background-origin-clause-cca2516ebb1d",
+        "css-backgrounds-3.background-origin-clause-44b62515795e",
+        "css-backgrounds-3.background-origin-clause-b15e6c97fc76",
+        "css-backgrounds-3.background-origin-clause-e9d0e7f002e4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.background-origin-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-origin"
+      ],
+      "behaviour": "Positioning Area: the background-origin property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-origin",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-origin-clause-44b62515795e",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-origin"
+      ],
+      "behaviour": "Positioning Area: the background-origin property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-origin",
+        "clause_index": 24,
+        "clause_sha256": "44b62515795e6cf722e338015d16f8eee5c7e4f24ecda2d2d4f9213f92ccdb77"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-origin-clause-b15e6c97fc76",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-origin"
+      ],
+      "behaviour": "Positioning Area: the background-origin property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-origin",
+        "clause_index": 26,
+        "clause_sha256": "b15e6c97fc7648fee81c3ef96e1ebf4ec0d7139a82230c874ba959a121871910"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-origin-clause-e9d0e7f002e4",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-origin"
+      ],
+      "behaviour": "Positioning Area: the background-origin property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-origin",
+        "clause_index": 27,
+        "clause_sha256": "e9d0e7f002e4b2eae5902fb9cc8e7b690a8bfdda3028f2b9181c0547f2a644e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-size",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-size"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sizing Images: the background-size property.",
+      "locator": {
+        "section_id": "background-size",
+        "text_sha256": "9effd823a057eb2ba7d7270eb73d8a10ab48ef12933fe5c2117756b62782fa30"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.background-size-clause-cca2516ebb1d",
+        "css-backgrounds-3.background-size-clause-569cff567c68",
+        "css-backgrounds-3.background-size-clause-c5a3c67d45c3",
+        "css-backgrounds-3.background-size-clause-fa274dcf6ce8",
+        "css-backgrounds-3.background-size-clause-16dbbce5ecef",
+        "css-backgrounds-3.background-size-clause-a1d1f1a7a0c6",
+        "css-backgrounds-3.background-size-clause-18b5d89ece74"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes",
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.background-size-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-size"
+      ],
+      "behaviour": "Sizing Images: the background-size property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-size",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-size-clause-569cff567c68",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-size"
+      ],
+      "behaviour": "Sizing Images: the background-size property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-size",
+        "clause_index": 13,
+        "clause_sha256": "569cff567c688e7faa029cf34fe7bfd6005de3bc9b2bdd1b82443c18aff9fb1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-size-clause-c5a3c67d45c3",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-size"
+      ],
+      "behaviour": "Sizing Images: the background-size property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-size",
+        "clause_index": 27,
+        "clause_sha256": "c5a3c67d45c3ff8c2d083f1ce720e727aaf2df3ac57ba1b033d34df13562d9ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-size-clause-fa274dcf6ce8",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-size"
+      ],
+      "behaviour": "Sizing Images: the background-size property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-size",
+        "clause_index": 28,
+        "clause_sha256": "fa274dcf6ce8ce6cc7250aca91e57fc306acb26d9e7a5558aa68348a55c6c054"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-size-clause-16dbbce5ecef",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-size"
+      ],
+      "behaviour": "Sizing Images: the background-size property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-size",
+        "clause_index": 38,
+        "clause_sha256": "16dbbce5ecefe8c6b217e702f57eb3a95a565fafd705d2c34c898f82bf66a40b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-size-clause-a1d1f1a7a0c6",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-size"
+      ],
+      "behaviour": "Sizing Images: the background-size property — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-size",
+        "clause_index": 51,
+        "clause_sha256": "a1d1f1a7a0c6a637e67a203fbd5778c14c7ba63e3f07e0dbe028c155646882fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-size-clause-18b5d89ece74",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background-size"
+      ],
+      "behaviour": "Sizing Images: the background-size property — normative clause 53, located by its exact source hash.",
+      "locator": {
+        "section_id": "background-size",
+        "clause_index": 52,
+        "clause_sha256": "18b5d89ece742eef6ad1a723b7e3425db26ddbcfe4662ebe4e2f574441656b6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Backgrounds Shorthand: the background property.",
+      "locator": {
+        "section_id": "background",
+        "text_sha256": "06fb96d563190269bde00d1f1c0cb86def9af2579bae20f3649ec7962cc4a09b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.background-clause-cca2516ebb1d",
+        "css-backgrounds-3.background-clause-830336cadf3e",
+        "css-backgrounds-3.background-clause-25b8abec71a2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.background-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background"
+      ],
+      "behaviour": "Backgrounds Shorthand: the background property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "background",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-clause-830336cadf3e",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background"
+      ],
+      "behaviour": "Backgrounds Shorthand: the background property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "background",
+        "clause_index": 17,
+        "clause_sha256": "830336cadf3e6a568d7fc118c9ddbd8505482842d5bbd69219e45aed59843536"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.background-clause-25b8abec71a2",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "background"
+      ],
+      "behaviour": "Backgrounds Shorthand: the background property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "background",
+        "clause_index": 32,
+        "clause_sha256": "25b8abec71a2954c0f99296b255d0daa41990a7c77d31b6c1b5f67843201b25e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.special-backgrounds",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "special-backgrounds"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Backgrounds of Special Elements.",
+      "locator": {
+        "section_id": "special-backgrounds",
+        "text_sha256": "69c52c0594cf4fea7cc32bc55cd648d588f85c864da7cfb07d731dbf50421588"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.root-background",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "root-background"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Canvas Background and the Root Element.",
+      "locator": {
+        "section_id": "root-background",
+        "text_sha256": "f6b97ac1190deab86ed42d4571b7c049d9c4b0b352a8d2a254d97d4fc2b6b6ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.body-background",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "body-background"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Canvas Background and the HTML <body> Element.",
+      "locator": {
+        "section_id": "body-background",
+        "text_sha256": "4819c6cd22e89ca31a5fb6a9bbaff20fdf6040fcec5e4c7b74209dfffd4b2d2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.body-background-clause-a4d1fdadc89d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.body-background-clause-a4d1fdadc89d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "body-background"
+      ],
+      "behaviour": "The Canvas Background and the HTML <body> Element — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "body-background",
+        "clause_index": 0,
+        "clause_sha256": "a4d1fdadc89d75637111256f0ec871727612274ebecb067e0cf30e9179d72991"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.first-line-background",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "first-line-background"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The ::first-line Pseudo-element‘s Background.",
+      "locator": {
+        "section_id": "first-line-background",
+        "text_sha256": "cfb7435db36f4fb52edf15f3120e297dbfcfb4f015688805a36f016957a35364"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "paint-overlap",
+        "vertical-align-keywords"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.borders",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "borders"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Borders.",
+      "locator": {
+        "section_id": "borders",
+        "text_sha256": "875aace0a5fcb1be72506bb09b880de23bab81c0d526451390a9b7219ddf5405"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-color",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line Colors: the border-color properties.",
+      "locator": {
+        "section_id": "border-color",
+        "text_sha256": "c9229f029b98560aac3cb65372e8e770af8e4bf3a38fe79ba5f1d19305fd1395"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-color-clause-cca2516ebb1d",
+        "css-backgrounds-3.border-color-clause-dee972826276",
+        "css-backgrounds-3.border-color-clause-674d5fa645b0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-color-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Line Colors: the border-color properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-color-clause-dee972826276",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Line Colors: the border-color properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color",
+        "clause_index": 13,
+        "clause_sha256": "dee972826276164f75b2c71903996f1f1ea46b319fbdea6895683953135c8b1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-color-clause-674d5fa645b0",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-color"
+      ],
+      "behaviour": "Line Colors: the border-color properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-color",
+        "clause_index": 17,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-style",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line Patterns: the border-style properties.",
+      "locator": {
+        "section_id": "border-style",
+        "text_sha256": "557e2d5e2bd8bbddf42a1448d257818eb1873036b6131b206fc2dca1759ddbdc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-style-clause-cca2516ebb1d",
+        "css-backgrounds-3.border-style-clause-c8c6dc71f503",
+        "css-backgrounds-3.border-style-clause-c06a53303cd5",
+        "css-backgrounds-3.border-style-clause-c576b195a886",
+        "css-backgrounds-3.border-style-clause-60719b8b32f9",
+        "css-backgrounds-3.border-style-clause-3c82f856fa16",
+        "css-backgrounds-3.border-style-clause-afb496565279"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-style-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Line Patterns: the border-style properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-style-clause-c8c6dc71f503",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Line Patterns: the border-style properties — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 44,
+        "clause_sha256": "c8c6dc71f5039dd85eab50c46e3b3365beea254b193ea6de8b92a8c2eda3af63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-style-clause-c06a53303cd5",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Line Patterns: the border-style properties — normative clause 55, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 54,
+        "clause_sha256": "c06a53303cd53f7dbf7d1a47a5ea3519ec3cf117f13975214ad5eaf11e54949a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-style-clause-c576b195a886",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Line Patterns: the border-style properties — normative clause 64, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 63,
+        "clause_sha256": "c576b195a8861f2ddb88eeb7fccd6101a72605997e12bc2ff3f0cd8118c8ad94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-style-clause-60719b8b32f9",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Line Patterns: the border-style properties — normative clause 66, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 65,
+        "clause_sha256": "60719b8b32f9d95a12e8d433b5a5ffa2d854f4a6df368dbd6b82997e5707ed7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-style-clause-3c82f856fa16",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Line Patterns: the border-style properties — normative clause 67, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 66,
+        "clause_sha256": "3c82f856fa1634f53bedb89dd48d321d1f046680aeb0f1b6edef9c66a9ba45f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-style-clause-afb496565279",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-style"
+      ],
+      "behaviour": "Line Patterns: the border-style properties — normative clause 68, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-style",
+        "clause_index": 67,
+        "clause_sha256": "afb496565279e4d4dae8d5d2fa09e913c5572dfda36992b982843478b104bf6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-width",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line Thickness: the border-width properties.",
+      "locator": {
+        "section_id": "border-width",
+        "text_sha256": "5714c0dff1aa3d0683658419528e2e020a9e26d63f518a46afa02c803f1d4329"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-width-clause-cca2516ebb1d",
+        "css-backgrounds-3.border-width-clause-674d5fa645b0",
+        "css-backgrounds-3.border-width-clause-a17fbafaca42",
+        "css-backgrounds-3.border-width-clause-9a9f0d2fcf15"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-width-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Line Thickness: the border-width properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-width-clause-674d5fa645b0",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Line Thickness: the border-width properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width",
+        "clause_index": 17,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-width-clause-a17fbafaca42",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Line Thickness: the border-width properties — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width",
+        "clause_index": 39,
+        "clause_sha256": "a17fbafaca42026955c283396c33a14b494ea1f4da12035332fb2a806139f7f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-width-clause-9a9f0d2fcf15",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-width"
+      ],
+      "behaviour": "Line Thickness: the border-width properties — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-width",
+        "clause_index": 43,
+        "clause_sha256": "9a9f0d2fcf15ae9757f781a9d581e5556ed81cebaa4d5626c5a518efcccd474f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-shorthands",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-shorthands"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Border Shorthand Properties.",
+      "locator": {
+        "section_id": "border-shorthands",
+        "text_sha256": "ee38428c9afbbfa47f14fd11fc62b229c7c270049538f2a09d3ff2f02080586d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-shorthands-clause-cca2516ebb1d",
+        "css-backgrounds-3.border-shorthands-clause-e5db338f94c5",
+        "css-backgrounds-3.border-shorthands-clause-876fe498a4a6",
+        "css-backgrounds-3.border-shorthands-clause-85fb4a06dfd6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-shorthands-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-shorthands"
+      ],
+      "behaviour": "Border Shorthand Properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-shorthands",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-shorthands-clause-e5db338f94c5",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-shorthands"
+      ],
+      "behaviour": "Border Shorthand Properties — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-shorthands",
+        "clause_index": 36,
+        "clause_sha256": "e5db338f94c58c7f6eb07902c804846d7aec11577fcceea44609595778d322c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-shorthands-clause-876fe498a4a6",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-shorthands"
+      ],
+      "behaviour": "Border Shorthand Properties — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-shorthands",
+        "clause_index": 37,
+        "clause_sha256": "876fe498a4a63a76e7f93bb7d5caff0dc15f1e8ee03b845238d31bc8ec9fa3f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-shorthands-clause-85fb4a06dfd6",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-shorthands"
+      ],
+      "behaviour": "Border Shorthand Properties — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-shorthands",
+        "clause_index": 43,
+        "clause_sha256": "85fb4a06dfd68b8095b023ab127dcdf543a0b8da5eb9cc900c43c17faa07c1a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.corners",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "corners"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rounded Corners.",
+      "locator": {
+        "section_id": "corners",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-radius",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-radius"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Curve Radii: the border-radius properties.",
+      "locator": {
+        "section_id": "border-radius",
+        "text_sha256": "17d9b1e2ce50a4dcba09ce0820df80cbfcacc7d77bd41b16351330e3f4dc4c7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-radius-clause-cca2516ebb1d",
+        "css-backgrounds-3.border-radius-clause-961589e5bfa3",
+        "css-backgrounds-3.border-radius-clause-674d5fa645b0",
+        "css-backgrounds-3.border-radius-clause-da27056ed9d2",
+        "css-backgrounds-3.border-radius-clause-9e8e9678be08"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-radius-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-radius"
+      ],
+      "behaviour": "Curve Radii: the border-radius properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-radius",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-radius-clause-961589e5bfa3",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-radius"
+      ],
+      "behaviour": "Curve Radii: the border-radius properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-radius",
+        "clause_index": 13,
+        "clause_sha256": "961589e5bfa380fc8dd74311ea5a69aa39808376b34cf53cb5eaa4a442edd488"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-radius-clause-674d5fa645b0",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-radius"
+      ],
+      "behaviour": "Curve Radii: the border-radius properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-radius",
+        "clause_index": 17,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-radius-clause-da27056ed9d2",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-radius"
+      ],
+      "behaviour": "Curve Radii: the border-radius properties — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-radius",
+        "clause_index": 37,
+        "clause_sha256": "da27056ed9d2deeb205649d832105e3545344cde0be7d659159aea8a73bc76c1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-radius-clause-9e8e9678be08",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-radius"
+      ],
+      "behaviour": "Curve Radii: the border-radius properties — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-radius",
+        "clause_index": 47,
+        "clause_sha256": "9e8e9678be083e78e3dd56ce49f447ccc4943b9c341c824df8856a12c8e8af6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.corner-shaping",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "corner-shaping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Corner Shaping.",
+      "locator": {
+        "section_id": "corner-shaping",
+        "text_sha256": "f0bfbaa5c1c655916c4ab18c716e49f178a567a47d649fab1625cac104389c69"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.corner-clipping",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "corner-clipping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Corner Clipping.",
+      "locator": {
+        "section_id": "corner-clipping",
+        "text_sha256": "06c12e7b8b9d5cc06531eb1669769efb9b03861f44eb9a90993e9876682c8f24"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.corner-clipping-clause-26c602a6d797",
+        "css-backgrounds-3.corner-clipping-clause-5f871ee9a3e0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.corner-clipping-clause-26c602a6d797",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "corner-clipping"
+      ],
+      "behaviour": "Corner Clipping — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-clipping",
+        "clause_index": 0,
+        "clause_sha256": "26c602a6d7978dc8768264bfa8bed04029979c6744ef987c4393ca0086d42b43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.corner-clipping-clause-5f871ee9a3e0",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "corner-clipping"
+      ],
+      "behaviour": "Corner Clipping — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-clipping",
+        "clause_index": 1,
+        "clause_sha256": "5f871ee9a3e00e911f7db1b1fe6bfb687e65fa84d01351ecd91a9ca7b9747fcf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.corner-transitions",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "corner-transitions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color and Style Transitions.",
+      "locator": {
+        "section_id": "corner-transitions",
+        "text_sha256": "0d30faa15d4cfcc5ad5d9d338b3060746fbbd6d50553e3dcc70715c1de6fcc66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.corner-transitions-clause-fdb31bc28a00"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.corner-transitions-clause-fdb31bc28a00",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "corner-transitions"
+      ],
+      "behaviour": "Color and Style Transitions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-transitions",
+        "clause_index": 0,
+        "clause_sha256": "fdb31bc28a00673081586405fb78873d6cd143b8c60a407c568a93fbc49fb423"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.corner-overlap",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "corner-overlap"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overlapping Curves.",
+      "locator": {
+        "section_id": "corner-overlap",
+        "text_sha256": "4f9b9fc3524fbae3af1ded19df829b99e93af2e4f79a7634e9da57d0ee2764e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.corner-overlap-clause-ebc60f3cde44",
+        "css-backgrounds-3.corner-overlap-clause-8db458735369"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.corner-overlap-clause-ebc60f3cde44",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "corner-overlap"
+      ],
+      "behaviour": "Overlapping Curves — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-overlap",
+        "clause_index": 0,
+        "clause_sha256": "ebc60f3cde443e74d93c00bd2d0662768c9e13fb6a6fea5fa987055ca908e7e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.corner-overlap-clause-8db458735369",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "corner-overlap"
+      ],
+      "behaviour": "Overlapping Curves — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "corner-overlap",
+        "clause_index": 2,
+        "clause_sha256": "8db4587353694659f1504c24b0c2cafa146b26bc24bf84bb99bf027c682ba9a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-radius-tables",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-radius-tables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Effect on Tables.",
+      "locator": {
+        "section_id": "border-radius-tables",
+        "text_sha256": "15eb4349e7f1804c9771bd6651ef18ca54ba910eb7da3550c3b3f8e3d681bb0c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-images",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-images"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Border Images.",
+      "locator": {
+        "section_id": "border-images",
+        "text_sha256": "f946455427667f52f8421b7491d7cd640dafbb3cee104246b4837fc8e0c15998"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-images-clause-2a1baec3bdae"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-images-clause-2a1baec3bdae",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-images"
+      ],
+      "behaviour": "Border Images — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-images",
+        "clause_index": 6,
+        "clause_sha256": "2a1baec3bdaee977710d0fd542e241a4ef3cff9d7f71c99fb201e6548e638a7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-source",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-source"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Image Source: the border-image-source property.",
+      "locator": {
+        "section_id": "border-image-source",
+        "text_sha256": "533b198f838e809b39a112bdebd83527cab33c43e3d45e6fa0a2f671d6089047"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-image-source-clause-cca2516ebb1d",
+        "css-backgrounds-3.border-image-source-clause-e97bb8a9330d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-source-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-source"
+      ],
+      "behaviour": "Image Source: the border-image-source property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-source",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-source-clause-e97bb8a9330d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-source"
+      ],
+      "behaviour": "Image Source: the border-image-source property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-source",
+        "clause_index": 13,
+        "clause_sha256": "e97bb8a9330dccd645c7c2a0abb47c53653cea568b73e467d838f54c5622d042"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-slice",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-slice"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Image Slicing: the border-image-slice property.",
+      "locator": {
+        "section_id": "border-image-slice",
+        "text_sha256": "20bbe4fe74a816d65b5f7c8d0bb80343e391bb984184453302b82b03a792b4f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-image-slice-clause-cca2516ebb1d",
+        "css-backgrounds-3.border-image-slice-clause-37e2e6b0dffb",
+        "css-backgrounds-3.border-image-slice-clause-7a6033564f79",
+        "css-backgrounds-3.border-image-slice-clause-e0dfe5e5cbf4",
+        "css-backgrounds-3.border-image-slice-clause-22d5156337d3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-slice-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-slice"
+      ],
+      "behaviour": "Image Slicing: the border-image-slice property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-slice",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-slice-clause-37e2e6b0dffb",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-slice"
+      ],
+      "behaviour": "Image Slicing: the border-image-slice property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-slice",
+        "clause_index": 24,
+        "clause_sha256": "37e2e6b0dffbc75365976eaa9e70f6dac156843db32b21078ada9f16885cf561"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-slice-clause-7a6033564f79",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-slice"
+      ],
+      "behaviour": "Image Slicing: the border-image-slice property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-slice",
+        "clause_index": 26,
+        "clause_sha256": "7a6033564f798af213de4656846d0473205d0e07a75535b5bda573e4bdffff4d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-slice-clause-e0dfe5e5cbf4",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-slice"
+      ],
+      "behaviour": "Image Slicing: the border-image-slice property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-slice",
+        "clause_index": 27,
+        "clause_sha256": "e0dfe5e5cbf49fb12644d4d0e8ffe25aaa2141967d7100776cf67efd16b93742"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-slice-clause-22d5156337d3",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-slice"
+      ],
+      "behaviour": "Image Slicing: the border-image-slice property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-slice",
+        "clause_index": 28,
+        "clause_sha256": "22d5156337d34308e91c70b428bb32c5917aa3a9a99cc95f8fca7b326f5b4a89"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-width",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Drawing Areas: the border-image-width property.",
+      "locator": {
+        "section_id": "border-image-width",
+        "text_sha256": "893909751bfe88fba73d90ea7e209d026e593324a2aa42c160306e4afb274439"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-image-width-clause-cca2516ebb1d",
+        "css-backgrounds-3.border-image-width-clause-d55a2cfbe976",
+        "css-backgrounds-3.border-image-width-clause-6d171549eb5d",
+        "css-backgrounds-3.border-image-width-clause-75c32b3428a2",
+        "css-backgrounds-3.border-image-width-clause-d7a6a34c66b7",
+        "css-backgrounds-3.border-image-width-clause-f3e77536e8fb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-width-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-width"
+      ],
+      "behaviour": "Drawing Areas: the border-image-width property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-width",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-width-clause-d55a2cfbe976",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-width"
+      ],
+      "behaviour": "Drawing Areas: the border-image-width property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-width",
+        "clause_index": 13,
+        "clause_sha256": "d55a2cfbe9761f7930df76fd3bca10127241af1094ca928be804385e4da63cb5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-width-clause-6d171549eb5d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-width"
+      ],
+      "behaviour": "Drawing Areas: the border-image-width property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-width",
+        "clause_index": 24,
+        "clause_sha256": "6d171549eb5db76e8e9e56abe6d73b1319f47df00ce11ff34e8cff5e91453459"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-width-clause-75c32b3428a2",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-width"
+      ],
+      "behaviour": "Drawing Areas: the border-image-width property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-width",
+        "clause_index": 26,
+        "clause_sha256": "75c32b3428a25fd25e41047c56fb95549357257b4121e78635e30730d1ab29a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-width-clause-d7a6a34c66b7",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-width"
+      ],
+      "behaviour": "Drawing Areas: the border-image-width property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-width",
+        "clause_index": 28,
+        "clause_sha256": "d7a6a34c66b717c3e7262c55e823bfc54fb4384e149c1d00863e2bd20224a79d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-width-clause-f3e77536e8fb",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-width"
+      ],
+      "behaviour": "Drawing Areas: the border-image-width property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-width",
+        "clause_index": 29,
+        "clause_sha256": "f3e77536e8fb65379cad9f1331c7530d26bd5d3c1d85e832882964173edcfa81"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-outset",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-outset"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Edge Overhang: the border-image-outset property.",
+      "locator": {
+        "section_id": "border-image-outset",
+        "text_sha256": "21442d697ae5734a15bb46a7b8ffafad6a3cac114b413fe577ca6c831e28539d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-image-outset-clause-cca2516ebb1d",
+        "css-backgrounds-3.border-image-outset-clause-fa274dcf6ce8",
+        "css-backgrounds-3.border-image-outset-clause-0878f227347c",
+        "css-backgrounds-3.border-image-outset-clause-9f41dafc7747"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-outset-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-outset"
+      ],
+      "behaviour": "Edge Overhang: the border-image-outset property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-outset",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-outset-clause-fa274dcf6ce8",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-outset"
+      ],
+      "behaviour": "Edge Overhang: the border-image-outset property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-outset",
+        "clause_index": 22,
+        "clause_sha256": "fa274dcf6ce8ce6cc7250aca91e57fc306acb26d9e7a5558aa68348a55c6c054"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-outset-clause-0878f227347c",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-outset"
+      ],
+      "behaviour": "Edge Overhang: the border-image-outset property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-outset",
+        "clause_index": 25,
+        "clause_sha256": "0878f227347c80dd67c364139cd0067235f0eee510ba21fc7152477a312a9e1b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-outset-clause-9f41dafc7747",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-outset"
+      ],
+      "behaviour": "Edge Overhang: the border-image-outset property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-outset",
+        "clause_index": 26,
+        "clause_sha256": "9f41dafc77474b786e263f42a8f75fafba738c356393d9df0910c1f8c2011672"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-repeat",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-repeat"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Image Tiling: the border-image-repeat property.",
+      "locator": {
+        "section_id": "border-image-repeat",
+        "text_sha256": "0696c45b9401397446268cfa062812fb83764148bd7ed4d0c47d6c9d719594a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-image-repeat-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-repeat-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-repeat"
+      ],
+      "behaviour": "Image Tiling: the border-image-repeat property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-repeat",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-process",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-process"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Drawing the Border Image.",
+      "locator": {
+        "section_id": "border-image-process",
+        "text_sha256": "b680e746b7f9918c95cec9a509babd5483ba679735b8f777e526d7578737a490"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-image",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Border Image Shorthand: the border-image property.",
+      "locator": {
+        "section_id": "border-image",
+        "text_sha256": "6579791108be02d4a2d24a2fc42909a453306913cecf7040e8061c56df10e625"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-image-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image"
+      ],
+      "behaviour": "Border Image Shorthand: the border-image property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-tables",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-tables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Effect on Tables.",
+      "locator": {
+        "section_id": "border-image-tables",
+        "text_sha256": "13077f2ecfdf6c31c1a57da48168d697c50e46b316decf928591101cf3dff64a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.border-image-tables-clause-c909e0aeb799"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.border-image-tables-clause-c909e0aeb799",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "border-image-tables"
+      ],
+      "behaviour": "Effect on Tables — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "border-image-tables",
+        "clause_index": 1,
+        "clause_sha256": "c909e0aeb79909036d1ab38eaaf7865bc40454fda135dda9921b2d4bb84ced37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.misc",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "misc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Miscellaneous Effects.",
+      "locator": {
+        "section_id": "misc",
+        "text_sha256": "f168eafc06c3e5ac8621d078e32b630cd9151ae3b9c50fe665f7deb92d1b424f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.box-shadow",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "box-shadow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Drop Shadows: the box-shadow property.",
+      "locator": {
+        "section_id": "box-shadow",
+        "text_sha256": "3ccfa6bed7818d4d7b8085e460c28170e10586ba26dcba19576edf81e77bfcde"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.box-shadow-clause-cca2516ebb1d",
+        "css-backgrounds-3.box-shadow-clause-fca5391efa28",
+        "css-backgrounds-3.box-shadow-clause-5baee16d2dc3",
+        "css-backgrounds-3.box-shadow-clause-768c21e27c3e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.box-shadow-clause-cca2516ebb1d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "box-shadow"
+      ],
+      "behaviour": "Drop Shadows: the box-shadow property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-shadow",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.box-shadow-clause-fca5391efa28",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "box-shadow"
+      ],
+      "behaviour": "Drop Shadows: the box-shadow property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-shadow",
+        "clause_index": 13,
+        "clause_sha256": "fca5391efa2847966311311488703fd22f29150505b38fa4d88ff1fb942c96cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.box-shadow-clause-5baee16d2dc3",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "box-shadow"
+      ],
+      "behaviour": "Drop Shadows: the box-shadow property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-shadow",
+        "clause_index": 26,
+        "clause_sha256": "5baee16d2dc31490f1fa92d86c37d09dfe7c9a1907738fd9419822e5694a9e3a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.box-shadow-clause-768c21e27c3e",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "box-shadow"
+      ],
+      "behaviour": "Drop Shadows: the box-shadow property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-shadow",
+        "clause_index": 35,
+        "clause_sha256": "768c21e27c3e02030b7c7bae403d9718dbfefd7e06fe61d6787692a9d1fc11f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.shadow-shape",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "shadow-shape"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shadow Shape, Spread, and Knockout.",
+      "locator": {
+        "section_id": "shadow-shape",
+        "text_sha256": "5306525a5216802fba251fa0f2c72ffb3c7ce3582be3b78f2f838e4664077207"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.shadow-blur",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "shadow-blur"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Blurring Shadow Edges.",
+      "locator": {
+        "section_id": "shadow-blur",
+        "text_sha256": "cf378d865f0cc5cd627c5723fff74570d7edf241a1255ec06fdcaca778549f99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.shadow-blur-clause-7c72a10c1885"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.shadow-blur-clause-7c72a10c1885",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "shadow-blur"
+      ],
+      "behaviour": "Blurring Shadow Edges — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "shadow-blur",
+        "clause_index": 0,
+        "clause_sha256": "7c72a10c18855dcb71ad65e896acca6bb3b6506d9ea48662d4aa4371cd34b999"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.shadow-layers",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "shadow-layers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Layering, Layout, and Other Details.",
+      "locator": {
+        "section_id": "shadow-layers",
+        "text_sha256": "af12f8839b0ee5c970cbb3028a5af9cef457db9b66aee77b3cd1c7bcc8968e2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.privacy",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "85b0bbcbc137ec4d540097af52b8b2bbdcc04575c1aed6ca81a878d6150d0b32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.security",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "7289157c42346d0cf51863e097d634af796b3f54eefe0fd72f7d5fb35b2fd504"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-conformance",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-conventions",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.w3c-conventions-clause-5c98c879f070",
+        "css-backgrounds-3.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-conventions-clause-5c98c879f070",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-conformance-classes",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.w3c-conformance-classes-clause-ff408372426c",
+        "css-backgrounds-3.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-partial",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-partial-clause-ef40c4aab200",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-conform-future-proofing",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-testing",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.w3c-testing-clause-1e0fff369221",
+        "css-backgrounds-3.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-testing-clause-1e0fff369221",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-testing-clause-ae1210cf9643",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-cr-exit-criteria",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+        "css-backgrounds-3.w3c-cr-exit-criteria-clause-ea752775913a",
+        "css-backgrounds-3.w3c-cr-exit-criteria-clause-b7d363ab42db",
+        "css-backgrounds-3.w3c-cr-exit-criteria-clause-b67129724911",
+        "css-backgrounds-3.w3c-cr-exit-criteria-clause-833729d43f23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-cr-exit-criteria-clause-ea752775913a",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-cr-exit-criteria-clause-b7d363ab42db",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-cr-exit-criteria-clause-b67129724911",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.w3c-cr-exit-criteria-clause-833729d43f23",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 10,
+        "clause_sha256": "833729d43f239b3deb57bcaaf1c29d2f077e86aad8b396f8458fa182e4db8d99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.property-index",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "a51c7a882b15c40fcc6488b9028f5fa976232100d5ef27550a1705eddd0414ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-backgrounds-3.property-index-clause-674d5fa645b0",
+        "css-backgrounds-3.property-index-clause-dee972826276",
+        "css-backgrounds-3.property-index-clause-6d0b031eb636",
+        "css-backgrounds-3.property-index-clause-569cff567c68",
+        "css-backgrounds-3.property-index-clause-961589e5bfa3",
+        "css-backgrounds-3.property-index-clause-e97bb8a9330d",
+        "css-backgrounds-3.property-index-clause-d55a2cfbe976",
+        "css-backgrounds-3.property-index-clause-d76e13e1e81f",
+        "css-backgrounds-3.property-index-clause-fca5391efa28"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.property-index-clause-674d5fa645b0",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 43,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.property-index-clause-dee972826276",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 45,
+        "clause_sha256": "dee972826276164f75b2c71903996f1f1ea46b319fbdea6895683953135c8b1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.property-index-clause-6d0b031eb636",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 73, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 72,
+        "clause_sha256": "6d0b031eb6362765441ceb11c11089bbb400d57e6507477d761eb45983c1698e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.property-index-clause-569cff567c68",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 91, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 90,
+        "clause_sha256": "569cff567c688e7faa029cf34fe7bfd6005de3bc9b2bdd1b82443c18aff9fb1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.property-index-clause-961589e5bfa3",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 128, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 127,
+        "clause_sha256": "961589e5bfa380fc8dd74311ea5a69aa39808376b34cf53cb5eaa4a442edd488"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.property-index-clause-e97bb8a9330d",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 213, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 212,
+        "clause_sha256": "e97bb8a9330dccd645c7c2a0abb47c53653cea568b73e467d838f54c5622d042"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.property-index-clause-d55a2cfbe976",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 222, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 221,
+        "clause_sha256": "d55a2cfbe9761f7930df76fd3bca10127241af1094ca928be804385e4da63cb5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.property-index-clause-d76e13e1e81f",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 393, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 392,
+        "clause_sha256": "d76e13e1e81fb2e0526e7eab3a931f9b2b78d84df7cb77b1b44b2c3af19bb2a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.property-index-clause-fca5391efa28",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 395, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 394,
+        "clause_sha256": "fca5391efa2847966311311488703fd22f29150505b38fa4d88ff1fb942c96cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-backgrounds-3.title",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Backgrounds and Borders Module Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "93c79eac0476f25c8527f6d741f2001f703ff975f138a079c36f0d646dda3c80"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.abstract",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "c6da745f1dededce5544ec503c37fa30645468d424388368e2f07fe1d05441f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.sotd",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "01754ade2e885cc8ca39caced2568f9e6eff9e43004d2ce7559055585c6e2e08"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.contents",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "cebcffccd6ccf9314df54db4cf0014661c52c4578bfd62d97fd4692ae3de3aaf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.levels",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "levels"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7. Levels.",
+      "locator": {
+        "section_id": "levels",
+        "text_sha256": "8cbdb880bc206e48ddd07e0128fbb4b8dca6f88a400e6ed115404d673b33c4b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.level-1",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "level-1"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.1. Level 1.",
+      "locator": {
+        "section_id": "level-1",
+        "text_sha256": "8edd50b053ad4a7d89e414f068fd5d36298f16bcf16657ccf58190351fa4be06"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.level-2",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "level-2"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.2. Level 2.",
+      "locator": {
+        "section_id": "level-2",
+        "text_sha256": "4503f3444d620b0a4466db1db14359406095e7084aa2f9e81585260a0b176b6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.level-3",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "level-3"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.3. Level 3.",
+      "locator": {
+        "section_id": "level-3",
+        "text_sha256": "3dc9e718d75c3c2107940016d42932f244f6b2abe05c39c2dc4279fdf28a22bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.changes",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.changes-2023-02",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "changes-2023-02"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.1. Changes since the 14 February 2023 Candidate Recommendation Snapshot.",
+      "locator": {
+        "section_id": "changes-2023-02",
+        "text_sha256": "78705d5f4aefe8ac4b88606aa4bd49115a0c329612f34739de0a10752b6cb410"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.changes-2020-12",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "changes-2020-12"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.2. Changes since the 22 December 2020 Candidate Recommendation Snapshot.",
+      "locator": {
+        "section_id": "changes-2020-12",
+        "text_sha256": "80216b99f77a44e8cce93f7351a880d5bcff89fa646de4460b144d50c0cd7b04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.changes-2017-10",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "changes-2017-10"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.3. Changes since the 17 October 2017 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-2017-10",
+        "text_sha256": "e85b6c1aab1886b2f11dd5dfb6893449fac486d9a7e77419cf144fb7db9b3423"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.changes-2014-09",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "changes-2014-09"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.4. Changes since the 9 September 2014 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-2014-09",
+        "text_sha256": "f3bb6fd1a625ef091f561153a00f4dc4a7aee3f263f04006d1cfbf942fed538a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.changes-2014-02",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "changes-2014-02"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.5. Changes since the 4 February 2014 Last Call Working Draft.",
+      "locator": {
+        "section_id": "changes-2014-02",
+        "text_sha256": "22a74cdfa9f44733265417003ee3de59f2327cd1035f5e705952368b3d66f8a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.changes-2012-07",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "changes-2012-07"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.6. Changes since the 24 July 2012 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-2012-07",
+        "text_sha256": "59e4db3da802d041c73ab46d9221a46891840a42bd05f6c826712c68b8145e79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.changes-2012-04",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "changes-2012-04"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.7. Changes since the 17 April 2012 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-2012-04",
+        "text_sha256": "12a21c2db16087c2077146e2f786c17b22ba19389c5363fb34b16bd191dfae97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.changes-2012lc",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "changes-2012LC"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.8. Changes since the 14 February 2012 “Last Call” Working Draft.",
+      "locator": {
+        "section_id": "changes-2012LC",
+        "text_sha256": "15e54e0e6be190fad5db83a6c1322ab0a120c84c44e908d001d3381950ff14a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.changes-2011",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "changes-2011"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.9. Changes Since the 15 February 2011 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-2011",
+        "text_sha256": "abfda81495822b304c74913e0aa403a6dddce18fc6f0904018989eca3da4dd2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.changes-2009",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "changes-2009"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.10. Changes Since the 17 December 2009 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-2009",
+        "text_sha256": "0d77800046f87359bbd80cf0a09c0045bef7ee932c36a9bebba1bc75e81c897d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.acknowledgments",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9. Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "4046b861f3acab2af67bf4c388f174f0647ee79f4a543319c602cf037338ac03"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.index",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.index-defined-here",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "854b04e9670cfef7130b93da39c3843a4be632ade32c5ec17cb0cef457917722"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.index-defined-elsewhere",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "ee5c9b15345506ba26461d183b676678f617793d16c64cc905244329f315ca5f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.references",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.normative",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "5eb49caf34036da45f04a8e74ea910c9d35636cb31692ef75d6a545b502cb332"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-backgrounds-3.informative",
+      "family": "css-backgrounds-3",
+      "source_id": "css-backgrounds-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "e755474ece677b74f92b7d6bebcaab2b0f612784b5ecee7a81a25afa2541eef3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

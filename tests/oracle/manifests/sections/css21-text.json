@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-text",
+  "sections": [
+    {
+      "id": "q16.0",
+      "title": "16 Text",
+      "level": 1,
+      "text_sha256": "62a8c5ca203d7650869fec6aa8142752be204c47dcf6a552bb176786b81f7567",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-text.q16-0"
+        ]
+      }
+    },
+    {
+      "id": "indentation-prop",
+      "title": "16.1 Indentation: the 'text-indent' property",
+      "level": 2,
+      "text_sha256": "fe25f96861c8f609546a8e7319469cc4412120490db7b706275f83803b297a9d",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-text.indentation-prop",
+          "css21-text.indentation-prop-clause-865415d4b5ca",
+          "css21-text.indentation-prop-clause-cca2516ebb1d",
+          "css21-text.indentation-prop-clause-d0f0b6873b16",
+          "css21-text.indentation-prop-clause-ccc14ffd276a",
+          "css21-text.indentation-prop-clause-528213e93a94"
+        ]
+      }
+    },
+    {
+      "id": "alignment-prop",
+      "title": "16.2 Alignment: the 'text-align' property",
+      "level": 2,
+      "text_sha256": "99914a766ccca7d18a74e832d5f74bdcd6661202c53cf02ef3197667dd69b7d6",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-text.alignment-prop",
+          "css21-text.alignment-prop-clause-74e065d7205d",
+          "css21-text.alignment-prop-clause-cca2516ebb1d",
+          "css21-text.alignment-prop-clause-7d73ca22580f",
+          "css21-text.alignment-prop-clause-72f24db797b2",
+          "css21-text.alignment-prop-clause-cfd4b00773d7",
+          "css21-text.alignment-prop-clause-6b2fb84758ce",
+          "css21-text.alignment-prop-clause-41cd3b79ec39"
+        ]
+      }
+    },
+    {
+      "id": "decoration",
+      "title": "16.3 Decoration",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-text.decoration"
+        ]
+      }
+    },
+    {
+      "id": "lining-striking-props",
+      "title": "16.3.1 Underlining, overlining, striking, and blinking: the 'text-decoration' property",
+      "level": 3,
+      "text_sha256": "2919b26345deaa3a50b5a41ed7c5b5b22fd7d7c17a6b0826f77d4e220b4a2a35",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-text.lining-striking-props",
+          "css21-text.lining-striking-props-clause-df4b96f704a4",
+          "css21-text.lining-striking-props-clause-cca2516ebb1d",
+          "css21-text.lining-striking-props-clause-914dd664a98f",
+          "css21-text.lining-striking-props-clause-d2b6b8a7bc8d",
+          "css21-text.lining-striking-props-clause-4954daac97ec",
+          "css21-text.lining-striking-props-clause-7a92bea2cc6f",
+          "css21-text.lining-striking-props-clause-b714fd1e6eaf",
+          "css21-text.lining-striking-props-clause-74723221a6e3"
+        ]
+      }
+    },
+    {
+      "id": "spacing-props",
+      "title": "16.4 Letter and word spacing: the 'letter-spacing' and 'word-spacing' properties",
+      "level": 2,
+      "text_sha256": "e3fffc11ea33e9adf9d7998bba5536208ce350bb88eb83af4371b2983dd4b885",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-text.spacing-props",
+          "css21-text.spacing-props-clause-f6249b8c8edf",
+          "css21-text.spacing-props-clause-cca2516ebb1d",
+          "css21-text.spacing-props-clause-03115dded472",
+          "css21-text.spacing-props-clause-15339e106cf1",
+          "css21-text.spacing-props-clause-fb277e3fed3d",
+          "css21-text.spacing-props-clause-92496827a129"
+        ]
+      }
+    },
+    {
+      "id": "caps-prop",
+      "title": "16.5 Capitalization: the 'text-transform' property",
+      "level": 2,
+      "text_sha256": "bab90f9b00001ce6ae3eb4bb5b8346ed64daefb3334e785e5299342ea439ffd2",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-text.caps-prop",
+          "css21-text.caps-prop-clause-c2e240a3a448",
+          "css21-text.caps-prop-clause-cca2516ebb1d",
+          "css21-text.caps-prop-clause-def787b08e50"
+        ]
+      }
+    },
+    {
+      "id": "white-space-prop",
+      "title": "16.6 White space: the 'white-space' property",
+      "level": 2,
+      "text_sha256": "26f38b466d7be71cb5daf27ba8c3111af748068a319f6124058065852349fa50",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-text.white-space-prop",
+          "css21-text.white-space-prop-clause-6b814bda7f85",
+          "css21-text.white-space-prop-clause-cca2516ebb1d",
+          "css21-text.white-space-prop-clause-564f6cd40370",
+          "css21-text.white-space-prop-clause-99516c18ecd7",
+          "css21-text.white-space-prop-clause-63f10afef61e",
+          "css21-text.white-space-prop-clause-ebf1c061d763",
+          "css21-text.white-space-prop-clause-fa4982ad9fbe"
+        ]
+      }
+    },
+    {
+      "id": "white-space-model",
+      "title": "16.6.1 The 'white-space' processing model",
+      "level": 3,
+      "text_sha256": "808785f3e89abd36fc28a8c0a77f5be246946e8725d2d17935464448cc5fb56b",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-text.white-space-model",
+          "css21-text.white-space-model-clause-4dd4251d7d7e"
+        ]
+      }
+    },
+    {
+      "id": "egbidiwscollapse",
+      "title": "16.6.2 Example of bidirectionality with white space collapsing",
+      "level": 3,
+      "text_sha256": "f6560e47c49088438de1cb7f20201236f313476c4f11c4d0e40c7adf09c47e83",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-text.egbidiwscollapse",
+          "css21-text.egbidiwscollapse-clause-1c95b5c585b3"
+        ]
+      }
+    },
+    {
+      "id": "ctrlchars",
+      "title": "16.6.3 Control and combining characters' details",
+      "level": 3,
+      "text_sha256": "08d09c3b6bcecf4cce6ff5f265ac1efe7f025bb67ac57c22d9fa1dee903a6d7b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-text.ctrlchars",
+          "css21-text.ctrlchars-clause-5c0b20e7fa28"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,549 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-style-attr.heading-94c36acbfc92",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "heading-94c36acbfc92"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Style Attributes.",
+      "locator": {
+        "section_id": "heading-94c36acbfc92",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.longstatus-date",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "longstatus-date"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Recommendation 07 November 2013.",
+      "locator": {
+        "section_id": "longstatus-date",
+        "text_sha256": "c108a82aed05c12b70b02ad1cd1a26d36b61df92cd925835345871940d3d2718"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.intro",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "5dfd0ffd59f30dea2e7e43377829db46d3f1c478b7937feba651266818f23659"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.conformance",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "1c06e36a69093043ddcbdcac86e885910c71a3ec81c341f6c4cce8b5942ceafd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-style-attr.conformance-clause-9eaa9ae4d6b8",
+        "css-style-attr.conformance-clause-8da46cef76e4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.conformance-clause-9eaa9ae4d6b8",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Conformance — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 5,
+        "clause_sha256": "9eaa9ae4d6b8480625d42522d4fd7171307b68b8ec9151892f5751e58c3f6839"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-style-attr.conformance-clause-8da46cef76e4",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Conformance — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 10,
+        "clause_sha256": "8da46cef76e4b46aec077f59cb5336d696daf299cd330e871fabb9481a3a931a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-style-attr.syntax",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Syntax and Parsing.",
+      "locator": {
+        "section_id": "syntax",
+        "text_sha256": "8b63a5f695e6ba34fe6e2a4e7a885a19d79f5c0b348dc958856984b0b89e9c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-style-attr.syntax-clause-a0132ef70183",
+        "css-style-attr.syntax-clause-88d577733517",
+        "css-style-attr.syntax-clause-0a86b4568afc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.syntax-clause-a0132ef70183",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Syntax and Parsing — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "syntax",
+        "clause_index": 0,
+        "clause_sha256": "a0132ef7018304ab92dfb773bd5356197e74810e991476450fae30d6fd67b345"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-style-attr.syntax-clause-88d577733517",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Syntax and Parsing — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "syntax",
+        "clause_index": 3,
+        "clause_sha256": "88d5777335177dea81ced99ddd3f7b136b590dae4ab8aa22b863bc5144f23191"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-style-attr.syntax-clause-0a86b4568afc",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Syntax and Parsing — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "syntax",
+        "clause_index": 4,
+        "clause_sha256": "0a86b4568afc3e4243883c6d548212662a2981d4ac9bd9a64b3bcc7af0c66b11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-style-attr.interpret",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "interpret"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascading and Interpretation.",
+      "locator": {
+        "section_id": "interpret",
+        "text_sha256": "fb13a438497fdc23bb2a92f2ef82263e4a8bf29861a13873ffcc60053b247840"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-style-attr.interpret-clause-0399b8e63144",
+        "css-style-attr.interpret-clause-07411ad1e077",
+        "css-style-attr.interpret-clause-e84f2c920f02"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.interpret-clause-0399b8e63144",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "interpret"
+      ],
+      "behaviour": "Cascading and Interpretation — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpret",
+        "clause_index": 0,
+        "clause_sha256": "0399b8e631444a533e128f2fbb6207e48dd12e14159921eb3db08b7c580c5dfe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-style-attr.interpret-clause-07411ad1e077",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "interpret"
+      ],
+      "behaviour": "Cascading and Interpretation — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpret",
+        "clause_index": 1,
+        "clause_sha256": "07411ad1e07727bf748d4c90e48f8baf0caa2a7b84e3bc4ca99b2a12a7bb048c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-style-attr.interpret-clause-e84f2c920f02",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "interpret"
+      ],
+      "behaviour": "Cascading and Interpretation — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpret",
+        "clause_index": 2,
+        "clause_sha256": "e84f2c920f026dec21db922426e54197c76915d6529d12a2048e705bf7ebd12d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-style-attr.abstract",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "0c89bf88bd368e638c141693f4d2f8aff7d02dbfc70c49ff1f83666cc9f3f63d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.status",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "5017b5a3091a401efa182df4af864ac996257c1c74e963c98b912288586b7312"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.contents",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "54a2ae1704453c9a3e17f4591d80d188f6c35465c944e87652c9e0d19c98a7b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.ack",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "ack"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5. Acknowledgments.",
+      "locator": {
+        "section_id": "ack",
+        "text_sha256": "8454fa91d00de8599c32f6f74c343589913da385b6680c05d9cbd78533cd806b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.references",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 6. References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.normative-references",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "normative-references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative references.",
+      "locator": {
+        "section_id": "normative-references",
+        "text_sha256": "e03d48ac81c7632c1157e093a7eacce8256e50cac7f36941ca89abaa536adf1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-style-attr.informative-references",
+      "family": "css-style-attr",
+      "source_id": "css-style-attr",
+      "sections": [
+        "informative-references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative references.",
+      "locator": {
+        "section_id": "informative-references",
+        "text_sha256": "7531705eed2769a19cfbc2f1c426c59acc9f0afa81f28a7d673aecb5251b7032"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

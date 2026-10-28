@@ -1,0 +1,1437 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-will-change-1.intro",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "e3fa5aba2c89158b94c78f80e1113746738bc09ff955043a6c1e009e627ea10d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.values",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.using",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "using"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Using will-change Well.",
+      "locator": {
+        "section_id": "using",
+        "text_sha256": "435d094512f14da778dca528b5614406a6089cf57799fa764c91abdfe842cf01"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.dont-global",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "dont-global"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Don’t Spam will-change Across Too Many Properties or Elements.",
+      "locator": {
+        "section_id": "dont-global",
+        "text_sha256": "86f1c29b09bd943c7bd99e0f1d3556616d7d9417777ab9883573b4940e86e16b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.css-sparingly",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "css-sparingly"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Use will-change Sparingly In Stylesheets.",
+      "locator": {
+        "section_id": "css-sparingly",
+        "text_sha256": "bef44486b01f8b419f21c228b3878725fda2f5a0f2448149e82fad5a545e1293"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-will-change-1.css-sparingly-clause-a2ed82f7ab38"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.css-sparingly-clause-a2ed82f7ab38",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "css-sparingly"
+      ],
+      "behaviour": "Use will-change Sparingly In Stylesheets — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-sparingly",
+        "clause_index": 0,
+        "clause_sha256": "a2ed82f7ab3865dbae88daa58bb0f3b5a9ab32b0020958ede502ebb7fda98a20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.give-time",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "give-time"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Give will-change Sufficient Time To Work.",
+      "locator": {
+        "section_id": "give-time",
+        "text_sha256": "fb5a02eae4b0d75449957ea15957ebf379a2fe33ff0300fcf582a3dd31adebc6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.dont-waste",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "dont-waste"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Don’t Waste Resources On Elements That Have Stopped Changing.",
+      "locator": {
+        "section_id": "dont-waste",
+        "text_sha256": "b7f029c79cd027b568968c58357812393e230c17a582164d4753657ee8962a49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.will-change",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Hinting at Future Behavior: the will-change property.",
+      "locator": {
+        "section_id": "will-change",
+        "text_sha256": "462ac4a338e13ec92ef30b0f1db045ce65c86eac4a1710babae0a7d215a5e9b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-will-change-1.will-change-clause-cca2516ebb1d",
+        "css-will-change-1.will-change-clause-411d33148f59",
+        "css-will-change-1.will-change-clause-a88d85c755a7",
+        "css-will-change-1.will-change-clause-b65f6f5bd1d1",
+        "css-will-change-1.will-change-clause-e8d5206e1f92",
+        "css-will-change-1.will-change-clause-3874816aab1e",
+        "css-will-change-1.will-change-clause-b8222f1c250d",
+        "css-will-change-1.will-change-clause-a2600aeed9e3",
+        "css-will-change-1.will-change-clause-d80472b87e55",
+        "css-will-change-1.will-change-clause-2520abc0f2a1",
+        "css-will-change-1.will-change-clause-3c2b802ef81c",
+        "css-will-change-1.will-change-clause-c46b57cdf5ed"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-cca2516ebb1d",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-411d33148f59",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 21,
+        "clause_sha256": "411d33148f59621cddc6715fd4e77485ce15610f3202c120bf5f8fcb1a68cf0f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-a88d85c755a7",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 27,
+        "clause_sha256": "a88d85c755a77c5dec651593e6491413db2a2f8afe1a5a5e7804e54a0f96cd6e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-b65f6f5bd1d1",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 28,
+        "clause_sha256": "b65f6f5bd1d1b21796a81b20c9bf5a0983389e79719641e470d32fd899324e4e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-e8d5206e1f92",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 33,
+        "clause_sha256": "e8d5206e1f92b07574d61712d591b18c9d55e11c0d760db353a8cff4d71bd144"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-3874816aab1e",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 35,
+        "clause_sha256": "3874816aab1e05fbd165e5b16483c0d756e5660fcc6b57aaf5ccfbdaf8b662bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-b8222f1c250d",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 36,
+        "clause_sha256": "b8222f1c250dab50828a095cc74545ab680ba8dd6a109c3aabc7de2cfbd2efec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-a2600aeed9e3",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 37,
+        "clause_sha256": "a2600aeed9e3ab876034391d539c3597393b04189760eedd938dce1b41845e29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-d80472b87e55",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 38,
+        "clause_sha256": "d80472b87e556fac24a57643c12ef904848978811562e77c9582c688c6362eba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-2520abc0f2a1",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 39,
+        "clause_sha256": "2520abc0f2a1564cd3de3dce69a3446c500fd9a2e8640a90e3666eceef7e0740"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-3c2b802ef81c",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 42,
+        "clause_sha256": "3c2b802ef81cd57473dcb4fc0190dc2110d078e562f14dc18f4bfc1a9c31e2d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.will-change-clause-c46b57cdf5ed",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "will-change"
+      ],
+      "behaviour": "Hinting at Future Behavior: the will-change property — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "will-change",
+        "clause_index": 43,
+        "clause_sha256": "c46b57cdf5ed68fe2592e2d21d1ec1cc006bbd1168f129a6e91a2cb10a65e636"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.security",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "b95e943686281e1ded8767ecc7aa42178d5040c2df7c6b88ac150edb2feddc4b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.privacy",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "d3a7870a58ef8f9d20d8998308d0f82c14183ccf99fae12d223172e1dee81d6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.w3c-conformance",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.w3c-conventions",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-will-change-1.w3c-conventions-clause-5c98c879f070",
+        "css-will-change-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.w3c-conformance-classes",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-will-change-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-will-change-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.w3c-partial",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-will-change-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.w3c-conform-future-proofing",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.w3c-testing",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-will-change-1.w3c-testing-clause-1e0fff369221",
+        "css-will-change-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.w3c-cr-exit-criteria",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-will-change-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+        "css-will-change-1.w3c-cr-exit-criteria-clause-ea752775913a",
+        "css-will-change-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+        "css-will-change-1.w3c-cr-exit-criteria-clause-b67129724911",
+        "css-will-change-1.w3c-cr-exit-criteria-clause-833729d43f23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.w3c-cr-exit-criteria-clause-ea752775913a",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.w3c-cr-exit-criteria-clause-b67129724911",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.w3c-cr-exit-criteria-clause-833729d43f23",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 10,
+        "clause_sha256": "833729d43f239b3deb57bcaaf1c29d2f077e86aad8b396f8458fa182e4db8d99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-will-change-1.property-index",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "e02166516d408618071a771b8efb5ef065b6f5f07b37386422eb242b03151a5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.title",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Will Change Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "63fecc7aaf6ad5ace28bd434fbb8b18e953b4c0cfb2f4700685fa0ef28413422"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.abstract",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "8948959364210add9d93b0ba40e5fcf901d0f942a4533a3ee0e2fd7f9bffcfc8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.status",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "81832ba385bb40fe85935f4b9596815704dfde1b986660c9c857c2dfad931f76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.contents",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "bfc559d9b0b527327f03d878f43b14d5f92f7c0b4c7dd4f125db25e5f2b9c8dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.acks",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "acks"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5. Acknowledgements.",
+      "locator": {
+        "section_id": "acks",
+        "text_sha256": "7cfeac9be8b61cf4ff6b54bd9ec21408b2939809ddc91edbc0a20fcb2da0e35e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.changes",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 6. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "f44e95ddddb70a9f7d482a4e718c50270de1df8fdee3b53edc1046a01cdf25e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.index",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.index-defined-here",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "d024d806b5fca6580fce23960d1264d1b32f1585164d337d9bee68e265f62e25"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.index-defined-elsewhere",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "8225ab01b0d5aa2206bbe28a54423c5f27f900f8e0cc5588833eb57bbff94765"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.references",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.normative",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "4a9f2ef8dfb97885ac0dd4bf6030449b663c354b107c96d54b4b3286843b157e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-will-change-1.informative",
+      "family": "css-will-change-1",
+      "source_id": "css-will-change-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "f313f9bed40c3cc06d4e76dd855cf074056782929a6db9c64d09efcf4f56cdda"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

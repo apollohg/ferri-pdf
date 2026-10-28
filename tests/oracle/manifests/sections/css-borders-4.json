@@ -1,0 +1,1173 @@
+{
+  "schema_version": 1,
+  "source_id": "css-borders-4",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Borders and Box Decorations Module Level 4",
+      "level": 1,
+      "text_sha256": "dbd84fcae9b752807ae3993a95d6d7985eae4ed5e5c6af58bff0c81d8c24a042",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "7a82eb3aee49b15e54d6dc319f1439471cd18b09bb72476967f8536e3b4e16ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "fe3635a9c1bc58ba42cdd0d01e64c25e830f553e474984f66dcd5610f45b11e9",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "fc3828725232d9567dab292223ba7b7b765628b9abb1501d63c01a2d89b89a66",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "a214b15c045cf37964074ac251ce414c3c55b51b6c69da9f34bc50a98eba7056",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "47453f379cab6b272540f7b985716ad866d373f13c0ae9560b5f02f5867deb4d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.placement",
+          "css-borders-4.placement-clause-cf1b5ac8b0fd"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "6a8c697e2e3e2b223e8f880f9c8524e873db319131cf7bb23b69c6ad7ae11130",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.values"
+        ]
+      }
+    },
+    {
+      "id": "borders",
+      "title": "2. Borders",
+      "level": 2,
+      "text_sha256": "48bdbc600ab80638250fdc4c7c31e4ca0b3161e2ad68c91c6c4b50825a496d29",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.borders"
+        ]
+      }
+    },
+    {
+      "id": "border-color",
+      "title": "2.1. Line Colors: the border-color properties",
+      "level": 3,
+      "text_sha256": "493a4a25af10bacbd6fc4661421d7c21099ed6e5fd641f104305f54924be425e",
+      "clause_count": 74,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-color",
+          "css-borders-4.border-color-clause-cca2516ebb1d",
+          "css-borders-4.border-color-clause-877155d8277b",
+          "css-borders-4.border-color-clause-c7184547edca",
+          "css-borders-4.border-color-clause-7baf3b614ab4",
+          "css-borders-4.border-color-clause-cb65c55ae4e9"
+        ]
+      }
+    },
+    {
+      "id": "border-style",
+      "title": "2.2. Line Patterns: the border-style properties",
+      "level": 3,
+      "text_sha256": "798a5bb0658aeec03129532cd0340921a18339cc996e38e20d093d3c5ec4c58c",
+      "clause_count": 91,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-style",
+          "css-borders-4.border-style-clause-cca2516ebb1d",
+          "css-borders-4.border-style-clause-c8c6dc71f503",
+          "css-borders-4.border-style-clause-c06a53303cd5",
+          "css-borders-4.border-style-clause-c576b195a886",
+          "css-borders-4.border-style-clause-fcda3c9fa655",
+          "css-borders-4.border-style-clause-2fcbcdf18540",
+          "css-borders-4.border-style-clause-8f643fb06d70",
+          "css-borders-4.border-style-clause-4ae80e0f04f4"
+        ]
+      }
+    },
+    {
+      "id": "border-width",
+      "title": "2.3. Line Thickness: the border-width properties",
+      "level": 3,
+      "text_sha256": "7c6cff7c25ed79cf25235cc0ab8baa1117a38e7552320772bb49806d7d7ddb90",
+      "clause_count": 98,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-width",
+          "css-borders-4.border-width-clause-cca2516ebb1d",
+          "css-borders-4.border-width-clause-674d5fa645b0",
+          "css-borders-4.border-width-clause-a17fbafaca42",
+          "css-borders-4.border-width-clause-bfc205666eac",
+          "css-borders-4.border-width-clause-b94b45d7dce4",
+          "css-borders-4.border-width-clause-181579349447",
+          "css-borders-4.border-width-clause-b7564547ab45"
+        ]
+      }
+    },
+    {
+      "id": "border-shorthands",
+      "title": "2.4. Border Shorthand Properties",
+      "level": 3,
+      "text_sha256": "fe1b45e1b0c5a52d03b52f9fe8e7e0b59ac089fc39cd484b0b3a1b3612aef5fb",
+      "clause_count": 67,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-shorthands",
+          "css-borders-4.border-shorthands-clause-cca2516ebb1d",
+          "css-borders-4.border-shorthands-clause-47f096467d8a",
+          "css-borders-4.border-shorthands-clause-e5db338f94c5",
+          "css-borders-4.border-shorthands-clause-876fe498a4a6",
+          "css-borders-4.border-shorthands-clause-fca6be513040"
+        ]
+      }
+    },
+    {
+      "id": "corners",
+      "title": "3. Corners",
+      "level": 2,
+      "text_sha256": "4292c781f2af93b16a23fae03c69938bfdfe22fae81827a98bdb83dd5f1f5c4e",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corners",
+          "css-borders-4.corners-clause-ebdb6731bc7e",
+          "css-borders-4.corners-clause-3a65533a7fb5"
+        ]
+      }
+    },
+    {
+      "id": "corner-clipping",
+      "title": "3.1. Corner Clipping",
+      "level": 3,
+      "text_sha256": "06c12e7b8b9d5cc06531eb1669769efb9b03861f44eb9a90993e9876682c8f24",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-clipping",
+          "css-borders-4.corner-clipping-clause-26c602a6d797",
+          "css-borders-4.corner-clipping-clause-5f871ee9a3e0"
+        ]
+      }
+    },
+    {
+      "id": "corner-transitions",
+      "title": "3.2. Color and Style Transitions",
+      "level": 3,
+      "text_sha256": "6aa05fdd587a936c8f93ebce42404afa354ae96d082801bbdba9276add649988",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-transitions",
+          "css-borders-4.corner-transitions-clause-fdb31bc28a00"
+        ]
+      }
+    },
+    {
+      "id": "corner-overlap",
+      "title": "3.3. Overlapping Curves",
+      "level": 3,
+      "text_sha256": "0d4e0a09ebb55bffa05748145536cba083a554c79f3d490d5449b17218650bfe",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-overlap",
+          "css-borders-4.corner-overlap-clause-ebc60f3cde44",
+          "css-borders-4.corner-overlap-clause-8db458735369"
+        ]
+      }
+    },
+    {
+      "id": "border-radius-tables",
+      "title": "3.4. Effect on Tables",
+      "level": 3,
+      "text_sha256": "10208a452a10fd650e0b12d30a643b42747a2e24fc0143be42b5c2e6dce17fa3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-radius-tables"
+        ]
+      }
+    },
+    {
+      "id": "border-radius",
+      "title": "3.5. Corner Sizing: the border-*-*-radius properties",
+      "level": 3,
+      "text_sha256": "77087fe0f88c645d84c74d55cf8e6cba31b2498fbdfdb039e869e8d766d2ac3d",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-radius",
+          "css-borders-4.border-radius-clause-cca2516ebb1d",
+          "css-borders-4.border-radius-clause-961589e5bfa3",
+          "css-borders-4.border-radius-clause-674d5fa645b0",
+          "css-borders-4.border-radius-clause-da27056ed9d2",
+          "css-borders-4.border-radius-clause-efbb44fd9925",
+          "css-borders-4.border-radius-clause-df6df02628fe"
+        ]
+      }
+    },
+    {
+      "id": "corner-sizing",
+      "title": "3.6. Corner Sizing Shorthands: the border-radius and border-*-radius shorthand properties",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-sizing"
+        ]
+      }
+    },
+    {
+      "id": "corner-sizing-side-shorthands",
+      "title": "3.6.1. Sizing The Corners Of One Side: The border-top-radius, border-right-radius, border-bottom-radius, border-left-radius, border-block-start-radius, border-block-end-radius, border-inline-start-radius, border-inline-end-radius shorthands",
+      "level": 4,
+      "text_sha256": "d72d3dedee04eb8a83c6b2dcccb55a9f41890eed8a7c1da50c10535aba954ade",
+      "clause_count": 104,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-sizing-side-shorthands",
+          "css-borders-4.corner-sizing-side-shorthands-clause-cca2516ebb1d",
+          "css-borders-4.corner-sizing-side-shorthands-clause-34b48aee762f",
+          "css-borders-4.corner-sizing-side-shorthands-clause-1e34b6fc4fb6",
+          "css-borders-4.corner-sizing-side-shorthands-clause-c8c2e073af23",
+          "css-borders-4.corner-sizing-side-shorthands-clause-ee615c361f5b",
+          "css-borders-4.corner-sizing-side-shorthands-clause-77cff6c23922",
+          "css-borders-4.corner-sizing-side-shorthands-clause-a00427c934d3",
+          "css-borders-4.corner-sizing-side-shorthands-clause-548e28b239e0",
+          "css-borders-4.corner-sizing-side-shorthands-clause-2e26855b3a91",
+          "css-borders-4.corner-sizing-side-shorthands-clause-6764f8839d9d",
+          "css-borders-4.corner-sizing-side-shorthands-clause-30f4f600e8a4",
+          "css-borders-4.corner-sizing-side-shorthands-clause-2ce6a8537db8",
+          "css-borders-4.corner-sizing-side-shorthands-clause-333e55382b5c",
+          "css-borders-4.corner-sizing-side-shorthands-clause-bffed87313e3",
+          "css-borders-4.corner-sizing-side-shorthands-clause-978b17d5c15f",
+          "css-borders-4.corner-sizing-side-shorthands-clause-6acf91ec13c7",
+          "css-borders-4.corner-sizing-side-shorthands-clause-72c4888cece8",
+          "css-borders-4.corner-sizing-side-shorthands-clause-0f04679a601d",
+          "css-borders-4.corner-sizing-side-shorthands-clause-3cdfc51544c3",
+          "css-borders-4.corner-sizing-side-shorthands-clause-2cae3bb4914d"
+        ]
+      }
+    },
+    {
+      "id": "corner-sizing-shorthand",
+      "title": "3.6.2. Sizing All Corners At Once: The border-radius shorthand",
+      "level": 4,
+      "text_sha256": "bac54dcee1b1ad45a2f9521bd9409d3a340e5fe9f18d5fccba47fb34ca88b38e",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-sizing-shorthand",
+          "css-borders-4.corner-sizing-shorthand-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "corner-shaping",
+      "title": "3.7. Corner Shaping: the corner-*-shape properties",
+      "level": 3,
+      "text_sha256": "91d53bf64bfddb14d7f73628bb8901abe3695376c276c1c17e21c1cd942fe186",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-shaping",
+          "css-borders-4.corner-shaping-clause-9a5d37bc5c05",
+          "css-borders-4.corner-shaping-clause-11b353ca3833",
+          "css-borders-4.corner-shaping-clause-cca2516ebb1d",
+          "css-borders-4.corner-shaping-clause-e3a2278787cf",
+          "css-borders-4.corner-shaping-clause-96e7aca390da",
+          "css-borders-4.corner-shaping-clause-81d2418a70ed",
+          "css-borders-4.corner-shaping-clause-97f49b16b70a",
+          "css-borders-4.corner-shaping-clause-a62176b63bd5"
+        ]
+      }
+    },
+    {
+      "id": "corner-shaping-shorthands",
+      "title": "3.8. Corner Shaping Shorthands: the corner-shape and corner-*-shape shorthand properties",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-shaping-shorthands"
+        ]
+      }
+    },
+    {
+      "id": "corner-shaping-side-shorthands",
+      "title": "3.8.1. Shaping The Corners Of One Side: The corner-*-shape shorthands:",
+      "level": 4,
+      "text_sha256": "96fc8be9047a9c2dd42affe81471e991318be600a22fa71dd2ed182a8bef0103",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-shaping-side-shorthands",
+          "css-borders-4.corner-shaping-side-shorthands-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "corner-shaping-shorthand",
+      "title": "3.8.2. Shaping All Corners At Once: The corner-shape shorthand",
+      "level": 4,
+      "text_sha256": "986726c53b9025aaeb64f52b58c3a8f2a0ff04a4265c61ba42bf3584bc6cca6c",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-shaping-shorthand",
+          "css-borders-4.corner-shaping-shorthand-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "corner-shorthands",
+      "title": "3.9. Corner Sizing & Shaping Shorthands: the corner and corner-* shorthand properties",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-shorthands"
+        ]
+      }
+    },
+    {
+      "id": "single-corner-shorthands",
+      "title": "3.9.1. Sizing & shaping a corner: The corner-top-left, corner-top-right, corner-bottom-right, corner-bottom-left, corner-start-start, corner-start-end, corner-end-start, corner-end-end shorthands",
+      "level": 4,
+      "text_sha256": "38c7edef782e5e15da7afbf02e6796a866ce431603d2420efd6df4595c347585",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.single-corner-shorthands",
+          "css-borders-4.single-corner-shorthands-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "corner-side-shorthands",
+      "title": "3.9.2. Sizing & shaping rhe Corners Of One Side: The corner-top, corner-right, corner-bottom, corner-left, corner-block-start, corner-block-end, corner-inline-start, corner-inline-end shorthands",
+      "level": 4,
+      "text_sha256": "688a378c7d9c587535b48cc298c90d544a359db40ec619d6694d35253ccef293",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-side-shorthands",
+          "css-borders-4.corner-side-shorthands-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "corner-shorthand",
+      "title": "3.9.3. Sizing & Shaping All Corners At Once: The corner shorthand",
+      "level": 4,
+      "text_sha256": "339b92dca9962efbd0a7b667e462f54fe1c0e0d84ae89c5d69bfa1fa1b18b09f",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-shorthand",
+          "css-borders-4.corner-shorthand-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "corner-shape-rendering",
+      "title": "3.9.4. Rendering corner-shape",
+      "level": 4,
+      "text_sha256": "6ed6b3e5e028a663d74437f5978465a8d0f722e88480ba0669096a3c6732b31c",
+      "clause_count": 85,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-shape-rendering",
+          "css-borders-4.corner-shape-rendering-clause-969d2c087010",
+          "css-borders-4.corner-shape-rendering-clause-a6746edf21d6",
+          "css-borders-4.corner-shape-rendering-clause-27e0cf0f036e",
+          "css-borders-4.corner-shape-rendering-clause-5ea000ae615e"
+        ]
+      }
+    },
+    {
+      "id": "corner-shape-constrain-radii",
+      "title": "3.9.5. Constraining opposite radii",
+      "level": 4,
+      "text_sha256": "50de88a8ec8df6b489449b607c225bcbe7137e86dce8c10b86e3cc7c3738d5a1",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-shape-constrain-radii",
+          "css-borders-4.corner-shape-constrain-radii-clause-1e4ee5c690de",
+          "css-borders-4.corner-shape-constrain-radii-clause-497e3dd08dae",
+          "css-borders-4.corner-shape-constrain-radii-clause-1c765cd5a8bd",
+          "css-borders-4.corner-shape-constrain-radii-clause-b3517206d92a"
+        ]
+      }
+    },
+    {
+      "id": "corner-shape-interpolation",
+      "title": "3.9.6. Interpolating corner shapes",
+      "level": 4,
+      "text_sha256": "8bb0917111b1cee4bebd6672c097e12b3fc27fed3514f24bd0cdb097b7f77610",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.corner-shape-interpolation"
+        ]
+      }
+    },
+    {
+      "id": "border-images",
+      "title": "4. Border Images",
+      "level": 2,
+      "text_sha256": "f946455427667f52f8421b7491d7cd640dafbb3cee104246b4837fc8e0c15998",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-images",
+          "css-borders-4.border-images-clause-2a1baec3bdae"
+        ]
+      }
+    },
+    {
+      "id": "border-image-source",
+      "title": "4.1. Image Source: the border-image-source property",
+      "level": 3,
+      "text_sha256": "de3d150e02ea58db96230cb167f5aa9c0e491a2e1c192709cf39cfc6e21b05c4",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-image-source",
+          "css-borders-4.border-image-source-clause-cca2516ebb1d",
+          "css-borders-4.border-image-source-clause-e97bb8a9330d",
+          "css-borders-4.border-image-source-clause-38ad6462055e",
+          "css-borders-4.border-image-source-clause-4348b0a2c1eb",
+          "css-borders-4.border-image-source-clause-ea49ffe57dfd"
+        ]
+      }
+    },
+    {
+      "id": "border-image-slice",
+      "title": "4.2. Image Slicing: the border-image-slice property",
+      "level": 3,
+      "text_sha256": "9706f1bcef654d5fdbc7423d153ce529aeb5fc096abe8f16748103897e90e3e4",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-image-slice",
+          "css-borders-4.border-image-slice-clause-cca2516ebb1d",
+          "css-borders-4.border-image-slice-clause-6cbacde9ee96",
+          "css-borders-4.border-image-slice-clause-b3c74d380f52",
+          "css-borders-4.border-image-slice-clause-37e2e6b0dffb",
+          "css-borders-4.border-image-slice-clause-7a6033564f79",
+          "css-borders-4.border-image-slice-clause-e0dfe5e5cbf4",
+          "css-borders-4.border-image-slice-clause-3a45c4db59ec"
+        ]
+      }
+    },
+    {
+      "id": "border-image-width",
+      "title": "4.3. Drawing Areas: the border-image-width property",
+      "level": 3,
+      "text_sha256": "5e871614429135afa225adb85e5e5b76d64a924a3f4e8d99401cc4e510e5dd10",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-image-width",
+          "css-borders-4.border-image-width-clause-cca2516ebb1d",
+          "css-borders-4.border-image-width-clause-d55a2cfbe976",
+          "css-borders-4.border-image-width-clause-daccb5250a8d",
+          "css-borders-4.border-image-width-clause-ad5ce8ac3eaf",
+          "css-borders-4.border-image-width-clause-4a40e09517d1",
+          "css-borders-4.border-image-width-clause-6d171549eb5d",
+          "css-borders-4.border-image-width-clause-75c32b3428a2",
+          "css-borders-4.border-image-width-clause-d7a6a34c66b7",
+          "css-borders-4.border-image-width-clause-c4bc24b0d5a9"
+        ]
+      }
+    },
+    {
+      "id": "border-image-outset",
+      "title": "4.4. Edge Overhang: the border-image-outset property",
+      "level": 3,
+      "text_sha256": "02cecff39927d26b727b76e00485e0427adeff78a3dd21b47d6d82b4cf9958dc",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-image-outset",
+          "css-borders-4.border-image-outset-clause-cca2516ebb1d",
+          "css-borders-4.border-image-outset-clause-5c31a6f2b49a",
+          "css-borders-4.border-image-outset-clause-4433cbaf21c4",
+          "css-borders-4.border-image-outset-clause-fa274dcf6ce8",
+          "css-borders-4.border-image-outset-clause-ce608b7eae5e",
+          "css-borders-4.border-image-outset-clause-c4b985b3627f"
+        ]
+      }
+    },
+    {
+      "id": "border-image-repeat",
+      "title": "4.5. Image Tiling: the border-image-repeat property",
+      "level": 3,
+      "text_sha256": "c24f65d48ca9ef94fe1f7884aff6ce50f48834ce08af5908e4ae38d3165d8e9e",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-image-repeat",
+          "css-borders-4.border-image-repeat-clause-cca2516ebb1d",
+          "css-borders-4.border-image-repeat-clause-ba6a274d2a3e",
+          "css-borders-4.border-image-repeat-clause-bdfe3f446ce4",
+          "css-borders-4.border-image-repeat-clause-7f1bbbc84d13"
+        ]
+      }
+    },
+    {
+      "id": "border-image-process",
+      "title": "4.6. Drawing the Border Image",
+      "level": 3,
+      "text_sha256": "b680e746b7f9918c95cec9a509babd5483ba679735b8f777e526d7578737a490",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-image-process"
+        ]
+      }
+    },
+    {
+      "id": "border-image",
+      "title": "4.7. Border Image Shorthand: the border-image property",
+      "level": 3,
+      "text_sha256": "331f8dafe2b16d5a26cd6f54efa7530016032dd048577ac6407c624646ec834c",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-image",
+          "css-borders-4.border-image-clause-cca2516ebb1d",
+          "css-borders-4.border-image-clause-0ebbf039065f",
+          "css-borders-4.border-image-clause-b7b65024b74e"
+        ]
+      }
+    },
+    {
+      "id": "border-image-tables",
+      "title": "4.8. Effect on Tables",
+      "level": 3,
+      "text_sha256": "13077f2ecfdf6c31c1a57da48168d697c50e46b316decf928591101cf3dff64a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-image-tables",
+          "css-borders-4.border-image-tables-clause-c909e0aeb799"
+        ]
+      }
+    },
+    {
+      "id": "partial-borders",
+      "title": "5. Partial borders",
+      "level": 2,
+      "text_sha256": "23988cc967f103f2daf7efca4c8a0427bca9a48fd2d65f41a40f233c75b2410c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.partial-borders",
+          "css-borders-4.partial-borders-clause-d64372e6b244"
+        ]
+      }
+    },
+    {
+      "id": "border-limit",
+      "title": "5.1. Partial Borders: the border-limit property",
+      "level": 3,
+      "text_sha256": "7efd06954db90b1ec75635d555e547669cc82213736d349adb88e0271c65d1a2",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-limit",
+          "css-borders-4.border-limit-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "border-clip",
+      "title": "5.2. The border-clip properties",
+      "level": 3,
+      "text_sha256": "48740d40679091a17032ba9d982128abf9770141c999a704eba73f36aceab732",
+      "clause_count": 85,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-clip",
+          "css-borders-4.border-clip-clause-cca2516ebb1d",
+          "css-borders-4.border-clip-clause-674d5fa645b0",
+          "css-borders-4.border-clip-clause-888488ebebd5",
+          "css-borders-4.border-clip-clause-59d71b345442",
+          "css-borders-4.border-clip-clause-ee3d2fece9e7",
+          "css-borders-4.border-clip-clause-b7836a5ac620",
+          "css-borders-4.border-clip-clause-4eaa83aa4df0"
+        ]
+      }
+    },
+    {
+      "id": "drop-shadows",
+      "title": "6. Drop Shadows",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.drop-shadows"
+        ]
+      }
+    },
+    {
+      "id": "box-shadow-color",
+      "title": "6.1. Coloring shadows: the box-shadow-color property",
+      "level": 3,
+      "text_sha256": "7264342840ed5d6afdf76e561e68d90ef955770992a60ce5c5614535ce9af6d8",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.box-shadow-color",
+          "css-borders-4.box-shadow-color-clause-cca2516ebb1d",
+          "css-borders-4.box-shadow-color-clause-e2442a3bc57e",
+          "css-borders-4.box-shadow-color-clause-493be2f6780d",
+          "css-borders-4.box-shadow-color-clause-dc6455ee6e6c",
+          "css-borders-4.box-shadow-color-clause-54d81c9592be"
+        ]
+      }
+    },
+    {
+      "id": "box-shadow-offset",
+      "title": "6.2. Offsetting shadows: the box-shadow-offset property",
+      "level": 3,
+      "text_sha256": "80180631e5e9c7b3fd129277e4245e2398082b2ec6ab165587fd81b59c4ae123",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.box-shadow-offset",
+          "css-borders-4.box-shadow-offset-clause-cca2516ebb1d",
+          "css-borders-4.box-shadow-offset-clause-83acaeb79590",
+          "css-borders-4.box-shadow-offset-clause-2e5d483c633b",
+          "css-borders-4.box-shadow-offset-clause-9ee009996cbe",
+          "css-borders-4.box-shadow-offset-clause-aef6c98ee972"
+        ]
+      }
+    },
+    {
+      "id": "box-shadow-blur",
+      "title": "6.3. Blurring shadows: the box-shadow-blur property",
+      "level": 3,
+      "text_sha256": "a185f8fc399116622214e141b0dc9724949389b0636a0d00e1e927caf230ee2a",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.box-shadow-blur",
+          "css-borders-4.box-shadow-blur-clause-cca2516ebb1d",
+          "css-borders-4.box-shadow-blur-clause-a22fa29bde3b",
+          "css-borders-4.box-shadow-blur-clause-99cfe280d590",
+          "css-borders-4.box-shadow-blur-clause-d3d18fb99f06",
+          "css-borders-4.box-shadow-blur-clause-3a23d11d3ee1"
+        ]
+      }
+    },
+    {
+      "id": "box-shadow-spread",
+      "title": "6.4. Spreading shadows: the box-shadow-spread property",
+      "level": 3,
+      "text_sha256": "6b127537ed80eebd4537cd2df6e867962326ef5436f892140d7f115d51a2c1da",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.box-shadow-spread",
+          "css-borders-4.box-shadow-spread-clause-cca2516ebb1d",
+          "css-borders-4.box-shadow-spread-clause-477c63088701",
+          "css-borders-4.box-shadow-spread-clause-257ba2307737",
+          "css-borders-4.box-shadow-spread-clause-fe4f18ecf7d1"
+        ]
+      }
+    },
+    {
+      "id": "box-shadow-position",
+      "title": "6.5. Spreading shadows: the box-shadow-position property",
+      "level": 3,
+      "text_sha256": "430b3515fb7558437d2535edf005d537ab2a28b5fe39d323a952e7d9d4d59487",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.box-shadow-position",
+          "css-borders-4.box-shadow-position-clause-cca2516ebb1d",
+          "css-borders-4.box-shadow-position-clause-f224c8799fd9",
+          "css-borders-4.box-shadow-position-clause-bcb88efd5b4d",
+          "css-borders-4.box-shadow-position-clause-8854cfc285f7",
+          "css-borders-4.box-shadow-position-clause-4ee627a3987a"
+        ]
+      }
+    },
+    {
+      "id": "box-shadow",
+      "title": "6.6. Drop Shadows Shorthand: the box-shadow property",
+      "level": 3,
+      "text_sha256": "9f39df6ea4d08d98e403e403b0e8f22bf29e2cee66314d5cfcff302b454da886",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.box-shadow",
+          "css-borders-4.box-shadow-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "shadow-shape",
+      "title": "6.6.1. Shadow Shape, Spread, and Knockout",
+      "level": 4,
+      "text_sha256": "b08de706cf17d7e8c6d46f34ea995ae494bda0f46c18423ba9f2963426ffd3ce",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.shadow-shape"
+        ]
+      }
+    },
+    {
+      "id": "shadow-blur",
+      "title": "6.6.2. Blurring Shadow Edges",
+      "level": 4,
+      "text_sha256": "cf378d865f0cc5cd627c5723fff74570d7edf241a1255ec06fdcaca778549f99",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.shadow-blur",
+          "css-borders-4.shadow-blur-clause-7c72a10c1885"
+        ]
+      }
+    },
+    {
+      "id": "shadow-layers",
+      "title": "6.7. Layering, Layout, and Other Details",
+      "level": 3,
+      "text_sha256": "64cd8baa24f31ebb1f5cc58f96e846f1c1ad0c6b66ed4e83382320bfc05e16e8",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.shadow-layers"
+        ]
+      }
+    },
+    {
+      "id": "border-shape",
+      "title": "7. Border Shaping",
+      "level": 2,
+      "text_sha256": "7e36542db83d5c809af7bcb8b8492ab4587710b4751677ac50b9f4cbd5f17e10",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-shape"
+        ]
+      }
+    },
+    {
+      "id": "border-shape-func",
+      "title": "7.1. The border-shape property",
+      "level": 3,
+      "text_sha256": "dbe2fcac160d5f7e95c72c7d0b9718e1bbdee7e40500a95137b92938674b8e8a",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.border-shape-func",
+          "css-borders-4.border-shape-func-clause-cca2516ebb1d",
+          "css-borders-4.border-shape-func-clause-e2442a3bc57e",
+          "css-borders-4.border-shape-func-clause-fd78ee2bd302",
+          "css-borders-4.border-shape-func-clause-eba3937c074f",
+          "css-borders-4.border-shape-func-clause-e326ee72edc4",
+          "css-borders-4.border-shape-func-clause-8390a658cde1",
+          "css-borders-4.border-shape-func-clause-5a2801685ee6",
+          "css-borders-4.border-shape-func-clause-84f385b9a760",
+          "css-borders-4.border-shape-func-clause-18d537ab69c3",
+          "css-borders-4.border-shape-func-clause-1ac230a57b75",
+          "css-borders-4.border-shape-func-clause-ab9993ebb258",
+          "css-borders-4.border-shape-func-clause-0ef4fc026441",
+          "css-borders-4.border-shape-func-clause-9d61d66e50b3"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.security"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20250722",
+      "title": "Changes since the First Public Working Draft of 22 July 2025",
+      "level": 3,
+      "text_sha256": "d0aa4a5ca6ee5b6966934b316247aa04c66e552b0eae6a92e4e899c7c9d0197d",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.changes-20250722"
+        ]
+      }
+    },
+    {
+      "id": "level-changes",
+      "title": "Additions since [CSS3BG]",
+      "level": 3,
+      "text_sha256": "42979738751ca9255e2489808f0ab60a148013ee1c8de56a23140c71746e82c2",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.level-changes"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "002fff947f0e046ba9aea089f2ef2d4c293881396dcc8a6ad64f35e8bb97eaba",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.w3c-conventions",
+          "css-borders-4.w3c-conventions-clause-5c98c879f070",
+          "css-borders-4.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.w3c-conformance-classes",
+          "css-borders-4.w3c-conformance-classes-clause-ff408372426c",
+          "css-borders-4.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.w3c-partial",
+          "css-borders-4.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.w3c-testing",
+          "css-borders-4.w3c-testing-clause-1e0fff369221",
+          "css-borders-4.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "36381a4b7eec2f3db483125f12f59fafb18255c6f71db9747b678f6d7a5bc6ce",
+      "clause_count": 205,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "646654e094e7fafbe95a9176f98fa8a198953721b56c626a72e467d950618e20",
+      "clause_count": 131,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "4b36ce9bba64c33bedb6726209d9f9678416d63b83ad4ee87e6262d290038f5a",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.import-637bec456d3e"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "df26ca8e65b7fb81dcbabdd6f4dbedae1141714259ccae34e8f5af577cf396f5",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "aecb3b417677828be6cf7ca4960dd9ddcce6bd51dcf268720a6b3a0d3e8ae4e8",
+      "clause_count": 1138,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.property-index",
+          "css-borders-4.property-index-clause-674d5fa645b0",
+          "css-borders-4.property-index-clause-877155d8277b",
+          "css-borders-4.property-index-clause-961589e5bfa3",
+          "css-borders-4.property-index-clause-e97bb8a9330d",
+          "css-borders-4.property-index-clause-d55a2cfbe976",
+          "css-borders-4.property-index-clause-e2442a3bc57e",
+          "css-borders-4.property-index-clause-807f8a13b9fb"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "d6065a57943fc44d64382d87f9b9c566c1558465a3da39d847dad355a2ebbd95",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-borders-4.issues-index"
+        ]
+      }
+    }
+  ]
+}

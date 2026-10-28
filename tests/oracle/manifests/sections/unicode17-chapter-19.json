@@ -1,0 +1,366 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-19",
+  "sections": [
+    {
+      "id": "G12178",
+      "title": "Africa",
+      "level": 1,
+      "text_sha256": "9fad76c3130b4c190d3cc827b8ccbaf481a4106adefc29287f78da12352220b4",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.g12178"
+        ]
+      }
+    },
+    {
+      "id": "heading-a7f8fe8ebfc6",
+      "title": "19.1 Ethiopic",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-a7f8fe8ebfc6"
+        ]
+      }
+    },
+    {
+      "id": "heading-a5bd6c77017b",
+      "title": "19.1.1 Ethiopic: U+1200–U+137F",
+      "level": 3,
+      "text_sha256": "c1636aabc0d9769df353dea9c26f3f4830e05730bb3a95154a5509f0c8d0febe",
+      "clause_count": 114,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-a5bd6c77017b",
+          "unicode17-chapter-19.heading-a5bd6c77017b-clause-c3e46f229a8f"
+        ]
+      }
+    },
+    {
+      "id": "heading-f2d230c906b9",
+      "title": "19.1.2 Ethiopic Extensions",
+      "level": 3,
+      "text_sha256": "61dc0f1e539bac6483d843e7efa1fc184ea4f7b2b0ab834a3845dd2b4d7adaf4",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-f2d230c906b9"
+        ]
+      }
+    },
+    {
+      "id": "heading-fbdd47d6193e",
+      "title": "19.2 Osmanya",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-fbdd47d6193e"
+        ]
+      }
+    },
+    {
+      "id": "heading-c0d54e60d926",
+      "title": "19.2.1 Osmanya: U+10480–U+104AF",
+      "level": 3,
+      "text_sha256": "2dd7ae15e804857074d3e763180c24a80eeb54e1610d49ff44726b737886eee1",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-c0d54e60d926"
+        ]
+      }
+    },
+    {
+      "id": "heading-ba177bde2256",
+      "title": "19.3 Tifinagh",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-ba177bde2256"
+        ]
+      }
+    },
+    {
+      "id": "heading-3a31d4f04e62",
+      "title": "19.3.1 Tifinagh: U+2D30–U+2D7F",
+      "level": 3,
+      "text_sha256": "9d62848ad44b5fd6155455867899489f47d9adade6ce760346cc6c71ae893bb2",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-3a31d4f04e62",
+          "unicode17-chapter-19.heading-3a31d4f04e62-clause-dc680eac0f4f",
+          "unicode17-chapter-19.heading-3a31d4f04e62-clause-1d6e396c755e",
+          "unicode17-chapter-19.heading-3a31d4f04e62-clause-5a816d969d9e"
+        ]
+      }
+    },
+    {
+      "id": "heading-04d53aabc343",
+      "title": "19.4 N’Ko",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-04d53aabc343"
+        ]
+      }
+    },
+    {
+      "id": "heading-e0b40237f924",
+      "title": "19.4.1 N’Ko: U+07C0–U+07FF",
+      "level": 3,
+      "text_sha256": "86f58d1caff5c7cd31ca0a9067387f190415a0e673615452766d27885fb9afbd",
+      "clause_count": 285,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-e0b40237f924",
+          "unicode17-chapter-19.heading-e0b40237f924-clause-ddad3b33c354"
+        ]
+      }
+    },
+    {
+      "id": "heading-ed09f94f911c",
+      "title": "19.5 Vai",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-ed09f94f911c"
+        ]
+      }
+    },
+    {
+      "id": "heading-ba0791be17e9",
+      "title": "19.5.1 Vai: U+A500–U+A63F",
+      "level": 3,
+      "text_sha256": "95f253f72ace1e11f8ecc7bf2795311fc7146135a4f057984a8ba87ea6150324",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-ba0791be17e9",
+          "unicode17-chapter-19.heading-ba0791be17e9-clause-a98c4a39e645",
+          "unicode17-chapter-19.heading-ba0791be17e9-clause-61bf263c85bc"
+        ]
+      }
+    },
+    {
+      "id": "heading-2d8ac38ecc2d",
+      "title": "19.6 Bamum",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-2d8ac38ecc2d"
+        ]
+      }
+    },
+    {
+      "id": "heading-446aff40c8de",
+      "title": "19.6.1 Bamum: U+A6A0–U+A6FF",
+      "level": 3,
+      "text_sha256": "6bd2f4fac481737f825fa5631ce2c6ef01a1182641a3a4ae4103a1986244f27c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-446aff40c8de"
+        ]
+      }
+    },
+    {
+      "id": "heading-3780ef26bbdc",
+      "title": "19.6.2 Bamum Supplement: U+16800–U+16A3F",
+      "level": 3,
+      "text_sha256": "bee1ff91e76695b79a85fd9adc20b23279f2397f070ab962352dd22feb93fc11",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-3780ef26bbdc"
+        ]
+      }
+    },
+    {
+      "id": "heading-bd0ff18fdbfa",
+      "title": "19.7 Bassa Vah",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-bd0ff18fdbfa"
+        ]
+      }
+    },
+    {
+      "id": "heading-10498dd0b353",
+      "title": "19.7.1 Bassa Vah: U+16AD0–U+16AFF",
+      "level": 3,
+      "text_sha256": "7ffb45eb40357280b8f4199ede526b5bd28f8d5bd1c216fe4a5d819c84d14181",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-10498dd0b353"
+        ]
+      }
+    },
+    {
+      "id": "heading-0a109180edcb",
+      "title": "19.8 Mende Kikakui",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-0a109180edcb"
+        ]
+      }
+    },
+    {
+      "id": "heading-27aa1339df26",
+      "title": "19.8.1 Mende Kikakui: U+1E800–U+1E8DF",
+      "level": 3,
+      "text_sha256": "7f2dad8b9011282685fdf86ff8d67824835ac0b7caed15a96261fc4b4e7b32d0",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-27aa1339df26",
+          "unicode17-chapter-19.heading-27aa1339df26-clause-60b07a1ed3e7"
+        ]
+      }
+    },
+    {
+      "id": "heading-e23c935b1442",
+      "title": "19.9 Adlam",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-e23c935b1442"
+        ]
+      }
+    },
+    {
+      "id": "heading-c2be2b6d6900",
+      "title": "19.9.1 Adlam: U+1E900–U+1E95F",
+      "level": 3,
+      "text_sha256": "2dd3c02bf87322fcf11162dfbb9bbefc59021458eb88b75bad83e35c9a9d53f7",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-c2be2b6d6900",
+          "unicode17-chapter-19.heading-c2be2b6d6900-clause-33b032de9ea1"
+        ]
+      }
+    },
+    {
+      "id": "heading-13f8bb6f8eb7",
+      "title": "19.10 Medefaidrin",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-13f8bb6f8eb7"
+        ]
+      }
+    },
+    {
+      "id": "heading-08030229086f",
+      "title": "19.10.1 Medefaidrin: U+16E40–U+16E9F",
+      "level": 3,
+      "text_sha256": "95caac61c2ecb3d223f933acc4335cb2cbcdebfe6c5007099b1f8c4e26279ced",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-08030229086f"
+        ]
+      }
+    },
+    {
+      "id": "heading-334a56453b27",
+      "title": "19.11 Garay",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-334a56453b27"
+        ]
+      }
+    },
+    {
+      "id": "heading-f993cbba900f",
+      "title": "19.11.1 Garay: U+10D40–U+10D8F",
+      "level": 3,
+      "text_sha256": "8746b17d767662ab95f053eafd70ab5dcdebaf3ea45b3df33194655039fa72cd",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-f993cbba900f"
+        ]
+      }
+    },
+    {
+      "id": "heading-7fcf18a13965",
+      "title": "19.12 Beria Erfe",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-7fcf18a13965"
+        ]
+      }
+    },
+    {
+      "id": "heading-0aac4756824a",
+      "title": "19.12.1 Beria Erfe: U+16EA0–U+16EDF",
+      "level": 3,
+      "text_sha256": "34ba703725c220e147558120afdaf41fde5bb8effb31ba482e0cc99924d6829c",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-19.heading-0aac4756824a"
+        ]
+      }
+    }
+  ]
+}

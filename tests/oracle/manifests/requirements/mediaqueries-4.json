@@ -1,0 +1,3881 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "mediaqueries-4.media",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Queries.",
+      "locator": {
+        "section_id": "media",
+        "text_sha256": "f879883d0a9ac2213042490cc1785bc0340fc6a2f174e40675f5584f45fc487c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.media-clause-fe2d93288c38",
+        "mediaqueries-4.media-clause-bbe8ff29b8d5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.media-clause-fe2d93288c38",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media"
+      ],
+      "behaviour": "Media Queries — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "media",
+        "clause_index": 9,
+        "clause_sha256": "fe2d93288c3840e6e9d886f586bad2bd4cc54737f9168d7e403b6c3367dfe6a0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.media-clause-bbe8ff29b8d5",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media"
+      ],
+      "behaviour": "Media Queries — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "media",
+        "clause_index": 12,
+        "clause_sha256": "bbe8ff29b8d5d6a1c2080999506e8f99bc7c10978dd8b04a475119b08422b0fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mq-list",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-list"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Combining Media Queries.",
+      "locator": {
+        "section_id": "mq-list",
+        "text_sha256": "57cfdbc3854ff0a143e6a34172fcc8d509fc03c03830652e990255f79a0f2a7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mq-prefix",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-prefix"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Query Modifiers.",
+      "locator": {
+        "section_id": "mq-prefix",
+        "text_sha256": "4b417a05d9c342581df24bbb15d055af259fb1844a413b8aa845ef846987a1fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mq-not",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-not"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Negating a Media Query: the not keyword.",
+      "locator": {
+        "section_id": "mq-not",
+        "text_sha256": "80dbf5bf9dad33f5231494a4b9a66d2a0ace21f3bfb3d862ef54375e3cc74797"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mq-only",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-only"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Hiding a Media Query From Legacy user agents: the only keyword.",
+      "locator": {
+        "section_id": "mq-only",
+        "text_sha256": "fdab1af9ed3dc37533bf20062cc8fb033928df04393585bfced980aa0972da1e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.mq-only-clause-139862eaa7c4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mq-only-clause-139862eaa7c4",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-only"
+      ],
+      "behaviour": "Hiding a Media Query From Legacy user agents: the only keyword — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "mq-only",
+        "clause_index": 2,
+        "clause_sha256": "139862eaa7c40e205466fda705c93b1a937e9f17cccaecf367f845f1741aec18"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.media-types",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media-types"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Types.",
+      "locator": {
+        "section_id": "media-types",
+        "text_sha256": "6bb93e828ba8aab0b19912ff3d9d65f324ecf52db002a024e0e36bac74b74090"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.media-types-clause-48286b43b4f2",
+        "mediaqueries-4.media-types-clause-a7e189d4654f",
+        "mediaqueries-4.media-types-clause-b23ae104cbe1",
+        "mediaqueries-4.media-types-clause-6326f1c73e3d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.media-types-clause-48286b43b4f2",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media-types"
+      ],
+      "behaviour": "Media Types — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-types",
+        "clause_index": 8,
+        "clause_sha256": "48286b43b4f20973a2faf2cd378a584769ad20bf492dec875aa7c1b4fd485ab7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.media-types-clause-a7e189d4654f",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media-types"
+      ],
+      "behaviour": "Media Types — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-types",
+        "clause_index": 9,
+        "clause_sha256": "a7e189d4654fc5afa1f4f62286cfe01e68e85748d9a32814e3255a0bf73829ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.media-types-clause-b23ae104cbe1",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media-types"
+      ],
+      "behaviour": "Media Types — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-types",
+        "clause_index": 18,
+        "clause_sha256": "b23ae104cbe169e2804514668ce3eb5d66656aabad38bca7137b00c3a8f6496f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.media-types-clause-6326f1c73e3d",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media-types"
+      ],
+      "behaviour": "Media Types — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-types",
+        "clause_index": 20,
+        "clause_sha256": "6326f1c73e3d583fc8e489ea174a407c0e43fa328dbbc7dc40ee16e08de7a22c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mq-features",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-features"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Features.",
+      "locator": {
+        "section_id": "mq-features",
+        "text_sha256": "18b0529ba25e89abd38ff894b0a224fed94a1084e7ee7e0972e7191ae3d50f1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.mq-features-clause-c4f8f0cc2574"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mq-features-clause-c4f8f0cc2574",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-features"
+      ],
+      "behaviour": "Media Features — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "mq-features",
+        "clause_index": 8,
+        "clause_sha256": "c4f8f0cc25747ed96b9cf5568e6914c501e3150413a4ea5b747af48abeda9020"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mq-ranges",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-ranges"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Feature Types: “range” and “discrete”.",
+      "locator": {
+        "section_id": "mq-ranges",
+        "text_sha256": "4eb66c6f2d026110994709da418a57437209d8f595cd2e7be0d7cb0f8eec5dc5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mq-boolean-context",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-boolean-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Evaluating Media Features in a Boolean Context.",
+      "locator": {
+        "section_id": "mq-boolean-context",
+        "text_sha256": "2d72f1b62438e8ff3cb3325dd6fcacb02d0c83b2c09d47858e7b9b72e434023c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mq-range-context",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-range-context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Evaluating Media Features in a Range Context.",
+      "locator": {
+        "section_id": "mq-range-context",
+        "text_sha256": "2483d3ae362ba09c984b6f37e341375b42b1d3be611db63253e5af2967001b01"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.mq-range-context-clause-928ab9396dff"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mq-range-context-clause-928ab9396dff",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-range-context"
+      ],
+      "behaviour": "Evaluating Media Features in a Range Context — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "mq-range-context",
+        "clause_index": 4,
+        "clause_sha256": "928ab9396dffbc14f552dac98b4b70ddf989f0c27526cd353e728a4f88bd87e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mq-min-max",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-min-max"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Using “min-” and “max-” Prefixes On Range Features.",
+      "locator": {
+        "section_id": "mq-min-max",
+        "text_sha256": "813b4df228e27c64be24dafa262bfb5f195d037141b2300920ae83425270b540"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.mq-min-max-clause-4724fc6dff0f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mq-min-max-clause-4724fc6dff0f",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-min-max"
+      ],
+      "behaviour": "Using “min-” and “max-” Prefixes On Range Features — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "mq-min-max",
+        "clause_index": 12,
+        "clause_sha256": "4724fc6dff0fcd98e3dd76e6846102a67833efcaade86f73abb894c8880253b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.media-conditions",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media-conditions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Combining Media Features.",
+      "locator": {
+        "section_id": "media-conditions",
+        "text_sha256": "d490da793f2083d4cec52393ec86038a3ba01c957a57c1363b1ac09c086ae50e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.media-conditions-clause-9828de00d96b",
+        "mediaqueries-4.media-conditions-clause-9a188200bc39",
+        "mediaqueries-4.media-conditions-clause-619e115c4af8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.media-conditions-clause-9828de00d96b",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media-conditions"
+      ],
+      "behaviour": "Combining Media Features — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-conditions",
+        "clause_index": 5,
+        "clause_sha256": "9828de00d96b970d259f9ec1ba4aea354bccbf9d4d75eca474a5fa1c9196de5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.media-conditions-clause-9a188200bc39",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media-conditions"
+      ],
+      "behaviour": "Combining Media Features — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-conditions",
+        "clause_index": 7,
+        "clause_sha256": "9a188200bc392e0d75270159a968485519c63cd470914518dee7bf3bda94f885"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.media-conditions-clause-619e115c4af8",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media-conditions"
+      ],
+      "behaviour": "Combining Media Features — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "media-conditions",
+        "clause_index": 9,
+        "clause_sha256": "619e115c4af89de4b5828fefbf57219a48bf023b6551cb1ce0368961697a47c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mq-syntax",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Syntax.",
+      "locator": {
+        "section_id": "mq-syntax",
+        "text_sha256": "bfba9f302d12d30f31d87843b694e81d9a8483d0dd1a74021edea782f7255b32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.mq-syntax-clause-fb9dd6974e3d",
+        "mediaqueries-4.mq-syntax-clause-603e4576ef31"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mq-syntax-clause-fb9dd6974e3d",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-syntax"
+      ],
+      "behaviour": "Syntax — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "mq-syntax",
+        "clause_index": 9,
+        "clause_sha256": "fb9dd6974e3da64c4f70860555a4924ecdf1b2eb84c8a2e01968522ac4bbb369"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mq-syntax-clause-603e4576ef31",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mq-syntax"
+      ],
+      "behaviour": "Syntax — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "mq-syntax",
+        "clause_index": 10,
+        "clause_sha256": "603e4576ef31f7a06c0acc6c321a03c6a836c9bfb40034e7d5f77eebfb329825"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.evaluating",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "evaluating"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Evaluating Media Queries.",
+      "locator": {
+        "section_id": "evaluating",
+        "text_sha256": "12c19fe0aac9470a46ab5e2b10e2b57ebfa7b716525abddb86bed30996f0161a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.evaluating-clause-63861ba7087e",
+        "mediaqueries-4.evaluating-clause-b930d434efdf",
+        "mediaqueries-4.evaluating-clause-10c32f0a2de1",
+        "mediaqueries-4.evaluating-clause-9b23c31253b7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.evaluating-clause-63861ba7087e",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "evaluating"
+      ],
+      "behaviour": "Evaluating Media Queries — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "evaluating",
+        "clause_index": 13,
+        "clause_sha256": "63861ba7087e1048cae9bb28f4865c62789ea1cdd6acaee7f3c69f9a72391f57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.evaluating-clause-b930d434efdf",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "evaluating"
+      ],
+      "behaviour": "Evaluating Media Queries — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "evaluating",
+        "clause_index": 14,
+        "clause_sha256": "b930d434efdf4f1face5ffd99b7048e4249c1c2e6eaf40daa2807c3677ce1c5d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.evaluating-clause-10c32f0a2de1",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "evaluating"
+      ],
+      "behaviour": "Evaluating Media Queries — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "evaluating",
+        "clause_index": 16,
+        "clause_sha256": "10c32f0a2de15ac196a6ab4015cac536bda2314309bf1932f2e0e76fa0fe4de4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.evaluating-clause-9b23c31253b7",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "evaluating"
+      ],
+      "behaviour": "Evaluating Media Queries — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "evaluating",
+        "clause_index": 20,
+        "clause_sha256": "9b23c31253b7156d0114e0d608085cc9563dccf3b6b92e960931a39a051add09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Error Handling.",
+      "locator": {
+        "section_id": "error-handling",
+        "text_sha256": "1cd44a0712a65e574f220b55129c8d70c738e9c5acdbbfc45d8457c58df3fa3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.error-handling-clause-70a97bb855e3",
+        "mediaqueries-4.error-handling-clause-1244db17d4f6",
+        "mediaqueries-4.error-handling-clause-9ca36efd63b8",
+        "mediaqueries-4.error-handling-clause-08d9f6b8429b",
+        "mediaqueries-4.error-handling-clause-a13a7a1e4d7c",
+        "mediaqueries-4.error-handling-clause-8c8452bcb3bd",
+        "mediaqueries-4.error-handling-clause-50d22266da44",
+        "mediaqueries-4.error-handling-clause-15c6ee41a21e",
+        "mediaqueries-4.error-handling-clause-8038a03e1c48",
+        "mediaqueries-4.error-handling-clause-d9c8a9e57ce1",
+        "mediaqueries-4.error-handling-clause-5cc46341e111",
+        "mediaqueries-4.error-handling-clause-edc63d634691",
+        "mediaqueries-4.error-handling-clause-68fd74297a7c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-70a97bb855e3",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 0,
+        "clause_sha256": "70a97bb855e34c53deaaa70bc1bbc3b8ccfe4613509f5aaf58060cd8897cc929"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-1244db17d4f6",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 4,
+        "clause_sha256": "1244db17d4f641d33c3d11832afb4bafb28b379b27678f008e81292e177f0bdc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-9ca36efd63b8",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 7,
+        "clause_sha256": "9ca36efd63b88e41c5267bcbe5ffd8f2312f904e0bbb0799f63d9f1b1ac82b14"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-08d9f6b8429b",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 9,
+        "clause_sha256": "08d9f6b8429b6722c152c82cc8cdfbc86f1dc2897fbfff024fd5a1836690d934"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-a13a7a1e4d7c",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 15,
+        "clause_sha256": "a13a7a1e4d7c1de48eb65bd37ea187bfce52f6d0669c8fc305496cdb025317bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-8c8452bcb3bd",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 17,
+        "clause_sha256": "8c8452bcb3bd0d5e20ccfdfc3a2ccb1aac0aaf6a7983648cae3e6549de25d04c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-50d22266da44",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 18,
+        "clause_sha256": "50d22266da440c905f878aaf1f68f20cca105d07bf11c5228ed62a98e5dff385"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-15c6ee41a21e",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 19,
+        "clause_sha256": "15c6ee41a21e5dc552ef7a05196b8308e49159cf7600bde7cf9dc657c6b5a4a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-8038a03e1c48",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 20,
+        "clause_sha256": "8038a03e1c48f3d790f5bca2b7ee600a722c62c14eadcf11e07ea8b43922f3cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-d9c8a9e57ce1",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 21,
+        "clause_sha256": "d9c8a9e57ce1f2a4bf3b86c8729727d8cfe689551b5a964019b88c79d1472518"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-5cc46341e111",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 22,
+        "clause_sha256": "5cc46341e111b829b9844dbe7c66a0b3ceebbc2035d70dba3cfe931f709addf9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-edc63d634691",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 23,
+        "clause_sha256": "edc63d6346918116060ae4ae7aabae6ca0baec59527a4f25b8e4c4a045a27a49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.error-handling-clause-68fd74297a7c",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "error-handling"
+      ],
+      "behaviour": "Error Handling — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "error-handling",
+        "clause_index": 24,
+        "clause_sha256": "68fd74297a7cbbe4aeee43b5c9818f912b8d57b540b2f44c83d31326741d5e01"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mf-dimensions",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-dimensions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Viewport/Page Dimensions Media Features.",
+      "locator": {
+        "section_id": "mf-dimensions",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.width",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Width: the width feature.",
+      "locator": {
+        "section_id": "width",
+        "text_sha256": "c8b22d800a5ec0ab710d10da2b1bdd3f50d6b498049ffd4a9c2f87f6c369ebed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.width-clause-ec7f82de5157",
+        "mediaqueries-4.width-clause-4c9ce79f9758"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.width-clause-ec7f82de5157",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "width"
+      ],
+      "behaviour": "Width: the width feature — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "width",
+        "clause_index": 13,
+        "clause_sha256": "ec7f82de5157ea912396e4b9fadfda8ef09fad2e54e77427b134e5ff917d995d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.width-clause-4c9ce79f9758",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "width"
+      ],
+      "behaviour": "Width: the width feature — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "width",
+        "clause_index": 18,
+        "clause_sha256": "4c9ce79f97589bd10c1a9529c937bf030eeab8fd48f36b2a920fbbcfba117183"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.height",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Height: the height feature.",
+      "locator": {
+        "section_id": "height",
+        "text_sha256": "242c871d721800ed66ad594493f9234ff64208ae2f5ac3ad0f70358265074f2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.aspect-ratio",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "aspect-ratio"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Aspect-Ratio: the aspect-ratio feature.",
+      "locator": {
+        "section_id": "aspect-ratio",
+        "text_sha256": "91bb5d330543f1d9d80ff31b2b8a316e35fdfee1d1aea6853a6372dc3203f054"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.orientation",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "orientation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Orientation: the orientation feature.",
+      "locator": {
+        "section_id": "orientation",
+        "text_sha256": "b995c66f7e65dfeff5f13ad5f20862d2f45c12febf2e8d60fe40c7df84e1698d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mf-display-quality",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-display-quality"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Display Quality Media Features.",
+      "locator": {
+        "section_id": "mf-display-quality",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.resolution",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "resolution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Display Resolution: the resolution feature.",
+      "locator": {
+        "section_id": "resolution",
+        "text_sha256": "79140481bbc47b4d02b0619034b5e9d8c05b114941364c553ec8c112f1831a98"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.resolution-clause-8ba10a0cb7bd",
+        "mediaqueries-4.resolution-clause-14233a63cc89",
+        "mediaqueries-4.resolution-clause-bc12845d6ca8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.resolution-clause-8ba10a0cb7bd",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "resolution"
+      ],
+      "behaviour": "Display Resolution: the resolution feature — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "resolution",
+        "clause_index": 11,
+        "clause_sha256": "8ba10a0cb7bdf101d54c47d5e4cdd5d8ecf8faf1c4dd2521a9f82119572f3ce4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.resolution-clause-14233a63cc89",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "resolution"
+      ],
+      "behaviour": "Display Resolution: the resolution feature — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "resolution",
+        "clause_index": 17,
+        "clause_sha256": "14233a63cc894a27c481180e3473a3548d8b1101dd41795416211ea0586ddfde"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.resolution-clause-bc12845d6ca8",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "resolution"
+      ],
+      "behaviour": "Display Resolution: the resolution feature — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "resolution",
+        "clause_index": 18,
+        "clause_sha256": "bc12845d6ca8144c9b36255a921b5c4fc7452997ee4c998b4dfc4978385e2a6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.scan",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "scan"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Display Type: the scan feature.",
+      "locator": {
+        "section_id": "scan",
+        "text_sha256": "786f28dcc0368a1e61cb2cbb5656d9db802f37d6e9f624eee7978d4f6978d3af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.scan-clause-a94934b4af25",
+        "mediaqueries-4.scan-clause-3f64dd1c4cef",
+        "mediaqueries-4.scan-clause-70e3a1acb64a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.scan-clause-a94934b4af25",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "scan"
+      ],
+      "behaviour": "Display Type: the scan feature — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "scan",
+        "clause_index": 9,
+        "clause_sha256": "a94934b4af2557263dbc1059905e79c2e7c193388bfa5f46e01a641cc7ce2c2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.scan-clause-3f64dd1c4cef",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "scan"
+      ],
+      "behaviour": "Display Type: the scan feature — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "scan",
+        "clause_index": 10,
+        "clause_sha256": "3f64dd1c4cef1bf988fed207d09d3776faa1bbd5472e3c2961096e2cb023317e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.scan-clause-70e3a1acb64a",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "scan"
+      ],
+      "behaviour": "Display Type: the scan feature — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "scan",
+        "clause_index": 16,
+        "clause_sha256": "70e3a1acb64aa3db89149b7a1df281a087a72350781f29dd0724684fb914fa2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.grid",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "grid"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Detecting Console Displays: the grid feature.",
+      "locator": {
+        "section_id": "grid",
+        "text_sha256": "8c816ccd453ff21541917d901007fb043683662016aac1a11c2889d890d4fb5f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.grid-clause-864b26fd31ef",
+        "mediaqueries-4.grid-clause-15798fe27251"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.grid-clause-864b26fd31ef",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "grid"
+      ],
+      "behaviour": "Detecting Console Displays: the grid feature — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "grid",
+        "clause_index": 9,
+        "clause_sha256": "864b26fd31efb0b03794370d2807b09c269541177a7c68f72a5f2f4be7cfdc4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.grid-clause-15798fe27251",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "grid"
+      ],
+      "behaviour": "Detecting Console Displays: the grid feature — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "grid",
+        "clause_index": 13,
+        "clause_sha256": "15798fe2725137bae92a97e279681fe20600fae317d096dc3ec882d622a0a3d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.update",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "update"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Display Update Frequency: the update feature.",
+      "locator": {
+        "section_id": "update",
+        "text_sha256": "84a95bb65c90279bf0039040582e10ec59d8a26c3b7d906fdd2cc09476b15b82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mf-overflow-block",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-overflow-block"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block-Axis Overflow: the overflow-block feature.",
+      "locator": {
+        "section_id": "mf-overflow-block",
+        "text_sha256": "e90009e240eb3ac1ced01663b5596c3f4b93fe35e2985c2ec4bf6d912d141174"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mf-overflow-inline",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-overflow-inline"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline-Axis Overflow: the overflow-inline feature.",
+      "locator": {
+        "section_id": "mf-overflow-inline",
+        "text_sha256": "01b6c0b21def899c393390e006560d795261af2bf2f49bfd2dfcd6a2c0542169"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mf-colors",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-colors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color Media Features.",
+      "locator": {
+        "section_id": "mf-colors",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.color",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color Depth: the color feature.",
+      "locator": {
+        "section_id": "color",
+        "text_sha256": "91739a1a479bf1bcb47d4e2659d904465a68d4102dd6f3196e2a55c0291aca41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.color-clause-d8524c74c565",
+        "mediaqueries-4.color-clause-e8f77f90d2d2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.color-clause-d8524c74c565",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "color"
+      ],
+      "behaviour": "Color Depth: the color feature — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "color",
+        "clause_index": 13,
+        "clause_sha256": "d8524c74c5657131e4da3dc834e4e663c8a22b8692920cbc023a4dfa81bfc66f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.color-clause-e8f77f90d2d2",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "color"
+      ],
+      "behaviour": "Color Depth: the color feature — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "color",
+        "clause_index": 14,
+        "clause_sha256": "e8f77f90d2d25c2aecbb38e9a3c451d1d465bdcd1c24d0df6eb4e484a06c5252"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.color-index",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "color-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Paletted Color Screens: the color-index feature.",
+      "locator": {
+        "section_id": "color-index",
+        "text_sha256": "0fc3dd778e0a067838771fb3f09eeed66854ef34c5b695b278dacef7587c8cb0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.monochrome",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "monochrome"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Monochrome Screens: the monochrome feature.",
+      "locator": {
+        "section_id": "monochrome",
+        "text_sha256": "8917316febea2c639c7747f4dd579482966bcf29b2d2c25c59e52b13d5d4e1b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.color-gamut",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "color-gamut"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color Display Quality: the color-gamut feature.",
+      "locator": {
+        "section_id": "color-gamut",
+        "text_sha256": "17a491727cf06258acbbd033f5d3995dd9ada6adeb42005d6c9b2914b44a330c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.color-gamut-clause-6c359c1f01c0",
+        "mediaqueries-4.color-gamut-clause-162d46c370d1",
+        "mediaqueries-4.color-gamut-clause-b494e839140f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.color-gamut-clause-6c359c1f01c0",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "color-gamut"
+      ],
+      "behaviour": "Color Display Quality: the color-gamut feature — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-gamut",
+        "clause_index": 10,
+        "clause_sha256": "6c359c1f01c0f5210cc0ac5054267fe65df30eb8e6ca37f6eed81019dd4174d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.color-gamut-clause-162d46c370d1",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "color-gamut"
+      ],
+      "behaviour": "Color Display Quality: the color-gamut feature — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-gamut",
+        "clause_index": 11,
+        "clause_sha256": "162d46c370d1c5811dc6bb5cc3e09eeeeccc95adb1e0b1c7e9bd505eb7bf9456"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.color-gamut-clause-b494e839140f",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "color-gamut"
+      ],
+      "behaviour": "Color Display Quality: the color-gamut feature — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "color-gamut",
+        "clause_index": 18,
+        "clause_sha256": "b494e839140f46ad050e527126d8969229e3bc70d0104e95928237835d5c052f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mf-interaction",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-interaction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interaction Media Features.",
+      "locator": {
+        "section_id": "mf-interaction",
+        "text_sha256": "04c7cf33f66a9a26ad1eba330b7a0129d9f2e574f59bd07407a5629d4d58afb2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.mf-interaction-clause-1a5d15eaef04",
+        "mediaqueries-4.mf-interaction-clause-c68d44d83d62",
+        "mediaqueries-4.mf-interaction-clause-9631e99c4a93"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mf-interaction-clause-1a5d15eaef04",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-interaction"
+      ],
+      "behaviour": "Interaction Media Features — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "mf-interaction",
+        "clause_index": 11,
+        "clause_sha256": "1a5d15eaef042220265d1cda879382366e707afa2e8bc9c51de7c97508d8cdae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mf-interaction-clause-c68d44d83d62",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-interaction"
+      ],
+      "behaviour": "Interaction Media Features — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "mf-interaction",
+        "clause_index": 12,
+        "clause_sha256": "c68d44d83d6204da1cbdc7077e7a50125db2d1dd23526f9d8832dc2b59de1766"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mf-interaction-clause-9631e99c4a93",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-interaction"
+      ],
+      "behaviour": "Interaction Media Features — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "mf-interaction",
+        "clause_index": 13,
+        "clause_sha256": "9631e99c4a93ac3b5dc08ac0125fd42b3c4254699cca38f22fa39383de3be51f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.pointer",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "pointer"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pointing Device Quality: the pointer feature.",
+      "locator": {
+        "section_id": "pointer",
+        "text_sha256": "a213d93a8725f4966d3bc97aee87849c2eb2730fcf9bf43ec81e583f2c2a3956"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.pointer-clause-44e32e9dac33",
+        "mediaqueries-4.pointer-clause-dd3a4f357f1f",
+        "mediaqueries-4.pointer-clause-28ff0f3055bd",
+        "mediaqueries-4.pointer-clause-e771c92c4029"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.pointer-clause-44e32e9dac33",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "pointer"
+      ],
+      "behaviour": "Pointing Device Quality: the pointer feature — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "pointer",
+        "clause_index": 7,
+        "clause_sha256": "44e32e9dac331b65916e0d838cbf2e10ad2983b6d4dfff78ea64d83f66905fea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.pointer-clause-dd3a4f357f1f",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "pointer"
+      ],
+      "behaviour": "Pointing Device Quality: the pointer feature — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "pointer",
+        "clause_index": 14,
+        "clause_sha256": "dd3a4f357f1f0d514e69a337ff1d1925d62ecd9e17905a373c2d81ddbf8cfeb0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.pointer-clause-28ff0f3055bd",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "pointer"
+      ],
+      "behaviour": "Pointing Device Quality: the pointer feature — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "pointer",
+        "clause_index": 17,
+        "clause_sha256": "28ff0f3055bd7d67772ddb64c7b6986e332e8ba3155e6b4ec486b1a1eb3af05c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.pointer-clause-e771c92c4029",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "pointer"
+      ],
+      "behaviour": "Pointing Device Quality: the pointer feature — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "pointer",
+        "clause_index": 18,
+        "clause_sha256": "e771c92c4029bd0a1609e37bc7cf635c9fe5a639509d9f4586571482d3591858"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.hover",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "hover"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Hover Capability: the hover feature.",
+      "locator": {
+        "section_id": "hover",
+        "text_sha256": "75ae37ac06da92b07af32a5a2553853e742c6a2c8b85ed314e783ebaae4fb1de"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.hover-clause-043cbca4807b",
+        "mediaqueries-4.hover-clause-43f7d07df232",
+        "mediaqueries-4.hover-clause-20cbbf750331",
+        "mediaqueries-4.hover-clause-2c423caea963"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.hover-clause-043cbca4807b",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "hover"
+      ],
+      "behaviour": "Hover Capability: the hover feature — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "hover",
+        "clause_index": 7,
+        "clause_sha256": "043cbca4807b7a8c99ad618192769077666affea7f4f4a9a66041cf6063fae8c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.hover-clause-43f7d07df232",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "hover"
+      ],
+      "behaviour": "Hover Capability: the hover feature — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "hover",
+        "clause_index": 12,
+        "clause_sha256": "43f7d07df232b8f3a7b071f37bb2fa9db11fc13b8de053265aa0a4f5d20b990b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.hover-clause-20cbbf750331",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "hover"
+      ],
+      "behaviour": "Hover Capability: the hover feature — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "hover",
+        "clause_index": 15,
+        "clause_sha256": "20cbbf750331605f4d603e581ffc7b6c8418e9781f75ea47884eec50fc23cf31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.hover-clause-2c423caea963",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "hover"
+      ],
+      "behaviour": "Hover Capability: the hover feature — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "hover",
+        "clause_index": 16,
+        "clause_sha256": "2c423caea963901a6bdd4c24270b1e5873ce8a11f1c60ca188b0cdec350e4b8a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.media-any-input",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "@media/any-input"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in All Available Interaction Capabilities: the any-pointer and any-hover features.",
+      "locator": {
+        "section_id": "@media/any-input",
+        "text_sha256": "8e9a457c4454a47bd538a27d159098c520abb9d0c3daabcf565611cfe569bce3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.media-any-input-clause-3c015cb49a01",
+        "mediaqueries-4.media-any-input-clause-3fa8b9b43895"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.media-any-input-clause-3c015cb49a01",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "@media/any-input"
+      ],
+      "behaviour": "All Available Interaction Capabilities: the any-pointer and any-hover features — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "@media/any-input",
+        "clause_index": 16,
+        "clause_sha256": "3c015cb49a01101a497f1749268cbef265c2ace9ce3048e2dd1dca3bb47bcc1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.media-any-input-clause-3fa8b9b43895",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "@media/any-input"
+      ],
+      "behaviour": "All Available Interaction Capabilities: the any-pointer and any-hover features — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "@media/any-input",
+        "clause_index": 21,
+        "clause_sha256": "3fa8b9b43895fa742d72dd2a726a2f25dedd7e47b8d08245a5a39db30c34dcb2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mf-deprecated",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-deprecated"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix A: Deprecated Media Features.",
+      "locator": {
+        "section_id": "mf-deprecated",
+        "text_sha256": "f8753620085b96a6de803e9856139dfa75dd32f1bea45c770f3bb5141250fd36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.mf-deprecated-clause-4b52b3ccf725",
+        "mediaqueries-4.mf-deprecated-clause-6c47eeaf0ad3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.mf-deprecated-clause-4b52b3ccf725",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-deprecated"
+      ],
+      "behaviour": "Appendix A: Deprecated Media Features — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "mf-deprecated",
+        "clause_index": 0,
+        "clause_sha256": "4b52b3ccf725c4a06a13b8f1b8ae637ddb23421f9d6c9acc02b34fe94cb864a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.mf-deprecated-clause-6c47eeaf0ad3",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "mf-deprecated"
+      ],
+      "behaviour": "Appendix A: Deprecated Media Features — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "mf-deprecated",
+        "clause_index": 1,
+        "clause_sha256": "6c47eeaf0ad35e808891035cb69d67390a72862486f895216ba6792c513ab4bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.device-width",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "device-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in device-width.",
+      "locator": {
+        "section_id": "device-width",
+        "text_sha256": "4a8f5d6b686e6951f611a78a8905db36d8164c8af3c539113ade2905fbbf2fc8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.device-height",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "device-height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in device-height.",
+      "locator": {
+        "section_id": "device-height",
+        "text_sha256": "88a0dd0cffcf11b68e662df4c4bbff436f6d11f5295932d4c29088c0b2a76a15"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.device-aspect-ratio",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "device-aspect-ratio"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in device-aspect-ratio.",
+      "locator": {
+        "section_id": "device-aspect-ratio",
+        "text_sha256": "80fade092abb048125f9d5463db7773902a27c21b863d964ea90a1484db9d51a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.security",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.privacy",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "56613ab2602c4c5fd54b45aeb48da57dc64959f4d3dce41f45d098f3168b412b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.privacy-clause-d5decb747f00",
+        "mediaqueries-4.privacy-clause-f360ae85faad"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.privacy-clause-d5decb747f00",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Privacy Considerations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "privacy",
+        "clause_index": 0,
+        "clause_sha256": "d5decb747f00f252f1dfcf5f77a308c3d5302339db5c0de92d93d5d68b3f58a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.privacy-clause-f360ae85faad",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Privacy Considerations — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "privacy",
+        "clause_index": 30,
+        "clause_sha256": "f360ae85faad4b9d780fc692443e1194c4cbd5fe33d77ff6f1dea0128f456575"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-conformance",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.w3c-conventions",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.w3c-conventions-clause-5c98c879f070",
+        "mediaqueries-4.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.w3c-conventions-clause-5c98c879f070",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-conventions-clause-33a5ed16a48d",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-conformance-classes",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.w3c-conformance-classes-clause-ff408372426c",
+        "mediaqueries-4.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.w3c-conformance-classes-clause-ff408372426c",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-conformance-classes-clause-d9976214330c",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-partial",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.w3c-partial-clause-ef40c4aab200",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-conform-future-proofing",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.w3c-testing",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.w3c-testing-clause-1e0fff369221",
+        "mediaqueries-4.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.w3c-testing-clause-1e0fff369221",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-testing-clause-ae1210cf9643",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-cr-exit-criteria",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CR exit criteria.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "mediaqueries-4.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+        "mediaqueries-4.w3c-cr-exit-criteria-clause-ea752775913a",
+        "mediaqueries-4.w3c-cr-exit-criteria-clause-b7d363ab42db",
+        "mediaqueries-4.w3c-cr-exit-criteria-clause-b67129724911",
+        "mediaqueries-4.w3c-cr-exit-criteria-clause-833729d43f23"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 0,
+        "clause_sha256": "057d9e0b4ff8658e843b9273320cf370c67d9c94900640d3e941146c983f8a73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-cr-exit-criteria-clause-ea752775913a",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 2,
+        "clause_sha256": "ea752775913a037cf87acfa8d1812c7c59aa87f2c2f6f57a02dcd7aabbc1feab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-cr-exit-criteria-clause-b7d363ab42db",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 4,
+        "clause_sha256": "b7d363ab42db2b5e28e86e2baaed54ab983629157c5836df79764e4e10d786fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-cr-exit-criteria-clause-b67129724911",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 7,
+        "clause_sha256": "b67129724911c785c1275f1f2fccd5b02bcd3b780279b13cb08b429044ac6c0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.w3c-cr-exit-criteria-clause-833729d43f23",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "w3c-cr-exit-criteria"
+      ],
+      "behaviour": "CR exit criteria — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-cr-exit-criteria",
+        "clause_index": 10,
+        "clause_sha256": "833729d43f239b3deb57bcaaf1c29d2f077e86aad8b396f8458fa182e4db8d99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "mediaqueries-4.property-index",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "547c4769772c9ff811e57bf39809cc6f1c1e6380af2bb402096c995db2287df6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.media-descriptor-table",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "media-descriptor-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in @media Descriptors.",
+      "locator": {
+        "section_id": "media-descriptor-table",
+        "text_sha256": "4d81c27b5ebf065ef3ce122fe3168bfea6e6150ba6d75b3d556982639c64a63e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.import-433fbe8b79ce",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by http://www.cie.co.at/publications/colorimetry-4th-edition.",
+      "unresolved_reference": "http://www.cie.co.at/publications/colorimetry-4th-edition",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "mediaqueries-4.title",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Media Queries Level 4.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "f172fd2b0069e043e755f764b813c0262aa7d8496ce7821fbc60c33bf51d3fc5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.abstract",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "eb51f02e2621efc4240c7becf7996e73c16f0d65b1eaf25c68ba201b2a32e10f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.sotd",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "02f57332a61d0ddda9846dc7258e536a7721ab7856b8f74fcccbde3c849d1ae0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.contents",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "8fceba391d4c9cb36abc0067593405958d403cd0d036570e1490c82a1f133356"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.intro",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "f8d558600a3890985d961f73f3ab9b50401a5db7285461421b4d5cab8c088b0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.placement",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Module interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "9ecfd9eb9935f695411fb94e7981ae4c4e36a208a8d48b4c38185b9fc82d392a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.values",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.2. Values.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "d193cd34553f138ff963021e6da1ff3bf681e9cc6bf237ba428420793f0e37f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.units",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "units"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.3. Units.",
+      "locator": {
+        "section_id": "units",
+        "text_sha256": "dbd4785112b0d392f8cf237f10b9a42d568e226c633edc1d9bc8e6ca4e39297a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.changes",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.changes-2021-12",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "changes-2021-12"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 25 December 2021 Candidate Recommendation Draft.",
+      "locator": {
+        "section_id": "changes-2021-12",
+        "text_sha256": "add1965d37c92e376f8a0ec1c7d18bbd7a8d624d2a55da7be7bf4f6f1484f776"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.changes-2020-7",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "changes-2020-7"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 21 July 2020 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-2020-7",
+        "text_sha256": "3eddc2374e566659356c13d9d1826751643374072fbdffd01f192794216061dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.changes-2017-9",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "changes-2017-9"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 5 September 2017 Candidate Recommendation.",
+      "locator": {
+        "section_id": "changes-2017-9",
+        "text_sha256": "98cdb0839cc53565b48d23a9952594f634fad953d8bc9f7edcca0e3b219e9ebe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.changes-2017",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "changes-2017"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 19 May 2017 Working Draft.",
+      "locator": {
+        "section_id": "changes-2017",
+        "text_sha256": "288f8d5faa2024cef6faef1150e948db0f583b6d459734f6ec2e0119e2284b45"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.changes-2012",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "changes-2012"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes Since Media Queries Level 3.",
+      "locator": {
+        "section_id": "changes-2012",
+        "text_sha256": "45ac8a02932cbacd7c1279c37fa3fa86ced579ebdc99eeed4da722e19cc9582b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.acknowledgments",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "d11010064eee773a60133f93ba9312a69800c2b4e5c691c47b142528c4e93e5e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.index",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.index-defined-here",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "d53ffd40929169f47b218e249ff305c2182ac34d7f28532e81f49582fb82a665"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.index-defined-elsewhere",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "f302fee7b79445c4f44c62eb36a004da592faccbb2755127175f656c4d5c902f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.references",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "mediaqueries-4.informative",
+      "family": "mediaqueries-4",
+      "source_id": "mediaqueries-4",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "78a4da181a7d3ec9b85add017c55f16629d0728dcab02b5c4550d1d1398203ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

@@ -1,0 +1,3296 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-gaps-1.gaps",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gaps"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gaps Between Boxes.",
+      "locator": {
+        "section_id": "gaps",
+        "text_sha256": "26a4f17320488fd99069c8daff95288f0ae14e2dbf1886026514d4a9276800ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.column-row-gap",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-gap"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Row and Column Gutters: the row-gap and column-gap properties.",
+      "locator": {
+        "section_id": "column-row-gap",
+        "text_sha256": "8de449c1fc13c33b3f47374eddf0671beba6f941cc7637e22b8dfce8a7d9d0b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.column-row-gap-clause-cca2516ebb1d",
+        "css-gaps-1.column-row-gap-clause-70828f810467",
+        "css-gaps-1.column-row-gap-clause-0cd0dcc2093c",
+        "css-gaps-1.column-row-gap-clause-7a4201f67640",
+        "css-gaps-1.column-row-gap-clause-0b01956cddd7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.column-row-gap-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-gap"
+      ],
+      "behaviour": "Row and Column Gutters: the row-gap and column-gap properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-gap",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-gap-clause-70828f810467",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-gap"
+      ],
+      "behaviour": "Row and Column Gutters: the row-gap and column-gap properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-gap",
+        "clause_index": 13,
+        "clause_sha256": "70828f810467501010afde4b9499fddab9dd19ff063d94fc58292c4edaf6da22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-gap-clause-0cd0dcc2093c",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-gap"
+      ],
+      "behaviour": "Row and Column Gutters: the row-gap and column-gap properties — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-gap",
+        "clause_index": 22,
+        "clause_sha256": "0cd0dcc2093c907aad0e6dd6bff9806d6a703730540f292a8bc7819611344606"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-gap-clause-7a4201f67640",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-gap"
+      ],
+      "behaviour": "Row and Column Gutters: the row-gap and column-gap properties — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-gap",
+        "clause_index": 23,
+        "clause_sha256": "7a4201f67640af423987a2a71ece735a969e5e73515624e2da20925b846f3b42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-gap-clause-0b01956cddd7",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-gap"
+      ],
+      "behaviour": "Row and Column Gutters: the row-gap and column-gap properties — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-gap",
+        "clause_index": 27,
+        "clause_sha256": "0b01956cddd77a223f4704dda34d9cd56aa38e77cc5387128a8da4144a764fa2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.gap-shorthand",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-shorthand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gap Shorthand: the gap property.",
+      "locator": {
+        "section_id": "gap-shorthand",
+        "text_sha256": "b524d659af0cc01d51cf7833cb0809e0a7425d9942f87781efb5a5302b502d75"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.gap-shorthand-clause-cca2516ebb1d",
+        "css-gaps-1.gap-shorthand-clause-c8e7872bfd47"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.gap-shorthand-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-shorthand"
+      ],
+      "behaviour": "Gap Shorthand: the gap property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "gap-shorthand",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.gap-shorthand-clause-c8e7872bfd47",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-shorthand"
+      ],
+      "behaviour": "Gap Shorthand: the gap property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "gap-shorthand",
+        "clause_index": 19,
+        "clause_sha256": "c8e7872bfd474464a52e3b6ae1b0531188d837aea20e2555b1e86f7e8937537c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.gap-percent",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-percent"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Percentages In gap Properties.",
+      "locator": {
+        "section_id": "gap-percent",
+        "text_sha256": "166d9250b354ec9cca2632c0378f7f13c0904961a3f9fb81498ee75405add548"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.gap-percent-clause-eb19563b1c1d",
+        "css-gaps-1.gap-percent-clause-dd07b28a2395",
+        "css-gaps-1.gap-percent-clause-0a34484ffa53"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.gap-percent-clause-eb19563b1c1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-percent"
+      ],
+      "behaviour": "Percentages In gap Properties — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "gap-percent",
+        "clause_index": 0,
+        "clause_sha256": "eb19563b1c1dd4fc7a5cc2e63820b9b01660e376cf89833327ae810bc4319412"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.gap-percent-clause-dd07b28a2395",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-percent"
+      ],
+      "behaviour": "Percentages In gap Properties — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "gap-percent",
+        "clause_index": 3,
+        "clause_sha256": "dd07b28a23957ac4a6ed4f71c285fe4b373cf57d0cb0e23e9b9a9fbf24f2a96a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.gap-percent-clause-0a34484ffa53",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-percent"
+      ],
+      "behaviour": "Percentages In gap Properties — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "gap-percent",
+        "clause_index": 6,
+        "clause_sha256": "0a34484ffa5376b2b3e96cab0ecd949671830eb13ceb5c3cf7077ec501ed25ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.gap-legacy",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-legacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Legacy Gap Properties: the grid-row-gap, grid-column-gap, and grid-gap properties.",
+      "locator": {
+        "section_id": "gap-legacy",
+        "text_sha256": "982853a2a86ca718766dd756fbcaad6e1f560919c1e315e65048cc9fc2a3c2d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.gap-legacy-clause-346de5f93bfe"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.gap-legacy-clause-346de5f93bfe",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-legacy"
+      ],
+      "behaviour": "Legacy Gap Properties: the grid-row-gap, grid-column-gap, and grid-gap properties — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "gap-legacy",
+        "clause_index": 0,
+        "clause_sha256": "346de5f93bfe50c4924f044425bd10cd8f8079613dc24c754e3b0c36124cc2a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.gap-decorations",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-decorations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gap decorations.",
+      "locator": {
+        "section_id": "gap-decorations",
+        "text_sha256": "325a2c1762db9aeba6ae62f4fa588b1058c728b526a52843bbe831082a27cd30"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.geometry",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "geometry"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Geometry.",
+      "locator": {
+        "section_id": "geometry",
+        "text_sha256": "172fc9a558d4c20f1350637f2860895f36c29302079c1e065caf41fd8aefdcd4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.segment-endpoints",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "segment-endpoints"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Segment endpoints.",
+      "locator": {
+        "section_id": "segment-endpoints",
+        "text_sha256": "45dde4c4855fd4d1c41960c5ba9acb12fdf3f741527254ed6c995e9fe781b29f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.segments",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "segments"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gap decoration segments.",
+      "locator": {
+        "section_id": "segments",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.segments-definitions",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "segments-definitions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Definitions.",
+      "locator": {
+        "section_id": "segments-definitions",
+        "text_sha256": "9aa2f2647b6b9c13fe8c61754743b606ec1cc46e3867fd6acf2d36937064bd85"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.segments-algorithms",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "segments-algorithms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Algorithms.",
+      "locator": {
+        "section_id": "segments-algorithms",
+        "text_sha256": "b6ba280f7dd26637297990c7bbcbfa251cea5a66b0214123134bb66fb089903d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.break",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "break"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Break behaviors at intersections: The column-rule-break, row-rule-break, and rule-break properties.",
+      "locator": {
+        "section_id": "break",
+        "text_sha256": "8058f792b355550ebf13bb3bba9e4f16e3ebbb1a3d3c1cad46a4e702c8bf3829"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.break-clause-cca2516ebb1d",
+        "css-gaps-1.break-clause-0a221452344b",
+        "css-gaps-1.break-clause-7c1e52df7a62",
+        "css-gaps-1.break-clause-861f4b596997",
+        "css-gaps-1.break-clause-195b140f143a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.break-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "break"
+      ],
+      "behaviour": "Break behaviors at intersections: The column-rule-break, row-rule-break, and rule-break properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "break",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.break-clause-0a221452344b",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "break"
+      ],
+      "behaviour": "Break behaviors at intersections: The column-rule-break, row-rule-break, and rule-break properties — normative clause 73, located by its exact source hash.",
+      "locator": {
+        "section_id": "break",
+        "clause_index": 72,
+        "clause_sha256": "0a221452344ba75a2f0415db6557a9007d662e35f222e5e5e2d2db68c27a22b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.break-clause-7c1e52df7a62",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "break"
+      ],
+      "behaviour": "Break behaviors at intersections: The column-rule-break, row-rule-break, and rule-break properties — normative clause 74, located by its exact source hash.",
+      "locator": {
+        "section_id": "break",
+        "clause_index": 73,
+        "clause_sha256": "7c1e52df7a626040b29d9158346d1fb25c714f1013187cbfa52b47fb74909d9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.break-clause-861f4b596997",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "break"
+      ],
+      "behaviour": "Break behaviors at intersections: The column-rule-break, row-rule-break, and rule-break properties — normative clause 87, located by its exact source hash.",
+      "locator": {
+        "section_id": "break",
+        "clause_index": 86,
+        "clause_sha256": "861f4b5969977bd0c63ca2010de5d68a586a670f550b9c75d431486aef138639"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.break-clause-195b140f143a",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "break"
+      ],
+      "behaviour": "Break behaviors at intersections: The column-rule-break, row-rule-break, and rule-break properties — normative clause 88, located by its exact source hash.",
+      "locator": {
+        "section_id": "break",
+        "clause_index": 87,
+        "clause_sha256": "195b140f143afb4f537505433e3a15d41e2660707dcd1a9befbf79687859c49b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.inset",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "inset"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Adjusting gap decoration endpoints: The rule-inset properties.",
+      "locator": {
+        "section_id": "inset",
+        "text_sha256": "ecb969f8879047bbacfa66a097b36bc2e6646acdacbbe0b2c7b8f7abf2d4aa88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.inset-clause-cca2516ebb1d",
+        "css-gaps-1.inset-clause-9039d0384d7c",
+        "css-gaps-1.inset-clause-de87f43f03ab",
+        "css-gaps-1.inset-clause-26ff0015136e",
+        "css-gaps-1.inset-clause-70c3acc14642",
+        "css-gaps-1.inset-clause-d343f2e70713",
+        "css-gaps-1.inset-clause-9950c3d3c2af"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.inset-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "inset"
+      ],
+      "behaviour": "Adjusting gap decoration endpoints: The rule-inset properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "inset",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.inset-clause-9039d0384d7c",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "inset"
+      ],
+      "behaviour": "Adjusting gap decoration endpoints: The rule-inset properties — normative clause 98, located by its exact source hash.",
+      "locator": {
+        "section_id": "inset",
+        "clause_index": 97,
+        "clause_sha256": "9039d0384d7c6ebefa6d645d2f239840e6f6bc2e888d3aea3198e21cd1964fc3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.inset-clause-de87f43f03ab",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "inset"
+      ],
+      "behaviour": "Adjusting gap decoration endpoints: The rule-inset properties — normative clause 99, located by its exact source hash.",
+      "locator": {
+        "section_id": "inset",
+        "clause_index": 98,
+        "clause_sha256": "de87f43f03ab321cafd61645cacaec66c660e1387741800319f05c9d115847f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.inset-clause-26ff0015136e",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "inset"
+      ],
+      "behaviour": "Adjusting gap decoration endpoints: The rule-inset properties — normative clause 100, located by its exact source hash.",
+      "locator": {
+        "section_id": "inset",
+        "clause_index": 99,
+        "clause_sha256": "26ff0015136efaabeb935ebf6c94ffe7d1d96f340972298b55dcf47f2c216b88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.inset-clause-70c3acc14642",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "inset"
+      ],
+      "behaviour": "Adjusting gap decoration endpoints: The rule-inset properties — normative clause 101, located by its exact source hash.",
+      "locator": {
+        "section_id": "inset",
+        "clause_index": 100,
+        "clause_sha256": "70c3acc14642aff49b293b92838b24180294f13f97d4f9bc348d0edf1bc3aed6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.inset-clause-d343f2e70713",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "inset"
+      ],
+      "behaviour": "Adjusting gap decoration endpoints: The rule-inset properties — normative clause 102, located by its exact source hash.",
+      "locator": {
+        "section_id": "inset",
+        "clause_index": 101,
+        "clause_sha256": "d343f2e70713a6ed109f9f08dea796ab5e5be51240706e450473cb8ae96f22ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.inset-clause-9950c3d3c2af",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "inset"
+      ],
+      "behaviour": "Adjusting gap decoration endpoints: The rule-inset properties — normative clause 103, located by its exact source hash.",
+      "locator": {
+        "section_id": "inset",
+        "clause_index": 102,
+        "clause_sha256": "9950c3d3c2afc13cebd118df5e7855f1c516d1313203ba971ea06a87ad5c8ab3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-start-end",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-start-end"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in -start and -end shorthands.",
+      "locator": {
+        "section_id": "insets-start-end",
+        "text_sha256": "b9f5c520ac5cdfb8b7b9b3314693c1dd2273f3391fa2a0bc74cb64c1727cf147"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.insets-start-end-clause-cca2516ebb1d",
+        "css-gaps-1.insets-start-end-clause-6e603b860c70",
+        "css-gaps-1.insets-start-end-clause-5b6f24c3a20e",
+        "css-gaps-1.insets-start-end-clause-3e74945532b4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.insets-start-end-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-start-end"
+      ],
+      "behaviour": "-start and -end shorthands — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-start-end",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-start-end-clause-6e603b860c70",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-start-end"
+      ],
+      "behaviour": "-start and -end shorthands — normative clause 60, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-start-end",
+        "clause_index": 59,
+        "clause_sha256": "6e603b860c707b769af0286bcfe59ca504617771f512354914dfe7d38845412e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-start-end-clause-5b6f24c3a20e",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-start-end"
+      ],
+      "behaviour": "-start and -end shorthands — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-start-end",
+        "clause_index": 60,
+        "clause_sha256": "5b6f24c3a20e04a587b455bdbcacfd54fcaa7d4bbe77dd9081e72224bb143729"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-start-end-clause-3e74945532b4",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-start-end"
+      ],
+      "behaviour": "-start and -end shorthands — normative clause 64, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-start-end",
+        "clause_index": 63,
+        "clause_sha256": "3e74945532b46063f916b1649a81417ebb83bde9aa39ea395d7781c71d5b7008"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-cap-junction",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-cap-junction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in -cap- and -junction- shorthands.",
+      "locator": {
+        "section_id": "insets-cap-junction",
+        "text_sha256": "3b1adcd762850377193c98ca8f17199eea9287b63ea70f6f2fdad133b578660c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.insets-cap-junction-clause-cca2516ebb1d",
+        "css-gaps-1.insets-cap-junction-clause-e9fcf80d3f61",
+        "css-gaps-1.insets-cap-junction-clause-8531f0da4c90",
+        "css-gaps-1.insets-cap-junction-clause-f04ae8afa6a7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.insets-cap-junction-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-cap-junction"
+      ],
+      "behaviour": "-cap- and -junction- shorthands — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-cap-junction",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-cap-junction-clause-e9fcf80d3f61",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-cap-junction"
+      ],
+      "behaviour": "-cap- and -junction- shorthands — normative clause 60, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-cap-junction",
+        "clause_index": 59,
+        "clause_sha256": "e9fcf80d3f610872601de3a3ddf253da70025a77aa691a90557aeb01cd890a10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-cap-junction-clause-8531f0da4c90",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-cap-junction"
+      ],
+      "behaviour": "-cap- and -junction- shorthands — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-cap-junction",
+        "clause_index": 60,
+        "clause_sha256": "8531f0da4c906132b432d3f2a62a7174d4e483f501e353c44d8866a015912938"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-cap-junction-clause-f04ae8afa6a7",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-cap-junction"
+      ],
+      "behaviour": "-cap- and -junction- shorthands — normative clause 65, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-cap-junction",
+        "clause_index": 64,
+        "clause_sha256": "f04ae8afa6a754be165aff8c820b5618afda87a217052fb69a843d3fb942f1b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-universal",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-universal"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Universal shorthands.",
+      "locator": {
+        "section_id": "insets-universal",
+        "text_sha256": "d2f8bb72c7eb63119f41b16f71672ef8eaac55e54c9c8381505bef537f64e113"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.insets-universal-clause-cca2516ebb1d",
+        "css-gaps-1.insets-universal-clause-78486174da6e",
+        "css-gaps-1.insets-universal-clause-f2bb941ca267",
+        "css-gaps-1.insets-universal-clause-d6a5a12acaa1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.insets-universal-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-universal"
+      ],
+      "behaviour": "Universal shorthands — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-universal",
+        "clause_index": 17,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-universal-clause-78486174da6e",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-universal"
+      ],
+      "behaviour": "Universal shorthands — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-universal",
+        "clause_index": 47,
+        "clause_sha256": "78486174da6e3631b6decd572af7ffc3f6414137daf333a54d4d8f394ed7dce5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-universal-clause-f2bb941ca267",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-universal"
+      ],
+      "behaviour": "Universal shorthands — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-universal",
+        "clause_index": 48,
+        "clause_sha256": "f2bb941ca2675e264315f0129debf86d73c6564256d93ad8a7db1dbece198391"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.insets-universal-clause-d6a5a12acaa1",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "insets-universal"
+      ],
+      "behaviour": "Universal shorthands — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "insets-universal",
+        "clause_index": 51,
+        "clause_sha256": "d6a5a12acaa14d1bb599efe46c5fe93898ca0a546dbf0cd5b96d11151ec175cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.visibility",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "visibility"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gap decoration visibility: The rule-visibility-items properties.",
+      "locator": {
+        "section_id": "visibility",
+        "text_sha256": "fe2471b8a5beea223f9b5ba29327c277c1e67aa95d5aba35e67c80eb8ac3903b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.visibility-clause-cca2516ebb1d",
+        "css-gaps-1.visibility-clause-832ef2484a1b",
+        "css-gaps-1.visibility-clause-6b2abd67bc55",
+        "css-gaps-1.visibility-clause-9c4ad790810f",
+        "css-gaps-1.visibility-clause-c72517a84832"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.visibility-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "visibility"
+      ],
+      "behaviour": "Gap decoration visibility: The rule-visibility-items properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "visibility",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.visibility-clause-832ef2484a1b",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "visibility"
+      ],
+      "behaviour": "Gap decoration visibility: The rule-visibility-items properties — normative clause 75, located by its exact source hash.",
+      "locator": {
+        "section_id": "visibility",
+        "clause_index": 74,
+        "clause_sha256": "832ef2484a1b807503e0f59e13329c9dba317c67d9295e3fb0e7e7dfd88f39ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.visibility-clause-6b2abd67bc55",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "visibility"
+      ],
+      "behaviour": "Gap decoration visibility: The rule-visibility-items properties — normative clause 76, located by its exact source hash.",
+      "locator": {
+        "section_id": "visibility",
+        "clause_index": 75,
+        "clause_sha256": "6b2abd67bc55c73a6748146f63954d17e09b9079bb60c2a258b3ba93856cd07e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.visibility-clause-9c4ad790810f",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "visibility"
+      ],
+      "behaviour": "Gap decoration visibility: The rule-visibility-items properties — normative clause 79, located by its exact source hash.",
+      "locator": {
+        "section_id": "visibility",
+        "clause_index": 78,
+        "clause_sha256": "9c4ad790810f69fec0e08042268914950f249cf336680108b51106464d4d00d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.visibility-clause-c72517a84832",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "visibility"
+      ],
+      "behaviour": "Gap decoration visibility: The rule-visibility-items properties — normative clause 80, located by its exact source hash.",
+      "locator": {
+        "section_id": "visibility",
+        "clause_index": 79,
+        "clause_sha256": "c72517a84832f90c9a90258298973ef4a11edaa30b320af97b5ace2bdf88e3c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.overlap",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "overlap"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gap decoration overlap: The rule-overlap property.",
+      "locator": {
+        "section_id": "overlap",
+        "text_sha256": "105d41b9cc62dc3a8575442f7c16e89a2237ca2be2aeb97da854a9a089bb8504"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.overlap-clause-cca2516ebb1d",
+        "css-gaps-1.overlap-clause-e57b340b4921",
+        "css-gaps-1.overlap-clause-1bde10708644",
+        "css-gaps-1.overlap-clause-7656def592f2",
+        "css-gaps-1.overlap-clause-0ad860e7a356"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.overlap-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "overlap"
+      ],
+      "behaviour": "Gap decoration overlap: The rule-overlap property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "overlap",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.overlap-clause-e57b340b4921",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "overlap"
+      ],
+      "behaviour": "Gap decoration overlap: The rule-overlap property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "overlap",
+        "clause_index": 26,
+        "clause_sha256": "e57b340b4921ca5d95364a75da1796d7bb0826fe33e4f9370129460ad13bf8dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.overlap-clause-1bde10708644",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "overlap"
+      ],
+      "behaviour": "Gap decoration overlap: The rule-overlap property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "overlap",
+        "clause_index": 27,
+        "clause_sha256": "1bde10708644b8903eee58293cadec141527e4a0559a6458307f3e504de9d263"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.overlap-clause-7656def592f2",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "overlap"
+      ],
+      "behaviour": "Gap decoration overlap: The rule-overlap property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "overlap",
+        "clause_index": 29,
+        "clause_sha256": "7656def592f287cc1d6a980a16963d6119d76c3b51715ea022fb61f361bd23c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.overlap-clause-0ad860e7a356",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "overlap"
+      ],
+      "behaviour": "Gap decoration overlap: The rule-overlap property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "overlap",
+        "clause_index": 30,
+        "clause_sha256": "0ad860e7a356d7fcd67d264ed27dd6de3b55c1832f13b051bcaf84edc071b473"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.fragmentation",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "fragmentation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fragmentation.",
+      "locator": {
+        "section_id": "fragmentation",
+        "text_sha256": "13959510f362313e466eb369d71a6ed74c24cbbba8d3a75a57bd3d1f993730f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.color-style-width",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "color-style-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Color, style, and width.",
+      "locator": {
+        "section_id": "color-style-width",
+        "text_sha256": "b6aecd8bb739adb2e678999b8ec7325c121f8dc0ae0801d01af9d3a624236f6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-color",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gap decoration color: The column-rule-color, row-rule-color, and rule-color properties.",
+      "locator": {
+        "section_id": "column-row-rule-color",
+        "text_sha256": "69354ceaa19e9d4a4da3a13b2a940eeb3fbd8e9a75e7a285b833697ecde55b9a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.column-row-rule-color-clause-cca2516ebb1d",
+        "css-gaps-1.column-row-rule-color-clause-94df99ed985b",
+        "css-gaps-1.column-row-rule-color-clause-c05eff9e4db7",
+        "css-gaps-1.column-row-rule-color-clause-96578965aba4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-color-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-color"
+      ],
+      "behaviour": "Gap decoration color: The column-rule-color, row-rule-color, and rule-color properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-color",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-color-clause-94df99ed985b",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-color"
+      ],
+      "behaviour": "Gap decoration color: The column-rule-color, row-rule-color, and rule-color properties — normative clause 60, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-color",
+        "clause_index": 59,
+        "clause_sha256": "94df99ed985b43c05b3c94913f312fa7631210f426a988fbfd4b3030d7717b9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-color-clause-c05eff9e4db7",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-color"
+      ],
+      "behaviour": "Gap decoration color: The column-rule-color, row-rule-color, and rule-color properties — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-color",
+        "clause_index": 60,
+        "clause_sha256": "c05eff9e4db779759ddaf87689169b17f224fa69bb89191e735affa4c6982965"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-color-clause-96578965aba4",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-color"
+      ],
+      "behaviour": "Gap decoration color: The column-rule-color, row-rule-color, and rule-color properties — normative clause 63, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-color",
+        "clause_index": 62,
+        "clause_sha256": "96578965aba4b93ee3f41a94a61075b9439915347c9eb33c5d731defde589f32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-style",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-style"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gap decoration style: The column-rule-style, row-rule-style, and rule-style properties.",
+      "locator": {
+        "section_id": "column-row-rule-style",
+        "text_sha256": "f2651b1f25fe910aa723f8ec96ecfb2ce59fd3218e816a0a2895449f97fcce6c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.column-row-rule-style-clause-cca2516ebb1d",
+        "css-gaps-1.column-row-rule-style-clause-988081444181",
+        "css-gaps-1.column-row-rule-style-clause-efe7f1a64c4c",
+        "css-gaps-1.column-row-rule-style-clause-2a450d7f368e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-style-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-style"
+      ],
+      "behaviour": "Gap decoration style: The column-rule-style, row-rule-style, and rule-style properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-style",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-style-clause-988081444181",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-style"
+      ],
+      "behaviour": "Gap decoration style: The column-rule-style, row-rule-style, and rule-style properties — normative clause 54, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-style",
+        "clause_index": 53,
+        "clause_sha256": "9880814441811eb88d3c98d34ab63c34160be99fe8d73edb7a2391a240daf8cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-style-clause-efe7f1a64c4c",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-style"
+      ],
+      "behaviour": "Gap decoration style: The column-rule-style, row-rule-style, and rule-style properties — normative clause 55, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-style",
+        "clause_index": 54,
+        "clause_sha256": "efe7f1a64c4c883bac11c6e9871c9c362902282884cf71589f54efe9f6758b8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-style-clause-2a450d7f368e",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-style"
+      ],
+      "behaviour": "Gap decoration style: The column-rule-style, row-rule-style, and rule-style properties — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-style",
+        "clause_index": 56,
+        "clause_sha256": "2a450d7f368e9cc4115b14f52ea6115b14289b5a0d32496abb427a5cab06ca1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-width",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gap decoration width: The column-rule-width, row-rule-width, and rule-width properties.",
+      "locator": {
+        "section_id": "column-row-rule-width",
+        "text_sha256": "6c2301d8c7caa1e12fde93f0b71d81311d7c0d0a3510c1b098a7d0aacfbe8800"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.column-row-rule-width-clause-cca2516ebb1d",
+        "css-gaps-1.column-row-rule-width-clause-58aa680381b1",
+        "css-gaps-1.column-row-rule-width-clause-c651a3e6810c",
+        "css-gaps-1.column-row-rule-width-clause-bc9cf2174d0c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-width-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-width"
+      ],
+      "behaviour": "Gap decoration width: The column-rule-width, row-rule-width, and rule-width properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-width",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-width-clause-58aa680381b1",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-width"
+      ],
+      "behaviour": "Gap decoration width: The column-rule-width, row-rule-width, and rule-width properties — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-width",
+        "clause_index": 43,
+        "clause_sha256": "58aa680381b15733c3499614465960e79298b05e907ab3d92801cdc4cf6674a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-width-clause-c651a3e6810c",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-width"
+      ],
+      "behaviour": "Gap decoration width: The column-rule-width, row-rule-width, and rule-width properties — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-width",
+        "clause_index": 44,
+        "clause_sha256": "c651a3e6810ce501501628c419106b16717569db2578b20a79c33fc751d22f94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.column-row-rule-width-clause-bc9cf2174d0c",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "column-row-rule-width"
+      ],
+      "behaviour": "Gap decoration width: The column-rule-width, row-rule-width, and rule-width properties — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-row-rule-width",
+        "clause_index": 46,
+        "clause_sha256": "bc9cf2174d0c40b4cba5f3b6982e73115cb80bdc5481bd0497e0a7ec5a2a7a10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.gap-decoration-shorthands",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-decoration-shorthands"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gap decoration shorthands: The column-rule, row-rule, and rule properties.",
+      "locator": {
+        "section_id": "gap-decoration-shorthands",
+        "text_sha256": "2f5335c8a48ac0767639e4f34c70428fb28a5664b22ea0a0c4e93b2ecf1140bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.gap-decoration-shorthands-clause-cca2516ebb1d",
+        "css-gaps-1.gap-decoration-shorthands-clause-969d644afafa",
+        "css-gaps-1.gap-decoration-shorthands-clause-b38badfadf92",
+        "css-gaps-1.gap-decoration-shorthands-clause-c0f0bbac0b84"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.gap-decoration-shorthands-clause-cca2516ebb1d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-decoration-shorthands"
+      ],
+      "behaviour": "Gap decoration shorthands: The column-rule, row-rule, and rule properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "gap-decoration-shorthands",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.gap-decoration-shorthands-clause-969d644afafa",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-decoration-shorthands"
+      ],
+      "behaviour": "Gap decoration shorthands: The column-rule, row-rule, and rule properties — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "gap-decoration-shorthands",
+        "clause_index": 41,
+        "clause_sha256": "969d644afafa318d1fd70397c181d9ff7c8d91cadddf35f083d09401f1269c86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.gap-decoration-shorthands-clause-b38badfadf92",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-decoration-shorthands"
+      ],
+      "behaviour": "Gap decoration shorthands: The column-rule, row-rule, and rule properties — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "gap-decoration-shorthands",
+        "clause_index": 42,
+        "clause_sha256": "b38badfadf92aa0f65669f97c87631894496109cc36e87c07357adfe1df0c896"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.gap-decoration-shorthands-clause-c0f0bbac0b84",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "gap-decoration-shorthands"
+      ],
+      "behaviour": "Gap decoration shorthands: The column-rule, row-rule, and rule properties — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "gap-decoration-shorthands",
+        "clause_index": 45,
+        "clause_sha256": "c0f0bbac0b84a5abd2713cf32e9b9c00a37dd27ffc041a4f68cc3e4f4d8aefb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.lists-repeat",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "lists-repeat"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lists of values and the repeat() notation.",
+      "locator": {
+        "section_id": "lists-repeat",
+        "text_sha256": "016c422cff5eb1c51ed9ea5bd8877c861b2f9355d682f63f1c0863d7fc481db5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.assigning",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "assigning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Assigning gap decoration values to gaps.",
+      "locator": {
+        "section_id": "assigning",
+        "text_sha256": "0b518e20e5439f4230e168a7b53d7681cb4f967a01cb9b124934ec5172837cf0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.assigning-clause-c632165c1dad"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.assigning-clause-c632165c1dad",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "assigning"
+      ],
+      "behaviour": "Assigning gap decoration values to gaps — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "assigning",
+        "clause_index": 6,
+        "clause_sha256": "c632165c1dad49225495510c35d21be22a2dd6009ea22852e2e1f401d1a3f7e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.interpolation-behavior",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "interpolation-behavior"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interpolation of list values.",
+      "locator": {
+        "section_id": "interpolation-behavior",
+        "text_sha256": "498361710981fb5a547b8d9f9e22ce31083bbbc11d0f7dcf1415a09f2735b7f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.interpolation-behavior-clause-29835e60e5aa"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.interpolation-behavior-clause-29835e60e5aa",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "interpolation-behavior"
+      ],
+      "behaviour": "Interpolation of list values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "interpolation-behavior",
+        "clause_index": 1,
+        "clause_sha256": "29835e60e5aa1be9fee270433b1e8c408320bb940775f7c92221751a3fc4ca57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.serialization",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serialization.",
+      "locator": {
+        "section_id": "serialization",
+        "text_sha256": "2b84eb0de36a08af25130413f4e964cfe2592982c4264ef5311591e1eed21bb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.privacy",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.security",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.w3c-conformance",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.w3c-conventions",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.w3c-conventions-clause-5c98c879f070",
+        "css-gaps-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.w3c-conformance-classes",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-gaps-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.w3c-partial",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.w3c-conform-future-proofing",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.w3c-testing",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.w3c-testing-clause-1e0fff369221",
+        "css-gaps-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.property-index",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "4d06ea7a37541b1cc61cfe60d4daaf86686c68b02db0696684f17fbc86b3b5d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-gaps-1.property-index-clause-4b59fe755d34",
+        "css-gaps-1.property-index-clause-70828f810467"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.property-index-clause-4b59fe755d34",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 15,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.property-index-clause-70828f810467",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 17,
+        "clause_sha256": "70828f810467501010afde4b9499fddab9dd19ff063d94fc58292c4edaf6da22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-gaps-1.title",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Gaps Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "4e9c2e198cd446704c4136d94fefea88a760232b458256d9de18878b1e369463"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.abstract",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "ca981ec30a050f959d02f815acf134f071daa3d0933a4fd1e3bfff4212d1c766"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.sotd",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "892d4694be1d6fa97d25e43ce5482faa4586a126527fefc7e613a73794cc06b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.contents",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "c9925682bef9e4079532d3ed3594781571753badaeb1d2b9ea67e70bad11c155"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.intro",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "1b631c8dabc4f0f4a61c2902eca4a0d56ebb4244546f4e422373d3b5fecfa5f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.values",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.acknowledgements",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5. Acknowledgements.",
+      "locator": {
+        "section_id": "acknowledgements",
+        "text_sha256": "efc783aba4a101912b559c40b61cbe69d1ab06242a25e15cf715b312d93d1896"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.changes",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.changes-20260227",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "changes-20260227"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.1. Changes since the 27 February 2026 Working Draft.",
+      "locator": {
+        "section_id": "changes-20260227",
+        "text_sha256": "3916d54e6c680f7ab0b50fe2c680676c63207fa8e9bda6dfcc5cf1e962c32f53"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.changes-20250417",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "changes-20250417"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8.2. Changes since the 17 April 2025 Working Draft.",
+      "locator": {
+        "section_id": "changes-20250417",
+        "text_sha256": "3b7f7a7cd935ee912d96dda390185ef2ff85a2fcfd1e46d854c2f00a796f26b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.index",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.index-defined-here",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "c7d7b66c8db4ed32f5efd0431b00da9e6cc5066f62e6bb4e0ef5d22dd3b050e3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.index-defined-elsewhere",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "c64df60f3c749cf83a1a7dc24cb8ac0923148d22ff5ccb21cf2b59b337f1818c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.references",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.normative",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "013e2e77c878a9b65888f17f6456afc87e545cffacb17eaf46c3192cc5a01637"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-gaps-1.informative",
+      "family": "css-gaps-1",
+      "source_id": "css-gaps-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "5323ff7ee17f4e8bacb8123e9aa27938d969645fbf6ee1a72810b9d84238dd38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

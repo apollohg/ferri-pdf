@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>leader-wrap</title><style>@font-face { font-family: Probe; src: url('../assets/DejaVuSans.ttf'); }
+@page { size: 300pt 300pt; margin: 36pt; }
+html, body { margin: 0; padding: 0; }
+body { font: 10pt/15pt Probe; }
+p { margin: 0; width: 200pt; }
+p::after { content: leader('.') 'Z'; }
+.wrapped { width: 60pt; margin-top: 15pt; }</style></head><body><p class="short">A</p><p class="long">AAAA</p><p class="wrapped">Before content wraps across several lines</p></body></html>

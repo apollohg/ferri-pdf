@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-hhea",
+  "sections": [
+    {
+      "id": "hhea--horizontal-header-table",
+      "title": "hhea — Horizontal Header Table",
+      "level": 1,
+      "text_sha256": "3ddc9f436fbb388506cc1eee9fec980ddc82bfecd0b0b2fc897a0de635a27558",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-hhea.hhea-horizontal-header-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-hhea.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "hhea-table-and-opentype-font-variations",
+      "title": "'hhea' Table and OpenType Font Variations",
+      "level": 2,
+      "text_sha256": "1a78c32cf2fa0a64fda296150f5c051c50195f973ecaef7bebabe8073c52fb8d",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-hhea.hhea-table-and-opentype-font-variations"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-hhea.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "2bb4fcc2bd743fa4b51a786e2a6bc74b2afad4c27580e6bc574766ba7ef327cd",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-hhea.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-hhea.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

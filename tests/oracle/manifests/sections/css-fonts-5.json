@@ -1,0 +1,782 @@
+{
+  "schema_version": 1,
+  "source_id": "css-fonts-5",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Fonts Module Level 5",
+      "level": 1,
+      "text_sha256": "63406117871a65e213898dff09d00323801ff341d68b1491672e97d2d8a684e2",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "3e8f681c5981cc44762c1d91859ec650167725de58cbdd6ed143a26257a9a779",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "ac16f539d2ab53c69fe04756c0a9935596b94d7d843e25adbf3b19b1e1166068",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "165dc0a97e63826c2479d8c95e063293e01f098e3bcf9ca0e759428bf6d31615",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "aba3b7ce0d56f146d94da0e58a0179129989ee5eb6eb978d78d19e63dfbfa770",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.introduction"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.values"
+        ]
+      }
+    },
+    {
+      "id": "text-scale-meta",
+      "title": "2. Text-Scale meta element",
+      "level": 2,
+      "text_sha256": "0176fa20e67dbceffcc9dbe556149f32f2c16f906919ac2169a261ba77295c92",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.text-scale-meta",
+          "css-fonts-5.text-scale-meta-clause-a9cbaa7b291a",
+          "css-fonts-5.text-scale-meta-clause-ac0681eba41b",
+          "css-fonts-5.text-scale-meta-clause-d1949c29408c"
+        ]
+      }
+    },
+    {
+      "id": "text-scale-meta-keywords",
+      "title": "2.1. Keywords",
+      "level": 3,
+      "text_sha256": "2b54b6408377a50e897d09bfe1d31d324931a37f88bc08ca265f99c627873c2c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.text-scale-meta-keywords",
+          "css-fonts-5.text-scale-meta-keywords-clause-b8510322d7ee"
+        ]
+      }
+    },
+    {
+      "id": "legacy-keyword",
+      "title": "2.2. The legacy keyword",
+      "level": 3,
+      "text_sha256": "3f0d41eb7898e42a4c417de5c1ff631ce3af255f6fce36f550cb4dc9a1d6f680",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.legacy-keyword",
+          "css-fonts-5.legacy-keyword-clause-9aab14d40040"
+        ]
+      }
+    },
+    {
+      "id": "scale-keyword",
+      "title": "2.3. The scale keyword",
+      "level": 3,
+      "text_sha256": "42f81fc2801a5536cc77efe5e16648ee048b4a838574da30f20c49fcaed3e41f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.scale-keyword",
+          "css-fonts-5.scale-keyword-clause-abe41059ecf9",
+          "css-fonts-5.scale-keyword-clause-763203ce23ff",
+          "css-fonts-5.scale-keyword-clause-b8efdc3b04a9"
+        ]
+      }
+    },
+    {
+      "id": "basic-font-props",
+      "title": "3. Basic Font Properties",
+      "level": 2,
+      "text_sha256": "4941cee96f00cd83f3349bc695935f40cabfee89384b7557b90a31d9d54d67c8",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.basic-font-props"
+        ]
+      }
+    },
+    {
+      "id": "font-family-prop",
+      "title": "3.1. Font family: the font-family property",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-family-prop"
+        ]
+      }
+    },
+    {
+      "id": "generic-font-families",
+      "title": "3.1.1. Generic font families",
+      "level": 4,
+      "text_sha256": "ea5bb34e79b7b3db287c1e2261d3b8c43e32cfb1ee053791c20dd4c5651ef1a0",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.generic-font-families",
+          "css-fonts-5.generic-font-families-clause-91dd09f3a740"
+        ]
+      }
+    },
+    {
+      "id": "font-weight-prop",
+      "title": "3.2. Font weight: the font-weight property",
+      "level": 3,
+      "text_sha256": "679f7c55d039f8e903201b8aad8861f147ecc080abcba58588d25f1d846dceff",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-weight-prop"
+        ]
+      }
+    },
+    {
+      "id": "font-style-prop",
+      "title": "3.3. Font style: the font-style property",
+      "level": 3,
+      "text_sha256": "5ead2e559a5359d96761970e1d4d67bb6a6e7745bafff620f75df4972474cde4",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-style-prop"
+        ]
+      }
+    },
+    {
+      "id": "font-size-adjust-prop",
+      "title": "3.4. Relative sizing: the font-size-adjust property",
+      "level": 3,
+      "text_sha256": "ede7bf7367e9cec46eaba5c5c5e8420f6f28ccf80d4bf987cacdf4b04e5c3d5e",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-size-adjust-prop",
+          "css-fonts-5.font-size-adjust-prop-clause-cca2516ebb1d",
+          "css-fonts-5.font-size-adjust-prop-clause-96f542627b1e",
+          "css-fonts-5.font-size-adjust-prop-clause-fa274dcf6ce8",
+          "css-fonts-5.font-size-adjust-prop-clause-426c3f8097ff",
+          "css-fonts-5.font-size-adjust-prop-clause-a4d558339209",
+          "css-fonts-5.font-size-adjust-prop-clause-ce8e832260d7",
+          "css-fonts-5.font-size-adjust-prop-clause-da3c64f4fe10",
+          "css-fonts-5.font-size-adjust-prop-clause-0722c7e39392",
+          "css-fonts-5.font-size-adjust-prop-clause-c912ff8334f9",
+          "css-fonts-5.font-size-adjust-prop-clause-98b81eb3f6eb"
+        ]
+      }
+    },
+    {
+      "id": "font-resources",
+      "title": "4. Font Resources",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-resources"
+        ]
+      }
+    },
+    {
+      "id": "font-face-rule",
+      "title": "4.1. The @font-face rule",
+      "level": 3,
+      "text_sha256": "b869d9bc29f0b8accce1a9ddf1c9c0d1ccd60662f4790a891e3f4ac7fd9b8499",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-face-rule"
+        ]
+      }
+    },
+    {
+      "id": "src-desc",
+      "title": "4.2. Font reference: the src descriptor",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.src-desc"
+        ]
+      }
+    },
+    {
+      "id": "font-face-src-parsing",
+      "title": "4.2.1. Parsing the src descriptor",
+      "level": 4,
+      "text_sha256": "3dec3f62714ef039f6a5dd129e42a19e28ed10a26135df44b4fb2ae977a408b1",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-face-src-parsing",
+          "css-fonts-5.font-face-src-parsing-clause-eac1b221bc4f"
+        ]
+      }
+    },
+    {
+      "id": "font-size-desc",
+      "title": "4.3. Font property descriptors: the font-size",
+      "level": 3,
+      "text_sha256": "edfbbc1fd5aedd7eea20eaf3e87cc73d97041efced4591087965722528b0747f",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-size-desc"
+        ]
+      }
+    },
+    {
+      "id": "size-adjust-desc",
+      "title": "4.4. Glyph Size Multiplier: the size-adjust descriptor",
+      "level": 3,
+      "text_sha256": "a36a68a143dacb2395b01e069bdf7bf413303a2147ce6ccc98a2ba055c87074e",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.size-adjust-desc",
+          "css-fonts-5.size-adjust-desc-clause-7fe77b5e5968",
+          "css-fonts-5.size-adjust-desc-clause-d9a3e250df3a",
+          "css-fonts-5.size-adjust-desc-clause-bee11b846fc7"
+        ]
+      }
+    },
+    {
+      "id": "font-metrics-override-desc",
+      "title": "4.5. Line Height Font Metrics Overrides: the ascent-override, descent-override, and line-gap-override descriptors",
+      "level": 3,
+      "text_sha256": "5c44bffc703822a6dbf3fa0a5d811d8fb4e0698c90a683eb98e9b2524d5d6fb7",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-metrics-override-desc"
+        ]
+      }
+    },
+    {
+      "id": "font-sup-sub-override-desc",
+      "title": "4.6. Superscript and subscript metrics overrides: the superscript-position-override, subscript-position-override,superscript-size-override and subscript-size-override descriptors",
+      "level": 3,
+      "text_sha256": "9951d41fb861cea52ab8335d472bf0d9d014bf2df26c9cd203caaa6c77d03fcc",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-sup-sub-override-desc",
+          "css-fonts-5.font-sup-sub-override-desc-clause-baf61836bd72",
+          "css-fonts-5.font-sup-sub-override-desc-clause-96a9b2742bcc"
+        ]
+      }
+    },
+    {
+      "id": "font-rend-props",
+      "title": "5. Font Feature Properties",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-rend-props"
+        ]
+      }
+    },
+    {
+      "id": "font-language-override-prop",
+      "title": "5.1. Font language override: the font-language-override property",
+      "level": 3,
+      "text_sha256": "f2897959c0387f8e679ded20ed8c62e01359af0ab588903d147162da0a322a63",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-language-override-prop"
+        ]
+      }
+    },
+    {
+      "id": "font-feature-variation-resolution",
+      "title": "6. Font Feature and Variation Resolution",
+      "level": 2,
+      "text_sha256": "bc7de2c60dc04a220e68e270c95842b340515559e99119637bf5617ed60d557b",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-feature-variation-resolution"
+        ]
+      }
+    },
+    {
+      "id": "font-variation-props",
+      "title": "7. Font Variation Properties",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-variation-props"
+        ]
+      }
+    },
+    {
+      "id": "font-optical-sizing-def",
+      "title": "7.1. Optical sizing control: the font-optical-sizing property",
+      "level": 3,
+      "text_sha256": "cad57d745a19a0e80cee264adf8b78fca6798014be92e51a6ba4bb02a0a177f9",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-optical-sizing-def"
+        ]
+      }
+    },
+    {
+      "id": "font-technologies-formats",
+      "title": "8. Font Technologies and Formats",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-technologies-formats"
+        ]
+      }
+    },
+    {
+      "id": "font-tech-definitions",
+      "title": "8.1. Font tech",
+      "level": 3,
+      "text_sha256": "7adcfc0a61f62a457d1d63b17443ebb70b594eed476f2d460a845d7f116a21b5",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-tech-definitions"
+        ]
+      }
+    },
+    {
+      "id": "object-model",
+      "title": "9. Object Model",
+      "level": 2,
+      "text_sha256": "ac2603d695cdcb35d997eddb9ad99ae16c51c9764a21d21153a780df30894ebf",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.object-model"
+        ]
+      }
+    },
+    {
+      "id": "om-fontface",
+      "title": "9.1. The CSSFontFaceRule interface",
+      "level": 3,
+      "text_sha256": "70d031a2090a96a5fd8ee7a25fdff0ebe9e32e44b56bf03382e05ef7176aed6d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.om-fontface"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "10. Security Considerations",
+      "level": 2,
+      "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.security"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "11. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.privacy"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "12. Acknowledgments",
+      "level": 2,
+      "text_sha256": "c24837002d9fbbbeebba1be6f5f75c769b9f7e3bc5333ffb4ea678b5d28daa2c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "13. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20260206",
+      "title": "13.1. Changes since the WD of 6 February 2024",
+      "level": 3,
+      "text_sha256": "d7197203e2a024945c4f5bbd2a6c32c4d201753af4a92567bfe0efb86e750a1d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.changes-20260206"
+        ]
+      }
+    },
+    {
+      "id": "changes-20211221",
+      "title": "13.2. Changes since the WD of 21 December 2021",
+      "level": 3,
+      "text_sha256": "678d64b85c3c3984e75fe199358a2959ea22e3e3957273c672d8736a9f2e83ac",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.changes-20211221"
+        ]
+      }
+    },
+    {
+      "id": "changes-20210729",
+      "title": "13.3. Changes since the WD of 2021-07-29",
+      "level": 3,
+      "text_sha256": "bdfac3261f5e7ae09a544858a944ee869455f4393a0373839b4cf87f23d59c56",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.changes-20210729"
+        ]
+      }
+    },
+    {
+      "id": "changes-20210629",
+      "title": "13.4. Changes since the FPWD of 2021-06-29",
+      "level": 3,
+      "text_sha256": "d01e9c2dee67639f129b0230320cf2c7c4dbc6a462b5b17a38669f003b082843",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.changes-20210629"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.w3c-conventions",
+          "css-fonts-5.w3c-conventions-clause-5c98c879f070",
+          "css-fonts-5.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.w3c-conformance-classes",
+          "css-fonts-5.w3c-conformance-classes-clause-ff408372426c",
+          "css-fonts-5.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.w3c-partial",
+          "css-fonts-5.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.w3c-testing",
+          "css-fonts-5.w3c-testing-clause-1e0fff369221",
+          "css-fonts-5.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "96377cf81d56fa89a0b903eaa7596ff4c53b4db12805c6cdcde064ff8af88f35",
+      "clause_count": 96,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "f56455040f23aafb73798cfd7b99d53ee148dcc5738e81b046c7237a0f684f13",
+      "clause_count": 69,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "9117e0d0d31bfe595586e1b269d6fd9e8aaaecc92b8a9f137b4b47b47a739fe0",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.import-a3f920e3f838",
+          "css-fonts-5.import-709148d9fced",
+          "css-fonts-5.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "455d39e62c4d9fbbe889bfd11e0f6e8e50147f18bbb79358ef157c87d98ad194",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "25a438a93c284cd6e6b20792e66d1fb99dd778832907b2f5ac926c35122a506a",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.property-index",
+          "css-fonts-5.property-index-clause-73e5892a3ad6"
+        ]
+      }
+    },
+    {
+      "id": "font-face-descriptor-table",
+      "title": "@font-face Descriptors",
+      "level": 3,
+      "text_sha256": "daf68136c15c31506e0893857c1e2545e193c03594669db09b6eb5d7dfb997c0",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.font-face-descriptor-table"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "05daf04ef8b4a73d58f944a047cc10ef691fc74a9eae44373f7f6cbb2095732a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "9932ba9cfc5e842f18b88e7565020c20bfa52c8f996ff3a4154c0ee4c0dac25c",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-fonts-5.issues-index"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,3308 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-sizing-3.terms",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "terms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terms",
+        "text_sha256": "899f5d04846dcb89223e3d26e548893dba4fbb40abe5fcae4b843b33ae302898"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.terms-clause-89eb0ea0030e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.terms-clause-89eb0ea0030e",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "terms"
+      ],
+      "behaviour": "Terminology — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "terms",
+        "clause_index": 21,
+        "clause_sha256": "89eb0ea0030e07ef583aa30b8d21bcbfc9e2ceb589dd7650b76147363a5857d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.auto-box-sizes",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "auto-box-sizes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Auto Box Sizes.",
+      "locator": {
+        "section_id": "auto-box-sizes",
+        "text_sha256": "909f22a257fed46eb3ff72650f946f183522009e6bb0461e70ae5bec3513fcff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.auto-box-sizes-clause-0eed120aa172",
+        "css-sizing-3.auto-box-sizes-clause-02ab08a2cb13"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.auto-box-sizes-clause-0eed120aa172",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "auto-box-sizes"
+      ],
+      "behaviour": "Auto Box Sizes — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "auto-box-sizes",
+        "clause_index": 4,
+        "clause_sha256": "0eed120aa172ce7e30376b72af88892059835e3c949351dbad291c4045213860"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.auto-box-sizes-clause-02ab08a2cb13",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "auto-box-sizes"
+      ],
+      "behaviour": "Auto Box Sizes — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "auto-box-sizes",
+        "clause_index": 6,
+        "clause_sha256": "02ab08a2cb13a5db6e16c868bcc7680eed175e0426e597e45f2cadd1688a0934"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.contributions",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "contributions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Intrinsic Size Contributions.",
+      "locator": {
+        "section_id": "contributions",
+        "text_sha256": "8e23b12e0509bdc09052fdabe89e8abe268ab42477dcb5892a2883e4557a9161"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.constraints",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "constraints"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Intrinsic Size Constraints.",
+      "locator": {
+        "section_id": "constraints",
+        "text_sha256": "9c5df30ddd54f518bbc424beb71574ee73fe8a5ad10534801abba351db038201"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.foundation-existing-mode-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.specifying-sizes",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "specifying-sizes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying Box Sizes.",
+      "locator": {
+        "section_id": "specifying-sizes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.sizing-properties",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "sizing-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sizing Properties.",
+      "locator": {
+        "section_id": "sizing-properties",
+        "text_sha256": "ebdb38f929496b1b3da3c45c21857513511702858aef274657085c141cb32aa7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.preferred-size-properties",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "preferred-size-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Preferred Size Properties: the width, height, inline-size, and block-size properties.",
+      "locator": {
+        "section_id": "preferred-size-properties",
+        "text_sha256": "7f20ee62068560324ca19aee223f0b2871f994b64315eef916b5227ad9a7a777"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.preferred-size-properties-clause-cca2516ebb1d",
+        "css-sizing-3.preferred-size-properties-clause-b01ac2e0bfb3",
+        "css-sizing-3.preferred-size-properties-clause-cb3ecde13531",
+        "css-sizing-3.preferred-size-properties-clause-6c5c7bef4dde",
+        "css-sizing-3.preferred-size-properties-clause-b6ef7e694e5e",
+        "css-sizing-3.preferred-size-properties-clause-792100bca624",
+        "css-sizing-3.foundation-intrinsic-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.preferred-size-properties-clause-cca2516ebb1d",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "preferred-size-properties"
+      ],
+      "behaviour": "Preferred Size Properties: the width, height, inline-size, and block-size properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "preferred-size-properties",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.preferred-size-properties-clause-b01ac2e0bfb3",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "preferred-size-properties"
+      ],
+      "behaviour": "Preferred Size Properties: the width, height, inline-size, and block-size properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "preferred-size-properties",
+        "clause_index": 13,
+        "clause_sha256": "b01ac2e0bfb348ba5205874ca9fc3524aef8a556c10675c7bf31dacc5ce8afce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.preferred-size-properties-clause-cb3ecde13531",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "preferred-size-properties"
+      ],
+      "behaviour": "Preferred Size Properties: the width, height, inline-size, and block-size properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "preferred-size-properties",
+        "clause_index": 17,
+        "clause_sha256": "cb3ecde135314e061f9b6efeff3af9366cc8e9a1a80740c070a0fcd3cb42ab2b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.preferred-size-properties-clause-6c5c7bef4dde",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "preferred-size-properties"
+      ],
+      "behaviour": "Preferred Size Properties: the width, height, inline-size, and block-size properties — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "preferred-size-properties",
+        "clause_index": 25,
+        "clause_sha256": "6c5c7bef4ddecec6f41e643e85556e2ff563f6091c8a09ccd27bfb76d161f181"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.preferred-size-properties-clause-b6ef7e694e5e",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "preferred-size-properties"
+      ],
+      "behaviour": "Preferred Size Properties: the width, height, inline-size, and block-size properties — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "preferred-size-properties",
+        "clause_index": 27,
+        "clause_sha256": "b6ef7e694e5e518873a08fa8fd9b8d76be435d33097a67f51f9d6dcba5ff4e76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.preferred-size-properties-clause-792100bca624",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "preferred-size-properties"
+      ],
+      "behaviour": "Preferred Size Properties: the width, height, inline-size, and block-size properties — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "preferred-size-properties",
+        "clause_index": 30,
+        "clause_sha256": "792100bca624a40421d9da2d78c3607a86dcc8ece59651134c7271ec017c1bd5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.min-size-properties",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "min-size-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Minimum Size Properties: the min-width, min-height, min-inline-size, and min-block-size properties.",
+      "locator": {
+        "section_id": "min-size-properties",
+        "text_sha256": "45c2bcf5c9ba73bef9197d18eba7b441379ed76e3cb6bd8168d307e29efbbe5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.min-size-properties-clause-cca2516ebb1d",
+        "css-sizing-3.min-size-properties-clause-b01ac2e0bfb3",
+        "css-sizing-3.min-size-properties-clause-f0f6583e1f3f",
+        "css-sizing-3.min-size-properties-clause-de736bf8c16d",
+        "css-sizing-3.min-size-properties-clause-4daad46d0654",
+        "css-sizing-3.min-size-properties-clause-26e781f48c18",
+        "css-sizing-3.min-size-properties-clause-daadf988a5cf",
+        "css-sizing-3.min-size-properties-clause-e2d4b6001eea",
+        "css-sizing-3.min-size-properties-clause-a4fa1d2f0366",
+        "css-sizing-3.foundation-intrinsic-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.min-size-properties-clause-cca2516ebb1d",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "min-size-properties"
+      ],
+      "behaviour": "Minimum Size Properties: the min-width, min-height, min-inline-size, and min-block-size properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-size-properties",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.min-size-properties-clause-b01ac2e0bfb3",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "min-size-properties"
+      ],
+      "behaviour": "Minimum Size Properties: the min-width, min-height, min-inline-size, and min-block-size properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-size-properties",
+        "clause_index": 13,
+        "clause_sha256": "b01ac2e0bfb348ba5205874ca9fc3524aef8a556c10675c7bf31dacc5ce8afce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.min-size-properties-clause-f0f6583e1f3f",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "min-size-properties"
+      ],
+      "behaviour": "Minimum Size Properties: the min-width, min-height, min-inline-size, and min-block-size properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-size-properties",
+        "clause_index": 17,
+        "clause_sha256": "f0f6583e1f3f2b37a935f1e1c6653377b82f5a7d859592cc9ff2add062f18c10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.min-size-properties-clause-de736bf8c16d",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "min-size-properties"
+      ],
+      "behaviour": "Minimum Size Properties: the min-width, min-height, min-inline-size, and min-block-size properties — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-size-properties",
+        "clause_index": 25,
+        "clause_sha256": "de736bf8c16d874ad9791f248d02b8c965985e4fa5a8c00d86b9acbd06f48775"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.min-size-properties-clause-4daad46d0654",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "min-size-properties"
+      ],
+      "behaviour": "Minimum Size Properties: the min-width, min-height, min-inline-size, and min-block-size properties — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-size-properties",
+        "clause_index": 26,
+        "clause_sha256": "4daad46d06542216cbb74edb44c688d89d59a54a742c2bbcdd6c834c2df29d58"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.min-size-properties-clause-26e781f48c18",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "min-size-properties"
+      ],
+      "behaviour": "Minimum Size Properties: the min-width, min-height, min-inline-size, and min-block-size properties — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-size-properties",
+        "clause_index": 28,
+        "clause_sha256": "26e781f48c18ded7c618f076f823d1792a406bb1930a022c7d75ba13bf1b2964"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.min-size-properties-clause-daadf988a5cf",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "min-size-properties"
+      ],
+      "behaviour": "Minimum Size Properties: the min-width, min-height, min-inline-size, and min-block-size properties — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-size-properties",
+        "clause_index": 29,
+        "clause_sha256": "daadf988a5cf7d0ad85ad4ccfb0ab4baac8b54b59a5bcd71a3d1d63388dbe3aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.min-size-properties-clause-e2d4b6001eea",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "min-size-properties"
+      ],
+      "behaviour": "Minimum Size Properties: the min-width, min-height, min-inline-size, and min-block-size properties — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-size-properties",
+        "clause_index": 32,
+        "clause_sha256": "e2d4b6001eeae8d9bf031e6aa8c48ee168ff19d1df192c6ddd035c1ab23165e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.min-size-properties-clause-a4fa1d2f0366",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "min-size-properties"
+      ],
+      "behaviour": "Minimum Size Properties: the min-width, min-height, min-inline-size, and min-block-size properties — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "min-size-properties",
+        "clause_index": 33,
+        "clause_sha256": "a4fa1d2f03661bdfac990c17f36978c5b9fe35a9007a4003706a50bd0ee96c4b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.max-size-properties",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "max-size-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Maximum Size Properties: the max-width, max-height, max-inline-size, and max-block-size properties.",
+      "locator": {
+        "section_id": "max-size-properties",
+        "text_sha256": "a5f3804b3de10c5f5b9743e700634bb3e6462b0513759505518d37d5fcf6adfc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.max-size-properties-clause-cca2516ebb1d",
+        "css-sizing-3.max-size-properties-clause-b01ac2e0bfb3",
+        "css-sizing-3.max-size-properties-clause-f0f6583e1f3f",
+        "css-sizing-3.max-size-properties-clause-c12a74351d09",
+        "css-sizing-3.max-size-properties-clause-b1a28274dbd0",
+        "css-sizing-3.max-size-properties-clause-e11928ad9370",
+        "css-sizing-3.max-size-properties-clause-80793f314322",
+        "css-sizing-3.max-size-properties-clause-20f6e220c3df",
+        "css-sizing-3.foundation-intrinsic-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.max-size-properties-clause-cca2516ebb1d",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "max-size-properties"
+      ],
+      "behaviour": "Maximum Size Properties: the max-width, max-height, max-inline-size, and max-block-size properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "max-size-properties",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.max-size-properties-clause-b01ac2e0bfb3",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "max-size-properties"
+      ],
+      "behaviour": "Maximum Size Properties: the max-width, max-height, max-inline-size, and max-block-size properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "max-size-properties",
+        "clause_index": 13,
+        "clause_sha256": "b01ac2e0bfb348ba5205874ca9fc3524aef8a556c10675c7bf31dacc5ce8afce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.max-size-properties-clause-f0f6583e1f3f",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "max-size-properties"
+      ],
+      "behaviour": "Maximum Size Properties: the max-width, max-height, max-inline-size, and max-block-size properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "max-size-properties",
+        "clause_index": 17,
+        "clause_sha256": "f0f6583e1f3f2b37a935f1e1c6653377b82f5a7d859592cc9ff2add062f18c10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.max-size-properties-clause-c12a74351d09",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "max-size-properties"
+      ],
+      "behaviour": "Maximum Size Properties: the max-width, max-height, max-inline-size, and max-block-size properties — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "max-size-properties",
+        "clause_index": 26,
+        "clause_sha256": "c12a74351d09e0f6cf74d5d489192e907f160e0f6a680a2f2fc6b6b40d513514"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.max-size-properties-clause-b1a28274dbd0",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "max-size-properties"
+      ],
+      "behaviour": "Maximum Size Properties: the max-width, max-height, max-inline-size, and max-block-size properties — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "max-size-properties",
+        "clause_index": 27,
+        "clause_sha256": "b1a28274dbd08238388a200f0dfe247d7d48b98080404102676c30dfadf68615"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.max-size-properties-clause-e11928ad9370",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "max-size-properties"
+      ],
+      "behaviour": "Maximum Size Properties: the max-width, max-height, max-inline-size, and max-block-size properties — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "max-size-properties",
+        "clause_index": 29,
+        "clause_sha256": "e11928ad937018bef72b64d4090dfa4219038b6b43e464738fe1cfe98bda818c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.max-size-properties-clause-80793f314322",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "max-size-properties"
+      ],
+      "behaviour": "Maximum Size Properties: the max-width, max-height, max-inline-size, and max-block-size properties — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "max-size-properties",
+        "clause_index": 30,
+        "clause_sha256": "80793f314322571b36a292a9d42b3abc7fc89bd9b2c81b55a991959aed582666"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.max-size-properties-clause-20f6e220c3df",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "max-size-properties"
+      ],
+      "behaviour": "Maximum Size Properties: the max-width, max-height, max-inline-size, and max-block-size properties — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "max-size-properties",
+        "clause_index": 33,
+        "clause_sha256": "20f6e220c3df8c8e9b4142e4e44d2a2dc3055282eed56ada8931358785431256"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.sizing-values",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "sizing-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sizing Values: the <length-percentage>, auto | none, stretch, min-content, max-content, and fit-content values.",
+      "locator": {
+        "section_id": "sizing-values",
+        "text_sha256": "04491f4fd6750dbbd1300d335234677484c842e01e266ffd2f9edfb9bba8c816"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.sizing-values-clause-20252075ebb0",
+        "css-sizing-3.sizing-values-clause-fa274dcf6ce8",
+        "css-sizing-3.sizing-values-clause-8b3f86aef0b6",
+        "css-sizing-3.foundation-intrinsic-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.sizing-values-clause-20252075ebb0",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "sizing-values"
+      ],
+      "behaviour": "Sizing Values: the <length-percentage>, auto | none, stretch, min-content, max-content, and fit-content values — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-values",
+        "clause_index": 4,
+        "clause_sha256": "20252075ebb047c8e7373cba83e2bc8ac63ff93be43b39b013b4a97b9df9724a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.sizing-values-clause-fa274dcf6ce8",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "sizing-values"
+      ],
+      "behaviour": "Sizing Values: the <length-percentage>, auto | none, stretch, min-content, max-content, and fit-content values — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-values",
+        "clause_index": 5,
+        "clause_sha256": "fa274dcf6ce8ce6cc7250aca91e57fc306acb26d9e7a5558aa68348a55c6c054"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.sizing-values-clause-8b3f86aef0b6",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "sizing-values"
+      ],
+      "behaviour": "Sizing Values: the <length-percentage>, auto | none, stretch, min-content, max-content, and fit-content values — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-values",
+        "clause_index": 7,
+        "clause_sha256": "8b3f86aef0b6551a69678042e3ee3d60243983484d49600d10091657278264cf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.behave-auto",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "behave-auto"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in “Behaving as auto”.",
+      "locator": {
+        "section_id": "behave-auto",
+        "text_sha256": "ad24579799af91e798abd8cff1c6b95688fa53b1d217e1e04f4a874dd72b747e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.behave-auto-clause-2c5dad1bd887"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.behave-auto-clause-2c5dad1bd887",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "behave-auto"
+      ],
+      "behaviour": "“Behaving as auto” — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "behave-auto",
+        "clause_index": 1,
+        "clause_sha256": "2c5dad1bd887b8eed38a7ecefef288f37512a7c99c44990153e2916c1865b905"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.box-sizing",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Box Edges for Sizing: the box-sizing property.",
+      "locator": {
+        "section_id": "box-sizing",
+        "text_sha256": "4069a0153e7a3eb01280c5bd5d79df61aa421e76743a6716dd68b5ae6af89d74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.box-sizing-clause-cca2516ebb1d",
+        "css-sizing-3.box-sizing-clause-b133b298bd9e",
+        "css-sizing-3.box-sizing-clause-d562d0caf212",
+        "css-sizing-3.box-sizing-clause-b7c772259426",
+        "css-sizing-3.box-sizing-clause-def0987a6e5c",
+        "css-sizing-3.foundation-intrinsic-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.box-sizing-clause-cca2516ebb1d",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Box Edges for Sizing: the box-sizing property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.box-sizing-clause-b133b298bd9e",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Box Edges for Sizing: the box-sizing property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 20,
+        "clause_sha256": "b133b298bd9e5c6e1076dc2a63f4aeefbc0ae578455ad8a6ded8df3ccdf71f4b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.box-sizing-clause-d562d0caf212",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Box Edges for Sizing: the box-sizing property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 21,
+        "clause_sha256": "d562d0caf21231fdda24909bd0bcecc0a656d508d267d9794c6ae0009a3131e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.box-sizing-clause-b7c772259426",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Box Edges for Sizing: the box-sizing property — normative clause 56, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 55,
+        "clause_sha256": "b7c7722594261cda9b17235fcdc6dab3f234965dbc708fd9da199b56f4e7076f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.box-sizing-clause-def0987a6e5c",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "box-sizing"
+      ],
+      "behaviour": "Box Edges for Sizing: the box-sizing property — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "box-sizing",
+        "clause_index": 56,
+        "clause_sha256": "def0987a6e5c799f1f064dad911eb9d888d3a80fcb671c18756851cec9f28014"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.column-sizing",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "column-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in New Column Sizing Values: the stretch, min-content, max-content, and fit-content values.",
+      "locator": {
+        "section_id": "column-sizing",
+        "text_sha256": "b307864e58941fe5b3e0aa0a17ebfacc260d9c9f59f2a16d569daf874342b338"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.column-sizing-clause-cca2516ebb1d",
+        "css-sizing-3.column-sizing-clause-b01ac2e0bfb3",
+        "css-sizing-3.column-sizing-clause-73f12671fd9f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.column-sizing-clause-cca2516ebb1d",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "column-sizing"
+      ],
+      "behaviour": "New Column Sizing Values: the stretch, min-content, max-content, and fit-content values — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-sizing",
+        "clause_index": 4,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.column-sizing-clause-b01ac2e0bfb3",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "column-sizing"
+      ],
+      "behaviour": "New Column Sizing Values: the stretch, min-content, max-content, and fit-content values — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-sizing",
+        "clause_index": 5,
+        "clause_sha256": "b01ac2e0bfb348ba5205874ca9fc3524aef8a556c10675c7bf31dacc5ce8afce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.column-sizing-clause-73f12671fd9f",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "column-sizing"
+      ],
+      "behaviour": "New Column Sizing Values: the stretch, min-content, max-content, and fit-content values — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-sizing",
+        "clause_index": 17,
+        "clause_sha256": "73f12671fd9f737bf3e627ccefdc9b486eb71b66691a9e7389db876b7b86710b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.extrinsic",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "extrinsic"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extrinsic Size Determination.",
+      "locator": {
+        "section_id": "extrinsic",
+        "text_sha256": "936234f956d2951a1e3a68de6ea5efc39bc998d12341f06a43d63a74a547d321"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.percentage-sizing",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "percentage-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Percentage Sizing.",
+      "locator": {
+        "section_id": "percentage-sizing",
+        "text_sha256": "06c350247a066b93ca74bbc529a39e4b4454427ac82ae61132ef0e0487870bfd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.percentage-sizing-clause-cdefbb59558f",
+        "css-sizing-3.foundation-existing-mode-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.percentage-sizing-clause-cdefbb59558f",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "percentage-sizing"
+      ],
+      "behaviour": "Percentage Sizing — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "percentage-sizing",
+        "clause_index": 6,
+        "clause_sha256": "cdefbb59558f82421a5cd6c6fc3cd5d5363a8ebfe536da2476741f15cab10060"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.stretch-fit-sizing",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "stretch-fit-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stretch-fit Sizing: filling the containing block.",
+      "locator": {
+        "section_id": "stretch-fit-sizing",
+        "text_sha256": "59050e69ba86155b98875c49391336433d4a43ec0421f3f75749e9cd297fc4b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.stretch-fit-sizing-clause-f3e1db96002f",
+        "css-sizing-3.stretch-fit-sizing-clause-de27b4a362f4",
+        "css-sizing-3.stretch-fit-sizing-clause-6e1056e66d3b",
+        "css-sizing-3.foundation-intrinsic-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.stretch-fit-sizing-clause-f3e1db96002f",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "stretch-fit-sizing"
+      ],
+      "behaviour": "Stretch-fit Sizing: filling the containing block — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "stretch-fit-sizing",
+        "clause_index": 1,
+        "clause_sha256": "f3e1db96002fddebbd23e8eb3cac3dd58b7bd27fd1d9c537851818628ffd3f15"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.stretch-fit-sizing-clause-de27b4a362f4",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "stretch-fit-sizing"
+      ],
+      "behaviour": "Stretch-fit Sizing: filling the containing block — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "stretch-fit-sizing",
+        "clause_index": 4,
+        "clause_sha256": "de27b4a362f4e862b11114d5a1c1e9cafddeda50546c2c4554b193aa79fd1b0f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.stretch-fit-sizing-clause-6e1056e66d3b",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "stretch-fit-sizing"
+      ],
+      "behaviour": "Stretch-fit Sizing: filling the containing block — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "stretch-fit-sizing",
+        "clause_index": 6,
+        "clause_sha256": "6e1056e66d3b648c77323137b3b244dabe92adb6da466eff304a9a06656d7491"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.intrinsic",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intrinsic"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Intrinsic Size Determination.",
+      "locator": {
+        "section_id": "intrinsic",
+        "text_sha256": "15a222d216f35c81e6fd41cd2a1c9be21ff3775ea0408897b3ad7cc6f8bf6a12"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.intrinsic-sizes",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intrinsic-sizes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Intrinsic Sizes.",
+      "locator": {
+        "section_id": "intrinsic-sizes",
+        "text_sha256": "afb8bb93dd583bc3f0d3030ce6f8eab6d02fda9288d657917d0b75963001e2d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.intrinsic-sizes-clause-bb7883391470",
+        "css-sizing-3.intrinsic-sizes-clause-ed8a49b14a71",
+        "css-sizing-3.intrinsic-sizes-clause-5172df40ec0e",
+        "css-sizing-3.intrinsic-sizes-clause-d950d3e40c8f",
+        "css-sizing-3.intrinsic-sizes-clause-5a5bb77382db",
+        "css-sizing-3.intrinsic-sizes-clause-0a1ca5c8ffe2",
+        "css-sizing-3.intrinsic-sizes-clause-5df9c161f643",
+        "css-sizing-3.foundation-intrinsic-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [
+        "overflow-axes"
+      ],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.intrinsic-sizes-clause-bb7883391470",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intrinsic-sizes"
+      ],
+      "behaviour": "Intrinsic Sizes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-sizes",
+        "clause_index": 9,
+        "clause_sha256": "bb78833914706f07f4e845daf0aa3212b346fd1d139b98a5612f0bc0b7674a9a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.intrinsic-sizes-clause-ed8a49b14a71",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intrinsic-sizes"
+      ],
+      "behaviour": "Intrinsic Sizes — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-sizes",
+        "clause_index": 11,
+        "clause_sha256": "ed8a49b14a71b80445b2422adbcbd6e0f905ec0dedeaf29d73917ac0f20049a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.intrinsic-sizes-clause-5172df40ec0e",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intrinsic-sizes"
+      ],
+      "behaviour": "Intrinsic Sizes — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-sizes",
+        "clause_index": 15,
+        "clause_sha256": "5172df40ec0eab42c67f2f6d9af76dac60ded04c4daa3b8011ce7571ced094dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.intrinsic-sizes-clause-d950d3e40c8f",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intrinsic-sizes"
+      ],
+      "behaviour": "Intrinsic Sizes — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-sizes",
+        "clause_index": 17,
+        "clause_sha256": "d950d3e40c8fc6304897f829e48476fb4d24aa2d2a314fc3cce205e5d71dd76f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.intrinsic-sizes-clause-5a5bb77382db",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intrinsic-sizes"
+      ],
+      "behaviour": "Intrinsic Sizes — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-sizes",
+        "clause_index": 19,
+        "clause_sha256": "5a5bb77382db1ce95c6008c0ba494f644bc024a48298ca81a49a77592fe7a93a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.intrinsic-sizes-clause-0a1ca5c8ffe2",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intrinsic-sizes"
+      ],
+      "behaviour": "Intrinsic Sizes — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-sizes",
+        "clause_index": 27,
+        "clause_sha256": "0a1ca5c8ffe2140c7e943be0e2a7afe40d393b5da0e46a986127e0f9c5b10a31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.intrinsic-sizes-clause-5df9c161f643",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intrinsic-sizes"
+      ],
+      "behaviour": "Intrinsic Sizes — normative clause 82, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-sizes",
+        "clause_index": 81,
+        "clause_sha256": "5df9c161f64306f95b0d301336fbfbd67cb56db48950d26e2577a87e0fde1376"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.intrinsic-contribution",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intrinsic-contribution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Intrinsic Contributions.",
+      "locator": {
+        "section_id": "intrinsic-contribution",
+        "text_sha256": "f4e31da80e105e126d96d826bdda095a081d05aa748f02b0cc568d80a0fb1733"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.intrinsic-contribution-clause-680f349bd2d2",
+        "css-sizing-3.foundation-intrinsic-sizing",
+        "css-sizing-3.foundation-existing-mode-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.intrinsic-contribution-clause-680f349bd2d2",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intrinsic-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-contribution",
+        "clause_index": 7,
+        "clause_sha256": "680f349bd2d2e0e708086daeeac3e082c01dec45354f49d3cc170cc8de92e2b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Intrinsic Contributions of Percentage-Sized Boxes.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "text_sha256": "3f059607f3b22300fe9d554a206bc0de461f14f6aa78cd4ef77df5314c97aabe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.cyclic-percentage-contribution-clause-dc4ede1a71f2",
+        "css-sizing-3.cyclic-percentage-contribution-clause-96dad5618a78",
+        "css-sizing-3.cyclic-percentage-contribution-clause-6b12fe7edd39",
+        "css-sizing-3.cyclic-percentage-contribution-clause-83df9b42fa25",
+        "css-sizing-3.cyclic-percentage-contribution-clause-51a3d92a8a8d",
+        "css-sizing-3.cyclic-percentage-contribution-clause-0f7f6463e8d8",
+        "css-sizing-3.cyclic-percentage-contribution-clause-ec8d702c80d2",
+        "css-sizing-3.cyclic-percentage-contribution-clause-e6061a295ba6",
+        "css-sizing-3.cyclic-percentage-contribution-clause-3ee540e720f2",
+        "css-sizing-3.cyclic-percentage-contribution-clause-a9490ba559ab",
+        "css-sizing-3.cyclic-percentage-contribution-clause-687b91a6991b",
+        "css-sizing-3.cyclic-percentage-contribution-clause-011349e8cdcc",
+        "css-sizing-3.cyclic-percentage-contribution-clause-fdf40bc24858",
+        "css-sizing-3.foundation-intrinsic-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-dc4ede1a71f2",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 1,
+        "clause_sha256": "dc4ede1a71f2af44efa21ad164903dd0153f11bb1502cb03865b7734d6ba51b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-96dad5618a78",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 2,
+        "clause_sha256": "96dad5618a7830ddbb97d1aceef66073c718e75064a1414249f1c4786ceb08f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-6b12fe7edd39",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 3,
+        "clause_sha256": "6b12fe7edd39238113cedbd0d16790741e1f1635a480abcbcc33eb9ffa779514"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-83df9b42fa25",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 7,
+        "clause_sha256": "83df9b42fa25af3534483081356325eda97242959518458c054dca420e00fd09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-51a3d92a8a8d",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 31,
+        "clause_sha256": "51a3d92a8a8dcee3a948ac0b54814cf9410e1b517f708fec04ff3a9522c65b49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-0f7f6463e8d8",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 32,
+        "clause_sha256": "0f7f6463e8d8f83a594a7ed3e26bdc43e8569ff587fee4cf4694b634bd1e9663"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-ec8d702c80d2",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 39,
+        "clause_sha256": "ec8d702c80d2be3f614dcafcf1333dabf542e89738fb5f4f94586b87ad8a42ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-e6061a295ba6",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 40,
+        "clause_sha256": "e6061a295ba64b8fa75c021672e60af9e3055b5f43bbdefb2b7652cf8eb63b34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-3ee540e720f2",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 41,
+        "clause_sha256": "3ee540e720f22bd4e1d8b6fca8ec03a14deae1010da834766e69d43e319abca8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-a9490ba559ab",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 43,
+        "clause_sha256": "a9490ba559ab80df1a84cec46715336fc5593bf70ab676ed955eb749eb7990ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-687b91a6991b",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 45, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 44,
+        "clause_sha256": "687b91a6991bd3a9122afbe89a173ae8d012ee7277a9c7710e35d9116dd25c05"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-011349e8cdcc",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 46,
+        "clause_sha256": "011349e8cdcc2722ef7fe948832ff42741f6f0c8fe68eefb66ffc0e1b9f3484c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.cyclic-percentage-contribution-clause-fdf40bc24858",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "cyclic-percentage-contribution"
+      ],
+      "behaviour": "Intrinsic Contributions of Percentage-Sized Boxes — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "cyclic-percentage-contribution",
+        "clause_index": 49,
+        "clause_sha256": "fdf40bc24858b0fb40fda74fb5012d34bc0f0b62fd4270b63cca4a32a5fb1345"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.min-content-zero",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "min-content-zero"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Compressible Replaced Elements.",
+      "locator": {
+        "section_id": "min-content-zero",
+        "text_sha256": "3ed9f86b3bcd47a95b8224a8c831e08c0951058b360551fbc701133170eb300d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.foundation-intrinsic-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.privacy",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "f42cb600d21adf1f3ebd7d3d8f28891fb8189b461c32c1e84a2ebff34cf3f99d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.security",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.w3c-conformance",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.w3c-conventions",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.w3c-conventions-clause-5c98c879f070",
+        "css-sizing-3.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.w3c-conventions-clause-5c98c879f070",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.w3c-conformance-classes",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.w3c-conformance-classes-clause-ff408372426c",
+        "css-sizing-3.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.w3c-partial",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.w3c-partial-clause-ef40c4aab200",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.w3c-conform-future-proofing",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.w3c-testing",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.w3c-testing-clause-1e0fff369221",
+        "css-sizing-3.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.w3c-testing-clause-1e0fff369221",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.w3c-testing-clause-ae1210cf9643",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.property-index",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "68ddf93666391c709312b59351c4415f83c6dd45f05cc6ed4a7538fab2389a45"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-3.property-index-clause-cb3ecde13531",
+        "css-sizing-3.property-index-clause-b01ac2e0bfb3",
+        "css-sizing-3.property-index-clause-f0f6583e1f3f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.property-index-clause-cb3ecde13531",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 16,
+        "clause_sha256": "cb3ecde135314e061f9b6efeff3af9366cc8e9a1a80740c070a0fcd3cb42ab2b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.property-index-clause-b01ac2e0bfb3",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 18,
+        "clause_sha256": "b01ac2e0bfb348ba5205874ca9fc3524aef8a556c10675c7bf31dacc5ce8afce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.property-index-clause-f0f6583e1f3f",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 56, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 55,
+        "clause_sha256": "f0f6583e1f3f2b37a935f1e1c6653377b82f5a7d859592cc9ff2add062f18c10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-3.issues-index",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "ca777947be2ce35733c5cbc128d4c136e208a1b05b0c444e1f0cd507d80fde68"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.title",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Box Sizing Module Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "6aca474ed0beeb55e29424ffb283ecc1e4d1dce08e59263604c9385633f0dfc9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.abstract",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "49eed213b92f4e81c8788f3399dc5f94831f7b6b20931adeb01c62ecd0b686e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.sotd",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "4412d72d2c53efefb9d0ec2b083cac53628de70f7b68677b4a3c86ad2f6726d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.contents",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "84157725fa0e69a0b3cff751f2ec3ac0d7d62b7428f209ceb40b40a821998b8c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.intro",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "c20d911c6affbb6f9e8f1537f232546ecd1da4fc4f4b7fd09adeb01548b94b73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.placement",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Module interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "f860baf66a8eefb545be4d9d06cfeb0ae3d082e5bfd1d58bee1ce8f01bd67018"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.values",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.2. Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.the-contain-floats-value",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "the-contain-floats-value"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 3.2.2. Containing or Excluding Floats.",
+      "locator": {
+        "section_id": "the-contain-floats-value",
+        "text_sha256": "41c2d3aa0b3ba64dd28b5eaa6daff1558ea95145eb4df5dd02258794245c0aff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.changes",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.changes-recent",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "changes-recent"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Recent Changes.",
+      "locator": {
+        "section_id": "changes-recent",
+        "text_sha256": "cfdc45c17e96b508b1fd9ddb2a2ccd06e7ca100676a2bd2306b08061ccce3398"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.changes-3",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "changes-3"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additions since CSS Level 2.",
+      "locator": {
+        "section_id": "changes-3",
+        "text_sha256": "dfb10cf59de14d8eb6c215d208483c8ed01a70eb9bbdf56713a22813564f9a37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.acknowledgments",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "b0b73e42fc4308bb3d1fee7d71ff33ff0f0fadb45d392d4bde7ba6c961d41e21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.index",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.index-defined-here",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "c9002496729fcc535d21d99c134c07aafbb99a5f608ce7efdfdec46abf89ff5f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.index-defined-elsewhere",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "b8007125fc5fe0ec8a7016a5fb23d5205a9f86ed656695cd69ee46da0bfebbc8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.references",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.normative",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "5f38445dd8c2122abbe1ce7ef1d8146debc20b450fbe808cc46840c90400872c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.informative",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "74c6dc239e0290f433b2911c2f94bd1cf7ab489ac532d663ca03dca3b4c8acb6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-3.foundation-intrinsic-sizing",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "preferred-size-properties",
+        "min-size-properties",
+        "max-size-properties",
+        "sizing-values",
+        "box-sizing",
+        "stretch-fit-sizing",
+        "intrinsic-sizes",
+        "intrinsic-contribution",
+        "cyclic-percentage-contribution",
+        "min-content-zero"
+      ],
+      "behaviour": "Preserve auto/min-content/max-content/fit-content/stretch sizing, automatic minimums and cyclic percentages.",
+      "locator": {
+        "section_id": "preferred-size-properties",
+        "text_sha256": "7f20ee62068560324ca19aee223f0b2871f994b64315eef916b5227ad9a7a777"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    },
+    {
+      "id": "css-sizing-3.foundation-existing-mode-sizing",
+      "family": "css-sizing-3",
+      "source_id": "css-sizing-3",
+      "sections": [
+        "constraints",
+        "intrinsic-contribution",
+        "percentage-sizing"
+      ],
+      "behaviour": "Integrate selected sizing semantics through existing block/inline/replaced/flex/table and pagination paths.",
+      "locator": {
+        "section_id": "constraints",
+        "text_sha256": "9c5df30ddd54f518bbc424beb71574ee73fe8a5ad10534801abba351db038201"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    }
+  ]
+}

@@ -1,0 +1,2382 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "unicode17-chapter-12.g12281",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "G12281"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in South and Central Asia-I.",
+      "locator": {
+        "section_id": "G12281",
+        "text_sha256": "03d8eb0114645794595f1fbf1f364cd2542196cde4618dfe5dc3dea7cefdf7ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.g12281-clause-99bb2774d73d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.g12281-clause-99bb2774d73d",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "G12281"
+      ],
+      "behaviour": "South and Central Asia-I — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "G12281",
+        "clause_index": 8,
+        "clause_sha256": "99bb2774d73defb63aefc5c281a730c82fbdbb01963afe08d4cceccb99ef9088"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-4c576ff77634",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-4c576ff77634"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Devanagari.",
+      "locator": {
+        "section_id": "heading-4c576ff77634",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-2909a1ec11e3",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-2909a1ec11e3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Devanagari: U+0900–U+097F.",
+      "locator": {
+        "section_id": "heading-2909a1ec11e3",
+        "text_sha256": "dfbc3e81517c6440afdb2c570e17bbe62544e23879d6e380ebd013cae675e739"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Principles of the Devanagari Script.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "text_sha256": "ec3ddb8bdf2109fa1840def6137fd3b42185384656558e9435f61efc2699d6e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-90898609b490-clause-f05a627d20d9",
+        "unicode17-chapter-12.heading-90898609b490-clause-6efac2d0574d",
+        "unicode17-chapter-12.heading-90898609b490-clause-0c2b11356743",
+        "unicode17-chapter-12.heading-90898609b490-clause-fee7a9543be7",
+        "unicode17-chapter-12.heading-90898609b490-clause-1275e786e833",
+        "unicode17-chapter-12.heading-90898609b490-clause-f13576e7a1a8",
+        "unicode17-chapter-12.heading-90898609b490-clause-36610b237fa4",
+        "unicode17-chapter-12.heading-90898609b490-clause-bbed466d0fc9",
+        "unicode17-chapter-12.heading-90898609b490-clause-383b50948e3f",
+        "unicode17-chapter-12.heading-90898609b490-clause-3e218c83521f",
+        "unicode17-chapter-12.heading-90898609b490-clause-bdac7da1aaf4",
+        "unicode17-chapter-12.heading-90898609b490-clause-f38b63c9e4f0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-f05a627d20d9",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 1,
+        "clause_sha256": "f05a627d20d9ad1bdda542bb664bba0c110cf87d11d19af5b448b50b7d327429"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-6efac2d0574d",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 10,
+        "clause_sha256": "6efac2d0574dfb48a915c44ee8ea3ef22f732de1f2c31988afbf2e9b2a421b21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-0c2b11356743",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 79, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 78,
+        "clause_sha256": "0c2b113567432d7d9314b85bbdaf6d86e76a6140f296783c402d357786b2e681"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-fee7a9543be7",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 80, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 79,
+        "clause_sha256": "fee7a9543be7a6a259142ace7b450b25d649141fddf9395e417c8072053d24bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-1275e786e833",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 183, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 182,
+        "clause_sha256": "1275e786e833df31d091e6e5e241806b1a7235ca25d5cf94472fca88180c8f2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-f13576e7a1a8",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 246, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 245,
+        "clause_sha256": "f13576e7a1a87dab07a0ac95d6745b13a2b7c099b641100e3b296fb58c071bbf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-36610b237fa4",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 247, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 246,
+        "clause_sha256": "36610b237fa4b37cd00658707f7848f217f009ffffe04ed0295594da37c028f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-bbed466d0fc9",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 263, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 262,
+        "clause_sha256": "bbed466d0fc930d706814f86c328920ccb7062c0916158d5eae4e9890b52a588"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-383b50948e3f",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 264, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 263,
+        "clause_sha256": "383b50948e3faff70f03eded0d51468c291de8ff0af8491c512f671f4453c3dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-3e218c83521f",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 386, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 385,
+        "clause_sha256": "3e218c83521fcd52b50fddaba268f3fd2981a91cbfb8c6777c2e86596c75c885"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-bdac7da1aaf4",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 387, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 386,
+        "clause_sha256": "bdac7da1aaf4b7f65ddc5038bbd0c483c6f9efc1ab49548c60ab8ac8ee747e62"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-90898609b490-clause-f38b63c9e4f0",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-90898609b490"
+      ],
+      "behaviour": "Principles of the Devanagari Script — normative clause 388, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-90898609b490",
+        "clause_index": 387,
+        "clause_sha256": "f38b63c9e4f015b2cf042d09148699a169a93107ec93dec9e09b4c8e62f2258e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-be38df128b71",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-be38df128b71"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rendering Devanagari.",
+      "locator": {
+        "section_id": "heading-be38df128b71",
+        "text_sha256": "ab418b855e4e84fe781ed6d6f20c4fdb1be4c433fd2045157733c9d2bfc85818"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-be38df128b71-clause-f2d9fa4d7b0d",
+        "unicode17-chapter-12.heading-be38df128b71-clause-acfc8a74d314",
+        "unicode17-chapter-12.heading-be38df128b71-clause-779c0fbb4d1a",
+        "unicode17-chapter-12.heading-be38df128b71-clause-80699c77243f",
+        "unicode17-chapter-12.heading-be38df128b71-clause-ca502985f01e",
+        "unicode17-chapter-12.heading-be38df128b71-clause-f98874efd9a8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-be38df128b71-clause-f2d9fa4d7b0d",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-be38df128b71"
+      ],
+      "behaviour": "Rendering Devanagari — normative clause 211, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-be38df128b71",
+        "clause_index": 210,
+        "clause_sha256": "f2d9fa4d7b0d361b0dec171724c44c3d6496bd05bb5f72785351e608be194813"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-be38df128b71-clause-acfc8a74d314",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-be38df128b71"
+      ],
+      "behaviour": "Rendering Devanagari — normative clause 226, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-be38df128b71",
+        "clause_index": 225,
+        "clause_sha256": "acfc8a74d31484b0aa980a62ee8cd09821137e239bb13b9ece1a8f6ff01dad77"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-be38df128b71-clause-779c0fbb4d1a",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-be38df128b71"
+      ],
+      "behaviour": "Rendering Devanagari — normative clause 351, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-be38df128b71",
+        "clause_index": 350,
+        "clause_sha256": "779c0fbb4d1a6e0c6d0ba1bbe68657819ca05a5c4dcf8ab32a7ee8097afd035a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-be38df128b71-clause-80699c77243f",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-be38df128b71"
+      ],
+      "behaviour": "Rendering Devanagari — normative clause 394, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-be38df128b71",
+        "clause_index": 393,
+        "clause_sha256": "80699c77243f6dff9f45ee0b403ee254371a57dea58898ef83700ba40da6dc20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-be38df128b71-clause-ca502985f01e",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-be38df128b71"
+      ],
+      "behaviour": "Rendering Devanagari — normative clause 873, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-be38df128b71",
+        "clause_index": 872,
+        "clause_sha256": "ca502985f01e9572129c71e1f904126dc8a4656d97067ac6042b4136742e8379"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-be38df128b71-clause-f98874efd9a8",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-be38df128b71"
+      ],
+      "behaviour": "Rendering Devanagari — normative clause 963, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-be38df128b71",
+        "clause_index": 962,
+        "clause_sha256": "f98874efd9a8dc6009e24a292612115ff744984ecf90e17e7b2bbbc1d264e5b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-51fd6cf13128",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-51fd6cf13128"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Devanagari Digits, Punctuation, and Symbols.",
+      "locator": {
+        "section_id": "heading-51fd6cf13128",
+        "text_sha256": "3390c08209c42537830a69c7e2c07d4991ba7f6dd94dff582feca3e448a89875"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-55363808a994",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-55363808a994"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extensions in the Main Devanagari Block.",
+      "locator": {
+        "section_id": "heading-55363808a994",
+        "text_sha256": "ecd20bb475a897bd79754ab39673c09b8f56f1f2b72ffc9bb16452c44c0d6bad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-55363808a994-clause-c844568e063f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-55363808a994-clause-c844568e063f",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-55363808a994"
+      ],
+      "behaviour": "Extensions in the Main Devanagari Block — normative clause 53, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-55363808a994",
+        "clause_index": 52,
+        "clause_sha256": "c844568e063f1cf07f4ff5605b969c41645f5a4974eae49af8a6418970923d24"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-e44b4458b9f8",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-e44b4458b9f8"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Devanagari Extended: U+A8E0–U+A8FF.",
+      "locator": {
+        "section_id": "heading-e44b4458b9f8",
+        "text_sha256": "ce99e725f82aa92d0750c3fc9b4cd6ea774bc7a0b76a82d3ac174115f50c87e5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-e44b4458b9f8-clause-0e8db24edfa5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-e44b4458b9f8-clause-0e8db24edfa5",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-e44b4458b9f8"
+      ],
+      "behaviour": "Devanagari Extended: U+A8E0–U+A8FF — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-e44b4458b9f8",
+        "clause_index": 6,
+        "clause_sha256": "0e8db24edfa56d1c07d4e0f68e574130523a75c1d680f818596f3acc3af9b0e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-d2b75185565d",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-d2b75185565d"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Devanagari Extended-A: U+11B00–U+11B5F.",
+      "locator": {
+        "section_id": "heading-d2b75185565d",
+        "text_sha256": "073085d030c49746442f165f4975146e2127c04a367870c81ae43d97b8d93df9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-24c6b08b5837",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-24c6b08b5837"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Vedic Extensions: U+1CD0–U+1CFF.",
+      "locator": {
+        "section_id": "heading-24c6b08b5837",
+        "text_sha256": "a8b817191fdcadd9f6b664bfb69cf4d856280fd83943d3017d72786407317697"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-56f35cc409ed",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-56f35cc409ed"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bengali (Bangla).",
+      "locator": {
+        "section_id": "heading-56f35cc409ed",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-34e4c1638c25",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-34e4c1638c25"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bengali: U+0980–U+09FF.",
+      "locator": {
+        "section_id": "heading-34e4c1638c25",
+        "text_sha256": "c9e5e4e32e3ca33d18a75c422f3196d90ee2f7ce5221ab32dced72cdf04b0c66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-34e4c1638c25-clause-9db3d1cc790a",
+        "unicode17-chapter-12.heading-34e4c1638c25-clause-f4a0345306ad",
+        "unicode17-chapter-12.heading-34e4c1638c25-clause-7747278b8d4e",
+        "unicode17-chapter-12.heading-34e4c1638c25-clause-5edd237d46e5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-34e4c1638c25-clause-9db3d1cc790a",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-34e4c1638c25"
+      ],
+      "behaviour": "Bengali: U+0980–U+09FF — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-34e4c1638c25",
+        "clause_index": 3,
+        "clause_sha256": "9db3d1cc790a978865c8ab0f173a7b93ede5065db3fab685339a8d2c89f961a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-34e4c1638c25-clause-f4a0345306ad",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-34e4c1638c25"
+      ],
+      "behaviour": "Bengali: U+0980–U+09FF — normative clause 88, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-34e4c1638c25",
+        "clause_index": 87,
+        "clause_sha256": "f4a0345306ad0f3ba206eb48758e9a825866fcd32d23afecfbe0905e316848ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-34e4c1638c25-clause-7747278b8d4e",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-34e4c1638c25"
+      ],
+      "behaviour": "Bengali: U+0980–U+09FF — normative clause 92, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-34e4c1638c25",
+        "clause_index": 91,
+        "clause_sha256": "7747278b8d4efa25b2f2382eff370135205e2cdafd7ec38e6b46429fd9587dcb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-34e4c1638c25-clause-5edd237d46e5",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-34e4c1638c25"
+      ],
+      "behaviour": "Bengali: U+0980–U+09FF — normative clause 106, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-34e4c1638c25",
+        "clause_index": 105,
+        "clause_sha256": "5edd237d46e5895595f85c81a5c8febe98b62d579ed3d124af73cad6c89cecd8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-12717468bd8b",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-12717468bd8b"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gurmukhi.",
+      "locator": {
+        "section_id": "heading-12717468bd8b",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-d98fcdb3cb7b",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-d98fcdb3cb7b"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gurmukhi: U+0A00–U+0A7F.",
+      "locator": {
+        "section_id": "heading-d98fcdb3cb7b",
+        "text_sha256": "03d8476e21094a90a6d39792a3eccb4d43adc6f16c1a6e1f9360de8f1eef621c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-45184ee66318",
+        "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-b134dce2677f",
+        "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-7fcf0738744f",
+        "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-da19382b3ed6",
+        "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-d6aa6ac9a24c",
+        "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-4e75eb7fd4d5",
+        "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-feafdca1e1f7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-45184ee66318",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-d98fcdb3cb7b"
+      ],
+      "behaviour": "Gurmukhi: U+0A00–U+0A7F — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-d98fcdb3cb7b",
+        "clause_index": 5,
+        "clause_sha256": "45184ee66318540e77bc57c759b76f8d21f1c85d1dcef2620befdd155b2df9a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-b134dce2677f",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-d98fcdb3cb7b"
+      ],
+      "behaviour": "Gurmukhi: U+0A00–U+0A7F — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-d98fcdb3cb7b",
+        "clause_index": 6,
+        "clause_sha256": "b134dce2677f289bd410b4a20359e7f6574a9d3d93e63f5fd7710bcea82ee6bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-7fcf0738744f",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-d98fcdb3cb7b"
+      ],
+      "behaviour": "Gurmukhi: U+0A00–U+0A7F — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-d98fcdb3cb7b",
+        "clause_index": 8,
+        "clause_sha256": "7fcf0738744f4a2a5fcbbe986fc87dcbcaa39ae9039dfa253d550865fd7fd7d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-da19382b3ed6",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-d98fcdb3cb7b"
+      ],
+      "behaviour": "Gurmukhi: U+0A00–U+0A7F — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-d98fcdb3cb7b",
+        "clause_index": 9,
+        "clause_sha256": "da19382b3ed61fd50adffabbade426204919d84dd6136f35f260d6b8b9a8d981"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-d6aa6ac9a24c",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-d98fcdb3cb7b"
+      ],
+      "behaviour": "Gurmukhi: U+0A00–U+0A7F — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-d98fcdb3cb7b",
+        "clause_index": 10,
+        "clause_sha256": "d6aa6ac9a24ce851ec71b1862acbee52db219fbecb4ad0dc436e3a75c04fa827"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-4e75eb7fd4d5",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-d98fcdb3cb7b"
+      ],
+      "behaviour": "Gurmukhi: U+0A00–U+0A7F — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-d98fcdb3cb7b",
+        "clause_index": 11,
+        "clause_sha256": "4e75eb7fd4d5bb4b842148ec1fe1ddb991eed73cafcafe02e346dca89cd182cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-d98fcdb3cb7b-clause-feafdca1e1f7",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-d98fcdb3cb7b"
+      ],
+      "behaviour": "Gurmukhi: U+0A00–U+0A7F — normative clause 243, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-d98fcdb3cb7b",
+        "clause_index": 242,
+        "clause_sha256": "feafdca1e1f7c9c792ffe178e9ec249ee1a1ef8596fa89c9e9800b682f9db56b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-09da7abfd1bc",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-09da7abfd1bc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gujarati.",
+      "locator": {
+        "section_id": "heading-09da7abfd1bc",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-c919446600a4",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-c919446600a4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gujarati: U+0A80–U+0AFF.",
+      "locator": {
+        "section_id": "heading-c919446600a4",
+        "text_sha256": "fa4dc98ad81817b47c4ae767ab981bcdf4f13b05ee479f83ea03cbb60156356d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-c919446600a4-clause-19b4a0ac1ef8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-c919446600a4-clause-19b4a0ac1ef8",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-c919446600a4"
+      ],
+      "behaviour": "Gujarati: U+0A80–U+0AFF — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-c919446600a4",
+        "clause_index": 1,
+        "clause_sha256": "19b4a0ac1ef8d66afb1ef3d151181ffe08c47e9fe6c752c32ce69c462e74c672"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-02138be4c936",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-02138be4c936"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Oriya (Odia).",
+      "locator": {
+        "section_id": "heading-02138be4c936",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-1fd2e16c654e",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-1fd2e16c654e"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Oriya: U+0B00–U+0B7F.",
+      "locator": {
+        "section_id": "heading-1fd2e16c654e",
+        "text_sha256": "bf6d3c5218afc78f485e4e7284da7c2d8002520c854822d80ec498d2d3b5b2f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-1fd2e16c654e-clause-0ff571de35a4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-1fd2e16c654e-clause-0ff571de35a4",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-1fd2e16c654e"
+      ],
+      "behaviour": "Oriya: U+0B00–U+0B7F — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-1fd2e16c654e",
+        "clause_index": 3,
+        "clause_sha256": "0ff571de35a4619a5d3083a00b705c1ada97395d6a4928d16cf10c38abfe448f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-70f0ff74cbf7",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-70f0ff74cbf7"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tamil.",
+      "locator": {
+        "section_id": "heading-70f0ff74cbf7",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-52dbad8ad0d2",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-52dbad8ad0d2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tamil: U+0B80–U+0BFF.",
+      "locator": {
+        "section_id": "heading-52dbad8ad0d2",
+        "text_sha256": "a78e0f553d4dacbd11ba5d97c17b998a3f6600a3343b4717a36a1f8186ecb2a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-52dbad8ad0d2-clause-b8b8bae57503"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-52dbad8ad0d2-clause-b8b8bae57503",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-52dbad8ad0d2"
+      ],
+      "behaviour": "Tamil: U+0B80–U+0BFF — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-52dbad8ad0d2",
+        "clause_index": 4,
+        "clause_sha256": "b8b8bae57503c39de1d5b34f9d2e8c00bfcd0dece04c0556439f6bdfe36f7e92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-129cea5d323a",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-129cea5d323a"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tamil Vowels.",
+      "locator": {
+        "section_id": "heading-129cea5d323a",
+        "text_sha256": "ec3a9561906ced09dba7bec6ee6c26cdd1bcff0469ea777102b99b7cca19ac78"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-129cea5d323a-clause-29944ebb04ff"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-129cea5d323a-clause-29944ebb04ff",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-129cea5d323a"
+      ],
+      "behaviour": "Tamil Vowels — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-129cea5d323a",
+        "clause_index": 0,
+        "clause_sha256": "29944ebb04ff4d2eeb006dbc837e1069f0f5752b724041bd2cfa6f43d601de41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-37202f5a92c2",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-37202f5a92c2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tamil Ligatures.",
+      "locator": {
+        "section_id": "heading-37202f5a92c2",
+        "text_sha256": "e342e8b4aba62b02c390ec3ab8ffe85997437ad1987038eb90d14fe1c6da6327"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-37202f5a92c2-clause-0c4bb0ba1861"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-37202f5a92c2-clause-0c4bb0ba1861",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-37202f5a92c2"
+      ],
+      "behaviour": "Tamil Ligatures — normative clause 117, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-37202f5a92c2",
+        "clause_index": 116,
+        "clause_sha256": "0c4bb0ba186188b6473b5ef43f8bbf64399ee63e90c3d7b7c81207ab7d4443df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-baeb48b1c36c",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-baeb48b1c36c"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tamil Supplement: U+11FC0–U+11FFF.",
+      "locator": {
+        "section_id": "heading-baeb48b1c36c",
+        "text_sha256": "3a394e27f0d13ffa6ddb7b9714416e9454b41df678cd94634a7faeae52a88a63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-24b3386cc026",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-24b3386cc026"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tamil Named Character Sequences.",
+      "locator": {
+        "section_id": "heading-24b3386cc026",
+        "text_sha256": "9e5ce82413417e1683701706b879ab3b099b9909b3a2f3ac7f739fc3aed58e2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-a3e94592cfe9",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-a3e94592cfe9"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Telugu.",
+      "locator": {
+        "section_id": "heading-a3e94592cfe9",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-46c3539c3d71",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-46c3539c3d71"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Telugu: U+0C00–U+0C7F.",
+      "locator": {
+        "section_id": "heading-46c3539c3d71",
+        "text_sha256": "b49317f2ffc7271e09c11094c9764a33ab8893b58b7aa09ba438e4f806412402"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-46c3539c3d71-clause-8d71c1927f35"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-46c3539c3d71-clause-8d71c1927f35",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-46c3539c3d71"
+      ],
+      "behaviour": "Telugu: U+0C00–U+0C7F — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-46c3539c3d71",
+        "clause_index": 1,
+        "clause_sha256": "8d71c1927f351eb8a6ae16fd3f07f45b5df847f8243bbac1f45e9aa64ce6a81f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-a7c7ce6d47cf",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-a7c7ce6d47cf"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Kannada.",
+      "locator": {
+        "section_id": "heading-a7c7ce6d47cf",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-3dab9c4c5941",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-3dab9c4c5941"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Kannada: U+0C80–U+0CFF.",
+      "locator": {
+        "section_id": "heading-3dab9c4c5941",
+        "text_sha256": "32eb41123011339eaa6e2c9726f67ce081849b6ddfde518a24d2959593983999"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-99a9207cc135",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-99a9207cc135"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Principles of the Kannada Script.",
+      "locator": {
+        "section_id": "heading-99a9207cc135",
+        "text_sha256": "631d8ab90c3700141ceb51389521a01da5994ce579d176019ff0c891e97e9545"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-99a9207cc135-clause-be99640aa525",
+        "unicode17-chapter-12.heading-99a9207cc135-clause-60c7cd990dda",
+        "unicode17-chapter-12.heading-99a9207cc135-clause-981d04109f4f",
+        "unicode17-chapter-12.heading-99a9207cc135-clause-90ca2b24f781",
+        "unicode17-chapter-12.heading-99a9207cc135-clause-ee48aaf8005b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-99a9207cc135-clause-be99640aa525",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-99a9207cc135"
+      ],
+      "behaviour": "Principles of the Kannada Script — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-99a9207cc135",
+        "clause_index": 1,
+        "clause_sha256": "be99640aa525bff0c73632359a639464e5e6ee44119a5ae907fc7a00072dfeee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-99a9207cc135-clause-60c7cd990dda",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-99a9207cc135"
+      ],
+      "behaviour": "Principles of the Kannada Script — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-99a9207cc135",
+        "clause_index": 18,
+        "clause_sha256": "60c7cd990ddac8e727fca6d9c403137dbad6952a1cf981f41027ae9027c60b36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-99a9207cc135-clause-981d04109f4f",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-99a9207cc135"
+      ],
+      "behaviour": "Principles of the Kannada Script — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-99a9207cc135",
+        "clause_index": 20,
+        "clause_sha256": "981d04109f4f2773f9eea8fbdbb320c6e2538e5f300f2ed69e9fe316d93c4e7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-99a9207cc135-clause-90ca2b24f781",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-99a9207cc135"
+      ],
+      "behaviour": "Principles of the Kannada Script — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-99a9207cc135",
+        "clause_index": 22,
+        "clause_sha256": "90ca2b24f7818b2017e4be63e26fa91abf4edb0662b17ca5875a45d3b8ace4ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-99a9207cc135-clause-ee48aaf8005b",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-99a9207cc135"
+      ],
+      "behaviour": "Principles of the Kannada Script — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-99a9207cc135",
+        "clause_index": 23,
+        "clause_sha256": "ee48aaf8005b8163e69c7138dc00ce21452a9dec8bf134852165134a7da0b816"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-21aa5cd1e9ee",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-21aa5cd1e9ee"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rendering Kannada.",
+      "locator": {
+        "section_id": "heading-21aa5cd1e9ee",
+        "text_sha256": "9af8fc42e0a9796cc099a6ddd75c5a1c02c53d96c52f8bb859829b57a1286275"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-21aa5cd1e9ee-clause-1efa5399367a",
+        "unicode17-chapter-12.heading-21aa5cd1e9ee-clause-5a0016f6fb46",
+        "unicode17-chapter-12.heading-21aa5cd1e9ee-clause-a5b135fd3530"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-21aa5cd1e9ee-clause-1efa5399367a",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-21aa5cd1e9ee"
+      ],
+      "behaviour": "Rendering Kannada — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-21aa5cd1e9ee",
+        "clause_index": 1,
+        "clause_sha256": "1efa5399367a9f9e1a9b323d6d91bc6a8f4bbb0dc87c8e8e0911312b5e4d6f85"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-21aa5cd1e9ee-clause-5a0016f6fb46",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-21aa5cd1e9ee"
+      ],
+      "behaviour": "Rendering Kannada — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-21aa5cd1e9ee",
+        "clause_index": 48,
+        "clause_sha256": "5a0016f6fb4647c88e88413911444ef17375437e9fe8b0503618d917d4598477"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-21aa5cd1e9ee-clause-a5b135fd3530",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-21aa5cd1e9ee"
+      ],
+      "behaviour": "Rendering Kannada — normative clause 68, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-21aa5cd1e9ee",
+        "clause_index": 67,
+        "clause_sha256": "a5b135fd35308f177fac47fde934d606ffff4d18b546ec579398362b83e8cf23"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-2bb629a6489b",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-2bb629a6489b"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Malayalam.",
+      "locator": {
+        "section_id": "heading-2bb629a6489b",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-1f0cd26e1c25",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-1f0cd26e1c25"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Malayalam: U+0D00–U+0D7F.",
+      "locator": {
+        "section_id": "heading-1f0cd26e1c25",
+        "text_sha256": "c08d9c71f50524183d56498f3ba8fa092d3f4db3913532e0f844bcab3f1fc83a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-1f0cd26e1c25-clause-7da9f81b9d16"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-1f0cd26e1c25-clause-7da9f81b9d16",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-1f0cd26e1c25"
+      ],
+      "behaviour": "Malayalam: U+0D00–U+0D7F — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-1f0cd26e1c25",
+        "clause_index": 2,
+        "clause_sha256": "7da9f81b9d163b29223fe0c53c2d5e8f549311df69089f5c9ca1c1496721286f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-c4d148d2ca49",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-c4d148d2ca49"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Malayalam Orthographic Reform.",
+      "locator": {
+        "section_id": "heading-c4d148d2ca49",
+        "text_sha256": "c01144e4ac23909df9b2e989875c0e068ef2f84e0a0679d896430c1c0040dec2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-f313a5bbe1dc",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-f313a5bbe1dc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rendering Malayalam.",
+      "locator": {
+        "section_id": "heading-f313a5bbe1dc",
+        "text_sha256": "99c9ef4dfb427bbc7f6a576a92765061d8f795d3c03bb1d182f08894939d50a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "unicode17-chapter-12.heading-f313a5bbe1dc-clause-6a99e1b91218",
+        "unicode17-chapter-12.heading-f313a5bbe1dc-clause-95e8f205e464",
+        "unicode17-chapter-12.heading-f313a5bbe1dc-clause-31c009757851",
+        "unicode17-chapter-12.heading-f313a5bbe1dc-clause-af45f014ac2b",
+        "unicode17-chapter-12.heading-f313a5bbe1dc-clause-fb48fc98dcd9",
+        "unicode17-chapter-12.heading-f313a5bbe1dc-clause-bffcd97be5eb",
+        "unicode17-chapter-12.heading-f313a5bbe1dc-clause-4acfbe50274e",
+        "unicode17-chapter-12.heading-f313a5bbe1dc-clause-0344742cfa66"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-f313a5bbe1dc-clause-6a99e1b91218",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-f313a5bbe1dc"
+      ],
+      "behaviour": "Rendering Malayalam — normative clause 91, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-f313a5bbe1dc",
+        "clause_index": 90,
+        "clause_sha256": "6a99e1b9121829f49ff1983d498a1ce21737901a2a8ee129078d2b212fddb0db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-f313a5bbe1dc-clause-95e8f205e464",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-f313a5bbe1dc"
+      ],
+      "behaviour": "Rendering Malayalam — normative clause 92, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-f313a5bbe1dc",
+        "clause_index": 91,
+        "clause_sha256": "95e8f205e46466e2d23776fe40deab0483924d21060da4041f0e978a3459a1ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-f313a5bbe1dc-clause-31c009757851",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-f313a5bbe1dc"
+      ],
+      "behaviour": "Rendering Malayalam — normative clause 205, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-f313a5bbe1dc",
+        "clause_index": 204,
+        "clause_sha256": "31c009757851655ea28b70ff2bfe1a89ab7353729390661b688aa761649880e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-f313a5bbe1dc-clause-af45f014ac2b",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-f313a5bbe1dc"
+      ],
+      "behaviour": "Rendering Malayalam — normative clause 206, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-f313a5bbe1dc",
+        "clause_index": 205,
+        "clause_sha256": "af45f014ac2bb831a37af55be36d841119132823a09a0eb9f7fe4757d6a8d02b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-f313a5bbe1dc-clause-fb48fc98dcd9",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-f313a5bbe1dc"
+      ],
+      "behaviour": "Rendering Malayalam — normative clause 232, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-f313a5bbe1dc",
+        "clause_index": 231,
+        "clause_sha256": "fb48fc98dcd9c747049425f07eeacd303367b9e94cb984528d636029ad52845d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-f313a5bbe1dc-clause-bffcd97be5eb",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-f313a5bbe1dc"
+      ],
+      "behaviour": "Rendering Malayalam — normative clause 271, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-f313a5bbe1dc",
+        "clause_index": 270,
+        "clause_sha256": "bffcd97be5eb9aea915ed0e42ac82fc030c2a82cfbe637772bfe888af947821d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-f313a5bbe1dc-clause-4acfbe50274e",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-f313a5bbe1dc"
+      ],
+      "behaviour": "Rendering Malayalam — normative clause 272, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-f313a5bbe1dc",
+        "clause_index": 271,
+        "clause_sha256": "4acfbe50274ea6057bdf6e066b2a086aecf8e14e02cf10c532c4df8a70b7e6a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-f313a5bbe1dc-clause-0344742cfa66",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-f313a5bbe1dc"
+      ],
+      "behaviour": "Rendering Malayalam — normative clause 273, located by its exact source hash.",
+      "locator": {
+        "section_id": "heading-f313a5bbe1dc",
+        "clause_index": 272,
+        "clause_sha256": "0344742cfa667c02722512c494ae8481ab30735e584ff27b4e1a9107d8d06a1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "unicode17-chapter-12.heading-7eee20e0c99b",
+      "family": "unicode17-chapter-12",
+      "source_id": "unicode17-chapter-12",
+      "sections": [
+        "heading-7eee20e0c99b"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Malayalam Numbers and Punctuation.",
+      "locator": {
+        "section_id": "heading-7eee20e0c99b",
+        "text_sha256": "56d3ca76721199634422f0aec9fecb50c6e79d84e087d99bf9c837a16ad8665b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

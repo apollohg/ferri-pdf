@@ -1,0 +1,602 @@
+{
+  "schema_version": 1,
+  "source_id": "css-cascade-6",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Cascading and Inheritance Level 6",
+      "level": 1,
+      "text_sha256": "1a938371bccc3b34d48043c759be2f6e5b2f4b03daf294eb97a6f78db15011c2",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "67018378dbc1ad8652aec291e253e20ac7e54ea9a78125c3a1e94254dfb24394",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "0bf5ceb5e5430566a383a1b65934dd471f01449998120c9b3b187bae8eceeb17",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "40164e118fa4877e0986c28d449a7801d10b21c8204cc949fd9970b720f6f547",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction and Missing Sections",
+      "level": 2,
+      "text_sha256": "1de89c6a595ce9237aad965cc9de61a2803d7922acff6732280d733b559b819b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.intro"
+        ]
+      }
+    },
+    {
+      "id": "cascading",
+      "title": "2. Cascading",
+      "level": 2,
+      "text_sha256": "ab824c1b96ee9f1625e14a62a8cf29f8820357b764abff5fc31aa813f4b1ed6f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.cascading"
+        ]
+      }
+    },
+    {
+      "id": "cascade-sort",
+      "title": "2.1. Cascade Sorting Order",
+      "level": 3,
+      "text_sha256": "150c725f0ffbeab2b93b6e8251e330191f98386446d8e389a507dff9d2a2c6ac",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.cascade-sort",
+          "css-cascade-6.foundation-element-attached-cascade",
+          "css-cascade-6.foundation-css-scope"
+        ]
+      }
+    },
+    {
+      "id": "cascading-origins",
+      "title": "2.2. Cascading Origins",
+      "level": 3,
+      "text_sha256": "28612feeb61def172d220360f8622099025389fcd59f0492a63ec5f2c1e9fa65",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.cascading-origins",
+          "css-cascade-6.foundation-element-attached-cascade"
+        ]
+      }
+    },
+    {
+      "id": "importance",
+      "title": "2.3. Important Declarations: the !important annotation",
+      "level": 3,
+      "text_sha256": "b81ebfb3d7e906410b658fdf00304b041fa2ad0f31bb97f23272018f3a24894c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.importance",
+          "css-cascade-6.foundation-element-attached-cascade"
+        ]
+      }
+    },
+    {
+      "id": "layering",
+      "title": "2.4. Cascade Layers",
+      "level": 3,
+      "text_sha256": "cb091ddd3fff05c5e2e3257a377bac578922f1a9382aeec786c267b7848d0172",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.layering"
+        ]
+      }
+    },
+    {
+      "id": "layer-ordering",
+      "title": "2.4.1. Layer Ordering",
+      "level": 4,
+      "text_sha256": "88fa34a38af228be54d662e652e5e0016f7b4cac1c36550917de9ae056b7face",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.layer-ordering"
+        ]
+      }
+    },
+    {
+      "id": "scoped-styles",
+      "title": "2.5. Scoping Styles: the @scope rule",
+      "level": 3,
+      "text_sha256": "76f0dbc13015d06cbc7d9496bea4ee672f9c60a4f9410fd3353b175404676f4b",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.scoped-styles",
+          "css-cascade-6.scoped-styles-clause-144401d39b91",
+          "css-cascade-6.foundation-css-scope"
+        ]
+      }
+    },
+    {
+      "id": "scope-effects",
+      "title": "2.5.1. Effects of @scope",
+      "level": 4,
+      "text_sha256": "d55dcabfa2483f171257df50a32f20356e976edb976cc4344e0483715d55b827",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.scope-effects",
+          "css-cascade-6.foundation-css-scope"
+        ]
+      }
+    },
+    {
+      "id": "scope-syntax",
+      "title": "2.5.2. Syntax of @scope",
+      "level": 4,
+      "text_sha256": "a4e840c4f51936769162bd710f33bcc525dd7595acd129d44d9bc162a1fb6de9",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.scope-syntax",
+          "css-cascade-6.scope-syntax-clause-01499de3380b",
+          "css-cascade-6.foundation-css-scope"
+        ]
+      }
+    },
+    {
+      "id": "scoped-rules",
+      "title": "2.5.3. Scoped Style Rules",
+      "level": 4,
+      "text_sha256": "32898042cd44cb41991964d5d8239ac36caae5f403bad462502134c3de92bb99",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.scoped-rules",
+          "css-cascade-6.scoped-rules-clause-e84a4be0f594",
+          "css-cascade-6.foundation-css-scope"
+        ]
+      }
+    },
+    {
+      "id": "scope-limits",
+      "title": "2.5.4. Identifying Scoping Roots and Limits",
+      "level": 4,
+      "text_sha256": "899c818167b53827c78afa0c2ef4faee1f3a75ec8d8dd3ab0d98c2d8e735d37d",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.scope-limits",
+          "css-cascade-6.foundation-css-scope"
+        ]
+      }
+    },
+    {
+      "id": "scope-scope",
+      "title": "2.5.5. Scope Nesting",
+      "level": 4,
+      "text_sha256": "6efa6ffa8450d421c0641a05b7bb3d117945b933bd1f1383ec6cc12679140682",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.scope-scope",
+          "css-cascade-6.scope-scope-clause-99887148e11b",
+          "css-cascade-6.foundation-css-scope"
+        ]
+      }
+    },
+    {
+      "id": "preshint",
+      "title": "2.6. Precedence of Non-CSS Presentational Hints",
+      "level": 3,
+      "text_sha256": "cb091ddd3fff05c5e2e3257a377bac578922f1a9382aeec786c267b7848d0172",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.preshint"
+        ]
+      }
+    },
+    {
+      "id": "cssom",
+      "title": "3. CSSOM",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.cssom"
+        ]
+      }
+    },
+    {
+      "id": "the-cssscoperule-interface",
+      "title": "3.1. The CSSScopeRule interface",
+      "level": 3,
+      "text_sha256": "ea22e400be46ce885f41290a83fc2e0358e29fca949636c772b286d71aba3fef",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.the-cssscoperule-interface"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "4. Changes",
+      "level": 2,
+      "text_sha256": "9a2def4ee299e63f63fcc9dc6132e0c04cecb9b09c90fd45d2abca30a78f068b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-since-2023-03",
+      "title": "4.1. Changes since the 21 March 2023 Working Draft",
+      "level": 3,
+      "text_sha256": "7473196a61a6eb4e9abac8cebb4312ca77a0605a2dbf93a18ce046f25a2957f0",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.changes-since-2023-03"
+        ]
+      }
+    },
+    {
+      "id": "changes-2022-08",
+      "title": "4.2. Changes since the 21 December 2021 First Public Working Draft",
+      "level": 3,
+      "text_sha256": "66acaa76c77d1eb08142962fde58757e1e062263368bffdf5ba12195192b1291",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.changes-2022-08"
+        ]
+      }
+    },
+    {
+      "id": "additions-l5",
+      "title": "4.3. Additions Since Level 5",
+      "level": 3,
+      "text_sha256": "ccfff18e77cce45c7760df4026905c4ef6eaf15affb242b63e8c72e9866acf31",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.additions-l5"
+        ]
+      }
+    },
+    {
+      "id": "additions-l4",
+      "title": "4.4. Additions Since Level 4",
+      "level": 3,
+      "text_sha256": "e3688a0a75cd0d88b33b23fb9bc55a081a2b46daf4f2d5dcaf0ab10414fbec14",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.additions-l4"
+        ]
+      }
+    },
+    {
+      "id": "additions-l3",
+      "title": "4.5. Additions Since Level 3",
+      "level": 3,
+      "text_sha256": "75a8725f841de4be9f709dc370c24406a3e8c46fe003c0186b010d8204d070cb",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.additions-l3"
+        ]
+      }
+    },
+    {
+      "id": "changes-2",
+      "title": "4.6. Additions Since Level 2",
+      "level": 3,
+      "text_sha256": "256a5213fe7ed2d0662baac768c1975d1256debcb65b744757847713038c3ea1",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.changes-2"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "dde076b3f519fef67e85856f32ddc5fb3c55bff1b196378d728750e1efa8c5c7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "5. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "8106e52379f1c413861babbf36b29261a57b8b0aaccaa6f8febe4d5d0d2d0c49",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.privacy",
+          "css-cascade-6.privacy-clause-8106e52379f1"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "6. Security Considerations",
+      "level": 2,
+      "text_sha256": "21c9d67fcdd8caefbc3faad74db81f2caf7296a0ea7689b4fb1233f7f0d9a332",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.security",
+          "css-cascade-6.security-clause-ade0b5db06da",
+          "css-cascade-6.security-clause-5e3e7bbb457c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.w3c-conventions",
+          "css-cascade-6.w3c-conventions-clause-5c98c879f070",
+          "css-cascade-6.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.w3c-conformance-classes",
+          "css-cascade-6.w3c-conformance-classes-clause-ff408372426c",
+          "css-cascade-6.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.w3c-partial",
+          "css-cascade-6.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.w3c-testing",
+          "css-cascade-6.w3c-testing-clause-1e0fff369221",
+          "css-cascade-6.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "a32fb095027219251814fb4da1ffdc30bb6a820207096ae8045620ee7e156819",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "35a3ba279a5cab9bb3089b1b85f8604304e051b76d36eaba86d2f63c0a63c639",
+      "clause_count": 69,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "e532166e8c747fad5393251e48855e1a340e2203e9f619a235d5bd2959cae368",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "8887438b83777e26a6b50a7d841ad538b02905a3bea0c6ab39ea04edb9414328",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.informative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "e9d7d0592b502621250ba5c37938b4186098d8383daafbdfe72987965f5e7e5c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "ab4d8fdd72cc1ac7f43081bb16eb3cbf6268bfe3677020436777ea649ed46aac",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-cascade-6.issues-index"
+        ]
+      }
+    }
+  ]
+}

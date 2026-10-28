@@ -1,0 +1,3093 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-align-3.intro",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "b69e6604bc2e31958b49952a78acdc796cc66805a3e23586ebbbbb0dc584d187"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.placement",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module Interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "f304549dc598e26c364babce9e86cd83e0a874d1bedebd68b307adb621ea54e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.values",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.partial",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial Implementations.",
+      "locator": {
+        "section_id": "partial",
+        "text_sha256": "2982f2e8ca7b0ea7b3dbbe7735f6c3d0c5125d3648ae7d47aaf1f95b6a5eca52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.partial-clause-ef3a4834eca6",
+        "css-align-3.partial-clause-c237f685c0b5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.partial-clause-ef3a4834eca6",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Partial Implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "partial",
+        "clause_index": 0,
+        "clause_sha256": "ef3a4834eca696be28d66e7a7587542675e0c9ca67efb887d43d027159c93d76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.partial-clause-c237f685c0b5",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Partial Implementations — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "partial",
+        "clause_index": 1,
+        "clause_sha256": "c237f685c0b56321518118b9c82db720983bf07a1065198008674669387c49ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.overview",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "overview"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overview of Alignment Properties.",
+      "locator": {
+        "section_id": "overview",
+        "text_sha256": "226d3175babf29580baa4b1afa978b6319d4e0c5705c8b89bdf9b92467edc7ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.terms",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "terms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alignment Terminology.",
+      "locator": {
+        "section_id": "terms",
+        "text_sha256": "a217cc27a3e5d93ee0d59c79a902e3c0ad044aa25b79f4845d9d51accad7611b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.alignment-values",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "alignment-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alignment Keywords.",
+      "locator": {
+        "section_id": "alignment-values",
+        "text_sha256": "329859aa7a68bb755aef69643b36f8ff7a464c67bc460d934e7ecda278ba2cd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.positional-values",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "positional-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Positional Alignment: the center, start, end, self-start, self-end, flex-start, flex-end, left, and right keywords.",
+      "locator": {
+        "section_id": "positional-values",
+        "text_sha256": "9a4a22d891e55a8dff5517601aedeab4d3b3fded33a46913f946b66e77faf2a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.baseline-values",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Baseline Alignment: the baseline keyword and first/last modifiers.",
+      "locator": {
+        "section_id": "baseline-values",
+        "text_sha256": "0419f0582c0ea69f8e7339e1e9f5d0331b1b19742dfe5cc177f08904b7cf042d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.distribution-values",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "distribution-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Distributed Alignment: the stretch, space-between, space-around, and space-evenly keywords.",
+      "locator": {
+        "section_id": "distribution-values",
+        "text_sha256": "d82e5b0d3ca7521d089de9d634dad0e8552987ce213dacc71cc2ce9c2450571c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.overflow-values",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "overflow-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow Alignment: the safe and unsafe keywords and scroll safety limits.",
+      "locator": {
+        "section_id": "overflow-values",
+        "text_sha256": "33d150dec04c58bd7c671518cc5beb9631edab0783893f177d1f8ae52b6cafff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.auto-safety",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "auto-safety"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Automatic Overflow Alignment Safety.",
+      "locator": {
+        "section_id": "auto-safety",
+        "text_sha256": "a591c281b5ca9a8b580ee8a51b47377e97cc407d0983019e76b78e64ae79e608"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.auto-safety-scroll",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "auto-safety-scroll"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Content Distribution for Scroll Containers.",
+      "locator": {
+        "section_id": "auto-safety-scroll",
+        "text_sha256": "ce0dae587eda3e1261929c6e04f4e46345a6c3ba7ba36b73903f50416144ea3a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.auto-safety-position",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "auto-safety-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Self-Alignment for Absolutely Positioned Boxes.",
+      "locator": {
+        "section_id": "auto-safety-position",
+        "text_sha256": "c1b8b624dcd726afe49a654e3d1e79f574657edc3da0b4a701787b258aaa47fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.auto-safety-default",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "auto-safety-default"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in All Other Alignment.",
+      "locator": {
+        "section_id": "auto-safety-default",
+        "text_sha256": "fd4fca4bd2b6a29655108086875a9fd755744f7b1902472528245b89017bfd5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.auto-safety-default-clause-3f6519538be8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.auto-safety-default-clause-3f6519538be8",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "auto-safety-default"
+      ],
+      "behaviour": "All Other Alignment — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "auto-safety-default",
+        "clause_index": 5,
+        "clause_sha256": "3f6519538be8977fa8e3ec692e35a4725fb30586d78d225203a530b1d829a9ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.content-distribution",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "content-distribution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Content Distribution: Aligning a Box’s Contents Within Itself.",
+      "locator": {
+        "section_id": "content-distribution",
+        "text_sha256": "be78bf213dd3da87be233e77f79c40558a30f31b5f323d63444898ea27edb132"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.align-justify-content",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-justify-content"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The justify-content and align-content Properties.",
+      "locator": {
+        "section_id": "align-justify-content",
+        "text_sha256": "480b1988173e02a89f294498a1b7c3303efb89ce745f4ba22170e3b021142565"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.align-justify-content-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.align-justify-content-clause-cca2516ebb1d",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-justify-content"
+      ],
+      "behaviour": "The justify-content and align-content Properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "align-justify-content",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.distribution-block",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "distribution-block"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block Containers (Including Table Cells).",
+      "locator": {
+        "section_id": "distribution-block",
+        "text_sha256": "fb9fc7e0754bf28cc1b3ee2af9a52807f5ea6d78758822b196b2044452e2fa02"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.distribution-block-clause-df5d27fc32f2",
+        "css-align-3.distribution-block-clause-e0f3d4948041"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.distribution-block-clause-df5d27fc32f2",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "distribution-block"
+      ],
+      "behaviour": "Block Containers (Including Table Cells) — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "distribution-block",
+        "clause_index": 9,
+        "clause_sha256": "df5d27fc32f21da279984d2de918946bf49b1c6cdbd750538613980c565e6e20"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.distribution-block-clause-e0f3d4948041",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "distribution-block"
+      ],
+      "behaviour": "Block Containers (Including Table Cells) — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "distribution-block",
+        "clause_index": 11,
+        "clause_sha256": "e0f3d4948041fd6ac631ce56c4a4174c37263ebd1de1cd471673fcecb2807fc3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.distribution-multicol",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "distribution-multicol"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Multicol Containers.",
+      "locator": {
+        "section_id": "distribution-multicol",
+        "text_sha256": "e4a20c5780ee29dae12c9805385317174f9d216a133f0b2e1bfb47170166cebf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.distribution-flex",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "distribution-flex"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flex Containers.",
+      "locator": {
+        "section_id": "distribution-flex",
+        "text_sha256": "62d64175ec50c8e4f1f668571f84e4bdce60a184924c3542b7ecbcfceee2a596"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.distribution-grid",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "distribution-grid"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grid Containers.",
+      "locator": {
+        "section_id": "distribution-grid",
+        "text_sha256": "231d8064e4803a56435214935d3cdaf06b26411d2b44ddff2c6f3a8f2e1c0c3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.place-content",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "place-content"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Content-Distribution Shorthand: the place-content property.",
+      "locator": {
+        "section_id": "place-content",
+        "text_sha256": "0d2f894649ae66380baa40a212985554b6977187fde0f9bf33ac7bfc24eb68a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.place-content-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.place-content-clause-cca2516ebb1d",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "place-content"
+      ],
+      "behaviour": "Content-Distribution Shorthand: the place-content property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "place-content",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.overflow-scroll-position",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "overflow-scroll-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alignment Overflow and Scroll Containers.",
+      "locator": {
+        "section_id": "overflow-scroll-position",
+        "text_sha256": "a669f6c80f645125a76357fab46136d2e30a57bb7a041f12abdedbf277988be5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.baseline-align-content",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-align-content"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Baseline Content-Alignment.",
+      "locator": {
+        "section_id": "baseline-align-content",
+        "text_sha256": "78e6f3d1b1eb5c5563c39ccfcfad4526f149a02e9639a7fc20d78aa18203498d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.baseline-align-content-clause-c8cfb57b778d",
+        "css-align-3.baseline-align-content-clause-3c079b2d1fdf",
+        "css-align-3.baseline-align-content-clause-11b8f9f55a2e",
+        "css-align-3.baseline-align-content-clause-8a386729708e",
+        "css-align-3.baseline-align-content-clause-5e32d1aee5ce"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.baseline-align-content-clause-c8cfb57b778d",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-align-content"
+      ],
+      "behaviour": "Baseline Content-Alignment — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-align-content",
+        "clause_index": 1,
+        "clause_sha256": "c8cfb57b778d817398ca0503fc77c880ebb4baf4f17dbe39dcd5788880cb7812"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-align-content-clause-3c079b2d1fdf",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-align-content"
+      ],
+      "behaviour": "Baseline Content-Alignment — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-align-content",
+        "clause_index": 6,
+        "clause_sha256": "3c079b2d1fdf60027f5fd669d9b10615b82639e4c374268d06f88154c3cff2d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-align-content-clause-11b8f9f55a2e",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-align-content"
+      ],
+      "behaviour": "Baseline Content-Alignment — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-align-content",
+        "clause_index": 8,
+        "clause_sha256": "11b8f9f55a2e389b41d5ba76590ca96936cfd99063d797836e7950d01e8ad1a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-align-content-clause-8a386729708e",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-align-content"
+      ],
+      "behaviour": "Baseline Content-Alignment — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-align-content",
+        "clause_index": 10,
+        "clause_sha256": "8a386729708eb2947c7f8ac6e004b6de048d55fc06ac23194bb63c6ab51db3aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-align-content-clause-5e32d1aee5ce",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-align-content"
+      ],
+      "behaviour": "Baseline Content-Alignment — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-align-content",
+        "clause_index": 22,
+        "clause_sha256": "5e32d1aee5ce7cc54300c809b8e3b0f11bc7a29626e0e95fffaac15a173a903c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.self-alignment",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "self-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Self-Alignment: Aligning the Box Within Its Parent.",
+      "locator": {
+        "section_id": "self-alignment",
+        "text_sha256": "278bf36ba3fc9992af22719f1787aaf303642d0bb8dc4af4e447bdd51c72aa6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.justify-self-property",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-self-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline-Axis (or Main-Axis) Self-Alignment: the justify-self property.",
+      "locator": {
+        "section_id": "justify-self-property",
+        "text_sha256": "7c38498f2d182bf5dbec48c271e6d5eb500361db4d2c17adad3176771f9c1a01"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.justify-self-property-clause-cca2516ebb1d",
+        "css-align-3.justify-self-property-clause-0c82acab8608",
+        "css-align-3.justify-self-property-clause-b2f3a57c3c19",
+        "css-align-3.justify-self-property-clause-175ea4ead781",
+        "css-align-3.justify-self-property-clause-a8302debc730"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.justify-self-property-clause-cca2516ebb1d",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-self-property"
+      ],
+      "behaviour": "Inline-Axis (or Main-Axis) Self-Alignment: the justify-self property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "justify-self-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.justify-self-property-clause-0c82acab8608",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-self-property"
+      ],
+      "behaviour": "Inline-Axis (or Main-Axis) Self-Alignment: the justify-self property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "justify-self-property",
+        "clause_index": 19,
+        "clause_sha256": "0c82acab8608fbe5742bdfde14bc5fff5df7e853d0bfc51c51b38738842c256f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.justify-self-property-clause-b2f3a57c3c19",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-self-property"
+      ],
+      "behaviour": "Inline-Axis (or Main-Axis) Self-Alignment: the justify-self property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "justify-self-property",
+        "clause_index": 31,
+        "clause_sha256": "b2f3a57c3c195dd8029891e6f08363bbc1147925d82ea2ef632ac65e90ffe528"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.justify-self-property-clause-175ea4ead781",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-self-property"
+      ],
+      "behaviour": "Inline-Axis (or Main-Axis) Self-Alignment: the justify-self property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "justify-self-property",
+        "clause_index": 34,
+        "clause_sha256": "175ea4ead781bd4a03afc26eb6836a6c138c901f2e5cfb180642b5a5c71737cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.justify-self-property-clause-a8302debc730",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-self-property"
+      ],
+      "behaviour": "Inline-Axis (or Main-Axis) Self-Alignment: the justify-self property — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "justify-self-property",
+        "clause_index": 40,
+        "clause_sha256": "a8302debc730612892fe23f2f9f9e9786bc7ef99a237fdfdbf1e31f72094b709"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.justify-block",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-block"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block-Level Boxes.",
+      "locator": {
+        "section_id": "justify-block",
+        "text_sha256": "704a8642025e3f3fe7b8ce3f7c7d1e06230947e6e71ad25537ce4b3a55150ff4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.justify-block-clause-9096846a5086"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.justify-block-clause-9096846a5086",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-block"
+      ],
+      "behaviour": "Block-Level Boxes — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "justify-block",
+        "clause_index": 11,
+        "clause_sha256": "9096846a50862694c9b24ad9f27b67fab06071fb4d86f5cd9d0ddefa83992f32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.justify-abspos",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-abspos"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Absolutely-Positioned Boxes.",
+      "locator": {
+        "section_id": "justify-abspos",
+        "text_sha256": "539ab23a1225f99a4cfd0c2b5ab7c0eaf41f18902f7b63f2b8af076e743395ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.justify-abspos-clause-bf421f1712d9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.justify-abspos-clause-bf421f1712d9",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-abspos"
+      ],
+      "behaviour": "Absolutely-Positioned Boxes — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "justify-abspos",
+        "clause_index": 13,
+        "clause_sha256": "bf421f1712d982fd36f969a6081ec6fbd4d6a7ac8f30960e94dfa1764a6c1980"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.justify-cell",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-cell"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Table Cells.",
+      "locator": {
+        "section_id": "justify-cell",
+        "text_sha256": "11e16d1723d5c63cc3465685da2366041b4269c67e979ef2a9130ef197cc4c51"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.justify-flex",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-flex"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flex Items.",
+      "locator": {
+        "section_id": "justify-flex",
+        "text_sha256": "096b6a2f29b64ac5e3eb5c1cf91960951693b05afef015916a83e9f7153185a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.justify-grid",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-grid"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grid Items.",
+      "locator": {
+        "section_id": "justify-grid",
+        "text_sha256": "859e417d647ed66096c11c76623015e8553194d20980a4e57d937fc6d5ccf1e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.align-self-property",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-self-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block-Axis (or Cross-Axis) Self-Alignment: the align-self property.",
+      "locator": {
+        "section_id": "align-self-property",
+        "text_sha256": "860db5e724b9dbd25222a871a61fecde215b2baa89ca919097ff9b394d32edcc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.align-self-property-clause-cca2516ebb1d",
+        "css-align-3.align-self-property-clause-cb9bb80e040e",
+        "css-align-3.align-self-property-clause-24a4d5b82b44"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.align-self-property-clause-cca2516ebb1d",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-self-property"
+      ],
+      "behaviour": "Block-Axis (or Cross-Axis) Self-Alignment: the align-self property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "align-self-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.align-self-property-clause-cb9bb80e040e",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-self-property"
+      ],
+      "behaviour": "Block-Axis (or Cross-Axis) Self-Alignment: the align-self property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "align-self-property",
+        "clause_index": 19,
+        "clause_sha256": "cb9bb80e040eef98ae1622abb72d82c5b8908e3a3d31a0510332c836ffa22fee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.align-self-property-clause-24a4d5b82b44",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-self-property"
+      ],
+      "behaviour": "Block-Axis (or Cross-Axis) Self-Alignment: the align-self property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "align-self-property",
+        "clause_index": 37,
+        "clause_sha256": "24a4d5b82b440c864bc3d7fb0955b9a4324870f0a703530c466cdd76b511485f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.align-block",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-block"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block-Level Boxes.",
+      "locator": {
+        "section_id": "align-block",
+        "text_sha256": "71626aa4f6c788442fe9a3db0d244bd68672669cab6c24b0bcdcf4a53677f3d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.align-abspos",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-abspos"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Absolutely-Positioned Boxes.",
+      "locator": {
+        "section_id": "align-abspos",
+        "text_sha256": "b718571360425239dfcd46d40e854f358ff4983ace58c4b8781eb36534992c2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.align-abspos-clause-a9b2d7dc2fa6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.align-abspos-clause-a9b2d7dc2fa6",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-abspos"
+      ],
+      "behaviour": "Absolutely-Positioned Boxes — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "align-abspos",
+        "clause_index": 13,
+        "clause_sha256": "a9b2d7dc2fa6a66a8ef2ae183ec8a6c471429867a8dec5a395a3d8b01b199a97"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.align-cell",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-cell"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Table Cells.",
+      "locator": {
+        "section_id": "align-cell",
+        "text_sha256": "11e16d1723d5c63cc3465685da2366041b4269c67e979ef2a9130ef197cc4c51"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.align-flex",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-flex"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Flex Items.",
+      "locator": {
+        "section_id": "align-flex",
+        "text_sha256": "0fd58201519ad470152ec9edfeacac56cb732419ebb7259f0c67153ae64fc151"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.align-grid",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-grid"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grid Items.",
+      "locator": {
+        "section_id": "align-grid",
+        "text_sha256": "d415a3480a0f4a16f02cc2fd00274d05c21d1d2dbfdc4f32e392a207b7622c46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.place-self-property",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "place-self-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Self-Alignment Shorthand: the place-self property.",
+      "locator": {
+        "section_id": "place-self-property",
+        "text_sha256": "f9498c4b9c3432de2c81f5f236c91f3937e9f978c48e120b8116d72e8a7fd0a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.place-self-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.place-self-property-clause-cca2516ebb1d",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "place-self-property"
+      ],
+      "behaviour": "Self-Alignment Shorthand: the place-self property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "place-self-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-align-self",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-align-self"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Baseline Self-Alignment.",
+      "locator": {
+        "section_id": "baseline-align-self",
+        "text_sha256": "0485fc6d115735b744302cba1e9e1efd2434c6a528e5ae5b3ef5d2a17688c4ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.baseline-align-self-clause-978981339c73"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.baseline-align-self-clause-978981339c73",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-align-self"
+      ],
+      "behaviour": "Baseline Self-Alignment — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-align-self",
+        "clause_index": 3,
+        "clause_sha256": "978981339c73936c670db47a9ca1d49ca7846d818d1d5e8ed80e01298c09a2bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.abspos-sizing",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "abspos-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Effects on Sizing of Absolutely Positioned Boxes with Static-Position Insets.",
+      "locator": {
+        "section_id": "abspos-sizing",
+        "text_sha256": "7fb0ed6c8e72fcd81905a29bc94dd543b6239b40e6be5d1c0bc9c74e47586b1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.default-alignment",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "default-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default Alignment.",
+      "locator": {
+        "section_id": "default-alignment",
+        "text_sha256": "bc68b9d59233e09c8382984b7f7976d70a20621aa306907f04c74b2ac7675135"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.justify-items-property",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-items-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline-Axis (or Main-Axis) Default Alignment: the justify-items property.",
+      "locator": {
+        "section_id": "justify-items-property",
+        "text_sha256": "7e42662106f75beb665691d2efb0d3e76e4d469eaa565ed190bd311798a3371a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.justify-items-property-clause-cca2516ebb1d",
+        "css-align-3.justify-items-property-clause-ef2b42a4f037",
+        "css-align-3.justify-items-property-clause-a852506f3c91"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.justify-items-property-clause-cca2516ebb1d",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-items-property"
+      ],
+      "behaviour": "Inline-Axis (or Main-Axis) Default Alignment: the justify-items property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "justify-items-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.justify-items-property-clause-ef2b42a4f037",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-items-property"
+      ],
+      "behaviour": "Inline-Axis (or Main-Axis) Default Alignment: the justify-items property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "justify-items-property",
+        "clause_index": 22,
+        "clause_sha256": "ef2b42a4f037ec376593c23b898b74c82e38036c472a858de625e75bbfff9a4d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.justify-items-property-clause-a852506f3c91",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "justify-items-property"
+      ],
+      "behaviour": "Inline-Axis (or Main-Axis) Default Alignment: the justify-items property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "justify-items-property",
+        "clause_index": 23,
+        "clause_sha256": "a852506f3c91aa48caefe9bd9f56260c92dc176ae692c32f1c370df90a208099"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.align-items-property",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-items-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block-Axis (or Cross-Axis) Default Alignment: the align-items property.",
+      "locator": {
+        "section_id": "align-items-property",
+        "text_sha256": "2d3dfa0890e967a01dc5df4b16300a0e310778944af47856084b54e6ec49c624"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.align-items-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.align-items-property-clause-cca2516ebb1d",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-items-property"
+      ],
+      "behaviour": "Block-Axis (or Cross-Axis) Default Alignment: the align-items property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "align-items-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.place-items-property",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "place-items-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default Alignment Shorthand: the place-items property.",
+      "locator": {
+        "section_id": "place-items-property",
+        "text_sha256": "e36ada09051cdd800b85fb204af73e7af9bedf49e5cb9fc55c27f3d15fc33098"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.place-items-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.place-items-property-clause-cca2516ebb1d",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "place-items-property"
+      ],
+      "behaviour": "Default Alignment Shorthand: the place-items property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "place-items-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.gaps",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "gaps"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gaps Between Boxes.",
+      "locator": {
+        "section_id": "gaps",
+        "text_sha256": "cfc7900abd9e66af556bdb2267d7bb6f663411e8cd807cb64896f4b5fcc8ffae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.baseline-rules",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Baseline Alignment Details.",
+      "locator": {
+        "section_id": "baseline-rules",
+        "text_sha256": "ab62b44c85ea6d1f53729c2dbf2e179ed286913afa4ab399c44c7202abdb7405"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.baseline-export",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-export"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Determining the Baselines of a Box.",
+      "locator": {
+        "section_id": "baseline-export",
+        "text_sha256": "ffddbeadbcee40924b5132fc6b4b9990b83650fda3859cda0f17612247786db9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.baseline-export-clause-00cc3622b914",
+        "css-align-3.baseline-export-clause-143712117f2f",
+        "css-align-3.baseline-export-clause-c3ace852086b",
+        "css-align-3.baseline-export-clause-68fe3b1659e7",
+        "css-align-3.baseline-export-clause-41e2995d28de",
+        "css-align-3.baseline-export-clause-550091750526",
+        "css-align-3.baseline-export-clause-b7de21742482",
+        "css-align-3.baseline-export-clause-bf24454448bf",
+        "css-align-3.baseline-export-clause-b35e88604950"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.baseline-export-clause-00cc3622b914",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-export"
+      ],
+      "behaviour": "Determining the Baselines of a Box — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-export",
+        "clause_index": 5,
+        "clause_sha256": "00cc3622b914c2532ddb2d2405f2573dcdbb3b7207dfae46f76b5a3f268959b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-export-clause-143712117f2f",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-export"
+      ],
+      "behaviour": "Determining the Baselines of a Box — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-export",
+        "clause_index": 6,
+        "clause_sha256": "143712117f2f74eb220351c7c0fe6cb7ee5283e4267b3625f2f165a1f8d76765"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-export-clause-c3ace852086b",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-export"
+      ],
+      "behaviour": "Determining the Baselines of a Box — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-export",
+        "clause_index": 11,
+        "clause_sha256": "c3ace852086b7e098b3240a991a326bd3b3a1b0970f382ce2eca709dc63e934c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-export-clause-68fe3b1659e7",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-export"
+      ],
+      "behaviour": "Determining the Baselines of a Box — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-export",
+        "clause_index": 12,
+        "clause_sha256": "68fe3b1659e73fec126b2c4e7719602ef6bdbf3e24c27b6a912622f525b1bca9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-export-clause-41e2995d28de",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-export"
+      ],
+      "behaviour": "Determining the Baselines of a Box — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-export",
+        "clause_index": 22,
+        "clause_sha256": "41e2995d28de8a4c8b039cc0c46f15161fe968d485008601baf72002a3be9d3b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-export-clause-550091750526",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-export"
+      ],
+      "behaviour": "Determining the Baselines of a Box — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-export",
+        "clause_index": 25,
+        "clause_sha256": "550091750526fcffefa670627db8b91f5726930f352b573d92834dd0a7f6953b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-export-clause-b7de21742482",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-export"
+      ],
+      "behaviour": "Determining the Baselines of a Box — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-export",
+        "clause_index": 32,
+        "clause_sha256": "b7de21742482ac1fc6746274388fe9df1ef43ab13517adf53d8479d3b2249eaf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-export-clause-bf24454448bf",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-export"
+      ],
+      "behaviour": "Determining the Baselines of a Box — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-export",
+        "clause_index": 41,
+        "clause_sha256": "bf24454448bf1a1a58789e741253b5e58287a9cfd902237d381e0ae4b31dd817"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-export-clause-b35e88604950",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-export"
+      ],
+      "behaviour": "Determining the Baselines of a Box — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "baseline-export",
+        "clause_index": 42,
+        "clause_sha256": "b35e88604950d5e55c383aa786fe5528f7aed8ab95ea5d9b569f799e20618763"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.baseline-terms",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "baseline-terms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Baseline Alignment Grouping.",
+      "locator": {
+        "section_id": "baseline-terms",
+        "text_sha256": "c8f9a00b6579ec9bcafbf0b3ec1adf83939533720e6ccec7ea04c25831186be7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.align-by-baseline",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "align-by-baseline"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Aligning Boxes by Baseline.",
+      "locator": {
+        "section_id": "align-by-baseline",
+        "text_sha256": "efd4a847500aa7055f4355979cf91e5362ea4812872df3bd996e94db140fcfa0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.staticpos-rect",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "staticpos-rect"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix A: Static Position Terminology.",
+      "locator": {
+        "section_id": "staticpos-rect",
+        "text_sha256": "55907ed7b972909d892bd5f2031b92b1998af7a54fe5fd8cea6964fe850852d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.staticpos-rect-clause-55b7b19a0362"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.staticpos-rect-clause-55b7b19a0362",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "staticpos-rect"
+      ],
+      "behaviour": "Appendix A: Static Position Terminology — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "staticpos-rect",
+        "clause_index": 0,
+        "clause_sha256": "55b7b19a03628115ba5c847a97886af77f8591e5fa4dfd75fe6a0ef506667459"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.privacy",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "1ce3f2e66544ad97de45ba0126b53981a8508c1e6d13230bbccfe1accda2add5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.security",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "e33ed430a346baf9e591b33e74586e08357b40d5f42919c4344f647d1664a92b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.w3c-conformance",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.w3c-conventions",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.w3c-conventions-clause-5c98c879f070",
+        "css-align-3.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.w3c-conventions-clause-5c98c879f070",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.w3c-conformance-classes",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.w3c-conformance-classes-clause-ff408372426c",
+        "css-align-3.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.w3c-partial",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.w3c-partial-clause-ef40c4aab200",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.w3c-conform-future-proofing",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.w3c-testing",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-align-3.w3c-testing-clause-1e0fff369221",
+        "css-align-3.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.w3c-testing-clause-1e0fff369221",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.w3c-testing-clause-ae1210cf9643",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-align-3.property-index",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "59c146e78a76618b28c4e8b12353e993730214a3493cd7e346acc140a17c9f88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.issues-index",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "800a0604cc2bce2da2471eaad3168ee632fe4cc131af935c947f91a0e48b9c42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.import-22ca1a8f637f",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://tc39.es/ecma426/.",
+      "unresolved_reference": "https://tc39.es/ecma426/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-align-3.title",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Box Alignment Module Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "c969d141ee66c960ccb723f9a273504f7a3b6dde921f4934bda2f33e8df33ae0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.abstract",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "125673aa422094837114300cb2847a098aaffae20d62f1f6dfec16cfb11cbd03"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.sotd",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "3dffe7c8acfd85ed34281d5bceda631b832ab51b272e28a38343eacfc192d216"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.contents",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "a51c2b02f81e88531d41ce673431ce805757992736b88bed33eb36b008541f48"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.changes",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 10. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "324372e831e02e95929cd53ec318cfe6bd2d57d7d5fe800054e31285a7ac3778"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.acknowledgments",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "c1d459c8049481ed3a90b957a11a49033df02ff4cb96516f1112064323bacbd7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.index",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.index-defined-here",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "c0497709a87e57e12cace7906040ba4da01b6fd3af93d4211b3a5811c54ba55a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.index-defined-elsewhere",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "c0f9c95d43febba919ce77dae8f4053fc75ecc26194870f3177298b96c993ed6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.references",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-align-3.informative",
+      "family": "css-align-3",
+      "source_id": "css-align-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "2c86ef7e7422a30ba43043392c2b84437ef258ddda596e32513498345303e16f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

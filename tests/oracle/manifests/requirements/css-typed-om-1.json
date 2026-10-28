@@ -1,0 +1,3806 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-typed-om-1.intro",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "fe9ee5d18a6363f379d231b891e890a894fbc6a04a35b97c6e082ba129324a4f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.stylevalue-objects",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "stylevalue-objects"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSStyleValue objects.",
+      "locator": {
+        "section_id": "stylevalue-objects",
+        "text_sha256": "d417941a3da404ec2242feed3bfebe51b14fa945d1c7c3e19801b6aeeac74e7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.stylevalue-objects-clause-bcc48b2b6957",
+        "css-typed-om-1.stylevalue-objects-clause-c264210348c3",
+        "css-typed-om-1.stylevalue-objects-clause-47f40bbc376b",
+        "css-typed-om-1.stylevalue-objects-clause-b2ebd18ca26b",
+        "css-typed-om-1.stylevalue-objects-clause-ef2a5da122fd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.stylevalue-objects-clause-bcc48b2b6957",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "stylevalue-objects"
+      ],
+      "behaviour": "CSSStyleValue objects — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "stylevalue-objects",
+        "clause_index": 3,
+        "clause_sha256": "bcc48b2b6957f32c3c3da7b4701f40b8d32f664da17f53a0d59c5ab6b05eefdc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.stylevalue-objects-clause-c264210348c3",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "stylevalue-objects"
+      ],
+      "behaviour": "CSSStyleValue objects — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "stylevalue-objects",
+        "clause_index": 4,
+        "clause_sha256": "c264210348c32c85b8cd8d4c2b2b326757b73ef64d6d136fccba7b92a717fdc2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.stylevalue-objects-clause-47f40bbc376b",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "stylevalue-objects"
+      ],
+      "behaviour": "CSSStyleValue objects — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "stylevalue-objects",
+        "clause_index": 10,
+        "clause_sha256": "47f40bbc376b6f1948ed7382b27b4f1fac08c7bbb34f06c0eb6a90be85009a77"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.stylevalue-objects-clause-b2ebd18ca26b",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "stylevalue-objects"
+      ],
+      "behaviour": "CSSStyleValue objects — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "stylevalue-objects",
+        "clause_index": 12,
+        "clause_sha256": "b2ebd18ca26b4992309bd2be329daafa772b7678e00a8a498aca21d98e9d75a0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.stylevalue-objects-clause-ef2a5da122fd",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "stylevalue-objects"
+      ],
+      "behaviour": "CSSStyleValue objects — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "stylevalue-objects",
+        "clause_index": 24,
+        "clause_sha256": "ef2a5da122fd722509f97e02fa0be0097fbcdc41fad04d8d048b6d32921bb4f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.direct-cssstylevalue",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "direct-cssstylevalue"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Direct CSSStyleValue Objects.",
+      "locator": {
+        "section_id": "direct-cssstylevalue",
+        "text_sha256": "4ad198ef515ad9433b6702b82046eca37e58d78ae270f4aca04e2acec0e6a8e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.the-stylepropertymap",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "the-stylepropertymap"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The StylePropertyMap.",
+      "locator": {
+        "section_id": "the-stylepropertymap",
+        "text_sha256": "c4a6fea6a911b74ba0c6814262afa2b2e616fecd2f306548fa61d73bb8893f8d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.the-stylepropertymap-clause-40bb3ed06781"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.the-stylepropertymap-clause-40bb3ed06781",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "the-stylepropertymap"
+      ],
+      "behaviour": "The StylePropertyMap — normative clause 78, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-stylepropertymap",
+        "clause_index": 77,
+        "clause_sha256": "40bb3ed067816d535c3ee6dcb4f294b26391a7ffe7fcad4fe0c32f26f39f261a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.computed-stylepropertymapreadonly-objects",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "computed-stylepropertymapreadonly-objects"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Computed StylePropertyMapReadOnly objects.",
+      "locator": {
+        "section_id": "computed-stylepropertymapreadonly-objects",
+        "text_sha256": "1669486baaaf8b126855f94b993bc66be6607d5029d73578b3b072518eb1bf9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-abe07d60e1ee",
+        "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-d37af0ebfb74",
+        "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-893fd6bfda46",
+        "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-75f6e05a4aea",
+        "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-def05260de74"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-abe07d60e1ee",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "computed-stylepropertymapreadonly-objects"
+      ],
+      "behaviour": "Computed StylePropertyMapReadOnly objects — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed-stylepropertymapreadonly-objects",
+        "clause_index": 1,
+        "clause_sha256": "abe07d60e1ee826602f62f7dc7827bdc1595b8d168de4ff51392845169715464"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-d37af0ebfb74",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "computed-stylepropertymapreadonly-objects"
+      ],
+      "behaviour": "Computed StylePropertyMapReadOnly objects — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed-stylepropertymapreadonly-objects",
+        "clause_index": 3,
+        "clause_sha256": "d37af0ebfb741e776b001cc4a095cfd7d8cbafad92be1a60cfb15b1a55fd05ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-893fd6bfda46",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "computed-stylepropertymapreadonly-objects"
+      ],
+      "behaviour": "Computed StylePropertyMapReadOnly objects — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed-stylepropertymapreadonly-objects",
+        "clause_index": 4,
+        "clause_sha256": "893fd6bfda4600d1a5fa6e3bff3c8dd31521d878689243703876c92ff071ffa7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-75f6e05a4aea",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "computed-stylepropertymapreadonly-objects"
+      ],
+      "behaviour": "Computed StylePropertyMapReadOnly objects — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed-stylepropertymapreadonly-objects",
+        "clause_index": 6,
+        "clause_sha256": "75f6e05a4aea9d210a3b94d2ffcbacfd43eb12b22df972b5a85e0bf1e20dbaf7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-def05260de74",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "computed-stylepropertymapreadonly-objects"
+      ],
+      "behaviour": "Computed StylePropertyMapReadOnly objects — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed-stylepropertymapreadonly-objects",
+        "clause_index": 10,
+        "clause_sha256": "def05260de74644c045069649efbaec48093eb5adb9f5e4f92700208f0a6d1dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.declared-stylepropertymap-objects",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "declared-stylepropertymap-objects"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Declared & Inline StylePropertyMap objects.",
+      "locator": {
+        "section_id": "declared-stylepropertymap-objects",
+        "text_sha256": "64d0e8375840b40cf6cea50800848c5c7fc5c82b32bc3dc7d10af236a93a6735"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.stylevalue-subclasses",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "stylevalue-subclasses"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSStyleValue subclasses.",
+      "locator": {
+        "section_id": "stylevalue-subclasses",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.unparsedvalue-objects",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "unparsedvalue-objects"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSUnparsedValue objects.",
+      "locator": {
+        "section_id": "unparsedvalue-objects",
+        "text_sha256": "dcbda1d699328ef7114ab9f84ee3323aee484d92074899985d13d61de18f54a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.unparsedvalue-objects-clause-2f4ae3c17ce3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.unparsedvalue-objects-clause-2f4ae3c17ce3",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "unparsedvalue-objects"
+      ],
+      "behaviour": "CSSUnparsedValue objects — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "unparsedvalue-objects",
+        "clause_index": 7,
+        "clause_sha256": "2f4ae3c17ce3c03cf44795910bca1537296233b53ffcdabb831fc5cf55983b39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.keywordvalue-objects",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "keywordvalue-objects"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSKeywordValue objects.",
+      "locator": {
+        "section_id": "keywordvalue-objects",
+        "text_sha256": "22c49d645300022c6763ca081f8272960005b1d5643d32278b505aae3bebdbbc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.keywordvalue-objects-clause-aee39411e978"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.keywordvalue-objects-clause-aee39411e978",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "keywordvalue-objects"
+      ],
+      "behaviour": "CSSKeywordValue objects — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "keywordvalue-objects",
+        "clause_index": 6,
+        "clause_sha256": "aee39411e9782716018651eb4555173643ea835b093a6c08d3885c4ffcce96b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-objects",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-objects"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Numeric Values:.",
+      "locator": {
+        "section_id": "numeric-objects",
+        "text_sha256": "f07bd6dcbaba794b99698f2406eee3d66701aee4c66827498a2693cacdc10558"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.numeric-objects-clause-54067112b81a",
+        "css-typed-om-1.numeric-objects-clause-bc3c66961075"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.numeric-objects-clause-54067112b81a",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-objects"
+      ],
+      "behaviour": "Numeric Values: — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-objects",
+        "clause_index": 0,
+        "clause_sha256": "54067112b81a7bcd0655e1aea252de38c4353af1aa3f2b055f44b8b547c9ded1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-objects-clause-bc3c66961075",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-objects"
+      ],
+      "behaviour": "Numeric Values: — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-objects",
+        "clause_index": 9,
+        "clause_sha256": "bc3c66961075b371c2111eea5a1e3f69856a82e53f05fe8df17b7b87e8288992"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Common Numeric Operations, and the CSSNumericValue Superclass.",
+      "locator": {
+        "section_id": "numeric-value",
+        "text_sha256": "c4d80bdf8d8d994da19876dd1eb09d887eb840779e826040ffb91fc4c1a36fb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.numeric-value-clause-786533900a49",
+        "css-typed-om-1.numeric-value-clause-2af1c46fc263",
+        "css-typed-om-1.numeric-value-clause-3ecefd9437c6",
+        "css-typed-om-1.numeric-value-clause-da1192b8e59d",
+        "css-typed-om-1.numeric-value-clause-73d3705a0e12",
+        "css-typed-om-1.numeric-value-clause-905487097a64",
+        "css-typed-om-1.numeric-value-clause-c163a6e8716b",
+        "css-typed-om-1.numeric-value-clause-11794325c3b3",
+        "css-typed-om-1.numeric-value-clause-c39adbca3712",
+        "css-typed-om-1.numeric-value-clause-9a792f91d0bc",
+        "css-typed-om-1.numeric-value-clause-a717bc5f3189",
+        "css-typed-om-1.numeric-value-clause-84a4f964ae8f",
+        "css-typed-om-1.numeric-value-clause-603038972e83"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-786533900a49",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 8,
+        "clause_sha256": "786533900a49eb3eb4325c416917ab8ee0f37bc454750af2ef5e949cb4f78d1b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-2af1c46fc263",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 16,
+        "clause_sha256": "2af1c46fc263be69c9ac179ca97f081b693c0d89921693b1c901299ec802b042"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-3ecefd9437c6",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 29,
+        "clause_sha256": "3ecefd9437c69fd0a281c9ef2b3eaafe2c7a7a343056856927f9fa17d7bf0ebf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-da1192b8e59d",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 30,
+        "clause_sha256": "da1192b8e59d779d0bd33cb6c9e0843556c1024e1af8554f7420502ab68b9a16"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-73d3705a0e12",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 32,
+        "clause_sha256": "73d3705a0e127b2e423f41d01ed426463ce2e8506423216c3a5a010567e8889d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-905487097a64",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 33,
+        "clause_sha256": "905487097a649133977a32e868544d72fc129e9794ff3339a0f0a3a1e2222cc5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-c163a6e8716b",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 40,
+        "clause_sha256": "c163a6e8716bb1215d27ba6526ee4a6dcfc3ea4698a6d830847e65d4fed2639c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-11794325c3b3",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 112, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 111,
+        "clause_sha256": "11794325c3b3f04d298fc3d96e014f700db416bf6cf377f361ead0ea33fee48a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-c39adbca3712",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 167, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 166,
+        "clause_sha256": "c39adbca3712f721ca820fdb6c99ef123b61421588afd28cd871f8a38fb5892f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-9a792f91d0bc",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 286, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 285,
+        "clause_sha256": "9a792f91d0bcae234dbd12963e9aa42f1fd77c8c53e87f347fcad02c9e2fe858"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-a717bc5f3189",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 288, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 287,
+        "clause_sha256": "a717bc5f31893bc8e16ae2172f95727544136b0e3ef569749d210210d98e3e5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-84a4f964ae8f",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 290, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 289,
+        "clause_sha256": "84a4f964ae8f75dde183b92bf7d752d3884164c40359fccfbf6c3b6f1235b306"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-value-clause-603038972e83",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-value"
+      ],
+      "behaviour": "Common Numeric Operations, and the CSSNumericValue Superclass — normative clause 294, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-value",
+        "clause_index": 293,
+        "clause_sha256": "603038972e83fefd953771e433553322ba55bc2850e462e6d6e6597763b1b107"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-typing",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-typing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Numeric Value Typing.",
+      "locator": {
+        "section_id": "numeric-typing",
+        "text_sha256": "94338f6e01d1098fd64e5da662342feb315a903a99de88da34001a97ccac0da8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.numeric-typing-clause-a106f1711bc4",
+        "css-typed-om-1.numeric-typing-clause-64ad73ca1081",
+        "css-typed-om-1.numeric-typing-clause-481b9bc9c678",
+        "css-typed-om-1.numeric-typing-clause-f5cc6aae268b",
+        "css-typed-om-1.numeric-typing-clause-024255237bc3",
+        "css-typed-om-1.numeric-typing-clause-2ae65178033a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.numeric-typing-clause-a106f1711bc4",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-typing"
+      ],
+      "behaviour": "Numeric Value Typing — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-typing",
+        "clause_index": 0,
+        "clause_sha256": "a106f1711bc48e1e90a059157220bdffccb8bcdf76dc9cdeebe6462015904cfb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-typing-clause-64ad73ca1081",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-typing"
+      ],
+      "behaviour": "Numeric Value Typing — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-typing",
+        "clause_index": 32,
+        "clause_sha256": "64ad73ca10819bac36675cbe21568438e18ee97c49a64bad7cc884533856afc6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-typing-clause-481b9bc9c678",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-typing"
+      ],
+      "behaviour": "Numeric Value Typing — normative clause 91, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-typing",
+        "clause_index": 90,
+        "clause_sha256": "481b9bc9c678fd6bea5ddf83d1673262e928b4e6b42cb1d22a53a2cb2f1f1a13"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-typing-clause-f5cc6aae268b",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-typing"
+      ],
+      "behaviour": "Numeric Value Typing — normative clause 92, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-typing",
+        "clause_index": 91,
+        "clause_sha256": "f5cc6aae268b3b5bc3ed316a6d36e070ca4972270c74c5d44f399c0dcc04a570"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-typing-clause-024255237bc3",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-typing"
+      ],
+      "behaviour": "Numeric Value Typing — normative clause 99, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-typing",
+        "clause_index": 98,
+        "clause_sha256": "024255237bc38596b6dde737c863094dc53448bdd25b95fff90b0e2995eaa735"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-typing-clause-2ae65178033a",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-typing"
+      ],
+      "behaviour": "Numeric Value Typing — normative clause 101, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-typing",
+        "clause_index": 100,
+        "clause_sha256": "2ae65178033ac478ae6cf5827f4e0a16c25eb7aaacc9f978f883012efd67da33"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.simple-numeric",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "simple-numeric"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value + Unit: CSSUnitValue objects.",
+      "locator": {
+        "section_id": "simple-numeric",
+        "text_sha256": "aba15851b827dc8bd4463e4a9b6eb40769d38858d651c914b43ffe9b009ca7bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.simple-numeric-clause-88a6f4218ec6",
+        "css-typed-om-1.simple-numeric-clause-f9a1453706c0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.simple-numeric-clause-88a6f4218ec6",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "simple-numeric"
+      ],
+      "behaviour": "Value + Unit: CSSUnitValue objects — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "simple-numeric",
+        "clause_index": 3,
+        "clause_sha256": "88a6f4218ec63b2369ca152262f559c63c53b706a76f67b36d4332131fbc4bb3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.simple-numeric-clause-f9a1453706c0",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "simple-numeric"
+      ],
+      "behaviour": "Value + Unit: CSSUnitValue objects — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "simple-numeric",
+        "clause_index": 7,
+        "clause_sha256": "f9a1453706c02b7a3c766de53a6a5dc0fd83ffcfaa5b25aa62ce467af21249f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.complex-numeric",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "complex-numeric"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Complex Numeric Values: CSSMathValue objects.",
+      "locator": {
+        "section_id": "complex-numeric",
+        "text_sha256": "f3708ac531a8ebe660a005aabb6fd8a9e3876fd820fd247ef96f751227f107c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.complex-numeric-clause-13d28836297c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.complex-numeric-clause-13d28836297c",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "complex-numeric"
+      ],
+      "behaviour": "Complex Numeric Values: CSSMathValue objects — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "complex-numeric",
+        "clause_index": 46,
+        "clause_sha256": "13d28836297cfbd92e2b718eea5404ed7c63aec20df65e4fb9a3b048189142fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-factory",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-factory"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Numeric Factory Functions.",
+      "locator": {
+        "section_id": "numeric-factory",
+        "text_sha256": "a4d486ed351ee753b26277d8ed012263d9bce821eb642f387081fd5fcb586644"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.numeric-factory-clause-f998cd02637c",
+        "css-typed-om-1.numeric-factory-clause-efefeeee30c8",
+        "css-typed-om-1.numeric-factory-clause-6d27c962d5de"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.numeric-factory-clause-f998cd02637c",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-factory"
+      ],
+      "behaviour": "Numeric Factory Functions — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-factory",
+        "clause_index": 3,
+        "clause_sha256": "f998cd02637c95de8b6b75a132e085f73a3789cc8f51492fbd5806039badb0b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-factory-clause-efefeeee30c8",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-factory"
+      ],
+      "behaviour": "Numeric Factory Functions — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-factory",
+        "clause_index": 4,
+        "clause_sha256": "efefeeee30c8cc1cb627295b73ea18c80eba5776f7f5438e8e88c802032c189d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.numeric-factory-clause-6d27c962d5de",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numeric-factory"
+      ],
+      "behaviour": "Numeric Factory Functions — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "numeric-factory",
+        "clause_index": 5,
+        "clause_sha256": "6d27c962d5def6371171476e5d63caa2a286f14c320bae1eed88d3012118bf1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.transformvalue-objects",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "transformvalue-objects"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSTransformValue objects.",
+      "locator": {
+        "section_id": "transformvalue-objects",
+        "text_sha256": "be3c99a7f9e14976838678538ae6f8f6fac493851647433454ec70caabca6c19"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.imagevalue-objects",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "imagevalue-objects"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSImageValue objects.",
+      "locator": {
+        "section_id": "imagevalue-objects",
+        "text_sha256": "9b7504875317ef7b99a39b1c4603602fbfae52620caae8079b90f29d380300d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.imagevalue-objects-clause-6ec7bb7c22cf",
+        "css-typed-om-1.imagevalue-objects-clause-fb7dc1dc65ea"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.imagevalue-objects-clause-6ec7bb7c22cf",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "imagevalue-objects"
+      ],
+      "behaviour": "CSSImageValue objects — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "imagevalue-objects",
+        "clause_index": 4,
+        "clause_sha256": "6ec7bb7c22cf39bae490cc34ed305d1134766a110f9f259745238ec9297fb12f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.imagevalue-objects-clause-fb7dc1dc65ea",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "imagevalue-objects"
+      ],
+      "behaviour": "CSSImageValue objects — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "imagevalue-objects",
+        "clause_index": 5,
+        "clause_sha256": "fb7dc1dc65ea5fc0d7a40d18d6e2d4f11c359b1f87a5f32b19b5dba41c724208"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.colorvalue-objects",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "colorvalue-objects"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSColorValue objects.",
+      "locator": {
+        "section_id": "colorvalue-objects",
+        "text_sha256": "e9a5709bf7166f78079e9622c1af3b56891abd4f0a105098226469d4c79f3106"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.colorvalue-objects-clause-447603f5cec9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.colorvalue-objects-clause-447603f5cec9",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "colorvalue-objects"
+      ],
+      "behaviour": "CSSColorValue objects — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "colorvalue-objects",
+        "clause_index": 2,
+        "clause_sha256": "447603f5cec90ff7c0dfd2be9820bb0ca7355c17ac67d9ff57ed6654df69f852"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-stylevalue",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-stylevalue"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSStyleValue Reification.",
+      "locator": {
+        "section_id": "reify-stylevalue",
+        "text_sha256": "645ffabebe72f157d5ab440bb96e18a794be22cd35dec9e74ceb862219715cfe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.reify-property",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property-specific Rules.",
+      "locator": {
+        "section_id": "reify-property",
+        "text_sha256": "5ad73c432da8688ff76c1baeaa59a1816898cd4b572fb27e3a355d91825dc671"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.reify-property-clause-d9dbc8145e69",
+        "css-typed-om-1.reify-property-clause-7f8c3cd8fc0d",
+        "css-typed-om-1.reify-property-clause-37731fe83a8f",
+        "css-typed-om-1.reify-property-clause-228302b65d84",
+        "css-typed-om-1.reify-property-clause-07904b9b085e",
+        "css-typed-om-1.reify-property-clause-835daaf9bbde",
+        "css-typed-om-1.reify-property-clause-2f52bef1b5d8",
+        "css-typed-om-1.reify-property-clause-3c6c66b0517a",
+        "css-typed-om-1.reify-property-clause-e7f06d743216",
+        "css-typed-om-1.reify-property-clause-8f46ce56512a",
+        "css-typed-om-1.reify-property-clause-17a5b21eb8c1",
+        "css-typed-om-1.reify-property-clause-1cf563c334d1",
+        "css-typed-om-1.reify-property-clause-da581eb67630",
+        "css-typed-om-1.reify-property-clause-08df966e577f",
+        "css-typed-om-1.reify-property-clause-5fbd65d45234",
+        "css-typed-om-1.reify-property-clause-74d624a5e33b",
+        "css-typed-om-1.reify-property-clause-9977ae191cd8",
+        "css-typed-om-1.reify-property-clause-1dcd942c3f4e",
+        "css-typed-om-1.reify-property-clause-110afaa58679",
+        "css-typed-om-1.reify-property-clause-1bdd3576a341",
+        "css-typed-om-1.reify-property-clause-5ec678fc5abd",
+        "css-typed-om-1.reify-property-clause-dccae8eeae96",
+        "css-typed-om-1.reify-property-clause-d193032320d5",
+        "css-typed-om-1.reify-property-clause-fba6144929f3",
+        "css-typed-om-1.reify-property-clause-e83727c0b686",
+        "css-typed-om-1.reify-property-clause-00d28d4379fd",
+        "css-typed-om-1.reify-property-clause-8247d84150a6",
+        "css-typed-om-1.reify-property-clause-fa94c3aa8d03",
+        "css-typed-om-1.reify-property-clause-26126e643cf2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-d9dbc8145e69",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 0,
+        "clause_sha256": "d9dbc8145e6910e0665b9196b3198e8685f1513b30c1be3ddd47b2bc1996f2c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-7f8c3cd8fc0d",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 2,
+        "clause_sha256": "7f8c3cd8fc0d614e7a8e11b79afd91fcb8770364d90a80a5480f8805a4a2c4da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-37731fe83a8f",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 9,
+        "clause_sha256": "37731fe83a8f9471e039b42df533e8c4f217720d1d172f49e2db5c0b7c01c17f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-228302b65d84",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 18,
+        "clause_sha256": "228302b65d84a8d223920434838449e4da59d0f87d9cb38dc67af96f32cf7d17"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-07904b9b085e",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 29,
+        "clause_sha256": "07904b9b085eece088196d6a36673c78f8fcfe295eda5d05c3005edd64f7b1e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-835daaf9bbde",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 31,
+        "clause_sha256": "835daaf9bbdef0d037ef8a697a03dc4edd19582ed98c5d25f7dfa6c7dc0cc2df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-2f52bef1b5d8",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 51,
+        "clause_sha256": "2f52bef1b5d8c5e91febf53131eb45b51d4c67cca179a9d32b3cbd6b02e7c38c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-3c6c66b0517a",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 60,
+        "clause_sha256": "3c6c66b0517aa973d72e581326c30a1d1ae647e45487be73c910eaad0fe664e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-e7f06d743216",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 66, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 65,
+        "clause_sha256": "e7f06d74321609f24100f3eb50df3dc6d9de719fc876c6a7eec0a5200a5ff0b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-8f46ce56512a",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 88, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 87,
+        "clause_sha256": "8f46ce56512a341cb541c75ad304c30ea0f48d6e6525ff098cedbaeec217623c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-17a5b21eb8c1",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 90, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 89,
+        "clause_sha256": "17a5b21eb8c1512121eebbb31b2cfa4df615c3be8508b6614f61182f4c4f822a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-1cf563c334d1",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 102, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 101,
+        "clause_sha256": "1cf563c334d1e618ef0b251350afd84677c7354e1b24e5f3246cffce7f4c2f92"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-da581eb67630",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 109, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 108,
+        "clause_sha256": "da581eb67630217622b09f0a425df21696958aeace41a2b3b02aa698ce059546"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-08df966e577f",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 131, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 130,
+        "clause_sha256": "08df966e577f3ee79bc385a63ed4e1f77fe893fc64d0c07d88d6f4fe5bf0abce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-5fbd65d45234",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 255, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 254,
+        "clause_sha256": "5fbd65d452348170dd46285ac31e1ec9180978de2cd0862f2441974f56e0b07c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-74d624a5e33b",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 265, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 264,
+        "clause_sha256": "74d624a5e33b47adc37a633ac76ce96b2b614ba8d1ae2ec05cc44ee831b27e9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-9977ae191cd8",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 275, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 274,
+        "clause_sha256": "9977ae191cd84794f546d852d6ae46568a7e8ccbe5d3bd0c26448077fcb6b547"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-1dcd942c3f4e",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 371, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 370,
+        "clause_sha256": "1dcd942c3f4e51ad2646dc4807f6f5329e155c3a44928b501f6b029bb57bc58b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-110afaa58679",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 381, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 380,
+        "clause_sha256": "110afaa586793478d06a8586feeaf84ce640ab57d4e49f62bf67100af753cb7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-1bdd3576a341",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 388, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 387,
+        "clause_sha256": "1bdd3576a341001eee03e1bf4e523fe507ebd087bc01608ba486bdced4bf7e73"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-5ec678fc5abd",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 402, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 401,
+        "clause_sha256": "5ec678fc5abdf21cd4b37038f4e6fdb46e37629d8460c42789ad38a531ea2d08"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-dccae8eeae96",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 412, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 411,
+        "clause_sha256": "dccae8eeae96432a69cabcfb3b706470f3ec8467d2a2d92adacc849b43c02d01"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-d193032320d5",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 422, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 421,
+        "clause_sha256": "d193032320d51a16848767ef8eac99d501a80ac44a83107748467aff6d781c7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-fba6144929f3",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 439, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 438,
+        "clause_sha256": "fba6144929f3b2cee912bbe1f83583385ee30c9dde42bf8a317b339c41d2fff7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-e83727c0b686",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 467, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 466,
+        "clause_sha256": "e83727c0b686bc7368bff9c42ebc9640177da895d03b1599a238e170e4ef0fc9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-00d28d4379fd",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 500, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 499,
+        "clause_sha256": "00d28d4379fd14ed071d352c3dde2afb27d3b55eb1896112772fe36029fd413c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-8247d84150a6",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 563, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 562,
+        "clause_sha256": "8247d84150a610796d4e65f69811d6508bb7b3d5a05a4bb0f8b0b05bd2add99b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-fa94c3aa8d03",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 592, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 591,
+        "clause_sha256": "fa94c3aa8d034d57b814d52d4c583898322dcece2447a0c1c87d93e6024b016b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-property-clause-26126e643cf2",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-property"
+      ],
+      "behaviour": "Property-specific Rules — normative clause 792, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-property",
+        "clause_index": 791,
+        "clause_sha256": "26126e643cf2514e528c48dfacea41d967a5ab0a212223d3723c5eee420b7988"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-failure",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-failure"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Unrepresentable Values.",
+      "locator": {
+        "section_id": "reify-failure",
+        "text_sha256": "6dc255a9d5e2fd0d8b7c9c08750596aa4836af192a6df947aa23433d05b38788"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.reify-tokens",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-tokens"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Raw CSS tokens: properties with var() references.",
+      "locator": {
+        "section_id": "reify-tokens",
+        "text_sha256": "93b8dc9b5358a66260ef130d0e4ee27809a8d91234da606dbe4fc81f51b4a180"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.reify-var",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-var"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in var() References.",
+      "locator": {
+        "section_id": "reify-var",
+        "text_sha256": "2bfe69d875003bdaa6ebaf09b08894e57de33354629e356878da3d2132635ba5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.reify-ident",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-ident"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Identifier Values.",
+      "locator": {
+        "section_id": "reify-ident",
+        "text_sha256": "5daf56579420a2bd0bd3152ca11ab42eb5f96774308d3ca1baa8b2fc72d461ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.reify-numeric",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-numeric"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in <number>, <percentage>, and <dimension> values.",
+      "locator": {
+        "section_id": "reify-numeric",
+        "text_sha256": "6ad2af9c0a876e4434f5ebd84a355013d4a951872ef434babaad8b1bb04a6f74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.reify-numeric-clause-63e9b86adec5",
+        "css-typed-om-1.reify-numeric-clause-833e0cc24843",
+        "css-typed-om-1.reify-numeric-clause-306170f61df8",
+        "css-typed-om-1.reify-numeric-clause-d43b282da269"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.reify-numeric-clause-63e9b86adec5",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-numeric"
+      ],
+      "behaviour": "<number>, <percentage>, and <dimension> values — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-numeric",
+        "clause_index": 6,
+        "clause_sha256": "63e9b86adec53831ff7a0b35239854bf34d234e3dcf7898328c4a8d7ad146557"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-numeric-clause-833e0cc24843",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-numeric"
+      ],
+      "behaviour": "<number>, <percentage>, and <dimension> values — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-numeric",
+        "clause_index": 7,
+        "clause_sha256": "833e0cc24843db6378ce2de605e1513ca6ce90757cafa01d55f79f9a0c46eee5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-numeric-clause-306170f61df8",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-numeric"
+      ],
+      "behaviour": "<number>, <percentage>, and <dimension> values — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-numeric",
+        "clause_index": 46,
+        "clause_sha256": "306170f61df85dfcf8dab6e97f29e8571547070da087c9aaa98f072f329a1376"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-numeric-clause-d43b282da269",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-numeric"
+      ],
+      "behaviour": "<number>, <percentage>, and <dimension> values — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-numeric",
+        "clause_index": 47,
+        "clause_sha256": "d43b282da269b9a1ad02ba71d5007a77db54d75af8eb2813b474736fce8090b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.reify-color",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in <color> Values.",
+      "locator": {
+        "section_id": "reify-color",
+        "text_sha256": "c559de2e2c95bee9ac992f5515c1979ad3f90c8192d8be08f28f83da21851b56"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.reify-transformvalue",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-transformvalue"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in <transform-list> and <transform-function> Values.",
+      "locator": {
+        "section_id": "reify-transformvalue",
+        "text_sha256": "1f781a0d5e7eda291540da90191ae11654ea9e8ccb54117e2be31ef5154cfabd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.reify-transformvalue-clause-8a731df42b17"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.reify-transformvalue-clause-8a731df42b17",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "reify-transformvalue"
+      ],
+      "behaviour": "<transform-list> and <transform-function> Values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "reify-transformvalue",
+        "clause_index": 1,
+        "clause_sha256": "8a731df42b17335bef2ca4cd896cc6e5bdfe1d155106b84479c9ac31ce3d4fb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.stylevalue-serialization",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "stylevalue-serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSStyleValue Serialization.",
+      "locator": {
+        "section_id": "stylevalue-serialization",
+        "text_sha256": "f27753d00187cdffc199a68f1355a1cd10d98c56f39396d40fed74d17f730bc5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.unparsedvalue-serialization",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "unparsedvalue-serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSUnparsedValue Serialization.",
+      "locator": {
+        "section_id": "unparsedvalue-serialization",
+        "text_sha256": "90ca51b69feffc6d32cba8117b315e42e6d769000fabc1c2338288a3f2275892"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.keywordvalue-serialization",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "keywordvalue-serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSKeywordValue Serialization.",
+      "locator": {
+        "section_id": "keywordvalue-serialization",
+        "text_sha256": "947112c9ce4c40d74760d6ce55ef5dc56f513431102552c5d7c45afaf4c1576e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.numericvalue-serialization",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "numericvalue-serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSNumericValue Serialization.",
+      "locator": {
+        "section_id": "numericvalue-serialization",
+        "text_sha256": "86da584e01c59d918d2e0e6a3de42ea6a168e0d4940e203b4608db32063ff667"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.unitvalue-serialization",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "unitvalue-serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSUnitValue Serialization.",
+      "locator": {
+        "section_id": "unitvalue-serialization",
+        "text_sha256": "279855ddbec72c62eed49a22f468ff6a02f41027c29c81434d8c5c6b946c6db1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.calc-serialization",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "calc-serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSMathValue Serialization.",
+      "locator": {
+        "section_id": "calc-serialization",
+        "text_sha256": "4fa9ed22ef87949ee167198e9f9b830456f74ed5c993f17c5b61e392b71d91f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.transformvalue-serialization",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "transformvalue-serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSTransformValue and CSSTransformComponent Serialization.",
+      "locator": {
+        "section_id": "transformvalue-serialization",
+        "text_sha256": "07e80863730e0559c6b51f139b46033c4024a61a32867a776575cb68f844460e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.cssom-serialization",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "cssom-serialization"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Serialization from CSSOM Values.",
+      "locator": {
+        "section_id": "cssom-serialization",
+        "text_sha256": "5e6adf91c8650feee2185c0dd13ebcca3bacc133408d3d458e526550cb783c3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.security-considerations",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "security-considerations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security-considerations",
+        "text_sha256": "a730cf04f3085a21aee77d83511a4a769610473998a413943ae29344acc3ed84"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.privacy-considerations",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "privacy-considerations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy-considerations",
+        "text_sha256": "6274a3d99950e02de466a8b5d9a51d9c22505c00c3497c7bc4b4159d8a76ee64"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.w3c-conformance",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.w3c-conventions",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.w3c-conventions-clause-5c98c879f070",
+        "css-typed-om-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.w3c-conformance-classes",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-typed-om-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.w3c-partial",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.w3c-conform-future-proofing",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.w3c-testing",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.w3c-testing-clause-1e0fff369221",
+        "css-typed-om-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.idl-index",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "22d71e56ba481b85c9404be2144094d4df68074712817a2b4dfd4335e73779f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.issues-index",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "2c64733d1c0e68623a88c3ebca5c1388208fcbe6d5edaf4670c490654afffb8a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-typed-om-1.issues-index-clause-ef2a5da122fd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.issues-index-clause-ef2a5da122fd",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Issues Index — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "issues-index",
+        "clause_index": 0,
+        "clause_sha256": "ef2a5da122fd722509f97e02fa0be0097fbcdc41fad04d8d048b6d32921bb4f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-typed-om-1.import-d3d424e180c0",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.csswg.org/css-gcpm-4/.",
+      "unresolved_reference": "https://drafts.csswg.org/css-gcpm-4/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-typed-om-1.import-637bec456d3e",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.csswg.org/css-shapes-2/.",
+      "unresolved_reference": "https://drafts.csswg.org/css-shapes-2/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-typed-om-1.import-709148d9fced",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.csswg.org/css-size-adjust-1/.",
+      "unresolved_reference": "https://drafts.csswg.org/css-size-adjust-1/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-typed-om-1.import-d69a4c5fd069",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.fxtf.org/filter-effects-2/.",
+      "unresolved_reference": "https://drafts.fxtf.org/filter-effects-2/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-typed-om-1.import-8cac7d115c27",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-typed-om-1.title",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Typed OM Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "0ac90a020e9f2dc995960287ea17421f6ca983f68d3d514a9f04c4ac803cb83c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.abstract",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "09f70f599c9226c647f718bc8e39878f46a095fcedf7c33fa71f6698041f588d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.sotd",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "bcf449e2fecb4cc9effb3facf0a0a077d270b48d52f25a7a67335d4859435c2b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.contents",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "a91163f682babb3755a1db26303debb99eb50e97c09901560890b6d050d2b28b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.changes",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.changes-20180410",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "changes-20180410"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9.1. Changes since the 10 April 2018 Working Draft.",
+      "locator": {
+        "section_id": "changes-20180410",
+        "text_sha256": "4815b2e2656d9a4b0da5f3613f72d796a4c490a2c569149bafacedd3f82e1d08"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.index",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.index-defined-here",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "cd25308893b55338382efeb1eb2e66c01c05ea23a08bb3b7b34f6a9b3a6d57a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.index-defined-elsewhere",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "cf04f866a1c74c7ae49a6a20557d397c1c75135cf1b73105cbb0df04f548fe6e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-typed-om-1.references",
+      "family": "css-typed-om-1",
+      "source_id": "css-typed-om-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

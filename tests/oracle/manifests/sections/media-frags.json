@@ -1,0 +1,685 @@
+{
+  "schema_version": 1,
+  "source_id": "media-frags",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Media Fragments URI 1.0 (basic)",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.title"
+        ]
+      }
+    },
+    {
+      "id": "w3c-doctype",
+      "title": "W3C Recommendation 25 September 2012",
+      "level": 2,
+      "text_sha256": "e0bf82a2834711ae76206527c65cbb017e5737f14396ebd13d1a4317246a42a3",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.w3c-doctype"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "1c9ca667f63b6ff91608dfd57dc455dfbc97c0bc1aa3c77d641bcae831a83ac7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this Document",
+      "level": 2,
+      "text_sha256": "feb91e0c4ea3278f67eb856873c13b984bda95001484c8fc0795978b4afc0f2e",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "a59e9357cd04fa8030421f957b22e29b566d57b7c37f6d2466fd11b394917003",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.contents"
+        ]
+      }
+    },
+    {
+      "id": "appendices",
+      "title": "Appendices",
+      "level": 3,
+      "text_sha256": "72119caa2fc5dc0c79724b7e3ece7fb221ac03482470c669613c6d482ce92f8d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.appendices"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "6c4601186b0c43ca3a01949d3d9d6cb9d1b8e01d17fe151910a6582c66f1eba3",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.introduction",
+          "media-frags.introduction-clause-3a45e9f5f10b"
+        ]
+      }
+    },
+    {
+      "id": "standardisation",
+      "title": "2 Standardisation Issues",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.standardisation"
+        ]
+      }
+    },
+    {
+      "id": "standardisation-terminology",
+      "title": "2.1 Terminology",
+      "level": 3,
+      "text_sha256": "4dafd84f564b4192a13855231832232fcd3c7d6eaa73b118a41f70a20a7d97e4",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.standardisation-terminology",
+          "media-frags.standardisation-terminology-clause-7ae41d0fba4a"
+        ]
+      }
+    },
+    {
+      "id": "standardisation-approach",
+      "title": "2.2 Media Fragments Standardisation",
+      "level": 3,
+      "text_sha256": "f9673703cab5b482ffdc638f8cac678ce17e6d444f9dcd7acbb1435b75253e87",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.standardisation-approach"
+        ]
+      }
+    },
+    {
+      "id": "standardisation-URI-fragments",
+      "title": "2.2.1 URI Fragments",
+      "level": 4,
+      "text_sha256": "db19e3ae4cc23bdfecc2f698f462985e475519ff37ecde23b3b9813012c3f58b",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.standardisation-uri-fragments",
+          "media-frags.standardisation-uri-fragments-clause-64bf9043cf48"
+        ]
+      }
+    },
+    {
+      "id": "standardisation-URI-queries",
+      "title": "2.2.2 URI Queries",
+      "level": 4,
+      "text_sha256": "772017ad31d9eedb2783188a636694f1f7b717564f4345c553e162eb12d6e91b",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.standardisation-uri-queries"
+        ]
+      }
+    },
+    {
+      "id": "fragment-query",
+      "title": "3 URI fragment and URI query",
+      "level": 2,
+      "text_sha256": "3121d9021d0dac46d529355cf841cc9f83a35800f64c276da068b5c6586209e2",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.fragment-query"
+        ]
+      }
+    },
+    {
+      "id": "URIquery-vs-fragments",
+      "title": "3.1 When to choose URI fragments? When to choose URI queries?",
+      "level": 3,
+      "text_sha256": "377d11de4140d959045cf94926605e548a16d0a17177bb66d1cd232fce9de104",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.uriquery-vs-fragments",
+          "media-frags.uriquery-vs-fragments-clause-e6c0eb75bfff",
+          "media-frags.uriquery-vs-fragments-clause-ab541cab3371"
+        ]
+      }
+    },
+    {
+      "id": "URIfragment-user-agent",
+      "title": "3.2 Resolving URI fragments within the user agent",
+      "level": 3,
+      "text_sha256": "3135935862651fe498987598ef53943b48e32cd34c83b5cbf0dd5a378bbc693b",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.urifragment-user-agent",
+          "media-frags.urifragment-user-agent-clause-d3656bddf286",
+          "media-frags.urifragment-user-agent-clause-19a551881dbe",
+          "media-frags.urifragment-user-agent-clause-4f342befc920",
+          "media-frags.urifragment-user-agent-clause-07fcdceeecdb"
+        ]
+      }
+    },
+    {
+      "id": "URIquery-media-fragments",
+      "title": "3.3 Resolving URI queries",
+      "level": 3,
+      "text_sha256": "1f0cfc60753c0a153fd4a3922fbdb172561cca7acea3197cb5f49d4bd832ba1b",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.uriquery-media-fragments",
+          "media-frags.uriquery-media-fragments-clause-2446838c0c64",
+          "media-frags.uriquery-media-fragments-clause-b12f239130f6",
+          "media-frags.uriquery-media-fragments-clause-dc209ad2fe44"
+        ]
+      }
+    },
+    {
+      "id": "URIquery-URIfragment",
+      "title": "3.4 Combining URI fragments and URI queries",
+      "level": 3,
+      "text_sha256": "b412aaa78ff8d9b89eca7b824aaedbda1e48dea46ffed191b295c70ed2995855",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.uriquery-urifragment"
+        ]
+      }
+    },
+    {
+      "id": "media-fragment-syntax",
+      "title": "4 Media Fragments Syntax",
+      "level": 2,
+      "text_sha256": "0e37a6576afef0f6c22141698b605bc318689823150919c6bfd59f24e0facdff",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.media-fragment-syntax",
+          "media-frags.media-fragment-syntax-clause-9339f34c5077",
+          "media-frags.media-fragment-syntax-clause-b08eb6908327",
+          "media-frags.media-fragment-syntax-clause-69026c56a216",
+          "media-frags.media-fragment-syntax-clause-e53c1da99152",
+          "media-frags.media-fragment-syntax-clause-fed87b2d9ea3",
+          "media-frags.media-fragment-syntax-clause-c5c92bb68ba4",
+          "media-frags.media-fragment-syntax-clause-91688232c1f5"
+        ]
+      }
+    },
+    {
+      "id": "general-structure",
+      "title": "4.1 General Structure",
+      "level": 3,
+      "text_sha256": "72198e59d4580840df17601fe3694f8fc0255721d2065386916fd00d32391135",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.general-structure"
+        ]
+      }
+    },
+    {
+      "id": "fragment-dimensions",
+      "title": "4.2 Fragment Dimensions",
+      "level": 3,
+      "text_sha256": "13437763d41367de651a0a02979cd60a948f35f5d1cbb6f6a2c21cdb0851fc33",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.fragment-dimensions"
+        ]
+      }
+    },
+    {
+      "id": "naming-time",
+      "title": "4.2.1 Temporal Dimension",
+      "level": 4,
+      "text_sha256": "5b5b1ebed8ac0b46ab0972abd6ee69133961064d7086f55ef7d6f90ee9856b9d",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.naming-time",
+          "media-frags.naming-time-clause-57b8354ab74d"
+        ]
+      }
+    },
+    {
+      "id": "naming-space",
+      "title": "4.2.2 Spatial Dimension",
+      "level": 4,
+      "text_sha256": "9cdc7a33bda177e4e099d1af8fb227d446c360770db041c1bd23b6ee7f037255",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.naming-space",
+          "media-frags.naming-space-clause-11c1a9ecf11c",
+          "media-frags.naming-space-clause-75adeba6ff30"
+        ]
+      }
+    },
+    {
+      "id": "media-fragment-processing",
+      "title": "5 Media Fragments Processing",
+      "level": 2,
+      "text_sha256": "2f68a0f3ebcb7d6e85a84a6f53ee6f799bc56625c442badfea662c9e28ea42be",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.media-fragment-processing",
+          "media-frags.media-fragment-processing-clause-e542a52e7f21"
+        ]
+      }
+    },
+    {
+      "id": "processing-media-fragment-uri",
+      "title": "5.1 Processing Media Fragment URI",
+      "level": 3,
+      "text_sha256": "e70f01352e67e1a44012034c689172544ac77eae7cdfb97d53bad5c57b3d021e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.processing-media-fragment-uri"
+        ]
+      }
+    },
+    {
+      "id": "processing-name-value-components",
+      "title": "5.1.1 Processing name-value components",
+      "level": 4,
+      "text_sha256": "e441ea00a074926cc9cf1b8fecebfcbaaadb4f9eef13baebcc49e812717d9ab0",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.processing-name-value-components",
+          "media-frags.processing-name-value-components-clause-5168cf4a9980",
+          "media-frags.processing-name-value-components-clause-3bff6ed7b4f1",
+          "media-frags.processing-name-value-components-clause-05ac6afa7002",
+          "media-frags.processing-name-value-components-clause-d791dbf9e8f4",
+          "media-frags.processing-name-value-components-clause-461269c1ab46",
+          "media-frags.processing-name-value-components-clause-c611bd37e706",
+          "media-frags.processing-name-value-components-clause-ac6328d774a6"
+        ]
+      }
+    },
+    {
+      "id": "processing-name-value-lists",
+      "title": "5.1.2 Processing name-value lists",
+      "level": 4,
+      "text_sha256": "dda1a5267db6467b4098b208d28bba1633d90deb4f2630c7ac4b8f44d6071442",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.processing-name-value-lists",
+          "media-frags.processing-name-value-lists-clause-47d00035de30"
+        ]
+      }
+    },
+    {
+      "id": "processing-protocol-frag",
+      "title": "5.2 Protocol for URI fragment and query resolution in HTTP",
+      "level": 3,
+      "text_sha256": "36edf5b3031afe53f8282b9f2081243dafd742f5efed88e1013345b9ba03faa6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.processing-protocol-frag",
+          "media-frags.processing-protocol-frag-clause-36edf5b3031a"
+        ]
+      }
+    },
+    {
+      "id": "media-fragment-semantics",
+      "title": "6 Media Fragments Semantics",
+      "level": 2,
+      "text_sha256": "344e4136c9bf75c4a1fe91dc4d9456a49ffa7823c5ea336eadca2025108d8903",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.media-fragment-semantics",
+          "media-frags.media-fragment-semantics-clause-344e4136c9bf"
+        ]
+      }
+    },
+    {
+      "id": "valid-uri",
+      "title": "6.1 Valid Media Fragment URIs",
+      "level": 3,
+      "text_sha256": "3fff16bddfc9ff461bad6934556e595e023a2068c02c611f6c7523a8a3524b59",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.valid-uri"
+        ]
+      }
+    },
+    {
+      "id": "valid-uri-temporal",
+      "title": "6.1.1 Valid temporal dimension",
+      "level": 4,
+      "text_sha256": "331e48c24cdb22bb899555e406665a4ff1145292ad779f460e83ba4247192b57",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.valid-uri-temporal",
+          "media-frags.valid-uri-temporal-clause-5c365e56e28f",
+          "media-frags.valid-uri-temporal-clause-7e774cca3b67",
+          "media-frags.valid-uri-temporal-clause-a8694ea6989d",
+          "media-frags.valid-uri-temporal-clause-913fcf72ffbf",
+          "media-frags.valid-uri-temporal-clause-c6067a4dcb8e"
+        ]
+      }
+    },
+    {
+      "id": "valid-uri-spatial",
+      "title": "6.1.2 Valid spatial dimension",
+      "level": 4,
+      "text_sha256": "da2a79280acf60f6aa0b98c628aa49bfa7002ae1e5dc3e486891c6675d218f37",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.valid-uri-spatial"
+        ]
+      }
+    },
+    {
+      "id": "error-uri",
+      "title": "6.2 Errors detectable based on the URI syntax",
+      "level": 3,
+      "text_sha256": "e423e72f8c950ce45baec664af0dadf1cbe64480a752f8f3c20c4408cbb4f594",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.error-uri",
+          "media-frags.error-uri-clause-e423e72f8c95"
+        ]
+      }
+    },
+    {
+      "id": "error-uri-general",
+      "title": "6.2.1 Errors on the general URI level",
+      "level": 4,
+      "text_sha256": "1829a8c6c8aa8a5723f8d3b072772650257dbc6edf4f051e9c8d240982d124a4",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.error-uri-general",
+          "media-frags.error-uri-general-clause-d45abc0e4970",
+          "media-frags.error-uri-general-clause-2fd866c803a8",
+          "media-frags.error-uri-general-clause-fb398ebd5631"
+        ]
+      }
+    },
+    {
+      "id": "error-uri-temporal",
+      "title": "6.2.2 Errors on the temporal dimension",
+      "level": 4,
+      "text_sha256": "6f07e5ba7394ca9aa38a99a2aff2b9522e8b2be1db0231958860793ddb329a48",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.error-uri-temporal",
+          "media-frags.error-uri-temporal-clause-829448ac6d43",
+          "media-frags.error-uri-temporal-clause-42de12992770"
+        ]
+      }
+    },
+    {
+      "id": "error-uri-spatial",
+      "title": "6.2.3 Errors on the spatial dimension",
+      "level": 4,
+      "text_sha256": "881f6ce3d9e44d2832eb9da126b61dece6a578d6a9516f3498413a4de0dc63e6",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.error-uri-spatial",
+          "media-frags.error-uri-spatial-clause-c1fe0e6826cd"
+        ]
+      }
+    },
+    {
+      "id": "error-media",
+      "title": "6.3 Errors detectable based on information of the source media",
+      "level": 3,
+      "text_sha256": "da5f9db03d2335a2fa4b5076ac1467408aeda225b6374e818312745ae45ea296",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.error-media"
+        ]
+      }
+    },
+    {
+      "id": "error-media-general",
+      "title": "6.3.1 Errors on the general level",
+      "level": 4,
+      "text_sha256": "bf60454690c10afd3906c9597f612759aaca4548d34b6d458289304c4f01a3ae",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.error-media-general",
+          "media-frags.error-media-general-clause-08e6f139828f"
+        ]
+      }
+    },
+    {
+      "id": "error-media-temporal",
+      "title": "6.3.2 Errors on the temporal dimension",
+      "level": 4,
+      "text_sha256": "dc0fc97fc70297e2c06fb7cb5cde45edf502cf8e6cef5622859a4f74a885f802",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.error-media-temporal"
+        ]
+      }
+    },
+    {
+      "id": "error-media-spatial",
+      "title": "6.3.3 Errors on the spatial dimension",
+      "level": 4,
+      "text_sha256": "f48a98d36ae9384d3cf3d403ecfac959a2b96ef7ad5771fc0b12057e7c82e13a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.error-media-spatial",
+          "media-frags.error-media-spatial-clause-ee9bfc05a334"
+        ]
+      }
+    },
+    {
+      "id": "implementor-notes",
+      "title": "7 Notes to Implementors (non-normative)",
+      "level": 2,
+      "text_sha256": "74e8c5129b8ef5a0f5c50abde343bb026b43d281e751ebf160e586121b28184e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.implementor-notes",
+          "media-frags.implementor-notes-clause-a6cd709b825a"
+        ]
+      }
+    },
+    {
+      "id": "media-fragment-browser",
+      "title": "7.1 Browsers Rendering Media Fragments",
+      "level": 3,
+      "text_sha256": "fde58e98025251ca43b2dee8b60b75bdd420d5d9e14ed23d1a7f794c57326e65",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.media-fragment-browser",
+          "media-frags.media-fragment-browser-clause-fde58e980252"
+        ]
+      }
+    },
+    {
+      "id": "media-fragment-display",
+      "title": "7.2 Clients Displaying Media Fragments",
+      "level": 3,
+      "text_sha256": "e1c356021d08e5cf0a975c2bf24c777d0e083bfc9037f84680f496de0cda1458",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.media-fragment-display",
+          "media-frags.media-fragment-display-clause-bee343c3ca18"
+        ]
+      }
+    },
+    {
+      "id": "media-fragment-clients",
+      "title": "7.3 All Media Fragment Clients",
+      "level": 3,
+      "text_sha256": "c56a2ccf6609e50a475edfe3382551e6c78090d2e6e1692cfac6017db8a08490",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.media-fragment-clients",
+          "media-frags.media-fragment-clients-clause-3926adf06b5e",
+          "media-frags.media-fragment-clients-clause-86ab506c4457"
+        ]
+      }
+    },
+    {
+      "id": "media-fragment-servers",
+      "title": "7.4 Media Fragment Servers",
+      "level": 3,
+      "text_sha256": "370e268385fa172ba729157888651335b24dc911d7ca1b558c13cf00fe4654c9",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.media-fragment-servers",
+          "media-frags.media-fragment-servers-clause-6631e5ddae82",
+          "media-frags.media-fragment-servers-clause-3d391afc6638",
+          "media-frags.media-fragment-servers-clause-9c8a795d8cf0"
+        ]
+      }
+    },
+    {
+      "id": "media-fragment-webapps",
+      "title": "7.5 Media Fragment Web Applications",
+      "level": 3,
+      "text_sha256": "f3cd2707b87616bb2bff7ff12827fcdef25dab5c9376bbbfc520eec3d55343e2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.media-fragment-webapps"
+        ]
+      }
+    },
+    {
+      "id": "references-normative",
+      "title": "A References",
+      "level": 2,
+      "text_sha256": "f33f97e722288de911feed26302bbe584e255c6fb1e6eec264d50e867ba36ef7",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.references-normative"
+        ]
+      }
+    },
+    {
+      "id": "collected-syntax-uri",
+      "title": "B Collected ABNF Syntax for URI (Non-Normative)",
+      "level": 2,
+      "text_sha256": "2467f4e7ab241a555d856ca17789e05edd12f6c56f6c1f242ccfb5dbfb6d31d0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.collected-syntax-uri"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "C Acknowledgements (Non-Normative)",
+      "level": 2,
+      "text_sha256": "475c1aa2b31fa77377770c6aa53ad84a2407a92c317f55ee393abf5f9fbe5ce0",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "media-frags.acknowledgments"
+        ]
+      }
+    }
+  ]
+}

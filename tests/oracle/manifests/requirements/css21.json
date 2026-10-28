@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21.heading-0dba637f6515",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "heading-0dba637f6515"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascading Style Sheets, level 2CSS2 Specification.",
+      "locator": {
+        "section_id": "heading-0dba637f6515",
+        "text_sha256": "6ee4ac02df61376d3ddf2fbfa30bcb109d4129998877882f00ace37d772c9898"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21.heading-5aafe3fe5344",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "heading-5aafe3fe5344"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Available formats.",
+      "locator": {
+        "section_id": "heading-5aafe3fe5344",
+        "text_sha256": "b55c507941e1c760f65fd90a9a7c9ca2fc9c5f6c91ecf5ab7914530e60f13e82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21.heading-495754b4b639",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "heading-495754b4b639"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Available languages.",
+      "locator": {
+        "section_id": "heading-495754b4b639",
+        "text_sha256": "e3efa12ec94b1ac8b606c96f00c0d2182a6a0da48e13a35fab2cf11dd993c6bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21.heading-5b70b56f65e7",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "heading-5b70b56f65e7"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Errata.",
+      "locator": {
+        "section_id": "heading-5b70b56f65e7",
+        "text_sha256": "4e1ed5f5ee68bd543048db8ec25f696f9c17645cb02893970c7ee7bc06e88302"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21.minitoc",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "minitoc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Quick Table of Contents.",
+      "locator": {
+        "section_id": "minitoc",
+        "text_sha256": "c5a8296cb847c25f23e507566ef8ec18779c8a9ce8b0e1bd64f09ec28c5f81b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21.toc",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "toc"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Full Table of Contents.",
+      "locator": {
+        "section_id": "toc",
+        "text_sha256": "4a4cfe9bdfbcd9244ab9dbc9138859aa9d481f8938a0708ddfbb6c4654116d09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21.toc-clause-eeeb79dd53a5",
+        "css21.toc-clause-1690ea7386d2",
+        "css21.toc-clause-5e0758efa953",
+        "css21.toc-clause-e60fd30ac443"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21.toc-clause-eeeb79dd53a5",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "toc"
+      ],
+      "behaviour": "Full Table of Contents — normative clause 80, located by its exact source hash.",
+      "locator": {
+        "section_id": "toc",
+        "clause_index": 79,
+        "clause_sha256": "eeeb79dd53a51474d73706bec18f0b25980eccbf40e07453aa010fcd287cf4d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21.toc-clause-1690ea7386d2",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "toc"
+      ],
+      "behaviour": "Full Table of Contents — normative clause 82, located by its exact source hash.",
+      "locator": {
+        "section_id": "toc",
+        "clause_index": 81,
+        "clause_sha256": "1690ea7386d27d917feacb98166e3746b11fc134d01deb1e18b8a8ccd3037eb8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21.toc-clause-5e0758efa953",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "toc"
+      ],
+      "behaviour": "Full Table of Contents — normative clause 85, located by its exact source hash.",
+      "locator": {
+        "section_id": "toc",
+        "clause_index": 84,
+        "clause_sha256": "5e0758efa953ea4c7bea7dbebe6c6bfed8caae3062d60a12259d17b98c592432"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21.toc-clause-e60fd30ac443",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "toc"
+      ],
+      "behaviour": "Full Table of Contents — normative clause 252, located by its exact source hash.",
+      "locator": {
+        "section_id": "toc",
+        "clause_index": 251,
+        "clause_sha256": "e60fd30ac4432622e14f6be537e02624c38f6fd127f971d58dc490234f3bd296"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21.heading-d704fcf329ba",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "heading-d704fcf329ba"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "heading-d704fcf329ba",
+        "text_sha256": "d70016cc2dbe751d7a165abd2b54c89c4c1ce61748dc6c40365c6de68a59588e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21.heading-cc502e9d94c8",
+      "family": "css21",
+      "source_id": "css21",
+      "sections": [
+        "heading-cc502e9d94c8"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "heading-cc502e9d94c8",
+        "text_sha256": "5524b78dba5c97d782681a4a8bd679239be45d4c825735a6926a53c27be40ae1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

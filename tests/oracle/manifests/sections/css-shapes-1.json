@@ -1,0 +1,758 @@
+{
+  "schema_version": 1,
+  "source_id": "css-shapes-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Shapes Module Level 1",
+      "level": 1,
+      "text_sha256": "b1ac2acc3ad895982d3535e9ae63e10b140cb6af5850ecdf7ee2b5bfcfec5fd8",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "aeea2fcf309c52a8b3939850d92b714d915e33bc0b252945148652e778de2b66",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "4485c18b22bc2c287af37fbf4fe8d005104647459eb952eb9f15ade17b0fcfcb",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "ab2953be5b70c2a450d80e21426a5f4778b97b29820bab2f910f0d09d9faa072",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "cfb0bb164281bcc9c6effd4498255415431c43d40135f7fdec4164d6098a7955",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "module-interactions",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "b022e0bbb8a5cae78981bacc6372b93cffceae1873d7ac5faea90dc9c7f53b4d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.module-interactions"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Values",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.values"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "1.3. Terminology",
+      "level": 3,
+      "text_sha256": "f805cb7c893ee85cc1a3956a0712e1aff050af672ba6dea77a995fc57cac5b7f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.terminology"
+        ]
+      }
+    },
+    {
+      "id": "relation-to-box-model-and-float-behavior",
+      "title": "2. Relation to the box model and float behavior",
+      "level": 2,
+      "text_sha256": "5c3a7e75d3c3cb338551ec18a56a2e1c847f7aad762f984a7e506e4b054af3e4",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.relation-to-box-model-and-float-behavior",
+          "css-shapes-1.relation-to-box-model-and-float-behavior-clause-b23e54368b7e",
+          "css-shapes-1.relation-to-box-model-and-float-behavior-clause-31daa0acbee0"
+        ]
+      }
+    },
+    {
+      "id": "basic-shape-functions",
+      "title": "3. Basic Shapes",
+      "level": 2,
+      "text_sha256": "cac6f1bc2b01d34ec9386a70e165552c5c635e22d5e7a2270bfdd752cb1949d5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.basic-shape-functions"
+        ]
+      }
+    },
+    {
+      "id": "supported-basic-shapes",
+      "title": "3.1. Supported Shapes",
+      "level": 3,
+      "text_sha256": "e48fe7f8d9efdd9a946b2ca3af041632ab3d5c265efba8bceae9bc7ea59b4a21",
+      "clause_count": 74,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.supported-basic-shapes",
+          "css-shapes-1.supported-basic-shapes-clause-a9048a8bc32a",
+          "css-shapes-1.supported-basic-shapes-clause-cba8c828eae5",
+          "css-shapes-1.supported-basic-shapes-clause-fa912fd2e4e8",
+          "css-shapes-1.supported-basic-shapes-clause-074fc17dec02",
+          "css-shapes-1.supported-basic-shapes-clause-26df8efed0b7",
+          "css-shapes-1.supported-basic-shapes-clause-8755b2f1fb9d",
+          "css-shapes-1.supported-basic-shapes-clause-3d4d3148ba0f",
+          "css-shapes-1.supported-basic-shapes-clause-65af5de7b632",
+          "css-shapes-1.supported-basic-shapes-clause-e4168bca7918",
+          "css-shapes-1.supported-basic-shapes-clause-64c75e2cdb6e",
+          "css-shapes-1.supported-basic-shapes-clause-b48d7e3d6052",
+          "css-shapes-1.supported-basic-shapes-clause-72ba097071b1",
+          "css-shapes-1.supported-basic-shapes-clause-fbee23e621df",
+          "css-shapes-1.supported-basic-shapes-clause-6c63c23f0202",
+          "css-shapes-1.supported-basic-shapes-clause-b85bc28bbf42",
+          "css-shapes-1.supported-basic-shapes-clause-f93d1308c8d2",
+          "css-shapes-1.supported-basic-shapes-clause-f30da0e8568e",
+          "css-shapes-1.supported-basic-shapes-clause-7359d45a03fc",
+          "css-shapes-1.supported-basic-shapes-clause-729a16a758e7",
+          "css-shapes-1.supported-basic-shapes-clause-b3e3c40e57d0",
+          "css-shapes-1.supported-basic-shapes-clause-62b8810e2d29",
+          "css-shapes-1.supported-basic-shapes-clause-692bc2e668a0",
+          "css-shapes-1.supported-basic-shapes-clause-b15a59b4fafa",
+          "css-shapes-1.supported-basic-shapes-clause-3ebd2b20e714",
+          "css-shapes-1.supported-basic-shapes-clause-804c726b92de",
+          "css-shapes-1.supported-basic-shapes-clause-7fc5f5380b1b",
+          "css-shapes-1.supported-basic-shapes-clause-36e9d18c3792",
+          "css-shapes-1.supported-basic-shapes-clause-d2c35392ac36",
+          "css-shapes-1.supported-basic-shapes-clause-84996dcd876c",
+          "css-shapes-1.supported-basic-shapes-clause-f5885f7751c0"
+        ]
+      }
+    },
+    {
+      "id": "shape-function",
+      "title": "3.1.1. The shape() Function",
+      "level": 4,
+      "text_sha256": "9ff00be606af077e00c9dd701a00b5aa5d2171c9de2bed223e10d3c7024413ef",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.shape-function",
+          "css-shapes-1.shape-function-clause-2775390d52ca",
+          "css-shapes-1.shape-function-clause-692adc09767b",
+          "css-shapes-1.shape-function-clause-a039a2b19b88",
+          "css-shapes-1.shape-function-clause-cc22b3d19b72",
+          "css-shapes-1.shape-function-clause-3e5a2095dea9",
+          "css-shapes-1.shape-function-clause-fb5b2bd403aa",
+          "css-shapes-1.shape-function-clause-218b768a2ed7"
+        ]
+      }
+    },
+    {
+      "id": "shape-examples",
+      "title": "3.1.1.1. Using shape() to create responsive, parametric speech bubble",
+      "level": 5,
+      "text_sha256": "1a3e90f972a99adad180ccfd4be27f12995d3883e5acd1445340277db5a04cca",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.shape-examples"
+        ]
+      }
+    },
+    {
+      "id": "interpolating-shape",
+      "title": "3.1.1.2. Interpolating the shape() Function",
+      "level": 5,
+      "text_sha256": "28179702c7d5197703a49deb109f6f3226e5092302ae49a293d77983ed7e9389",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.interpolating-shape",
+          "css-shapes-1.interpolating-shape-clause-d72cfe5cb1a6",
+          "css-shapes-1.interpolating-shape-clause-2f31689219d2"
+        ]
+      }
+    },
+    {
+      "id": "basic-shape-computed-values",
+      "title": "3.2. Computed Values of Basic Shapes",
+      "level": 3,
+      "text_sha256": "520c12d969c6f1585a2cfd3d69dc106bdf6b1de558495f22c8a85878d0575383",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.basic-shape-computed-values",
+          "css-shapes-1.basic-shape-computed-values-clause-51968e141505",
+          "css-shapes-1.basic-shape-computed-values-clause-edc397781665",
+          "css-shapes-1.basic-shape-computed-values-clause-9c0fe23a0428",
+          "css-shapes-1.basic-shape-computed-values-clause-e5ddc572ce83",
+          "css-shapes-1.basic-shape-computed-values-clause-3b06b1dd37cc",
+          "css-shapes-1.basic-shape-computed-values-clause-a79b5726e22e",
+          "css-shapes-1.basic-shape-computed-values-clause-72ba097071b1",
+          "css-shapes-1.basic-shape-computed-values-clause-b85bc28bbf42",
+          "css-shapes-1.basic-shape-computed-values-clause-a9048a8bc32a",
+          "css-shapes-1.basic-shape-computed-values-clause-d2c35392ac36",
+          "css-shapes-1.basic-shape-computed-values-clause-62b8810e2d29",
+          "css-shapes-1.basic-shape-computed-values-clause-3d4d3148ba0f",
+          "css-shapes-1.basic-shape-computed-values-clause-074fc17dec02",
+          "css-shapes-1.basic-shape-computed-values-clause-e5276d16ce32",
+          "css-shapes-1.basic-shape-computed-values-clause-42de6cd36104"
+        ]
+      }
+    },
+    {
+      "id": "basic-shape-serialization",
+      "title": "3.3. Serialization of Basic Shapes",
+      "level": 3,
+      "text_sha256": "906230bd032dced838cc4b41855b472ce6333d19c464d960c470adfa328c0e43",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.basic-shape-serialization",
+          "css-shapes-1.basic-shape-serialization-clause-518ab0dae32e",
+          "css-shapes-1.basic-shape-serialization-clause-c5713ae128f2"
+        ]
+      }
+    },
+    {
+      "id": "basic-shape-interpolation",
+      "title": "3.4. Interpolation of Basic Shapes",
+      "level": 3,
+      "text_sha256": "63a6554e96609cb7b4932ae13731abf2d17e8625faa57bd55cd55ed0e0e2c676",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.basic-shape-interpolation",
+          "css-shapes-1.basic-shape-interpolation-clause-3206cea11665",
+          "css-shapes-1.basic-shape-interpolation-clause-81a601714997"
+        ]
+      }
+    },
+    {
+      "id": "shapes-from-image",
+      "title": "4. Shapes from Image",
+      "level": 2,
+      "text_sha256": "7e740282d710a134464d3298a779c3a31bf52935ea17cddaa1307584ba2b3750",
+      "clause_count": 68,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.shapes-from-image",
+          "css-shapes-1.shapes-from-image-clause-d357238d8d5c",
+          "css-shapes-1.shapes-from-image-clause-e5ddc572ce83",
+          "css-shapes-1.shapes-from-image-clause-c818f65dbaa1"
+        ]
+      }
+    },
+    {
+      "id": "shapes-from-box-values",
+      "title": "5. Shapes from Box Values",
+      "level": 2,
+      "text_sha256": "db61c4419e3997e5efbab3b57c978a687037c86815b5a0cdb350dd56230660df",
+      "clause_count": 61,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.shapes-from-box-values"
+        ]
+      }
+    },
+    {
+      "id": "declaring-shapes",
+      "title": "6. Declaring Shapes",
+      "level": 2,
+      "text_sha256": "a3259ec62463631d1c5458056c94b2f7aa7c9d9c5ccf3e2d28c761b9d5df6a04",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.declaring-shapes"
+        ]
+      }
+    },
+    {
+      "id": "shape-outside-property",
+      "title": "6.1. Float Area Shape: the shape-outside property",
+      "level": 3,
+      "text_sha256": "82d2ebe510971770d2a56552404b1892c490690eb39e38d967344b4e6b2b5c83",
+      "clause_count": 346,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.shape-outside-property",
+          "css-shapes-1.shape-outside-property-clause-cca2516ebb1d",
+          "css-shapes-1.shape-outside-property-clause-1952b3ce8681",
+          "css-shapes-1.shape-outside-property-clause-4011d8e33c21",
+          "css-shapes-1.shape-outside-property-clause-40b5b6d734aa",
+          "css-shapes-1.shape-outside-property-clause-9e1bfa0bbb5e",
+          "css-shapes-1.shape-outside-property-clause-a79b5726e22e",
+          "css-shapes-1.shape-outside-property-clause-e7b3e16da5d3",
+          "css-shapes-1.shape-outside-property-clause-142af95f6a3d",
+          "css-shapes-1.shape-outside-property-clause-8145f4cab551",
+          "css-shapes-1.shape-outside-property-clause-959b27b31810",
+          "css-shapes-1.shape-outside-property-clause-33307a871de2",
+          "css-shapes-1.shape-outside-property-clause-cd7d56585458",
+          "css-shapes-1.shape-outside-property-clause-2d355dfa3c90",
+          "css-shapes-1.shape-outside-property-clause-66883663afcf",
+          "css-shapes-1.shape-outside-property-clause-fc0fe2fa44c8",
+          "css-shapes-1.shape-outside-property-clause-db0fee191af7",
+          "css-shapes-1.shape-outside-property-clause-351c0a7bb159",
+          "css-shapes-1.shape-outside-property-clause-79a95181ffb3",
+          "css-shapes-1.shape-outside-property-clause-6a534f5f748a",
+          "css-shapes-1.shape-outside-property-clause-854185939c52",
+          "css-shapes-1.shape-outside-property-clause-38be53e0a482",
+          "css-shapes-1.shape-outside-property-clause-02ea279a6b54",
+          "css-shapes-1.shape-outside-property-clause-363edf9ba617",
+          "css-shapes-1.shape-outside-property-clause-e5276d16ce32",
+          "css-shapes-1.shape-outside-property-clause-42de6cd36104",
+          "css-shapes-1.shape-outside-property-clause-0846884a668b",
+          "css-shapes-1.shape-outside-property-clause-4bbcc45f776d",
+          "css-shapes-1.shape-outside-property-clause-d9471b638e8c"
+        ]
+      }
+    },
+    {
+      "id": "shape-image-threshold-property",
+      "title": "6.2. Choosing Image Pixels: the shape-image-threshold property",
+      "level": 3,
+      "text_sha256": "7c314591e5451484e2144e0fd556f8d9a0877a414bda5ecb56350c1f33912c99",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.shape-image-threshold-property",
+          "css-shapes-1.shape-image-threshold-property-clause-cca2516ebb1d",
+          "css-shapes-1.shape-image-threshold-property-clause-e5ddc572ce83",
+          "css-shapes-1.shape-image-threshold-property-clause-c818f65dbaa1",
+          "css-shapes-1.shape-image-threshold-property-clause-2731c401ea6b",
+          "css-shapes-1.shape-image-threshold-property-clause-47b47e50296d"
+        ]
+      }
+    },
+    {
+      "id": "shape-margin-property",
+      "title": "6.3. Expanding a Shape: the shape-margin property",
+      "level": 3,
+      "text_sha256": "b1ab81475ba7cc5d71663a7d764bc0340e8a043b718c85314c8640bfb50d97a1",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.shape-margin-property",
+          "css-shapes-1.shape-margin-property-clause-c5067751f2db",
+          "css-shapes-1.shape-margin-property-clause-cca2516ebb1d",
+          "css-shapes-1.shape-margin-property-clause-7b603efbca19",
+          "css-shapes-1.shape-margin-property-clause-72a285280f7d",
+          "css-shapes-1.shape-margin-property-clause-3b06b1dd37cc",
+          "css-shapes-1.shape-margin-property-clause-4cd938d72f6d",
+          "css-shapes-1.shape-margin-property-clause-d348c24533dc",
+          "css-shapes-1.shape-margin-property-clause-3ea7b6449857"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "7. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "5c29076b1243d88d5dfdd9048d1b3e0c26eb15d1cc00ac88081a80a7f70d153d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "8. Security Considerations",
+      "level": 2,
+      "text_sha256": "613e673286b7d14813d53d6a52e0809c3d0eb0bafeb63fc866f7dc41d41a6f2e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.security"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "c0824c58f7420557b1f7e62fb02e10fc1c89a9734a4d3cf0bbb282216e134bad",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "change-log",
+      "title": "Change Log",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.change-log"
+        ]
+      }
+    },
+    {
+      "id": "20221115",
+      "title": "Since 15 November 2022",
+      "level": 3,
+      "text_sha256": "0a1e25271fd25828be9fd219b2d1b5cd0931ec298250834a72633593889a84a1",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.20221115",
+          "css-shapes-1.20221115-clause-d25f2ed0abe9"
+        ]
+      }
+    },
+    {
+      "id": "20140320",
+      "title": "Since March 20th 2014",
+      "level": 3,
+      "text_sha256": "3f4caa5b1da3a1b970406a7bfb865ee5cdcab020a52d21e3a145989a150dce38",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.20140320",
+          "css-shapes-1.20140320-clause-055e67d6142c",
+          "css-shapes-1.20140320-clause-8247391005c8",
+          "css-shapes-1.20140320-clause-53f77bd67aeb",
+          "css-shapes-1.20140320-clause-79cbbd9bac89",
+          "css-shapes-1.20140320-clause-69f7eab3d75d"
+        ]
+      }
+    },
+    {
+      "id": "20140211",
+      "title": "Since February 11th 2014",
+      "level": 3,
+      "text_sha256": "6e5692c8eed37b690a13300038a82ef360d6d12bb08b44da829a2a674a3221da",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.20140211"
+        ]
+      }
+    },
+    {
+      "id": "20131203",
+      "title": "Since December 3rd 2013",
+      "level": 3,
+      "text_sha256": "88419e0faa92dc38eeb40233b709e05c580a7a06106d251dff25e6b781f148ba",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.20131203",
+          "css-shapes-1.20131203-clause-8808a880d3db"
+        ]
+      }
+    },
+    {
+      "id": "20130620",
+      "title": "Since June 20th 2013",
+      "level": 3,
+      "text_sha256": "3588f5d1403738ee3986b611cbb15d1b15281baa299c7a6affc951cc87c267c2",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.20130620",
+          "css-shapes-1.20130620-clause-5dae5518cb79",
+          "css-shapes-1.20130620-clause-79d9d55f0f7e"
+        ]
+      }
+    },
+    {
+      "id": "20120503",
+      "title": "Since May 3rd 2012",
+      "level": 3,
+      "text_sha256": "123166f49e27135c686277d8513abb74c847803f39da49c3d6ea6605d97d9ab3",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.20120503"
+        ]
+      }
+    },
+    {
+      "id": "20111213",
+      "title": "Since December 13th 2011",
+      "level": 3,
+      "text_sha256": "26ec0b2a54b93de3b1e7da939ee3878211a3c9942686e262a8fbc4994046a3b9",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.20111213"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.w3c-conventions",
+          "css-shapes-1.w3c-conventions-clause-5c98c879f070",
+          "css-shapes-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.w3c-conformance-classes",
+          "css-shapes-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-shapes-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.w3c-partial",
+          "css-shapes-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.w3c-testing",
+          "css-shapes-1.w3c-testing-clause-1e0fff369221",
+          "css-shapes-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.w3c-cr-exit-criteria",
+          "css-shapes-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-shapes-1.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-shapes-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-shapes-1.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-shapes-1.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "11adf7f29e29307d05da84563221a6741a6e035c208ab69301b1f1bad6cd6682",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "5afc507f495c83c645bc37cade84c6d89f67711c0ce401c0feb05c740070fc55",
+      "clause_count": 67,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "4dddeb96e134c3fcd1351f6ab904e93ec8929b86e735bb27593993b1db9e5741",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "e3c9014c2e862583276b51d2d2bf0252915498d7262adfe44026f689d40ce998",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "e5d7aa7a03826043cc53294cdc15c25fb802220c384d95099e40c918681bddb0",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-shapes-1.property-index",
+          "css-shapes-1.property-index-clause-674d5fa645b0",
+          "css-shapes-1.property-index-clause-7b603efbca19",
+          "css-shapes-1.property-index-clause-1952b3ce8681"
+        ]
+      }
+    }
+  ]
+}

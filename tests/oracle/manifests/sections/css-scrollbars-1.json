@@ -1,0 +1,477 @@
+{
+  "schema_version": 1,
+  "source_id": "css-scrollbars-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Scrollbars Styling Module Level 1",
+      "level": 1,
+      "text_sha256": "6d98fe2337c14d1d1073c01140d5260de5237b325096fe3ce0ff0571d0abdeb1",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "f2a68746ad5c5a16a6b8c95c1f9d9e86b575354eb2204e1a7047813bf5bd9789",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "5c690198e77eba276d9c23fcefb73f5925b5b5732d8c77482f68bac8338e3b7d",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "d67c5b88fe07375876ab5032a07227d17cbee060215f2b5858aa579ffa08b715",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "587e69c446245848a3a9fca0f6fe7f682cb1c11d38885daf48ac5750e6a2edcf",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "scope",
+      "title": "1.1. Scope",
+      "level": 3,
+      "text_sha256": "09b127d4b30643877fb8630a3c97e0c815fef11301f8e43132652faede6ef33f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.scope"
+        ]
+      }
+    },
+    {
+      "id": "out-of-scope",
+      "title": "1.1.1. Out Of Scope",
+      "level": 4,
+      "text_sha256": "0c55079aeecc8bcaf8766635f27f0291895cf6548a68bdcf54e4100bc1e241da",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.out-of-scope"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.values"
+        ]
+      }
+    },
+    {
+      "id": "scrollbar-color",
+      "title": "2. Scrollbar Colors: the scrollbar-color property",
+      "level": 2,
+      "text_sha256": "aa41a0136c38b3524bff9b50521265d5075608dcc552f7ba85ba140dfd2c2654",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.scrollbar-color",
+          "css-scrollbars-1.scrollbar-color-clause-cca2516ebb1d",
+          "css-scrollbars-1.scrollbar-color-clause-73273ad0f997",
+          "css-scrollbars-1.scrollbar-color-clause-58b4694dc453",
+          "css-scrollbars-1.scrollbar-color-clause-640cb63c07e9",
+          "css-scrollbars-1.scrollbar-color-clause-6f51bece850d",
+          "css-scrollbars-1.scrollbar-color-clause-d346ff7f2946",
+          "css-scrollbars-1.scrollbar-color-clause-3f36f71c9c9c"
+        ]
+      }
+    },
+    {
+      "id": "scrollbar-width",
+      "title": "3. Scrollbar Thickness: the scrollbar-width property",
+      "level": 2,
+      "text_sha256": "d32a765af8b4c3e6029a7f8a1edf1cda5d4d9ef5704e87f159324497b07b2c64",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.scrollbar-width",
+          "css-scrollbars-1.scrollbar-width-clause-cca2516ebb1d",
+          "css-scrollbars-1.scrollbar-width-clause-e28cd4ae1141",
+          "css-scrollbars-1.scrollbar-width-clause-17741fa4e637",
+          "css-scrollbars-1.scrollbar-width-clause-f7ecdc783b6a",
+          "css-scrollbars-1.scrollbar-width-clause-b0d72479979e",
+          "css-scrollbars-1.scrollbar-width-clause-afdfb1297bcd",
+          "css-scrollbars-1.scrollbar-width-clause-107abfd94a32",
+          "css-scrollbars-1.scrollbar-width-clause-574ce7b8cdc0"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Appendix A. Acknowledgments",
+      "level": 2,
+      "text_sha256": "35751a23b80c39ae541dc02ee8294e53920012bb4e572aab094699e44f77174b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Appendix B. Changes",
+      "level": 2,
+      "text_sha256": "a519e6832178d039a0e49fbae4b7670d4e0c7f3173854503affad7f65022158f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-since-2021-12-02",
+      "title": "Changes since the 2021-12-02 Working Draft",
+      "level": 3,
+      "text_sha256": "c52b2abf44355a2338ee8f915198d0aea15a2735c99ac7747e0070abc34c9d57",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.changes-since-2021-12-02"
+        ]
+      }
+    },
+    {
+      "id": "changes-since-2021-08-05",
+      "title": "Changes from the 2021-08-05 Working Draft",
+      "level": 3,
+      "text_sha256": "1a34982628503bfc7f3ae9d2e4b0ace3214ab2f6790352054c2758400529874b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.changes-since-2021-08-05"
+        ]
+      }
+    },
+    {
+      "id": "changes-since-2018-09-25",
+      "title": "Changes from the 2018-09-25 First Public Working Draft",
+      "level": 3,
+      "text_sha256": "c68f14f1c60274f93d57971ed3ae4f87f7e7464953bd2765aa5447db6b6b78ff",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.changes-since-2018-09-25"
+        ]
+      }
+    },
+    {
+      "id": "security-privacy-considerations",
+      "title": "Appendix C. Considerations for Security and Privacy",
+      "level": 2,
+      "text_sha256": "a519e6832178d039a0e49fbae4b7670d4e0c7f3173854503affad7f65022158f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.security-privacy-considerations"
+        ]
+      }
+    },
+    {
+      "id": "security-considerations",
+      "title": "Considerations for Security",
+      "level": 3,
+      "text_sha256": "fe549a6b467b9c645ade062c0b909798588124160e23ce112430748b775e0e9d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.security-considerations"
+        ]
+      }
+    },
+    {
+      "id": "privacy-considerations",
+      "title": "Considerations for Privacy",
+      "level": 3,
+      "text_sha256": "f796c767ad09cfe4fae5e389881116918f23a1cd3a01fd9997114954a1845b20",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.privacy-considerations"
+        ]
+      }
+    },
+    {
+      "id": "security-privacy-self-review",
+      "title": "Self-review questionaire",
+      "level": 3,
+      "text_sha256": "e2e226f64e0c03c9d8721cfdf5185f16b1addff592bff248f205858a7b7d2566",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.security-privacy-self-review"
+        ]
+      }
+    },
+    {
+      "id": "accessibility-considerations",
+      "title": "Appendix D. Considerations for accessibility",
+      "level": 2,
+      "text_sha256": "bbc14dbb7dc764b224686d332c91b19912eaf203765934b4e2f5377abbdca41c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.accessibility-considerations"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.w3c-conventions",
+          "css-scrollbars-1.w3c-conventions-clause-5c98c879f070",
+          "css-scrollbars-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.w3c-conformance-classes",
+          "css-scrollbars-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-scrollbars-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.w3c-partial",
+          "css-scrollbars-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.w3c-testing",
+          "css-scrollbars-1.w3c-testing-clause-1e0fff369221",
+          "css-scrollbars-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.w3c-cr-exit-criteria",
+          "css-scrollbars-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-scrollbars-1.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-scrollbars-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-scrollbars-1.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-scrollbars-1.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "0acf989fb5a0249c9862585fd99c63b8f9a3071cfec265702e2e000638f2dbbd",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "7051af8185ba8386d328d1fcecf630d4f4cf6709e312eb089126ea983eaa7f3e",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "57365df7a20200fbd8ab55f727ecdd950ff65ab8dea4f14f4c18a818bc9fe360",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "6ea7fa0a95dc264233b4c6c00ba50a2fba8ea2860eedc463367df02c14300059",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "715f3ee4005a55925869dd7c43c5273bd2b51a8a205346381ee026817a6827bd",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scrollbars-1.property-index",
+          "css-scrollbars-1.property-index-clause-674d5fa645b0",
+          "css-scrollbars-1.property-index-clause-73273ad0f997"
+        ]
+      }
+    }
+  ]
+}

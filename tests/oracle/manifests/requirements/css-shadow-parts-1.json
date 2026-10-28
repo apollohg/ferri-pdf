@@ -1,0 +1,1251 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-shadow-parts-1.intro",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "cf565ba4a221224101e97b2477f6f606b0b8e04d8a1177898eef0119a2df4501"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.intro-clause-f456e9a32175"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.intro-clause-f456e9a32175",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Introduction — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "intro",
+        "clause_index": 5,
+        "clause_sha256": "f456e9a321755ff1ba97b1a955d37a65f897c76bcc415f833e9619c94fa4c937"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.motivation",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "motivation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Motivation.",
+      "locator": {
+        "section_id": "motivation",
+        "text_sha256": "9c05d314095f29597c11496f72af9b75c56d14280e562a3ae9dfa396ecdc29e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.motivation-clause-013b1c9e977f",
+        "css-shadow-parts-1.motivation-clause-cfd3b50ef85c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.motivation-clause-013b1c9e977f",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "motivation"
+      ],
+      "behaviour": "Motivation — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "motivation",
+        "clause_index": 0,
+        "clause_sha256": "013b1c9e977f99077df04af1bfb4f7f6d000fc2fcd8b75be441044fadb0d4898"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.motivation-clause-cfd3b50ef85c",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "motivation"
+      ],
+      "behaviour": "Motivation — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "motivation",
+        "clause_index": 4,
+        "clause_sha256": "cfd3b50ef85c18af0ff8b6104fbb2f76ecfadc1250ae4300068b4b2578681782"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.exposing",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "exposing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Exposing a Shadow Element:.",
+      "locator": {
+        "section_id": "exposing",
+        "text_sha256": "bce6df68fe3433226db1824c69cd783af4bb8c657dc7adeacccab59067f8ea28"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.exposing-clause-7f26ba6cfeaa"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.exposing-clause-7f26ba6cfeaa",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "exposing"
+      ],
+      "behaviour": "Exposing a Shadow Element: — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "exposing",
+        "clause_index": 3,
+        "clause_sha256": "7f26ba6cfeaaf06dd508ef65dee3ef2b26d6cf15dc770dcc656b628e02cb92c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.part-attr",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "part-attr"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Naming a Shadow Element: the part attribute.",
+      "locator": {
+        "section_id": "part-attr",
+        "text_sha256": "83fdc4c61a768bf980518b53c93170ec65b9306d536df13b64e81ed52c86c268"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.part-attr-clause-872c16841887"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.part-attr-clause-872c16841887",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "part-attr"
+      ],
+      "behaviour": "Naming a Shadow Element: the part attribute — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "part-attr",
+        "clause_index": 4,
+        "clause_sha256": "872c168418879bb963c614636f319cb6a011db5a46ef6b951ca6729949660ec3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.exportparts-attr",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "exportparts-attr"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Forwarding a Shadow Element: the exportparts attribute.",
+      "locator": {
+        "section_id": "exportparts-attr",
+        "text_sha256": "67559fd69d3636e599e0b3f211b6fee643d4905f4062f2109419f464b8e8bd1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.exportparts-attr-clause-0e1489a42b2b",
+        "css-shadow-parts-1.exportparts-attr-clause-ffc1bb30acfe"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.exportparts-attr-clause-0e1489a42b2b",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "exportparts-attr"
+      ],
+      "behaviour": "Forwarding a Shadow Element: the exportparts attribute — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "exportparts-attr",
+        "clause_index": 17,
+        "clause_sha256": "0e1489a42b2b845d91781df94da8670a066b4eca71e4de05453d2a3f69716473"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.exportparts-attr-clause-ffc1bb30acfe",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "exportparts-attr"
+      ],
+      "behaviour": "Forwarding a Shadow Element: the exportparts attribute — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "exportparts-attr",
+        "clause_index": 22,
+        "clause_sha256": "ffc1bb30acfe290ad76d6d018492809a66c4ecbbe7c5c09aef424ac96353ffdf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.part",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "part"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selecting a Shadow Element: the ::part() pseudo-element.",
+      "locator": {
+        "section_id": "part",
+        "text_sha256": "916b4d8b45f221c0f32f321d5f2a0f545dbc2249cd5e9106acadfab0d15906e3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.part-clause-3f700c68e51e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.part-clause-3f700c68e51e",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "part"
+      ],
+      "behaviour": "Selecting a Shadow Element: the ::part() pseudo-element — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "part",
+        "clause_index": 11,
+        "clause_sha256": "3f700c68e51e5b37a53bce4a2c7c6b8832ac6ccea4e0dd25b22172b814af743f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.idl",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "idl"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extensions to the Element Interface.",
+      "locator": {
+        "section_id": "idl",
+        "text_sha256": "d523ba391f4631838cadf9a98baaa8a112dfe1d3f116731ba6be4da8172757b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.idl-clause-b034f8e06fb9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.idl-clause-b034f8e06fb9",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "idl"
+      ],
+      "behaviour": "Extensions to the Element Interface — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "idl",
+        "clause_index": 5,
+        "clause_sha256": "b034f8e06fb9e5ddb78d92082034f722599ab9df6b283c2d2408b0040bfa7d5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.parsing",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "parsing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Microsyntaxes for parsing.",
+      "locator": {
+        "section_id": "parsing",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.parsing-mapping",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "parsing-mapping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rules for parsing part mappings.",
+      "locator": {
+        "section_id": "parsing-mapping",
+        "text_sha256": "2ba96f187c82a2f63b8ce05303bee4aec61a522156aa092983254a57ec1d300b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.parsing-mapping-clause-8dff29903c6b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.parsing-mapping-clause-8dff29903c6b",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "parsing-mapping"
+      ],
+      "behaviour": "Rules for parsing part mappings — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-mapping",
+        "clause_index": 0,
+        "clause_sha256": "8dff29903c6bc66fe65c59728886d2831be7e91772d206579ad5dc2d8bbbb5e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.parsing-mapping-list",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "parsing-mapping-list"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rules for parsing a list of part mappings.",
+      "locator": {
+        "section_id": "parsing-mapping-list",
+        "text_sha256": "d4e439cec971f9ad94e1cab83e3a042e1ffecaf435f55d642388215f60ee0823"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.parsing-mapping-list-clause-ff3b03d6d02f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.parsing-mapping-list-clause-ff3b03d6d02f",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "parsing-mapping-list"
+      ],
+      "behaviour": "Rules for parsing a list of part mappings — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "parsing-mapping-list",
+        "clause_index": 6,
+        "clause_sha256": "ff3b03d6d02f483926ab637bd405ada0968c7a85c886303dfd378013542abdaf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.priv",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "priv"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "priv",
+        "text_sha256": "f0fdc4d86fda3fc6e7ed062e39eaf875cdea33a1095645ee1a01376f9b49fe07"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.sec",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "sec",
+        "text_sha256": "8be4f3dba675a57acd9559dbfb6d3b63732a068ceecd9d3945ce269e14a23a21"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-conformance",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-conventions",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.w3c-conventions-clause-5c98c879f070",
+        "css-shadow-parts-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-conformance-classes",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-shadow-parts-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-partial",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-conform-future-proofing",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-testing",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-shadow-parts-1.w3c-testing-clause-1e0fff369221",
+        "css-shadow-parts-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-shadow-parts-1.idl-index",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "69d95cfae0249d8c1fa9b70e596ff5bb6b11b3c10b588103584f9bc5e0c09529"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.issues-index",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "126dc217d995b761c1e9c8415ffcaef34fa521c3256bb35e9d5713eccfe363ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.import-8cac7d115c27",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-shadow-parts-1.title",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Shadow Parts Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "59ba4c139841fa5ac696c335fdb2f5a5179c95fc35caa198caf9b134bb38b724"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.abstract",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "910440082ed4fb20c3795ea4785bf1441b1f55d79e49fdeae5fa0baaa7f03120"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.sotd",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "c094f76d1bb7c09f93e908d56ab18a92beb78e9ea9d04ef25949d558b6a1250d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.contents",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "f6eafff1ea9d85aec90e0d3bd89c32c66f4fd752d058be1b2e15bd5a26290e60"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.changes",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 8. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "f89dcc1ddd47d0b9db164ff532661804cf795cf14f2df4de6110e26d0568dffc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.index",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.index-defined-here",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "6a425d0025a554dfe4eaf2e16c87f70cc653f8cd05515b608a5c2ff2a6a4c4c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.index-defined-elsewhere",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "4429c1d656be3e92955595c870dfff8fe36d2fcee9f3d31780dc1ff2843543e2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-shadow-parts-1.references",
+      "family": "css-shadow-parts-1",
+      "source_id": "css-shadow-parts-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

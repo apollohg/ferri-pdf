@@ -1,0 +1,1394 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-generate.x1",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "x1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 12 Generated content, automatic numbering, and lists.",
+      "locator": {
+        "section_id": "x1",
+        "text_sha256": "f5aed9fee002b50198ad5acf5c83e8f0d36a6690fb66e76dd9b4ede3ab78c6e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-generate.x1-clause-5b4abe286b45"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.x1-clause-5b4abe286b45",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "x1"
+      ],
+      "behaviour": "12 Generated content, automatic numbering, and lists — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "x1",
+        "clause_index": 14,
+        "clause_sha256": "5b4abe286b45c1494055aa070d1edd5f33fc18681e15cef4f42026e990e90a77"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.x5",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "x5"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The :before and :after pseudo-elements.",
+      "locator": {
+        "section_id": "x5",
+        "text_sha256": "81d6c5529c759d051540d9053f6dd9c10e63086274542071f67e26cfd13f4224"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-generate.x5-clause-972f7aeda5d2",
+        "css21-generate.x5-clause-817a37477f2f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.x5-clause-972f7aeda5d2",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "x5"
+      ],
+      "behaviour": "The :before and :after pseudo-elements — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "x5",
+        "clause_index": 7,
+        "clause_sha256": "972f7aeda5d247d9d6e823ac9909aac33b683be41717d54f787dab64861a1077"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.x5-clause-817a37477f2f",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "x5"
+      ],
+      "behaviour": "The :before and :after pseudo-elements — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "x5",
+        "clause_index": 13,
+        "clause_sha256": "817a37477f2fd4e36e88bd0d45901424a3401516f325753b9cae7b40be0a6211"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.content",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "content"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The 'content' property.",
+      "locator": {
+        "section_id": "content",
+        "text_sha256": "d77f78175c40aee03b5c6effe9bae50b5d4772e47b352d0768236c81b7bf80f1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-generate.content-clause-9db0d2b0b6ca",
+        "css21-generate.content-clause-cca2516ebb1d",
+        "css21-generate.content-clause-cf29e4ca1228",
+        "css21-generate.content-clause-b289ed5e8be7",
+        "css21-generate.content-clause-33e13bc71223",
+        "css21-generate.content-clause-75dba8f0c733"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.content-clause-9db0d2b0b6ca",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "content"
+      ],
+      "behaviour": "The 'content' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "content",
+        "clause_index": 2,
+        "clause_sha256": "9db0d2b0b6ca6fc31b20c2ba2e393d17306ecf27ea806721cf76426d41c14f32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.content-clause-cca2516ebb1d",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "content"
+      ],
+      "behaviour": "The 'content' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "content",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.content-clause-cf29e4ca1228",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "content"
+      ],
+      "behaviour": "The 'content' property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "content",
+        "clause_index": 15,
+        "clause_sha256": "cf29e4ca122823c278b4344d62471c97d8ab427acd29e6a04c16c13079b952d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.content-clause-b289ed5e8be7",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "content"
+      ],
+      "behaviour": "The 'content' property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "content",
+        "clause_index": 23,
+        "clause_sha256": "b289ed5e8be73f7ab46d0a317e36e9864723bc9ae87d64cd4155cc55e6af618e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.content-clause-33e13bc71223",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "content"
+      ],
+      "behaviour": "The 'content' property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "content",
+        "clause_index": 25,
+        "clause_sha256": "33e13bc71223102a3d116ad72e6320ff8552de47c57cb8455fe522e478a259ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.content-clause-75dba8f0c733",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "content"
+      ],
+      "behaviour": "The 'content' property — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "content",
+        "clause_index": 40,
+        "clause_sha256": "75dba8f0c73315918d79d374526e5b5bb59e1161e23f5e8a6cc9aa728d5b9466"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.quotes",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "quotes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Quotation marks.",
+      "locator": {
+        "section_id": "quotes",
+        "text_sha256": "ff7059effc1ee0af7f42a985904213d55fb917eab4dc42009ba60563251dabd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-generate.quotes-clause-ff7059effc1e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.quotes-clause-ff7059effc1e",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "quotes"
+      ],
+      "behaviour": "Quotation marks — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "quotes",
+        "clause_index": 0,
+        "clause_sha256": "ff7059effc1ee0af7f42a985904213d55fb917eab4dc42009ba60563251dabd9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.quotes-specify",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "quotes-specify"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying quotes with the 'quotes' property.",
+      "locator": {
+        "section_id": "quotes-specify",
+        "text_sha256": "dac7180919234cd40909f1920613c13b4f0a9a1d4780dbfcb22bbac17dc80ec7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-generate.quotes-specify-clause-631b2f286d13",
+        "css21-generate.quotes-specify-clause-cca2516ebb1d",
+        "css21-generate.quotes-specify-clause-138a04418cf8",
+        "css21-generate.quotes-specify-clause-5a2630ad3ca9",
+        "css21-generate.quotes-specify-clause-c6f18e4846fe"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.quotes-specify-clause-631b2f286d13",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "quotes-specify"
+      ],
+      "behaviour": "Specifying quotes with the 'quotes' property — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "quotes-specify",
+        "clause_index": 2,
+        "clause_sha256": "631b2f286d13a0009196de6683acef29cd91499e3d03f97448b4488a659a5362"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.quotes-specify-clause-cca2516ebb1d",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "quotes-specify"
+      ],
+      "behaviour": "Specifying quotes with the 'quotes' property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "quotes-specify",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.quotes-specify-clause-138a04418cf8",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "quotes-specify"
+      ],
+      "behaviour": "Specifying quotes with the 'quotes' property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "quotes-specify",
+        "clause_index": 15,
+        "clause_sha256": "138a04418cf80bcd7eca1c54dd23dbef3dffdace5d626c4a51aa69fe44e81818"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.quotes-specify-clause-5a2630ad3ca9",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "quotes-specify"
+      ],
+      "behaviour": "Specifying quotes with the 'quotes' property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "quotes-specify",
+        "clause_index": 31,
+        "clause_sha256": "5a2630ad3ca9c84bb1d86561ac39a9630e18e1b9493c09ff380db0f6258aa90b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.quotes-specify-clause-c6f18e4846fe",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "quotes-specify"
+      ],
+      "behaviour": "Specifying quotes with the 'quotes' property — normative clause 81, located by its exact source hash.",
+      "locator": {
+        "section_id": "quotes-specify",
+        "clause_index": 80,
+        "clause_sha256": "c6f18e4846feecad1a00860b8c73a420e7117d76f225c0cb8ee4be59ac52ba77"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.quotes-insert",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "quotes-insert"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inserting quotes with the 'content' property.",
+      "locator": {
+        "section_id": "quotes-insert",
+        "text_sha256": "b23fa6893447cf5000f83b16a5b9f19a2367e7e110995ec03ae64e7b949e4796"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-generate.quotes-insert-clause-959e8c921cef"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.quotes-insert-clause-959e8c921cef",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "quotes-insert"
+      ],
+      "behaviour": "Inserting quotes with the 'content' property — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "quotes-insert",
+        "clause_index": 1,
+        "clause_sha256": "959e8c921ceffff68dc564bba100ef5b462ba844369f8884949ce4f79788be7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.counters",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "counters"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Automatic counters and numbering.",
+      "locator": {
+        "section_id": "counters",
+        "text_sha256": "a0cba478554c43c4a9d662e7515705b078b15cf0a34590e512f4624b4cf9b2cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-generate.counters-clause-23872c683c1b",
+        "css21-generate.counters-clause-cca2516ebb1d",
+        "css21-generate.counters-clause-f950980611ae",
+        "css21-generate.counters-clause-b7ea3fa2a644",
+        "css21-generate.counters-clause-41fda12124dd",
+        "css21-generate.counters-clause-48da59c34493"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.counters-clause-23872c683c1b",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "counters"
+      ],
+      "behaviour": "Automatic counters and numbering — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "counters",
+        "clause_index": 3,
+        "clause_sha256": "23872c683c1b134b3366908cc64660d89278acb6ae95c06310e2823f8b90b479"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.counters-clause-cca2516ebb1d",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "counters"
+      ],
+      "behaviour": "Automatic counters and numbering — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "counters",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.counters-clause-f950980611ae",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "counters"
+      ],
+      "behaviour": "Automatic counters and numbering — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "counters",
+        "clause_index": 15,
+        "clause_sha256": "f950980611ae802f790715370f0da0276aeab6c6820d6df0a7abe6bca5f906c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.counters-clause-b7ea3fa2a644",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "counters"
+      ],
+      "behaviour": "Automatic counters and numbering — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "counters",
+        "clause_index": 33,
+        "clause_sha256": "b7ea3fa2a644cde114969190cbd0af6279521213971b525978be4305a6d31b9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.counters-clause-41fda12124dd",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "counters"
+      ],
+      "behaviour": "Automatic counters and numbering — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "counters",
+        "clause_index": 49,
+        "clause_sha256": "41fda12124dd82bc58c40a1fc1be354029f88d991a6e90906c7456da443add1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.counters-clause-48da59c34493",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "counters"
+      ],
+      "behaviour": "Automatic counters and numbering — normative clause 51, located by its exact source hash.",
+      "locator": {
+        "section_id": "counters",
+        "clause_index": 50,
+        "clause_sha256": "48da59c34493c225933ca75c3cae62c4c1f2d1fb0aaf935ecc08521aa278db49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.scope",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "scope"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Nested counters and scope.",
+      "locator": {
+        "section_id": "scope",
+        "text_sha256": "b63b4f377a76f96d406f8f9294fa7a6534af1d27824be99132ed7f5e60ae703a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-generate.scope-clause-0fdd7f2612aa"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.scope-clause-0fdd7f2612aa",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "scope"
+      ],
+      "behaviour": "Nested counters and scope — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "scope",
+        "clause_index": 5,
+        "clause_sha256": "0fdd7f2612aaf46a37325839afae01c034554afd3f79912cccc74d66dca300d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.counter-styles",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "counter-styles"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Counter styles.",
+      "locator": {
+        "section_id": "counter-styles",
+        "text_sha256": "e92487b35904963ffb8c7c7266d5fb663d2bc03839e3426b6a811f9fe40bcdcd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.undisplayed-counters",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "undisplayed-counters"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Counters in elements with 'display: none'.",
+      "locator": {
+        "section_id": "undisplayed-counters",
+        "text_sha256": "10a34d867bc7f8176c635ac5fc7b103090f672378b26b6135481e0f4e9acffef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.lists",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "lists"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lists.",
+      "locator": {
+        "section_id": "lists",
+        "text_sha256": "4eb77d2ad94906b45e5d9dc62c439b2108f04e4744dc9285ed176961b3befc03"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.list-style",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties.",
+      "locator": {
+        "section_id": "list-style",
+        "text_sha256": "e1453cd639b0b878df2a08fa0667199d3226820c8c3c3329750673980aebc659"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-generate.list-style-clause-d030794c7c81",
+        "css21-generate.list-style-clause-cca2516ebb1d",
+        "css21-generate.list-style-clause-f4dec12b9a83",
+        "css21-generate.list-style-clause-72365641e6d2",
+        "css21-generate.list-style-clause-ca093cb17e17",
+        "css21-generate.list-style-clause-9613584439b5",
+        "css21-generate.list-style-clause-fd49d69af837",
+        "css21-generate.list-style-clause-9d5ae3a381a9",
+        "css21-generate.list-style-clause-c6ab495399ca",
+        "css21-generate.list-style-clause-721a24a20a01",
+        "css21-generate.list-style-clause-2df139a43297",
+        "css21-generate.list-style-clause-ca6d76615d9e",
+        "css21-generate.list-style-clause-e0f8c024dc4a",
+        "css21-generate.list-style-clause-264d68edad36",
+        "css21-generate.list-style-clause-fac2c1c8f04c",
+        "css21-generate.list-style-clause-cf5c727db9ea",
+        "css21-generate.list-style-clause-f3893cbc2c39"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-generate.list-style-clause-d030794c7c81",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 2,
+        "clause_sha256": "d030794c7c81eafe6ae3a7161df51d789b3cd4ad3c3585ed3e039d4a45dcebea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-cca2516ebb1d",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-f4dec12b9a83",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 17,
+        "clause_sha256": "f4dec12b9a8313d10af4f80610048aa44477444165e67a6fa618ccd077af16a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-72365641e6d2",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 37,
+        "clause_sha256": "72365641e6d2fb669f59d2a9c0a608ca2b471800351f84b5e29db95882843fcd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-ca093cb17e17",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 44, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 43,
+        "clause_sha256": "ca093cb17e170926a080c2417c523be95c0b9164e200c781a356f57b7210a361"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-9613584439b5",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 46, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 45,
+        "clause_sha256": "9613584439b5c4de87bb70d0f07dae4e8fd53a84203e151da485f3bfb307dbb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-fd49d69af837",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 47,
+        "clause_sha256": "fd49d69af837b910a63eeda36be7b988d9c37d8cbacf1c6f542aabd86b38a1e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-9d5ae3a381a9",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 69, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 68,
+        "clause_sha256": "9d5ae3a381a9d92a8e7a37f3a01fabed5a6eda24275db739aa0db3fa138c75ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-c6ab495399ca",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 73, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 72,
+        "clause_sha256": "c6ab495399cac42608232ff863415bf99145db6168f43c82773c0820318614bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-721a24a20a01",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 86, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 85,
+        "clause_sha256": "721a24a20a013d99ee42db0efc50bc0263020783f3d528bd4cd8f5c4d167d2cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-2df139a43297",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 88, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 87,
+        "clause_sha256": "2df139a43297190cab0f68ebff5317b53c75c32cd3de7d32fc0d279d8a3d8a9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-ca6d76615d9e",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 97, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 96,
+        "clause_sha256": "ca6d76615d9ebf77b48d4f969ecbb51485bded11d0c9e658c6d56b8d618a6c81"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-e0f8c024dc4a",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 99, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 98,
+        "clause_sha256": "e0f8c024dc4a0baf31bff5bbbfbcd1ac6c878ae305da8246c725ba90c072d997"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-264d68edad36",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 114, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 113,
+        "clause_sha256": "264d68edad36616862a0b0aa355ee020dce6a29c7668a31f4400cb20fbfec40a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-fac2c1c8f04c",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 127, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 126,
+        "clause_sha256": "fac2c1c8f04cbb0f20e093152d534534c042def086c86ea8f702f57cb8b57af2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-cf5c727db9ea",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 133, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 132,
+        "clause_sha256": "cf5c727db9ea53ef521c7be276f9e2482c97c923a6ab50283b58abc7354464c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-generate.list-style-clause-f3893cbc2c39",
+      "family": "css21-generate",
+      "source_id": "css21-generate",
+      "sections": [
+        "list-style"
+      ],
+      "behaviour": "Lists: the 'list-style-type', 'list-style-image', 'list-style-position', and 'list-style' properties — normative clause 134, located by its exact source hash.",
+      "locator": {
+        "section_id": "list-style",
+        "clause_index": 133,
+        "clause_sha256": "f3893cbc2c391335d5def772ea5e5dea660be96dd5a020d8b9a054fb47ab47f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    }
+  ]
+}

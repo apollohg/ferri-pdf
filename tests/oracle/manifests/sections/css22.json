@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "source_id": "css22",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Cascading Style Sheets Level 2 Revision 2 (CSS 2.2) Specification",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css22.title"
+        ]
+      }
+    },
+    {
+      "id": "W3C-doctype",
+      "title": "W3C First Public Working Draft 12 April 2016",
+      "level": 2,
+      "text_sha256": "fd7729fdb7db2cdaf18f885ee082e115c363a5ecb9ec8e02557ed66eb5960082",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css22.w3c-doctype"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "3a9fab60ef3d8e2cda61be7d5e40111e78233e7853f9f667627230a8b66b478b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css22.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "d07327f5a19271c56ce037ecf5e53dc8aa5aab6da2c38e2d0885ec1f8f3edebf",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css22.status"
+        ]
+      }
+    },
+    {
+      "id": "minitoc",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "d40381e2c0d92cbaeafdcd709d25b0063296e58d2472641a01a7ae4affd31677",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css22.minitoc"
+        ]
+      }
+    },
+    {
+      "id": "fulltoc",
+      "title": "Full Table of Contents",
+      "level": 2,
+      "text_sha256": "282ed9dd593632f2310d9aacbd9a1f684d414e75575f95e40e828bb51632a430",
+      "clause_count": 294,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css22.fulltoc",
+          "css22.fulltoc-clause-c4291a798bbe",
+          "css22.fulltoc-clause-eeeb79dd53a5",
+          "css22.fulltoc-clause-1690ea7386d2",
+          "css22.fulltoc-clause-5e0758efa953",
+          "css22.fulltoc-clause-7d29c3bcaf2e"
+        ]
+      }
+    }
+  ]
+}

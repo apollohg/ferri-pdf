@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-name",
+  "sections": [
+    {
+      "id": "name--naming-table",
+      "title": "name — Naming Table",
+      "level": 1,
+      "text_sha256": "be78458fbefcdffa4790e9ccd933d627531ed1aa8949434acac6f1271fc23c04",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.name-naming-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "naming-table-header",
+      "title": "Naming table header",
+      "level": 2,
+      "text_sha256": "4e4e235267e70d86e9a219c5a4f2c84cfb963d48d3f2303ba2366aa0871f512d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.naming-table-header"
+        ]
+      }
+    },
+    {
+      "id": "naming-table-version-0",
+      "title": "Naming table version 0",
+      "level": 3,
+      "text_sha256": "19f4de9d9484501ed7042a16df9f58a8c45c577e118642cae0ad6df9b4959eaf",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.naming-table-version-0"
+        ]
+      }
+    },
+    {
+      "id": "naming-table-version-1",
+      "title": "Naming table version 1",
+      "level": 3,
+      "text_sha256": "57871ca4fc47e472d416a541a911fa459151cc833b89ab0d8f5f1b6e46186533",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.naming-table-version-1",
+          "opentype-name.naming-table-version-1-clause-6633bddfbacd",
+          "opentype-name.naming-table-version-1-clause-1753be6aa7f1"
+        ]
+      }
+    },
+    {
+      "id": "name-records",
+      "title": "Name records",
+      "level": 2,
+      "text_sha256": "4803c4b1c1ae4855c7f799e5b616c15c4b78fac591b4122f265fcddd58ed494c",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.name-records",
+          "opentype-name.name-records-clause-c1f47de6c304"
+        ]
+      }
+    },
+    {
+      "id": "platform-encoding-and-language",
+      "title": "Platform, encoding and language",
+      "level": 2,
+      "text_sha256": "b234627e7df13e7a3a1ae76a121296c4da6b8becb950bcb578cf4ab321960e01",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.platform-encoding-and-language",
+          "opentype-name.platform-encoding-and-language-clause-74ef60a0be7f"
+        ]
+      }
+    },
+    {
+      "id": "name-ids",
+      "title": "Name IDs",
+      "level": 2,
+      "text_sha256": "7e5f5f679e496d224de3a0ca15203f593e4528a65ffbe977db56022f39691a98",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.name-ids",
+          "opentype-name.name-ids-clause-53a90dfc242a",
+          "opentype-name.name-ids-clause-352f451a05cb",
+          "opentype-name.name-ids-clause-405750cb40c0",
+          "opentype-name.name-ids-clause-7e5c7bde9d78",
+          "opentype-name.name-ids-clause-b4054aed81e3",
+          "opentype-name.name-ids-clause-07f9026dd2aa",
+          "opentype-name.name-ids-clause-82770e94d1ef",
+          "opentype-name.name-ids-clause-1206b4fa1398",
+          "opentype-name.name-ids-clause-4aabb6ab15e7",
+          "opentype-name.name-ids-clause-73a3d769de1d",
+          "opentype-name.name-ids-clause-f5f4546db986",
+          "opentype-name.name-ids-clause-b9005ddf43f4",
+          "opentype-name.name-ids-clause-0d26df3435c9",
+          "opentype-name.name-ids-clause-7397ad80c767"
+        ]
+      }
+    },
+    {
+      "id": "name-id-examples",
+      "title": "Name ID examples",
+      "level": 3,
+      "text_sha256": "8d895b3f04a8fc36a777a36dda43e6152504c03d9a4c57faacabd52295378a36",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.name-id-examples",
+          "opentype-name.name-id-examples-clause-81661b9c5f99",
+          "opentype-name.name-id-examples-clause-679a849ce0f3",
+          "opentype-name.name-id-examples-clause-02e123e16f8e",
+          "opentype-name.name-id-examples-clause-55fa4ea41457"
+        ]
+      }
+    },
+    {
+      "id": "platform-encoding-and-language-ids",
+      "title": "Platform, encoding and language IDs",
+      "level": 2,
+      "text_sha256": "3aafc2e7ec75cefd8e708ac5b1d50cd376c80278d14962c5ab92a0d1a8736c10",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.platform-encoding-and-language-ids"
+        ]
+      }
+    },
+    {
+      "id": "platform-ids",
+      "title": "Platform IDs",
+      "level": 3,
+      "text_sha256": "69659785412a14ebc856e40223cccb6e5f98b865c8e5e300b32371e672c2117f",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.platform-ids"
+        ]
+      }
+    },
+    {
+      "id": "unicode-platform-platform-id--0",
+      "title": "Unicode platform (platform ID = 0)",
+      "level": 3,
+      "text_sha256": "0d70ef9c6fc9a6709a0a1c0bea31225fe1c8d06ebe5840cf71a33394e9e5af00",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.unicode-platform-platform-id-0",
+          "opentype-name.unicode-platform-platform-id-0-clause-e08717e115a3"
+        ]
+      }
+    },
+    {
+      "id": "macintosh-platform-platform-id--1",
+      "title": "Macintosh platform (platform ID = 1)",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.macintosh-platform-platform-id-1"
+        ]
+      }
+    },
+    {
+      "id": "macintosh-encoding-ids-script-manager-codes",
+      "title": "Macintosh encoding IDs (script manager codes)",
+      "level": 4,
+      "text_sha256": "f9173bcc0a9e67b1cc984eca7f2a71e69144e1fd7620dcea09321a9876312092",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.macintosh-encoding-ids-script-manager-codes"
+        ]
+      }
+    },
+    {
+      "id": "macintosh-language-ids",
+      "title": "Macintosh language IDs",
+      "level": 4,
+      "text_sha256": "61761ab5748fcd2f1e93f12cd1dccc54146c2d0e9bc266e7e52a530b0664426a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.macintosh-language-ids"
+        ]
+      }
+    },
+    {
+      "id": "windows-platform-platform-id-3",
+      "title": "Windows platform (platform ID= 3)",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.windows-platform-platform-id-3"
+        ]
+      }
+    },
+    {
+      "id": "windows-encoding-ids",
+      "title": "Windows encoding IDs",
+      "level": 4,
+      "text_sha256": "7e929bf9fc2ac98d9101db4cb595146420bc92338e733dc1011733b51699e7be",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.windows-encoding-ids",
+          "opentype-name.windows-encoding-ids-clause-7198258c770a"
+        ]
+      }
+    },
+    {
+      "id": "windows-language-ids",
+      "title": "Windows language IDs",
+      "level": 4,
+      "text_sha256": "888344f27ce9a8f1c9c752466f81e1e3ed9a6ad8554b3915a2a840d3646e2ae3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.windows-language-ids"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "4e2297f79525355aa3dc07756ae4ae6ba350dc012790f96133dc9fdbf48db6d0",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-name.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

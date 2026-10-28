@@ -1,0 +1,767 @@
+{
+  "schema_version": 1,
+  "source_id": "css-gaps-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Gaps Module Level 1",
+      "level": 1,
+      "text_sha256": "4e9c2e198cd446704c4136d94fefea88a760232b458256d9de18878b1e369463",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "ca981ec30a050f959d02f815acf134f071daa3d0933a4fd1e3bfff4212d1c766",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "892d4694be1d6fa97d25e43ce5482faa4586a126527fefc7e613a73794cc06b8",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "c9925682bef9e4079532d3ed3594781571753badaeb1d2b9ea67e70bad11c155",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "1b631c8dabc4f0f4a61c2902eca4a0d56ebb4244546f4e422373d3b5fecfa5f5",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.1. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.values"
+        ]
+      }
+    },
+    {
+      "id": "gaps",
+      "title": "2. Gaps Between Boxes",
+      "level": 2,
+      "text_sha256": "26a4f17320488fd99069c8daff95288f0ae14e2dbf1886026514d4a9276800ae",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.gaps"
+        ]
+      }
+    },
+    {
+      "id": "column-row-gap",
+      "title": "2.1. Row and Column Gutters: the row-gap and column-gap properties",
+      "level": 3,
+      "text_sha256": "8de449c1fc13c33b3f47374eddf0671beba6f941cc7637e22b8dfce8a7d9d0b5",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.column-row-gap",
+          "css-gaps-1.column-row-gap-clause-cca2516ebb1d",
+          "css-gaps-1.column-row-gap-clause-70828f810467",
+          "css-gaps-1.column-row-gap-clause-0cd0dcc2093c",
+          "css-gaps-1.column-row-gap-clause-7a4201f67640",
+          "css-gaps-1.column-row-gap-clause-0b01956cddd7"
+        ]
+      }
+    },
+    {
+      "id": "gap-shorthand",
+      "title": "2.2. Gap Shorthand: the gap property",
+      "level": 3,
+      "text_sha256": "b524d659af0cc01d51cf7833cb0809e0a7425d9942f87781efb5a5302b502d75",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.gap-shorthand",
+          "css-gaps-1.gap-shorthand-clause-cca2516ebb1d",
+          "css-gaps-1.gap-shorthand-clause-c8e7872bfd47"
+        ]
+      }
+    },
+    {
+      "id": "gap-percent",
+      "title": "2.3. Percentages In gap Properties",
+      "level": 3,
+      "text_sha256": "166d9250b354ec9cca2632c0378f7f13c0904961a3f9fb81498ee75405add548",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.gap-percent",
+          "css-gaps-1.gap-percent-clause-eb19563b1c1d",
+          "css-gaps-1.gap-percent-clause-dd07b28a2395",
+          "css-gaps-1.gap-percent-clause-0a34484ffa53"
+        ]
+      }
+    },
+    {
+      "id": "gap-legacy",
+      "title": "2.4. Legacy Gap Properties: the grid-row-gap, grid-column-gap, and grid-gap properties",
+      "level": 3,
+      "text_sha256": "982853a2a86ca718766dd756fbcaad6e1f560919c1e315e65048cc9fc2a3c2d6",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.gap-legacy",
+          "css-gaps-1.gap-legacy-clause-346de5f93bfe"
+        ]
+      }
+    },
+    {
+      "id": "gap-decorations",
+      "title": "3. Gap decorations",
+      "level": 2,
+      "text_sha256": "325a2c1762db9aeba6ae62f4fa588b1058c728b526a52843bbe831082a27cd30",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.gap-decorations"
+        ]
+      }
+    },
+    {
+      "id": "geometry",
+      "title": "3.1. Geometry",
+      "level": 3,
+      "text_sha256": "172fc9a558d4c20f1350637f2860895f36c29302079c1e065caf41fd8aefdcd4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.geometry"
+        ]
+      }
+    },
+    {
+      "id": "segment-endpoints",
+      "title": "3.1.1. Segment endpoints",
+      "level": 4,
+      "text_sha256": "45dde4c4855fd4d1c41960c5ba9acb12fdf3f741527254ed6c995e9fe781b29f",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.segment-endpoints"
+        ]
+      }
+    },
+    {
+      "id": "segments",
+      "title": "3.1.2. Gap decoration segments",
+      "level": 4,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.segments"
+        ]
+      }
+    },
+    {
+      "id": "segments-definitions",
+      "title": "Definitions",
+      "level": 5,
+      "text_sha256": "9aa2f2647b6b9c13fe8c61754743b606ec1cc46e3867fd6acf2d36937064bd85",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.segments-definitions"
+        ]
+      }
+    },
+    {
+      "id": "segments-algorithms",
+      "title": "Algorithms",
+      "level": 5,
+      "text_sha256": "b6ba280f7dd26637297990c7bbcbfa251cea5a66b0214123134bb66fb089903d",
+      "clause_count": 110,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.segments-algorithms"
+        ]
+      }
+    },
+    {
+      "id": "break",
+      "title": "3.2. Break behaviors at intersections: The column-rule-break, row-rule-break, and rule-break properties",
+      "level": 3,
+      "text_sha256": "8058f792b355550ebf13bb3bba9e4f16e3ebbb1a3d3c1cad46a4e702c8bf3829",
+      "clause_count": 88,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.break",
+          "css-gaps-1.break-clause-cca2516ebb1d",
+          "css-gaps-1.break-clause-0a221452344b",
+          "css-gaps-1.break-clause-7c1e52df7a62",
+          "css-gaps-1.break-clause-861f4b596997",
+          "css-gaps-1.break-clause-195b140f143a"
+        ]
+      }
+    },
+    {
+      "id": "inset",
+      "title": "3.3. Adjusting gap decoration endpoints: The rule-inset properties",
+      "level": 3,
+      "text_sha256": "ecb969f8879047bbacfa66a097b36bc2e6646acdacbbe0b2c7b8f7abf2d4aa88",
+      "clause_count": 103,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.inset",
+          "css-gaps-1.inset-clause-cca2516ebb1d",
+          "css-gaps-1.inset-clause-9039d0384d7c",
+          "css-gaps-1.inset-clause-de87f43f03ab",
+          "css-gaps-1.inset-clause-26ff0015136e",
+          "css-gaps-1.inset-clause-70c3acc14642",
+          "css-gaps-1.inset-clause-d343f2e70713",
+          "css-gaps-1.inset-clause-9950c3d3c2af"
+        ]
+      }
+    },
+    {
+      "id": "insets-start-end",
+      "title": "3.3.1. -start and -end shorthands",
+      "level": 4,
+      "text_sha256": "b9f5c520ac5cdfb8b7b9b3314693c1dd2273f3391fa2a0bc74cb64c1727cf147",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.insets-start-end",
+          "css-gaps-1.insets-start-end-clause-cca2516ebb1d",
+          "css-gaps-1.insets-start-end-clause-6e603b860c70",
+          "css-gaps-1.insets-start-end-clause-5b6f24c3a20e",
+          "css-gaps-1.insets-start-end-clause-3e74945532b4"
+        ]
+      }
+    },
+    {
+      "id": "insets-cap-junction",
+      "title": "3.3.2. -cap- and -junction- shorthands",
+      "level": 4,
+      "text_sha256": "3b1adcd762850377193c98ca8f17199eea9287b63ea70f6f2fdad133b578660c",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.insets-cap-junction",
+          "css-gaps-1.insets-cap-junction-clause-cca2516ebb1d",
+          "css-gaps-1.insets-cap-junction-clause-e9fcf80d3f61",
+          "css-gaps-1.insets-cap-junction-clause-8531f0da4c90",
+          "css-gaps-1.insets-cap-junction-clause-f04ae8afa6a7"
+        ]
+      }
+    },
+    {
+      "id": "insets-universal",
+      "title": "3.3.3. Universal shorthands",
+      "level": 4,
+      "text_sha256": "d2f8bb72c7eb63119f41b16f71672ef8eaac55e54c9c8381505bef537f64e113",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.insets-universal",
+          "css-gaps-1.insets-universal-clause-cca2516ebb1d",
+          "css-gaps-1.insets-universal-clause-78486174da6e",
+          "css-gaps-1.insets-universal-clause-f2bb941ca267",
+          "css-gaps-1.insets-universal-clause-d6a5a12acaa1"
+        ]
+      }
+    },
+    {
+      "id": "visibility",
+      "title": "3.4. Gap decoration visibility: The rule-visibility-items properties",
+      "level": 3,
+      "text_sha256": "fe2471b8a5beea223f9b5ba29327c277c1e67aa95d5aba35e67c80eb8ac3903b",
+      "clause_count": 80,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.visibility",
+          "css-gaps-1.visibility-clause-cca2516ebb1d",
+          "css-gaps-1.visibility-clause-832ef2484a1b",
+          "css-gaps-1.visibility-clause-6b2abd67bc55",
+          "css-gaps-1.visibility-clause-9c4ad790810f",
+          "css-gaps-1.visibility-clause-c72517a84832"
+        ]
+      }
+    },
+    {
+      "id": "overlap",
+      "title": "3.5. Gap decoration overlap: The rule-overlap property",
+      "level": 3,
+      "text_sha256": "105d41b9cc62dc3a8575442f7c16e89a2237ca2be2aeb97da854a9a089bb8504",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.overlap",
+          "css-gaps-1.overlap-clause-cca2516ebb1d",
+          "css-gaps-1.overlap-clause-e57b340b4921",
+          "css-gaps-1.overlap-clause-1bde10708644",
+          "css-gaps-1.overlap-clause-7656def592f2",
+          "css-gaps-1.overlap-clause-0ad860e7a356"
+        ]
+      }
+    },
+    {
+      "id": "fragmentation",
+      "title": "3.6. Fragmentation",
+      "level": 3,
+      "text_sha256": "13959510f362313e466eb369d71a6ed74c24cbbba8d3a75a57bd3d1f993730f3",
+      "clause_count": 81,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.fragmentation"
+        ]
+      }
+    },
+    {
+      "id": "color-style-width",
+      "title": "4. Color, style, and width",
+      "level": 2,
+      "text_sha256": "b6aecd8bb739adb2e678999b8ec7325c121f8dc0ae0801d01af9d3a624236f6a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.color-style-width"
+        ]
+      }
+    },
+    {
+      "id": "column-row-rule-color",
+      "title": "4.1. Gap decoration color: The column-rule-color, row-rule-color, and rule-color properties",
+      "level": 3,
+      "text_sha256": "69354ceaa19e9d4a4da3a13b2a940eeb3fbd8e9a75e7a285b833697ecde55b9a",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.column-row-rule-color",
+          "css-gaps-1.column-row-rule-color-clause-cca2516ebb1d",
+          "css-gaps-1.column-row-rule-color-clause-94df99ed985b",
+          "css-gaps-1.column-row-rule-color-clause-c05eff9e4db7",
+          "css-gaps-1.column-row-rule-color-clause-96578965aba4"
+        ]
+      }
+    },
+    {
+      "id": "column-row-rule-style",
+      "title": "4.2. Gap decoration style: The column-rule-style, row-rule-style, and rule-style properties",
+      "level": 3,
+      "text_sha256": "f2651b1f25fe910aa723f8ec96ecfb2ce59fd3218e816a0a2895449f97fcce6c",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.column-row-rule-style",
+          "css-gaps-1.column-row-rule-style-clause-cca2516ebb1d",
+          "css-gaps-1.column-row-rule-style-clause-988081444181",
+          "css-gaps-1.column-row-rule-style-clause-efe7f1a64c4c",
+          "css-gaps-1.column-row-rule-style-clause-2a450d7f368e"
+        ]
+      }
+    },
+    {
+      "id": "column-row-rule-width",
+      "title": "4.3. Gap decoration width: The column-rule-width, row-rule-width, and rule-width properties",
+      "level": 3,
+      "text_sha256": "6c2301d8c7caa1e12fde93f0b71d81311d7c0d0a3510c1b098a7d0aacfbe8800",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.column-row-rule-width",
+          "css-gaps-1.column-row-rule-width-clause-cca2516ebb1d",
+          "css-gaps-1.column-row-rule-width-clause-58aa680381b1",
+          "css-gaps-1.column-row-rule-width-clause-c651a3e6810c",
+          "css-gaps-1.column-row-rule-width-clause-bc9cf2174d0c"
+        ]
+      }
+    },
+    {
+      "id": "gap-decoration-shorthands",
+      "title": "4.4. Gap decoration shorthands: The column-rule, row-rule, and rule properties",
+      "level": 3,
+      "text_sha256": "2f5335c8a48ac0767639e4f34c70428fb28a5664b22ea0a0c4e93b2ecf1140bc",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.gap-decoration-shorthands",
+          "css-gaps-1.gap-decoration-shorthands-clause-cca2516ebb1d",
+          "css-gaps-1.gap-decoration-shorthands-clause-969d644afafa",
+          "css-gaps-1.gap-decoration-shorthands-clause-b38badfadf92",
+          "css-gaps-1.gap-decoration-shorthands-clause-c0f0bbac0b84"
+        ]
+      }
+    },
+    {
+      "id": "lists-repeat",
+      "title": "4.5. Lists of values and the repeat() notation",
+      "level": 3,
+      "text_sha256": "016c422cff5eb1c51ed9ea5bd8877c861b2f9355d682f63f1c0863d7fc481db5",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.lists-repeat"
+        ]
+      }
+    },
+    {
+      "id": "assigning",
+      "title": "4.6. Assigning gap decoration values to gaps",
+      "level": 3,
+      "text_sha256": "0b518e20e5439f4230e168a7b53d7681cb4f967a01cb9b124934ec5172837cf0",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.assigning",
+          "css-gaps-1.assigning-clause-c632165c1dad"
+        ]
+      }
+    },
+    {
+      "id": "interpolation-behavior",
+      "title": "4.7. Interpolation of list values",
+      "level": 3,
+      "text_sha256": "498361710981fb5a547b8d9f9e22ce31083bbbc11d0f7dcf1415a09f2735b7f4",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.interpolation-behavior",
+          "css-gaps-1.interpolation-behavior-clause-29835e60e5aa"
+        ]
+      }
+    },
+    {
+      "id": "serialization",
+      "title": "4.8. Serialization",
+      "level": 3,
+      "text_sha256": "2b84eb0de36a08af25130413f4e964cfe2592982c4264ef5311591e1eed21bb7",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.serialization"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "5. Acknowledgements",
+      "level": 2,
+      "text_sha256": "efc783aba4a101912b559c40b61cbe69d1ab06242a25e15cf715b312d93d1896",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "6. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "7. Security Considerations",
+      "level": 2,
+      "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.security"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "8. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20260227",
+      "title": "8.1. Changes since the 27 February 2026 Working Draft",
+      "level": 3,
+      "text_sha256": "3916d54e6c680f7ab0b50fe2c680676c63207fa8e9bda6dfcc5cf1e962c32f53",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.changes-20260227"
+        ]
+      }
+    },
+    {
+      "id": "changes-20250417",
+      "title": "8.2. Changes since the 17 April 2025 Working Draft",
+      "level": 3,
+      "text_sha256": "3b7f7a7cd935ee912d96dda390185ef2ff85a2fcfd1e46d854c2f00a796f26b9",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.changes-20250417"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.w3c-conventions",
+          "css-gaps-1.w3c-conventions-clause-5c98c879f070",
+          "css-gaps-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.w3c-conformance-classes",
+          "css-gaps-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-gaps-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.w3c-partial",
+          "css-gaps-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.w3c-testing",
+          "css-gaps-1.w3c-testing-clause-1e0fff369221",
+          "css-gaps-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "c7d7b66c8db4ed32f5efd0431b00da9e6cc5066f62e6bb4e0ef5d22dd3b050e3",
+      "clause_count": 108,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "c64df60f3c749cf83a1a7dc24cb8ac0923148d22ff5ccb21cf2b59b337f1818c",
+      "clause_count": 68,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "013e2e77c878a9b65888f17f6456afc87e545cffacb17eaf46c3192cc5a01637",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "5323ff7ee17f4e8bacb8123e9aa27938d969645fbf6ee1a72810b9d84238dd38",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "4d06ea7a37541b1cc61cfe60d4daaf86686c68b02db0696684f17fbc86b3b5d0",
+      "clause_count": 414,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-gaps-1.property-index",
+          "css-gaps-1.property-index-clause-4b59fe755d34",
+          "css-gaps-1.property-index-clause-70828f810467"
+        ]
+      }
+    }
+  ]
+}

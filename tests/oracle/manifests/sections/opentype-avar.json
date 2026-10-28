@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-avar",
+  "sections": [
+    {
+      "id": "avar--axis-variations-table",
+      "title": "avar — Axis Variations Table",
+      "level": 1,
+      "text_sha256": "35f1792417b4a3faef123da6709222b38c9804631e6a213da967873b16df1073",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-avar.avar-axis-variations-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-avar.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "Overview",
+      "level": 2,
+      "text_sha256": "545e723eb97f2c91d9516f362f9a069b34b678de5c210e616c557fa0cbe22599",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-avar.overview",
+          "opentype-avar.overview-clause-5a85fb14af5e"
+        ]
+      }
+    },
+    {
+      "id": "table-formats",
+      "title": "Table formats",
+      "level": 2,
+      "text_sha256": "fdb8bfa83f4bed54c07ce137bc88eb5ad8f3c334017ec608edb465a1401b1a4d",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-avar.table-formats",
+          "opentype-avar.table-formats-clause-b80e7f653c59",
+          "opentype-avar.table-formats-clause-2c29083e2bdf",
+          "opentype-avar.table-formats-clause-fdea9d584519",
+          "opentype-avar.table-formats-clause-afd20fc7c5d4",
+          "opentype-avar.table-formats-clause-98e9cbaf1cac"
+        ]
+      }
+    },
+    {
+      "id": "processing",
+      "title": "Processing",
+      "level": 2,
+      "text_sha256": "5f1f66ed1dba54945797015f2d39812685e7bb736c581373bf99af1036e0bc2d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-avar.processing"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-avar.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "4e2297f79525355aa3dc07756ae4ae6ba350dc012790f96133dc9fdbf48db6d0",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-avar.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-avar.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

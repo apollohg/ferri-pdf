@@ -1,0 +1,474 @@
+{
+  "schema_version": 1,
+  "source_id": "css-2023",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Snapshot 2023",
+      "level": 1,
+      "text_sha256": "7d34adbc12699ba9670a998922c4f2e964937eb0f147e3e6e68d119e6a2746c4",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "064f9c742ffc0fe6f5b202a485c910fdb3aab063a7cc62439aeecb8ac5bf9415",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "df218f4b9a2d072a46bbf72f4674e1e1fa721de9a5cf0bc3fa75398326f3f863",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "f3134243599d910fb90f700a6ff2077eb94ba7de91c07a8a7ba365e200faf7a4",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "e0077bea2d4f310683e85aab92b2283e6583f564f7a4a1a5ff4bf5c10aa54f13",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "css-glossary",
+      "title": "1.1. What is CSS?",
+      "level": 3,
+      "text_sha256": "6bf5ca0ce3973efdb56a4880cf9c79e872ef5c2fd1cde4e874eb0663191a158d",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "w3c-process",
+      "title": "1.2. Background: The W3C Process and CSS",
+      "level": 3,
+      "text_sha256": "d4533d2c39625848b11a4aaa747ec818e2299606ee58430da97752f25c8b05ec",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "module-classification",
+      "title": "2. Classification of CSS Specifications",
+      "level": 2,
+      "text_sha256": "1e99770b3e837230fa937c8d4bbec1ae53bfc5b9f6111b8d07c9fd95e98a7bbf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "css-official",
+      "title": "2.1. Cascading Style Sheets (CSS) — The Official Definition",
+      "level": 3,
+      "text_sha256": "08d2c5dead05af83b4aa50a2a9223b9558cceffddf13cd601f00d87fcfa7e5b3",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "fairly-stable",
+      "title": "2.2. Fairly Stable Modules with limited implementation experience",
+      "level": 3,
+      "text_sha256": "67d3144c602a096d1a6f0d31ae217c15ab7f3e358c6f555d4d2c9c4b04417cf2",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "rough-interop",
+      "title": "2.3. Modules with Rough Interoperability",
+      "level": 3,
+      "text_sha256": "16b5ce4fea0a417e4a31d4b8cec40653665bb374ab7a24faaf63ef18427ad4c0",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "css-levels",
+      "title": "2.4. CSS Levels",
+      "level": 3,
+      "text_sha256": "840084fb1729d19964d6e03cb73dd15cce08039aac626d2c1a6a672f369c8508",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "profiles",
+      "title": "2.5. CSS Profiles",
+      "level": 3,
+      "text_sha256": "f72c1570d449298ef77fe98f88feed032b5d08c89bfc644a7b345bdbe6d8598d",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "responsible",
+      "title": "3. Requirements for Responsible Implementation of CSS",
+      "level": 2,
+      "text_sha256": "63e281f28ed2ebefafb560d6716cfc98d63caa0f55f4ae36a918cca31886f4b3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "partial",
+      "title": "3.1. Partial Implementations",
+      "level": 3,
+      "text_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "future-proofing",
+      "title": "3.2. Implementations of Unstable and Proprietary Features",
+      "level": 3,
+      "text_sha256": "f1a70f959020b8024c354fb74d042ad21f76059750c52bd3cb93eeecb77bc5eb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "experimental",
+      "title": "3.2.1. Experimentation and Unstable Features",
+      "level": 4,
+      "text_sha256": "2fe2d2a08716138378164364fe70263db67adcfd646818fbb2c74ca5f30a21b3",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "proprietary",
+      "title": "3.2.2. Proprietary and Non-standardized Features",
+      "level": 4,
+      "text_sha256": "402b73da461c380916cb53ee9671bf8d871b414a437f2d5b4a3bae14fde16413",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "de-facto",
+      "title": "3.2.3. Market Pressure and De Facto Standards",
+      "level": 4,
+      "text_sha256": "64bd26b1ff19cccde9898a187e5e87f5bebd2c4e28fabce880e2b600a9c32959",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "unstable-syntax",
+      "title": "3.2.3.1. Vendor-prefixing Unstable Features",
+      "level": 5,
+      "text_sha256": "5b8d3372cd7cad91734a5149569c0fe295c4a9d55ecd56b38c5d255194afd1b1",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "open-technology",
+      "title": "3.2.3.2. Preserving the Openness of CSS",
+      "level": 5,
+      "text_sha256": "7f1a32a4b3b052942025087f05e2d56d7e0055a818b05c4db9d0069a2d615c2c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "testing",
+      "title": "3.3. Implementations of CR-level Features",
+      "level": 3,
+      "text_sha256": "85a2aab62de157ff88eb104ecdbf2c4c32e685f5fa12638fd5357bdf89415d2c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "CR-exceptions",
+      "title": "4. Safe to Release pre-CR Exceptions",
+      "level": 2,
+      "text_sha256": "9eb6873813620e9f0cf350c2b24fd2fdc7253a9d6da2573cc135d96965d5a836",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "indices",
+      "title": "5. Indices",
+      "level": 2,
+      "text_sha256": "5bd11000976016b45d0861954956a9256aaf3d3c1dcde6b3aa0786870979bc7e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "terms",
+      "title": "5.1. Terms Index",
+      "level": 3,
+      "text_sha256": "df9a44c9fb15ef8dfe693e5bc624153df20f3a449e021f73886eeeb2869738f5",
+      "clause_count": 1403,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "selectors",
+      "title": "5.2. Selector Index",
+      "level": 3,
+      "text_sha256": "4f6d8157015b6f78e7b22e189530e990ff3f0f72abb89aec8d2fdab38844e7bd",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "at-rules",
+      "title": "5.3. At-Rule Index",
+      "level": 3,
+      "text_sha256": "37cb3016e766dc5ea9eec80feb7b71feb533ca0597a552fbaf231674fde1785a",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "properties",
+      "title": "5.4. Property Index",
+      "level": 3,
+      "text_sha256": "939e0bfa44197004db0a3a7c1dccd56bb2481dbde3fcca95cff9a928dc87f6d5",
+      "clause_count": 347,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "values",
+      "title": "5.5. Values Index",
+      "level": 3,
+      "text_sha256": "a484c8cc2ed585a60cbc83dfb223ec4f51419e8bb187ca00bc577096e3d89dd0",
+      "clause_count": 965,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "acks",
+      "title": "6. Acknowledgements",
+      "level": 2,
+      "text_sha256": "60a26820270da6774dcafd060f3c412c1eed0df2b498b9c0832cf38e256f677b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "a8b170ad2a25a816f7c93d1cb7fff263a65660d05187cc29d2bb8e247a448f19",
+      "clause_count": 76,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "206636c519f1a838aab0d46cb7666412633bfd9686bacb65b437169acfd58a54",
+      "clause_count": 54,
+      "disposition": {
+        "kind": "informative",
+        "reason": "This document indexes the CSS standards set; rendering obligations are inventoried from the pinned modules.",
+        "classification": "non-normative"
+      }
+    }
+  ]
+}

@@ -1,0 +1,962 @@
+{
+  "schema_version": 1,
+  "source_id": "css-masking-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Masking Module Level 1",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.title"
+        ]
+      }
+    },
+    {
+      "id": "profile-and-date",
+      "title": "W3C Candidate Recommendation Draft, 5 August 2021",
+      "level": 2,
+      "text_sha256": "865b8994472c4efbf382153dd2ae8d2ab965c0ddeb75cd2104ec6954b3a99c92",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.profile-and-date"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "9f09dec10f43ee0b3b755983513eb912f74b29f9e7a04414bcd66eafa91d24ee",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "6985431c285a1ab1b734e0f7883e44203c586ecea74700c6850613a4963ad750",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "c6e8824259758f1128984555daef9b4b16d2a3b02b81a7c5bb74621173666332",
+      "clause_count": 60,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "4a716e779397ab24d69c10c5e0114d3481b2c6a6c55992d32a694df5418cfbfc",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "clipping",
+      "title": "1.1. Clipping",
+      "level": 3,
+      "text_sha256": "99765d20f054c35618b1e851f5942c074be46cd3d844b7091c4cd53509543d88",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.clipping"
+        ]
+      }
+    },
+    {
+      "id": "masking",
+      "title": "1.2. Masking",
+      "level": 3,
+      "text_sha256": "98be546c41b99b5a832cb8cfba987d73661b0ade5418c2099538dc3e5c1a249b",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.masking"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "2. Module interactions",
+      "level": 2,
+      "text_sha256": "9b90e387aefb2351146d5ac5a164ef78591bec6e7c35cf295903b727159ee9cb",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.placement"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "3. Values",
+      "level": 2,
+      "text_sha256": "109cef448f9f42a4ac344ecb4c19d02f582c9c307183bb955876747baa3a22c5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.values",
+          "css-masking-1.values-clause-d33f83819d3c"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "4. Terminology",
+      "level": 2,
+      "text_sha256": "55be4b44d037fc25fcd0bafc27d5b404e0bb7fa37a72d09ab57a3708ab9e6339",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.terminology"
+        ]
+      }
+    },
+    {
+      "id": "clipping-paths",
+      "title": "5. Clipping Paths",
+      "level": 2,
+      "text_sha256": "23f1f2427caef3a7102c5e9c9d0d659fdecc3556ab01ea9d5e6fe1720e0d0e58",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.clipping-paths",
+          "css-masking-1.clipping-paths-clause-b0d62aafc14f",
+          "css-masking-1.clipping-paths-clause-e620ca45ae3b"
+        ]
+      }
+    },
+    {
+      "id": "the-clip-path",
+      "title": "5.1. Clipping Shape: the clip-path property",
+      "level": 3,
+      "text_sha256": "b595e890c6281b4ab2dc7ef825e116e465c1c7767c20c356d95801a21d310145",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-clip-path",
+          "css-masking-1.the-clip-path-clause-cca2516ebb1d",
+          "css-masking-1.the-clip-path-clause-674d5fa645b0",
+          "css-masking-1.the-clip-path-clause-e7ad9573c225",
+          "css-masking-1.the-clip-path-clause-d18f8fdb6ffd",
+          "css-masking-1.the-clip-path-clause-73bcbf199667"
+        ]
+      }
+    },
+    {
+      "id": "svg-clipping-paths",
+      "title": "6. SVG Clipping Path Sources",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.svg-clipping-paths"
+        ]
+      }
+    },
+    {
+      "id": "ClipPathElement",
+      "title": "6.1. The clipPath element",
+      "level": 3,
+      "text_sha256": "92b1e1ef94ea746009597226b0f6481e2e0537219eb1a87e30a0f052d15ecc08",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.clippathelement",
+          "css-masking-1.clippathelement-clause-78ed0dc30293",
+          "css-masking-1.clippathelement-clause-a94f7b35b658",
+          "css-masking-1.clippathelement-clause-4ea2c2e025be",
+          "css-masking-1.clippathelement-clause-d0bdf9ad899b",
+          "css-masking-1.clippathelement-clause-d67d666c725f"
+        ]
+      }
+    },
+    {
+      "id": "the-clip-rule",
+      "title": "6.2. Winding Rules: the clip-rule property",
+      "level": 3,
+      "text_sha256": "3d7fe2a175de54195ad64e10b50638112edd1ac7165f261897ef37f2aac54567",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-clip-rule",
+          "css-masking-1.the-clip-rule-clause-cca2516ebb1d",
+          "css-masking-1.the-clip-rule-clause-37547a75f0dd",
+          "css-masking-1.the-clip-rule-clause-f5cf592e4407"
+        ]
+      }
+    },
+    {
+      "id": "positioned-masks",
+      "title": "7. Positioned Masks",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.positioned-masks"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-image",
+      "title": "7.1. Mask Image Source: the mask-image property",
+      "level": 3,
+      "text_sha256": "b2933da6d34f6f9bd8b9ce378f5838c105468bab60ca5b79ca6da2375577623e",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-image",
+          "css-masking-1.the-mask-image-clause-cca2516ebb1d",
+          "css-masking-1.the-mask-image-clause-eeff16f281dd",
+          "css-masking-1.the-mask-image-clause-e7ad9573c225",
+          "css-masking-1.the-mask-image-clause-832ed9d4276e",
+          "css-masking-1.the-mask-image-clause-ee640232092f"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-mode",
+      "title": "7.2. Mask Image Interpretation: the mask-mode property",
+      "level": 3,
+      "text_sha256": "f4c5868659a7a6832173c1a26589b3b5aee71ccb67eea5cd1a7df657b4fee665",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-mode",
+          "css-masking-1.the-mask-mode-clause-cca2516ebb1d",
+          "css-masking-1.the-mask-mode-clause-ef92f1c83a44",
+          "css-masking-1.the-mask-mode-clause-846d9eb3bcd0",
+          "css-masking-1.the-mask-mode-clause-a45bd8228a20",
+          "css-masking-1.the-mask-mode-clause-446c446dc764",
+          "css-masking-1.the-mask-mode-clause-095bedf5639d",
+          "css-masking-1.the-mask-mode-clause-7d18e4c50a59",
+          "css-masking-1.the-mask-mode-clause-276e49c3f534"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-repeat",
+      "title": "7.3. Tiling Mask Images: the mask-repeat property",
+      "level": 3,
+      "text_sha256": "a407ab873059b17de463e590daca566a54748ad373f63e83534e5cdb483e29af",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-repeat",
+          "css-masking-1.the-mask-repeat-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-position",
+      "title": "7.4. Positioning Mask Images: the mask-position property",
+      "level": 3,
+      "text_sha256": "bd3d85e941e194b572f5bbef6988ee39537d60161e693bbcea3810667b741efa",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-position",
+          "css-masking-1.the-mask-position-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-clip",
+      "title": "7.5. Masking Area: the mask-clip property",
+      "level": 3,
+      "text_sha256": "42e53d3c1f8a473972d729add4aed53cd95ba66400d2c6d83cbbf857a617c8fe",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-clip",
+          "css-masking-1.the-mask-clip-clause-cca2516ebb1d",
+          "css-masking-1.the-mask-clip-clause-a36818c94fc2",
+          "css-masking-1.the-mask-clip-clause-843fbf434727"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-origin",
+      "title": "7.6. Positioning Area: the mask-origin property",
+      "level": 3,
+      "text_sha256": "73db43bb9e831d7dbd21abd853004568ce960c186d4387fcacdd6df2e2af7f3e",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-origin",
+          "css-masking-1.the-mask-origin-clause-cca2516ebb1d",
+          "css-masking-1.the-mask-origin-clause-252180680484",
+          "css-masking-1.the-mask-origin-clause-8bdc401c3d3e",
+          "css-masking-1.the-mask-origin-clause-953b9eb667a0",
+          "css-masking-1.the-mask-origin-clause-6bab2b96f27d",
+          "css-masking-1.the-mask-origin-clause-21db5ac19b79"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-size",
+      "title": "7.7. Sizing Mask Images: the mask-size property",
+      "level": 3,
+      "text_sha256": "d95e92b528eecaefdc8d387d22a0f98b81dedd3ddd5128fee48071a0be71fb82",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-size",
+          "css-masking-1.the-mask-size-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-composite",
+      "title": "7.8. Compositing mask layers: the mask-composite property",
+      "level": 3,
+      "text_sha256": "87c702fe164f920a6fe47319198dccaeecb9413b0488d4744831eaaebdb0911e",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-composite",
+          "css-masking-1.the-mask-composite-clause-cca2516ebb1d",
+          "css-masking-1.the-mask-composite-clause-ed158e30568c",
+          "css-masking-1.the-mask-composite-clause-211c05faa059",
+          "css-masking-1.the-mask-composite-clause-126018153c71",
+          "css-masking-1.the-mask-composite-clause-37d9b61c3b27",
+          "css-masking-1.the-mask-composite-clause-e0a348367822"
+        ]
+      }
+    },
+    {
+      "id": "the-mask",
+      "title": "7.9. Mask Shorthand: the mask property",
+      "level": 3,
+      "text_sha256": "3f1d09797244106479f00597bc617bfaf853801e69efe744d862c45917739ec4",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask",
+          "css-masking-1.the-mask-clause-cca2516ebb1d",
+          "css-masking-1.the-mask-clause-72e31dcdb3a5",
+          "css-masking-1.the-mask-clause-d871d07ab783",
+          "css-masking-1.the-mask-clause-f6ed1e07898c"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-image-rendering-model",
+      "title": "7.10. The Mask Image Rendering Model",
+      "level": 3,
+      "text_sha256": "c4d02c09fccc1b0bbf8f6a68e237b4107f0b24b0bb5c4e1917ba780f4c686c64",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-image-rendering-model"
+        ]
+      }
+    },
+    {
+      "id": "MaskValues",
+      "title": "7.10.1. Mask processing",
+      "level": 4,
+      "text_sha256": "9beb9faffea090ed485959afcca29b97a6db945f3d6062c8c9b61437163a93de",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.maskvalues",
+          "css-masking-1.maskvalues-clause-ace8648bbaee",
+          "css-masking-1.maskvalues-clause-6617b70dbdb8",
+          "css-masking-1.maskvalues-clause-29c207be935c",
+          "css-masking-1.maskvalues-clause-7c421d179cf6",
+          "css-masking-1.maskvalues-clause-649845a2acd5"
+        ]
+      }
+    },
+    {
+      "id": "layering",
+      "title": "7.10.2. Layering Multiple Mask Images",
+      "level": 4,
+      "text_sha256": "c6dad92e9ae851e8cdc8bd9d47ef00c981c10e00c186416f47b40b04e797a064",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.layering",
+          "css-masking-1.layering-clause-88990728d873"
+        ]
+      }
+    },
+    {
+      "id": "mask-borders",
+      "title": "8. Border-Box Mask",
+      "level": 2,
+      "text_sha256": "9725913f4dab81a9245eda22c87e6b21bc87cff50a75902fb0e8e4762b30ca69",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.mask-borders"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-border-source",
+      "title": "8.1. Mask Border Image Source: the mask-border-source property",
+      "level": 3,
+      "text_sha256": "07caea5ff508b4e6306b19a15e9df3f501a9c45cdddccccd5fb0eaca065a3a31",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-border-source",
+          "css-masking-1.the-mask-border-source-clause-cca2516ebb1d",
+          "css-masking-1.the-mask-border-source-clause-3363dcdc6f50",
+          "css-masking-1.the-mask-border-source-clause-3933bdb2d84f",
+          "css-masking-1.the-mask-border-source-clause-e7ad9573c225",
+          "css-masking-1.the-mask-border-source-clause-f284d010d87d"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-border-mode",
+      "title": "8.2. Mask Border Image Interpretation: the mask-border-mode property",
+      "level": 3,
+      "text_sha256": "a1a70992b7da87f4153db4029f516ea999d673ac17b60daab054a4cd54eebc59",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-border-mode",
+          "css-masking-1.the-mask-border-mode-clause-cca2516ebb1d",
+          "css-masking-1.the-mask-border-mode-clause-f0ebd3669ae8",
+          "css-masking-1.the-mask-border-mode-clause-e78abaab3d45",
+          "css-masking-1.the-mask-border-mode-clause-f64ace138922",
+          "css-masking-1.the-mask-border-mode-clause-ade62d738c83",
+          "css-masking-1.the-mask-border-mode-clause-520498f2e700"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-border-slice",
+      "title": "8.3. Mask Border Image Slicing: the mask-border-slice property",
+      "level": 3,
+      "text_sha256": "8d8699706a18db2b2c2809746a37386fd94368ee8ee4cc2231789c7752f75c24",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-border-slice",
+          "css-masking-1.the-mask-border-slice-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-border-width",
+      "title": "8.4. Masking Areas: the mask-border-width property",
+      "level": 3,
+      "text_sha256": "2cda9863f75d093d6375dadc0a21ab3a436369eca5390b5e9a56a73cc9bfde75",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-border-width",
+          "css-masking-1.the-mask-border-width-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-border-outset",
+      "title": "8.5. Edge Overhang: the mask-border-outset property",
+      "level": 3,
+      "text_sha256": "353e6522000cac836a363699271c45c493abf694c39911808ca496a56fa80b6c",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-border-outset",
+          "css-masking-1.the-mask-border-outset-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-border-repeat",
+      "title": "8.6. Mask Border Image Tiling: the mask-border-repeat property",
+      "level": 3,
+      "text_sha256": "2e601a14a2610334c7d23c93138f823cd6d0ce88b249721bdd667ef917ba3f2f",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-border-repeat",
+          "css-masking-1.the-mask-border-repeat-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-border",
+      "title": "8.7. Mask Border Image Shorthand: the mask-border property",
+      "level": 3,
+      "text_sha256": "156e73ae22610c99ad0551f66919388e71f35d91d8138750fdf6f6d18cf6d6e9",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-border",
+          "css-masking-1.the-mask-border-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "masking-with-the-mask-border-image",
+      "title": "8.8. Masking with the mask border image",
+      "level": 3,
+      "text_sha256": "26544121ae5c7fc64669cc1472184a3342beb41d84daffdbd49d6e09b5b72743",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.masking-with-the-mask-border-image"
+        ]
+      }
+    },
+    {
+      "id": "svg-masks",
+      "title": "9. SVG Mask Sources",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.svg-masks"
+        ]
+      }
+    },
+    {
+      "id": "MaskElement",
+      "title": "9.1. The mask element",
+      "level": 3,
+      "text_sha256": "9f92500932d96d165bf621a69921633bd997e2f36f59ecce97c4c1c0eb03726a",
+      "clause_count": 86,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.maskelement",
+          "css-masking-1.maskelement-clause-16e980285af7",
+          "css-masking-1.maskelement-clause-54c6abcfa5a1",
+          "css-masking-1.maskelement-clause-04a7d9343123",
+          "css-masking-1.maskelement-clause-8bdc2b406da4"
+        ]
+      }
+    },
+    {
+      "id": "the-mask-type",
+      "title": "9.2. Mask Source Interpretation: the mask-type property",
+      "level": 3,
+      "text_sha256": "c1d8c602c54a4a58e947d4ec09772c1da20f06c913919e28a2e0c25502771e33",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.the-mask-type",
+          "css-masking-1.the-mask-type-clause-cca2516ebb1d",
+          "css-masking-1.the-mask-type-clause-ea65773daa02",
+          "css-masking-1.the-mask-type-clause-3ec24dc2ddd9",
+          "css-masking-1.the-mask-type-clause-6e3ce82da23e",
+          "css-masking-1.the-mask-type-clause-8ffde1140ef2",
+          "css-masking-1.the-mask-type-clause-3140b319ed2c"
+        ]
+      }
+    },
+    {
+      "id": "priv-sec",
+      "title": "10. Privacy and Security Considerations",
+      "level": 2,
+      "text_sha256": "e86bd07378296c78f83e4b44e1fd2ab333b32f131acc4dda43314145d4efeec6",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.priv-sec",
+          "css-masking-1.priv-sec-clause-995968d2022c",
+          "css-masking-1.priv-sec-clause-50ff090e5155"
+        ]
+      }
+    },
+    {
+      "id": "clip-property",
+      "title": "Appendix A: The deprecated clip property",
+      "level": 2,
+      "text_sha256": "6999c35e6e99ed3486792c5db41428fa3fdd044046e9b953af383a37796531dc",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.clip-property",
+          "css-masking-1.clip-property-clause-cca2516ebb1d",
+          "css-masking-1.clip-property-clause-674d5fa645b0",
+          "css-masking-1.clip-property-clause-6f0bf9c3c4c1",
+          "css-masking-1.clip-property-clause-7de25610426a",
+          "css-masking-1.clip-property-clause-f88473e638b8",
+          "css-masking-1.clip-property-clause-ef791d004aa9",
+          "css-masking-1.clip-property-clause-2468e138e196"
+        ]
+      }
+    },
+    {
+      "id": "compute-stroke-bounding-box",
+      "title": "Appendix B: Compute stroke bounding box",
+      "level": 2,
+      "text_sha256": "662e7cb9cbfc0e97eb0d34211b7f251f7096fb45645f1d28e029074b9bcb2202",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.compute-stroke-bounding-box",
+          "css-masking-1.compute-stroke-bounding-box-clause-f724a83d1f11",
+          "css-masking-1.compute-stroke-bounding-box-clause-8c7a5a87e638",
+          "css-masking-1.compute-stroke-bounding-box-clause-e768dae99acc",
+          "css-masking-1.compute-stroke-bounding-box-clause-c71c4e3e1403"
+        ]
+      }
+    },
+    {
+      "id": "DOMInterfaces",
+      "title": "Appendix C: DOM interfaces",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.dominterfaces"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGClipPathElement",
+      "title": "Interface SVGClipPathElement",
+      "level": 3,
+      "text_sha256": "e549de431f0b133e5095eab4ffad6185ee5610ed45c21fce23ac91a2756e6623",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.interfacesvgclippathelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGMaskElement",
+      "title": "Interface SVGMaskElement",
+      "level": 3,
+      "text_sha256": "ea8ef89a6b0d550a23fd1cddc48385e526ba84983521c76648683626b3eb9ed4",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.interfacesvgmaskelement"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes since last publication",
+      "level": 2,
+      "text_sha256": "b36705716910e38ad23c6070158248c988a9ba138fe551cd0b00ea72905e93eb",
+      "clause_count": 79,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "2ea23759d656550b64beb383e865c2a396ead17b970c76a270ae05814c11f844",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.w3c-conventions",
+          "css-masking-1.w3c-conventions-clause-5c98c879f070",
+          "css-masking-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.w3c-conformance-classes",
+          "css-masking-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-masking-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.w3c-partial",
+          "css-masking-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.w3c-testing",
+          "css-masking-1.w3c-testing-clause-1e0fff369221",
+          "css-masking-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.w3c-cr-exit-criteria",
+          "css-masking-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-masking-1.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-masking-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-masking-1.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-masking-1.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "e1cbc597f1d2b92ba54947be10539695eb9788baca317a3bac6dd08044e313a3",
+      "clause_count": 512,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "26e5c705dc31a76c7365f57c9c67a0f646ede965855e4def7a268c3f249d2079",
+      "clause_count": 175,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "89bcc51d597e903814da5ea88758acf77b4c5967a432fd5f5b59133714e2079a",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.import-6b91f794ab2b"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "f6655e0e81197c854a71117fcf0ec178a30c73a34b92cd1d73449c071fc75eec",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "c8a8f059f44d98e1f23655011a73e9cee95038ca68d11b390c6388e0c637f83a",
+      "clause_count": 210,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.property-index",
+          "css-masking-1.property-index-clause-674d5fa645b0",
+          "css-masking-1.property-index-clause-3363dcdc6f50",
+          "css-masking-1.property-index-clause-eeff16f281dd"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "196c52f40fa5aba143eaee2026d61279f74168f1fd57119666bc6f9c6bdfa0c5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "cd35f0a1accd476141408ca20454185cf93e8479827b697a7358a354efcfd080",
+      "clause_count": 257,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-masking-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-kern",
+  "sections": [
+    {
+      "id": "kern--kerning",
+      "title": "kern — Kerning",
+      "level": 1,
+      "text_sha256": "34bfb35f803cedff1216abd4da51f5f9ff344a84d958c16b94f700585fcfb242",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-kern.kern-kerning"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-kern.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "format-0",
+      "title": "Format 0",
+      "level": 2,
+      "text_sha256": "3e59ce22a612cdec9c86c78096475f11d5a4de17dbfc0dbf5b4690402bd25003",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-kern.format-0",
+          "opentype-kern.format-0-clause-8e02f442e0d5",
+          "opentype-kern.format-0-clause-cae5b23d0f77"
+        ]
+      }
+    },
+    {
+      "id": "format-2",
+      "title": "Format 2",
+      "level": 2,
+      "text_sha256": "4dd4cfb02aee3bd51c3771725a14ad2a17c5bfee0338bc8dad08f3ca656e2f13",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-kern.format-2",
+          "opentype-kern.format-2-clause-27239fd45164"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-kern.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "4e2297f79525355aa3dc07756ae4ae6ba350dc012790f96133dc9fdbf48db6d0",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-kern.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-kern.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "source_id": "svg2",
+  "sections": [
+    {
+      "id": "pagetitle",
+      "title": "Scalable Vector Graphics (SVG) 2",
+      "level": 1,
+      "text_sha256": "a12db1a0c1ccd11781f05238010747eb2be2ac9743128077c3da8a7eae296164",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg2.pagetitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "adbdf96221ca8bf102c6b44b6db739c1dcbd9c3854b4c0e80bb4a9a05895709b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg2.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of This Document",
+      "level": 2,
+      "text_sha256": "abc221ce5a5598d26a9283f504b4de17ad825be2343adacfc1b19166864de824",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg2.status"
+        ]
+      }
+    },
+    {
+      "id": "fulltoc",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "ed09534e8d249c1cf75c8f46a3e7e97c576bb2ee4d873db373b3802f35a2f74b",
+      "clause_count": 461,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg2.fulltoc"
+        ]
+      }
+    },
+    {
+      "id": "Acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "92a802c5811ff60a6729868aa9da6cbce93de61a41e0bc2e33f27b9900bee577",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "svg2.acknowledgments"
+        ]
+      }
+    }
+  ]
+}

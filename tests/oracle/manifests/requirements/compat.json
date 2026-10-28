@@ -1,0 +1,2497 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "compat.conformance",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "117628e67c812ed39bb19ed8528b617d83ef65d571b6bc5f4109c1b22f0470c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.conformance-clause-b8e68ad2e013",
+        "compat.conformance-clause-96cba5c63ad0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.conformance-clause-b8e68ad2e013",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Conformance — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 0,
+        "clause_sha256": "b8e68ad2e0134749f182f16f71d0f2b884ad5360e62715f9a0d1925ca8736e6f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.conformance-clause-96cba5c63ad0",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Conformance — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 1,
+        "clause_sha256": "96cba5c63ad0e3b901c03f87945364bc4c38d654b7ee0d8f6d7b33d74f593b99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-compat-section",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-compat-section"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Compatibility.",
+      "locator": {
+        "section_id": "css-compat-section",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-at-rules",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-at-rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS At-rules.",
+      "locator": {
+        "section_id": "css-at-rules",
+        "text_sha256": "d8b18b0e231278ada928b3fa8af6023387181860fd80bc152313163b6a470167"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.css-at-rules-clause-63fce987ec0f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-at-rules-clause-63fce987ec0f",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-at-rules"
+      ],
+      "behaviour": "CSS At-rules — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-at-rules",
+        "clause_index": 0,
+        "clause_sha256": "63fce987ec0f8bc771d71b0e9b19edc74ab980faa2dd5e9d1b4e6ac6acf33021"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-media-queries",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-media-queries"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Media Queries.",
+      "locator": {
+        "section_id": "css-media-queries",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-media-queries-webkit-device-pixel-ratio",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-media-queries-webkit-device-pixel-ratio"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in -webkit-device-pixel-ratio.",
+      "locator": {
+        "section_id": "css-media-queries-webkit-device-pixel-ratio",
+        "text_sha256": "d90b70775a2101e366e403ef14a96fb65e9efa76e0ced8cb324ed05e9fb56132"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.css-media-queries-webkit-device-pixel-ratio-clause-ab80a2861ae6",
+        "compat.css-media-queries-webkit-device-pixel-ratio-clause-224573254449",
+        "compat.css-media-queries-webkit-device-pixel-ratio-clause-30dd2e6155b4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-media-queries-webkit-device-pixel-ratio-clause-ab80a2861ae6",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-media-queries-webkit-device-pixel-ratio"
+      ],
+      "behaviour": "-webkit-device-pixel-ratio — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-media-queries-webkit-device-pixel-ratio",
+        "clause_index": 7,
+        "clause_sha256": "ab80a2861ae610b1b2c946b0fe8ca9eb7ed93721a12aee6e063c8068631bf6e5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-media-queries-webkit-device-pixel-ratio-clause-224573254449",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-media-queries-webkit-device-pixel-ratio"
+      ],
+      "behaviour": "-webkit-device-pixel-ratio — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-media-queries-webkit-device-pixel-ratio",
+        "clause_index": 8,
+        "clause_sha256": "2245732544490e534f5e7bcffbe58bb913be6e47a3ca53e8c018d5da11dbf252"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-media-queries-webkit-device-pixel-ratio-clause-30dd2e6155b4",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-media-queries-webkit-device-pixel-ratio"
+      ],
+      "behaviour": "-webkit-device-pixel-ratio — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-media-queries-webkit-device-pixel-ratio",
+        "clause_index": 9,
+        "clause_sha256": "30dd2e6155b4b6f922aa6776698f6d0e79ad0bd96cf3da9ca7c2f0bc2796dc6f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-media-queries-webkit-transform-3d",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-media-queries-webkit-transform-3d"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in -webkit-transform-3d.",
+      "locator": {
+        "section_id": "css-media-queries-webkit-transform-3d",
+        "text_sha256": "7234e3e78ee5fa90ff0c922313d6f5d87becb051ff4ac60dc7ce2fa753f360e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-gradient-fns",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-gradient-fns"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Gradient Functions.",
+      "locator": {
+        "section_id": "css-gradient-fns",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-gradients-webkit-linear-gradient",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-gradients-webkit-linear-gradient"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in -webkit-linear-gradient().",
+      "locator": {
+        "section_id": "css-gradients-webkit-linear-gradient",
+        "text_sha256": "a87ebbccbce28846adfd2fee6fb292be7e0cb7ba78b976f239d295db724d17b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.css-gradients-webkit-linear-gradient-clause-a87ebbccbce2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-gradients-webkit-linear-gradient-clause-a87ebbccbce2",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-gradients-webkit-linear-gradient"
+      ],
+      "behaviour": "-webkit-linear-gradient() — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-gradients-webkit-linear-gradient",
+        "clause_index": 0,
+        "clause_sha256": "a87ebbccbce28846adfd2fee6fb292be7e0cb7ba78b976f239d295db724d17b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-gradients-webkit-radial-gradient",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-gradients-webkit-radial-gradient"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in -webkit-radial-gradient().",
+      "locator": {
+        "section_id": "css-gradients-webkit-radial-gradient",
+        "text_sha256": "2d17d17999a5382e3a1bee63b5b8ea3a517efafb9e40d30d982ee533ba96b926"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.css-gradients-webkit-radial-gradient-clause-2d17d17999a5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-gradients-webkit-radial-gradient-clause-2d17d17999a5",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-gradients-webkit-radial-gradient"
+      ],
+      "behaviour": "-webkit-radial-gradient() — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-gradients-webkit-radial-gradient",
+        "clause_index": 0,
+        "clause_sha256": "2d17d17999a5382e3a1bee63b5b8ea3a517efafb9e40d30d982ee533ba96b926"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-gradients-repeating-webkit-linear-gradient",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-gradients-repeating-webkit-linear-gradient"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in -webkit-repeating-linear-gradient().",
+      "locator": {
+        "section_id": "css-gradients-repeating-webkit-linear-gradient",
+        "text_sha256": "9354eb33bc789e615fa4efeb1ce887c9969c652638cdca67e805f8f5e1c2756e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.css-gradients-repeating-webkit-linear-gradient-clause-9354eb33bc78"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-gradients-repeating-webkit-linear-gradient-clause-9354eb33bc78",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-gradients-repeating-webkit-linear-gradient"
+      ],
+      "behaviour": "-webkit-repeating-linear-gradient() — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-gradients-repeating-webkit-linear-gradient",
+        "clause_index": 0,
+        "clause_sha256": "9354eb33bc789e615fa4efeb1ce887c9969c652638cdca67e805f8f5e1c2756e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-gradients-repeating-webkit-radial-gradient",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-gradients-repeating-webkit-radial-gradient"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in -webkit-repeating-radial-gradient().",
+      "locator": {
+        "section_id": "css-gradients-repeating-webkit-radial-gradient",
+        "text_sha256": "f9b4e5f92227d7fb9cef72b80a7a81412e385df3bb7280d94833f7e3448def76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.css-gradients-repeating-webkit-radial-gradient-clause-f9b4e5f92227"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-gradients-repeating-webkit-radial-gradient-clause-f9b4e5f92227",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-gradients-repeating-webkit-radial-gradient"
+      ],
+      "behaviour": "-webkit-repeating-radial-gradient() — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-gradients-repeating-webkit-radial-gradient",
+        "clause_index": 0,
+        "clause_sha256": "f9b4e5f92227d7fb9cef72b80a7a81412e385df3bb7280d94833f7e3448def76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-properties",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Properties.",
+      "locator": {
+        "section_id": "css-properties",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-simple-aliases",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-simple-aliases"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Legacy name aliases.",
+      "locator": {
+        "section_id": "css-simple-aliases",
+        "text_sha256": "48f8823acf0d400236833c11810f6040e600c16f19514bc5ccd90a5114e89331"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.css-simple-aliases-clause-3bea2cf4e989"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-simple-aliases-clause-3bea2cf4e989",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-simple-aliases"
+      ],
+      "behaviour": "Legacy name aliases — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-simple-aliases",
+        "clause_index": 0,
+        "clause_sha256": "3bea2cf4e989a646f535aa062cd31bd14f675086520aa867d01c816267438237"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-prefixed-aliases",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-prefixed-aliases"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Prefixed legacy name aliases.",
+      "locator": {
+        "section_id": "css-prefixed-aliases",
+        "text_sha256": "f57b855dd165ac79f903c73cea7a917889575751eb7b6dd6e51a10639530c105"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.css-prefixed-aliases-clause-df0a7bb55f2f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-prefixed-aliases-clause-df0a7bb55f2f",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-prefixed-aliases"
+      ],
+      "behaviour": "Prefixed legacy name aliases — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-prefixed-aliases",
+        "clause_index": 0,
+        "clause_sha256": "df0a7bb55f2f2842186dd3f778caa3139c4936b0ba1b54075715411be7b10f42"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-non-aliased",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-non-aliased"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-aliased vendor prefixed properties.",
+      "locator": {
+        "section_id": "css-non-aliased",
+        "text_sha256": "0360127fd9a6dcc938d6a347373b3eee42d695754596d46cbe50cf0c47e2efc9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-property-mappings",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-property-mappings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property mappings.",
+      "locator": {
+        "section_id": "css-property-mappings",
+        "text_sha256": "446ae1e704dba9f1e91d3460c5a692f7e20a3cf742d761f63c35047abc7145a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.css-property-mappings-clause-dae55888c382"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-property-mappings-clause-dae55888c382",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-property-mappings"
+      ],
+      "behaviour": "Property mappings — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-property-mappings",
+        "clause_index": 0,
+        "clause_sha256": "dae55888c382b573694c2c9c66393dc1cf0a8e4dd6f57fb71ab4527d2d1dd80f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-keyword-mappings",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-keyword-mappings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Keyword mappings.",
+      "locator": {
+        "section_id": "css-keyword-mappings",
+        "text_sha256": "be0f82bd96a87d2798f581b846dd1e96ed6487280d4c469af5a93aa3330954f2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.css-keyword-mappings-clause-45dfe4e9a701"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.css-keyword-mappings-clause-45dfe4e9a701",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-keyword-mappings"
+      ],
+      "behaviour": "Keyword mappings — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "css-keyword-mappings",
+        "clause_index": 0,
+        "clause_sha256": "45dfe4e9a7014c0c3ff3dc5a3188782a8479caa168f7a2d6726a7b886183e103"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.text-fill-and-stroking",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "text-fill-and-stroking"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Fill and Stroking.",
+      "locator": {
+        "section_id": "text-fill-and-stroking",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.the-webkit-text-fill-color",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-fill-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Foreground Text Color: the -webkit-text-fill-color property.",
+      "locator": {
+        "section_id": "the-webkit-text-fill-color",
+        "text_sha256": "d8779540c388ac561b79636405bdd1ca424feb4036a186f4e0dd1ed89782ee9a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.the-webkit-text-fill-color-clause-cca2516ebb1d",
+        "compat.the-webkit-text-fill-color-clause-4b59fe755d34",
+        "compat.the-webkit-text-fill-color-clause-3ceb3ae8186d",
+        "compat.the-webkit-text-fill-color-clause-5bfc80bd92f7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.the-webkit-text-fill-color-clause-cca2516ebb1d",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-fill-color"
+      ],
+      "behaviour": "Foreground Text Color: the -webkit-text-fill-color property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-webkit-text-fill-color",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.the-webkit-text-fill-color-clause-4b59fe755d34",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-fill-color"
+      ],
+      "behaviour": "Foreground Text Color: the -webkit-text-fill-color property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-webkit-text-fill-color",
+        "clause_index": 17,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.the-webkit-text-fill-color-clause-3ceb3ae8186d",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-fill-color"
+      ],
+      "behaviour": "Foreground Text Color: the -webkit-text-fill-color property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-webkit-text-fill-color",
+        "clause_index": 20,
+        "clause_sha256": "3ceb3ae8186dcd849bae3ab762605ab9a22361db675921d519819ca59623d7b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.the-webkit-text-fill-color-clause-5bfc80bd92f7",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-fill-color"
+      ],
+      "behaviour": "Foreground Text Color: the -webkit-text-fill-color property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-webkit-text-fill-color",
+        "clause_index": 22,
+        "clause_sha256": "5bfc80bd92f7cc25c0f5d401b39e0c1b124922df23f6f2a6a3ac5f75b1d4cc66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.the-webkit-text-stroke-color",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-stroke-color"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Stroke Color: the -webkit-text-stroke-color property.",
+      "locator": {
+        "section_id": "the-webkit-text-stroke-color",
+        "text_sha256": "3836dfeecfc29519f6f6effe59386d5a8f681120a99c25b4ba7ab4a0aa8531bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.the-webkit-text-stroke-color-clause-cca2516ebb1d",
+        "compat.the-webkit-text-stroke-color-clause-4b59fe755d34"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.the-webkit-text-stroke-color-clause-cca2516ebb1d",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-stroke-color"
+      ],
+      "behaviour": "Text Stroke Color: the -webkit-text-stroke-color property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-webkit-text-stroke-color",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.the-webkit-text-stroke-color-clause-4b59fe755d34",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-stroke-color"
+      ],
+      "behaviour": "Text Stroke Color: the -webkit-text-stroke-color property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-webkit-text-stroke-color",
+        "clause_index": 17,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.the-webkit-text-stroke-width",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-stroke-width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Stroke Thickness: the -webkit-text-stroke-width property.",
+      "locator": {
+        "section_id": "the-webkit-text-stroke-width",
+        "text_sha256": "cc5d7b9830062d8f30c07097aa67c4871efee5de1249be9aa94c4c1fae562956"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.the-webkit-text-stroke-width-clause-cca2516ebb1d",
+        "compat.the-webkit-text-stroke-width-clause-ca9dc66c7504",
+        "compat.the-webkit-text-stroke-width-clause-aac84d1a2681"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.the-webkit-text-stroke-width-clause-cca2516ebb1d",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-stroke-width"
+      ],
+      "behaviour": "Text Stroke Thickness: the -webkit-text-stroke-width property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-webkit-text-stroke-width",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.the-webkit-text-stroke-width-clause-ca9dc66c7504",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-stroke-width"
+      ],
+      "behaviour": "Text Stroke Thickness: the -webkit-text-stroke-width property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-webkit-text-stroke-width",
+        "clause_index": 19,
+        "clause_sha256": "ca9dc66c750469c821749d4e87ca4b21e0dcd9a029ee0be1ca032488a58e3ea2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.the-webkit-text-stroke-width-clause-aac84d1a2681",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-stroke-width"
+      ],
+      "behaviour": "Text Stroke Thickness: the -webkit-text-stroke-width property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-webkit-text-stroke-width",
+        "clause_index": 20,
+        "clause_sha256": "aac84d1a26814b10716bb95b61a10243cf457bc5a4bcd7d1a23f3043b51b96be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.the-webkit-text-stroke",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-stroke"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Stroke Shorthand: the -webkit-text-stroke property.",
+      "locator": {
+        "section_id": "the-webkit-text-stroke",
+        "text_sha256": "36f78303a75380ae097df14e318c5d37b8d5d0a047308b9435bd262008d969cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.the-webkit-text-stroke-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.the-webkit-text-stroke-clause-cca2516ebb1d",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "the-webkit-text-stroke"
+      ],
+      "behaviour": "Text Stroke Shorthand: the -webkit-text-stroke property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-webkit-text-stroke",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.css-property-values",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "css-property-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Property values.",
+      "locator": {
+        "section_id": "css-property-values",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.touch-action",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "touch-action"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Additional touch-action values.",
+      "locator": {
+        "section_id": "touch-action",
+        "text_sha256": "b15b28d9760395b3e9240dac7ad6c8f7c89539ab3f1f9995a32daa79f8a068fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.touch-action-clause-cca2516ebb1d",
+        "compat.touch-action-clause-67ab8ec01a3c",
+        "compat.touch-action-clause-d9a7bc26b1be"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.touch-action-clause-cca2516ebb1d",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "touch-action"
+      ],
+      "behaviour": "Additional touch-action values — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "touch-action",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.touch-action-clause-67ab8ec01a3c",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "touch-action"
+      ],
+      "behaviour": "Additional touch-action values — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "touch-action",
+        "clause_index": 20,
+        "clause_sha256": "67ab8ec01a3cc7ae93880816a6ded03aa9314496202bbf38c80ce7010472e4c3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.touch-action-clause-d9a7bc26b1be",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "touch-action"
+      ],
+      "behaviour": "Additional touch-action values — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "touch-action",
+        "clause_index": 22,
+        "clause_sha256": "d9a7bc26b1bed9ef63037cc4b2d4102ef024d819e109700c8a789874e0e84a2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.dom-compat-section",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "dom-compat-section"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in DOM Compatibility.",
+      "locator": {
+        "section_id": "dom-compat-section",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.webkitcssmatrix-interface",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "webkitcssmatrix-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The WebKitCSSMatrix interface.",
+      "locator": {
+        "section_id": "webkitcssmatrix-interface",
+        "text_sha256": "8344e1005302a1ee9dd7567a3b5ed65095ae974a32f42db7b08faf17bc96143d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.windoworientation-interface",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "windoworientation-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in window.orientation API.",
+      "locator": {
+        "section_id": "windoworientation-interface",
+        "text_sha256": "36f47c41dd5dc1ae889dc1453f41fadd61ec4a91f709fc73d63088e2396a6a0b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.windoworientation-interface-clause-4a6e7f81ec71",
+        "compat.windoworientation-interface-clause-92265e935b22",
+        "compat.windoworientation-interface-clause-7fffcf192b42"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.windoworientation-interface-clause-4a6e7f81ec71",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "windoworientation-interface"
+      ],
+      "behaviour": "window.orientation API — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "windoworientation-interface",
+        "clause_index": 1,
+        "clause_sha256": "4a6e7f81ec71e005ec7e58a9a872665fa306991a2c3bc845457ba9a1707a3e1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.windoworientation-interface-clause-92265e935b22",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "windoworientation-interface"
+      ],
+      "behaviour": "window.orientation API — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "windoworientation-interface",
+        "clause_index": 6,
+        "clause_sha256": "92265e935b22ec6ac24711608c6401b658c795ccf4048a6136b1c7a7b3456a65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.windoworientation-interface-clause-7fffcf192b42",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "windoworientation-interface"
+      ],
+      "behaviour": "window.orientation API — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "windoworientation-interface",
+        "clause_index": 9,
+        "clause_sha256": "7fffcf192b42ce93cf85f54b3025d0f28eb5b13219d5a4fafa5c45f33a00efb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.dfn-window-orientation-angle",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "dfn-window-orientation-angle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in window.orientation angle.",
+      "locator": {
+        "section_id": "dfn-window-orientation-angle",
+        "text_sha256": "ef08d1184b9a929f6195c10daa106c721f87bc309ee217fc936b6e6273817085"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.dfn-window-orientation-angle-clause-ff99aa03f383",
+        "compat.dfn-window-orientation-angle-clause-71a3d10bf8ca"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.dfn-window-orientation-angle-clause-ff99aa03f383",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "dfn-window-orientation-angle"
+      ],
+      "behaviour": "window.orientation angle — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "dfn-window-orientation-angle",
+        "clause_index": 0,
+        "clause_sha256": "ff99aa03f3832aabe8febb81598de7ae96cc725e131221020323afb51d971034"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.dfn-window-orientation-angle-clause-71a3d10bf8ca",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "dfn-window-orientation-angle"
+      ],
+      "behaviour": "window.orientation angle — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "dfn-window-orientation-angle",
+        "clause_index": 2,
+        "clause_sha256": "71a3d10bf8cad69ac6f30b502daf9a576cf682af7760450c50ddb0b4cffcba56"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.event-handlers",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "event-handlers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Event Handlers on Window objects and body elements.",
+      "locator": {
+        "section_id": "event-handlers",
+        "text_sha256": "5eaeea08056d4fdb6f5d996105276ae3f5583f636366c2a4d8a7febbe2b3e99b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.event-handlers-clause-99817aacbad6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.event-handlers-clause-99817aacbad6",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "event-handlers"
+      ],
+      "behaviour": "Event Handlers on Window objects and body elements — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "event-handlers",
+        "clause_index": 0,
+        "clause_sha256": "99817aacbad6f6eca5260b9def5eaa43980c9146650c14aa7d5138f22c4ec0d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.property-index",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "d48409f81afc0bfe63c16a549d6d906fadbf90b80bc440d9687c5b98665e7721"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "compat.property-index-clause-4b59fe755d34"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.property-index-clause-4b59fe755d34",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 16,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "compat.media-descriptor-table",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "media-descriptor-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in @media Descriptors.",
+      "locator": {
+        "section_id": "media-descriptor-table",
+        "text_sha256": "ac850a5afbce4b39b19790bd1b600c79fa1ac88d2f1f83c92132b6cd736e5bda"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.idl-index",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "4b722e7b4b1cc91922de2a11449c02d20ac7e6e9d00290f8d838e9f947cfd54e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.import-4f80c079fa8d",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.csswg.org/css-flexbox-2/.",
+      "unresolved_reference": "https://drafts.csswg.org/css-flexbox-2/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "compat.import-709148d9fced",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.csswg.org/css-size-adjust-1/.",
+      "unresolved_reference": "https://drafts.csswg.org/css-size-adjust-1/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "compat.import-e7dd35961f00",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://httpwg.org/http-core/draft-ietf-httpbis-semantics-latest.html.",
+      "unresolved_reference": "https://httpwg.org/http-core/draft-ietf-httpbis-semantics-latest.html",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "compat.import-008171b5a918",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://w3c.github.io/pointerevents/.",
+      "unresolved_reference": "https://w3c.github.io/pointerevents/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "compat.import-eb828ff7ded3",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://w3c.github.io/screen-orientation/.",
+      "unresolved_reference": "https://w3c.github.io/screen-orientation/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "compat.import-d63835611ccb",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://w3c.github.io/svgwg/svg2-draft/.",
+      "unresolved_reference": "https://w3c.github.io/svgwg/svg2-draft/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "compat.import-8cac7d115c27",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "compat.title",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Compatibility (Commit 159624eff7222f84fbdaae006e998e65bf60daa0).",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "bd458f4ebc06ac9ca47078f78efc5784f948bddd9ada957bf043fa430436bfc4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.abstract",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "7cd6d1c5666f7dd064ad8794712c7c0547da9338d497a061071477bc5d6f02f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.contents",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "dc543d6ae5de555bd3ef852228820e6166b22949f875013588b22cfa082088c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.introduction",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "8aca241989a977b6a8f171b8959f6fa0f0d12a706594de6ff210b47762835d0b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-section",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-section"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5. The User-Agent String.",
+      "locator": {
+        "section_id": "ua-string-section",
+        "text_sha256": "9ded1f51f0a4d350f03e4a875ab4e77c95e79361462094caa00e367447d3c4b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-patterns",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-patterns"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.1. User-Agent Tokens.",
+      "locator": {
+        "section_id": "ua-string-patterns",
+        "text_sha256": "fd5e8d9f5ee57d931eef3389d1f229583af2b2ce905f22530a1debc3cd623747"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-token-reference",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-token-reference"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.1.1. User-Agent Token Reference.",
+      "locator": {
+        "section_id": "ua-string-token-reference",
+        "text_sha256": "64e771e299a0b52558a6bb281b611799182d7923d48abd58d9c08f89216db645"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-meta-structure",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-meta-structure"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.2. Meta Structure.",
+      "locator": {
+        "section_id": "ua-string-meta-structure",
+        "text_sha256": "2c47701cdfeb1d7a214bbfabf7eec134cbc2f9fe483e3a3cafbd5e33f03f5ffd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-chrome",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-chrome"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.3. Chrome.",
+      "locator": {
+        "section_id": "ua-string-chrome",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-pattern-chrome",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-pattern-chrome"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.3.1. Chrome User-Agent pattern.",
+      "locator": {
+        "section_id": "ua-string-pattern-chrome",
+        "text_sha256": "c71a61957bdbb0e43346cc7bf1a177a0732de82dfeb6cfa6338217cac1e3e727"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-tokens-chrome",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-tokens-chrome"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.3.2. Chrome-specific tokens.",
+      "locator": {
+        "section_id": "ua-string-tokens-chrome",
+        "text_sha256": "570c051a00cc31e2a63176d921fc589dd3d7a2b0c31c2a34d39b0869a7770fb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-firefox",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-firefox"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.4. Firefox.",
+      "locator": {
+        "section_id": "ua-string-firefox",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-pattern-firefox",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-pattern-firefox"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.4.1. Firefox User-Agent pattern.",
+      "locator": {
+        "section_id": "ua-string-pattern-firefox",
+        "text_sha256": "c93302c3b8a4699d53d4f960806c9d8d4c80f3809c518e89c347f1b9e963850b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-tokens-firefox",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-tokens-firefox"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.4.2. Firefox-specific tokens.",
+      "locator": {
+        "section_id": "ua-string-tokens-firefox",
+        "text_sha256": "d4306e60018b6c6f660fcaa39510090733538320fd41bd95083d8c443353603e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-safari",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-safari"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.5. Safari.",
+      "locator": {
+        "section_id": "ua-string-safari",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-pattern-safari",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-pattern-safari"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.5.1. Safari User-Agent pattern.",
+      "locator": {
+        "section_id": "ua-string-pattern-safari",
+        "text_sha256": "5fbf060b7b79bdd576b75fdc9fbad1af0656cf807087b3bba5f0d6309b365f3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ua-string-tokens-safari",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ua-string-tokens-safari"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 5.5.2. Safari-specific tokens.",
+      "locator": {
+        "section_id": "ua-string-tokens-safari",
+        "text_sha256": "917c42d488bebc5e2f1db98924f59194ce87ee2fe42fde16e2021a05a8519375"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.acknowledgements",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgements.",
+      "locator": {
+        "section_id": "acknowledgements",
+        "text_sha256": "4a8e38f84c44bd883a04b189e869e0f99f997686f73b3cd6b10d931dbfb2f0bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.ipr",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "ipr"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Intellectual property rights.",
+      "locator": {
+        "section_id": "ipr",
+        "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.index",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.index-defined-here",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "0de81ce7c84234947720b1df313490dfb7e3225405c111007923c54ffcb048d5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.index-defined-elsewhere",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "964ba90755342d6f9ff5461df85042df96485f68827ed1add105ad73f052c5b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.references",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "compat.informative",
+      "family": "compat",
+      "source_id": "compat",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "12c1591367b138514059354ad41f0761a8fc333d170261a606b9ce6bcbefcc8d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

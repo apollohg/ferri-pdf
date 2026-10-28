@@ -1,0 +1,338 @@
+{
+  "schema_version": 1,
+  "source_id": "rfc4647",
+  "sections": [
+    {
+      "id": "heading-227f52f723cd",
+      "title": "Matching of Language Tags",
+      "level": 1,
+      "text_sha256": "e6f32ef8e77b420fcb0fac11ab58b97ee8c0687be3263804c09c2cefb9d8683b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.heading-227f52f723cd"
+        ]
+      }
+    },
+    {
+      "id": "section-1",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "74dd46c6ddc4003876e40a2c8081f886fdd9aae479162eea75963c3f5e46edd9",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-1"
+        ]
+      }
+    },
+    {
+      "id": "section-2",
+      "title": "2. The Language Range",
+      "level": 2,
+      "text_sha256": "39e80d270ab5a6d07ad501d198fe5343a001a8a9f0048d8a22229420ef5f68f1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-2",
+          "rfc4647.section-2-clause-99430f4b965e"
+        ]
+      }
+    },
+    {
+      "id": "section-2.1",
+      "title": "2.1. Basic Language Range",
+      "level": 3,
+      "text_sha256": "5674b703862bbff8ca2288da52488a64eb5568398347990987ad0928f9865051",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-2-1"
+        ]
+      }
+    },
+    {
+      "id": "section-2.2",
+      "title": "2.2. Extended Language Range",
+      "level": 3,
+      "text_sha256": "d6dfdf60abadd344561a05e88b757195bb18da057a274d268191bb58a7c500f8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-2-2",
+          "rfc4647.section-2-2-clause-7b3cae9a6e06"
+        ]
+      }
+    },
+    {
+      "id": "section-2.3",
+      "title": "2.3. The Language Priority List",
+      "level": 3,
+      "text_sha256": "87f4aba8e744ac56f33054b1e33de8b5e5b32a77a66d10149279ec9ab6e756d9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-2-3"
+        ]
+      }
+    },
+    {
+      "id": "section-3",
+      "title": "3. Types of Matching",
+      "level": 2,
+      "text_sha256": "88a636c39ee852bf71ecb019dc491f136c5e33399afaec1b58a0fdf5a7227ebe",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-3"
+        ]
+      }
+    },
+    {
+      "id": "section-3.1",
+      "title": "3.1. Choosing a Matching Scheme",
+      "level": 3,
+      "text_sha256": "cbb995310e789ac8c99e644c17897ff21d3c77faeff30e6abde60d1c2df1a1c3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-3-1"
+        ]
+      }
+    },
+    {
+      "id": "section-3.2",
+      "title": "3.2. Implementation Considerations",
+      "level": 3,
+      "text_sha256": "83e982d0c59299e96c2ac7122f0fe5a1e0eef1cdfd6f505bfba55086cdcc780d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-3-2",
+          "rfc4647.section-3-2-clause-2d096dc3822c"
+        ]
+      }
+    },
+    {
+      "id": "section-3.3",
+      "title": "3.3. Filtering",
+      "level": 3,
+      "text_sha256": "739e37a32480a1a8b7cf8273ca2866bb68bfa81becf87dea10208edd687713ed",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-3-3"
+        ]
+      }
+    },
+    {
+      "id": "section-3.3.1",
+      "title": "3.3.1. Basic Filtering",
+      "level": 4,
+      "text_sha256": "c00e1fc9075e021c09ec2ab33c56f9a642ecc590f6ec42653092a3b0cb98779d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-3-3-1"
+        ]
+      }
+    },
+    {
+      "id": "section-3.3.2",
+      "title": "3.3.2. Extended Filtering",
+      "level": 4,
+      "text_sha256": "026d136242faae1004d7c3fddfa92d5e62c9708eedc242355ac35a24ce22d281",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-3-3-2",
+          "rfc4647.section-3-3-2-clause-a12fae6ea162"
+        ]
+      }
+    },
+    {
+      "id": "section-3.4",
+      "title": "3.4. Lookup",
+      "level": 3,
+      "text_sha256": "7ee4fd2f8b3c562c4a299856cc847f5c3c49da084c58470bec75452eab78ca3c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-3-4",
+          "rfc4647.section-3-4-clause-8c9dff9e8e3e"
+        ]
+      }
+    },
+    {
+      "id": "section-3.4.1",
+      "title": "3.4.1. Default Values",
+      "level": 4,
+      "text_sha256": "f27587ee4c348ad7166d8b07a0b4648159443e4100509d391b2f072c1649bc53",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-3-4-1"
+        ]
+      }
+    },
+    {
+      "id": "section-4",
+      "title": "4. Other Considerations",
+      "level": 2,
+      "text_sha256": "0566c6f66f0752d8468d41970a97e1f682011f53e4457885367c12d4e823ca76",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-4"
+        ]
+      }
+    },
+    {
+      "id": "section-4.1",
+      "title": "4.1. Choosing Language Ranges",
+      "level": 3,
+      "text_sha256": "223a8d3d2b2b6d7ac0e8e1df6661aaccf6bd3fc132cbec37823af4dc2571a8f0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-4-1",
+          "rfc4647.section-4-1-clause-6aa47cb76f1a"
+        ]
+      }
+    },
+    {
+      "id": "section-4.2",
+      "title": "4.2. Meaning of Language Tags and Ranges",
+      "level": 3,
+      "text_sha256": "e1f6ecebb49d5125525c84bf7e8f22749f70786ede18e0d1b70aec8fc507be73",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-4-2"
+        ]
+      }
+    },
+    {
+      "id": "section-4.3",
+      "title": "4.3. Considerations for Private-Use Subtags",
+      "level": 3,
+      "text_sha256": "9df3060a52c719d3b176f0833e1d93a6575baeebd0b512a29e31290b38295396",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-4-3"
+        ]
+      }
+    },
+    {
+      "id": "section-4.4",
+      "title": "4.4. Length Considerations for Language Ranges",
+      "level": 3,
+      "text_sha256": "8558415e040a31a07657f5a18b033f95e33065adcaa12096923d54d5b0c1f269",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-4-4"
+        ]
+      }
+    },
+    {
+      "id": "section-5",
+      "title": "5. Security Considerations",
+      "level": 2,
+      "text_sha256": "85be2b42e39df5348c3eb40139e6a2ebd283f1edab1d8fb49155a5ab4fc0811c",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-5"
+        ]
+      }
+    },
+    {
+      "id": "section-6",
+      "title": "6. Character Set Considerations",
+      "level": 2,
+      "text_sha256": "07df10806798aa4233aac4e43bbbc7385042f434e66f07f7af96256f2064112a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-6"
+        ]
+      }
+    },
+    {
+      "id": "section-7",
+      "title": "7. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-7"
+        ]
+      }
+    },
+    {
+      "id": "section-7.1",
+      "title": "7.1. Normative References",
+      "level": 3,
+      "text_sha256": "ad730b212a278920f5086a62f9cfe91a15b707485617b6875570a225f235ab27",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-7-1"
+        ]
+      }
+    },
+    {
+      "id": "section-7.2",
+      "title": "7.2. Informative References",
+      "level": 3,
+      "text_sha256": "12ef7bc36c53ab6ef25569cd364187550799d39d8d72a1ff4c34b262a348f0e3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.section-7-2"
+        ]
+      }
+    },
+    {
+      "id": "appendix-A",
+      "title": "Appendix A. Acknowledgements",
+      "level": 2,
+      "text_sha256": "f719b2759e307f3c70c6ac07e802c24208ea9fa22eb96cdacc13daf9c4f708a5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc4647.appendix-a",
+          "rfc4647.appendix-a-clause-3730de22659f"
+        ]
+      }
+    }
+  ]
+}

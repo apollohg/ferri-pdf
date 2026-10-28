@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "source_id": "css-position-4",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Positioned Layout Module Level 4",
+      "level": 1,
+      "text_sha256": "d1be945ed9b88a253928a0780397d4e05f04e1dabeb9d54392f7c82e4655e345",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "7dd792633687812791cb231d52544b3621c0a35a5f29a05152feb9bb90872432",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "e5b8af2684365b5316c78f7b0b9139f0d73034768c12ce83df5fad22b50063b0",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "ab19f4443c932c5f74a7f7ee6225276ea60bbc9efabbfe465077664f896dd5ab",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "0d699f4d94b9c82d4e7a4a94baae312066f5315c0341a9cc74f539e4f3791987",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.intro"
+        ]
+      }
+    },
+    {
+      "id": "scrollable-cb",
+      "title": "2. Scrollable Containing Block",
+      "level": 2,
+      "text_sha256": "9953693c460ad64a108213f13a961048ed6fb37a63d9e9f61f96e3825138e6cc",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.scrollable-cb"
+        ]
+      }
+    },
+    {
+      "id": "top-layer",
+      "title": "3. Top Layer",
+      "level": 2,
+      "text_sha256": "f069df432ce7d289d1ae3ea067b0cc3723fe07d0a9f05613c2e891b62f243cc7",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.top-layer",
+          "css-position-4.top-layer-clause-f5701be5fe9d"
+        ]
+      }
+    },
+    {
+      "id": "top-styling",
+      "title": "3.1. Top Layer Styling",
+      "level": 3,
+      "text_sha256": "e0c14e9dccf44b342de02e807774c502c7701c5b3929e8e4dafc0f2c39c8cfa5",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.top-styling"
+        ]
+      }
+    },
+    {
+      "id": "backdrop",
+      "title": "3.2. The ::backdrop Pseudo-Element",
+      "level": 3,
+      "text_sha256": "ed547f42daa36119fe8bb9b97b4611126ff5b8ada9ebad99fbed08ebdc19d7c3",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.backdrop",
+          "css-position-4.backdrop-clause-edcae522a77a",
+          "css-position-4.backdrop-clause-4e33cfaa0f59"
+        ]
+      }
+    },
+    {
+      "id": "top-manip",
+      "title": "3.3. Top Layer Manipulation",
+      "level": 3,
+      "text_sha256": "d6ae6fcc552f6380d77f5796d7a53522803f27b0c84f09d6b8852b5f84428289",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.top-manip",
+          "css-position-4.top-manip-clause-fe3593828b54",
+          "css-position-4.top-manip-clause-36cd20d26028",
+          "css-position-4.top-manip-clause-87212fe25f86",
+          "css-position-4.top-manip-clause-a5110a455816",
+          "css-position-4.top-manip-clause-a57e7f5a726a"
+        ]
+      }
+    },
+    {
+      "id": "overlay",
+      "title": "3.4. Controlling the Top Layer: the overlay property",
+      "level": 3,
+      "text_sha256": "14693aa8a0a90a365848291567e829aa875331004ee91fbd7bb4370dc57bf6d6",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.overlay",
+          "css-position-4.overlay-clause-cca2516ebb1d",
+          "css-position-4.overlay-clause-09bfa01dec9a",
+          "css-position-4.overlay-clause-1182ca0dddd3",
+          "css-position-4.overlay-clause-b029e4337db7"
+        ]
+      }
+    },
+    {
+      "id": "painting-order",
+      "title": "4. Painting Order and Stacking Contexts",
+      "level": 2,
+      "text_sha256": "804108c12740fb759d0b93486bcb9f6771a86987ff14b12610e858252eb487ac",
+      "clause_count": 108,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.painting-order",
+          "css-position-4.painting-order-clause-6dd862bc220e",
+          "css-position-4.painting-order-clause-510741bee5b5"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "5. Changes",
+      "level": 2,
+      "text_sha256": "2bca578178c26b2e6ff10e2711f6350bb847900b6c2aac5b9e80dd1e84897fe4",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.changes"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.security"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.w3c-conventions",
+          "css-position-4.w3c-conventions-clause-5c98c879f070",
+          "css-position-4.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.w3c-conformance-classes",
+          "css-position-4.w3c-conformance-classes-clause-ff408372426c",
+          "css-position-4.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.w3c-partial",
+          "css-position-4.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.w3c-testing",
+          "css-position-4.w3c-testing-clause-1e0fff369221",
+          "css-position-4.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "02264f6b61b45b6d3be66983c783ea505bedc799f5c7816b33bf30f8f7ed3bd9",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "e7c4f610a8761bff70168e91037a37b6587cb3b0519ad6f0d82f7844b2132c1a",
+      "clause_count": 91,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "3013904587c6a5b1f861a5d7eb042e0246a6f0bd4f9bae9a163d78d637f7314b",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "358c1cfcf08c9caf9bd13e0ff1a7e4ebc9e65860f929847eec7262db3eacf2ac",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "b2eee8c37d3b15efef43374494826af0bf43de7295a5e1899658b27f897cef2a",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.property-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "f241b6c5af3ac90ba8dee7b9b625e92c15b73da3d0750ea16209acdb03725fa1",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-position-4.issues-index"
+        ]
+      }
+    }
+  ]
+}

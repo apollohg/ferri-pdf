@@ -1,0 +1,923 @@
+{
+  "schema_version": 1,
+  "source_id": "css-counter-styles-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Counter Styles Level 3",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.title"
+        ]
+      }
+    },
+    {
+      "id": "profile-and-date",
+      "title": "W3C Candidate Recommendation Snapshot, 27 July 2021",
+      "level": 2,
+      "text_sha256": "e1ed069ced9f75a5a8422b61b7beb57e8cb2e4d515e89b178a18891086f22c3d",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.profile-and-date"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "bddc6e157ff0b2832369327bf17991f3b684d2f21e2249d398a7cfc07b8aa0f4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "aecb43c3b219beeb04571cb6068599ea0cbb707997464b37a69ad1093dea6192",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "8883013e4059dae658f4dad38a1e218f499fee74ab3a1a0f891281f9b0e31b00",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "5ad6589497d235377a950d55e3c2571e5c48b28ddc26b5c1c24ff037e582c091",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "counter-styles",
+      "title": "2. Counter Styles",
+      "level": 2,
+      "text_sha256": "0bfdb72f8a4d21d2b993a5cbbcbb4c3e97757277db322aa56f7a4100ba0d3fc9",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.counter-styles",
+          "css-counter-styles-3.counter-styles-clause-cba4af7e43cb",
+          "css-counter-styles-3.counter-styles-clause-0708357c8e43",
+          "css-counter-styles-3.counter-styles-clause-2f87193a9521",
+          "css-counter-styles-3.counter-styles-clause-8cc5c2459448",
+          "css-counter-styles-3.counter-styles-clause-d15151b4a685",
+          "css-counter-styles-3.counter-styles-clause-f5263069ebca"
+        ]
+      }
+    },
+    {
+      "id": "the-counter-style-rule",
+      "title": "3. Defining Custom Counter Styles: the @counter-style rule",
+      "level": 2,
+      "text_sha256": "914f34d0fd72c7f8a415edc918be98cbbbf98f8f6cd731de77179e4e5f548334",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.the-counter-style-rule",
+          "css-counter-styles-3.the-counter-style-rule-clause-f875ae993e96",
+          "css-counter-styles-3.the-counter-style-rule-clause-82aebf8250b1",
+          "css-counter-styles-3.the-counter-style-rule-clause-40527b28d06b",
+          "css-counter-styles-3.the-counter-style-rule-clause-c225f691300e"
+        ]
+      }
+    },
+    {
+      "id": "counter-style-system",
+      "title": "3.1. Counter algorithms: the system descriptor",
+      "level": 3,
+      "text_sha256": "ef7229f81a0c59290fbc33e97bf9c09f948aa7e390fc425e4e1ef970b4381598",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.counter-style-system",
+          "css-counter-styles-3.counter-style-system-clause-3495cfbb248c",
+          "css-counter-styles-3.counter-style-system-clause-29855626eb85",
+          "css-counter-styles-3.counter-style-system-clause-c5fa2d3e1aca"
+        ]
+      }
+    },
+    {
+      "id": "cyclic-system",
+      "title": "3.1.1. Cycling Symbols: the cyclic system",
+      "level": 4,
+      "text_sha256": "517545fa438844f8c028a4d4f96c19ac48d7659ccf86517c4bfb1e4d9c180e71",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.cyclic-system",
+          "css-counter-styles-3.cyclic-system-clause-163adfdb7a7e"
+        ]
+      }
+    },
+    {
+      "id": "fixed-system",
+      "title": "3.1.2. Exhaustible Symbols: the fixed system",
+      "level": 4,
+      "text_sha256": "dd9539662478d97ee2ac45c5f0e78d98c5a6c4ba2dea0fdc97b7eb03618d85f8",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.fixed-system",
+          "css-counter-styles-3.fixed-system-clause-a9c3776de8a4",
+          "css-counter-styles-3.fixed-system-clause-8cd27df2ac1d"
+        ]
+      }
+    },
+    {
+      "id": "symbolic-system",
+      "title": "3.1.3. Repeating Symbols: the symbolic system",
+      "level": 4,
+      "text_sha256": "cbb469c094f084bc2fc91e05a424232d067faa24a81248510e47ae345f8ad7c1",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.symbolic-system",
+          "css-counter-styles-3.symbolic-system-clause-c186b3782cb0",
+          "css-counter-styles-3.symbolic-system-clause-32406f754ccb"
+        ]
+      }
+    },
+    {
+      "id": "alphabetic-system",
+      "title": "3.1.4. Bijective Numerals: the alphabetic system",
+      "level": 4,
+      "text_sha256": "c18a9547b0977747dd06352ec48084c424df77cfe2ce9c7bd71e744f14271d5b",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.alphabetic-system",
+          "css-counter-styles-3.alphabetic-system-clause-1ab5e6388cfa",
+          "css-counter-styles-3.alphabetic-system-clause-7a60908309b8"
+        ]
+      }
+    },
+    {
+      "id": "numeric-system",
+      "title": "3.1.5. Positional Numerals: the numeric system",
+      "level": 4,
+      "text_sha256": "5bda3d890f2c95f224252fff70d1823e5c41275d7ffa1ce6c8876c4100dde8dc",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.numeric-system",
+          "css-counter-styles-3.numeric-system-clause-8ba747fe3121",
+          "css-counter-styles-3.numeric-system-clause-b0a15e6ca778"
+        ]
+      }
+    },
+    {
+      "id": "additive-system",
+      "title": "3.1.6. Accumulating Numerals: the additive system",
+      "level": 4,
+      "text_sha256": "46084cedcb58302d5ad15e1330ddca7abd5eda6abe4709a3cc66e26533573e61",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.additive-system",
+          "css-counter-styles-3.additive-system-clause-2af1cc9d190c",
+          "css-counter-styles-3.additive-system-clause-513551a38602",
+          "css-counter-styles-3.additive-system-clause-74634a65c12d",
+          "css-counter-styles-3.additive-system-clause-ac12ce69f442",
+          "css-counter-styles-3.additive-system-clause-ca449b8d22df"
+        ]
+      }
+    },
+    {
+      "id": "extends-system",
+      "title": "3.1.7. Building from Existing Counter Styles: the extends system",
+      "level": 4,
+      "text_sha256": "e6a6024d87920038d6d62231b523239f64fb381833f9b5567e1992e9fc80017a",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.extends-system",
+          "css-counter-styles-3.extends-system-clause-8eb07f596aac",
+          "css-counter-styles-3.extends-system-clause-5505256d78af",
+          "css-counter-styles-3.extends-system-clause-9dcddf4b372a"
+        ]
+      }
+    },
+    {
+      "id": "counter-style-negative",
+      "title": "3.2. Formatting negative values: the negative descriptor",
+      "level": 3,
+      "text_sha256": "dd353e0aa998e87753c91b517f0e5cef08dede21d8782b7d543a8d1d63074d96",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.counter-style-negative"
+        ]
+      }
+    },
+    {
+      "id": "counter-style-prefix",
+      "title": "3.3. Symbols before the marker: the prefix descriptor",
+      "level": 3,
+      "text_sha256": "46177728d295bb043064cbe4dbc206ed6011e7fccc5480d9d79585e87ddbb1b8",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.counter-style-prefix",
+          "css-counter-styles-3.counter-style-prefix-clause-d42ca23381c4",
+          "css-counter-styles-3.counter-style-prefix-clause-044ffaf950e8"
+        ]
+      }
+    },
+    {
+      "id": "counter-style-suffix",
+      "title": "3.4. Symbols after the marker: the suffix descriptor",
+      "level": 3,
+      "text_sha256": "4cb5aa368b80705bfad254ba2cb308d4c31ac575f9a170a5d3cddcbe1ba40e1a",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.counter-style-suffix",
+          "css-counter-styles-3.counter-style-suffix-clause-cf69b139b892",
+          "css-counter-styles-3.counter-style-suffix-clause-0d55c6a0a120"
+        ]
+      }
+    },
+    {
+      "id": "counter-style-range",
+      "title": "3.5. Limiting the counter scope: the range descriptor",
+      "level": 3,
+      "text_sha256": "deccf9ea7a5ecb0b4adcda155bccf7f710992eaab1a1565cdc120a9eb428b968",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.counter-style-range",
+          "css-counter-styles-3.counter-style-range-clause-a49375eb264f",
+          "css-counter-styles-3.counter-style-range-clause-0bedd150946c",
+          "css-counter-styles-3.counter-style-range-clause-7fa6fe110c0b",
+          "css-counter-styles-3.counter-style-range-clause-6676cd97627e"
+        ]
+      }
+    },
+    {
+      "id": "counter-style-pad",
+      "title": "3.6. Zero-Padding and Constant-Width Representations: the pad descriptor",
+      "level": 3,
+      "text_sha256": "802f7ecec9c58df06172804a679d16bae4ba917f33970cfef8b8b7f116fd159f",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.counter-style-pad",
+          "css-counter-styles-3.counter-style-pad-clause-37ac7a4ac7f5",
+          "css-counter-styles-3.counter-style-pad-clause-91d1f9382005",
+          "css-counter-styles-3.counter-style-pad-clause-710aed41146f"
+        ]
+      }
+    },
+    {
+      "id": "counter-style-fallback",
+      "title": "3.7. Defining fallback: the fallback descriptor",
+      "level": 3,
+      "text_sha256": "9098972e63dac0f19e3f4020a0067990d6b6e3897be239d1b56edf6684a1a81a",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.counter-style-fallback",
+          "css-counter-styles-3.counter-style-fallback-clause-bf354c304409",
+          "css-counter-styles-3.counter-style-fallback-clause-454d4ff65ebe"
+        ]
+      }
+    },
+    {
+      "id": "counter-style-symbols",
+      "title": "3.8. Marker characters: the symbols and additive-symbols descriptors",
+      "level": 3,
+      "text_sha256": "e8e94e14264e6087a962ca443fb8976d21c06a192585f9ae1e689d545ebb3ad8",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.counter-style-symbols",
+          "css-counter-styles-3.counter-style-symbols-clause-62ea354d7f84",
+          "css-counter-styles-3.counter-style-symbols-clause-98b93cc1e6d0",
+          "css-counter-styles-3.counter-style-symbols-clause-acf1c21d4e30",
+          "css-counter-styles-3.counter-style-symbols-clause-fc3ea93bcec4",
+          "css-counter-styles-3.counter-style-symbols-clause-9e64349dffce"
+        ]
+      }
+    },
+    {
+      "id": "counter-style-speak-as",
+      "title": "3.9. Speech Synthesis: the speak-as descriptor",
+      "level": 3,
+      "text_sha256": "98405074f29d324d474a67a9b1d01d1eb56002f0417f9f37034097cb0d5cdbd9",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.counter-style-speak-as",
+          "css-counter-styles-3.counter-style-speak-as-clause-a6236f5045e3",
+          "css-counter-styles-3.counter-style-speak-as-clause-eb4a351545eb",
+          "css-counter-styles-3.counter-style-speak-as-clause-0b4110a5c878"
+        ]
+      }
+    },
+    {
+      "id": "symbols-function",
+      "title": "4. Defining Anonymous Counter Styles: the symbols() function",
+      "level": 2,
+      "text_sha256": "56ae0423999777da23c3dd81da137202412dac0e5e716a974ca84ea81b621c49",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.symbols-function",
+          "css-counter-styles-3.symbols-function-clause-341fab46d3d4",
+          "css-counter-styles-3.symbols-function-clause-e195e27df35f"
+        ]
+      }
+    },
+    {
+      "id": "extending-css2",
+      "title": "5. Extending list-style-type, counter(), and counters()",
+      "level": 2,
+      "text_sha256": "7e980acb07a2f4fdd45b854e5e4941037290e30a95d6c45d43175192cc42f23f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.extending-css2",
+          "css-counter-styles-3.extending-css2-clause-d5ead186f480"
+        ]
+      }
+    },
+    {
+      "id": "predefined-counters",
+      "title": "6. Simple Predefined Counter Styles",
+      "level": 2,
+      "text_sha256": "b10aa3e672c2dc09000fcc03162cc2517a2f7674bd242dc96c5466e996efec55",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.predefined-counters",
+          "css-counter-styles-3.predefined-counters-clause-b10aa3e672c2"
+        ]
+      }
+    },
+    {
+      "id": "simple-numeric",
+      "title": "6.1. Numeric: decimal, decimal-leading-zero, arabic-indic, armenian, upper-armenian, lower-armenian, bengali, cambodian, khmer, cjk-decimal, devanagari, georgian, gujarati, gurmukhi, hebrew, kannada, lao, malayalam, mongolian, myanmar, oriya, persian, lower-roman, upper-roman, tamil, telugu, thai, tibetan",
+      "level": 3,
+      "text_sha256": "23d8012fd151bf336a9d3a47e57b114f40d3eacf2d8b9683499481b4e4c32024",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.simple-numeric",
+          "css-counter-styles-3.simple-numeric-clause-b84c917a7e4d",
+          "css-counter-styles-3.simple-numeric-clause-581d27275826"
+        ]
+      }
+    },
+    {
+      "id": "simple-alphabetic",
+      "title": "6.2. Alphabetic: lower-alpha, lower-latin, upper-alpha, upper-latin, lower-greek, hiragana, hiragana-iroha, katakana, katakana-iroha",
+      "level": 3,
+      "text_sha256": "08afeb06c694871cf08e21c555aa57c48a8bbda26d50f201df59d34bae972821",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.simple-alphabetic"
+        ]
+      }
+    },
+    {
+      "id": "simple-symbolic",
+      "title": "6.3. Symbolic: disc, circle, square, disclosure-open, disclosure-closed",
+      "level": 3,
+      "text_sha256": "dca7dd30373c15954481653d33fa346240b3e19f13e62cadb4541dac4b84027f",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.simple-symbolic",
+          "css-counter-styles-3.simple-symbolic-clause-f123046aeb27",
+          "css-counter-styles-3.simple-symbolic-clause-bc6e0b6fa4fe",
+          "css-counter-styles-3.simple-symbolic-clause-43e04286333c"
+        ]
+      }
+    },
+    {
+      "id": "simple-fixed",
+      "title": "6.4. Fixed: cjk-earthly-branch, cjk-heavenly-stem",
+      "level": 3,
+      "text_sha256": "94f031a877f814f08270bc68cb90d6700a105865b541429895dbeaf8445390c0",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.simple-fixed"
+        ]
+      }
+    },
+    {
+      "id": "complex-predefined-counters",
+      "title": "7. Complex Predefined Counter Styles",
+      "level": 2,
+      "text_sha256": "f98452c0395e8cd766ad52e189f31ae41f903da77c518d0dff79eb034f62e42f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.complex-predefined-counters",
+          "css-counter-styles-3.complex-predefined-counters-clause-5328e6436cbc"
+        ]
+      }
+    },
+    {
+      "id": "complex-cjk",
+      "title": "7.1. Longhand East Asian Counter Styles",
+      "level": 3,
+      "text_sha256": "7ac689438277ef03ccc66978a452a0f993a9f0ba435f6d280d932117197dd00d",
+      "clause_count": 113,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.complex-cjk"
+        ]
+      }
+    },
+    {
+      "id": "limited-japanese",
+      "title": "7.1.1. Japanese: japanese-informal and japanese-formal",
+      "level": 4,
+      "text_sha256": "091b543043ed7c00d935d72cc67b201bfd775f79247b6e308afc5ae5fd07d60d",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.limited-japanese"
+        ]
+      }
+    },
+    {
+      "id": "limited-korean",
+      "title": "7.1.2. Korean: korean-hangul-formal, korean-hanja-informal, and korean-hanja-formal",
+      "level": 4,
+      "text_sha256": "7ed99afe80da7f6c9d13cdc8a68e8103f07c791150c89caf4e601702582ea321",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.limited-korean"
+        ]
+      }
+    },
+    {
+      "id": "limited-chinese",
+      "title": "7.1.3. Chinese: simp-chinese-informal, simp-chinese-formal, trad-chinese-informal, and trad-chinese-formal",
+      "level": 4,
+      "text_sha256": "f06f5f24f143f30e8c200a695d7dfa2f1f875c358c1d0308969cf1267073c392",
+      "clause_count": 95,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.limited-chinese",
+          "css-counter-styles-3.limited-chinese-clause-10a1930eed52",
+          "css-counter-styles-3.limited-chinese-clause-849bf799b5f0",
+          "css-counter-styles-3.limited-chinese-clause-4f1c789806e8"
+        ]
+      }
+    },
+    {
+      "id": "ethiopic-numeric-counter-style",
+      "title": "7.2. Ethiopic Numeric Counter Style: ethiopic-numeric",
+      "level": 3,
+      "text_sha256": "e5a4171d8d8ef6ab633c0c00ba59cf076a77441c3faaf9b2e9883dd193390e2e",
+      "clause_count": 72,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.ethiopic-numeric-counter-style",
+          "css-counter-styles-3.ethiopic-numeric-counter-style-clause-f96bd715ed98",
+          "css-counter-styles-3.ethiopic-numeric-counter-style-clause-e887340af9f9",
+          "css-counter-styles-3.ethiopic-numeric-counter-style-clause-ade3ffe70058"
+        ]
+      }
+    },
+    {
+      "id": "additional-predefined",
+      "title": "8. Additional “Ready-made” Counter Styles",
+      "level": 2,
+      "text_sha256": "3d8f5b8f0793589910b9b0617812a52b0864808b19463489bf3898447401145c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.additional-predefined"
+        ]
+      }
+    },
+    {
+      "id": "apis",
+      "title": "9. APIs",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.apis"
+        ]
+      }
+    },
+    {
+      "id": "extensions-to-cssrule-interface",
+      "title": "9.1. Extensions to the CSSRule interface",
+      "level": 3,
+      "text_sha256": "5fb13241247959e6e0823ab6707ec36d56057c838cd840e603428e43fadcf485",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.extensions-to-cssrule-interface"
+        ]
+      }
+    },
+    {
+      "id": "the-csscounterstylerule-interface",
+      "title": "9.2. The CSSCounterStyleRule interface",
+      "level": 3,
+      "text_sha256": "3dd494c05597f6be1cbbf33a5c189f5dafc85ab4889c46a3f8e11e8e07ac54f9",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.the-csscounterstylerule-interface",
+          "css-counter-styles-3.the-csscounterstylerule-interface-clause-9434e90a35a8",
+          "css-counter-styles-3.the-csscounterstylerule-interface-clause-8fbf343169d1",
+          "css-counter-styles-3.the-csscounterstylerule-interface-clause-263330a4e9d0",
+          "css-counter-styles-3.the-csscounterstylerule-interface-clause-575425c20eca",
+          "css-counter-styles-3.the-csscounterstylerule-interface-clause-a8b39d39c8bc",
+          "css-counter-styles-3.the-csscounterstylerule-interface-clause-14760f061422"
+        ]
+      }
+    },
+    {
+      "id": "ua-stylesheet",
+      "title": "10. Sample style sheet for HTML",
+      "level": 2,
+      "text_sha256": "9500a474d259648fec129758665536f710864e1846ed27976050f993bca89920",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.ua-stylesheet"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-2017",
+      "title": "Changes since the December 2017 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "66a848656a3f4eb6ea8daa1d4484cab410a06858f2d81415b6d4d6f451435fbb",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.changes-2017"
+        ]
+      }
+    },
+    {
+      "id": "changes-jun-2015",
+      "title": "Changes since the June 2015 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "bdd8bcc1d0703470f51bff5d367300ece6175ad35ba9edfce90b38440b10de2e",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.changes-jun-2015"
+        ]
+      }
+    },
+    {
+      "id": "changes-feb-2015",
+      "title": "Changes since the Feb 2015 Candidate Recommendation",
+      "level": 3,
+      "text_sha256": "c909aa448e8df5221b4cf8cc66383f4ec11248e9126df62d1b2c473f365ee97b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.changes-feb-2015"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "751fd02ea65a4d146a17fff345afff3df072b0e06e7f5cf785865bed43820a0a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "priv-sec",
+      "title": "Privacy and Security Considerations",
+      "level": 2,
+      "text_sha256": "508211c345cc46d3344bf3460ffcde7c9eef7b952e529c627c53a5123db53ee3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.priv-sec"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.w3c-conventions",
+          "css-counter-styles-3.w3c-conventions-clause-5c98c879f070",
+          "css-counter-styles-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.w3c-conformance-classes",
+          "css-counter-styles-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-counter-styles-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.w3c-partial",
+          "css-counter-styles-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.w3c-testing",
+          "css-counter-styles-3.w3c-testing-clause-1e0fff369221",
+          "css-counter-styles-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.w3c-cr-exit-criteria",
+          "css-counter-styles-3.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "css-counter-styles-3.w3c-cr-exit-criteria-clause-ea752775913a",
+          "css-counter-styles-3.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "css-counter-styles-3.w3c-cr-exit-criteria-clause-b67129724911",
+          "css-counter-styles-3.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "8ab7521cf4c5fa880a5e85de74d05708608809a4896501c285b93d196630b77b",
+      "clause_count": 199,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "3359efd9d1253ae97f0a8e58e0073afb4cf9494fdb70769bb95b8712eb6d709d",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "e050dd846ba4946d9e8886292e79fd25a7b5b8ec4506ed057ded9a59ee4ff42d",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.import-6b91f794ab2b"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "096744e2c93293fe0f2ce98efa4e0de07ab92deeac3b670b90053a59dc3695b6",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "547c4769772c9ff811e57bf39809cc6f1c1e6380af2bb402096c995db2287df6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.property-index"
+        ]
+      }
+    },
+    {
+      "id": "counter-style-descriptor-table",
+      "title": "@counter-style Descriptors",
+      "level": 3,
+      "text_sha256": "e92a4f34332c87a4ca6114e4f683198366c5e0fc022767814c65202c6f7a7e76",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.counter-style-descriptor-table"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "a8403637cbbd18a142ef81522ce2f58acb899c6c31191b2bb4aba18b2e22d6c8",
+      "clause_count": 269,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-counter-styles-3.idl-index"
+        ]
+      }
+    }
+  ]
+}

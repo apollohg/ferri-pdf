@@ -1,0 +1,947 @@
+{
+  "schema_version": 1,
+  "source_id": "opentype-cff2",
+  "sections": [
+    {
+      "id": "cff2--compact-font-format-cff-version-2",
+      "title": "CFF2 — Compact Font Format (CFF) Version 2",
+      "level": 1,
+      "text_sha256": "214e1897aecdbc0fa38663f3c48b975638d01ca841f95852449b42b2f24c1245",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.cff2-compact-font-format-cff-version-2"
+        ]
+      }
+    },
+    {
+      "id": "ms--in-this-article",
+      "title": "In this article",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.ms-in-this-article"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "Introduction",
+      "level": 2,
+      "text_sha256": "fe7a3aa4ef6c98e5c91144fb4f0c5fedbf7c5c5378884e0fa676290952ca4494",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.introduction"
+        ]
+      }
+    },
+    {
+      "id": "organization-of-the-cff2-table",
+      "title": "Organization of the CFF2 table",
+      "level": 2,
+      "text_sha256": "a70d0e08ecfe2df4eda102555e2fd90e20627dee4f74142759c38c3d7633c695",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.organization-of-the-cff2-table",
+          "opentype-cff2.organization-of-the-cff2-table-clause-ec2e109cf22b",
+          "opentype-cff2.organization-of-the-cff2-table-clause-5ed9444552cf",
+          "opentype-cff2.organization-of-the-cff2-table-clause-2143ae63807b",
+          "opentype-cff2.organization-of-the-cff2-table-clause-01aa169f82e2",
+          "opentype-cff2.organization-of-the-cff2-table-clause-4850b174b713"
+        ]
+      }
+    },
+    {
+      "id": "encoded-numbers",
+      "title": "Encoded numbers",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.encoded-numbers"
+        ]
+      }
+    },
+    {
+      "id": "encoded-number-formats",
+      "title": "Encoded number formats",
+      "level": 3,
+      "text_sha256": "10cbc8101329641985b406d66cf5d7d822aa8954cd7b722e0ae605d6fc4e6710",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.encoded-number-formats",
+          "opentype-cff2.encoded-number-formats-clause-5d8c29052dd0"
+        ]
+      }
+    },
+    {
+      "id": "binary-coded-decimal",
+      "title": "Binary coded decimal",
+      "level": 3,
+      "text_sha256": "c5f5e26a85d5d9849fd95372ef386b8055f3b18ff9668edbfca9e282b407e7db",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.binary-coded-decimal",
+          "opentype-cff2.binary-coded-decimal-clause-adbf282622e0",
+          "opentype-cff2.binary-coded-decimal-clause-79370dbd5d89",
+          "opentype-cff2.binary-coded-decimal-clause-f1234d75178d"
+        ]
+      }
+    },
+    {
+      "id": "decoding-dict-and-charstring-data-using-a-stack",
+      "title": "Decoding DICT and CharString data using a stack",
+      "level": 2,
+      "text_sha256": "8053df75f9f32f12f678b1ca6a5419c753d5eccee0cf352f11c95152e532db2f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.decoding-dict-and-charstring-data-using-a-stack",
+          "opentype-cff2.decoding-dict-and-charstring-data-using-a-stack-clause-208f59ecc0b8"
+        ]
+      }
+    },
+    {
+      "id": "stack-based-cff2-decoding",
+      "title": "Stack-based CFF2 decoding",
+      "level": 3,
+      "text_sha256": "da29b1eb3d24c24da24dd8e35d3e45f1cb78578ba2645bb2090724b9291f12c3",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.stack-based-cff2-decoding",
+          "opentype-cff2.stack-based-cff2-decoding-clause-193a738ba5a6",
+          "opentype-cff2.stack-based-cff2-decoding-clause-5046991aa734",
+          "opentype-cff2.stack-based-cff2-decoding-clause-3153049be336"
+        ]
+      }
+    },
+    {
+      "id": "stack-notation",
+      "title": "Stack notation",
+      "level": 3,
+      "text_sha256": "07ac980861cd5626d07ee5c66d232392b0f92c4f30140a949ab54c7ddd2cf0c2",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.stack-notation",
+          "opentype-cff2.stack-notation-clause-c47c77579c9b",
+          "opentype-cff2.stack-notation-clause-8bd76a9f8ca3"
+        ]
+      }
+    },
+    {
+      "id": "common-formats-dict-and-index",
+      "title": "Common formats: DICT and INDEX",
+      "level": 2,
+      "text_sha256": "f85f84181d8700a8631638cbdf03e2d59173088a3672b235ace7ea195ad52861",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.common-formats-dict-and-index"
+        ]
+      }
+    },
+    {
+      "id": "dict-data",
+      "title": "DICT data",
+      "level": 3,
+      "text_sha256": "6560fb5029834d147d68eca882f517c49c316f5c80a58d49de80bf205021f6d4",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.dict-data",
+          "opentype-cff2.dict-data-clause-a0338571821b",
+          "opentype-cff2.dict-data-clause-e3d260047a1d",
+          "opentype-cff2.dict-data-clause-2a48e27f155a"
+        ]
+      }
+    },
+    {
+      "id": "index-data",
+      "title": "INDEX data",
+      "level": 3,
+      "text_sha256": "34ebb268b483cfab9c8c38369dbe390e82830e9bcf9dada077cdd372a84864eb",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.index-data"
+        ]
+      }
+    },
+    {
+      "id": "header",
+      "title": "Header",
+      "level": 2,
+      "text_sha256": "0be0fe97284a121123952c1b9d4a31203182add4bf3d67c316ab308bc8333aab",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.header",
+          "opentype-cff2.header-clause-617154d53c05",
+          "opentype-cff2.header-clause-924005d34ac3"
+        ]
+      }
+    },
+    {
+      "id": "topdict",
+      "title": "TopDICT",
+      "level": 2,
+      "text_sha256": "34912b920e1c29bdee0eaabddf4ec1cd6ce6ac3686c17c70f84907fe5d295376",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.topdict"
+        ]
+      }
+    },
+    {
+      "id": "topdict-operator-summary",
+      "title": "TopDICT operator summary",
+      "level": 3,
+      "text_sha256": "51caafb6500e65f0642e2c8b7e420a333cfb9a9cd74d3a0fe5db24008e667d34",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.topdict-operator-summary",
+          "opentype-cff2.topdict-operator-summary-clause-c50135630d1a",
+          "opentype-cff2.topdict-operator-summary-clause-4850b174b713"
+        ]
+      }
+    },
+    {
+      "id": "topdict-operator-specifications",
+      "title": "TopDICT operator specifications",
+      "level": 3,
+      "text_sha256": "7fe756f973173902f761448e6d9567502008d8855b0a8d9dbc0c6f73f68d5edc",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.topdict-operator-specifications",
+          "opentype-cff2.topdict-operator-specifications-clause-4850b174b713",
+          "opentype-cff2.topdict-operator-specifications-clause-0fea56cd9943",
+          "opentype-cff2.topdict-operator-specifications-clause-a907bb9b983d",
+          "opentype-cff2.topdict-operator-specifications-clause-6b80701fe7bb",
+          "opentype-cff2.topdict-operator-specifications-clause-9db873687f73"
+        ]
+      }
+    },
+    {
+      "id": "fontdictindex-fontdictselect-and-fontdict",
+      "title": "FontDICTINDEX, FontDICTSelect and FontDICT",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.fontdictindex-fontdictselect-and-fontdict"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "Overview",
+      "level": 3,
+      "text_sha256": "5d7977c51fb9cb24ce749268a781b3fe18e2ec3369893639b36fa91319a94692",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.overview"
+        ]
+      }
+    },
+    {
+      "id": "fontdictindex",
+      "title": "FontDICTINDEX",
+      "level": 3,
+      "text_sha256": "74649d74c6b37c2a8a53e73e22472b6d2aee5f019c259060ae814559d58a7056",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.fontdictindex",
+          "opentype-cff2.fontdictindex-clause-7acb120fe041",
+          "opentype-cff2.fontdictindex-clause-fc3a1b5c3982"
+        ]
+      }
+    },
+    {
+      "id": "fontdictselect",
+      "title": "FontDICTSelect",
+      "level": 3,
+      "text_sha256": "4bce5c29e3f3b12a57747da91eb37a3f9aae554736cf901c07796aaab1f50294",
+      "clause_count": 71,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.fontdictselect",
+          "opentype-cff2.fontdictselect-clause-2620458783dc",
+          "opentype-cff2.fontdictselect-clause-2fd838abc485",
+          "opentype-cff2.fontdictselect-clause-e78d7be0b9db"
+        ]
+      }
+    },
+    {
+      "id": "fontdict",
+      "title": "FontDICT",
+      "level": 3,
+      "text_sha256": "ee2ccffbeabcdea0156b78203e26acd2c523a4262d0b3f93bb4e19a4a5e297b7",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.fontdict",
+          "opentype-cff2.fontdict-clause-eff5784be52b",
+          "opentype-cff2.fontdict-clause-13dcc0e02273"
+        ]
+      }
+    },
+    {
+      "id": "privatedict",
+      "title": "PrivateDICT",
+      "level": 2,
+      "text_sha256": "4617f1303d3da661bd591423f880068350575011b8658baaaf473169d50cbdf7",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.privatedict",
+          "opentype-cff2.privatedict-clause-f108f9253cd3",
+          "opentype-cff2.privatedict-clause-b4c31e951226"
+        ]
+      }
+    },
+    {
+      "id": "privatedict-operator-summary",
+      "title": "PrivateDICT operator summary",
+      "level": 3,
+      "text_sha256": "b3e2f9c201e18b51474c34b35342a71508fdbae9d2d5a0b746566cee975b33c0",
+      "clause_count": 103,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.privatedict-operator-summary"
+        ]
+      }
+    },
+    {
+      "id": "privatedict-subroutine-operator",
+      "title": "PrivateDICT subroutine operator",
+      "level": 3,
+      "text_sha256": "1d018407876157a062133e722677fc47b99b1047acb9769c3e920c13a7987c0b",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.privatedict-subroutine-operator",
+          "opentype-cff2.privatedict-subroutine-operator-clause-0824f9293762"
+        ]
+      }
+    },
+    {
+      "id": "privatedict-variation-operators",
+      "title": "PrivateDICT variation operators",
+      "level": 3,
+      "text_sha256": "6c30e6793a4c1bda888f80b650648b817434fb04197fe8e285bf5bcf0cfbbec7",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.privatedict-variation-operators",
+          "opentype-cff2.privatedict-variation-operators-clause-b60e6858b72e",
+          "opentype-cff2.privatedict-variation-operators-clause-eda8cf6e1a87"
+        ]
+      }
+    },
+    {
+      "id": "privatedict-hinting-operators",
+      "title": "PrivateDICT hinting operators",
+      "level": 3,
+      "text_sha256": "73b727433a9e5ca417b5cf6690a6149084077f4a8bdc26346ca736eb7d398628",
+      "clause_count": 229,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.privatedict-hinting-operators",
+          "opentype-cff2.privatedict-hinting-operators-clause-3dda031743dc",
+          "opentype-cff2.privatedict-hinting-operators-clause-d2a22cc76289",
+          "opentype-cff2.privatedict-hinting-operators-clause-c03d898c39bf",
+          "opentype-cff2.privatedict-hinting-operators-clause-579c57f13b7b",
+          "opentype-cff2.privatedict-hinting-operators-clause-85b936cfcd7d",
+          "opentype-cff2.privatedict-hinting-operators-clause-d548063b41b6",
+          "opentype-cff2.privatedict-hinting-operators-clause-4fff2d1e8c27",
+          "opentype-cff2.privatedict-hinting-operators-clause-30df284d00d2",
+          "opentype-cff2.privatedict-hinting-operators-clause-65094d7677cd",
+          "opentype-cff2.privatedict-hinting-operators-clause-37d46688e2c8",
+          "opentype-cff2.privatedict-hinting-operators-clause-acca6928cb5f",
+          "opentype-cff2.privatedict-hinting-operators-clause-c702ad74fd32",
+          "opentype-cff2.privatedict-hinting-operators-clause-b24ae953100f",
+          "opentype-cff2.privatedict-hinting-operators-clause-757b77d547a0",
+          "opentype-cff2.privatedict-hinting-operators-clause-7c3bb0977947"
+        ]
+      }
+    },
+    {
+      "id": "operator-ordering-restrictions",
+      "title": "Operator ordering restrictions",
+      "level": 3,
+      "text_sha256": "7e15edb14d90b1b30795bb99157753966f482e65dfa212eebfe2f2bc5890e2f5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.operator-ordering-restrictions",
+          "opentype-cff2.operator-ordering-restrictions-clause-3081f18ed4d9",
+          "opentype-cff2.operator-ordering-restrictions-clause-e3e277eab95b"
+        ]
+      }
+    },
+    {
+      "id": "charstring",
+      "title": "CharString",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.charstring"
+        ]
+      }
+    },
+    {
+      "id": "overview-1",
+      "title": "Overview",
+      "level": 3,
+      "text_sha256": "d5552f63c7360b253e0bb2bb3ce974303268c89d039e596ec1064ebb04cb951a",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.overview-1"
+        ]
+      }
+    },
+    {
+      "id": "charstringindex",
+      "title": "CharStringINDEX",
+      "level": 3,
+      "text_sha256": "af7f0f379261086c80b9aab42a4b1e2bc9da83632a2759f3eb2903eda5625582",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.charstringindex",
+          "opentype-cff2.charstringindex-clause-194378ea3e8c"
+        ]
+      }
+    },
+    {
+      "id": "charstring-concepts",
+      "title": "CharString concepts",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.charstring-concepts"
+        ]
+      }
+    },
+    {
+      "id": "hints",
+      "title": "Hints",
+      "level": 4,
+      "text_sha256": "2e55e65877097951f02c84f53bc8462383974d274fcd73c6d8600c8198830db8",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.hints",
+          "opentype-cff2.hints-clause-6f3af04327f7",
+          "opentype-cff2.hints-clause-d7c7957e8325",
+          "opentype-cff2.hints-clause-726759f22db9",
+          "opentype-cff2.hints-clause-684151489fde",
+          "opentype-cff2.hints-clause-f076f7186dd3"
+        ]
+      }
+    },
+    {
+      "id": "paths",
+      "title": "Paths",
+      "level": 4,
+      "text_sha256": "cfdc016e9dd47f470803d3506d2de17f79f19127bf0f46782b1ea27f313aabcb",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.paths",
+          "opentype-cff2.paths-clause-29a52a6ffc63",
+          "opentype-cff2.paths-clause-db64b58a5059",
+          "opentype-cff2.paths-clause-ed3e37216628",
+          "opentype-cff2.paths-clause-3b46e004eebe",
+          "opentype-cff2.paths-clause-961fb1541c5b"
+        ]
+      }
+    },
+    {
+      "id": "subroutines",
+      "title": "Subroutines",
+      "level": 4,
+      "text_sha256": "291b50c96625fec81fbbc3cdb047af3b249b995c5fa1d9595cd35ae19dfd2a14",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.subroutines",
+          "opentype-cff2.subroutines-clause-da206e303ce5",
+          "opentype-cff2.subroutines-clause-8442edc437d4",
+          "opentype-cff2.subroutines-clause-38158ec9912f"
+        ]
+      }
+    },
+    {
+      "id": "charstring-organization",
+      "title": "CharString organization",
+      "level": 3,
+      "text_sha256": "f0d84115d7ad810698353a2fe59a68e2503baa28f14851b01ffdf6c11e0104f2",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.charstring-organization"
+        ]
+      }
+    },
+    {
+      "id": "charstring-operators",
+      "title": "CharString operators",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.charstring-operators"
+        ]
+      }
+    },
+    {
+      "id": "charstring-operator-summary",
+      "title": "CharString operator summary",
+      "level": 4,
+      "text_sha256": "d164908c500f9f6899473918c1c6bd96756184bbe6adaa2fb672133679b11b1b",
+      "clause_count": 169,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.charstring-operator-summary"
+        ]
+      }
+    },
+    {
+      "id": "charstring-path-operators",
+      "title": "CharString path operators",
+      "level": 4,
+      "text_sha256": "a8204aeea0aafa995b43cf09971ab6323a1813999e0c8f448b21bba978cd7eee",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.charstring-path-operators"
+        ]
+      }
+    },
+    {
+      "id": "operators-that-move-the-current-point-and-start-a-new-contour",
+      "title": "Operators that move the current point and start a new contour",
+      "level": 5,
+      "text_sha256": "35e550f3240ec6cb2b4db45a724550843d9f68d92187ee75fc7ec4a769812506",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.operators-that-move-the-current-point-and-start-a-new-contour"
+        ]
+      }
+    },
+    {
+      "id": "path-operators-that-draw-line-segments",
+      "title": "Path operators that draw line segments",
+      "level": 5,
+      "text_sha256": "55696545731e9ceb50807e9810ae4210beb72c4f592bdf394fe4b92cd6a245d7",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.path-operators-that-draw-line-segments",
+          "opentype-cff2.path-operators-that-draw-line-segments-clause-79eab011d7ff"
+        ]
+      }
+    },
+    {
+      "id": "path-operators-that-draw-curves",
+      "title": "Path operators that draw curves",
+      "level": 5,
+      "text_sha256": "ed53b12fca5a2cccddbfedabdabfdab41ad23cb1b1d1803acd60a5d982bfe1e8",
+      "clause_count": 114,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.path-operators-that-draw-curves",
+          "opentype-cff2.path-operators-that-draw-curves-clause-7b9460e251e1",
+          "opentype-cff2.path-operators-that-draw-curves-clause-5ecf21bf40d0",
+          "opentype-cff2.path-operators-that-draw-curves-clause-f45f8c5c8c42"
+        ]
+      }
+    },
+    {
+      "id": "charstring-hint-operators",
+      "title": "CharString hint operators",
+      "level": 4,
+      "text_sha256": "65365a0825b6f3b052e0ada6da9ed20c77a86d760e4532216dbf57a3f4d8d1af",
+      "clause_count": 97,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.charstring-hint-operators",
+          "opentype-cff2.charstring-hint-operators-clause-178b28855379",
+          "opentype-cff2.charstring-hint-operators-clause-d2053ddb7fc3",
+          "opentype-cff2.charstring-hint-operators-clause-66e66d33f1c2",
+          "opentype-cff2.charstring-hint-operators-clause-c70c5c167730",
+          "opentype-cff2.charstring-hint-operators-clause-de950d9a7a86",
+          "opentype-cff2.charstring-hint-operators-clause-04e217877b49",
+          "opentype-cff2.charstring-hint-operators-clause-b7682d8de8e2",
+          "opentype-cff2.charstring-hint-operators-clause-98e92b689d5e",
+          "opentype-cff2.charstring-hint-operators-clause-3989b8442a4c",
+          "opentype-cff2.charstring-hint-operators-clause-a97325515c93",
+          "opentype-cff2.charstring-hint-operators-clause-85db81d5f8e0",
+          "opentype-cff2.charstring-hint-operators-clause-1bd2b5cc1f5e",
+          "opentype-cff2.charstring-hint-operators-clause-64ec7f00c2a5"
+        ]
+      }
+    },
+    {
+      "id": "charstring-subroutine-operators",
+      "title": "CharString subroutine operators",
+      "level": 4,
+      "text_sha256": "c0e1ef5bb822bf05638bba04558a2864a1f65a5ec58835c84a82905cdd254e35",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.charstring-subroutine-operators",
+          "opentype-cff2.charstring-subroutine-operators-clause-92b7f2c47d42",
+          "opentype-cff2.charstring-subroutine-operators-clause-352abd626e86"
+        ]
+      }
+    },
+    {
+      "id": "charstring-variation-operators",
+      "title": "CharString variation operators",
+      "level": 4,
+      "text_sha256": "7921129022886ab10400abcaca4e66e417370e54153efacd800156c2baca031e",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.charstring-variation-operators",
+          "opentype-cff2.charstring-variation-operators-clause-c569f6f32762",
+          "opentype-cff2.charstring-variation-operators-clause-b60e6858b72e",
+          "opentype-cff2.charstring-variation-operators-clause-b474e9640087"
+        ]
+      }
+    },
+    {
+      "id": "opentype-font-variations-in-cff2",
+      "title": "OpenType Font Variations in CFF2",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.opentype-font-variations-in-cff2"
+        ]
+      }
+    },
+    {
+      "id": "overview-2",
+      "title": "Overview",
+      "level": 3,
+      "text_sha256": "ca018d1838fa62b73e27720dc15d34088d0f654c91b6058fd41631673718e7d6",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.overview-2"
+        ]
+      }
+    },
+    {
+      "id": "variationstore",
+      "title": "VariationStore",
+      "level": 3,
+      "text_sha256": "9e648f60d40dca22178cc2f8f97ecfbd332a88e9040a56eeef15151ca98c3fd2",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.variationstore",
+          "opentype-cff2.variationstore-clause-5dedb4b51ba7",
+          "opentype-cff2.variationstore-clause-7715a65db39c",
+          "opentype-cff2.variationstore-clause-d1042b86766e"
+        ]
+      }
+    },
+    {
+      "id": "variation-operators",
+      "title": "Variation operators",
+      "level": 3,
+      "text_sha256": "5e4a494307a54086cf974258fdfcd3135c2fa3db578c22c5f77ca994533136be",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.variation-operators",
+          "opentype-cff2.variation-operators-clause-48b803dd4d41",
+          "opentype-cff2.variation-operators-clause-12e902d06f99",
+          "opentype-cff2.variation-operators-clause-9090d121606f",
+          "opentype-cff2.variation-operators-clause-acb31f6f2ad2"
+        ]
+      }
+    },
+    {
+      "id": "blended-stem-and-edge-hints",
+      "title": "Blended stem and edge hints",
+      "level": 3,
+      "text_sha256": "ad6b4258322d29cdbdddda8c7812f4fb3e5edd3afd364e70caf1f65d113c9eec",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.blended-stem-and-edge-hints",
+          "opentype-cff2.blended-stem-and-edge-hints-clause-8186e77406c6",
+          "opentype-cff2.blended-stem-and-edge-hints-clause-911d08193c92",
+          "opentype-cff2.blended-stem-and-edge-hints-clause-2332638fec19",
+          "opentype-cff2.blended-stem-and-edge-hints-clause-b6de741b7914",
+          "opentype-cff2.blended-stem-and-edge-hints-clause-03d589f5ba30"
+        ]
+      }
+    },
+    {
+      "id": "advanced-uses-of-blend",
+      "title": "Advanced uses of blend",
+      "level": 3,
+      "text_sha256": "a1efbf14c54c260e4154c4b26800e90aa8f49b50c1536b4edce48f52c3c57247",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.advanced-uses-of-blend",
+          "opentype-cff2.advanced-uses-of-blend-clause-d6f50832598b"
+        ]
+      }
+    },
+    {
+      "id": "comparison-of-cff2-variations-with-gvar-variations",
+      "title": "Comparison of CFF2 variations with 'gvar' variations",
+      "level": 3,
+      "text_sha256": "3bb2c24f3cb5ae625ce1015b622fb690a427b05614bba712fb272fe2ad47c82f",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.comparison-of-cff2-variations-with-gvar-variations"
+        ]
+      }
+    },
+    {
+      "id": "cff2-dependencies-on-other-font-tables",
+      "title": "CFF2 dependencies on other font tables",
+      "level": 2,
+      "text_sha256": "caf5224eaf854289df7a35dd421c88a7e007bf39067362cd232bec20dc24e0a8",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.cff2-dependencies-on-other-font-tables"
+        ]
+      }
+    },
+    {
+      "id": "sfnt-header",
+      "title": "SFNT header",
+      "level": 3,
+      "text_sha256": "aca073d747e062c6801d9fa0b31dbdf40bc1115c6ba2b30937969e6705aada18",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.sfnt-header",
+          "opentype-cff2.sfnt-header-clause-aca073d747e0"
+        ]
+      }
+    },
+    {
+      "id": "maxp-table",
+      "title": "'maxp' table",
+      "level": 3,
+      "text_sha256": "5e358241625c84827c962206852db524f712770d58df0b9153d0f5cca5e864db",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.maxp-table",
+          "opentype-cff2.maxp-table-clause-602697a4574d",
+          "opentype-cff2.maxp-table-clause-4ec2e476a67c"
+        ]
+      }
+    },
+    {
+      "id": "head-table",
+      "title": "'head' table",
+      "level": 3,
+      "text_sha256": "daf7ee7c30a63b67141d98d7f201e4efeaa62b0dc37573fa59ce03daa6682217",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.head-table"
+        ]
+      }
+    },
+    {
+      "id": "hmtx-and-hvar-tables",
+      "title": "'hmtx' and HVAR tables",
+      "level": 3,
+      "text_sha256": "cca7bc0d7a358eb17231288dab5a1210c021eb7f2e15f7d53b883e97ac08f206",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.hmtx-and-hvar-tables"
+        ]
+      }
+    },
+    {
+      "id": "vmtx-and-vvar-tables",
+      "title": "'vmtx' and VVAR tables",
+      "level": 3,
+      "text_sha256": "69ff5c4b12ce0e77f57e9c4dfb6a88c4714892a421e96c09ae49933df3008f17",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.vmtx-and-vvar-tables"
+        ]
+      }
+    },
+    {
+      "id": "fvar-table",
+      "title": "'fvar' table",
+      "level": 3,
+      "text_sha256": "fe5253b074f09e9e801ca5a85a2bbf23c8cc23b6f614a8f927af696cd91014a1",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.fvar-table",
+          "opentype-cff2.fvar-table-clause-6cfa63ffb938"
+        ]
+      }
+    },
+    {
+      "id": "gvar-table",
+      "title": "'gvar' table",
+      "level": 3,
+      "text_sha256": "c4762dafec9e29ebc82723bc00abca8d7ba1b2c54b55e857c46e10d0eebe75ab",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.gvar-table"
+        ]
+      }
+    },
+    {
+      "id": "example-cff2-table",
+      "title": "Example CFF2 table",
+      "level": 2,
+      "text_sha256": "dcda46cc38114580b4892f5015117da6fed3610b61c6135e3b76cd9b034315ae",
+      "clause_count": 202,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.example-cff2-table"
+        ]
+      }
+    },
+    {
+      "id": "ms--feedback",
+      "title": "Feedback",
+      "level": 2,
+      "text_sha256": "6a41b36916617cb75ef74bdc8d7b7197dc6ff8e2f2af5d0c1e943b248b81422e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.ms-feedback"
+        ]
+      }
+    },
+    {
+      "id": "ms--additional-resources-mobile-heading",
+      "title": "Additional resources",
+      "level": 2,
+      "text_sha256": "dbd6cce6d759855c1bbef5330834a39ba56ebe89f6214fdce09a98357dac5315",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.ms-additional-resources-mobile-heading"
+        ]
+      }
+    },
+    {
+      "id": "side-doc-outline",
+      "title": "In this article",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "opentype-cff2.side-doc-outline"
+        ]
+      }
+    }
+  ]
+}

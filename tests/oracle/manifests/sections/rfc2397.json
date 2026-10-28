@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "source_id": "rfc2397",
+  "sections": [
+    {
+      "id": "heading-e66cb3cdc68c",
+      "title": "The \"data\" URL scheme",
+      "level": 1,
+      "text_sha256": "9ab62016e6e7039829fb7c8210dab2454e290eea93de68ad4bdd891f7d9a2848",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2397.heading-e66cb3cdc68c"
+        ]
+      }
+    },
+    {
+      "id": "section-1",
+      "title": "1. Abstract",
+      "level": 2,
+      "text_sha256": "e1122ec4679709f4c9f626f146bad8ab5eb8117eb4c4329d69b606b37aa3f684",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2397.section-1"
+        ]
+      }
+    },
+    {
+      "id": "section-2",
+      "title": "2. Description",
+      "level": 2,
+      "text_sha256": "c9c5a42c5e9e9ff05858daf4a96a6926d312e27dff9d6d2fd01eb6cae28b83ea",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2397.section-2"
+        ]
+      }
+    },
+    {
+      "id": "section-3",
+      "title": "3. Syntax",
+      "level": 2,
+      "text_sha256": "45681ffcd50e7904e9ec926475710e089e3f8b5f2d68fd28c7e8c49a8c817710",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2397.section-3"
+        ]
+      }
+    },
+    {
+      "id": "section-4",
+      "title": "4. Examples",
+      "level": 2,
+      "text_sha256": "838b64dec1f40a4fad3edc544891e83339ccee54482c466932d183e9b2945939",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2397.section-4"
+        ]
+      }
+    },
+    {
+      "id": "section-5",
+      "title": "5. History",
+      "level": 2,
+      "text_sha256": "dce4fdb5024383b45fc5401256ba52595dcc8984751af859bac849775dc516ae",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2397.section-5"
+        ]
+      }
+    },
+    {
+      "id": "section-6",
+      "title": "6. Security",
+      "level": 2,
+      "text_sha256": "46d24aa09a5bbf2d78821089e57dc18cb8c63b16461c6cb8eb8927c5058445fa",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2397.section-6",
+          "rfc2397.section-6-clause-100afb420063"
+        ]
+      }
+    },
+    {
+      "id": "section-7",
+      "title": "7. References",
+      "level": 2,
+      "text_sha256": "2223b7c8ad26ccf7e25408cc118705b02e5e21a7f50c30f9c6e3dff863fc0965",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2397.section-7"
+        ]
+      }
+    }
+  ]
+}

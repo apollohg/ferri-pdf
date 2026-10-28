@@ -1,0 +1,1109 @@
+{
+  "schema_version": 1,
+  "source_id": "compositing-1",
+  "sections": [
+    {
+      "id": "heading-6bf54162a3fc",
+      "title": "Compositing and Blending Level 1",
+      "level": 1,
+      "text_sha256": "adf7ea9abf5925b05485b504dc330d88202bf333d9760f00c5f71267275e8815",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.heading-6bf54162a3fc"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "0f4b780fdd939b947160b0c6e040449e7b414c90d0f0c3e42adce5ea0fb87166",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "d736111e17bbe6157d02783903948deaa9d8aadf52a7e7d129224480d87b9262",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "c1f25c27b4a242671b9f2ad32a0c300de1d66adfb3add6e0d3a152cecd161b64",
+      "clause_count": 77,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "ff8f6fae1efe7be9dd1f8ff22cbdad138f0844f80354c3ba86c089bb26b57e26",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.introduction"
+        ]
+      }
+    },
+    {
+      "id": "reading-this-document",
+      "title": "2. Reading This Document",
+      "level": 2,
+      "text_sha256": "7eeeda41d0ae1051bf12da2bae0d20243f40de5c1bbf1fa99414f25610a3d329",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.reading-this-document"
+        ]
+      }
+    },
+    {
+      "id": "module-interactions",
+      "title": "2.1. Module interactions",
+      "level": 3,
+      "text_sha256": "8d18adc4970bfc309029cc6577bae6006667ebeba2283938475525fa9d0b58f3",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.module-interactions"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "2.2. Values",
+      "level": 3,
+      "text_sha256": "3345a890f8cd3ffbd0b2664302893cb32f272b9623ef3679fc12a0dfa7a86fc2",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.values",
+          "compositing-1.values-clause-8e3334e16f0e"
+        ]
+      }
+    },
+    {
+      "id": "csscompositingandblending",
+      "title": "3. Specifying Blending in CSS",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.csscompositingandblending"
+        ]
+      }
+    },
+    {
+      "id": "compositingandblendingorder",
+      "title": "3.1. Order of graphical operations",
+      "level": 3,
+      "text_sha256": "ac70eea1a6fe2d5cd052d5cd3ea131602f7291e4f56da57322cf30efc0156b7b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.compositingandblendingorder",
+          "compositing-1.compositingandblendingorder-clause-ac70eea1a6fe"
+        ]
+      }
+    },
+    {
+      "id": "csscompositingrules_CSS",
+      "title": "3.2. Behavior specific to HTML",
+      "level": 3,
+      "text_sha256": "7d2bf036eed312fe08efc23050f603ec738b173d3c646c8bf9210934c33b8cff",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.csscompositingrules-css",
+          "compositing-1.csscompositingrules-css-clause-1a88c4fb2c1e",
+          "compositing-1.csscompositingrules-css-clause-45de0bfa2f22"
+        ]
+      }
+    },
+    {
+      "id": "csscompositingrules_SVG",
+      "title": "3.3. Behavior specific to SVG",
+      "level": 3,
+      "text_sha256": "52ed1688cd0ffb0405117ded3a203e16b9a5b7b0d2356ab28b6e4dccb8eb1d33",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.csscompositingrules-svg",
+          "compositing-1.csscompositingrules-svg-clause-b9fdcabb8d33",
+          "compositing-1.csscompositingrules-svg-clause-70efada7e83f",
+          "compositing-1.csscompositingrules-svg-clause-01f0f7433650"
+        ]
+      }
+    },
+    {
+      "id": "csskeywords",
+      "title": "3.4. CSS Properties",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.csskeywords"
+        ]
+      }
+    },
+    {
+      "id": "mix-blend-mode",
+      "title": "3.4.1. The mix-blend-mode property",
+      "level": 4,
+      "text_sha256": "08688dc315053acaaeb7b1abc9e4e18b6d44172646d4232b80199d6da99fe3eb",
+      "clause_count": 108,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.mix-blend-mode",
+          "compositing-1.mix-blend-mode-clause-c19e90fde2b0",
+          "compositing-1.mix-blend-mode-clause-cca2516ebb1d",
+          "compositing-1.mix-blend-mode-clause-67eaa90c646c",
+          "compositing-1.mix-blend-mode-clause-947788ff7e8f",
+          "compositing-1.mix-blend-mode-clause-a4b1f079ec45",
+          "compositing-1.mix-blend-mode-clause-9f9e369ec304"
+        ]
+      }
+    },
+    {
+      "id": "isolation",
+      "title": "3.4.2. The isolation property",
+      "level": 4,
+      "text_sha256": "5105c4e3c3f16360b6f46fa9864bc1ca5f97571ee332aec42f1c5d37ee0387e0",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.isolation",
+          "compositing-1.isolation-clause-8fa4df5715f4",
+          "compositing-1.isolation-clause-cca2516ebb1d",
+          "compositing-1.isolation-clause-b921115ca93f",
+          "compositing-1.isolation-clause-fd83539930ee",
+          "compositing-1.isolation-clause-77aaf8cc8d94",
+          "compositing-1.isolation-clause-b163055be45a"
+        ]
+      }
+    },
+    {
+      "id": "background-blend-mode",
+      "title": "3.4.3. The background-blend-mode property",
+      "level": 4,
+      "text_sha256": "3139bc37ac243c9786199d82bebf1dc8b0d15eb531f3032489b4dba27674e6e8",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.background-blend-mode",
+          "compositing-1.background-blend-mode-clause-b231325f28db",
+          "compositing-1.background-blend-mode-clause-cca2516ebb1d",
+          "compositing-1.background-blend-mode-clause-e6a2968035c1",
+          "compositing-1.background-blend-mode-clause-6e6cf61a2902",
+          "compositing-1.background-blend-mode-clause-5726257284a1",
+          "compositing-1.background-blend-mode-clause-27e7e0d1c355",
+          "compositing-1.background-blend-mode-clause-122432eec128",
+          "compositing-1.background-blend-mode-clause-3b6b0e5761ba"
+        ]
+      }
+    },
+    {
+      "id": "canvascompositingandblending",
+      "title": "4. Specifying Compositing and Blending in Canvas 2D",
+      "level": 2,
+      "text_sha256": "a37d202a7499a286f4b0a047e26f6b8dd32df2c4a5795ee7e5d896c9a9a680b5",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.canvascompositingandblending"
+        ]
+      }
+    },
+    {
+      "id": "whatiscompositing",
+      "title": "5. Introduction to compositing",
+      "level": 2,
+      "text_sha256": "3b77a8e79b7bff36e66c4936939692428cbe2d9343f523f94e490bc3566029a3",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.whatiscompositing"
+        ]
+      }
+    },
+    {
+      "id": "simplealphacompositing",
+      "title": "5.1. Simple alpha compositing",
+      "level": 3,
+      "text_sha256": "8ad4b8690fd9aeb0d3b6d09570b220dfeabec51f1a347a4fb2c5813d6b0bd303",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.simplealphacompositing"
+        ]
+      }
+    },
+    {
+      "id": "simplealphacompositingexamples",
+      "title": "5.1.1. Examples of simple alpha compositing",
+      "level": 4,
+      "text_sha256": "f81e3b708a5e6a722f48d2ee8d19c4c804838476d4965cb5cd6121a4bf9d12b6",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.simplealphacompositingexamples"
+        ]
+      }
+    },
+    {
+      "id": "generalformula",
+      "title": "6. General Formula for Compositing and Blending",
+      "level": 2,
+      "text_sha256": "e786ea08445ec8257fb97bc9fe061af6c4ee903b44b52a02cc06bf75053c5f09",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.generalformula"
+        ]
+      }
+    },
+    {
+      "id": "backdropCalc",
+      "title": "7. Backdrop calculation",
+      "level": 2,
+      "text_sha256": "3f029e1e6eb2e260803727aaf69b3819013b59f90bf85d2d4c8c1c03f6acfa69",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.backdropcalc"
+        ]
+      }
+    },
+    {
+      "id": "backdropexamples",
+      "title": "7.1. Examples of backdrop calculation",
+      "level": 3,
+      "text_sha256": "587230a219b0be931094f71cc4c752968558c8e2e1cbb29580391aa2ec0c3504",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.backdropexamples"
+        ]
+      }
+    },
+    {
+      "id": "groups",
+      "title": "8. Compositing Groups",
+      "level": 2,
+      "text_sha256": "ace1ecf981fed2035ceb8901439906f1f1b34ae0619e0a2fbe62093ac28c913e",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.groups",
+          "compositing-1.groups-clause-8bfa12286308",
+          "compositing-1.groups-clause-32e380c59425"
+        ]
+      }
+    },
+    {
+      "id": "groupinvariance",
+      "title": "8.1. Group invariance",
+      "level": 3,
+      "text_sha256": "3c5babbf80dc26c33ba36186b9e7feaf2ced8fb5ebfd8add5c685212c0461958",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.groupinvariance",
+          "compositing-1.groupinvariance-clause-17f3d996208a"
+        ]
+      }
+    },
+    {
+      "id": "isolatedgroups",
+      "title": "8.2. Isolated Groups",
+      "level": 3,
+      "text_sha256": "87f6056020065ea9791ab97ccea7a0c15c86f77cc5f6542b40bb194314ddad2a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.isolatedgroups",
+          "compositing-1.isolatedgroups-clause-ea48d8738141",
+          "compositing-1.isolatedgroups-clause-f5677d67f94d"
+        ]
+      }
+    },
+    {
+      "id": "pagebackdrop",
+      "title": "8.3. The Root Element Group",
+      "level": 3,
+      "text_sha256": "98c1c26843e2b836a1ca16c62805b368aeb2ae36a38d0f10ef2a5e2545e5a6cc",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.pagebackdrop"
+        ]
+      }
+    },
+    {
+      "id": "rootgroup",
+      "title": "8.4. The Root Group",
+      "level": 3,
+      "text_sha256": "4937213e947f836a63a27c395d39d80fd7034e4d3fa8cfa044509920d63cb825",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.rootgroup",
+          "compositing-1.rootgroup-clause-5bcde6ac572a"
+        ]
+      }
+    },
+    {
+      "id": "advancedcompositing",
+      "title": "9. Advanced compositing features",
+      "level": 2,
+      "text_sha256": "0ade3e2b457d522f1ea3c4b3cea06506e11c40cbb445e2329b6980c52adbba65",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.advancedcompositing"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators",
+      "title": "9.1. The Porter Duff Compositing Operators",
+      "level": 3,
+      "text_sha256": "42f879391b01e69dc53b43c8d228b9c29dc2e5b4ac40e6407f2d63e29257e4be",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_clear",
+      "title": "9.1.1. Clear",
+      "level": 4,
+      "text_sha256": "3d3697252f6d409ccf4b19ed63a60a6a58276f19aa1fcc2297ea3af54ad8fd08",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-clear"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_src",
+      "title": "9.1.2. Copy",
+      "level": 4,
+      "text_sha256": "aeed0f386546fd8c3f47de7c497f15afc43496ac4b1174c751db4ecaaf36aa62",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-src"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_dst",
+      "title": "9.1.3. Destination",
+      "level": 4,
+      "text_sha256": "34716650080ddef4e5d726e8552da7f4840e7f18028397927bace91cda9d51ca",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-dst"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_srcover",
+      "title": "9.1.4. Source Over",
+      "level": 4,
+      "text_sha256": "2ccc149b05ce5e252a8f664e9e72b237c0aea6183141d5f46e5cca44774f2748",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-srcover"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_dstover",
+      "title": "9.1.5. Destination Over",
+      "level": 4,
+      "text_sha256": "7be998b6d02291f0cabfb808c3c4beecc9c350bf09c3fdac69a4c8cb4db156c9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-dstover"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_srcin",
+      "title": "9.1.6. Source In",
+      "level": 4,
+      "text_sha256": "ca76c253f273c58e0ec808c93f21e2a6860411afbb005279ce7d68bce9e88400",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-srcin"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_dstin",
+      "title": "9.1.7. Destination In",
+      "level": 4,
+      "text_sha256": "1c58f924ccc7f698fcdd1e252196ce3e8fc5bc21fcdd0eac6b1a272bc4a825df",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-dstin"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_srcout",
+      "title": "9.1.8. Source Out",
+      "level": 4,
+      "text_sha256": "378052f88e8a19ff92bca83e7c553dd33d746aba194893d47234af79c5bbd67e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-srcout"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_dstout",
+      "title": "9.1.9. Destination Out",
+      "level": 4,
+      "text_sha256": "30292b1c59ea3d8b7c3cfd3edcb57b3eacb8ec9eaf0fb0340efa7cc309010f6c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-dstout"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_srcatop",
+      "title": "9.1.10. Source Atop",
+      "level": 4,
+      "text_sha256": "0ccbbb668233ed8e460da5f7e5a9a568677c53bbb19f1bac776c7632cffa7e04",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-srcatop"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_dstatop",
+      "title": "9.1.11. Destination Atop",
+      "level": 4,
+      "text_sha256": "8a6f60b05b71cef8f3466a2d4609fbde958545f8c072a5174b54155268b32031",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-dstatop"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_xor",
+      "title": "9.1.12. XOR",
+      "level": 4,
+      "text_sha256": "30e03945afea39b4b64439c3223ff483cad8abaf662e3a56f6047a8f55a0e79e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-xor"
+        ]
+      }
+    },
+    {
+      "id": "porterduffcompositingoperators_plus",
+      "title": "9.1.13. Lighter",
+      "level": 4,
+      "text_sha256": "562a7d7496ef41ea364fd6aa652692a41a34bd38faf1f21425e629af30c57391",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.porterduffcompositingoperators-plus"
+        ]
+      }
+    },
+    {
+      "id": "groupcompositing",
+      "title": "9.2. Group compositing behavior with Porter Duff modes",
+      "level": 3,
+      "text_sha256": "3bd2643d81b8bdc25693cbf260ca9f10fbba654f56d22cf279fb0140a3bdc7af",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.groupcompositing"
+        ]
+      }
+    },
+    {
+      "id": "blending",
+      "title": "10. Blending",
+      "level": 2,
+      "text_sha256": "466f3eafb61fc4dc837dbe5dd62968844c2ae03844203494e4ecaf1017e67e17",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blending",
+          "compositing-1.blending-clause-80d11b430cd4",
+          "compositing-1.blending-clause-d496f62e62a2"
+        ]
+      }
+    },
+    {
+      "id": "blendingseparable",
+      "title": "10.1. Separable blend modes",
+      "level": 3,
+      "text_sha256": "6f2c75bf05908583c9d791b583a3d5c36728a64859bb311241669a9440edda57",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingseparable"
+        ]
+      }
+    },
+    {
+      "id": "blendingnormal",
+      "title": "10.1.1. normal blend mode",
+      "level": 4,
+      "text_sha256": "a6e39556988c1f49b368cd0170e5b86c13468f133c13fae356d975c192dea21b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingnormal"
+        ]
+      }
+    },
+    {
+      "id": "blendingmultiply",
+      "title": "10.1.2. multiply blend mode",
+      "level": 4,
+      "text_sha256": "234a4aece02dc7945d02573b8dbe8cb5d0997b8ac17adddd148dff53630e2313",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingmultiply"
+        ]
+      }
+    },
+    {
+      "id": "blendingscreen",
+      "title": "10.1.3. screen blend mode",
+      "level": 4,
+      "text_sha256": "10bfb6e62668a18b8fbc961749c87618b98899b9052dd16c8a49d7e7c85b54f8",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingscreen"
+        ]
+      }
+    },
+    {
+      "id": "blendingoverlay",
+      "title": "10.1.4. overlay blend mode",
+      "level": 4,
+      "text_sha256": "34808617d958af83626826f7be6083a45066f958f7af763ea25f5e9cc49c4890",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingoverlay"
+        ]
+      }
+    },
+    {
+      "id": "blendingdarken",
+      "title": "10.1.5. darken blend mode",
+      "level": 4,
+      "text_sha256": "f6f33f5674f11bfbd6bfb64ecf48b38b9994d388d1232542c73c8ae7f1961b5e",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingdarken"
+        ]
+      }
+    },
+    {
+      "id": "blendinglighten",
+      "title": "10.1.6. lighten blend mode",
+      "level": 4,
+      "text_sha256": "105f32b13788d9d3543dfae316bb7e3e146eeb6a45b21eedf33e51db56ca8748",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendinglighten",
+          "compositing-1.blendinglighten-clause-6668149b923c"
+        ]
+      }
+    },
+    {
+      "id": "blendingcolordodge",
+      "title": "10.1.7. color-dodge blend mode",
+      "level": 4,
+      "text_sha256": "d67e62db7ba2dcea4b354c93c7391adbcd03c96f256dae7171198076ee317926",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingcolordodge"
+        ]
+      }
+    },
+    {
+      "id": "blendingcolorburn",
+      "title": "10.1.8. color-burn blend mode",
+      "level": 4,
+      "text_sha256": "cec552ef33624135e5681e2b9017d28b33a9af9073a926e082a2ed7cce3e18a6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingcolorburn"
+        ]
+      }
+    },
+    {
+      "id": "blendinghardlight",
+      "title": "10.1.9. hard-light blend mode",
+      "level": 4,
+      "text_sha256": "976bb51b3cff453c3f454aba8dceaf8ce8cc749f50e7fa3e9c4efdb2e2127ec7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendinghardlight"
+        ]
+      }
+    },
+    {
+      "id": "blendingsoftlight",
+      "title": "10.1.10. soft-light blend mode",
+      "level": 4,
+      "text_sha256": "18ec993881b2b13611cecbeb413bcff8488457cb46d7f0c1b283ab16aa951e8b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingsoftlight"
+        ]
+      }
+    },
+    {
+      "id": "blendingdifference",
+      "title": "10.1.11. difference blend mode",
+      "level": 4,
+      "text_sha256": "09b3c2a044719a025aa15f8c497f1e08d2e12cfeb14e0169b50ecb6ebc200e49",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingdifference"
+        ]
+      }
+    },
+    {
+      "id": "blendingexclusion",
+      "title": "10.1.12. exclusion blend mode",
+      "level": 4,
+      "text_sha256": "f1cf0c9e43a04192a5ed2eb6f355ead1aead23063704b46cdbf6ca7177d0db98",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingexclusion"
+        ]
+      }
+    },
+    {
+      "id": "blendingnonseparable",
+      "title": "10.2. Non-separable blend modes",
+      "level": 3,
+      "text_sha256": "0274b9b11046e3c90a2f1576e41dd4cdba5640c0d653ac08daa802c2f7a404ef",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingnonseparable",
+          "compositing-1.blendingnonseparable-clause-63c59fe11dc7"
+        ]
+      }
+    },
+    {
+      "id": "blendinghue",
+      "title": "10.2.1. hue blend mode",
+      "level": 4,
+      "text_sha256": "300bc8e2c820a7dd6b8fb479ab75f13acfb8aa8fe9793d87426b26118ec6537e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendinghue"
+        ]
+      }
+    },
+    {
+      "id": "blendingsaturation",
+      "title": "10.2.2. saturation blend mode",
+      "level": 4,
+      "text_sha256": "e57da411c95d12a996e47bac89c805a78e81c844350eb2030c2b492904d941ac",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingsaturation"
+        ]
+      }
+    },
+    {
+      "id": "blendingcolor",
+      "title": "10.2.3. color blend mode",
+      "level": 4,
+      "text_sha256": "b6f54b725ef2d2d55b0617b7d5230f3501931a353e727a26fa1250565b8ad782",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingcolor"
+        ]
+      }
+    },
+    {
+      "id": "blendingluminosity",
+      "title": "10.2.4. luminosity blend mode",
+      "level": 4,
+      "text_sha256": "f9057b907b1186f3577697c5c747d718d3b40224275eea4af9e00fdb31459fff",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.blendingluminosity"
+        ]
+      }
+    },
+    {
+      "id": "isolationblending",
+      "title": "10.3. Effect of group isolation on blending",
+      "level": 3,
+      "text_sha256": "c38f1e6b2705a31550ea780ad874012cc98e62d6e6253b2a7a0f5fb6956ad92f",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.isolationblending"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "c799c9479452d2d4abb102edcc685f8cc75b132788cca06e3752f8b5ded44ddb",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.security",
+          "compositing-1.security-clause-8ff62f408854"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "4bf9da6a63668976a561693cb623dbb5138ccf842cf55120aafa0391cecb2d43",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.w3c-conventions",
+          "compositing-1.w3c-conventions-clause-5c98c879f070",
+          "compositing-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.w3c-conformance-classes",
+          "compositing-1.w3c-conformance-classes-clause-ff408372426c",
+          "compositing-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.w3c-partial",
+          "compositing-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.w3c-testing",
+          "compositing-1.w3c-testing-clause-1e0fff369221",
+          "compositing-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "w3c-cr-exit-criteria",
+      "title": "CR exit criteria",
+      "level": 3,
+      "text_sha256": "c2cd5aa39dffff61db13554f5d0fbd48759cab09b9dc20e1e108a27167926ee9",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.w3c-cr-exit-criteria",
+          "compositing-1.w3c-cr-exit-criteria-clause-057d9e0b4ff8",
+          "compositing-1.w3c-cr-exit-criteria-clause-ea752775913a",
+          "compositing-1.w3c-cr-exit-criteria-clause-b7d363ab42db",
+          "compositing-1.w3c-cr-exit-criteria-clause-b67129724911",
+          "compositing-1.w3c-cr-exit-criteria-clause-833729d43f23"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "4e4604abb5ad9256d941076ef026eb847b00e887a14853715b1dfbbddc77865f",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "8350a7f52c1aa7c0a644303da5480de8fd76c6a1371629a1cad5aaf67f788ffe",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "7598f5735d57e08f3d4a841f2fbde4798139d8cfb60c6baa3f61106c0724cbad",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "dc19b741e00675cbe9a47a43023f9d54e3ae25a2a3447709ab9df09bb50a0a50",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "145dccafd058e0910d102c7a3e6c29cc25c2472d6326fad5d9edb8e2c8557188",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "compositing-1.property-index"
+        ]
+      }
+    }
+  ]
+}

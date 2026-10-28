@@ -1,0 +1,506 @@
+{
+  "schema_version": 1,
+  "source_id": "css-page-floats-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Page Floats",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.title"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C First Public Working Draft, 15 September 2015",
+      "level": 2,
+      "text_sha256": "51c07f2892f067fd8ec363cfbf976c1f741a1709c0aea4e5de57edfd7dd709b7",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.subtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "e744fb1de7340f8a249a2751922451223ca5c90134cc294e80c3a4ff9504445d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "5593cb0c899582ae6fe5f289ff2a9e78358f63cd31e553c2243056b9b2625dcc",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "54c1959773132528c1f64a8acb92e28f0a653f65e5b5a36f975ade0ebcc0a2c2",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "overview",
+      "title": "1. Overview",
+      "level": 2,
+      "text_sha256": "98d7a885953812415d320178faba143663c4ddfad1c57e9caefef33494fe5a6a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.overview"
+        ]
+      }
+    },
+    {
+      "id": "terms",
+      "title": "2. Terminology",
+      "level": 2,
+      "text_sha256": "58e71b9a6ea6f7359624ebea1496102854534d2582de93938cc52c4cf380b12c",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.terms"
+        ]
+      }
+    },
+    {
+      "id": "floating",
+      "title": "3. Floating to the inline-start/inline-end and block-start/block-end",
+      "level": 2,
+      "text_sha256": "a11a526da26e796b953deeab578271e1b179ec3471544eadb23cf512a83af04a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.floating"
+        ]
+      }
+    },
+    {
+      "id": "float-reference-property",
+      "title": "3.1. The float-reference property",
+      "level": 3,
+      "text_sha256": "81a45294cd7f91cf756abac3f100f06f9a95c342e737185559da56e69a45fd0f",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.float-reference-property",
+          "css-page-floats-3.float-reference-property-clause-cca2516ebb1d",
+          "css-page-floats-3.float-reference-property-clause-8dc79c1d57cd",
+          "css-page-floats-3.float-reference-property-clause-5f81b98afd65",
+          "css-page-floats-3.float-reference-property-clause-55b77051be66"
+        ]
+      }
+    },
+    {
+      "id": "float-property",
+      "title": "3.2. The float property",
+      "level": 3,
+      "text_sha256": "820232100b9a72a5f0d29207a153b50007ef4b7c95039f9cddee6b9c834b7c4d",
+      "clause_count": 70,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.float-property",
+          "css-page-floats-3.float-property-clause-cca2516ebb1d",
+          "css-page-floats-3.float-property-clause-818b71be02f8",
+          "css-page-floats-3.float-property-clause-9a96cd6a872c",
+          "css-page-floats-3.float-property-clause-3e0b3b776af2",
+          "css-page-floats-3.float-property-clause-857f68ab60cd",
+          "css-page-floats-3.float-property-clause-69fc5db37002",
+          "css-page-floats-3.float-property-clause-2296f8287fc5",
+          "css-page-floats-3.float-property-clause-0895e99451c0",
+          "css-page-floats-3.float-property-clause-92ce46599f84"
+        ]
+      }
+    },
+    {
+      "id": "clearing_page_floats",
+      "title": "4. The clear property",
+      "level": 2,
+      "text_sha256": "5c2915b0f04f354dcb0cf92d0f1b99f527fce4c1e31c73fe3538375585e9ced7",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.clearing-page-floats",
+          "css-page-floats-3.clearing-page-floats-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "deferring_floats",
+      "title": "5. Deferring floats",
+      "level": 2,
+      "text_sha256": "18cfe4010d00eb735342436bd7d7e9170b64dbe3f4c1b56aa0491168b2093c2b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.deferring-floats"
+        ]
+      }
+    },
+    {
+      "id": "float-defer-property",
+      "title": "5.1. The float-defer property",
+      "level": 3,
+      "text_sha256": "946c692c19cfc4b90dbb6f62916c16b4e3eb4c0d977b49982b364dbcb4171bc7",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.float-defer-property",
+          "css-page-floats-3.float-defer-property-clause-cca2516ebb1d",
+          "css-page-floats-3.float-defer-property-clause-f6a970ea6386",
+          "css-page-floats-3.float-defer-property-clause-f22814561078",
+          "css-page-floats-3.float-defer-property-clause-4f0180a96607"
+        ]
+      }
+    },
+    {
+      "id": "wrapping-around-page-floats",
+      "title": "6. Wrapping around floats",
+      "level": 2,
+      "text_sha256": "19e4acf809b491cf1388aecc22bcc8c054117d51e78027d57440dee68a859197",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.wrapping-around-page-floats"
+        ]
+      }
+    },
+    {
+      "id": "the-float_offset-property",
+      "title": "7. The float-offset property",
+      "level": 2,
+      "text_sha256": "02e3cdf7b72b845f72535134571e0425a4b82ae7d60bc18681fa5bc8ac9bcfef",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.the-float-offset-property",
+          "css-page-floats-3.the-float-offset-property-clause-cca2516ebb1d",
+          "css-page-floats-3.the-float-offset-property-clause-7dd765114c24",
+          "css-page-floats-3.the-float-offset-property-clause-bc181400edfb"
+        ]
+      }
+    },
+    {
+      "id": "page-float-placement",
+      "title": "8. Page float placement",
+      "level": 2,
+      "text_sha256": "3862eb0551ccbe99c9ad610463eb1c441ecbe90a61e34b76fb21d7b61769b251",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.page-float-placement",
+          "css-page-floats-3.page-float-placement-clause-577de872aee0"
+        ]
+      }
+    },
+    {
+      "id": "float-reference-growth",
+      "title": "8.1. Float reference growth",
+      "level": 3,
+      "text_sha256": "8bc44331bc43e24a6c128129171852bd144ff57e77c68e54ea86be9339c810ba",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.float-reference-growth"
+        ]
+      }
+    },
+    {
+      "id": "float-stacking",
+      "title": "8.2. Rules for Float stacking",
+      "level": 3,
+      "text_sha256": "e6bd0a9a89e8267fe8f7fd4688a6bdaf785f9a2908adbafff153a6539e11130d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.float-stacking"
+        ]
+      }
+    },
+    {
+      "id": "relation_to_absolutely_positioned_exclusions",
+      "title": "9. Floats and absolutely positioned exclusions",
+      "level": 2,
+      "text_sha256": "a7b9a45682e69a9950956fa53beda4de9a953cb95e761750148ce1d8c29e7345",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.relation-to-absolutely-positioned-exclusions",
+          "css-page-floats-3.relation-to-absolutely-positioned-exclusions-clause-a7b9a45682e6"
+        ]
+      }
+    },
+    {
+      "id": "inline_floats_and_absolutely_positioned_exclusions",
+      "title": "9.1. Differences between inline floats and absolutely positioned elements",
+      "level": 3,
+      "text_sha256": "af86da542acfac790caaf035bee16e238d3055e1e9d53f6bac048f193409b655",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.inline-floats-and-absolutely-positioned-exclusions"
+        ]
+      }
+    },
+    {
+      "id": "overconstrained-page-floats",
+      "title": "10. Overconstrained floats",
+      "level": 2,
+      "text_sha256": "e347945fc09c5150bc04f400b49d8b1104beff01f30ceda64476bccf9bfcbb9c",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.overconstrained-page-floats"
+        ]
+      }
+    },
+    {
+      "id": "acks",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "04127f794a0093c9ebbb047034137eb85e09d6231b70daced20ca2d45f9f0c69",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.acks"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.conformance"
+        ]
+      }
+    },
+    {
+      "id": "conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e1ee93bc8e4af9acf7083acfc75714b46c1c4685bdf761ebdfd63a4b9d6e8cad",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.conventions",
+          "css-page-floats-3.conventions-clause-6abbe28898f0",
+          "css-page-floats-3.conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.conformance-classes",
+          "css-page-floats-3.conformance-classes-clause-ff408372426c",
+          "css-page-floats-3.conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.partial",
+          "css-page-floats-3.partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "experimental",
+      "title": "Experimental implementations",
+      "level": 3,
+      "text_sha256": "d65302001727731f480732eea29f70c56e93286eee5ffd392400e6a470f873c7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.experimental"
+        ]
+      }
+    },
+    {
+      "id": "testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.testing",
+          "css-page-floats-3.testing-clause-1e0fff369221",
+          "css-page-floats-3.testing-clause-c7ed0d126be3"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "e8992d1871908a2a73d30ea4922261eb39ae24212d383548df4342f67abe4a7e",
+      "clause_count": 45,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "83b3b75e48093a5ed5d11d2ffbb6bce54299eadb9fafb8e3ba80b0a3b9c51495",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "67aeafd8fcbe0ab38480e61bdd60f40998a7d5a8baea89647c0eecd25a863011",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "d14b13c1de9c699635643f7c80e83c9b24657bf6ea3c5ba082f18b615e95a5c7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "187fe4a595809698f153b8dc3f40c1b3b9f4e9c33d7ae70cc245975172b4cdd8",
+      "clause_count": 54,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.property-index",
+          "css-page-floats-3.property-index-clause-22edaa34f875"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "47e1b01db0d8622abb638cf8d021dc858e68d4c663010a215b9af75a5fc8ca2b",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-page-floats-3.issues-index",
+          "css-page-floats-3.issues-index-clause-8dc79c1d57cd"
+        ]
+      }
+    }
+  ]
+}

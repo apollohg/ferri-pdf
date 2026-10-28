@@ -1,0 +1,1906 @@
+{
+  "schema_version": 1,
+  "source_id": "filter-effects-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Filter Effects Module Level 1",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.title"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C Working Draft, 18 December 2018",
+      "level": 2,
+      "text_sha256": "406f20f32afc1ad4eb59ac822bf167e4eccf13e9f6a9e7a57031ace186f793ab",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.subtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "d53efd32294efa5a935fd495f782ac70a09764d320cb3f35c9d533303894db4e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "7edfe030dac2f6b814bcfb133bc6d866b7158ba0e33d73ce29036189067a6a7e",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "002beacf7446c125adf562b0b96e3a65fec98c66408d02a9e3961060e573dbf0",
+      "clause_count": 120,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "ee34ea4dce09128bb2805431db7b622163cd54e157de21b24f2a274a61435e3b",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "2. Module interactions",
+      "level": 2,
+      "text_sha256": "382d0324ffd75b273d94aa9b63180da4e5e7d22525c10f316d72a17bc3aa6a8a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.placement",
+          "filter-effects-1.placement-clause-16e93edbcc5d"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "3. Values",
+      "level": 2,
+      "text_sha256": "3ee67b1937bf0ad024fb0b3dceab5d8711cf5ddfe9a23a80a0ad675195cd13f7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.values",
+          "filter-effects-1.values-clause-8e3334e16f0e"
+        ]
+      }
+    },
+    {
+      "id": "definitions",
+      "title": "4. Terminology",
+      "level": 2,
+      "text_sha256": "45f967034b5ccadc5225f87ba61e4a6df1aa10c90168b2b86df9f7b41cc51e36",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.definitions"
+        ]
+      }
+    },
+    {
+      "id": "FilterProperty",
+      "title": "5. Graphic filters: the filter property",
+      "level": 2,
+      "text_sha256": "284ae8b21715df312034f580235055658cf1fd29261910007d377c4d6ae6d7b7",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.filterproperty",
+          "filter-effects-1.filterproperty-clause-cca2516ebb1d",
+          "filter-effects-1.filterproperty-clause-b50a5fdcf17b",
+          "filter-effects-1.filterproperty-clause-b3f78bcde0bf",
+          "filter-effects-1.filterproperty-clause-f2b8b3ef2f27",
+          "filter-effects-1.filterproperty-clause-ad58ed1fe108",
+          "filter-effects-1.filterproperty-clause-938f0378c042"
+        ]
+      }
+    },
+    {
+      "id": "filter-functions",
+      "title": "6. Filter Functions",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.filter-functions"
+        ]
+      }
+    },
+    {
+      "id": "supported-filter-functions",
+      "title": "6.1. Supported Filter Functions",
+      "level": 3,
+      "text_sha256": "90cc07b63099c6fb4108c7409cf563dc8b7d428cd100445dda572aaf21437611",
+      "clause_count": 76,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.supported-filter-functions",
+          "filter-effects-1.supported-filter-functions-clause-d49de1162d76",
+          "filter-effects-1.supported-filter-functions-clause-80665373bc82",
+          "filter-effects-1.supported-filter-functions-clause-8a3f884743aa",
+          "filter-effects-1.supported-filter-functions-clause-e9f3cb83b6b4",
+          "filter-effects-1.supported-filter-functions-clause-988521036856",
+          "filter-effects-1.supported-filter-functions-clause-ab36f6c3f7d6",
+          "filter-effects-1.supported-filter-functions-clause-dbe859f774e5",
+          "filter-effects-1.supported-filter-functions-clause-9b11c6135684",
+          "filter-effects-1.supported-filter-functions-clause-2555d98837d2",
+          "filter-effects-1.supported-filter-functions-clause-b6e32fcd41a6",
+          "filter-effects-1.supported-filter-functions-clause-7a69db50c347",
+          "filter-effects-1.supported-filter-functions-clause-e4ac287003b7",
+          "filter-effects-1.supported-filter-functions-clause-6170d5f1579f",
+          "filter-effects-1.supported-filter-functions-clause-d7516aee3c19",
+          "filter-effects-1.supported-filter-functions-clause-9f498ff4c852",
+          "filter-effects-1.supported-filter-functions-clause-09bf4395a8f0",
+          "filter-effects-1.supported-filter-functions-clause-f4eb8b73ed7b",
+          "filter-effects-1.supported-filter-functions-clause-d99a2671889f",
+          "filter-effects-1.supported-filter-functions-clause-e4f281ef8d28",
+          "filter-effects-1.supported-filter-functions-clause-c5d6e5c6ef80",
+          "filter-effects-1.supported-filter-functions-clause-a092ab8ed308",
+          "filter-effects-1.supported-filter-functions-clause-314a6666440b"
+        ]
+      }
+    },
+    {
+      "id": "computed-values-of-filter-functions",
+      "title": "6.2. Computed Values of Filter Functions",
+      "level": 3,
+      "text_sha256": "a5eed0bc5bc7043dbf9db09c3de56f9f5c0dff5831375badbe0087160a074b44",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.computed-values-of-filter-functions",
+          "filter-effects-1.computed-values-of-filter-functions-clause-3c10dd3f696f",
+          "filter-effects-1.computed-values-of-filter-functions-clause-e25f186b4c19"
+        ]
+      }
+    },
+    {
+      "id": "serialization-of-filter-functions",
+      "title": "6.3. Serialization of Filter Functions",
+      "level": 3,
+      "text_sha256": "bcd799b87bc827a56e9e3a8af03826d124fc238486f17a4c994a38ce12556975",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.serialization-of-filter-functions"
+        ]
+      }
+    },
+    {
+      "id": "interpolation-of-filter-functions",
+      "title": "6.4. Interpolation of Filter Functions",
+      "level": 3,
+      "text_sha256": "560167eb00a48c95a68fe7d43ec66758940cec7227e4449b8bed826eedf1161b",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interpolation-of-filter-functions",
+          "filter-effects-1.interpolation-of-filter-functions-clause-081cfca77227",
+          "filter-effects-1.interpolation-of-filter-functions-clause-0d318784e3e6",
+          "filter-effects-1.interpolation-of-filter-functions-clause-e35d267bc81c",
+          "filter-effects-1.interpolation-of-filter-functions-clause-a8086e640cab"
+        ]
+      }
+    },
+    {
+      "id": "FilterElement",
+      "title": "7. SVG Filter Sources: the filter element",
+      "level": 2,
+      "text_sha256": "179d46624504946ee53eeffd633938b1122a752d2739266fd1e26f79785c3344",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.filterelement",
+          "filter-effects-1.filterelement-clause-f5639d2109fd",
+          "filter-effects-1.filterelement-clause-60e3fc24aafe",
+          "filter-effects-1.filterelement-clause-a625f0a2a802",
+          "filter-effects-1.filterelement-clause-716a1ab40c63",
+          "filter-effects-1.filterelement-clause-afd5c9e6615c"
+        ]
+      }
+    },
+    {
+      "id": "FilterEffectsRegion",
+      "title": "8. Filter Region",
+      "level": 2,
+      "text_sha256": "f27c8ec88ea76cb1e68a12e629d512ae6cd2650e258a7f9c5195d435bc6042d0",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.filtereffectsregion",
+          "filter-effects-1.filtereffectsregion-clause-4b42c469d2c2",
+          "filter-effects-1.filtereffectsregion-clause-f7bf320ce104",
+          "filter-effects-1.filtereffectsregion-clause-b14ecc7c2cbe",
+          "filter-effects-1.filtereffectsregion-clause-0af4b7fa68e7",
+          "filter-effects-1.filtereffectsregion-clause-6370cd073c10"
+        ]
+      }
+    },
+    {
+      "id": "FilterPrimitivesOverview",
+      "title": "9. Filter primitives",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.filterprimitivesoverview"
+        ]
+      }
+    },
+    {
+      "id": "FilterPrimitivesOverviewIntro",
+      "title": "9.1. Overview",
+      "level": 3,
+      "text_sha256": "7e0e762a2a2b8c7d0be39db60cad436d5d45b75f8d6f76e9cf7ff4b40e915aef",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.filterprimitivesoverviewintro",
+          "filter-effects-1.filterprimitivesoverviewintro-clause-b11a1f70868c",
+          "filter-effects-1.filterprimitivesoverviewintro-clause-07800d583ad6",
+          "filter-effects-1.filterprimitivesoverviewintro-clause-3dee11570c01"
+        ]
+      }
+    },
+    {
+      "id": "CommonAttributes",
+      "title": "9.2. Common filter primitive attributes",
+      "level": 3,
+      "text_sha256": "ed6a936b1992b271f6e4a82f5712e200570077f72f9454b38474fc5f06b2517d",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.commonattributes",
+          "filter-effects-1.commonattributes-clause-49535a483f2b",
+          "filter-effects-1.commonattributes-clause-0102ac9b66e6",
+          "filter-effects-1.commonattributes-clause-00f8460e1060",
+          "filter-effects-1.commonattributes-clause-5eb14e97b30f",
+          "filter-effects-1.commonattributes-clause-8c5e8fbe2526",
+          "filter-effects-1.commonattributes-clause-2274aa38b191",
+          "filter-effects-1.commonattributes-clause-976c9fa93536",
+          "filter-effects-1.commonattributes-clause-4d5eabad5aaa",
+          "filter-effects-1.commonattributes-clause-55df643d7966"
+        ]
+      }
+    },
+    {
+      "id": "FilterPrimitiveTree",
+      "title": "9.3. Filter primitive tree",
+      "level": 3,
+      "text_sha256": "9955770158a6cf70cdd20f7873270e6e7878e61a48fcbb4483b8606dbeac4f5e",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.filterprimitivetree",
+          "filter-effects-1.filterprimitivetree-clause-2f074970de55",
+          "filter-effects-1.filterprimitivetree-clause-a98920ed24b2"
+        ]
+      }
+    },
+    {
+      "id": "FilterPrimitiveSubRegion",
+      "title": "9.4. Filter primitive subregion",
+      "level": 3,
+      "text_sha256": "1a5dbfddddfd8097ef09c04d92192f4f1200b280c5e53d8c455002a9f4574e66",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.filterprimitivesubregion",
+          "filter-effects-1.filterprimitivesubregion-clause-5b83cb8db8fb",
+          "filter-effects-1.filterprimitivesubregion-clause-20664e589e5f",
+          "filter-effects-1.filterprimitivesubregion-clause-e7c0bec99e55"
+        ]
+      }
+    },
+    {
+      "id": "feBlendElement",
+      "title": "9.5. Filter primitive feBlend",
+      "level": 3,
+      "text_sha256": "d320db7684ffd451700fc87984649db5d1770f3fa79ce939298737699a69dcc7",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.feblendelement",
+          "filter-effects-1.feblendelement-clause-e983836942af",
+          "filter-effects-1.feblendelement-clause-cabbca57664d",
+          "filter-effects-1.feblendelement-clause-e497429bcf1a",
+          "filter-effects-1.feblendelement-clause-903b06cf1618",
+          "filter-effects-1.feblendelement-clause-d9a4a7f82238"
+        ]
+      }
+    },
+    {
+      "id": "feColorMatrixElement",
+      "title": "9.6. Filter primitive feColorMatrix",
+      "level": 3,
+      "text_sha256": "5d40f9a4328a14e8b128e827f6113ed195685b54b23090e7321c3dacda2d2604",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fecolormatrixelement",
+          "filter-effects-1.fecolormatrixelement-clause-200978803626",
+          "filter-effects-1.fecolormatrixelement-clause-677fcb2b59d4",
+          "filter-effects-1.fecolormatrixelement-clause-3be9002ac635",
+          "filter-effects-1.fecolormatrixelement-clause-53bc4fb0f595",
+          "filter-effects-1.fecolormatrixelement-clause-6c4693b17eca",
+          "filter-effects-1.fecolormatrixelement-clause-40e400bd4217",
+          "filter-effects-1.fecolormatrixelement-clause-b8232bfad9a3"
+        ]
+      }
+    },
+    {
+      "id": "feComponentTransferElement",
+      "title": "9.7. Filter primitive feComponentTransfer",
+      "level": 3,
+      "text_sha256": "1e5c8ad3fbe44cb4e694a0989d848ac580ef66407a80f4aad6023cbfebef781f",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fecomponenttransferelement",
+          "filter-effects-1.fecomponenttransferelement-clause-54ca7dea7a93",
+          "filter-effects-1.fecomponenttransferelement-clause-af6a9c1529d8"
+        ]
+      }
+    },
+    {
+      "id": "feFuncRElement",
+      "title": "9.7.1. Transfer function feFuncR",
+      "level": 4,
+      "text_sha256": "ee9108d2dd3c22f74bb2bdd28141d923a5e6ed40f6a358a26ada5c068acb1c86",
+      "clause_count": 78,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fefuncrelement",
+          "filter-effects-1.fefuncrelement-clause-d60f1552b123",
+          "filter-effects-1.fefuncrelement-clause-14cfd9d7529c",
+          "filter-effects-1.fefuncrelement-clause-c09accbd204b",
+          "filter-effects-1.fefuncrelement-clause-72d096e8521a",
+          "filter-effects-1.fefuncrelement-clause-2953cddcc12c",
+          "filter-effects-1.fefuncrelement-clause-1570d39dafa2",
+          "filter-effects-1.fefuncrelement-clause-001fc15ffdf3",
+          "filter-effects-1.fefuncrelement-clause-cc3eb8b894ca",
+          "filter-effects-1.fefuncrelement-clause-30bae578e840",
+          "filter-effects-1.fefuncrelement-clause-406eb13d2ccc",
+          "filter-effects-1.fefuncrelement-clause-1dded7c3a435",
+          "filter-effects-1.fefuncrelement-clause-f3e5343ba22f",
+          "filter-effects-1.fefuncrelement-clause-8eea8d8827aa"
+        ]
+      }
+    },
+    {
+      "id": "feFuncGElement",
+      "title": "9.7.2. Transfer function feFuncG",
+      "level": 4,
+      "text_sha256": "4ff35e870f68848eda62a055de4f885d79d871994a4f17ab6d7f51940bef1c1c",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fefuncgelement"
+        ]
+      }
+    },
+    {
+      "id": "feFuncBElement",
+      "title": "9.7.3. Transfer function feFuncB",
+      "level": 4,
+      "text_sha256": "51ccd6915da738d6944a557d506278d5bc8f2c5318b2a0b5fa873ded79162e6b",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fefuncbelement"
+        ]
+      }
+    },
+    {
+      "id": "feFuncAElement",
+      "title": "9.7.4. Transfer function feFuncA",
+      "level": 4,
+      "text_sha256": "bfbfe2ff9ab4f8a7c14d3a0634b8db83df8f35c69e2d7b760803cf0b8dc696b9",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fefuncaelement"
+        ]
+      }
+    },
+    {
+      "id": "feCompositeElement",
+      "title": "9.8. Filter primitive feComposite",
+      "level": 3,
+      "text_sha256": "1d250550320b7b71810248eee9413b522ee27f2035b52b97cf2764956df26f95",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fecompositeelement",
+          "filter-effects-1.fecompositeelement-clause-1ce743b24582",
+          "filter-effects-1.fecompositeelement-clause-59a60e8bec61",
+          "filter-effects-1.fecompositeelement-clause-916e45be259e",
+          "filter-effects-1.fecompositeelement-clause-1e31cb455042",
+          "filter-effects-1.fecompositeelement-clause-6f8027b78d63",
+          "filter-effects-1.fecompositeelement-clause-5036b3754885",
+          "filter-effects-1.fecompositeelement-clause-06790b29202e",
+          "filter-effects-1.fecompositeelement-clause-65bfb5d2852c",
+          "filter-effects-1.fecompositeelement-clause-afd7796a8274",
+          "filter-effects-1.fecompositeelement-clause-4169c73e0f21",
+          "filter-effects-1.fecompositeelement-clause-c84ab3c8c298",
+          "filter-effects-1.fecompositeelement-clause-d7b761a81055"
+        ]
+      }
+    },
+    {
+      "id": "feConvolveMatrixElement",
+      "title": "9.9. Filter primitive feConvolveMatrix",
+      "level": 3,
+      "text_sha256": "95cbc4e6775099cd99d214cf47a7074c44f8ea08efd468d658fbe7b98c03aeb9",
+      "clause_count": 91,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.feconvolvematrixelement",
+          "filter-effects-1.feconvolvematrixelement-clause-b11411cdb89f",
+          "filter-effects-1.feconvolvematrixelement-clause-c29f03c73dd2",
+          "filter-effects-1.feconvolvematrixelement-clause-50c113c2569c",
+          "filter-effects-1.feconvolvematrixelement-clause-42dd45181486",
+          "filter-effects-1.feconvolvematrixelement-clause-40a2acf0a5dd",
+          "filter-effects-1.feconvolvematrixelement-clause-1c6a8394b5b7",
+          "filter-effects-1.feconvolvematrixelement-clause-471663caf4d8",
+          "filter-effects-1.feconvolvematrixelement-clause-b36fbaadf423",
+          "filter-effects-1.feconvolvematrixelement-clause-fdb9fbbb2aeb",
+          "filter-effects-1.feconvolvematrixelement-clause-1a77133ac115",
+          "filter-effects-1.feconvolvematrixelement-clause-b707e7c991ba",
+          "filter-effects-1.feconvolvematrixelement-clause-6d5fdeb5d8b0",
+          "filter-effects-1.feconvolvematrixelement-clause-0001c8bfa44e",
+          "filter-effects-1.feconvolvematrixelement-clause-144eb348ea08",
+          "filter-effects-1.feconvolvematrixelement-clause-923ed18073f0",
+          "filter-effects-1.feconvolvematrixelement-clause-873fc952a4a5",
+          "filter-effects-1.feconvolvematrixelement-clause-180a3b13628f",
+          "filter-effects-1.feconvolvematrixelement-clause-a3123496045f",
+          "filter-effects-1.feconvolvematrixelement-clause-cd780bec7d51",
+          "filter-effects-1.feconvolvematrixelement-clause-49116a9f87b1",
+          "filter-effects-1.feconvolvematrixelement-clause-2cd233d2dc82"
+        ]
+      }
+    },
+    {
+      "id": "feDiffuseLightingElement",
+      "title": "9.10. Filter primitive feDiffuseLighting",
+      "level": 3,
+      "text_sha256": "5e0ae50a9d16a8e71162e99c6ab22b5384dfee1c929347886cf85b8af26c1dc1",
+      "clause_count": 93,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fediffuselightingelement",
+          "filter-effects-1.fediffuselightingelement-clause-224e7cc7e346",
+          "filter-effects-1.fediffuselightingelement-clause-95ecf5327b88",
+          "filter-effects-1.fediffuselightingelement-clause-d93c0481b56f",
+          "filter-effects-1.fediffuselightingelement-clause-da43693cfd71",
+          "filter-effects-1.fediffuselightingelement-clause-4dd52dfc8c74",
+          "filter-effects-1.fediffuselightingelement-clause-aef0f770e2f0"
+        ]
+      }
+    },
+    {
+      "id": "feDisplacementMapElement",
+      "title": "9.11. Filter primitive feDisplacementMap",
+      "level": 3,
+      "text_sha256": "6183378f23b6e533e108da5486087e6947c28d9bc78f55a6af0cf0ec8e71eb9c",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fedisplacementmapelement",
+          "filter-effects-1.fedisplacementmapelement-clause-be47ea530eac",
+          "filter-effects-1.fedisplacementmapelement-clause-76420b5ae988",
+          "filter-effects-1.fedisplacementmapelement-clause-a4f3dc8021ef",
+          "filter-effects-1.fedisplacementmapelement-clause-951fd7e7ffe7",
+          "filter-effects-1.fedisplacementmapelement-clause-9c0b41e75bc3",
+          "filter-effects-1.fedisplacementmapelement-clause-d3733d38ca35",
+          "filter-effects-1.fedisplacementmapelement-clause-be2923b05db4",
+          "filter-effects-1.fedisplacementmapelement-clause-1dbb036c1cae"
+        ]
+      }
+    },
+    {
+      "id": "feDropShadowElement",
+      "title": "9.12. Filter primitive feDropShadow",
+      "level": 3,
+      "text_sha256": "00bf2fe8e4ecd348078e0085c6fc5ad1e3d2ce167718984ebf125fcb93d7f18f",
+      "clause_count": 59,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fedropshadowelement",
+          "filter-effects-1.fedropshadowelement-clause-434fe21c678a",
+          "filter-effects-1.fedropshadowelement-clause-624a9d9167c1",
+          "filter-effects-1.fedropshadowelement-clause-873a0a2fcdab",
+          "filter-effects-1.fedropshadowelement-clause-f4951ddced39",
+          "filter-effects-1.fedropshadowelement-clause-e16f4244aa73",
+          "filter-effects-1.fedropshadowelement-clause-d12e0a8e60a6",
+          "filter-effects-1.fedropshadowelement-clause-8261c3b6b5f4",
+          "filter-effects-1.fedropshadowelement-clause-a8cc8eefb037",
+          "filter-effects-1.fedropshadowelement-clause-f6e2691db968"
+        ]
+      }
+    },
+    {
+      "id": "feFloodElement",
+      "title": "9.13. Filter primitive feFlood",
+      "level": 3,
+      "text_sha256": "2f1b1362bbfd6749bd52555b7cfd6cab4c6d8df0a3f4525ed26b57fa9379e989",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fefloodelement"
+        ]
+      }
+    },
+    {
+      "id": "FloodColorProperty",
+      "title": "9.13.1. The flood-color property",
+      "level": 4,
+      "text_sha256": "f3fb64bc4caa892161cbc47a0675a043ac05d07a59b0463949a24277226bc6c5",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.floodcolorproperty",
+          "filter-effects-1.floodcolorproperty-clause-cca2516ebb1d",
+          "filter-effects-1.floodcolorproperty-clause-ac71056fb345"
+        ]
+      }
+    },
+    {
+      "id": "FloodOpacityProperty",
+      "title": "9.13.2. The flood-opacity property",
+      "level": 4,
+      "text_sha256": "f5e8546cf959a7f5ea34aa2725768a2905d41c3cd9fa68e9f387010a9392c91e",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.floodopacityproperty",
+          "filter-effects-1.floodopacityproperty-clause-cca2516ebb1d",
+          "filter-effects-1.floodopacityproperty-clause-46e25aadfc3c",
+          "filter-effects-1.floodopacityproperty-clause-7ebb60541f6d"
+        ]
+      }
+    },
+    {
+      "id": "feGaussianBlurElement",
+      "title": "9.14. Filter primitive feGaussianBlur",
+      "level": 3,
+      "text_sha256": "f1582ecb9974bd588a3466c4c1bfa48ffe900d4cfc069b26cba4d767067396a9",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fegaussianblurelement",
+          "filter-effects-1.fegaussianblurelement-clause-99d99bcd3102",
+          "filter-effects-1.fegaussianblurelement-clause-462e79b41424",
+          "filter-effects-1.fegaussianblurelement-clause-0788c08edc42",
+          "filter-effects-1.fegaussianblurelement-clause-42d967466ef4",
+          "filter-effects-1.fegaussianblurelement-clause-e32308020455",
+          "filter-effects-1.fegaussianblurelement-clause-b365bab939d1"
+        ]
+      }
+    },
+    {
+      "id": "feImageElement",
+      "title": "9.15. Filter primitive feImage",
+      "level": 3,
+      "text_sha256": "ebb5c940f0b4ccb476a1c8c2023f3d9da5a49846a79d6efa51582a5872c38d17",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.feimageelement",
+          "filter-effects-1.feimageelement-clause-5122e5159061",
+          "filter-effects-1.feimageelement-clause-ffb23605df63",
+          "filter-effects-1.feimageelement-clause-34ceec83d910",
+          "filter-effects-1.feimageelement-clause-177709d6557a",
+          "filter-effects-1.feimageelement-clause-889ea41d56b0",
+          "filter-effects-1.feimageelement-clause-b2fd4a7c9734"
+        ]
+      }
+    },
+    {
+      "id": "feMergeElement",
+      "title": "9.16. Filter primitive feMerge",
+      "level": 3,
+      "text_sha256": "d92aa8e1c55aa8ae6931b658a45a22831631fb96e0588bd4d58be2ef0e7ad9df",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.femergeelement"
+        ]
+      }
+    },
+    {
+      "id": "feMergeNodeElement",
+      "title": "9.16.1. Merge node feMergeNode",
+      "level": 4,
+      "text_sha256": "0f9fa90366834e8899dc43929a7373a7f2be757b80632c3d301b975ba2d0732a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.femergenodeelement"
+        ]
+      }
+    },
+    {
+      "id": "feMorphologyElement",
+      "title": "9.17. Filter primitive feMorphology",
+      "level": 3,
+      "text_sha256": "2b386a890f78542101caa35379dd5773ff857379a81d0d3b1a70ed934e555ff1",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.femorphologyelement",
+          "filter-effects-1.femorphologyelement-clause-530ad7ba427a",
+          "filter-effects-1.femorphologyelement-clause-0b74c61e381c",
+          "filter-effects-1.femorphologyelement-clause-5263a7ac0a47",
+          "filter-effects-1.femorphologyelement-clause-9544c75911f5",
+          "filter-effects-1.femorphologyelement-clause-77fe115e2efe",
+          "filter-effects-1.femorphologyelement-clause-59aab58274fb"
+        ]
+      }
+    },
+    {
+      "id": "feOffsetElement",
+      "title": "9.18. Filter primitive feOffset",
+      "level": 3,
+      "text_sha256": "64fa838d9716f08be6116fcb5497ec00cfd2f2c0f5e31e64a6c15ffa9dab6e99",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.feoffsetelement",
+          "filter-effects-1.feoffsetelement-clause-11c0122ce303",
+          "filter-effects-1.feoffsetelement-clause-3c50e76971a8",
+          "filter-effects-1.feoffsetelement-clause-1f67d271ee6b",
+          "filter-effects-1.feoffsetelement-clause-7fca169ff0de",
+          "filter-effects-1.feoffsetelement-clause-275522f66826",
+          "filter-effects-1.feoffsetelement-clause-1d6994b0bf24"
+        ]
+      }
+    },
+    {
+      "id": "feSpecularLightingElement",
+      "title": "9.19. Filter primitive feSpecularLighting",
+      "level": 3,
+      "text_sha256": "40f30b39ae854a4dd9a197e530ea9c8ede86943af9d6bba06ac65fb57c051f3e",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fespecularlightingelement",
+          "filter-effects-1.fespecularlightingelement-clause-95ecf5327b88",
+          "filter-effects-1.fespecularlightingelement-clause-f984092e0165",
+          "filter-effects-1.fespecularlightingelement-clause-1b61648693e7",
+          "filter-effects-1.fespecularlightingelement-clause-352ca9edacc8",
+          "filter-effects-1.fespecularlightingelement-clause-218777c7859a",
+          "filter-effects-1.fespecularlightingelement-clause-000b9c0803e8",
+          "filter-effects-1.fespecularlightingelement-clause-bb1ecd0d3366",
+          "filter-effects-1.fespecularlightingelement-clause-1432f4d71169",
+          "filter-effects-1.fespecularlightingelement-clause-0b2a193b56ca",
+          "filter-effects-1.fespecularlightingelement-clause-0b2850de4b6c"
+        ]
+      }
+    },
+    {
+      "id": "feTileElement",
+      "title": "9.20. Filter primitive feTile",
+      "level": 3,
+      "text_sha256": "26f45b72e955a5dfaacc6372e1a0e713be768b4dd61d4089a9a2a04c7b7c85fc",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fetileelement",
+          "filter-effects-1.fetileelement-clause-1a68e24174a1",
+          "filter-effects-1.fetileelement-clause-ea661c781ed9"
+        ]
+      }
+    },
+    {
+      "id": "feTurbulenceElement",
+      "title": "9.21. Filter primitive feTurbulence",
+      "level": 3,
+      "text_sha256": "b97d095b67b30c5d9c18bd948d1f1fbad0dec33c1f2b0608f9f53f7d346a68c4",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.feturbulenceelement",
+          "filter-effects-1.feturbulenceelement-clause-02a1f99a910c",
+          "filter-effects-1.feturbulenceelement-clause-98eeebe33cc3",
+          "filter-effects-1.feturbulenceelement-clause-4f7dbdffc5c7",
+          "filter-effects-1.feturbulenceelement-clause-0540c1123ff1",
+          "filter-effects-1.feturbulenceelement-clause-c7e248965f0b",
+          "filter-effects-1.feturbulenceelement-clause-96068e225740",
+          "filter-effects-1.feturbulenceelement-clause-4291b11c6583",
+          "filter-effects-1.feturbulenceelement-clause-bb0e05fbd305",
+          "filter-effects-1.feturbulenceelement-clause-a46ca74ffba3",
+          "filter-effects-1.feturbulenceelement-clause-b6f6047934fc",
+          "filter-effects-1.feturbulenceelement-clause-6bf2a1bf1374",
+          "filter-effects-1.feturbulenceelement-clause-f53595af5163",
+          "filter-effects-1.feturbulenceelement-clause-6da7e2798fb7",
+          "filter-effects-1.feturbulenceelement-clause-205b8f13343a",
+          "filter-effects-1.feturbulenceelement-clause-81bb437a9957",
+          "filter-effects-1.feturbulenceelement-clause-dbd6fc9d013e"
+        ]
+      }
+    },
+    {
+      "id": "ColorInterpolationFiltersProperty",
+      "title": "10. The color-interpolation-filters property",
+      "level": 2,
+      "text_sha256": "fcef962aba81165b41b450bd11a34371977658a0e482adf8a49c9cc2d9548a0f",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.colorinterpolationfiltersproperty",
+          "filter-effects-1.colorinterpolationfiltersproperty-clause-cca2516ebb1d",
+          "filter-effects-1.colorinterpolationfiltersproperty-clause-9894639c9bb0",
+          "filter-effects-1.colorinterpolationfiltersproperty-clause-bf4808f4af5c",
+          "filter-effects-1.colorinterpolationfiltersproperty-clause-da2076bb178d",
+          "filter-effects-1.colorinterpolationfiltersproperty-clause-a7fe817c54a9",
+          "filter-effects-1.colorinterpolationfiltersproperty-clause-8506d1cb234d"
+        ]
+      }
+    },
+    {
+      "id": "LightSourceDefinitions",
+      "title": "11. Light source elements and properties",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.lightsourcedefinitions"
+        ]
+      }
+    },
+    {
+      "id": "LightSourceIntro",
+      "title": "11.1. Introduction",
+      "level": 3,
+      "text_sha256": "44f0270b0a8547b7c4866511a16c480e7332c282f227a173390da9bd715aed32",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.lightsourceintro"
+        ]
+      }
+    },
+    {
+      "id": "feDistantLightElement",
+      "title": "11.2. Light source feDistantLight",
+      "level": 3,
+      "text_sha256": "9608c0e51f8e0627aab619e5a786527be1447acd089364ac31ec8897c2a9d886",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fedistantlightelement",
+          "filter-effects-1.fedistantlightelement-clause-709d5b4a73d6",
+          "filter-effects-1.fedistantlightelement-clause-6bbe63da1ab4",
+          "filter-effects-1.fedistantlightelement-clause-3bc837a97e64",
+          "filter-effects-1.fedistantlightelement-clause-70ef7388da50",
+          "filter-effects-1.fedistantlightelement-clause-e58f5aacd251"
+        ]
+      }
+    },
+    {
+      "id": "fePointLightElement",
+      "title": "11.3. Light source fePointLight",
+      "level": 3,
+      "text_sha256": "92acdd2d2ca9ac90694cbb95488cdb2a11b0d5697035ac765e5630dba8652855",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fepointlightelement",
+          "filter-effects-1.fepointlightelement-clause-bbb149af37e4",
+          "filter-effects-1.fepointlightelement-clause-b58c126086be",
+          "filter-effects-1.fepointlightelement-clause-51453869ea55",
+          "filter-effects-1.fepointlightelement-clause-ed74562352b3",
+          "filter-effects-1.fepointlightelement-clause-2f6cb5ae04be",
+          "filter-effects-1.fepointlightelement-clause-dbe2341f1c3f",
+          "filter-effects-1.fepointlightelement-clause-92459d11f842"
+        ]
+      }
+    },
+    {
+      "id": "feSpotLightElement",
+      "title": "11.4. Light source feSpotLight",
+      "level": 3,
+      "text_sha256": "b20d3306f6225a599265f2ec8ca11afa3b53c3787617127da80400070c599d1b",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fespotlightelement",
+          "filter-effects-1.fespotlightelement-clause-bbb149af37e4",
+          "filter-effects-1.fespotlightelement-clause-b58c126086be",
+          "filter-effects-1.fespotlightelement-clause-51453869ea55",
+          "filter-effects-1.fespotlightelement-clause-ed74562352b3",
+          "filter-effects-1.fespotlightelement-clause-2f6cb5ae04be",
+          "filter-effects-1.fespotlightelement-clause-715efa112496",
+          "filter-effects-1.fespotlightelement-clause-e41c8a4ae587",
+          "filter-effects-1.fespotlightelement-clause-1781c68da62a",
+          "filter-effects-1.fespotlightelement-clause-510f98252c9c",
+          "filter-effects-1.fespotlightelement-clause-2e6abf2fdaf5",
+          "filter-effects-1.fespotlightelement-clause-dfbb10601d71",
+          "filter-effects-1.fespotlightelement-clause-17765516c3ce",
+          "filter-effects-1.fespotlightelement-clause-000b9c0803e8",
+          "filter-effects-1.fespotlightelement-clause-6621c6ed4499",
+          "filter-effects-1.fespotlightelement-clause-dd261c385188",
+          "filter-effects-1.fespotlightelement-clause-659b340ae3a6",
+          "filter-effects-1.fespotlightelement-clause-63485bb3a626"
+        ]
+      }
+    },
+    {
+      "id": "LightingColorProperty",
+      "title": "11.5. The lighting-color property",
+      "level": 3,
+      "text_sha256": "5edf6ad221a1743c1bae5bb7aca769e169ff57913a1ed03456ba65194d4e9b5d",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.lightingcolorproperty",
+          "filter-effects-1.lightingcolorproperty-clause-cca2516ebb1d",
+          "filter-effects-1.lightingcolorproperty-clause-222282b44b0b"
+        ]
+      }
+    },
+    {
+      "id": "FilterCSSImageValue",
+      "title": "12. Filter CSS <image> values",
+      "level": 2,
+      "text_sha256": "81c0810b842a1332624537beeaa41769973f735c8879b7f988fc622217417006",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.filtercssimagevalue",
+          "filter-effects-1.filtercssimagevalue-clause-584a4c8ac470"
+        ]
+      }
+    },
+    {
+      "id": "interpolating-filter-image",
+      "title": "12.1. Interpolating filter()",
+      "level": 3,
+      "text_sha256": "0613f39485ee4d9a21bc35e3dcdb598fe037e7345e439edc40a71a587152ac10",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interpolating-filter-image",
+          "filter-effects-1.interpolating-filter-image-clause-0613f39485ee"
+        ]
+      }
+    },
+    {
+      "id": "ShorthandEquivalents",
+      "title": "13. Shorthands defined in terms of the filter element",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.shorthandequivalents"
+        ]
+      }
+    },
+    {
+      "id": "FilterPrimitiveRepresentation",
+      "title": "13.1. Filter primitive representation",
+      "level": 3,
+      "text_sha256": "0d26ef476d51cd314f93bd37cbf4194731e54fdee802263e4ea2a05ac145efa7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.filterprimitiverepresentation"
+        ]
+      }
+    },
+    {
+      "id": "grayscaleEquivalent",
+      "title": "13.1.1. grayscale",
+      "level": 4,
+      "text_sha256": "492404c65d32a8e58c9f1e5a92fb7c590ee7abd2581a9eaffd5e99438f11687d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.grayscaleequivalent"
+        ]
+      }
+    },
+    {
+      "id": "sepiaEquivalent",
+      "title": "13.1.2. sepia",
+      "level": 4,
+      "text_sha256": "72da951330e0f161c810a84a260304f19eb3a5387e04bb0c16963dc52983cd70",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.sepiaequivalent"
+        ]
+      }
+    },
+    {
+      "id": "saturateEquivalent",
+      "title": "13.1.3. saturate",
+      "level": 4,
+      "text_sha256": "920bdc43b4ab8f9156be9cf69280491a16d33d5570f050c1a5a7bcf284e29f5c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.saturateequivalent"
+        ]
+      }
+    },
+    {
+      "id": "huerotateEquivalent",
+      "title": "13.1.4. hue-rotate",
+      "level": 4,
+      "text_sha256": "9880e9b3eaed20ae4580dc6ffeb42303aceea94f55f6a999aa5b3a11954fbfe2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.huerotateequivalent"
+        ]
+      }
+    },
+    {
+      "id": "invertEquivalent",
+      "title": "13.1.5. invert",
+      "level": 4,
+      "text_sha256": "f6294ea44893081e2345422ee90a5a3b12e9550a7202ad499e8560d897de5daf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.invertequivalent"
+        ]
+      }
+    },
+    {
+      "id": "opacityEquivalent",
+      "title": "13.1.6. opacity",
+      "level": 4,
+      "text_sha256": "db0eda29b796db859264a82f119d8c792749713c5037bb9aaae059067fbe4fa2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.opacityequivalent"
+        ]
+      }
+    },
+    {
+      "id": "brightnessEquivalent",
+      "title": "13.1.7. brightness",
+      "level": 4,
+      "text_sha256": "cd2d90f11dd13d06f8a9918543b922984fa1b5316ef2cedc803530f715d4e048",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.brightnessequivalent"
+        ]
+      }
+    },
+    {
+      "id": "contrastEquivalent",
+      "title": "13.1.8. contrast",
+      "level": 4,
+      "text_sha256": "41db5b42b4591edbf293b46ffa5e05fca010274aeb993ad12384e0cc909f13b1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.contrastequivalent"
+        ]
+      }
+    },
+    {
+      "id": "blurEquivalent",
+      "title": "13.1.9. blur",
+      "level": 4,
+      "text_sha256": "861afb2b0a767800aaad6f38cc55f083578d51d36ce6f1a226b54f47cea0f3ae",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.blurequivalent"
+        ]
+      }
+    },
+    {
+      "id": "dropshadowEquivalent",
+      "title": "13.1.10. drop-shadow",
+      "level": 4,
+      "text_sha256": "56224ff18fda27fd563b81beb9e469da3d79b5a9c505aa0dec35453238a7428a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.dropshadowequivalent"
+        ]
+      }
+    },
+    {
+      "id": "filter-region-for-shorthands",
+      "title": "13.2. Filter region for shorthands",
+      "level": 3,
+      "text_sha256": "c478dac532c74543056aed55778b8965218757a6ecf9fca4d703229feef036bf",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.filter-region-for-shorthands",
+          "filter-effects-1.filter-region-for-shorthands-clause-55cb4e89978e"
+        ]
+      }
+    },
+    {
+      "id": "animation-of-filters",
+      "title": "14. Animation of Filters",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.animation-of-filters"
+        ]
+      }
+    },
+    {
+      "id": "interpolation-of-filters",
+      "title": "14.1. Interpolation of Filter Function Lists",
+      "level": 3,
+      "text_sha256": "ea42808baedd01dd29d72e97e818bcc9aeca99aaf3a391c91fd49376c150d949",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interpolation-of-filters",
+          "filter-effects-1.interpolation-of-filters-clause-5d6493863d4a",
+          "filter-effects-1.interpolation-of-filters-clause-cede0e160369",
+          "filter-effects-1.interpolation-of-filters-clause-6c2ca2eee7d3",
+          "filter-effects-1.interpolation-of-filters-clause-45be35dc6ddc",
+          "filter-effects-1.interpolation-of-filters-clause-c33095e3abe0"
+        ]
+      }
+    },
+    {
+      "id": "addition",
+      "title": "14.2. Addition",
+      "level": 3,
+      "text_sha256": "78b10b9dd3d843412048869bd78ab0a5d4677bc952e3cde1648cdac0366ffa87",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.addition"
+        ]
+      }
+    },
+    {
+      "id": "accumulation",
+      "title": "14.3. Accumulation",
+      "level": 3,
+      "text_sha256": "c28aedec2842ec81523c8d33fd9bf32006b0baa892e173cfdad68ee6f572debc",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.accumulation"
+        ]
+      }
+    },
+    {
+      "id": "priv-sec",
+      "title": "15. Privacy and Security Considerations",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.priv-sec"
+        ]
+      }
+    },
+    {
+      "id": "tainted-filter-primitives",
+      "title": "15.1. Tainted Filter Primitives",
+      "level": 3,
+      "text_sha256": "afcbe4267f3935cc0e4a953ca40c24a3818934d3b1e5b7614affbd3ce62269ba",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.tainted-filter-primitives",
+          "filter-effects-1.tainted-filter-primitives-clause-88e0f5ed1b15",
+          "filter-effects-1.tainted-filter-primitives-clause-c233108da516",
+          "filter-effects-1.tainted-filter-primitives-clause-82776df01f53",
+          "filter-effects-1.tainted-filter-primitives-clause-c8374a445d05",
+          "filter-effects-1.tainted-filter-primitives-clause-0e69bec01a9c",
+          "filter-effects-1.tainted-filter-primitives-clause-1d6bb24de30d"
+        ]
+      }
+    },
+    {
+      "id": "fedisplacemnentmap-restrictions",
+      "title": "15.2. feDisplacementMap Restrictions",
+      "level": 3,
+      "text_sha256": "8c13f4194d74c8e43aa5d417bb585bf298f20db4662fcda2d6f17699cc983a8f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.fedisplacemnentmap-restrictions",
+          "filter-effects-1.fedisplacemnentmap-restrictions-clause-8c13f4194d74"
+        ]
+      }
+    },
+    {
+      "id": "origin-restrictions",
+      "title": "15.3. Origin Restrictions",
+      "level": 3,
+      "text_sha256": "3c39eb89161cf83bf620db4d60cc5f2358cd579780796d330825f1ea12eba245",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.origin-restrictions",
+          "filter-effects-1.origin-restrictions-clause-3c39eb89161c"
+        ]
+      }
+    },
+    {
+      "id": "timing-attack",
+      "title": "15.4. Timing Attacks",
+      "level": 3,
+      "text_sha256": "803792daf2a35b05157131f3e28b77b6540fc235c28edc1bdc2bc956cd95b424",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.timing-attack"
+        ]
+      }
+    },
+    {
+      "id": "AccessBackgroundImage",
+      "title": "Appendix A: The deprecated enable-background property",
+      "level": 2,
+      "text_sha256": "074c4738a882d97cea477f7f54e61fbc0b72525a1decfa8908014d24e7c9ca5d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.accessbackgroundimage",
+          "filter-effects-1.accessbackgroundimage-clause-fbfe9cc43b52"
+        ]
+      }
+    },
+    {
+      "id": "DOMInterfaces",
+      "title": "Appendix B: DOM interfaces",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.dominterfaces"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFilterElement",
+      "title": "Interface SVGFilterElement",
+      "level": 3,
+      "text_sha256": "2a15eca22b4064c6d5acb54c030f93524bd07543378c39a9a7e0d014ec8f9fb5",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfilterelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFilterPrimitiveStandardAttributes",
+      "title": "Interface SVGFilterPrimitiveStandardAttributes",
+      "level": 3,
+      "text_sha256": "a4f8f136e532070987388b143cfb70a088c5b39cb845b5f3c9b77a49d6799f58",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfilterprimitivestandardattributes"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEBlendElement",
+      "title": "Interface SVGFEBlendElement",
+      "level": 3,
+      "text_sha256": "eb56e05118d73dd75c3423d26359d8e58ee64c11f37545e5b176195c0bce57dd",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfeblendelement",
+          "filter-effects-1.interfacesvgfeblendelement-clause-786b7a460e66"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEColorMatrixElement",
+      "title": "Interface SVGFEColorMatrixElement",
+      "level": 3,
+      "text_sha256": "6fb9b02ed52c628c20fd947ecd5a649c5be7dc5be38468195784d6332448c6db",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfecolormatrixelement",
+          "filter-effects-1.interfacesvgfecolormatrixelement-clause-786b7a460e66"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEComponentTransferElement",
+      "title": "Interface SVGFEComponentTransferElement",
+      "level": 3,
+      "text_sha256": "3e65795fd9af96a822850b481e942810df4f72a156da1daf487c3f5b663660f3",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfecomponenttransferelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGComponentTransferFunctionElement",
+      "title": "Interface SVGComponentTransferFunctionElement",
+      "level": 3,
+      "text_sha256": "417e7fc556338426879c81a1edc1d6ad4e9674692cbf764a41f79a5bd4441c2b",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgcomponenttransferfunctionelement",
+          "filter-effects-1.interfacesvgcomponenttransferfunctionelement-clause-786b7a460e66"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEFuncRElement",
+      "title": "Interface SVGFEFuncRElement",
+      "level": 3,
+      "text_sha256": "806d2344505379d90586b916e9d8e4b396269b8735965678167e446895bebd70",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfefuncrelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEFuncGElement",
+      "title": "Interface SVGFEFuncGElement",
+      "level": 3,
+      "text_sha256": "33b0fcead44b576d7a87c61e16e8fcdc4c5cf28d8400201af13b5e126aac752c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfefuncgelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEFuncBElement",
+      "title": "Interface SVGFEFuncBElement",
+      "level": 3,
+      "text_sha256": "cd88155b6dc8e6b47cf38995e9e8eaf61ec09c8f9f67f501f29368c075dd339b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfefuncbelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEFuncAElement",
+      "title": "Interface SVGFEFuncAElement",
+      "level": 3,
+      "text_sha256": "30d72ecd664ff810ca7ba99739abd533338ec6eb5f90cc2634ce8d4e11cb1459",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfefuncaelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFECompositeElement",
+      "title": "Interface SVGFECompositeElement",
+      "level": 3,
+      "text_sha256": "9468e012c7ad7de8f4821db18a71048db56627c1b4fb7822a782e76263afed8a",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfecompositeelement",
+          "filter-effects-1.interfacesvgfecompositeelement-clause-786b7a460e66"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEConvolveMatrixElement",
+      "title": "Interface SVGFEConvolveMatrixElement",
+      "level": 3,
+      "text_sha256": "bc74f52af5473a8a140019893291b9d3a09eba5363e7083e49e8520d4b78966d",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfeconvolvematrixelement",
+          "filter-effects-1.interfacesvgfeconvolvematrixelement-clause-786b7a460e66"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEDiffuseLightingElement",
+      "title": "Interface SVGFEDiffuseLightingElement",
+      "level": 3,
+      "text_sha256": "52f27ca1b832f65187c7b41860ade7b41bd22aa0698ab3ffe022b3950304b3c3",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfediffuselightingelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEDistantLightElement",
+      "title": "Interface SVGFEDistantLightElement",
+      "level": 3,
+      "text_sha256": "d4f562eed0f0f5fea9547cb1d9b45dd76c61d71ff4f125c60561a856a5b8be4d",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfedistantlightelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEPointLightElement",
+      "title": "Interface SVGFEPointLightElement",
+      "level": 3,
+      "text_sha256": "d1d88f266eb20813e9ad435092b105d3ad58f107bd52fd12482d75c03575526f",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfepointlightelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFESpotLightElement",
+      "title": "Interface SVGFESpotLightElement",
+      "level": 3,
+      "text_sha256": "100f8312e99d0dd0fe6aadee4c39f59c99374d4e32fdea5bbb687a462fef02c3",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfespotlightelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEDisplacementMapElement",
+      "title": "Interface SVGFEDisplacementMapElement",
+      "level": 3,
+      "text_sha256": "3c18ee7cd8905706fb8ea1282bb062d0011984e9d32c2816d226ee98e89c45f4",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfedisplacementmapelement",
+          "filter-effects-1.interfacesvgfedisplacementmapelement-clause-786b7a460e66"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEDropShadowElement",
+      "title": "Interface SVGFEDropShadowElement",
+      "level": 3,
+      "text_sha256": "2682ca8c0b873f6162d00180e14929583b7937c880e2e154e168f7635485b57f",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfedropshadowelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEFloodElement",
+      "title": "Interface SVGFEFloodElement",
+      "level": 3,
+      "text_sha256": "bef3f04b883588a443f3dab15636afd15daecd5f08fec3e50303f45b8c9a3242",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfefloodelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEGaussianBlurElement",
+      "title": "Interface SVGFEGaussianBlurElement",
+      "level": 3,
+      "text_sha256": "b7c7057950983093e8e9137287a1397c28135f70972318853dec9697cdc2da50",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfegaussianblurelement",
+          "filter-effects-1.interfacesvgfegaussianblurelement-clause-786b7a460e66"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEImageElement",
+      "title": "Interface SVGFEImageElement",
+      "level": 3,
+      "text_sha256": "1ea7eb0b39a97cc093c4c1362c058a73638e3d53e762c94c5d8d2f8bd0cf54b1",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfeimageelement",
+          "filter-effects-1.interfacesvgfeimageelement-clause-b1718da35243"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEMergeElement",
+      "title": "Interface SVGFEMergeElement",
+      "level": 3,
+      "text_sha256": "02ec0f392872535bf87d32162de46114d8577ab91004e0341fa59707e65f1f80",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfemergeelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEMergeNodeElement",
+      "title": "Interface SVGFEMergeNodeElement",
+      "level": 3,
+      "text_sha256": "e1999e4505dc5559c975c3e87070abc0f3fbc5ca56b8e92b5393bd151e20c4ed",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfemergenodeelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEMorphologyElement",
+      "title": "Interface SVGFEMorphologyElement",
+      "level": 3,
+      "text_sha256": "4d95c762377cb077748833a670151f6f2d1c5904d01f184848a001114891bf50",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfemorphologyelement",
+          "filter-effects-1.interfacesvgfemorphologyelement-clause-786b7a460e66"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFEOffsetElement",
+      "title": "Interface SVGFEOffsetElement",
+      "level": 3,
+      "text_sha256": "4ade20860a3a014b36097006d824cd0116452dc067d1b829affe661315490ea3",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfeoffsetelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFESpecularLightingElement",
+      "title": "Interface SVGFESpecularLightingElement",
+      "level": 3,
+      "text_sha256": "47c2f03525ed45596bebe070d5920e703c2ea142f2c63fb55e115f2c6279c34e",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfespecularlightingelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFETileElement",
+      "title": "Interface SVGFETileElement",
+      "level": 3,
+      "text_sha256": "58a8e7c507efefd0397587f0c8217be988adb9bd4242698173b85f99925f15e4",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfetileelement"
+        ]
+      }
+    },
+    {
+      "id": "InterfaceSVGFETurbulenceElement",
+      "title": "Interface SVGFETurbulenceElement",
+      "level": 3,
+      "text_sha256": "d1f46f862dd7b8be0a66ce35ed659fdc812334ae3c8ff7581e9620cb24bcf0f0",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.interfacesvgfeturbulenceelement",
+          "filter-effects-1.interfacesvgfeturbulenceelement-clause-786b7a460e66"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "6561e9d0815be3d58f6b58c4964092577761ac546863c33b664e8114f98ef527",
+      "clause_count": 54,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "badbb611335a65928f159dbf5fe3aec61a6fcacd1dbbf32dd40746af1d7c7e33",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.conformance"
+        ]
+      }
+    },
+    {
+      "id": "document-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.document-conventions",
+          "filter-effects-1.document-conventions-clause-5c98c879f070",
+          "filter-effects-1.document-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "conform-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.conform-classes",
+          "filter-effects-1.conform-classes-clause-ff408372426c",
+          "filter-effects-1.conform-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "conform-responsible",
+      "title": "Requirements for Responsible Implementation of CSS",
+      "level": 3,
+      "text_sha256": "63e281f28ed2ebefafb560d6716cfc98d63caa0f55f4ae36a918cca31886f4b3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.conform-responsible"
+        ]
+      }
+    },
+    {
+      "id": "conform-partial",
+      "title": "Partial Implementations",
+      "level": 4,
+      "text_sha256": "db223ebb5aec741d4499084daefc72ba91d0816c7320aaa129bcf8d9c699c7ea",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.conform-partial",
+          "filter-effects-1.conform-partial-clause-db223ebb5aec"
+        ]
+      }
+    },
+    {
+      "id": "conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "conform-testing",
+      "title": "Implementations of CR-level Features",
+      "level": 4,
+      "text_sha256": "85a2aab62de157ff88eb104ecdbf2c4c32e685f5fa12638fd5357bdf89415d2c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.conform-testing",
+          "filter-effects-1.conform-testing-clause-003938d8c19a",
+          "filter-effects-1.conform-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "17d51225b309be54440927e240017b6ec22ecbac8e87060289e0878670b131d0",
+      "clause_count": 1754,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "cbc5bf651307c9d7390c3bfd21f205f40f61da7a451c07b694fac49608efeac3",
+      "clause_count": 169,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "6cc10765136ccb8603cd60c66469530449955a8dff1d72a35a8d04d7a07c628a",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.import-6b91f794ab2b"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "053ec85e7f26f7989bc17384e7b615d4d6e257d396c452f4d771d69f5136c3d9",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "0fa68a625c1ff2e23eed140000ce9a7e7ee241f8652199f2c4f21d857245a792",
+      "clause_count": 60,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.property-index"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "e676508163f51c30568665efcf559967041ab8c6225dd6d42720bcf5885e232d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "4ce58c6c40ab8505e8dedd8f090a0c5793efd9b358eb97196b7da14e8de81703",
+      "clause_count": 1025,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "filter-effects-1.issues-index",
+          "filter-effects-1.issues-index-clause-02cbbb29e7dd"
+        ]
+      }
+    }
+  ]
+}

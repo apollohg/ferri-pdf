@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode-tr11-tr11-44",
+  "sections": [
+    {
+      "id": "heading-4966ff94ef83",
+      "title": "Unicode® Standard Annex #11",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.heading-4966ff94ef83"
+        ]
+      }
+    },
+    {
+      "id": "heading-6b4202f82681",
+      "title": "East Asian Width",
+      "level": 1,
+      "text_sha256": "e3a9c6281fc7bc37e77b438e302e968e6d246633732ff417c61cc9f957e2d3c0",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.heading-6b4202f82681"
+        ]
+      }
+    },
+    {
+      "id": "heading-562e5643bfd0",
+      "title": "Summary",
+      "level": 4,
+      "text_sha256": "91bb591ea75354a7a04e6661455103e45fe46eeb150cf010cca0263c88f9ba1a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.heading-562e5643bfd0"
+        ]
+      }
+    },
+    {
+      "id": "heading-b67e4e63a5c4",
+      "title": "Status",
+      "level": 4,
+      "text_sha256": "969770954d10eb10c58c417e62f0aeb8ceca31b93e33871538ad4b7096754f2f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.heading-b67e4e63a5c4"
+        ]
+      }
+    },
+    {
+      "id": "heading-35d8550f521f",
+      "title": "Contents",
+      "level": 4,
+      "text_sha256": "22c24cb05bd87559495a8accd111d496a68a467cdc3b7bcbb34328a24af10aa5",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.heading-35d8550f521f"
+        ]
+      }
+    },
+    {
+      "id": "Overview",
+      "title": "1 Overview",
+      "level": 2,
+      "text_sha256": "b56d87bab0721dbf1241d488194673a15399c0859e6f3346a158023d4e3231c2",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.overview",
+          "unicode-tr11-tr11-44.overview-clause-c2d89f3a28f9"
+        ]
+      }
+    },
+    {
+      "id": "Scope",
+      "title": "2 Scope",
+      "level": 2,
+      "text_sha256": "eab24eb6e0bff513193992f77b8114c4aed3a19ade255e43bb1032ab09fd018c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.scope",
+          "unicode-tr11-tr11-44.scope-clause-9ce2e8b7d294",
+          "unicode-tr11-tr11-44.scope-clause-d120634d09d5"
+        ]
+      }
+    },
+    {
+      "id": "Description",
+      "title": "3 Description",
+      "level": 2,
+      "text_sha256": "86592fcac655ec41ed72275c244d9402afaf683a3b8667ce6dbc1cc145e28888",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.description",
+          "unicode-tr11-tr11-44.description-clause-9227d166141c",
+          "unicode-tr11-tr11-44.description-clause-e67a3263b2ae"
+        ]
+      }
+    },
+    {
+      "id": "Definitions",
+      "title": "4 Definitions",
+      "level": 2,
+      "text_sha256": "d6e44586968f240511468cb640b29ee16ac81836977552a00089ef33f328d66f",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.definitions",
+          "unicode-tr11-tr11-44.definitions-clause-d32370c19fcb",
+          "unicode-tr11-tr11-44.definitions-clause-419e0193bd92",
+          "unicode-tr11-tr11-44.definitions-clause-27492a31d319"
+        ]
+      }
+    },
+    {
+      "id": "Relation",
+      "title": "4.1 Relation to the Terms “Fullwidth” and “Halfwidth”",
+      "level": 3,
+      "text_sha256": "36c08e5019b4e0f12808c83aa874f9ef2eefaa661ab1400a6ba5ff05e8ba2c23",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.relation"
+        ]
+      }
+    },
+    {
+      "id": "Ambiguous",
+      "title": "4.2 Ambiguous Characters",
+      "level": 3,
+      "text_sha256": "b0306f179f26920cd492becc6aabff9823c6a0f4e1792bf3f40f7d7dd68e2399",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.ambiguous",
+          "unicode-tr11-tr11-44.ambiguous-clause-adcce0837242",
+          "unicode-tr11-tr11-44.ambiguous-clause-ce36d1c19ff5"
+        ]
+      }
+    },
+    {
+      "id": "VariationSequences",
+      "title": "4.3 Variation Sequences",
+      "level": 3,
+      "text_sha256": "c105baa2c909874aa3600daad4a06ed2be1303f3546c7815a20f5d5b22c8a51a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.variationsequences",
+          "unicode-tr11-tr11-44.variationsequences-clause-c105baa2c909"
+        ]
+      }
+    },
+    {
+      "id": "Recommendations",
+      "title": "5 Recommendations",
+      "level": 2,
+      "text_sha256": "1eed65e0d8d0f1392252d0436247730c690466bcf7f2bdb1a8342dd93fe737e5",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.recommendations",
+          "unicode-tr11-tr11-44.recommendations-clause-1ce70bec59c5"
+        ]
+      }
+    },
+    {
+      "id": "Classifications",
+      "title": "6 Classifications",
+      "level": 2,
+      "text_sha256": "dc2b34daf58b1022e1d48e66dbe77800a213386ed234b967d77b4fe8f2d662fd",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.classifications"
+        ]
+      }
+    },
+    {
+      "id": "Unassigned",
+      "title": "6.1 Unassigned and Private-Use Characters",
+      "level": 3,
+      "text_sha256": "8e335e51b5af8a120956bd754338bd6079eb0922de1d01e7a1f01e50c394a3c8",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.unassigned"
+        ]
+      }
+    },
+    {
+      "id": "Combining",
+      "title": "6.2 Combining Marks",
+      "level": 3,
+      "text_sha256": "478f46a56bad3db7fb5ae09fd613ca24904d62a4a901347011dfff6e96363184",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.combining",
+          "unicode-tr11-tr11-44.combining-clause-5658c50074c0"
+        ]
+      }
+    },
+    {
+      "id": "DataFile",
+      "title": "6.3 Data File",
+      "level": 3,
+      "text_sha256": "2aa2105148112017bbd2ca9e676d09251058b36981293e31cc50c18ef4265ac3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.datafile"
+        ]
+      }
+    },
+    {
+      "id": "Adding",
+      "title": "6.4 Adding Characters",
+      "level": 3,
+      "text_sha256": "88904353c86802f747b361530cef6128c6847917567846cd5cc12b1f47d97483",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.adding",
+          "unicode-tr11-tr11-44.adding-clause-88904353c868"
+        ]
+      }
+    },
+    {
+      "id": "References",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "8e262b530dd9dea23efac0eca37ae00f8a40d4b1be2872783d65ad768734b47a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.references"
+        ]
+      }
+    },
+    {
+      "id": "Acknowledgments",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "65f47f55369b9260aa7f9ac753106960e83d98860864d1a30c457fe923f86710",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.acknowledgments"
+        ]
+      }
+    },
+    {
+      "id": "Modifications",
+      "title": "Modifications",
+      "level": 2,
+      "text_sha256": "59e3df51f7ce304c784883667c2d217742b34321fb1f2df960fe04f0090a7b10",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.modifications"
+        ]
+      }
+    },
+    {
+      "id": "heading-d38656185be7",
+      "title": "Revision 44",
+      "level": 3,
+      "text_sha256": "bef2ec1d87a90d964de7aabd9fddc14ef145dc0f28d43dcddfbd7d4ecb800229",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode-tr11-tr11-44.heading-d38656185be7",
+          "unicode-tr11-tr11-44.heading-d38656185be7-clause-cc0b8d252104"
+        ]
+      }
+    }
+  ]
+}

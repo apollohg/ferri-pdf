@@ -1,0 +1,1339 @@
+{
+  "schema_version": 1,
+  "source_id": "dom",
+  "sections": [
+    {
+      "id": "title",
+      "title": "DOM (Commit 3c53f93a3e1fb11ef5bd38029b7a9c97baaf0177)",
+      "level": 1,
+      "text_sha256": "63b3d22f14c198436b0989f6525aa7767598084295186a94b9e18e6261bb0069",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "acbb4ac7bebe83e2f240e1262a027e4df29d613bb68a4d465588924b265edbb7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.abstract"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "ced8582a66eea92057ba1892c2bc1d56b68fd6fb79265dfaa83507513e7a7e20",
+      "clause_count": 90,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.contents"
+        ]
+      }
+    },
+    {
+      "id": "infrastructure",
+      "title": "1. Infrastructure",
+      "level": 2,
+      "text_sha256": "c9c397e969681ae613b34063dfeda61b3f5b497116752aaa4ca96e72333c3e50",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.infrastructure"
+        ]
+      }
+    },
+    {
+      "id": "trees",
+      "title": "1.1. Trees",
+      "level": 3,
+      "text_sha256": "839847949b71625980577cf8b344a6a94ebccc87f2e2535dea00412dd4960811",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.trees",
+          "dom.foundation-shadow-slot-distribution",
+          "dom.foundation-shared-static-dom"
+        ]
+      }
+    },
+    {
+      "id": "ordered-sets",
+      "title": "1.2. Ordered sets",
+      "level": 3,
+      "text_sha256": "00c2e57b7f2a785ca6bc0ea3046b607346c082e40ae780131c6565ace72a7ed7",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.ordered-sets"
+        ]
+      }
+    },
+    {
+      "id": "selectors",
+      "title": "1.3. Selectors",
+      "level": 3,
+      "text_sha256": "ac88b514758c84a29a495a3662fd4127db2a0e77b79007e3075c64bd12749678",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.selectors"
+        ]
+      }
+    },
+    {
+      "id": "namespaces",
+      "title": "1.4. Name validation",
+      "level": 3,
+      "text_sha256": "b5851d31e90121a22500848d936a8aa0dff6cfc2059351427706f2c0eef3dbab",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.namespaces",
+          "dom.namespaces-clause-8704e66d08ca",
+          "dom.foundation-shared-static-dom"
+        ]
+      }
+    },
+    {
+      "id": "events",
+      "title": "2. Events",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.events"
+        ]
+      }
+    },
+    {
+      "id": "introduction-to-dom-events",
+      "title": "2.1. Introduction to \"DOM Events\"",
+      "level": 3,
+      "text_sha256": "9a96557173268a7d563d89535ec72c72c55bd821cadd7510d8f41bf5f7ce6f3a",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.introduction-to-dom-events"
+        ]
+      }
+    },
+    {
+      "id": "interface-event",
+      "title": "2.2. Interface Event",
+      "level": 3,
+      "text_sha256": "d1cd099a23ee5db7d2ba6e7cd8506163ae80cc3b914b44d805352168c674860c",
+      "clause_count": 164,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-event",
+          "dom.interface-event-clause-d0659167784d",
+          "dom.interface-event-clause-9b8cac7c5b9f",
+          "dom.interface-event-clause-dd37b9839b5b",
+          "dom.interface-event-clause-a6334bb9e86e",
+          "dom.interface-event-clause-4a71cf9f2af1",
+          "dom.interface-event-clause-aeb0f35f9f5e",
+          "dom.interface-event-clause-b736594387a8",
+          "dom.interface-event-clause-d9086c029a04",
+          "dom.interface-event-clause-013b36a8d380"
+        ]
+      }
+    },
+    {
+      "id": "interface-window-extensions",
+      "title": "2.3. Legacy extensions to the Window interface",
+      "level": 3,
+      "text_sha256": "1a038c000d7b0531ed01053a9bd2fd0cd15629a12f426740123161eaffaf3fb9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-window-extensions"
+        ]
+      }
+    },
+    {
+      "id": "interface-customevent",
+      "title": "2.4. Interface CustomEvent",
+      "level": 3,
+      "text_sha256": "00063c663c41f955810e4e37e806091e03e85c470865898f74b29ff1a55f5001",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-customevent",
+          "dom.interface-customevent-clause-8210365ea31b",
+          "dom.interface-customevent-clause-d6ec6edfe275"
+        ]
+      }
+    },
+    {
+      "id": "constructing-events",
+      "title": "2.5. Constructing events",
+      "level": 3,
+      "text_sha256": "73b3290ebc91e375d57ae802c0097e130aa44f56600c4eb31facf9c51f4c9ac3",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.constructing-events",
+          "dom.constructing-events-clause-d1b13926da30",
+          "dom.constructing-events-clause-5e07358a7337",
+          "dom.constructing-events-clause-892e76ae9084",
+          "dom.constructing-events-clause-6fa191c7b04f",
+          "dom.constructing-events-clause-3863bb3d7357"
+        ]
+      }
+    },
+    {
+      "id": "defining-event-interfaces",
+      "title": "2.6. Defining event interfaces",
+      "level": 3,
+      "text_sha256": "31046ad6b5076e663cb11dbc79b612e30a1bda52ac1a49050657ef16c710b615",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.defining-event-interfaces",
+          "dom.defining-event-interfaces-clause-10d552d2cc8f"
+        ]
+      }
+    },
+    {
+      "id": "interface-eventtarget",
+      "title": "2.7. Interface EventTarget",
+      "level": 3,
+      "text_sha256": "d4f1a29711d19bd40e0b284f5c5c8d384299ae3ff5cb37155697ce5e0be72240",
+      "clause_count": 111,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-eventtarget",
+          "dom.interface-eventtarget-clause-a4109304bfef",
+          "dom.interface-eventtarget-clause-e339db709490",
+          "dom.interface-eventtarget-clause-05c2fa82af46",
+          "dom.interface-eventtarget-clause-03084fb00f4b",
+          "dom.interface-eventtarget-clause-4b1ddfbb1372",
+          "dom.interface-eventtarget-clause-35bc523ffec1",
+          "dom.interface-eventtarget-clause-e309103844f9",
+          "dom.interface-eventtarget-clause-255de09e2613"
+        ]
+      }
+    },
+    {
+      "id": "observing-event-listeners",
+      "title": "2.8. Observing event listeners",
+      "level": 3,
+      "text_sha256": "a9c4f826c58f60475d020f10899a82ac45eb9a948b4b1b02b258b49c18718dc0",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.observing-event-listeners",
+          "dom.observing-event-listeners-clause-e0fa511e820f"
+        ]
+      }
+    },
+    {
+      "id": "dispatching-events",
+      "title": "2.9. Dispatching events",
+      "level": 3,
+      "text_sha256": "e54ac32b1a752b60457ffd450649cb60a346b84bd4f60f92ce05b06e348f9484",
+      "clause_count": 219,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.dispatching-events"
+        ]
+      }
+    },
+    {
+      "id": "firing-events",
+      "title": "2.10. Firing events",
+      "level": 3,
+      "text_sha256": "5eedb3d2035a259e840db8add51e9249752f6d435a19ca2e035784071a2f6e02",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.firing-events",
+          "dom.firing-events-clause-eb0ac78dc4c4",
+          "dom.firing-events-clause-227368188470"
+        ]
+      }
+    },
+    {
+      "id": "action-versus-occurrence",
+      "title": "2.11. Action versus occurrence",
+      "level": 3,
+      "text_sha256": "a07314c0c2f87a6bb79ad3adb9bc0a0f2a74894f57a7260a16c9b09aebbbe1b3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.action-versus-occurrence",
+          "dom.action-versus-occurrence-clause-6ffac471409c"
+        ]
+      }
+    },
+    {
+      "id": "aborting-ongoing-activities",
+      "title": "3. Aborting ongoing activities",
+      "level": 2,
+      "text_sha256": "1bf83db8168407c932239f0b8258a8519e07be47d94ecd3427c10f67426616b9",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.aborting-ongoing-activities",
+          "dom.aborting-ongoing-activities-clause-a3c5a197a9b9"
+        ]
+      }
+    },
+    {
+      "id": "interface-abortcontroller",
+      "title": "3.1. Interface AbortController",
+      "level": 3,
+      "text_sha256": "164b97cfd2669523ea2d1a334628fe7117003934c434ba9c5b075ded1587d077",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-abortcontroller"
+        ]
+      }
+    },
+    {
+      "id": "interface-AbortSignal",
+      "title": "3.2. Interface AbortSignal",
+      "level": 3,
+      "text_sha256": "c81f21b1973287c92355faaa16653ae245b70fcbc6acbf249d5ab78d54ad68c6",
+      "clause_count": 103,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-abortsignal",
+          "dom.interface-abortsignal-clause-ac21ae04e128",
+          "dom.interface-abortsignal-clause-191994f16f4d",
+          "dom.interface-abortsignal-clause-f8eb0a272771",
+          "dom.interface-abortsignal-clause-da46a8ab7045",
+          "dom.interface-abortsignal-clause-cc2670749da5",
+          "dom.interface-abortsignal-clause-f031a7de4cd7",
+          "dom.interface-abortsignal-clause-05a30115d229"
+        ]
+      }
+    },
+    {
+      "id": "abort-signal-garbage-collection",
+      "title": "3.2.1. Garbage collection",
+      "level": 4,
+      "text_sha256": "c3b3ac56612c01b6db022ef015effc50fefe95ad76346665cc5a45ac857c28fa",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.abort-signal-garbage-collection",
+          "dom.abort-signal-garbage-collection-clause-c3b3ac56612c"
+        ]
+      }
+    },
+    {
+      "id": "abortcontroller-api-integration",
+      "title": "3.3. Using AbortController and AbortSignal objects in APIs",
+      "level": 3,
+      "text_sha256": "7df5bf5951f8d9b5b94bc719175c2556e2ca8b52c24d45e45970e9846c4e5766",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.abortcontroller-api-integration",
+          "dom.abortcontroller-api-integration-clause-ff9aeef17d32",
+          "dom.abortcontroller-api-integration-clause-aea83fc84cff",
+          "dom.abortcontroller-api-integration-clause-53717e4c3b01"
+        ]
+      }
+    },
+    {
+      "id": "nodes",
+      "title": "4. Nodes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.nodes"
+        ]
+      }
+    },
+    {
+      "id": "introduction-to-the-dom",
+      "title": "4.1. Introduction to \"The DOM\"",
+      "level": 3,
+      "text_sha256": "8983d6b55cbd4fa6a907136593086bc73842c28560df4fe967681caaa9c64a84",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.introduction-to-the-dom"
+        ]
+      }
+    },
+    {
+      "id": "node-trees",
+      "title": "4.2. Node tree",
+      "level": 3,
+      "text_sha256": "e52c8f6136d435e74e138da51d5f0f5151590eaf0bf80831106a919ea6ff10ea",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.node-trees",
+          "dom.foundation-shared-static-dom"
+        ]
+      }
+    },
+    {
+      "id": "document-trees",
+      "title": "4.2.1. Document tree",
+      "level": 4,
+      "text_sha256": "5f81022c130d52853b4db0d764242824a518e51945920a96aee4fe972238bc7a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.document-trees",
+          "dom.foundation-shared-static-dom"
+        ]
+      }
+    },
+    {
+      "id": "shadow-trees",
+      "title": "4.2.2. Shadow tree",
+      "level": 4,
+      "text_sha256": "3553240a24e2088e9cbd155f9e4596fda97c191f12347b7e79a3cabbb7de996c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.shadow-trees",
+          "dom.foundation-shadow-slot-distribution"
+        ]
+      }
+    },
+    {
+      "id": "shadow-tree-slots",
+      "title": "4.2.2.1. Slots",
+      "level": 5,
+      "text_sha256": "abc6499ccf2a982c55774da7b04b47b6951df80b40e24ceb1a3ce38db536bf14",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.shadow-tree-slots",
+          "dom.foundation-shadow-slot-distribution"
+        ]
+      }
+    },
+    {
+      "id": "light-tree-slotables",
+      "title": "4.2.2.2. Slottables",
+      "level": 5,
+      "text_sha256": "5dfb458c593d0e8ecd3f9c6ca00b65146baf0e95fdc65d72f811efe30815f4b4",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.light-tree-slotables",
+          "dom.foundation-shadow-slot-distribution"
+        ]
+      }
+    },
+    {
+      "id": "finding-slots-and-slotables",
+      "title": "4.2.2.3. Finding slots and slottables",
+      "level": 5,
+      "text_sha256": "4c981148388ad0680d7e7bebc6d1465e6367d4ee7c47937088cf6a087ea28391",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.finding-slots-and-slotables",
+          "dom.foundation-shadow-slot-distribution"
+        ]
+      }
+    },
+    {
+      "id": "assigning-slotables-and-slots",
+      "title": "4.2.2.4. Assigning slottables and slots",
+      "level": 5,
+      "text_sha256": "d6aa2eb94f1e34a99ae9efeea32348d3dce86e19e5a190c6b4f717fdb98e5acf",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.assigning-slotables-and-slots",
+          "dom.foundation-shadow-slot-distribution"
+        ]
+      }
+    },
+    {
+      "id": "signaling-slot-change",
+      "title": "4.2.2.5. Signaling slot change",
+      "level": 5,
+      "text_sha256": "c2d92fa08376556d503bbbe757d996691ec2a268b43f6ff76c5796d5368a1fc5",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.signaling-slot-change"
+        ]
+      }
+    },
+    {
+      "id": "mutation-algorithms",
+      "title": "4.2.3. Mutation algorithms",
+      "level": 4,
+      "text_sha256": "1cb53573378be665b8cfa252c61c0a92bd3dee56f5333280acd40a9d59b1e63f",
+      "clause_count": 310,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.mutation-algorithms",
+          "dom.mutation-algorithms-clause-43fe97b2103b",
+          "dom.mutation-algorithms-clause-5298718df1c8",
+          "dom.mutation-algorithms-clause-d5c16ecdc738",
+          "dom.mutation-algorithms-clause-06d937a61b6f",
+          "dom.mutation-algorithms-clause-3651baf4c0e9",
+          "dom.mutation-algorithms-clause-5773ef6f625c",
+          "dom.mutation-algorithms-clause-a2c10cc5a64f",
+          "dom.mutation-algorithms-clause-eb8db49362b1",
+          "dom.mutation-algorithms-clause-06b53bb37340",
+          "dom.mutation-algorithms-clause-fa529d008850",
+          "dom.mutation-algorithms-clause-3abba59164e6"
+        ]
+      }
+    },
+    {
+      "id": "interface-nonelementparentnode",
+      "title": "4.2.4. Mixin NonElementParentNode",
+      "level": 4,
+      "text_sha256": "53ff849d9865a895555b7a95fa3eaf8fab03f0718d7f852efab736dca51a2000",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-nonelementparentnode"
+        ]
+      }
+    },
+    {
+      "id": "mixin-documentorshadowroot",
+      "title": "4.2.5. Mixin DocumentOrShadowRoot",
+      "level": 4,
+      "text_sha256": "0e3ee5413d119ce640e71e7466ec5610dcbb0a7fc95b59944b6e0625390d5104",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.mixin-documentorshadowroot",
+          "dom.mixin-documentorshadowroot-clause-ce683f0ebfe9",
+          "dom.mixin-documentorshadowroot-clause-d23fe2e63ce4"
+        ]
+      }
+    },
+    {
+      "id": "interface-parentnode",
+      "title": "4.2.6. Mixin ParentNode",
+      "level": 4,
+      "text_sha256": "d38e168a3f71fcdddd8dfbc87c751b410f8642f74de3d8b532e3a67fb03b2e83",
+      "clause_count": 70,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-parentnode"
+        ]
+      }
+    },
+    {
+      "id": "interface-nondocumenttypechildnode",
+      "title": "4.2.7. Mixin NonDocumentTypeChildNode",
+      "level": 4,
+      "text_sha256": "bd656ad0e58c798a43b5d068b9e1c52bf9d198819627150b1d12463b31ff5146",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-nondocumenttypechildnode"
+        ]
+      }
+    },
+    {
+      "id": "interface-childnode",
+      "title": "4.2.8. Mixin ChildNode",
+      "level": 4,
+      "text_sha256": "72108120d57f28992a0c52b0da91b6cc2aac353273abd28aa25a28aea770fafd",
+      "clause_count": 58,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-childnode"
+        ]
+      }
+    },
+    {
+      "id": "mixin-slotable",
+      "title": "4.2.9. Mixin Slottable",
+      "level": 4,
+      "text_sha256": "6eb89151cc265084222afa7d9ae2d000f79c5a90a64b3439df263820e60b13a9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.mixin-slotable"
+        ]
+      }
+    },
+    {
+      "id": "old-style-collections",
+      "title": "4.2.10. Old-style collections: NodeList and HTMLCollection",
+      "level": 4,
+      "text_sha256": "7c1ed3dfdbc898d0079d51468380d3ec469021f1e446cc494513521fdf501ce9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.old-style-collections",
+          "dom.old-style-collections-clause-2fc13ce4e596",
+          "dom.old-style-collections-clause-72af29626c7f",
+          "dom.old-style-collections-clause-d0e4da85a953"
+        ]
+      }
+    },
+    {
+      "id": "interface-nodelist",
+      "title": "4.2.10.1. Interface NodeList",
+      "level": 5,
+      "text_sha256": "fe9711b96fc61aaedc5c121cfe1cb095fd7746cfbfc5002d481e4c7ec4b68629",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-nodelist",
+          "dom.interface-nodelist-clause-a638dbab2abe",
+          "dom.interface-nodelist-clause-cbb9d7b38086",
+          "dom.interface-nodelist-clause-0d6d89447c9e"
+        ]
+      }
+    },
+    {
+      "id": "interface-htmlcollection",
+      "title": "4.2.10.2. Interface HTMLCollection",
+      "level": 5,
+      "text_sha256": "13669f88b4e3228ac46257b46f89613db154187690c72d5473ea91c54e48eb80",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-htmlcollection",
+          "dom.interface-htmlcollection-clause-6516e26554d0",
+          "dom.interface-htmlcollection-clause-ec630722e0e0"
+        ]
+      }
+    },
+    {
+      "id": "mutation-observers",
+      "title": "4.3. Mutation observers",
+      "level": 3,
+      "text_sha256": "e155becabc7a94ba84c336fe6ec49542717f9ff866260d42c2e80e75612844ce",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.mutation-observers"
+        ]
+      }
+    },
+    {
+      "id": "interface-mutationobserver",
+      "title": "4.3.1. Interface MutationObserver",
+      "level": 4,
+      "text_sha256": "8f6ce09ef5387f369f44d0e23926d4b79b3543cb455e8708aedcc8f597072c5a",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-mutationobserver",
+          "dom.interface-mutationobserver-clause-8a1cf7c71f33",
+          "dom.interface-mutationobserver-clause-86cd3417cd75",
+          "dom.interface-mutationobserver-clause-540346fa9476"
+        ]
+      }
+    },
+    {
+      "id": "queueing-a-mutation-record",
+      "title": "4.3.2. Queuing a mutation record",
+      "level": 4,
+      "text_sha256": "35d3d3d0e7c82c566a607aadea6830ae470c8e0c2fd617f9abf90c72d02df947",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.queueing-a-mutation-record"
+        ]
+      }
+    },
+    {
+      "id": "interface-mutationrecord",
+      "title": "4.3.3. Interface MutationRecord",
+      "level": 4,
+      "text_sha256": "398d068c4f57c564cbbe73e0c6d9b1186c7d569fa26b2b6131d369f5566f837c",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-mutationrecord",
+          "dom.interface-mutationrecord-clause-979212cb8515",
+          "dom.interface-mutationrecord-clause-ffca3ef4e3a1"
+        ]
+      }
+    },
+    {
+      "id": "interface-node",
+      "title": "4.4. Interface Node",
+      "level": 3,
+      "text_sha256": "8ce2f9b91ca9b44cc8a65101ca5b957b80cd184d5fe2b0aad8e7ab72fc45294c",
+      "clause_count": 517,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-node",
+          "dom.interface-node-clause-1d2e72b5bd7d",
+          "dom.interface-node-clause-2f38234e978b",
+          "dom.interface-node-clause-ce5a38558350",
+          "dom.interface-node-clause-a302499f699a",
+          "dom.interface-node-clause-497e0ab356d0",
+          "dom.interface-node-clause-20d787539ed1",
+          "dom.interface-node-clause-792b676418aa",
+          "dom.interface-node-clause-a9ce606e0013",
+          "dom.interface-node-clause-14ca25796bbd",
+          "dom.interface-node-clause-e22b3b700c5c",
+          "dom.interface-node-clause-cd3860160eb1",
+          "dom.interface-node-clause-dddcaeb01a9b",
+          "dom.interface-node-clause-5e252de537ba",
+          "dom.interface-node-clause-16a51b60f8aa"
+        ]
+      }
+    },
+    {
+      "id": "interface-document",
+      "title": "4.5. Interface Document",
+      "level": 3,
+      "text_sha256": "dc37178bfb49ec9b0b7730ce03945521b6f1c759122e9282979dbff5fd9f3ca3",
+      "clause_count": 341,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-document",
+          "dom.interface-document-clause-c34bc93294d8",
+          "dom.interface-document-clause-b8b9080b743b",
+          "dom.interface-document-clause-5a39494f7b8a",
+          "dom.interface-document-clause-7d068f1e8f7e",
+          "dom.interface-document-clause-d03b49f6b5ab"
+        ]
+      }
+    },
+    {
+      "id": "interface-domimplementation",
+      "title": "4.5.1. Interface DOMImplementation",
+      "level": 4,
+      "text_sha256": "9deeef53daa2f96cbeff1618ce6ffd869f6013a3e33460f3d5e3e30b971dbfc4",
+      "clause_count": 67,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-domimplementation",
+          "dom.interface-domimplementation-clause-d083909e4b79"
+        ]
+      }
+    },
+    {
+      "id": "interface-documenttype",
+      "title": "4.6. Interface DocumentType",
+      "level": 3,
+      "text_sha256": "c713bc87438816a643d31cfa15b1a71df6aa98337c266e33a8c3271954152ca4",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-documenttype"
+        ]
+      }
+    },
+    {
+      "id": "interface-documentfragment",
+      "title": "4.7. Interface DocumentFragment",
+      "level": 3,
+      "text_sha256": "af6023b981933c92533855d4f0732707d2e4a4a89fb8ae8c0b3030a522c62df0",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-documentfragment"
+        ]
+      }
+    },
+    {
+      "id": "interface-shadowroot",
+      "title": "4.8. Interface ShadowRoot",
+      "level": 3,
+      "text_sha256": "0d7f07b90b0fbdf55bb828017f50ff28e1f39f436441aa25b27394c7b9f0c95d",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-shadowroot",
+          "dom.interface-shadowroot-clause-0bf74af828b8",
+          "dom.interface-shadowroot-clause-f835914cfed4"
+        ]
+      }
+    },
+    {
+      "id": "interface-element",
+      "title": "4.9. Interface Element",
+      "level": 3,
+      "text_sha256": "25f129cd9eeeca8f21962e4b9ee83a08436c39a0ccc888da3308fda5033e2c8d",
+      "clause_count": 521,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-element",
+          "dom.interface-element-clause-336c135ce7fc",
+          "dom.interface-element-clause-8515baf100b3",
+          "dom.interface-element-clause-c083f1a3b444",
+          "dom.interface-element-clause-a981f32dc750",
+          "dom.interface-element-clause-dd30e6eb76ba",
+          "dom.interface-element-clause-6170e0c937f5",
+          "dom.interface-element-clause-3303d0103589",
+          "dom.interface-element-clause-abcfbef8fa41",
+          "dom.interface-element-clause-8a49ba3a25dc"
+        ]
+      }
+    },
+    {
+      "id": "interface-namednodemap",
+      "title": "4.9.1. Interface NamedNodeMap",
+      "level": 4,
+      "text_sha256": "8044cbb1db819203a4e78176de01f85a814c5d04088e28d72eb092e10506cade",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-namednodemap"
+        ]
+      }
+    },
+    {
+      "id": "interface-attr",
+      "title": "4.9.2. Interface Attr",
+      "level": 4,
+      "text_sha256": "4333ea7f24002c6d8f48915928384899afcc54f4d24bd8e74946a4fcce436718",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-attr"
+        ]
+      }
+    },
+    {
+      "id": "interface-characterdata",
+      "title": "4.10. Interface CharacterData",
+      "level": 3,
+      "text_sha256": "5999b81dab3483f345ba323cd4e869ec45f45cf00e6a060ba3728e43842e946f",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-characterdata"
+        ]
+      }
+    },
+    {
+      "id": "interface-text",
+      "title": "4.11. Interface Text",
+      "level": 3,
+      "text_sha256": "d891ea644ee483a0ae59fcbb77dcba6026b55a110c34b78f258e5a5c396b4ea0",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-text"
+        ]
+      }
+    },
+    {
+      "id": "interface-cdatasection",
+      "title": "4.12. Interface CDATASection",
+      "level": 3,
+      "text_sha256": "3376c4b7e2db3fedcd0aeb746b5bc2d61d96ee9d51b22e47bacf41964c67b450",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-cdatasection"
+        ]
+      }
+    },
+    {
+      "id": "interface-processinginstruction",
+      "title": "4.13. Interface ProcessingInstruction",
+      "level": 3,
+      "text_sha256": "cad5ab10bf4e919a57bf4c0ff6ad285c50b285c47972b14cc76dd69d44f7efb8",
+      "clause_count": 121,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-processinginstruction"
+        ]
+      }
+    },
+    {
+      "id": "interface-comment",
+      "title": "4.14. Interface Comment",
+      "level": 3,
+      "text_sha256": "ac357b943b892440ffd205436d3b03bfa7b3998c6399377168f1b64b76cc68cb",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-comment"
+        ]
+      }
+    },
+    {
+      "id": "ranges",
+      "title": "5. Ranges",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.ranges"
+        ]
+      }
+    },
+    {
+      "id": "introduction-to-dom-ranges",
+      "title": "5.1. Introduction to \"DOM Ranges\"",
+      "level": 3,
+      "text_sha256": "cd091c1911b6cf516353240374dedee5e7c8101b7bd988acea0bd38e19c1dc94",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.introduction-to-dom-ranges"
+        ]
+      }
+    },
+    {
+      "id": "boundary-points",
+      "title": "5.2. Boundary points",
+      "level": 3,
+      "text_sha256": "e599256478f04c519731e8b44116659d238a9095ad0bd89fdf547588116f933d",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.boundary-points"
+        ]
+      }
+    },
+    {
+      "id": "interface-abstractrange",
+      "title": "5.3. Interface AbstractRange",
+      "level": 3,
+      "text_sha256": "8dd6090b0c8e7bb3ad06de4e94bae53ae37f6c038179b8a3326a7b4cd2d67eaf",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-abstractrange"
+        ]
+      }
+    },
+    {
+      "id": "interface-staticrange",
+      "title": "5.4. Interface StaticRange",
+      "level": 3,
+      "text_sha256": "fecd4d6118750d0bd6d6ae72f685ba6c004847c801f83ef515f5bc4de6e86bad",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-staticrange",
+          "dom.interface-staticrange-clause-f8e69f02894b"
+        ]
+      }
+    },
+    {
+      "id": "interface-range",
+      "title": "5.5. Interface Range",
+      "level": 3,
+      "text_sha256": "e4a8678b878ed94e3aca7af6f5a9d64a213a07efe75173c49e1d2c676c8d234f",
+      "clause_count": 476,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-range",
+          "dom.interface-range-clause-bb7089afb968",
+          "dom.interface-range-clause-c27ffcb2426d"
+        ]
+      }
+    },
+    {
+      "id": "traversal",
+      "title": "6. Traversal",
+      "level": 2,
+      "text_sha256": "42c4481973865923bdd86a8579c6e950b0f63e97881e1eb1e3c664644eeb9c68",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.traversal"
+        ]
+      }
+    },
+    {
+      "id": "interface-nodeiterator",
+      "title": "6.1. Interface NodeIterator",
+      "level": 3,
+      "text_sha256": "38d94ddd58c18672df012228db529d7378469a6509d37e5906ac07d4db0e1ad7",
+      "clause_count": 75,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-nodeiterator",
+          "dom.interface-nodeiterator-clause-f7b301c03f18"
+        ]
+      }
+    },
+    {
+      "id": "interface-treewalker",
+      "title": "6.2. Interface TreeWalker",
+      "level": 3,
+      "text_sha256": "dcde9ec0f8109d3df76a82398059d6a02aec7f84df86cbbb7401e83b3131e35b",
+      "clause_count": 150,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-treewalker"
+        ]
+      }
+    },
+    {
+      "id": "interface-nodefilter",
+      "title": "6.3. Interface NodeFilter",
+      "level": 3,
+      "text_sha256": "4df70e642c405fcab9259942351c7578d9bd0f91983faa14a75a6416ce72a11e",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-nodefilter"
+        ]
+      }
+    },
+    {
+      "id": "sets",
+      "title": "7. Sets",
+      "level": 2,
+      "text_sha256": "cf1779e0098d79054adde09b336017427ddefeff2a386efc52cfb451ab4d02d4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.sets"
+        ]
+      }
+    },
+    {
+      "id": "interface-domtokenlist",
+      "title": "7.1. Interface DOMTokenList",
+      "level": 3,
+      "text_sha256": "2a9720b765476534eb5bec211dddf609f9cb4a8ec7fc54d663784cd584e02852",
+      "clause_count": 140,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-domtokenlist"
+        ]
+      }
+    },
+    {
+      "id": "xpath",
+      "title": "8. XPath",
+      "level": 2,
+      "text_sha256": "a675701df084b3b77ccf762eb9ad7f6ba1bbd7667af1868201bfa65ae81a53a6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.xpath"
+        ]
+      }
+    },
+    {
+      "id": "interface-xpathresult",
+      "title": "8.1. Interface XPathResult",
+      "level": 3,
+      "text_sha256": "f59019f2cc8d984cfba8dc9a7a45b69ff798b3060840b78281269880f468b4e3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-xpathresult"
+        ]
+      }
+    },
+    {
+      "id": "interface-xpathexpression",
+      "title": "8.2. Interface XPathExpression",
+      "level": 3,
+      "text_sha256": "836ac8a4049a7f15e36bc55e2f541e370c319f774395ae59400eae967b3ae8a5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-xpathexpression"
+        ]
+      }
+    },
+    {
+      "id": "mixin-xpathevaluatorbase",
+      "title": "8.3. Mixin XPathEvaluatorBase",
+      "level": 3,
+      "text_sha256": "b62d2b6465156370ec99b8ae5739d8b9d4eaf5a8f9889ed16f50f66fe07f972d",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.mixin-xpathevaluatorbase"
+        ]
+      }
+    },
+    {
+      "id": "interface-xpathevaluator",
+      "title": "8.4. Interface XPathEvaluator",
+      "level": 3,
+      "text_sha256": "be16743b01011fc541bb8af8b7d111ce83417e5c304426e814860dfbae6212d0",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-xpathevaluator"
+        ]
+      }
+    },
+    {
+      "id": "xslt",
+      "title": "9. XSLT",
+      "level": 2,
+      "text_sha256": "8961ce52798b48c173348a14564a30532c61f7cd7a286ae640d8be0af1012aaf",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.xslt"
+        ]
+      }
+    },
+    {
+      "id": "interface-xsltprocessor",
+      "title": "9.1. Interface XSLTProcessor",
+      "level": 3,
+      "text_sha256": "c87cd0a9bd00864c0dbde341d09f58d6a2f2c76b1cea8fbffaeafc6af4f49241",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.interface-xsltprocessor"
+        ]
+      }
+    },
+    {
+      "id": "security-and-privacy",
+      "title": "10. Security and privacy considerations",
+      "level": 2,
+      "text_sha256": "5ddef1e9276d9599ab1e15eb470b010b3e6a2fab8bfcab1f487f33a8beaba50e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.security-and-privacy"
+        ]
+      }
+    },
+    {
+      "id": "historical",
+      "title": "11. Historical",
+      "level": 2,
+      "text_sha256": "41f3e0beef3cd5e429637bbe70bc26ae4fddec570425a69fbbab53cfe35074e0",
+      "clause_count": 64,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.historical"
+        ]
+      }
+    },
+    {
+      "id": "acks",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "9dbeefef8a00b0094ce0952ef14333e31003975ffaa4a5432c495dbe8d42ec46",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.acks"
+        ]
+      }
+    },
+    {
+      "id": "ipr",
+      "title": "Intellectual property rights",
+      "level": 2,
+      "text_sha256": "71690811fd52024c14eea511d3873d3a37ee62a754a2742eac6d5ee6c39518dd",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.ipr"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "9a19f3ea57894871c28f191c7bb7fda8fcfb657abf5fc47eb8e6003a02a26fcd",
+      "clause_count": 1003,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "799b7aa3a27c7d98016e30eb5d8b52cab4f96e5300877008c043a8b1075e5353",
+      "clause_count": 239,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "49f4fe465e33d7fce5acdd2ff0985ef4249a4018d682e0566abc556442b00ca6",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.import-fcc7356fabcb",
+          "dom.import-6f83408a0fc1",
+          "dom.import-81d6eacb7a2f",
+          "dom.import-8fbd089b67ea",
+          "dom.import-326196f3f9e2",
+          "dom.import-008171b5a918",
+          "dom.import-1db098735f1b",
+          "dom.import-11dc68531e1f",
+          "dom.import-3a1143ed6138",
+          "dom.import-a4eacec3fd91",
+          "dom.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Non-Normative References",
+      "level": 3,
+      "text_sha256": "30673f5c661340041e4b91273531054fb313b34d03140219b3c57e1b67f2b876",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.informative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "5543f6a3bf6bc6301a6e370f108b33d4c7bb06e4514bc9952f6dd4f60cc147fd",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "dom.idl-index",
+          "dom.idl-index-clause-6fdf5bfd90fc"
+        ]
+      }
+    }
+  ]
+}

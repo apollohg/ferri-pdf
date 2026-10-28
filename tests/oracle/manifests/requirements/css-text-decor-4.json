@@ -1,0 +1,4051 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-text-decor-4.intro",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "62863372e401e22e6ce26ec477f0a41c3225828afe526a6164bfd0109e9f23a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.placement",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module Interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "209224db384a1b77fd9d96654540dd4dd3a5eb553fe23e76988648909fd14064"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.values",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.terms",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "terms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terms",
+        "text_sha256": "5eaca510d7c3287b5c543c4210e3193d34a40f3bfae2552849c63e9b4ab746d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.line-decoration",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "line-decoration"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Line Decoration: Underline, Overline, and Strike-Through.",
+      "locator": {
+        "section_id": "line-decoration",
+        "text_sha256": "f2884e332655b0e497024aa82e52e899499595316ec68ae80dd6b5bbdaae6b2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.line-decoration-clause-6cea7eb588e9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.line-decoration-clause-6cea7eb588e9",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "line-decoration"
+      ],
+      "behaviour": "Line Decoration: Underline, Overline, and Strike-Through — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-decoration",
+        "clause_index": 3,
+        "clause_sha256": "6cea7eb588e993bf1e8fe687a5f8fa6476fb6119ecfd735f4545cfde48144eb6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-line-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-line-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Decoration Lines: the text-decoration-line property.",
+      "locator": {
+        "section_id": "text-decoration-line-property",
+        "text_sha256": "de075f39fdc5eae93970ccfbb0a90c6595de4a394cfdf18ae27dc791f60dacc2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-line-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-decoration-line-property-clause-ad93d2f9310a",
+        "css-text-decor-4.text-decoration-line-property-clause-ebcfc0faf7a4",
+        "css-text-decor-4.text-decoration-line-property-clause-495572104cce"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-line-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-line-property"
+      ],
+      "behaviour": "Text Decoration Lines: the text-decoration-line property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-line-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-line-property-clause-ad93d2f9310a",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-line-property"
+      ],
+      "behaviour": "Text Decoration Lines: the text-decoration-line property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-line-property",
+        "clause_index": 34,
+        "clause_sha256": "ad93d2f9310a26e0f700e0fe20fa91d70c9bcb2eb367981fd0180c178e402dea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-line-property-clause-ebcfc0faf7a4",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-line-property"
+      ],
+      "behaviour": "Text Decoration Lines: the text-decoration-line property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-line-property",
+        "clause_index": 35,
+        "clause_sha256": "ebcfc0faf7a4a70495dc3c67f55061b44d486d70df4473f97c7f8f97b51d07c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-line-property-clause-495572104cce",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-line-property"
+      ],
+      "behaviour": "Text Decoration Lines: the text-decoration-line property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-line-property",
+        "clause_index": 36,
+        "clause_sha256": "495572104ccec3da9ae02da3a5a60197ca7b8271d1c406ecd4b3f49f15015877"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-style-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-style-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Decoration Style: the text-decoration-style property.",
+      "locator": {
+        "section_id": "text-decoration-style-property",
+        "text_sha256": "d2c55383582c9a7e31fe3de098646f15b59ce432a7213fa881d2699e2cc57082"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-style-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-style-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-style-property"
+      ],
+      "behaviour": "Text Decoration Style: the text-decoration-style property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-style-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-color-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-color-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Decoration Color: the text-decoration-color property.",
+      "locator": {
+        "section_id": "text-decoration-color-property",
+        "text_sha256": "298a74c30e908f37e28a8944af14eae9340b6c4b36d3097da3066e7ebd511d63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-color-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-decoration-color-property-clause-dee972826276",
+        "css-text-decor-4.text-decoration-color-property-clause-cccbe246d263"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-color-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-color-property"
+      ],
+      "behaviour": "Text Decoration Color: the text-decoration-color property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-color-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-color-property-clause-dee972826276",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-color-property"
+      ],
+      "behaviour": "Text Decoration Color: the text-decoration-color property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-color-property",
+        "clause_index": 13,
+        "clause_sha256": "dee972826276164f75b2c71903996f1f1ea46b319fbdea6895683953135c8b1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-color-property-clause-cccbe246d263",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-color-property"
+      ],
+      "behaviour": "Text Decoration Color: the text-decoration-color property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-color-property",
+        "clause_index": 18,
+        "clause_sha256": "cccbe246d2639d5d3f9cd2264a75c0a33ade6fcb3b636746f1d0ad7de460bee2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-thickness-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-thickness-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Decoration Line Thickness: the text-decoration-thickness property.",
+      "locator": {
+        "section_id": "text-decoration-thickness-property",
+        "text_sha256": "a56f3a70c0982ed6962a467ddf6a5dfbb5414633d022c7916338f6c4b5026d7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-thickness-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-decoration-thickness-property-clause-052daaa666d7",
+        "css-text-decor-4.text-decoration-thickness-property-clause-edaede3b1c73",
+        "css-text-decor-4.text-decoration-thickness-property-clause-97dc77e38f29",
+        "css-text-decor-4.text-decoration-thickness-property-clause-1e74334587b3",
+        "css-text-decor-4.text-decoration-thickness-property-clause-5d77719a9399",
+        "css-text-decor-4.text-decoration-thickness-property-clause-d0757bf68578"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-thickness-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-thickness-property"
+      ],
+      "behaviour": "Text Decoration Line Thickness: the text-decoration-thickness property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-thickness-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-thickness-property-clause-052daaa666d7",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-thickness-property"
+      ],
+      "behaviour": "Text Decoration Line Thickness: the text-decoration-thickness property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-thickness-property",
+        "clause_index": 24,
+        "clause_sha256": "052daaa666d75fffc97fdd31a8748055f23c1db66f22d07ebbffa4c8d924fb57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-thickness-property-clause-edaede3b1c73",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-thickness-property"
+      ],
+      "behaviour": "Text Decoration Line Thickness: the text-decoration-thickness property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-thickness-property",
+        "clause_index": 25,
+        "clause_sha256": "edaede3b1c7312fa43aa999151206343b549a1d9d69b5a446bc631fe293dd3ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-thickness-property-clause-97dc77e38f29",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-thickness-property"
+      ],
+      "behaviour": "Text Decoration Line Thickness: the text-decoration-thickness property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-thickness-property",
+        "clause_index": 27,
+        "clause_sha256": "97dc77e38f29005bd396f03988df0b18c947263c20b03f964b99f4d2583adace"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-thickness-property-clause-1e74334587b3",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-thickness-property"
+      ],
+      "behaviour": "Text Decoration Line Thickness: the text-decoration-thickness property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-thickness-property",
+        "clause_index": 28,
+        "clause_sha256": "1e74334587b33cc7d1afec8a0242a7bb1867b5785c2c954f87166c43e1855dbc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-thickness-property-clause-5d77719a9399",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-thickness-property"
+      ],
+      "behaviour": "Text Decoration Line Thickness: the text-decoration-thickness property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-thickness-property",
+        "clause_index": 29,
+        "clause_sha256": "5d77719a93992bb306736697bf9f5308d23fd51816e3da20a234ba6daf090c4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-thickness-property-clause-d0757bf68578",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-thickness-property"
+      ],
+      "behaviour": "Text Decoration Line Thickness: the text-decoration-thickness property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-thickness-property",
+        "clause_index": 30,
+        "clause_sha256": "d0757bf6857894033da3cb75806bd2654b58d5a97cfd3de87c88e69b6aa590a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-thickness",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-thickness"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Automatic Thickness of Text Decoration Lines.",
+      "locator": {
+        "section_id": "text-decoration-thickness",
+        "text_sha256": "44f323869bde5aa0aa96c0016d4c9b961ad085c924752f9df19f3c1406403880"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-thickness-clause-44f323869bde"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-thickness-clause-44f323869bde",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-thickness"
+      ],
+      "behaviour": "Automatic Thickness of Text Decoration Lines — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-thickness",
+        "clause_index": 0,
+        "clause_sha256": "44f323869bde5aa0aa96c0016d4c9b961ad085c924752f9df19f3c1406403880"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.line-position",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "line-position"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Determining the Position and Thickness of Line Decorations.",
+      "locator": {
+        "section_id": "line-position",
+        "text_sha256": "babf0836bc156bee979e0e5deb4fe76c070a0bbb7ee5eed03c64357846f7dff2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.line-position-clause-78c67cb808dc",
+        "css-text-decor-4.line-position-clause-42c1b0986073",
+        "css-text-decor-4.line-position-clause-990fd0ce50b0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.line-position-clause-78c67cb808dc",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "line-position"
+      ],
+      "behaviour": "Determining the Position and Thickness of Line Decorations — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-position",
+        "clause_index": 6,
+        "clause_sha256": "78c67cb808dca1623d2d9bcfd42d826400165789a5a9c32a4f4577e51e421c99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.line-position-clause-42c1b0986073",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "line-position"
+      ],
+      "behaviour": "Determining the Position and Thickness of Line Decorations — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-position",
+        "clause_index": 10,
+        "clause_sha256": "42c1b0986073549f55ebc4e9481060150a0b7cc36838ff3cee99a827fc53d9f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.line-position-clause-990fd0ce50b0",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "line-position"
+      ],
+      "behaviour": "Determining the Position and Thickness of Line Decorations — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-position",
+        "clause_index": 15,
+        "clause_sha256": "990fd0ce50b077c0aafd1fa5b3fdb76451e3813092d3a4999990a945a96a1da0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Decoration Shorthand: the text-decoration property.",
+      "locator": {
+        "section_id": "text-decoration-property",
+        "text_sha256": "b5aeed2abe4d88a64984be74b1b3a84bd07f7b694a201f8f9290ada917527f29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-decoration-property-clause-6a9abb2701e1",
+        "css-text-decor-4.text-decoration-property-clause-f3bee36ee41a",
+        "css-text-decor-4.text-decoration-property-clause-33c5262148f2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-property"
+      ],
+      "behaviour": "Text Decoration Shorthand: the text-decoration property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-property-clause-6a9abb2701e1",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-property"
+      ],
+      "behaviour": "Text Decoration Shorthand: the text-decoration property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-property",
+        "clause_index": 18,
+        "clause_sha256": "6a9abb2701e12b4154d9ace05042debb4a964f3bd50a71c4eee7bdf3162c09ae"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-property-clause-f3bee36ee41a",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-property"
+      ],
+      "behaviour": "Text Decoration Shorthand: the text-decoration property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-property",
+        "clause_index": 19,
+        "clause_sha256": "f3bee36ee41a61baae1df9503f6095579b1a8e85c61fa52c6b54a668b102a340"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-property-clause-33c5262148f2",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-property"
+      ],
+      "behaviour": "Text Decoration Shorthand: the text-decoration property — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-property",
+        "clause_index": 20,
+        "clause_sha256": "33c5262148f223b80b19348506e762cc1fb8b28c2d8ef777921ea1e76b936b4c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-underline-position-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-underline-position-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Underline Position: the text-underline-position property.",
+      "locator": {
+        "section_id": "text-underline-position-property",
+        "text_sha256": "8c00a25e81199b380fc84505b24c7c6010a7a1684a2893ab0bdcc1bd51ff8c11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-underline-position-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-underline-position-property-clause-e7533c94a472",
+        "css-text-decor-4.text-underline-position-property-clause-d5ecc2b4c59e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-underline-position-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-underline-position-property"
+      ],
+      "behaviour": "Text Underline Position: the text-underline-position property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-underline-position-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-underline-position-property-clause-e7533c94a472",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-underline-position-property"
+      ],
+      "behaviour": "Text Underline Position: the text-underline-position property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-underline-position-property",
+        "clause_index": 23,
+        "clause_sha256": "e7533c94a472bd99d74c4c1106c0c91c2136b9ed918db2374fe3849d4cfd2343"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-underline-position-property-clause-d5ecc2b4c59e",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-underline-position-property"
+      ],
+      "behaviour": "Text Underline Position: the text-underline-position property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-underline-position-property",
+        "clause_index": 34,
+        "clause_sha256": "d5ecc2b4c59eeb27c272f1d5a55488ed4eee9b3573cd8379c9061957b4a50b7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.underline-offset",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "underline-offset"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Underline Offset: the text-underline-offset property.",
+      "locator": {
+        "section_id": "underline-offset",
+        "text_sha256": "97a9fe87756d6b5314f839574ff4e6bedd188244a08ff8301ce9c949a1bc6eed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.underline-offset-clause-cca2516ebb1d",
+        "css-text-decor-4.underline-offset-clause-c32a269f903a",
+        "css-text-decor-4.underline-offset-clause-e114772bd632",
+        "css-text-decor-4.underline-offset-clause-052daaa666d7",
+        "css-text-decor-4.underline-offset-clause-a6ebddad63de",
+        "css-text-decor-4.underline-offset-clause-1e74334587b3",
+        "css-text-decor-4.underline-offset-clause-26fce55d7541",
+        "css-text-decor-4.underline-offset-clause-7fab5a5df59f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.underline-offset-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "underline-offset"
+      ],
+      "behaviour": "Text Underline Offset: the text-underline-offset property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "underline-offset",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.underline-offset-clause-c32a269f903a",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "underline-offset"
+      ],
+      "behaviour": "Text Underline Offset: the text-underline-offset property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "underline-offset",
+        "clause_index": 21,
+        "clause_sha256": "c32a269f903a8d9ee50d773ff05bcb77c4c831ae347e1bd944c7146beb7bde9b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.underline-offset-clause-e114772bd632",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "underline-offset"
+      ],
+      "behaviour": "Text Underline Offset: the text-underline-offset property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "underline-offset",
+        "clause_index": 22,
+        "clause_sha256": "e114772bd632292821f0fbe4a91e47ac3be3b3be6342f0c43b474396ab7f57b3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.underline-offset-clause-052daaa666d7",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "underline-offset"
+      ],
+      "behaviour": "Text Underline Offset: the text-underline-offset property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "underline-offset",
+        "clause_index": 25,
+        "clause_sha256": "052daaa666d75fffc97fdd31a8748055f23c1db66f22d07ebbffa4c8d924fb57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.underline-offset-clause-a6ebddad63de",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "underline-offset"
+      ],
+      "behaviour": "Text Underline Offset: the text-underline-offset property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "underline-offset",
+        "clause_index": 26,
+        "clause_sha256": "a6ebddad63de53de19d1db42c7d66c3a5d5ff3cbc80927ba697cf2fe4095a763"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.underline-offset-clause-1e74334587b3",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "underline-offset"
+      ],
+      "behaviour": "Text Underline Offset: the text-underline-offset property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "underline-offset",
+        "clause_index": 29,
+        "clause_sha256": "1e74334587b33cc7d1afec8a0242a7bb1867b5785c2c954f87166c43e1855dbc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.underline-offset-clause-26fce55d7541",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "underline-offset"
+      ],
+      "behaviour": "Text Underline Offset: the text-underline-offset property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "underline-offset",
+        "clause_index": 31,
+        "clause_sha256": "26fce55d75415869dc22e7dff7747334f8eec766b0163a11ad5eb4e7c26986ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.underline-offset-clause-7fab5a5df59f",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "underline-offset"
+      ],
+      "behaviour": "Text Underline Offset: the text-underline-offset property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "underline-offset",
+        "clause_index": 32,
+        "clause_sha256": "7fab5a5df59f4e8324ce61dbeeb4a9ef7907d863cd781a7a4dddad4777164360"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.line-offset-zero",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "line-offset-zero"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Underline Offset Origin (Zero Position).",
+      "locator": {
+        "section_id": "line-offset-zero",
+        "text_sha256": "ba5327dc70bd197c5ce8a17a0a13ca2836df4af5c9700181aafd85f1de57108e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.line-auto-offset",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "line-auto-offset"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Using Font Metrics for Automatic Positioning.",
+      "locator": {
+        "section_id": "line-auto-offset",
+        "text_sha256": "49b3273d0163bcca9dd664ba174285bce164c0815b743fd2580ad394062deb44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.line-auto-offset-clause-d19b9960272a",
+        "css-text-decor-4.line-auto-offset-clause-ec2b3b41e7ae"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.line-auto-offset-clause-d19b9960272a",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "line-auto-offset"
+      ],
+      "behaviour": "Using Font Metrics for Automatic Positioning — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-auto-offset",
+        "clause_index": 0,
+        "clause_sha256": "d19b9960272a5ebed333d854dade7e0379e19f46f5f6440605cbe4c07c9a40b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.line-auto-offset-clause-ec2b3b41e7ae",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "line-auto-offset"
+      ],
+      "behaviour": "Using Font Metrics for Automatic Positioning — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "line-auto-offset",
+        "clause_index": 1,
+        "clause_sha256": "ec2b3b41e7ae109d8728f664c2b771f61dc1c1126abfcfb8888f55df26c2bfb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-line-constancy",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-line-constancy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Decoration Line Uniformity.",
+      "locator": {
+        "section_id": "text-line-constancy",
+        "text_sha256": "e3e1eb0ae32ad895c98d9cdd2b709f555c1b999f90fdf5d9baa61248093a5b8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-line-constancy-clause-8cc0885e915d",
+        "css-text-decor-4.text-line-constancy-clause-c8322a6f973d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-line-constancy-clause-8cc0885e915d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-line-constancy"
+      ],
+      "behaviour": "Text Decoration Line Uniformity — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-line-constancy",
+        "clause_index": 0,
+        "clause_sha256": "8cc0885e915d63933f6a519ec829800561bbdc42550bd3f703bebbc17339f32f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-line-constancy-clause-c8322a6f973d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-line-constancy"
+      ],
+      "behaviour": "Text Decoration Line Uniformity — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-line-constancy",
+        "clause_index": 3,
+        "clause_sha256": "c8322a6f973d1a8a7cb1c4ee6f4d21c0936eaef523f064c8b54f93536a98df4c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skipping",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skipping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Decoration Line Continuity: the text-decoration-skip shorthand and its sub-properties.",
+      "locator": {
+        "section_id": "text-decoration-skipping",
+        "text_sha256": "66eca9f30c4a62e3eb050293d44fbbf1f88e94c54dee1a9aee7be08246ae3f04"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-skipping-clause-cca2516ebb1d",
+        "css-text-decor-4.text-decoration-skipping-clause-2d13c0137f65",
+        "css-text-decor-4.text-decoration-skipping-clause-ae2d12febc5c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skipping-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skipping"
+      ],
+      "behaviour": "Text Decoration Line Continuity: the text-decoration-skip shorthand and its sub-properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skipping",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skipping-clause-2d13c0137f65",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skipping"
+      ],
+      "behaviour": "Text Decoration Line Continuity: the text-decoration-skip shorthand and its sub-properties — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skipping",
+        "clause_index": 20,
+        "clause_sha256": "2d13c0137f6524f3525e73b17a65cb3dabedcee81acef2cbc2236a8fbf34641a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skipping-clause-ae2d12febc5c",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skipping"
+      ],
+      "behaviour": "Text Decoration Line Continuity: the text-decoration-skip shorthand and its sub-properties — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skipping",
+        "clause_index": 24,
+        "clause_sha256": "ae2d12febc5cc36fcca83f57ce54a7802b8bcce561d043e1deb5a7f873a09b62"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-self-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-self-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Skipping Spaces: the text-decoration-skip-self property.",
+      "locator": {
+        "section_id": "text-decoration-skip-self-property",
+        "text_sha256": "bd3be76b0aed72c6ce95b6f8f07d85f32de48a55ba56945b4954d0f5c5a7dce6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-skip-self-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-self-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-self-property"
+      ],
+      "behaviour": "Skipping Spaces: the text-decoration-skip-self property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-self-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-box-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-box-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Skipping Spaces: the text-decoration-skip-box property.",
+      "locator": {
+        "section_id": "text-decoration-skip-box-property",
+        "text_sha256": "1baec39349d8955718a0705c70f0485cbf6cc3713030a7a83bbccbb030d7ebef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-skip-box-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-decoration-skip-box-property-clause-3a75f5e13cb8",
+        "css-text-decor-4.text-decoration-skip-box-property-clause-ac5e1321775c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-box-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-box-property"
+      ],
+      "behaviour": "Skipping Spaces: the text-decoration-skip-box property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-box-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-box-property-clause-3a75f5e13cb8",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-box-property"
+      ],
+      "behaviour": "Skipping Spaces: the text-decoration-skip-box property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-box-property",
+        "clause_index": 18,
+        "clause_sha256": "3a75f5e13cb8117af46a850a760a8d1a29b7cb06ecdfc4e11955321b6d144e7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-box-property-clause-ac5e1321775c",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-box-property"
+      ],
+      "behaviour": "Skipping Spaces: the text-decoration-skip-box property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-box-property",
+        "clause_index": 24,
+        "clause_sha256": "ac5e1321775c9f93872babf45610ee4d916ec62f7b6ec3d9e74c73939bec52c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-inset-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-inset-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inset Edges: the text-decoration-skip-inset property.",
+      "locator": {
+        "section_id": "text-decoration-skip-inset-property",
+        "text_sha256": "7ea5082e7079ca697b6c93532d43ebe5b7abd6ad60c61d2bde1c9e6806f5599c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-skip-inset-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-decoration-skip-inset-property-clause-b892e1f112e5",
+        "css-text-decor-4.text-decoration-skip-inset-property-clause-1d200a8634d3",
+        "css-text-decor-4.text-decoration-skip-inset-property-clause-2fc79eb672c9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-inset-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-inset-property"
+      ],
+      "behaviour": "Inset Edges: the text-decoration-skip-inset property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-inset-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-inset-property-clause-b892e1f112e5",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-inset-property"
+      ],
+      "behaviour": "Inset Edges: the text-decoration-skip-inset property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-inset-property",
+        "clause_index": 18,
+        "clause_sha256": "b892e1f112e50569c96e9c36039dfc88ea226995d3399ee60efe1a7891b3e6a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-inset-property-clause-1d200a8634d3",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-inset-property"
+      ],
+      "behaviour": "Inset Edges: the text-decoration-skip-inset property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-inset-property",
+        "clause_index": 24,
+        "clause_sha256": "1d200a8634d3cbfb1ac5506bc240505fdcdaf11151491607ea65fdeaaf6ef161"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-inset-property-clause-2fc79eb672c9",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-inset-property"
+      ],
+      "behaviour": "Inset Edges: the text-decoration-skip-inset property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-inset-property",
+        "clause_index": 25,
+        "clause_sha256": "2fc79eb672c939a318db57d461fa7f40fa6e818fb0b2d90001d6bc4779e48960"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-spaces-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-spaces-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Skipping Spaces: the text-decoration-skip-spaces property.",
+      "locator": {
+        "section_id": "text-decoration-skip-spaces-property",
+        "text_sha256": "6ee1fd07d60312695ce31baaea13895e99addf266b7fd0d69d4a741979e64a5e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-skip-spaces-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-decoration-skip-spaces-property-clause-1f45b5b3f494",
+        "css-text-decor-4.text-decoration-skip-spaces-property-clause-6ce24b8759cf"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-spaces-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-spaces-property"
+      ],
+      "behaviour": "Skipping Spaces: the text-decoration-skip-spaces property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-spaces-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-spaces-property-clause-1f45b5b3f494",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-spaces-property"
+      ],
+      "behaviour": "Skipping Spaces: the text-decoration-skip-spaces property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-spaces-property",
+        "clause_index": 17,
+        "clause_sha256": "1f45b5b3f49455e7a802d1a9f51a480d57065d590aa93ec6255b26a43b1b9e2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-spaces-property-clause-6ce24b8759cf",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-spaces-property"
+      ],
+      "behaviour": "Skipping Spaces: the text-decoration-skip-spaces property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-spaces-property",
+        "clause_index": 28,
+        "clause_sha256": "6ce24b8759cf80dbc2bf378fdf01bc4911c6a59ca88ee42a1783f4bca534a51b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-ink-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-ink-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Skipping Glyphs: the text-decoration-skip-ink property.",
+      "locator": {
+        "section_id": "text-decoration-skip-ink-property",
+        "text_sha256": "4a6e3dddb5deb0775ee82e0059bced374715f04a62bd0423e5da32df2e283efe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-decoration-skip-ink-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-decoration-skip-ink-property-clause-4ed33c685be9",
+        "css-text-decor-4.text-decoration-skip-ink-property-clause-304454014e3c",
+        "css-text-decor-4.text-decoration-skip-ink-property-clause-446ac713bdae",
+        "css-text-decor-4.text-decoration-skip-ink-property-clause-f54214b6c0e9",
+        "css-text-decor-4.text-decoration-skip-ink-property-clause-3e3ae6ef8c53",
+        "css-text-decor-4.text-decoration-skip-ink-property-clause-9a0fb9daf778",
+        "css-text-decor-4.text-decoration-skip-ink-property-clause-d9c73c63ae59"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-ink-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-ink-property"
+      ],
+      "behaviour": "Skipping Glyphs: the text-decoration-skip-ink property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-ink-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-ink-property-clause-4ed33c685be9",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-ink-property"
+      ],
+      "behaviour": "Skipping Glyphs: the text-decoration-skip-ink property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-ink-property",
+        "clause_index": 18,
+        "clause_sha256": "4ed33c685be91c0dba5294ddf384d937f29440db486b2de6afddc29a7eb1edb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-ink-property-clause-304454014e3c",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-ink-property"
+      ],
+      "behaviour": "Skipping Glyphs: the text-decoration-skip-ink property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-ink-property",
+        "clause_index": 22,
+        "clause_sha256": "304454014e3c943ac36760e7d635c919301a59668c643aa55927ce8f0b3e8776"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-ink-property-clause-446ac713bdae",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-ink-property"
+      ],
+      "behaviour": "Skipping Glyphs: the text-decoration-skip-ink property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-ink-property",
+        "clause_index": 24,
+        "clause_sha256": "446ac713bdaecb47484f7d7cde4de90dd4a64c73ec474b6fdc3f4aa85c54dc4b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-ink-property-clause-f54214b6c0e9",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-ink-property"
+      ],
+      "behaviour": "Skipping Glyphs: the text-decoration-skip-ink property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-ink-property",
+        "clause_index": 27,
+        "clause_sha256": "f54214b6c0e9d82364f9d8b1e14923d0ac09d83b230233eecea6d35f3ac38704"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-ink-property-clause-3e3ae6ef8c53",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-ink-property"
+      ],
+      "behaviour": "Skipping Glyphs: the text-decoration-skip-ink property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-ink-property",
+        "clause_index": 29,
+        "clause_sha256": "3e3ae6ef8c53bbb2cd38111a891fbeeaa3890eb4a7b2274d904178a75fc083dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-ink-property-clause-9a0fb9daf778",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-ink-property"
+      ],
+      "behaviour": "Skipping Glyphs: the text-decoration-skip-ink property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-ink-property",
+        "clause_index": 31,
+        "clause_sha256": "9a0fb9daf778e2c77b1213d2aa62f7ef1a39f5bdffa43b30fabf347ec06b77f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-decoration-skip-ink-property-clause-d9c73c63ae59",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-decoration-skip-ink-property"
+      ],
+      "behaviour": "Skipping Glyphs: the text-decoration-skip-ink property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-decoration-skip-ink-property",
+        "clause_index": 32,
+        "clause_sha256": "d9c73c63ae59c891cf2de10663a43eda5cf40523a13b14b1fc8a768301de4d38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.ink-skip-shape",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "ink-skip-shape"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Shaping Interruptions.",
+      "locator": {
+        "section_id": "ink-skip-shape",
+        "text_sha256": "1cdd1d4d88d7a376027630a696aae67e45712a7e95d0c3932f20d5f44631ab5a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.ink-skip-shape-clause-549e15e69480"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.ink-skip-shape-clause-549e15e69480",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "ink-skip-shape"
+      ],
+      "behaviour": "Shaping Interruptions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "ink-skip-shape",
+        "clause_index": 0,
+        "clause_sha256": "549e15e69480706a5c34ce7150fb81ba86c61605d3ac626123487d0eb7b499b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.emphasis-marks",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "emphasis-marks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Additional Controls for Emphasis Marks.",
+      "locator": {
+        "section_id": "emphasis-marks",
+        "text_sha256": "df92086db67386ce1abd48d544eb100afad71ce8fea282abf075406dd84453f5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-style-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-style-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emphasis Mark Style: the text-emphasis-style property.",
+      "locator": {
+        "section_id": "text-emphasis-style-property",
+        "text_sha256": "572889faca7672af7d7471660570dcdbba39ea7172ba08076c7c12cb36337cb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-emphasis-style-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-emphasis-style-property-clause-1368cce03212",
+        "css-text-decor-4.text-emphasis-style-property-clause-6f19790feade",
+        "css-text-decor-4.text-emphasis-style-property-clause-8f6e564030ca"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-style-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-style-property"
+      ],
+      "behaviour": "Emphasis Mark Style: the text-emphasis-style property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-style-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-style-property-clause-1368cce03212",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-style-property"
+      ],
+      "behaviour": "Emphasis Mark Style: the text-emphasis-style property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-style-property",
+        "clause_index": 36,
+        "clause_sha256": "1368cce0321254ce6468cac96abef7b8faa08d1345bda72f0a81708465c6eee3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-style-property-clause-6f19790feade",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-style-property"
+      ],
+      "behaviour": "Emphasis Mark Style: the text-emphasis-style property — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-style-property",
+        "clause_index": 40,
+        "clause_sha256": "6f19790feade26988997ca44c71686bea059928a110d27865e2557189712ee72"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-style-property-clause-8f6e564030ca",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-style-property"
+      ],
+      "behaviour": "Emphasis Mark Style: the text-emphasis-style property — normative clause 90, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-style-property",
+        "clause_index": 89,
+        "clause_sha256": "8f6e564030ca2d200660e2b843da64c07996f32b587057ae67adb0fb71733a44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-color-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-color-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emphasis Mark Color: the text-emphasis-color property.",
+      "locator": {
+        "section_id": "text-emphasis-color-property",
+        "text_sha256": "3442703f88ebde0fc6c4a7fcd6196c7f716e327ecae6d188a920d9e49f74aa29"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-emphasis-color-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-emphasis-color-property-clause-dee972826276",
+        "css-text-decor-4.text-emphasis-color-property-clause-dee19a78f35e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-color-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-color-property"
+      ],
+      "behaviour": "Emphasis Mark Color: the text-emphasis-color property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-color-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-color-property-clause-dee972826276",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-color-property"
+      ],
+      "behaviour": "Emphasis Mark Color: the text-emphasis-color property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-color-property",
+        "clause_index": 13,
+        "clause_sha256": "dee972826276164f75b2c71903996f1f1ea46b319fbdea6895683953135c8b1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-color-property-clause-dee19a78f35e",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-color-property"
+      ],
+      "behaviour": "Emphasis Mark Color: the text-emphasis-color property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-color-property",
+        "clause_index": 19,
+        "clause_sha256": "dee19a78f35ee6deaa4c815c6e2b7bca4fc5a2e91ffb7660cb0f1efd4a6be07c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emphasis Mark Shorthand: the text-emphasis property.",
+      "locator": {
+        "section_id": "text-emphasis-property",
+        "text_sha256": "6c821bf2606e0fe988a8df7019835a55dd364be714e67bff4bb4ffe0bfc0e325"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-emphasis-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-emphasis-property-clause-d02c2d0da293",
+        "css-text-decor-4.text-emphasis-property-clause-31291c482d41"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-property"
+      ],
+      "behaviour": "Emphasis Mark Shorthand: the text-emphasis property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-property-clause-d02c2d0da293",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-property"
+      ],
+      "behaviour": "Emphasis Mark Shorthand: the text-emphasis property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-property",
+        "clause_index": 18,
+        "clause_sha256": "d02c2d0da2931e3c2450089e05a6f6d038b69f6e0519d69dfd3bd1ee61d8bade"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-property-clause-31291c482d41",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-property"
+      ],
+      "behaviour": "Emphasis Mark Shorthand: the text-emphasis property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-property",
+        "clause_index": 19,
+        "clause_sha256": "31291c482d41179c585fd65d3061b66ff4f8465b63dfc1e0f1f3b2035ddecec9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-position-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-position-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emphasis Mark Position: the text-emphasis-position property.",
+      "locator": {
+        "section_id": "text-emphasis-position-property",
+        "text_sha256": "0a4bc880bbdad92ca8a052d8343a2d4f0cc3b03995c9af57cbc90c55ee8273a0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-emphasis-position-property-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-position-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-position-property"
+      ],
+      "behaviour": "Emphasis Mark Position: the text-emphasis-position property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-position-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-skip",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-skip"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Emphasis Mark Skip: the text-emphasis-skip property.",
+      "locator": {
+        "section_id": "text-emphasis-skip",
+        "text_sha256": "9089740188ad02423ab09a54d9087705be1b662e385dc3c4215d901e7350c9b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-emphasis-skip-clause-cca2516ebb1d",
+        "css-text-decor-4.text-emphasis-skip-clause-688a72e6b391",
+        "css-text-decor-4.text-emphasis-skip-clause-b1b58c423e36",
+        "css-text-decor-4.text-emphasis-skip-clause-0e4dd3f0c7c7",
+        "css-text-decor-4.text-emphasis-skip-clause-0ca51f06ee4a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-skip-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-skip"
+      ],
+      "behaviour": "Emphasis Mark Skip: the text-emphasis-skip property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-skip",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-skip-clause-688a72e6b391",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-skip"
+      ],
+      "behaviour": "Emphasis Mark Skip: the text-emphasis-skip property — normative clause 73, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-skip",
+        "clause_index": 72,
+        "clause_sha256": "688a72e6b391dffca2620ddae1395b42e0a4e42e729473b56989f2bef6dccb30"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-skip-clause-b1b58c423e36",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-skip"
+      ],
+      "behaviour": "Emphasis Mark Skip: the text-emphasis-skip property — normative clause 74, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-skip",
+        "clause_index": 73,
+        "clause_sha256": "b1b58c423e3622b6cf91b1babe469dfd5b5cf75e7653325f806db54a19ccc72d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-skip-clause-0e4dd3f0c7c7",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-skip"
+      ],
+      "behaviour": "Emphasis Mark Skip: the text-emphasis-skip property — normative clause 75, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-skip",
+        "clause_index": 74,
+        "clause_sha256": "0e4dd3f0c7c7c740e7ef8adb9978c3b4aa691e380d3734685339b3986e7d3c40"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-emphasis-skip-clause-0ca51f06ee4a",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-emphasis-skip"
+      ],
+      "behaviour": "Emphasis Mark Skip: the text-emphasis-skip property — normative clause 76, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-emphasis-skip",
+        "clause_index": 75,
+        "clause_sha256": "0ca51f06ee4a289721863a8c42e9c78aa413fba3dc06045ef2138e5c16ab3454"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-shadow-property",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-shadow-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Text Shadows: the text-shadow property.",
+      "locator": {
+        "section_id": "text-shadow-property",
+        "text_sha256": "3f617266d3281b70ffec608129155657943a45bd48f64106e6c2e9bd740c42f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.text-shadow-property-clause-cca2516ebb1d",
+        "css-text-decor-4.text-shadow-property-clause-a58ed1e9c4b4",
+        "css-text-decor-4.text-shadow-property-clause-2e6c7b7fe5fc",
+        "css-text-decor-4.text-shadow-property-clause-fc3fdf0005c3",
+        "css-text-decor-4.text-shadow-property-clause-302edc3a969d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.text-shadow-property-clause-cca2516ebb1d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-shadow-property"
+      ],
+      "behaviour": "Text Shadows: the text-shadow property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-shadow-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-shadow-property-clause-a58ed1e9c4b4",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-shadow-property"
+      ],
+      "behaviour": "Text Shadows: the text-shadow property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-shadow-property",
+        "clause_index": 13,
+        "clause_sha256": "a58ed1e9c4b4ba59ef56bf54d3bf19b0b1752cf3aee29b9bd8154a22d47be4f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-shadow-property-clause-2e6c7b7fe5fc",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-shadow-property"
+      ],
+      "behaviour": "Text Shadows: the text-shadow property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-shadow-property",
+        "clause_index": 18,
+        "clause_sha256": "2e6c7b7fe5fc54dfff01b3cf474bd1bcbaad1644fb1110c0ff72019180167ec5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-shadow-property-clause-fc3fdf0005c3",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-shadow-property"
+      ],
+      "behaviour": "Text Shadows: the text-shadow property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-shadow-property",
+        "clause_index": 22,
+        "clause_sha256": "fc3fdf0005c3c9fe4b3e8dc36e18d3e98c52d85156dcae2532c8d73c84985895"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.text-shadow-property-clause-302edc3a969d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "text-shadow-property"
+      ],
+      "behaviour": "Text Shadows: the text-shadow property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "text-shadow-property",
+        "clause_index": 26,
+        "clause_sha256": "302edc3a969d7729df16210778ba9acf725fb3077063ecfff5fffaa0c53ae7fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.painting",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "painting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Painting Text Decorations.",
+      "locator": {
+        "section_id": "painting",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.painting-order",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "painting-order"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Painting Order of Text Decorations.",
+      "locator": {
+        "section_id": "painting-order",
+        "text_sha256": "1592727537afcb5ddf49191d12f0842048493c09a3dd9362b30b23f16bb44e6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.overflow",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "overflow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overflow of Text Decorations.",
+      "locator": {
+        "section_id": "overflow",
+        "text_sha256": "92dd10012a0af1eaaadb0504b24089608f52ec891912896a715df799f5bfb2b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.acknowledgements",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "acknowledgements"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix A: Acknowledgements.",
+      "locator": {
+        "section_id": "acknowledgements",
+        "text_sha256": "fb801ad1384cfc45e3c0498fafb575e0ad909e8dd0a9ae110537fa8f6b9c864e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.default-stylesheet",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "default-stylesheet"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix B: Default UA Stylesheet.",
+      "locator": {
+        "section_id": "default-stylesheet",
+        "text_sha256": "3196ecad4edeca111849572670b76a9120d5de47fa0daea340eec32aba4435c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.default-stylesheet-clause-4bb708f5f80e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.default-stylesheet-clause-4bb708f5f80e",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "default-stylesheet"
+      ],
+      "behaviour": "Appendix B: Default UA Stylesheet — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "default-stylesheet",
+        "clause_index": 1,
+        "clause_sha256": "4bb708f5f80ec6a867355d6bfef83690d2196e8271e1dcf99da3a08a0fc87872"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.additions-l3",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "additions-l3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Additions Since Level 3.",
+      "locator": {
+        "section_id": "additions-l3",
+        "text_sha256": "e91eb1133e6fdb05570a3244a085d72c7422421de79aa0727fd548d5488407d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.priv-sec",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy and Security Considerations.",
+      "locator": {
+        "section_id": "priv-sec",
+        "text_sha256": "508211c345cc46d3344bf3460ffcde7c9eef7b952e529c627c53a5123db53ee3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.w3c-conformance",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.w3c-conventions",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.w3c-conventions-clause-5c98c879f070",
+        "css-text-decor-4.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.w3c-conventions-clause-5c98c879f070",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.w3c-conformance-classes",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.w3c-conformance-classes-clause-ff408372426c",
+        "css-text-decor-4.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.w3c-partial",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.w3c-partial-clause-ef40c4aab200",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.w3c-conform-future-proofing",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.w3c-testing",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.w3c-testing-clause-1e0fff369221",
+        "css-text-decor-4.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.w3c-testing-clause-1e0fff369221",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.w3c-testing-clause-ae1210cf9643",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.property-index",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "f3554b66f31587f6deffe3e76161256ea76ad9ffd77e9e38371de25f9a2e3212"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-text-decor-4.property-index-clause-4b59fe755d34",
+        "css-text-decor-4.property-index-clause-dee972826276",
+        "css-text-decor-4.property-index-clause-674d5fa645b0",
+        "css-text-decor-4.property-index-clause-a58ed1e9c4b4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.property-index-clause-4b59fe755d34",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 24,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.property-index-clause-dee972826276",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 26,
+        "clause_sha256": "dee972826276164f75b2c71903996f1f1ea46b319fbdea6895683953135c8b1d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.property-index-clause-674d5fa645b0",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 106, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 105,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.property-index-clause-a58ed1e9c4b4",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 162, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 161,
+        "clause_sha256": "a58ed1e9c4b4ba59ef56bf54d3bf19b0b1752cf3aee29b9bd8154a22d47be4f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-text-decor-4.issues-index",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "ae63c339733d90978e31bc4dee64a32204557e3e50a1aad081836f7d54691979"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.title",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Text Decoration Module Level 4.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "ace5da07607bc7cb505a2200007734ec5b6a80ab35494ae8284112111f5fb9c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.abstract",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "fae775f9897c068c3689b7ea820db5f36dc221b047d9c97c9d44326113f87f8c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.sotd",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "0c2e746616d5592a3294282545fcbdfcbf87adf396d054a10d8720b1557fb0d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.contents",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "1cc0e52459b6dcb2c60137691bc3f2a2d0a5f18af7972738a50add0650d37fc1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.changes",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Appendix C: Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.changes-2020",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "changes-2020"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 6 May 2020 Working Draft.",
+      "locator": {
+        "section_id": "changes-2020",
+        "text_sha256": "755e4a15c2973461b36364765a40c2c034fdae5215dc7ac23f988cf3c84ed02f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.index",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.index-defined-here",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "fa930f9b567f7b6dfaa5c0b884e7b7de45382ebc42b685add7ddd0eaafb5c160"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.index-defined-elsewhere",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "61a4587136dc1632c0c5b1854c5f042714325cdb9b01ce5b7e378c463a340a9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.references",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.normative",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "ad4420083fbde0f737b6252109178c1d6740722ed95a1878d106ae92455714f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-text-decor-4.informative",
+      "family": "css-text-decor-4",
+      "source_id": "css-text-decor-4",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "2cc7110663b23430bd32952f9a70cedff78c6b70219faf1ce735e3fa1b4b7cfd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

@@ -1,0 +1,1247 @@
+{
+  "schema_version": 1,
+  "source_id": "css-inline-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Inline Layout Module Level 3",
+      "level": 1,
+      "text_sha256": "10488e35b0f0dbfef3d10d55340501abdbab1b2f4b4b3d69335a63f809aac5ab",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "d3874347c3d92a75fe50df53149fe2d3da987a0b2dcfdf75875c0142ebb11bad",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "19053dad908daeeadf18f4e8e722b8985b3a36deffd058f0d870b4681fe6faa5",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "9dd2dc30c21148905f9359cffeefdb092ec461c7b725c0a4012d744f3b8f0118",
+      "clause_count": 82,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "bfe851f0f9188af04d97db58ab8d575bdfa068c58c18b9e7addbe2e04c5949bc",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "placement",
+      "title": "1.1. Module Interactions",
+      "level": 3,
+      "text_sha256": "c43f0c82d94e57edc05569d3073f7cd52dea150699d4c092ae4d37e6aa46ba49",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.placement"
+        ]
+      }
+    },
+    {
+      "id": "values",
+      "title": "1.2. Value Definitions",
+      "level": 3,
+      "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.values"
+        ]
+      }
+    },
+    {
+      "id": "model",
+      "title": "2. Inline Layout Model",
+      "level": 2,
+      "text_sha256": "c4a4c730d924fb8af6ac91311b6e53daf7683f7514206ed7994555b2c4bdf28c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.model",
+          "css-inline-3.model-clause-f55e4e967427"
+        ]
+      }
+    },
+    {
+      "id": "line-boxes",
+      "title": "2.1. Layout of Line Boxes",
+      "level": 3,
+      "text_sha256": "ae338e2fa443a6b81ad78f686e05dda36ce357fa2bb9492199fa828322077b9f",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.line-boxes"
+        ]
+      }
+    },
+    {
+      "id": "line-layout",
+      "title": "2.2. Layout Within Line Boxes",
+      "level": 3,
+      "text_sha256": "0f31cd084afd33b0fa18a6157d8e88a6c16ec9801aef0b7e9afb923462a46c38",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.line-layout"
+        ]
+      }
+    },
+    {
+      "id": "invisible-line-boxes",
+      "title": "2.3. Phantom Line Boxes",
+      "level": 3,
+      "text_sha256": "c0884edc8ed811c1d9c327554eb94fbdddc320dd667a9b21a85475c051e9ea43",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.invisible-line-boxes",
+          "css-inline-3.invisible-line-boxes-clause-0cfe691b727d",
+          "css-inline-3.invisible-line-boxes-clause-d342b00c8547",
+          "css-inline-3.invisible-line-boxes-clause-fd4ecb8cf872"
+        ]
+      }
+    },
+    {
+      "id": "paint-order",
+      "title": "2.4. Painting Order",
+      "level": 3,
+      "text_sha256": "d909c5d8263f60da02ab2517ad95c5e9c903545155b8d3d7a0b541deb59c2c65",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.paint-order"
+        ]
+      }
+    },
+    {
+      "id": "css-metrics",
+      "title": "3. Baselines and Alignment Metrics",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.css-metrics"
+        ]
+      }
+    },
+    {
+      "id": "baseline-intro",
+      "title": "3.1. Introduction to Baselines",
+      "level": 3,
+      "text_sha256": "6507af319e93be8320596d5964f31490b63ede583384dc2d7558db01e9e26615",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.baseline-intro",
+          "css-inline-3.baseline-intro-clause-3e81b116e104"
+        ]
+      }
+    },
+    {
+      "id": "baseline-types",
+      "title": "3.2. Baselines and Metrics",
+      "level": 3,
+      "text_sha256": "bdf0e72d16d73176029ce6b27d791e68e712d78ce79db3d083efe676d3fedde0",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.baseline-types",
+          "css-inline-3.baseline-types-clause-e2a4668edd74",
+          "css-inline-3.baseline-types-clause-bfc6c84cd43e"
+        ]
+      }
+    },
+    {
+      "id": "ascent-descent",
+      "title": "3.2.1. Ascent and Descent Metrics",
+      "level": 4,
+      "text_sha256": "90ef120e6f589c97ee209586c470f5d9a7d5bf7015be6d13480f388c366812e7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.ascent-descent",
+          "css-inline-3.ascent-descent-clause-1fe9555b4ff0"
+        ]
+      }
+    },
+    {
+      "id": "font-line-gap",
+      "title": "3.2.2. Line Gap Metrics",
+      "level": 4,
+      "text_sha256": "d30e574622ca0deebaebd5253f769a0a6a7764cbba563d5693b7256c48281ab6",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.font-line-gap",
+          "css-inline-3.font-line-gap-clause-1da139cf44c3"
+        ]
+      }
+    },
+    {
+      "id": "baseline-tables",
+      "title": "3.3. Baselines of Glyphs and Boxes",
+      "level": 3,
+      "text_sha256": "2da45874852688bacf9a7dc828b466433cebb9aca49436176f06d5769ed694fb",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.baseline-tables",
+          "css-inline-3.baseline-tables-clause-c990bbf6ba5b"
+        ]
+      }
+    },
+    {
+      "id": "alignment",
+      "title": "4. Baseline Alignment",
+      "level": 2,
+      "text_sha256": "1948ba072d9d99fc6b89f49a648eb77f4baccb819dea10fdaa09a61a13a23b93",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.alignment"
+        ]
+      }
+    },
+    {
+      "id": "dominant-baseline-property",
+      "title": "4.1. Dominant Baselines: the dominant-baseline property",
+      "level": 3,
+      "text_sha256": "9517f0c2681a7604f925efc63d8f4f2516f86f51365aca9dfca02ca127c38d1b",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.dominant-baseline-property",
+          "css-inline-3.dominant-baseline-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "transverse-alignment",
+      "title": "4.2. Transverse Box Alignment: the vertical-align property",
+      "level": 3,
+      "text_sha256": "15a17e5f093c383d029d2b1d8c08bd1c92d964291f30e2463fc7049dd1410b21",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.transverse-alignment",
+          "css-inline-3.transverse-alignment-clause-cca2516ebb1d",
+          "css-inline-3.transverse-alignment-clause-0883b6f33acd",
+          "css-inline-3.transverse-alignment-clause-2618b7aeaffd"
+        ]
+      }
+    },
+    {
+      "id": "baseline-source",
+      "title": "4.2.1. Alignment Baseline Source: the baseline-source longhand",
+      "level": 4,
+      "text_sha256": "b647053a480e9af146dab8ceb434f223b5136f5e0e16b00c47215f8f7a763526",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.baseline-source",
+          "css-inline-3.baseline-source-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "alignment-baseline-property",
+      "title": "4.2.2. Alignment Baseline Type: the alignment-baseline longhand",
+      "level": 4,
+      "text_sha256": "a30b948556db034a1efae3941952e4ff6a15a6cf8a5cdebb8bf1a40004814ddb",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.alignment-baseline-property",
+          "css-inline-3.alignment-baseline-property-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "alignment-baseline-svg-legacy",
+      "title": "4.2.2.1. Legacy Values for SVG",
+      "level": 5,
+      "text_sha256": "d104b806f946f0d676a7395c8d04a75e0362c182fcd346adbae15baa0b8b9870",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.alignment-baseline-svg-legacy"
+        ]
+      }
+    },
+    {
+      "id": "baseline-shift-property",
+      "title": "4.2.3. Post-Alignment Shift: the baseline-shift longhand",
+      "level": 4,
+      "text_sha256": "25766665c341665b851f3a8f35a11a17b71d982b8cae77ce1dde8773f38a0a32",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.baseline-shift-property",
+          "css-inline-3.baseline-shift-property-clause-cca2516ebb1d",
+          "css-inline-3.baseline-shift-property-clause-c2a2dd001d58",
+          "css-inline-3.baseline-shift-property-clause-bf229d5c0dbe",
+          "css-inline-3.baseline-shift-property-clause-346f7aa7d749",
+          "css-inline-3.baseline-shift-property-clause-8a5c4898e08e",
+          "css-inline-3.baseline-shift-property-clause-4e1eb46c57b4"
+        ]
+      }
+    },
+    {
+      "id": "baseline-shift-svg-legacy",
+      "title": "4.2.3.1. Legacy Values for SVG",
+      "level": 5,
+      "text_sha256": "786b2f1fe282ef98eba81ec300704ce1904e27248c7bac7ab3a8a7b6ed930a6c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.baseline-shift-svg-legacy"
+        ]
+      }
+    },
+    {
+      "id": "line-height",
+      "title": "5. Logical Heights and Inter-line Spacing",
+      "level": 2,
+      "text_sha256": "8c50c9fe12d988c868f2de02a7f907d152319344dd16e310c6f6b3ff1e007ced",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.line-height"
+        ]
+      }
+    },
+    {
+      "id": "line-height-property",
+      "title": "5.1. Line Spacing: the line-height property",
+      "level": 3,
+      "text_sha256": "d972c2cbbf5665f03f1f703295a7ab2619dd65387b5c96528e12d56a1cd91d36",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.line-height-property",
+          "css-inline-3.line-height-property-clause-7073b91844ac",
+          "css-inline-3.line-height-property-clause-cca2516ebb1d",
+          "css-inline-3.line-height-property-clause-310dcf318a49",
+          "css-inline-3.line-height-property-clause-041c2934e0ac",
+          "css-inline-3.line-height-property-clause-8916493aad9d",
+          "css-inline-3.line-height-property-clause-414d3964ce83",
+          "css-inline-3.line-height-property-clause-ff37e21bbd15"
+        ]
+      }
+    },
+    {
+      "id": "text-edges",
+      "title": "5.2. Text Edge Metrics: the line-fit-edge property",
+      "level": 3,
+      "text_sha256": "ae178b348f29c82dbbd6b143e6366a0daabb39ce2d68a0c88d2743fed531f825",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.text-edges",
+          "css-inline-3.text-edges-clause-cca2516ebb1d",
+          "css-inline-3.text-edges-clause-e85801d733f7",
+          "css-inline-3.text-edges-clause-c56cdd4e1eee"
+        ]
+      }
+    },
+    {
+      "id": "inline-height",
+      "title": "5.3. Calculating the Logical Height Contributions (“Layout Bounds”) of Inline Boxes",
+      "level": 3,
+      "text_sha256": "783e6a03434c4f578e5fe81620fd46e71b6e8fc98f237d678e30236aeb537ae4",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.inline-height",
+          "css-inline-3.inline-height-clause-217885c374be",
+          "css-inline-3.inline-height-clause-e4bd75a05ec6",
+          "css-inline-3.inline-height-clause-815a63e77c26",
+          "css-inline-3.inline-height-clause-966b916e132d",
+          "css-inline-3.explicit-fallback-line-height-output"
+        ]
+      }
+    },
+    {
+      "id": "leading-trim",
+      "title": "6. Trimming Leading Over/Under Text",
+      "level": 2,
+      "text_sha256": "a21d321a64b48e7a4dd2bde8231c97b50833a8fbb98b142996e147baef2964a9",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.leading-trim"
+        ]
+      }
+    },
+    {
+      "id": "text-box-shorthand",
+      "title": "6.1. Shorthand for Text Box Trimming: the text-box property",
+      "level": 3,
+      "text_sha256": "408bee43e151e4c0b55e1aee127fa61345145548852a17c8102cfd363978967a",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.text-box-shorthand",
+          "css-inline-3.text-box-shorthand-clause-cca2516ebb1d",
+          "css-inline-3.text-box-shorthand-clause-29bbe48538ed",
+          "css-inline-3.text-box-shorthand-clause-e863f1b6f2b4"
+        ]
+      }
+    },
+    {
+      "id": "text-box-trim",
+      "title": "6.2. Trimming Over/Under Text: the text-box-trim property",
+      "level": 3,
+      "text_sha256": "2ac7eec92ae3dcc60b39bc5f09d68b5df466de79f6c7989ab6133c8b4f8035b6",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.text-box-trim",
+          "css-inline-3.text-box-trim-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "text-box-edge",
+      "title": "6.3. Text Trimming Metrics: the text-box-edge property",
+      "level": 3,
+      "text_sha256": "4dbbab801ff50ca3a016e6bd023a066e08ba5395bbd332a88b4370fb69769ada",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.text-box-edge",
+          "css-inline-3.text-box-edge-clause-cca2516ebb1d",
+          "css-inline-3.text-box-edge-clause-0d7fd0870e63",
+          "css-inline-3.text-box-edge-clause-36d74c4dfec7",
+          "css-inline-3.text-box-edge-clause-6fd7c6ea5bfc"
+        ]
+      }
+    },
+    {
+      "id": "line-fill",
+      "title": "6.4. Inline Box Drawing Height: the inline-sizing property",
+      "level": 3,
+      "text_sha256": "8dbdd1d5f87ea8af97dc881814cb308c2370e9f4498da31643fac951d6e8807b",
+      "clause_count": 28,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.line-fill",
+          "css-inline-3.line-fill-clause-cca2516ebb1d",
+          "css-inline-3.line-fill-clause-83cf058400b0",
+          "css-inline-3.line-fill-clause-d50448df0914"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-styling",
+      "title": "7. Initial Letters",
+      "level": 2,
+      "text_sha256": "528f99b1d9e9e53a404f2c846de316bc276124c014b5150dffa8bcde0d99372b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-styling"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-intro",
+      "title": "7.1. An Introduction to Initial Letters",
+      "level": 3,
+      "text_sha256": "5a9d16433a73ad55b664cd557502615412ba26b0a2a1b390eab7928f4ce5a7fb",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-intro"
+        ]
+      }
+    },
+    {
+      "id": "drop-initial",
+      "title": "7.1.1. Drop Initial",
+      "level": 4,
+      "text_sha256": "40096e6a158ff21fe365761d922574654f254f415dff1e63e9590021e2f0ac18",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.drop-initial"
+        ]
+      }
+    },
+    {
+      "id": "sunk-initial",
+      "title": "7.1.2. Sunken Initial Letters",
+      "level": 4,
+      "text_sha256": "0ef388da09a98ed731286e6342641596dd14390c984705ffe29eb65c1f4d88e6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.sunk-initial"
+        ]
+      }
+    },
+    {
+      "id": "raise-initial",
+      "title": "7.1.3. Raised Initial Letters",
+      "level": 4,
+      "text_sha256": "5499f8fc7886749fda66840d6fec74ad9bff9a7e7c10f76db0db0fdb159d9f5b",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.raise-initial"
+        ]
+      }
+    },
+    {
+      "id": "selecting-drop-initials",
+      "title": "7.2. Selecting Initial Letters",
+      "level": 3,
+      "text_sha256": "d0b7d494c0bb8085ac403e97036e9b913a4ae59cb722eb6701c4f5be07b57b2e",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.selecting-drop-initials"
+        ]
+      }
+    },
+    {
+      "id": "sizing-drop-initials",
+      "title": "7.3. Creating Initial Letters: the initial-letter property",
+      "level": 3,
+      "text_sha256": "5f5edfd7539bdd42832e7ee0861ab1205804368d223a5d027497df9d47cc62b0",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.sizing-drop-initials",
+          "css-inline-3.sizing-drop-initials-clause-cca2516ebb1d",
+          "css-inline-3.sizing-drop-initials-clause-98ee2c25f7bb",
+          "css-inline-3.sizing-drop-initials-clause-bf3d074d8985",
+          "css-inline-3.sizing-drop-initials-clause-5b894591ed90"
+        ]
+      }
+    },
+    {
+      "id": "first-most-inline-level",
+      "title": "7.3.1. Applicability",
+      "level": 4,
+      "text_sha256": "34a34252e49a235fbb264fabf5df6dad1bce3401de51141f29633dd41d191989",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.first-most-inline-level",
+          "css-inline-3.first-most-inline-level-clause-15cc05b0070f",
+          "css-inline-3.first-most-inline-level-clause-adfb9d4d1ed5"
+        ]
+      }
+    },
+    {
+      "id": "aligning-initial-letter",
+      "title": "7.4. Alignment of Initial Letters: the initial-letter-align property",
+      "level": 3,
+      "text_sha256": "19c216efc1c17e14586eef1f12e0f614906702eb9f41662b8cdea0b9ed6f944c",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.aligning-initial-letter",
+          "css-inline-3.aligning-initial-letter-clause-cca2516ebb1d"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-align-defaults",
+      "title": "7.4.1. UA Default Stylesheet for initial-letter-align",
+      "level": 4,
+      "text_sha256": "9a6bd0997ed19403609804fc770466a745d5fdcbfc2d8efb6524f38a0d1545e4",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-align-defaults",
+          "css-inline-3.initial-letter-align-defaults-clause-89f9c3d9e30d",
+          "css-inline-3.initial-letter-align-defaults-clause-38d0d493279a"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-layout",
+      "title": "7.5. Initial Letter Layout",
+      "level": 3,
+      "text_sha256": "f5ca08809a4185adbbb4da05fb8a6c7e52aa4fc42d8f38aed6cd24f58948be5a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-layout",
+          "css-inline-3.initial-letter-layout-clause-5489eb91d20f"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-properties",
+      "title": "7.5.1. Properties Applying to Initial Letters",
+      "level": 4,
+      "text_sha256": "7f9a5ea6d7dcfc3f818e60013b9e78a2b1f1fa979169235f74eb62c32ba3ed31",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-properties"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-box",
+      "title": "7.5.2. Margins, Borders, and Padding",
+      "level": 4,
+      "text_sha256": "5447f59b0714006e9d93e2157f6dae1c675e07820737bd0f18bf8fca177537ff",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-box"
+        ]
+      }
+    },
+    {
+      "id": "sizing-initial-letter",
+      "title": "7.5.3. Font Sizing of Initial Letters",
+      "level": 4,
+      "text_sha256": "69af53b096c1fdaf4e9db295c3082becd21072f1886a4810139f974d6d29d22c",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.sizing-initial-letter",
+          "css-inline-3.sizing-initial-letter-clause-d3cd34f6aab1",
+          "css-inline-3.sizing-initial-letter-clause-b22e35811d73",
+          "css-inline-3.sizing-initial-letter-clause-36b3a7eb223b"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-shaping",
+      "title": "7.5.4. Shaping and Glyph Selection",
+      "level": 4,
+      "text_sha256": "aafae9ddf5e6fa9f469c63d4d5e61016f9872c10cfd7af88acd768984ea45661",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-shaping",
+          "css-inline-3.initial-letter-shaping-clause-2b02fc6437eb"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-box-size",
+      "title": "7.5.5. Sizing the Initial Letter Box",
+      "level": 4,
+      "text_sha256": "3c52c924b7774b519740d19c256b585836ea614453fd8aac493476f8f444b872",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-box-size",
+          "css-inline-3.initial-letter-box-size-clause-c6681fd1510f",
+          "css-inline-3.initial-letter-box-size-clause-34624659fe59",
+          "css-inline-3.initial-letter-box-size-clause-ce8b58ea9423"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-content-align",
+      "title": "7.5.6. Alignment Within an Initial Letter Box",
+      "level": 4,
+      "text_sha256": "02c91a1e612fe639f247b1dc0929cba2d7334b39c8795fe33ac933bf8c7dd06c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-content-align"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-position",
+      "title": "7.6. Initial Letter Positioning and Spacing",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-position"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-block-position",
+      "title": "7.6.1. Block-axis Positioning",
+      "level": 4,
+      "text_sha256": "088dc0179bfa086bd6223edd7bb9f61462d1e41d3a3db2bdcd84f4b4fe24027c",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-block-position",
+          "css-inline-3.initial-letter-block-position-clause-096f2c574d40",
+          "css-inline-3.initial-letter-block-position-clause-215bc687b6e2"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-inline-position",
+      "title": "7.6.2. Inline Kerning",
+      "level": 4,
+      "text_sha256": "f35907c4f48af0281e56864cb14a50ff799eaa7eb84cfd4503f95c3b279255dc",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-inline-position"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-wrapping",
+      "title": "7.7. Initial Letter Wrapping: the initial-letter-wrap property",
+      "level": 3,
+      "text_sha256": "682188da281302f70185e3b1fd05a2a8460e4c8e86f6dcdd93b44a740b0e548e",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-wrapping",
+          "css-inline-3.initial-letter-wrapping-clause-cca2516ebb1d",
+          "css-inline-3.initial-letter-wrapping-clause-bcf26d84daf4",
+          "css-inline-3.initial-letter-wrapping-clause-cf76ba02adde",
+          "css-inline-3.initial-letter-wrapping-clause-d8bbfe71b1c0",
+          "css-inline-3.initial-letter-wrapping-clause-079f5508cf37",
+          "css-inline-3.initial-letter-wrapping-clause-e11523da36de",
+          "css-inline-3.initial-letter-wrapping-clause-3996673bf897",
+          "css-inline-3.initial-letter-wrapping-clause-744c73cb42e8"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-line-layout",
+      "title": "7.8. Line Layout",
+      "level": 3,
+      "text_sha256": "a3db9a9aadbe4512d56233ecf6cd3d2b1927f1e8c3d659c8dd2f4ff62ac6dee1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-line-layout"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-inline-flow",
+      "title": "7.8.1. Inline Flow Layout: Alignment, Justification, and White Space",
+      "level": 4,
+      "text_sha256": "4000dfbac11c92764953eb752b88dfe242c653cbc8444732bcd9b3e51e94af87",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-inline-flow"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-indentation",
+      "title": "7.8.2. Edge Effects: Indentation and Hanging Punctuation",
+      "level": 4,
+      "text_sha256": "762f20b4cb0e305e5c4daf639c93e280c72b96de49c6770b375c58326b4d1dca",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-indentation"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-ancestors",
+      "title": "7.8.3. Ancestor Inlines",
+      "level": 4,
+      "text_sha256": "6a6f33da1c7f534439a6d3e166ccd012951e23f139f7afb6bd776e8933074d8f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-ancestors"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-multi-line",
+      "title": "7.8.4. Multi-line Initial Letters",
+      "level": 4,
+      "text_sha256": "6e20461e435c48ac08794e7e08ae8cf5e671ebc87b38ca6d07bc9c7c463335f0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-multi-line"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-paragraphs",
+      "title": "7.9. Clearing Initial Letters",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-paragraphs"
+        ]
+      }
+    },
+    {
+      "id": "raised-sunken-caps",
+      "title": "7.9.1. Raised and sunken caps",
+      "level": 4,
+      "text_sha256": "bf4e3e781f133c0b7279fa7921cfaded0ce1651cf7e7f375b3a1a2b24678fb67",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.raised-sunken-caps"
+        ]
+      }
+    },
+    {
+      "id": "short-para-initial-letter",
+      "title": "7.9.2. Short paragraphs with initial letters",
+      "level": 4,
+      "text_sha256": "6be149eb7f36acffc6d477f827f69b8bd3780254feb213ae081f8fbbd7bc614e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.short-para-initial-letter",
+          "css-inline-3.short-para-initial-letter-clause-d8b842ea7442"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-floats",
+      "title": "7.9.3. Interaction with floats",
+      "level": 4,
+      "text_sha256": "267e9b353baaa96516449d1c4f0bde73d50a9662518c79429a188bcd993b5413",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-floats",
+          "css-inline-3.initial-letter-floats-clause-02c2838a050a",
+          "css-inline-3.initial-letter-floats-clause-0219dfaf661e",
+          "css-inline-3.initial-letter-floats-clause-02dad7f9427c",
+          "css-inline-3.initial-letter-floats-clause-c901f3d40066"
+        ]
+      }
+    },
+    {
+      "id": "initial-letter-breaking",
+      "title": "7.9.4. Interaction with Fragmentation (Pagination)",
+      "level": 4,
+      "text_sha256": "47db134e198d16753dceffe6567a7eca6211c5f4fb3c2a6cbdfc86ee328e950d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.initial-letter-breaking",
+          "css-inline-3.initial-letter-breaking-clause-37c618c59234"
+        ]
+      }
+    },
+    {
+      "id": "baseline-synthesis",
+      "title": "Appendix A: Synthesizing Alignment Metrics",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.baseline-synthesis"
+        ]
+      }
+    },
+    {
+      "id": "baseline-synthesis-em",
+      "title": "A.1: Calculating Em-over and Em-under",
+      "level": 3,
+      "text_sha256": "68f07f4992f050f3f00665f89d8cb108f8597f07a03a974d53c4f62542805e98",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.baseline-synthesis-em"
+        ]
+      }
+    },
+    {
+      "id": "baseline-synthesis-fonts",
+      "title": "A.2: Synthesizing Baselines (and Other Font Metrics) for Text",
+      "level": 3,
+      "text_sha256": "872ae78919ac1fd7227efc292654f461a1646f688c2295eb01b7fabfe8d2822d",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.baseline-synthesis-fonts",
+          "css-inline-3.baseline-synthesis-fonts-clause-53af7dec4375",
+          "css-inline-3.baseline-synthesis-fonts-clause-5ccbe9924bd9",
+          "css-inline-3.baseline-synthesis-fonts-clause-c6dd11cb06ab"
+        ]
+      }
+    },
+    {
+      "id": "baseline-synthesis-box",
+      "title": "A.3: Synthesizing Baselines for Atomic Inlines",
+      "level": 3,
+      "text_sha256": "7da31d4971305232f0e903c2c796b924f4155b725bb35afc551d07dd3b7b79e7",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.baseline-synthesis-box",
+          "css-inline-3.baseline-synthesis-box-clause-7a68ff730649"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "afe9637fc78ac02a22ac4746139f80e28d3a3383c0cbb58accafebce1a52c6d9",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "ack",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "470c7585592ab2438e4885519124d470753eb0b4ea757f3c2cf72a8eaec29862",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.ack"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.privacy"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.security"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.w3c-conventions",
+          "css-inline-3.w3c-conventions-clause-5c98c879f070",
+          "css-inline-3.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.w3c-conformance-classes",
+          "css-inline-3.w3c-conformance-classes-clause-ff408372426c",
+          "css-inline-3.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.w3c-partial",
+          "css-inline-3.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.w3c-testing",
+          "css-inline-3.w3c-testing-clause-1e0fff369221",
+          "css-inline-3.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "4ef11e2801720607174989f4302a99668129901a62075f780d3bd5800f16c740",
+      "clause_count": 167,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "615b69dde7313a30c542c42c2e9fc3c5563425a3ee5e176a8c3e882d80846e21",
+      "clause_count": 191,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "ac6f178900fb3981414931fb6b5cb5df36ecc414a950ee2e6d6e9f6e52dc3a20",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "13d4ff4620fe6b8c3c92f6144e5dbc9c9bb28c418bdbd47fdd0ccbce2d1b3965",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "04cf3bbde026ad9ca9e02b9ce629046abcce6c2f1d3715dfe01a7315661d4ce6",
+      "clause_count": 135,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.property-index",
+          "css-inline-3.property-index-clause-4b59fe755d34",
+          "css-inline-3.property-index-clause-c2a2dd001d58",
+          "css-inline-3.property-index-clause-bcf26d84daf4",
+          "css-inline-3.property-index-clause-7073b91844ac",
+          "css-inline-3.property-index-clause-310dcf318a49"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "8d1d89b2ed9d223f0b5a295728e2f1892a83c5121c49cbd197cd01e54646363a",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-inline-3.issues-index"
+        ]
+      }
+    }
+  ]
+}

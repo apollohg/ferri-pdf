@@ -1,0 +1,1468 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-nesting-1.nesting",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nesting"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Nesting Style Rules.",
+      "locator": {
+        "section_id": "nesting",
+        "text_sha256": "b0e25fe3c766b12d03b448d67d8f25dad8da3da3c48cf34f1a4fc837d63078fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.nesting-clause-3ddcd53a51c5",
+        "css-nesting-1.foundation-css-nesting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.nesting-clause-3ddcd53a51c5",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nesting"
+      ],
+      "behaviour": "Nesting Style Rules — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "nesting",
+        "clause_index": 0,
+        "clause_sha256": "3ddcd53a51c5e34ab75f40892150f39b16409aff4316711b681198b5631f25f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.syntax",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Syntax.",
+      "locator": {
+        "section_id": "syntax",
+        "text_sha256": "d4f6e99adb58135b45bf8bc23a49b90925d1e9029cb9a45106d6a46466e35c2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.syntax-clause-90fa1602b3df",
+        "css-nesting-1.syntax-clause-bf4242a969d5",
+        "css-nesting-1.syntax-clause-3096f34d11ba",
+        "css-nesting-1.foundation-css-nesting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.syntax-clause-90fa1602b3df",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Syntax — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "syntax",
+        "clause_index": 7,
+        "clause_sha256": "90fa1602b3df744e49d9fbdda5e540690432847e2576fc394adfc185d19b3781"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.syntax-clause-bf4242a969d5",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Syntax — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "syntax",
+        "clause_index": 12,
+        "clause_sha256": "bf4242a969d5fd7c46673b868e2a7afe916bbf5f8dcac88ecfbabbb44eb3752d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.syntax-clause-3096f34d11ba",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "syntax"
+      ],
+      "behaviour": "Syntax — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "syntax",
+        "clause_index": 14,
+        "clause_sha256": "3096f34d11bac09c83433712d2f19b2c04701db1328e09a8ad77855aee1d12b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.syntax-examples",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "syntax-examples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Examples.",
+      "locator": {
+        "section_id": "syntax-examples",
+        "text_sha256": "59bb6994dc47d40ed065a99e1f30b8ea20925f55f7c5d08072d7eeac229b1881"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.conditionals",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "conditionals"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Nesting Other At-Rules.",
+      "locator": {
+        "section_id": "conditionals",
+        "text_sha256": "4a55a429a2d7561307608225d5fdddf581acc4ad45327949d5c108ae55793a86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.conditionals-clause-8db560cbd7a3",
+        "css-nesting-1.foundation-css-nesting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.conditionals-clause-8db560cbd7a3",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "conditionals"
+      ],
+      "behaviour": "Nesting Other At-Rules — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "conditionals",
+        "clause_index": 14,
+        "clause_sha256": "8db560cbd7a3cede5d1c421bfbb2ff2265489564c510f7abe7871407d8912487"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.nesting-at-scope",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nesting-at-scope"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Nested @scope Rules.",
+      "locator": {
+        "section_id": "nesting-at-scope",
+        "text_sha256": "d1c683ceae08e905596f3fe5bd5eb933e093bcbbe3fa1445d106649fe0c4847d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.foundation-css-nesting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.mixing",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "mixing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Mixing Nesting Rules and Declarations.",
+      "locator": {
+        "section_id": "mixing",
+        "text_sha256": "067658d4a5ad239ec25e18ca964d698e2722dca7b76d47c899b50176bf5fc6ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.foundation-css-nesting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.nest-selector",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nest-selector"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Nesting Selector: the & selector.",
+      "locator": {
+        "section_id": "nest-selector",
+        "text_sha256": "2f7b971b13be15bc12e1ce89887b80d675e8e62486e123b90f47ea61ff244f78"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.nest-selector-clause-9d3af682fa8e",
+        "css-nesting-1.nest-selector-clause-df4321859884",
+        "css-nesting-1.nest-selector-clause-6d6e4cd283c3",
+        "css-nesting-1.nest-selector-clause-53bf008766c7",
+        "css-nesting-1.nest-selector-clause-1e6844aa2ab2",
+        "css-nesting-1.nest-selector-clause-fd2108b053bc",
+        "css-nesting-1.foundation-css-nesting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.nest-selector-clause-9d3af682fa8e",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nest-selector"
+      ],
+      "behaviour": "Nesting Selector: the & selector — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "nest-selector",
+        "clause_index": 0,
+        "clause_sha256": "9d3af682fa8ec898d9497212e7f14ef22948882c3bd4d8240cf3b07636bbec24"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.nest-selector-clause-df4321859884",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nest-selector"
+      ],
+      "behaviour": "Nesting Selector: the & selector — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "nest-selector",
+        "clause_index": 19,
+        "clause_sha256": "df432185988449469c5a46f8b8b087147ad035b84b99821e34154721024d98ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.nest-selector-clause-6d6e4cd283c3",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nest-selector"
+      ],
+      "behaviour": "Nesting Selector: the & selector — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "nest-selector",
+        "clause_index": 26,
+        "clause_sha256": "6d6e4cd283c380c9e5eb354972427695d9acb111d4f69e438258c881c862af76"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.nest-selector-clause-53bf008766c7",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nest-selector"
+      ],
+      "behaviour": "Nesting Selector: the & selector — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "nest-selector",
+        "clause_index": 27,
+        "clause_sha256": "53bf008766c71fdffea19bdf4fa9b47fe0b137740fe87a823945163d87f3e486"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.nest-selector-clause-1e6844aa2ab2",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nest-selector"
+      ],
+      "behaviour": "Nesting Selector: the & selector — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "nest-selector",
+        "clause_index": 28,
+        "clause_sha256": "1e6844aa2ab23ca651f0a6b2e1ffc843f2930933f138967c8b746788a1eddfa1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.nest-selector-clause-fd2108b053bc",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nest-selector"
+      ],
+      "behaviour": "Nesting Selector: the & selector — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "nest-selector",
+        "clause_index": 29,
+        "clause_sha256": "fd2108b053bc514a94ff36562d4f73b0778aed6ea68cd23aa57fe634348a3e36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.nested-declarations",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nested-declarations"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Nested Declarations Rule.",
+      "locator": {
+        "section_id": "nested-declarations",
+        "text_sha256": "436705ceca63b98ed851dce437463018d89863ba7183e689147b52f63cf793b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.foundation-css-nesting"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.cssom",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "cssom"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSOM.",
+      "locator": {
+        "section_id": "cssom",
+        "text_sha256": "c011467ed23e1ff63f46f5c669009a0966e2c5a46e3d575cadf3196b22b9ee77"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.cssom-clause-5bee87ad0964"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.cssom-clause-5bee87ad0964",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "cssom"
+      ],
+      "behaviour": "CSSOM — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "cssom",
+        "clause_index": 1,
+        "clause_sha256": "5bee87ad0964b7ff256d363f7727bccdc43c0be6e022cdf1619be4d924349a38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.the-cssnestrule",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "the-cssnestrule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSSNestedDeclarations Interface.",
+      "locator": {
+        "section_id": "the-cssnestrule",
+        "text_sha256": "c38d482a0140fa2b118b70a2d9800ac5c041bb9dc092171b140330e241b6dab4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.the-cssnestrule-clause-2523ef4433ef"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.the-cssnestrule-clause-2523ef4433ef",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "the-cssnestrule"
+      ],
+      "behaviour": "The CSSNestedDeclarations Interface — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-cssnestrule",
+        "clause_index": 2,
+        "clause_sha256": "2523ef4433ef114c1fb9db50f878023bb07c3b8d1f4193dba5e7ad5e7d2fa8b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.privacy",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "b89667d7478ce729187c446309592eb8da963829aac92d58f3d0bd7e48e5a81b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.security",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "462d2d9d3fa274af9cc4e8f4f469b7ddc48712c80b05defc9ac5f3d38c3fb123"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.w3c-conformance",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.w3c-conventions",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.w3c-conventions-clause-5c98c879f070",
+        "css-nesting-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.w3c-conventions-clause-5c98c879f070",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.w3c-conformance-classes",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.w3c-conformance-classes-clause-ff408372426c",
+        "css-nesting-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.w3c-partial",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.w3c-partial-clause-ef40c4aab200",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.w3c-conform-future-proofing",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.w3c-testing",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-nesting-1.w3c-testing-clause-1e0fff369221",
+        "css-nesting-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.w3c-testing-clause-1e0fff369221",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.w3c-testing-clause-ae1210cf9643",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-nesting-1.idl-index",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "ceac7264659908fca72e73bbbc339200ad60940f68a9a8a8007c1e9bc561e053"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.issues-index",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "c39ea0bd59b1b665cbe16e200b50b9e9fb468d680883d714c71375c1b2c65ea7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.import-8cac7d115c27",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-nesting-1.title",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Nesting Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "3d82e0d8e3e4c7d5d141ae6f25136cede44fc7caee1afec915deb4d992f57fb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.abstract",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "14c9be4424abdfcddee989e7071ae5c014ac3f8012ef1fe0bd16e629db31c4f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.sotd",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "294b07b9229493703642b5a6971b75531d7c96c6c36fe2db8b0f4985522617a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.contents",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "1bd5c5f2f761b610873f5ee9dd327d275a61c72844009d27647ef61a19187afb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.intro",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "07bb8a8c79bddb4f3b836bd86b2230152ae911444fb1a8083197fd55c7b1eab7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.placement",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Module Interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "ee9a9f081cb17c26a5a4ea67f853ab44fb4290f24c15507a2d10c4b53a2d2e85"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.values",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.2. Values.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "78eba7ff2d1df3bc1639576d81da86ff648d6086f8e426b109c1ce83e0763a32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.explainer",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "explainer"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 2. Explainer.",
+      "locator": {
+        "section_id": "explainer",
+        "text_sha256": "bd0cb2f2bb25651c49408f5b076f3a899046667b693050d9db83d503999cd22d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.changes",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "cf041938d783a105a9f8bf38ecb0b6e323c73ac82d29171c5324a1f867944837"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.index",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.index-defined-here",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "bea38a30cebc8528f985bd30fcbd193ef3e28c3fa4c34d52a869271f2955b614"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.index-defined-elsewhere",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "8797f843c2960e87c8809330aadd16064c8929fa7b71a98103604cae5fb33d2f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.references",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.informative",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "b9ef09c10fa6c2b0aceccf793d9afad904dce8440c750bca732c64389c32a240"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-nesting-1.foundation-css-nesting",
+      "family": "css-nesting-1",
+      "source_id": "css-nesting-1",
+      "sections": [
+        "nesting",
+        "syntax",
+        "conditionals",
+        "nesting-at-scope",
+        "mixing",
+        "nest-selector",
+        "nested-declarations"
+      ],
+      "behaviour": "Prepare nested selectors and declarations through the shared selector/declaration path.",
+      "locator": {
+        "section_id": "nesting",
+        "text_sha256": "b0e25fe3c766b12d03b448d67d8f25dad8da3da3c48cf34f1a4fc837d63078fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    }
+  ]
+}

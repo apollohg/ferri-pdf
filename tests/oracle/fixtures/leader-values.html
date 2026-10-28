@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>leader-values</title><style>@font-face { font-family: Probe; src: url('../assets/DejaVuSans.ttf'); }
+@page { size: 300pt 300pt; margin: 36pt; }
+html, body { margin: 0; padding: 0; }
+body { font: 10pt/15pt Probe; }
+p { margin: 0; width: 200pt; }
+.dotted::after { content: leader(dotted) 'D'; }
+.solid::after { content: leader(solid) 'S'; }
+.space::after { content: leader(space) 'W'; }
+.custom::after { content: leader('ab') 'C'; }
+.newline::after { content: leader('x\a y') 'N'; }</style></head><body><p class="dotted">Dotted</p><p class="solid">Solid</p><p class="space">Space</p><p class="custom">Custom</p><p class="newline">Newline</p></body></html>

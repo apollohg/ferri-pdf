@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "source_id": "css-namespaces-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Namespaces Module Level 3",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.title"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C Recommendation 29 September 2011, edited in place 20 March 2014",
+      "level": 2,
+      "text_sha256": "0300b5b2e72fac9104dedb4a3ea2ec1b4cfd0125a6d3b86124d438f9ff391c57",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.subtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "8a5858c4bd5de9a9e0bdf332098c498ef997ec316c4a17fb435a4b7071774714",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "1671fefc3dad27c8e6e83d9792b248618a7573ae0674eaf72a4eaa8ec7853320",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "dcff423ea16bfb2a1fb4027d12a4e78af69e8192894ad8b5eac86b11d692fb6e",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "a997b3ca1c4c2c3c479b12d4e50bf70887636ebd1a7c159c57805980d2d66e8f",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.intro"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "2 Conformance",
+      "level": 2,
+      "text_sha256": "e5f10285487efdce6a9640745452b59e69a80c67af49ca13cfc53027c57913ec",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.conformance",
+          "css-namespaces-3.conformance-clause-9eaa9ae4d6b8"
+        ]
+      }
+    },
+    {
+      "id": "terminology",
+      "title": "2.1 Terminology",
+      "level": 3,
+      "text_sha256": "8d4e69e24604a4c8d2709852bb7e88e7da6921b71f1e4dbbbdc3e081c4af1df0",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.terminology"
+        ]
+      }
+    },
+    {
+      "id": "declaration",
+      "title": "3 Declaring namespaces: the @namespace rule",
+      "level": 2,
+      "text_sha256": "0298f8b7426046b1656abca73035baca43f453fde4550310380e5dcabd4e39dd",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.declaration",
+          "css-namespaces-3.declaration-clause-ddd40bc9c6bc",
+          "css-namespaces-3.foundation-selector-namespaces"
+        ]
+      }
+    },
+    {
+      "id": "syntax",
+      "title": "3.1 Syntax",
+      "level": 3,
+      "text_sha256": "d2af087242ec6010fcf94769be6a2b618b946db58107d5219d5af08855e1a77f",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.syntax",
+          "css-namespaces-3.syntax-clause-fb099a76ec9c",
+          "css-namespaces-3.syntax-clause-1d5c23ef4cb7",
+          "css-namespaces-3.syntax-clause-1fe726f6dfac",
+          "css-namespaces-3.syntax-clause-e066645fb30b",
+          "css-namespaces-3.foundation-selector-namespaces"
+        ]
+      }
+    },
+    {
+      "id": "scope",
+      "title": "3.2 Scope",
+      "level": 3,
+      "text_sha256": "d9c14bbe1819f67f076bb3e69590425eba7f5d45399dd5b2f2b8f1929a59dbea",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.scope",
+          "css-namespaces-3.foundation-selector-namespaces"
+        ]
+      }
+    },
+    {
+      "id": "prefixes",
+      "title": "3.3 Declaring Prefixes",
+      "level": 3,
+      "text_sha256": "8a40747a6f3145072ebf9755cb91659fa2271e6374763570cbf73fb07ceb7104",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.prefixes",
+          "css-namespaces-3.prefixes-clause-3c80b2398bb3",
+          "css-namespaces-3.prefixes-clause-6af1b118924e",
+          "css-namespaces-3.foundation-selector-namespaces"
+        ]
+      }
+    },
+    {
+      "id": "css-qnames",
+      "title": "4 CSS Qualified Names",
+      "level": 2,
+      "text_sha256": "e57a58aa91df7bb43079a050657f4846b3e810268217fcbfb8d9ca3f08a2d6e8",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.css-qnames",
+          "css-namespaces-3.css-qnames-clause-b2fb0289d62b",
+          "css-namespaces-3.css-qnames-clause-d9b8241ca17d",
+          "css-namespaces-3.foundation-selector-namespaces"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "9879ce8af91c84aa62a2defe5b70aae11ed4b7824f9868e32ad2959f6f5cb7ee",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.changes"
+        ]
+      }
+    },
+    {
+      "id": "acks",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "7cf6267420ed9a07125bfd870d5b25181f2c75faccf69cf40e11f69d14fad84a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.acks"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "94cbaf09c6c54478aa3554a23f9aa3eb7aee9ee24b46aff2de09dc7a3418da6d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "3d27a24664adfb1be127c542b846547fd7d4c9a6d6c4501479372032da70dcf9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.informative"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "0cd756721ce12a00387089bcc7d9235a0a77858728f7c93a25d27245b50b14c5",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.index"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property index",
+      "level": 2,
+      "text_sha256": "547c4769772c9ff811e57bf39809cc6f1c1e6380af2bb402096c995db2287df6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-namespaces-3.property-index"
+        ]
+      }
+    }
+  ]
+}

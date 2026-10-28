@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "source_id": "rfc2119",
+  "sections": [
+    {
+      "id": "heading-271ebbb6b8f9",
+      "title": "Key words for use in RFCs to Indicate Requirement Levels",
+      "level": 1,
+      "text_sha256": "eab07a27ea18ce5c24e8117b9bd45d5f74c08eebf0441316e155cb0528cb0ff1",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2119.heading-271ebbb6b8f9"
+        ]
+      }
+    },
+    {
+      "id": "section-1",
+      "title": "1. MUST",
+      "level": 2,
+      "text_sha256": "d0e9caa3c19ddd3f03274917cc50f612ffb3b26d3ecfbc9a28db31073ea4349f",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2119.section-1"
+        ]
+      }
+    },
+    {
+      "id": "section-2",
+      "title": "2. MUST NOT",
+      "level": 2,
+      "text_sha256": "5224e7c27422bb3170c4836bd95d28671dd57ae75a72a4091b9ae3ab489ca71c",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2119.section-2"
+        ]
+      }
+    },
+    {
+      "id": "section-3",
+      "title": "3. SHOULD",
+      "level": 2,
+      "text_sha256": "c973e57bf7adb4189ff0142c8a778dff9640c1bcdc8e79feda014d66fbe9d014",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2119.section-3"
+        ]
+      }
+    },
+    {
+      "id": "section-4",
+      "title": "4. SHOULD NOT",
+      "level": 2,
+      "text_sha256": "971508874dbebb91b24b411bbe20771d60d65507b25f9b5b3eb6b54323b6deab",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2119.section-4"
+        ]
+      }
+    },
+    {
+      "id": "section-5",
+      "title": "5. MAY",
+      "level": 2,
+      "text_sha256": "ffcec54d8b3fd81f0e41d66a8ca6950ba7e318db3a8ddc5fcdce084110a9f71e",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2119.section-5"
+        ]
+      }
+    },
+    {
+      "id": "section-6",
+      "title": "6. Guidance in the use of these Imperatives",
+      "level": 2,
+      "text_sha256": "b2fd45438bcebaad4746d1dd9cfa906d25b934e89776fc66af03acddcd844ddf",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2119.section-6"
+        ]
+      }
+    },
+    {
+      "id": "section-7",
+      "title": "7. Security Considerations",
+      "level": 2,
+      "text_sha256": "3bf5633da6e365f283a85bf07fd614ec89ebe214a580b1528b5ecfd6c05c7ea9",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2119.section-7"
+        ]
+      }
+    },
+    {
+      "id": "section-8",
+      "title": "8. Acknowledgments",
+      "level": 2,
+      "text_sha256": "9dcbf471ef6a45fa07ad819de86ef12a94c6e971b0c1c3cfcd2b4a4c53b511c8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2119.section-8"
+        ]
+      }
+    },
+    {
+      "id": "section-9",
+      "title": "9. Author's Address",
+      "level": 2,
+      "text_sha256": "dffbee9a0729724ac2961153278c6abc937e17617fb8f6d5dde365a5808d0349",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "rfc2119.section-9"
+        ]
+      }
+    }
+  ]
+}

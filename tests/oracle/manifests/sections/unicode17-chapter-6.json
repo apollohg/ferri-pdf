@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-6",
+  "sections": [
+    {
+      "id": "G3804",
+      "title": "Writing Systems and Punctuation",
+      "level": 1,
+      "text_sha256": "4ab7a63b8a493dec2cacbc47d736b23ecd534f299ca2311b21e68d89aee2888c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.g3804"
+        ]
+      }
+    },
+    {
+      "id": "heading-85d71d1ca03c",
+      "title": "6.1 Writing Systems",
+      "level": 2,
+      "text_sha256": "5e584ed56df0543d489c89d4e7137f4399cfebc938e98ad215c3e928fc356730",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-85d71d1ca03c",
+          "unicode17-chapter-6.heading-85d71d1ca03c-clause-7b9769fab1bb"
+        ]
+      }
+    },
+    {
+      "id": "heading-ad8dd7fa8223",
+      "title": "6.2 General Punctuation",
+      "level": 2,
+      "text_sha256": "921f580e08258b86edb35a3f398c70afda8f53294dde850b8245e44724c8868b",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-ad8dd7fa8223",
+          "unicode17-chapter-6.heading-ad8dd7fa8223-clause-77871caccc35",
+          "unicode17-chapter-6.heading-ad8dd7fa8223-clause-40c393ed9a45",
+          "unicode17-chapter-6.heading-ad8dd7fa8223-clause-cd518f145ec1"
+        ]
+      }
+    },
+    {
+      "id": "heading-dfffed88d22d",
+      "title": "6.2.1 Blocks Devoted to Punctuation",
+      "level": 3,
+      "text_sha256": "77087b2034cf4c6804ae956749d13e4f89e2d988c2e19521177e1947e88706a9",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-dfffed88d22d"
+        ]
+      }
+    },
+    {
+      "id": "heading-dcbe6ae21b0b",
+      "title": "6.2.2 Format Control Characters",
+      "level": 3,
+      "text_sha256": "ee2c6c6324072948d51bf963819f9ebae9034ee5bc9c4546666bc11e5a1d0963",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-dcbe6ae21b0b",
+          "unicode17-chapter-6.heading-dcbe6ae21b0b-clause-c027889e471d"
+        ]
+      }
+    },
+    {
+      "id": "heading-e547016693f1",
+      "title": "6.2.3 Space Characters",
+      "level": 3,
+      "text_sha256": "5e841c03964fa6f3a63a8995dd5224c58caf546d08300e23da33a8b90a081298",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-e547016693f1",
+          "unicode17-chapter-6.heading-e547016693f1-clause-0a8bb7a41671",
+          "unicode17-chapter-6.heading-e547016693f1-clause-74235542894e"
+        ]
+      }
+    },
+    {
+      "id": "heading-40dc47e79814",
+      "title": "6.2.4 Dashes and Hyphens",
+      "level": 3,
+      "text_sha256": "4a7e5fd6d420c6be7eb8c84d2ccf38c1eac9413e136ee7b5095c293f30b6bf52",
+      "clause_count": 105,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-40dc47e79814",
+          "unicode17-chapter-6.heading-40dc47e79814-clause-108858e9554d",
+          "unicode17-chapter-6.heading-40dc47e79814-clause-dcd5655d201e",
+          "unicode17-chapter-6.heading-40dc47e79814-clause-cc1ec372ce32",
+          "unicode17-chapter-6.heading-40dc47e79814-clause-0408f17de444"
+        ]
+      }
+    },
+    {
+      "id": "heading-6657d40f724e",
+      "title": "6.2.5 Paired Punctuation",
+      "level": 3,
+      "text_sha256": "e23b6327aa99a30c7ac788d5804c1286a549add04d6180c07378f237bc0d6a9c",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-6657d40f724e",
+          "unicode17-chapter-6.heading-6657d40f724e-clause-6cccee98f66b"
+        ]
+      }
+    },
+    {
+      "id": "heading-83de12936458",
+      "title": "6.2.6 Language-Based Usage of Quotation Marks",
+      "level": 3,
+      "text_sha256": "5c43fef89503035bd82fb224d6ee3e40283771c40d4acbbe01b59a02a54dbc80",
+      "clause_count": 46,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-83de12936458",
+          "unicode17-chapter-6.heading-83de12936458-clause-ad3a6d11f531"
+        ]
+      }
+    },
+    {
+      "id": "heading-2e53aa8607e3",
+      "title": "6.2.7 Apostrophes",
+      "level": 3,
+      "text_sha256": "aa64eadd9c85ff4fea297a893bbcb1c44162d3ca9ca456bbd7f34ba99079730c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-2e53aa8607e3"
+        ]
+      }
+    },
+    {
+      "id": "heading-fa8d375c910b",
+      "title": "6.2.8 Hyphenation Point and Dictionary Syllabification",
+      "level": 3,
+      "text_sha256": "e5fc91e3c12c8aa3ec6d526cfcd9efa92560820d6513c86ae7df035b9a6a2f9d",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-fa8d375c910b",
+          "unicode17-chapter-6.heading-fa8d375c910b-clause-7563a63f14db",
+          "unicode17-chapter-6.heading-fa8d375c910b-clause-151643833ed3"
+        ]
+      }
+    },
+    {
+      "id": "heading-9f91247f2852",
+      "title": "6.2.9 Other Punctuation",
+      "level": 3,
+      "text_sha256": "06421d52f3547d348717934c745f989a56a29b7ac676a789542131c59851ed39",
+      "clause_count": 103,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-9f91247f2852",
+          "unicode17-chapter-6.heading-9f91247f2852-clause-1b93e81dfd77",
+          "unicode17-chapter-6.heading-9f91247f2852-clause-f482d1400da3",
+          "unicode17-chapter-6.heading-9f91247f2852-clause-1d6d71470d84",
+          "unicode17-chapter-6.heading-9f91247f2852-clause-add4be5c2957",
+          "unicode17-chapter-6.heading-9f91247f2852-clause-95d03aa32646"
+        ]
+      }
+    },
+    {
+      "id": "heading-2e2138448a4f",
+      "title": "6.2.10 Archaic Punctuation and Editorial Marks",
+      "level": 3,
+      "text_sha256": "633d7ec8a7d8cc438808de015d920c2955b17ea775775d04249514685e723d61",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-2e2138448a4f",
+          "unicode17-chapter-6.heading-2e2138448a4f-clause-7363088534f5",
+          "unicode17-chapter-6.heading-2e2138448a4f-clause-f097bfaa5a27"
+        ]
+      }
+    },
+    {
+      "id": "heading-41703b86f31e",
+      "title": "6.2.11 Indic Punctuation",
+      "level": 3,
+      "text_sha256": "18e1890f9bbaa8de12a47c05804a29235f00722ac2f32568e2e9d65cba1bc6f9",
+      "clause_count": 150,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-41703b86f31e",
+          "unicode17-chapter-6.heading-41703b86f31e-clause-ed2b1e07f910"
+        ]
+      }
+    },
+    {
+      "id": "heading-6b4b57a9f812",
+      "title": "6.2.12 CJK Punctuation",
+      "level": 3,
+      "text_sha256": "e4ba02c048f7d4ed789ecc418864e1c393abc12dff63606fb6269ed2d462347c",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-6b4b57a9f812",
+          "unicode17-chapter-6.heading-6b4b57a9f812-clause-769d735e137f"
+        ]
+      }
+    },
+    {
+      "id": "heading-bf8241651aad",
+      "title": "6.2.13 Unknown or Unavailable Ideographs",
+      "level": 3,
+      "text_sha256": "5af49b292823fffde7f4fd01f4c50d16735152bfe00477be73add29a7398feb4",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-bf8241651aad"
+        ]
+      }
+    },
+    {
+      "id": "heading-b037d508679f",
+      "title": "6.2.14 CJK Compatibility Forms",
+      "level": 3,
+      "text_sha256": "097ea67abbd6a9a20cbdd5f9443cfeed84705fdabf67e65349d278515ba4909d",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-6.heading-b037d508679f"
+        ]
+      }
+    }
+  ]
+}

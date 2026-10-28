@@ -1,0 +1,3476 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "selectors-3.heading-d3019e6d8cab",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "heading-d3019e6d8cab"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Recommendation 06 November 2018.",
+      "locator": {
+        "section_id": "heading-d3019e6d8cab",
+        "text_sha256": "d98bb801f5d344bc81e1cacb0b1ffc6a28d593470dffff3c2fdf7a5a510fca0c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.context",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "context"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "context",
+        "text_sha256": "024232e6c8d5ee2eded142b523fe28a34d2b2e55370ce67f4cd93f895af171fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.dependencies",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "dependencies"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dependencies.",
+      "locator": {
+        "section_id": "dependencies",
+        "text_sha256": "321f860f85ba7b53f9be1456f426cb72f5461bcb0df609c3d40bdd793f8156e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.terminology",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terminology",
+        "text_sha256": "18d5f1c8d32af3427008cacb3f2d25aa2a92573dbdadc9f4a53abc2470f14d2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.casesens",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "casesens"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Case sensitivity.",
+      "locator": {
+        "section_id": "casesens",
+        "text_sha256": "7148423db22d6d4d2b1468b379c7b0e84f4e13acd0d2b9b340adafd67557ea0f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.selector-syntax",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "selector-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selector syntax.",
+      "locator": {
+        "section_id": "selector-syntax",
+        "text_sha256": "8be57b8967186855c91755c3dc738d0ee9b6255fb50be2077ac318a7364da3e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.selector-syntax-clause-b269105fbffe",
+        "selectors-3.selector-syntax-clause-11550fd4c5e9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.selector-syntax-clause-b269105fbffe",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "selector-syntax"
+      ],
+      "behaviour": "Selector syntax — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "selector-syntax",
+        "clause_index": 5,
+        "clause_sha256": "b269105fbffe11f0198da67202f17ad091684f4fd3cf9bffeadef90183d9e2e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.selector-syntax-clause-11550fd4c5e9",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "selector-syntax"
+      ],
+      "behaviour": "Selector syntax — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "selector-syntax",
+        "clause_index": 7,
+        "clause_sha256": "11550fd4c5e93af23a2d134c88bd87bcecf479c673ba8c92653b8f1beb901f1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.grouping",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "grouping"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Groups of selectors.",
+      "locator": {
+        "section_id": "grouping",
+        "text_sha256": "de98d9b88bd95a1dee3987befa9f5f4b715413879315cab30dd45e793feb9e44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.grouping-clause-d37a6b38704a",
+        "selectors-3.grouping-clause-cac7fbd1084a",
+        "selectors-3.grouping-clause-d2584a182387"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.grouping-clause-d37a6b38704a",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "grouping"
+      ],
+      "behaviour": "Groups of selectors — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "grouping",
+        "clause_index": 6,
+        "clause_sha256": "d37a6b38704ae2f756e3ccff1251905de85dee93b516289f57505735fd861f4d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.grouping-clause-cac7fbd1084a",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "grouping"
+      ],
+      "behaviour": "Groups of selectors — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "grouping",
+        "clause_index": 7,
+        "clause_sha256": "cac7fbd1084a0f1f0406ceab71e25e29b8b060b79c87e76e2560712fe3eb9784"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.grouping-clause-d2584a182387",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "grouping"
+      ],
+      "behaviour": "Groups of selectors — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "grouping",
+        "clause_index": 11,
+        "clause_sha256": "d2584a1823878d9b2c84be6c37ada5d9b09131c38c420359256be291df6a493a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.simple-selectors",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "simple-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Simple selectors.",
+      "locator": {
+        "section_id": "simple-selectors",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.type-selectors",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "type-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Type selector.",
+      "locator": {
+        "section_id": "type-selectors",
+        "text_sha256": "ee7d1e98b7d49eeec64b76ac703522d5e1f5d51656f593a14892d07ae87b98fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.typenmsp",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "typenmsp"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Type selectors and namespaces.",
+      "locator": {
+        "section_id": "typenmsp",
+        "text_sha256": "50e7e409d12cc8883eeba5f7b0e45ea2cc7eb4d5f0524233b9f2719e43d692fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.typenmsp-clause-458c7a7eba31"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.typenmsp-clause-458c7a7eba31",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "typenmsp"
+      ],
+      "behaviour": "Type selectors and namespaces — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "typenmsp",
+        "clause_index": 4,
+        "clause_sha256": "458c7a7eba31580668b039d14bb782d2eeefabc9e8dd1abfe28742ffacf36738"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.universal-selector",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "universal-selector"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Universal selector.",
+      "locator": {
+        "section_id": "universal-selector",
+        "text_sha256": "04fa8814c64f4cc932c72155b77c6e6667b2c849f173498440108d17c26f6ae0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.univnmsp",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "univnmsp"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Universal selector and namespaces.",
+      "locator": {
+        "section_id": "univnmsp",
+        "text_sha256": "a492c37b5dbf781b3ecdf73ebcccd1b7eaab4283773652f4230e94102c7f4460"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.univnmsp-clause-1c527921737e",
+        "selectors-3.univnmsp-clause-bbac9e0ea888"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.univnmsp-clause-1c527921737e",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "univnmsp"
+      ],
+      "behaviour": "Universal selector and namespaces — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "univnmsp",
+        "clause_index": 8,
+        "clause_sha256": "1c527921737e610d052fd4a15c7fbbcdb9fcd04238f311d52c4088c2e4b0ef4c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.univnmsp-clause-bbac9e0ea888",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "univnmsp"
+      ],
+      "behaviour": "Universal selector and namespaces — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "univnmsp",
+        "clause_index": 9,
+        "clause_sha256": "bbac9e0ea888ffe566c5e72910f172e954104f170188cc273abcc02063d3fe0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.attribute-selectors",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "attribute-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Attribute selectors.",
+      "locator": {
+        "section_id": "attribute-selectors",
+        "text_sha256": "51757c6cbe988fcca58da645e2349633cc45d02e92f54d479d27a6ebcffbc3bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.attribute-selectors-clause-51757c6cbe98"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.attribute-selectors-clause-51757c6cbe98",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "attribute-selectors"
+      ],
+      "behaviour": "Attribute selectors — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "attribute-selectors",
+        "clause_index": 0,
+        "clause_sha256": "51757c6cbe988fcca58da645e2349633cc45d02e92f54d479d27a6ebcffbc3bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.attribute-representation",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "attribute-representation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Attribute presence and value selectors.",
+      "locator": {
+        "section_id": "attribute-representation",
+        "text_sha256": "6dec205ae52d9eec3632fab4d6e90babc2320385fba07a60f95a8578ef9c3140"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.attribute-representation-clause-a39474bc4b98",
+        "selectors-3.attribute-representation-clause-2add50c76bd9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.attribute-representation-clause-a39474bc4b98",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "attribute-representation"
+      ],
+      "behaviour": "Attribute presence and value selectors — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "attribute-representation",
+        "clause_index": 8,
+        "clause_sha256": "a39474bc4b98b1b8a6f28e896792da11c06da8e0d1f19b45d9688cd3d059c3bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.attribute-representation-clause-2add50c76bd9",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "attribute-representation"
+      ],
+      "behaviour": "Attribute presence and value selectors — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "attribute-representation",
+        "clause_index": 24,
+        "clause_sha256": "2add50c76bd915835e7431928c3b2ca42a7459bf4fde7d3aebe4fc0a83ef7e19"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.attribute-substrings",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "attribute-substrings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Substring matching attribute selectors.",
+      "locator": {
+        "section_id": "attribute-substrings",
+        "text_sha256": "b3020d52b34d685f4510b147bbe0604fdf43a813dc7e8abb57b1f1825069571f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.attribute-substrings-clause-240ccca14ee6",
+        "selectors-3.attribute-substrings-clause-168ef6a50659"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.attribute-substrings-clause-240ccca14ee6",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "attribute-substrings"
+      ],
+      "behaviour": "Substring matching attribute selectors — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "attribute-substrings",
+        "clause_index": 6,
+        "clause_sha256": "240ccca14ee6c7a433aeaf56fabae12d432906abccc91dd3871b24c5fea65472"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.attribute-substrings-clause-168ef6a50659",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "attribute-substrings"
+      ],
+      "behaviour": "Substring matching attribute selectors — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "attribute-substrings",
+        "clause_index": 14,
+        "clause_sha256": "168ef6a5065909be837b0c5935ad283e7e431b317f9f521f30a94db60c7c9444"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.attrnmsp",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "attrnmsp"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Attribute selectors and namespaces.",
+      "locator": {
+        "section_id": "attrnmsp",
+        "text_sha256": "47afafd7f0fbabe8d01a5f43bedaba4901d7400d86a3a00174c096e1593fbeb4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.attrnmsp-clause-87e844136b44"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.attrnmsp-clause-87e844136b44",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "attrnmsp"
+      ],
+      "behaviour": "Attribute selectors and namespaces — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "attrnmsp",
+        "clause_index": 1,
+        "clause_sha256": "87e844136b4486086b39ee0ceac6a72a1351cdf58aecb5efa6b3e392da9500c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.def-values",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "def-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default attribute values in DTDs.",
+      "locator": {
+        "section_id": "def-values",
+        "text_sha256": "dd8dad08637672a1f9c3fbf31f9a4460cf9ca8dcfd54addddfffd4c4edf99644"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.def-values-clause-ef40c46bff4e",
+        "selectors-3.def-values-clause-660c6b50cc3a",
+        "selectors-3.def-values-clause-725dfe3da4be",
+        "selectors-3.def-values-clause-fd36732fa75d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.def-values-clause-ef40c46bff4e",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "def-values"
+      ],
+      "behaviour": "Default attribute values in DTDs — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "def-values",
+        "clause_index": 0,
+        "clause_sha256": "ef40c46bff4e8418974fac0c04ff4628f895dc72f43fb9f1da6e529da47e3edb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.def-values-clause-660c6b50cc3a",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "def-values"
+      ],
+      "behaviour": "Default attribute values in DTDs — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "def-values",
+        "clause_index": 1,
+        "clause_sha256": "660c6b50cc3ac317da610edc2588c2299ec8dcf3f68ce9968bb27173479248bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.def-values-clause-725dfe3da4be",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "def-values"
+      ],
+      "behaviour": "Default attribute values in DTDs — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "def-values",
+        "clause_index": 2,
+        "clause_sha256": "725dfe3da4be485fb2a1ecdca6bc5b3d74c78e6984ccaa52d648e710e92610b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.def-values-clause-fd36732fa75d",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "def-values"
+      ],
+      "behaviour": "Default attribute values in DTDs — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "def-values",
+        "clause_index": 9,
+        "clause_sha256": "fd36732fa75d5be2d6ef0264e3c2d259ad41adaea4889ba90ea5d88a800eedbe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.class-html",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "class-html"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Class selectors.",
+      "locator": {
+        "section_id": "class-html",
+        "text_sha256": "e823b9bfabb11a2936915c7cddf1c5d0ab7b06d646a705ad86352f3d5fb449db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.class-html-clause-a7a8028e8b33",
+        "selectors-3.class-html-clause-001d2ee84e18",
+        "selectors-3.class-html-clause-9cef6a68baba",
+        "selectors-3.class-html-clause-6ae4b06586cc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.class-html-clause-a7a8028e8b33",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "class-html"
+      ],
+      "behaviour": "Class selectors — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "class-html",
+        "clause_index": 0,
+        "clause_sha256": "a7a8028e8b33bd15c1ae868a41f99e9fa420de87c42f9372ad2d30a3d0398507"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.class-html-clause-001d2ee84e18",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "class-html"
+      ],
+      "behaviour": "Class selectors — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "class-html",
+        "clause_index": 1,
+        "clause_sha256": "001d2ee84e18f377ff4d0155e1d506876d991ea7c9f74d293e0646876950f320"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.class-html-clause-9cef6a68baba",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "class-html"
+      ],
+      "behaviour": "Class selectors — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "class-html",
+        "clause_index": 14,
+        "clause_sha256": "9cef6a68baba10400ebc575e43dd68c1551e9feff3cbaa75961e0a420713cde8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.class-html-clause-6ae4b06586cc",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "class-html"
+      ],
+      "behaviour": "Class selectors — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "class-html",
+        "clause_index": 15,
+        "clause_sha256": "6ae4b06586cc204138fdc71473c9595edbb3ea8e913464d0fe4e3c534fabd7be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.id-selectors",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "id-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in ID selectors.",
+      "locator": {
+        "section_id": "id-selectors",
+        "text_sha256": "cfc74667ed84c94c76df6cedb7877a1326e3d45d094c3a0ffaf4e7033ccdc042"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.id-selectors-clause-e302822d5764",
+        "selectors-3.id-selectors-clause-dc5db222c68e",
+        "selectors-3.id-selectors-clause-325224d36116"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.id-selectors-clause-e302822d5764",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "id-selectors"
+      ],
+      "behaviour": "ID selectors — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "id-selectors",
+        "clause_index": 1,
+        "clause_sha256": "e302822d57647cd4a1a60a651608ec0295e544b0491144770da7b0c0810b8574"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.id-selectors-clause-dc5db222c68e",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "id-selectors"
+      ],
+      "behaviour": "ID selectors — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "id-selectors",
+        "clause_index": 10,
+        "clause_sha256": "dc5db222c68eac15462d15795013fa3ebb4ed310a774aae51d72a246cda34609"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.id-selectors-clause-325224d36116",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "id-selectors"
+      ],
+      "behaviour": "ID selectors — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "id-selectors",
+        "clause_index": 11,
+        "clause_sha256": "325224d36116cdc5dd806070a21b076dca0604ca2e5055a47bba5da2b68fc957"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.pseudo-classes",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "pseudo-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pseudo-classes.",
+      "locator": {
+        "section_id": "pseudo-classes",
+        "text_sha256": "15058402605735d5a46995863d022dbb8b8afaedfa5eaced96b362c8305643c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.dynamic-pseudos",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "dynamic-pseudos"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dynamic pseudo-classes.",
+      "locator": {
+        "section_id": "dynamic-pseudos",
+        "text_sha256": "c961d4508e23ec770f75cf011f8f97c1bf982e9fb960a4f42ed9835a5042c8d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.link",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "link"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The link pseudo-classes: :link and :visited.",
+      "locator": {
+        "section_id": "link",
+        "text_sha256": "678bea72fd3393f2dbf625a8a904c8ccaa4a11eab1fe37a23e2fec3165d47070"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.useraction-pseudos",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "useraction-pseudos"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The user action pseudo-classes :hover, :active, and :focus.",
+      "locator": {
+        "section_id": "useraction-pseudos",
+        "text_sha256": "e08056fe2833ae509fa78615cc72d80de1717736bb7c94a8f40f658e8dc2805d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.target-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "target-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The target pseudo-class :target.",
+      "locator": {
+        "section_id": "target-pseudo",
+        "text_sha256": "2269574cb1c2fe334f510cd3379b20469d1ed94034fa8ca1acfdbd95e6220f2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.lang-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "lang-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The language pseudo-class :lang.",
+      "locator": {
+        "section_id": "lang-pseudo",
+        "text_sha256": "aefeed96d3cef0c1f5a40a42c75e86856ec32d8da95ce156fd4abc9491a2eeb1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.lang-pseudo-clause-7b60dca2d2a6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.lang-pseudo-clause-7b60dca2d2a6",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "lang-pseudo"
+      ],
+      "behaviour": "The language pseudo-class :lang — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "lang-pseudo",
+        "clause_index": 2,
+        "clause_sha256": "7b60dca2d2a6b413db67440ddec2402565eedf8edd0bf85d7fbca22a0798e440"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.uistates",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "UIstates"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The UI element states pseudo-classes.",
+      "locator": {
+        "section_id": "UIstates",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.enableddisabled",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "enableddisabled"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The :enabled and :disabled pseudo-classes.",
+      "locator": {
+        "section_id": "enableddisabled",
+        "text_sha256": "37f314b1a6eb6a6ff241e5e614c3bf2d7c205099cb9283804838ba4f3fbdda5f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.checked",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "checked"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The :checked pseudo-class.",
+      "locator": {
+        "section_id": "checked",
+        "text_sha256": "a65a4a159ff089947a7b180c387f3e77d2c05db0d0f6209277aaee52da16c7cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.indeterminate",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "indeterminate"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The :indeterminate pseudo-class.",
+      "locator": {
+        "section_id": "indeterminate",
+        "text_sha256": "838860e0894e75a27c4e2ecbe948d4c76362dd90b8862c19cdf3282da154af44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.structural-pseudos",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "structural-pseudos"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Structural pseudo-classes.",
+      "locator": {
+        "section_id": "structural-pseudos",
+        "text_sha256": "eaa8d5b5da5de49fa1b6533b7428410792ea890b822e22e48e897f8e9a9d6f4a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.root-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "root-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :root pseudo-class.",
+      "locator": {
+        "section_id": "root-pseudo",
+        "text_sha256": "d8d8ddd2fcf52b2f292f42f2d2cca23f2a7d4aa062da6416bd3338c50d92946a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.nth-child-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-child-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :nth-child() pseudo-class.",
+      "locator": {
+        "section_id": "nth-child-pseudo",
+        "text_sha256": "4970d150c40ddd15854381e2a6dc35ba2b0337d9a3d6e70dd9ad17bd74ccbb3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.nth-child-pseudo-clause-eba238348535",
+        "selectors-3.nth-child-pseudo-clause-50b021f60b51",
+        "selectors-3.nth-child-pseudo-clause-1807bf5311aa",
+        "selectors-3.nth-child-pseudo-clause-aebbfda860d1",
+        "selectors-3.nth-child-pseudo-clause-108183167fdb"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.nth-child-pseudo-clause-eba238348535",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-child-pseudo"
+      ],
+      "behaviour": ":nth-child() pseudo-class — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "nth-child-pseudo",
+        "clause_index": 0,
+        "clause_sha256": "eba23834853504305f3feb1c615a35a586b28d0e7ed6f3898c828cabb0d5a978"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.nth-child-pseudo-clause-50b021f60b51",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-child-pseudo"
+      ],
+      "behaviour": ":nth-child() pseudo-class — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "nth-child-pseudo",
+        "clause_index": 2,
+        "clause_sha256": "50b021f60b510ef5154b9cff18d3c24d42fe1df8ef670d210d75245da80ead62"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.nth-child-pseudo-clause-1807bf5311aa",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-child-pseudo"
+      ],
+      "behaviour": ":nth-child() pseudo-class — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "nth-child-pseudo",
+        "clause_index": 6,
+        "clause_sha256": "1807bf5311aad41288650a7fa402bbca111eba5e9b299af12fd4dba8dfacd553"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.nth-child-pseudo-clause-aebbfda860d1",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-child-pseudo"
+      ],
+      "behaviour": ":nth-child() pseudo-class — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "nth-child-pseudo",
+        "clause_index": 8,
+        "clause_sha256": "aebbfda860d1278fa8d854db05434392fbc15f5242ae2b3ed0d53de68c72e954"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.nth-child-pseudo-clause-108183167fdb",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-child-pseudo"
+      ],
+      "behaviour": ":nth-child() pseudo-class — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "nth-child-pseudo",
+        "clause_index": 22,
+        "clause_sha256": "108183167fdbd08c577053392f9aada875f9238403096340768d2f6514bf2323"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.nth-last-child-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-last-child-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :nth-last-child() pseudo-class.",
+      "locator": {
+        "section_id": "nth-last-child-pseudo",
+        "text_sha256": "da9e1f830f68f530f2466cb1c0ad0ac32f1dfe22b8abaa788a6fdec59521266a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.nth-last-child-pseudo-clause-84311cf645ea"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.nth-last-child-pseudo-clause-84311cf645ea",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-last-child-pseudo"
+      ],
+      "behaviour": ":nth-last-child() pseudo-class — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "nth-last-child-pseudo",
+        "clause_index": 0,
+        "clause_sha256": "84311cf645ea8a618c4582734d41fed93c1fe5120248b16f708ae5c3c7bfc0ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.nth-of-type-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-of-type-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :nth-of-type() pseudo-class.",
+      "locator": {
+        "section_id": "nth-of-type-pseudo",
+        "text_sha256": "f142144c583732e2eb89b3e94b3619e9f4fb87ba40f7e5ed5931cf9cb4d6b3ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.nth-of-type-pseudo-clause-ab98c31c9408"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.nth-of-type-pseudo-clause-ab98c31c9408",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-of-type-pseudo"
+      ],
+      "behaviour": ":nth-of-type() pseudo-class — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "nth-of-type-pseudo",
+        "clause_index": 0,
+        "clause_sha256": "ab98c31c9408d63af3726adaed700df4ff5d2d45079365e029e950cd7f289e6f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.nth-last-of-type-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-last-of-type-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :nth-last-of-type() pseudo-class.",
+      "locator": {
+        "section_id": "nth-last-of-type-pseudo",
+        "text_sha256": "4363f5435a8949a9b4a295924a79adb77a8032b86efbb7752276f7c3b5c26aad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.nth-last-of-type-pseudo-clause-9a376d05c364"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.nth-last-of-type-pseudo-clause-9a376d05c364",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "nth-last-of-type-pseudo"
+      ],
+      "behaviour": ":nth-last-of-type() pseudo-class — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "nth-last-of-type-pseudo",
+        "clause_index": 0,
+        "clause_sha256": "9a376d05c364f7c0adcbf0d403a23c35fed30aa7090647e4a3e179c810c07a5e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.first-child-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "first-child-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :first-child pseudo-class.",
+      "locator": {
+        "section_id": "first-child-pseudo",
+        "text_sha256": "cb8db9fe546596c8f37e0e236755b0d2ee3f1e59b1096502dfd4709e616c6fe9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.last-child-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "last-child-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :last-child pseudo-class.",
+      "locator": {
+        "section_id": "last-child-pseudo",
+        "text_sha256": "a230188c3776203fc7cf52cc44fa4f078cdaf2b680a0651901cd01c7f5b52b93"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.first-of-type-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "first-of-type-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :first-of-type pseudo-class.",
+      "locator": {
+        "section_id": "first-of-type-pseudo",
+        "text_sha256": "e38910599c17a2ecb88b2482baf9c7e4e77b79402ee56f07a9590e1fe1d23865"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.last-of-type-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "last-of-type-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :last-of-type pseudo-class.",
+      "locator": {
+        "section_id": "last-of-type-pseudo",
+        "text_sha256": "14f3c9b328d87a7b7b24241dad3a800331dcaefdc95dcf24b50cba9303aa10dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.only-child-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "only-child-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :only-child pseudo-class.",
+      "locator": {
+        "section_id": "only-child-pseudo",
+        "text_sha256": "fcba64aba074da1ee1096b0aac111145bbd289cec73e61bc3544e3461cfdc17d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.only-of-type-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "only-of-type-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :only-of-type pseudo-class.",
+      "locator": {
+        "section_id": "only-of-type-pseudo",
+        "text_sha256": "5a3cce6d1df44b70cff65b01b5b04a7539d412c5aaf7efa59bacba0ef8360f41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.empty-pseudo",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "empty-pseudo"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in :empty pseudo-class.",
+      "locator": {
+        "section_id": "empty-pseudo",
+        "text_sha256": "54d759f1f403bfdacd88fc5d77e00ce4e6681a44fe01bba736048846854afa49"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.empty-pseudo-clause-de58fe00bbbe"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.empty-pseudo-clause-de58fe00bbbe",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "empty-pseudo"
+      ],
+      "behaviour": ":empty pseudo-class — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "empty-pseudo",
+        "clause_index": 0,
+        "clause_sha256": "de58fe00bbbe9b8bbabc2ff2b0c56138819edb0aebd804c87fc0517ae9b4a7e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.content-selectors",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "content-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Blank.",
+      "locator": {
+        "section_id": "content-selectors",
+        "text_sha256": "8027b715f397a3be4bdd7513a573ede7e33f7e8621bf901c4859ada1be23b9bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.negation",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "negation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The negation pseudo-class.",
+      "locator": {
+        "section_id": "negation",
+        "text_sha256": "e53fc61c671849e26fdd51e7eb2de0c92a3898387786a233bafae8cb0bceb046"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.negation-clause-7314840223ae"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.negation-clause-7314840223ae",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "negation"
+      ],
+      "behaviour": "The negation pseudo-class — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "negation",
+        "clause_index": 1,
+        "clause_sha256": "7314840223aee9674d10997c0174c6b8796b9d1c4c7de6eb37972fea98fee4b4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.pseudo-elements",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "pseudo-elements"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pseudo-elements.",
+      "locator": {
+        "section_id": "pseudo-elements",
+        "text_sha256": "077bd870724cb72c106c96adeec4f06fca65fb38ac0ae0197bfb46186f2a53a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.pseudo-elements-clause-218d08250de5",
+        "selectors-3.pseudo-elements-clause-b2a19dd96efd"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.pseudo-elements-clause-218d08250de5",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "pseudo-elements"
+      ],
+      "behaviour": "Pseudo-elements — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "pseudo-elements",
+        "clause_index": 2,
+        "clause_sha256": "218d08250de51cf9edf8c5cef4f865d6dbfaee007cc7c5f047825271c4053e1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.pseudo-elements-clause-b2a19dd96efd",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "pseudo-elements"
+      ],
+      "behaviour": "Pseudo-elements — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "pseudo-elements",
+        "clause_index": 3,
+        "clause_sha256": "b2a19dd96efd147aaa2ec8c3d5b6aa505cb46aa5260310ddfb86a0d3f4c3c863"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.first-line",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "first-line"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The ::first-line pseudo-element.",
+      "locator": {
+        "section_id": "first-line",
+        "text_sha256": "dd1cb2b8cc80c877ce6a2f66b7976af19fdf024da119a95782de6122cf42d044"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.first-formatted-line",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "first-formatted-line"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in First formatted line definition in CSS.",
+      "locator": {
+        "section_id": "first-formatted-line",
+        "text_sha256": "27f9d1c19b2761ff97050139d51af7890400fd881f49fa15c2bff30bacd0d9ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.first-formatted-line-clause-469a9967bd7e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.first-formatted-line-clause-469a9967bd7e",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "first-formatted-line"
+      ],
+      "behaviour": "First formatted line definition in CSS — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "first-formatted-line",
+        "clause_index": 4,
+        "clause_sha256": "469a9967bd7e171fc0e22696e43af85a489fde226219e2d14606e03015f44a99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.first-letter",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "first-letter"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The ::first-letter pseudo-element.",
+      "locator": {
+        "section_id": "first-letter",
+        "text_sha256": "637b61431c5684418bec6a9e8b8247e00dc963e829d0af8c9b3cefb2e215dbcd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.first-letter-clause-25d200839973",
+        "selectors-3.first-letter-clause-a8f77d4adc5a",
+        "selectors-3.first-letter-clause-5ecc1458c5db"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.first-letter-clause-25d200839973",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "first-letter"
+      ],
+      "behaviour": "The ::first-letter pseudo-element — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "first-letter",
+        "clause_index": 1,
+        "clause_sha256": "25d200839973c83c8ac55930d8363607bb05d074cfc4b61b56506ad1f32439c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.first-letter-clause-a8f77d4adc5a",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "first-letter"
+      ],
+      "behaviour": "The ::first-letter pseudo-element — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "first-letter",
+        "clause_index": 3,
+        "clause_sha256": "a8f77d4adc5a59d87dd0d894f98180cf203722952cb512eb5c6beec543266214"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.first-letter-clause-5ecc1458c5db",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "first-letter"
+      ],
+      "behaviour": "The ::first-letter pseudo-element — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "first-letter",
+        "clause_index": 12,
+        "clause_sha256": "5ecc1458c5db03018100a0ccd1380696277db93970c9d52d4083a2798eb08025"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.application-in-css",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "application-in-css"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Application in CSS.",
+      "locator": {
+        "section_id": "application-in-css",
+        "text_sha256": "72a19801547e946bc24d2246584fcfa5340637c02e014addbceb58a9d066e9af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.application-in-css-clause-e337419c08fd",
+        "selectors-3.application-in-css-clause-6b11857d5b31"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.application-in-css-clause-e337419c08fd",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "application-in-css"
+      ],
+      "behaviour": "Application in CSS — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "application-in-css",
+        "clause_index": 1,
+        "clause_sha256": "e337419c08fd6d4d398bcd0759127f224cc8cbac49e331d35625f226039838d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.application-in-css-clause-6b11857d5b31",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "application-in-css"
+      ],
+      "behaviour": "Application in CSS — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "application-in-css",
+        "clause_index": 13,
+        "clause_sha256": "6b11857d5b318185ddc8988f0c9a28755b4d1e8dd5a2c94eaa4d1cab7fff682c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.selection",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "selection"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Blank.",
+      "locator": {
+        "section_id": "selection",
+        "text_sha256": "4912a8dc56ad88599f4fda10722c3326a79ce83573eddfaf979492cad2cd32b0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.gen-content",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "gen-content"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The ::before and ::after pseudo-elements.",
+      "locator": {
+        "section_id": "gen-content",
+        "text_sha256": "8ef4aa9266e683f37b4ab02f830b185f506077d3090d6be592f2d4d4b2ca14b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.combinators",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "combinators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Combinators.",
+      "locator": {
+        "section_id": "combinators",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.descendant-combinators",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "descendant-combinators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Descendant combinator.",
+      "locator": {
+        "section_id": "descendant-combinators",
+        "text_sha256": "6ac13bee73154969d733df0c403c9eba990f222f9a27386299ecb463a76d78ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.descendant-combinators-clause-f3dedc990db6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.descendant-combinators-clause-f3dedc990db6",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "descendant-combinators"
+      ],
+      "behaviour": "Descendant combinator — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "descendant-combinators",
+        "clause_index": 8,
+        "clause_sha256": "f3dedc990db64cbd9c000ec25bd03549e3c07b73879488c89addac9ed4a383a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.child-combinators",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "child-combinators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Child combinators.",
+      "locator": {
+        "section_id": "child-combinators",
+        "text_sha256": "1a8687f027559b16e7fbaa78073eaf92fb5b1f66f583f167b80cc6048ac14d48"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.child-combinators-clause-d1a07f003b4a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.child-combinators-clause-d1a07f003b4a",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "child-combinators"
+      ],
+      "behaviour": "Child combinators — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "child-combinators",
+        "clause_index": 6,
+        "clause_sha256": "d1a07f003b4ac418970903611f0ded72a3c85047edc5d9faf7fabf0ced02aa33"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.sibling-combinators",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "sibling-combinators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sibling combinators.",
+      "locator": {
+        "section_id": "sibling-combinators",
+        "text_sha256": "0c724773912d8b0b694a23fa548e418be4f3b29b5f1de6433c6efba5f7471704"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.sibling-combinators-clause-0c724773912d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.sibling-combinators-clause-0c724773912d",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "sibling-combinators"
+      ],
+      "behaviour": "Sibling combinators — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sibling-combinators",
+        "clause_index": 0,
+        "clause_sha256": "0c724773912d8b0b694a23fa548e418be4f3b29b5f1de6433c6efba5f7471704"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.adjacent-sibling-combinators",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "adjacent-sibling-combinators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Next-sibling combinator.",
+      "locator": {
+        "section_id": "adjacent-sibling-combinators",
+        "text_sha256": "a3ba92296adaac03f3e635302ed591d5a2224c51892cf0e4371ee2362af76dda"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.adjacent-sibling-combinators-clause-a76bd65c4aa2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.adjacent-sibling-combinators-clause-a76bd65c4aa2",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "adjacent-sibling-combinators"
+      ],
+      "behaviour": "Next-sibling combinator — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "adjacent-sibling-combinators",
+        "clause_index": 4,
+        "clause_sha256": "a76bd65c4aa2cbecedb7f3b1c5ea825a15884dddd29a12400fe4f4a373d751ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.general-sibling-combinators",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "general-sibling-combinators"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Subsequent-sibling combinator.",
+      "locator": {
+        "section_id": "general-sibling-combinators",
+        "text_sha256": "bc2e2595a5949ed2fbf03b8a4df88bd940c1b4faa1512b35b302549b33b4b487"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.specificity",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "specificity"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Calculating a selector's specificity.",
+      "locator": {
+        "section_id": "specificity",
+        "text_sha256": "db8cf62a245a80acc44ce34576c5883c0eadf42cf51152cc8d3752c440ae5d41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.w3cselgrammar",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "w3cselgrammar"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The grammar of Selectors.",
+      "locator": {
+        "section_id": "w3cselgrammar",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.grammar",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "grammar"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grammar.",
+      "locator": {
+        "section_id": "grammar",
+        "text_sha256": "30227e43d90d64cb86e27fcca21f50ec36e3f210d7907d013c92bf7496e6a676"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.grammar-clause-3d03fdd0db8d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.grammar-clause-3d03fdd0db8d",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "grammar"
+      ],
+      "behaviour": "Grammar — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "grammar",
+        "clause_index": 0,
+        "clause_sha256": "3d03fdd0db8dc1e66751b833297ac13230c8ea211b37eeb332f0a3005426a78a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.lex",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "lex"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lexical scanner.",
+      "locator": {
+        "section_id": "lex",
+        "text_sha256": "787510c54d8505b1b58e66137841c2bff003f69ac2df12bbf8e996db1d9ab0ce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.lex-clause-70279149e186",
+        "selectors-3.lex-clause-24f48afc877c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.lex-clause-70279149e186",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "lex"
+      ],
+      "behaviour": "Lexical scanner — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "lex",
+        "clause_index": 1,
+        "clause_sha256": "70279149e18617e0ecc2a650d09c0d2fa605cd614a46c78c99bb953464f202fb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.lex-clause-24f48afc877c",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "lex"
+      ],
+      "behaviour": "Lexical scanner — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "lex",
+        "clause_index": 2,
+        "clause_sha256": "24f48afc877cac96ee339ce8424adb1053c5320085d4f958ab8ba6e7a8c6f2d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.profiling",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "profiling"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Profiles.",
+      "locator": {
+        "section_id": "profiling",
+        "text_sha256": "eeb2a723f50feb4a34c069f3a89115ef3b14c2f6f1ad2dcaf93ce1e24231de91"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.profiling-clause-d78878a62c8e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.profiling-clause-d78878a62c8e",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "profiling"
+      ],
+      "behaviour": "Profiles — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "profiling",
+        "clause_index": 0,
+        "clause_sha256": "d78878a62c8ed896dcc3143a7475ebbf31a2f11e1d2595a025fc1c2d65e08aa8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.conformance",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance and requirements.",
+      "locator": {
+        "section_id": "Conformance",
+        "text_sha256": "51dfda0b5f9f22135e4211044bf876de995f6467b52b259424c1ae4694c3da15"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "selectors-3.conformance-clause-b1007ae83567",
+        "selectors-3.conformance-clause-cfb1b35bb6ce",
+        "selectors-3.conformance-clause-1315ce25dd87",
+        "selectors-3.conformance-clause-f6f71492a664",
+        "selectors-3.conformance-clause-48e222338b69",
+        "selectors-3.conformance-clause-8f9aa22f94a3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.conformance-clause-b1007ae83567",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Conformance and requirements — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 2,
+        "clause_sha256": "b1007ae83567a28644629bed71824db0da3c055c8c180c82ea605135494b0591"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.conformance-clause-cfb1b35bb6ce",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Conformance and requirements — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 4,
+        "clause_sha256": "cfb1b35bb6ce63d6fd23dd973c5c927a122b1dedf1bf344680a8a248070dc31c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.conformance-clause-1315ce25dd87",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Conformance and requirements — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 5,
+        "clause_sha256": "1315ce25dd871dab8d0d0eef25b858290806ae84ac227ab15fe8620f51440915"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.conformance-clause-f6f71492a664",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Conformance and requirements — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 6,
+        "clause_sha256": "f6f71492a664818ce9f6f13db93781787f01c9e18d3335c699aa82900478e661"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.conformance-clause-48e222338b69",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Conformance and requirements — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 7,
+        "clause_sha256": "48e222338b69f70a2e84f2fc7a411b8e45e4eb5fdee93981f422235e2dfb6187"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.conformance-clause-8f9aa22f94a3",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "Conformance"
+      ],
+      "behaviour": "Conformance and requirements — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "Conformance",
+        "clause_index": 8,
+        "clause_sha256": "8f9aa22f94a390a0d108f383329a06a45f7fe3de5b17c9f9192232673fd49b38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "selectors-3.tests",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "Tests"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tests.",
+      "locator": {
+        "section_id": "Tests",
+        "text_sha256": "02a2ab87e3890140b941420bc87f540b516ff8a717417adf977e41f82cea1ce3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.title",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Selectors Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.abstract",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "a20a30db880e618e67584597c23224da14a4b311f3ee236e1339b9f09e2fec63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.status",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "1b4a6570db3cf809dcc4591ddbfdd25b5f6a3dd635d61dd84211cea53f83df41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.contents",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "f2b4734eb969d22b4be10de1000d7573584bd2ff6c33769e94003478938c7483"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.changesfromcss2",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "changesFromCSS2"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.3. Changes from CSS2.",
+      "locator": {
+        "section_id": "changesFromCSS2",
+        "text_sha256": "95c1cfa7a0cc50647d9215c24f892712e3960645d9fb28661bfe2380825007f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.selectors",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "selectors"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 2. Selectors.",
+      "locator": {
+        "section_id": "selectors",
+        "text_sha256": "104f940e5ac1124e5b7f2c2a482efc7ea198d3ad5d5303c2106c99e0e94287c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.acks",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "ACKS"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 14. Acknowledgements.",
+      "locator": {
+        "section_id": "ACKS",
+        "text_sha256": "385a6f27cc5785b98fb0725362d071942d3edc7b26e8c0080c64166a3c611e6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.references",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 15. References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.normative-references",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "normative-references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 15.1. Normative References.",
+      "locator": {
+        "section_id": "normative-references",
+        "text_sha256": "395a911d28cbc843db5f9b12b5197b55e1aa00d1f3cf0a0c838ba60d8e10c62b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.informative-references",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "informative-references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 15.2. Informative References.",
+      "locator": {
+        "section_id": "informative-references",
+        "text_sha256": "64384edb0a2154485e2bd68da928430eb82eae9473556fbe1264639eb6874641"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "selectors-3.changes",
+      "family": "selectors-3",
+      "source_id": "selectors-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 15.3. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "5ce4df8a8f6075a1642cab0078610c89f11d5a791496e22031fefe5facf4d66e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

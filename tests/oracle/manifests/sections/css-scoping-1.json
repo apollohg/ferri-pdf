@@ -1,0 +1,517 @@
+{
+  "schema_version": 1,
+  "source_id": "css-scoping-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Scoping Module Level 1",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.title"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C First Public Working Draft, 3 April 2014",
+      "level": 2,
+      "text_sha256": "789a2154cb0e55a5a268e9c03edd7c141afbb82f44c7cd305798bec19eee3822",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.subtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "2c64b5547234407497e274280a0f6152ac53f7d777b07e2105a9e68e68197775",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "9fc75e8d0a096394dafe2f8617f6a00c4942f647c7c4e1f4e8dc835675e52555",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "c9b7eaef77f76863a5dad6b077514998b04656137ca5ce583fd89c50811bca06",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1 Introduction",
+      "level": 2,
+      "text_sha256": "ab5df625bc76dbd4e163bed2dd888df828f90159bb93556525c31821b6541d46",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "scope",
+      "title": "2 Scoped Styles",
+      "level": 2,
+      "text_sha256": "1a584add9f03d0bbbf7dc15f9315e1daa2ee5b5361c64b2b7cc4d14c22a86be6",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.scope"
+        ]
+      }
+    },
+    {
+      "id": "scoping-mechanisms",
+      "title": "2.1 Scoping Mechanisms",
+      "level": 3,
+      "text_sha256": "fa7c343296d3ac39855f392cbd43b57e01db26f1d8c99a520fa7f6ee49b0e031",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.scoping-mechanisms"
+        ]
+      }
+    },
+    {
+      "id": "scoping-markup",
+      "title": "2.1.1 Document Markup for Scoping",
+      "level": 4,
+      "text_sha256": "49dc41435874e8caf170d7f6219bf3b3236a96b15fea771cbe86e36e4524387a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.scoping-markup"
+        ]
+      }
+    },
+    {
+      "id": "scope-atrule",
+      "title": "2.1.2 CSS Syntax for Scoping: the @scope rule",
+      "level": 4,
+      "text_sha256": "304215cc69cd0166a2455022cb68e946b32574deae00cfae225177ca2ba5b393",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.scope-atrule",
+          "css-scoping-1.scope-atrule-clause-7b43b004a339",
+          "css-scoping-1.scope-atrule-clause-8df23a1054fd",
+          "css-scoping-1.scope-atrule-clause-0698f7e006a3"
+        ]
+      }
+    },
+    {
+      "id": "scoping-context",
+      "title": "2.2 Querying the Scoping Context",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.scoping-context"
+        ]
+      }
+    },
+    {
+      "id": "scope-pseudo",
+      "title": "2.2.1 Selecting the Scoping Root: :scope pseudo-class",
+      "level": 4,
+      "text_sha256": "b8b2f3383ad013c02deebf7c8b72a0d06510111317faee040ac7bfb27e3558ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.scope-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "scope-content-pseudo",
+      "title": "2.2.2 Selecting Outside the Scope: :scope-context() pseudo-class",
+      "level": 4,
+      "text_sha256": "24bd82070fcd50770f5b54d8a466803352da72a225f127c3598a20a713cb406a",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.scope-content-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "shadow-dom",
+      "title": "3 Shadow Encapsulation",
+      "level": 2,
+      "text_sha256": "7142f75af532d2c0ed2870b00d5af17466da5261c9aac532b7ea97bcdda8624f",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.shadow-dom",
+          "css-scoping-1.shadow-dom-clause-1858ff82f3d7",
+          "css-scoping-1.shadow-dom-clause-7cc4f2bdb0ad"
+        ]
+      }
+    },
+    {
+      "id": "selectors-data-model",
+      "title": "3.1 Shadow DOM Selection Model",
+      "level": 3,
+      "text_sha256": "e763263a2dc687560af00479cfd3f820333ef4dcd798c46b0b2dffc1021aa0dc",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.selectors-data-model"
+        ]
+      }
+    },
+    {
+      "id": "host-element",
+      "title": "3.1.1 Host Elements in a Shadow Tree",
+      "level": 4,
+      "text_sha256": "e25ba0156263adb5b7788cf2e741642036d2ffd4a0b792d5ce830716253e8a5d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.host-element"
+        ]
+      }
+    },
+    {
+      "id": "selectors",
+      "title": "3.2 Shadow DOM Selectors",
+      "level": 3,
+      "text_sha256": "6f52e3734de414147932b795dfa782129372783b4f027f761e89e37e4424895d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.selectors"
+        ]
+      }
+    },
+    {
+      "id": "host-selector",
+      "title": "3.2.1 Selecting Into the Light: the :host, :host(), and :host-context() pseudo-classes",
+      "level": 4,
+      "text_sha256": "f838192fdc158de8ae024863358440a558274bc7e90c57a12b413ff080c48d8b",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.host-selector"
+        ]
+      }
+    },
+    {
+      "id": "shadow-pseudoelement",
+      "title": "3.2.2 Selecting Into the Dark: the ::shadow pseudo-element",
+      "level": 4,
+      "text_sha256": "86fa98854926196a694090e5c528009e393bc9a048c7bbedeca70837c96093fc",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.shadow-pseudoelement",
+          "css-scoping-1.shadow-pseudoelement-clause-d4dbb8fe1de4"
+        ]
+      }
+    },
+    {
+      "id": "content-combinator",
+      "title": "3.2.3 Selecting Shadow-Projected Content: the ::content pseudo-element",
+      "level": 4,
+      "text_sha256": "99f5d3f28a9dbc6bbc215c072616fefdb5fbdbca31ce5c5483d9f534bba786f4",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.content-combinator",
+          "css-scoping-1.content-combinator-clause-4dba22af5cfa"
+        ]
+      }
+    },
+    {
+      "id": "deep-combinator",
+      "title": "3.2.4 Selecting Through Shadows: the /deep/ combinator",
+      "level": 4,
+      "text_sha256": "a786cbf754829736a2805c9d70acabf8ccdae07199cbfd4e1d798e90191cd4dd",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.deep-combinator"
+        ]
+      }
+    },
+    {
+      "id": "shadow-cascading",
+      "title": "3.3 Shadow Cascading & Inheritance",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.shadow-cascading"
+        ]
+      }
+    },
+    {
+      "id": "cascading",
+      "title": "3.3.1 Cascading",
+      "level": 4,
+      "text_sha256": "be1903d0ffcb27f83a606c5c11d424212a854e2730ba5cbbe02d736e0478b44f",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.cascading",
+          "css-scoping-1.cascading-clause-de67518f3581"
+        ]
+      }
+    },
+    {
+      "id": "inheritance",
+      "title": "3.3.2 Inheritance",
+      "level": 4,
+      "text_sha256": "49a478e949fa306065a47148b81ae0b0ce57da514843124ffbbcac2cb9d5d334",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.inheritance",
+          "css-scoping-1.inheritance-clause-7251d9392ea2",
+          "css-scoping-1.inheritance-clause-c562a3e721ef"
+        ]
+      }
+    },
+    {
+      "id": "fragment-scoping",
+      "title": "4 Fragmented Styling",
+      "level": 2,
+      "text_sha256": "0193ec526aa3bfb36f1d803ecdef8a18aa8e217d62eed3573bb0899241626daa",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.fragment-scoping"
+        ]
+      }
+    },
+    {
+      "id": "the-region-pseudo-element",
+      "title": "4.1 Region-based Styling: the ::region pseudo-element",
+      "level": 3,
+      "text_sha256": "1f1ec5406089400e99faf36e818e488f9870cd8dcead66b13b916131aa224a58",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.the-region-pseudo-element",
+          "css-scoping-1.the-region-pseudo-element-clause-59d80e2146a5"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.conformance"
+        ]
+      }
+    },
+    {
+      "id": "conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "acb258dc27373bbfdcd07816f2e573041b50e9f35d9f9a3a64ca89c816865611",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.conventions",
+          "css-scoping-1.conventions-clause-6abbe28898f0"
+        ]
+      }
+    },
+    {
+      "id": "conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.conformance-classes",
+          "css-scoping-1.conformance-classes-clause-ff408372426c",
+          "css-scoping-1.conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.partial",
+          "css-scoping-1.partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "experimental",
+      "title": "Experimental implementations",
+      "level": 3,
+      "text_sha256": "d65302001727731f480732eea29f70c56e93286eee5ffd392400e6a470f873c7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.experimental"
+        ]
+      }
+    },
+    {
+      "id": "testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.testing",
+          "css-scoping-1.testing-clause-1e0fff369221",
+          "css-scoping-1.testing-clause-c7ed0d126be3"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "d42e74cc9493a4d121e92b4bcef93dff132ad62aaf9a57686d6e7b38a39dab83",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "6ee7a4ec5d6c781dc4df44c16de0d83bb5cc4543912968e885c3105f866d6627",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.informative"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "3c6d91084a6821f20347fc6278a760388eb7b0ebfac62c40110408299c9aff3e",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.index"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property index",
+      "level": 2,
+      "text_sha256": "547c4769772c9ff811e57bf39809cc6f1c1e6380af2bb402096c995db2287df6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.property-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "20c8a72d69142450a7ad3466e3b1745fe71bec082aa55984fb18f9a74ce31511",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-scoping-1.issues-index"
+        ]
+      }
+    }
+  ]
+}

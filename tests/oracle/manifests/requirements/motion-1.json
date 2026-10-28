@@ -1,0 +1,2580 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "motion-1.motion-paths-overview",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "motion-paths-overview"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Motion Paths.",
+      "locator": {
+        "section_id": "motion-paths-overview",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.offset-path-property",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-path-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Defining A Path: the offset-path property.",
+      "locator": {
+        "section_id": "offset-path-property",
+        "text_sha256": "7a929bb824a7ca9fea198ac7b829e17948634dbc9c496ffaa1bcbcaad5c6cd2b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.offset-path-property-clause-cca2516ebb1d",
+        "motion-1.offset-path-property-clause-674d5fa645b0",
+        "motion-1.offset-path-property-clause-1cf6a89b324f",
+        "motion-1.offset-path-property-clause-e52f528b2f5d",
+        "motion-1.offset-path-property-clause-1ec5d09a7863",
+        "motion-1.offset-path-property-clause-36c00cfea0bc",
+        "motion-1.offset-path-property-clause-88609667703a",
+        "motion-1.offset-path-property-clause-c24b7a9ef239",
+        "motion-1.offset-path-property-clause-48400b8bd74a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.offset-path-property-clause-cca2516ebb1d",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-path-property"
+      ],
+      "behaviour": "Defining A Path: the offset-path property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-path-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-path-property-clause-674d5fa645b0",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-path-property"
+      ],
+      "behaviour": "Defining A Path: the offset-path property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-path-property",
+        "clause_index": 17,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-path-property-clause-1cf6a89b324f",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-path-property"
+      ],
+      "behaviour": "Defining A Path: the offset-path property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-path-property",
+        "clause_index": 37,
+        "clause_sha256": "1cf6a89b324f73effbccc4274682b1a816e9c220261c009f95f7597269cf8f58"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-path-property-clause-e52f528b2f5d",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-path-property"
+      ],
+      "behaviour": "Defining A Path: the offset-path property — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-path-property",
+        "clause_index": 39,
+        "clause_sha256": "e52f528b2f5df501029e7c96919ffad8a291d4e4d3dda0f4ef86a1405795b0c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-path-property-clause-1ec5d09a7863",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-path-property"
+      ],
+      "behaviour": "Defining A Path: the offset-path property — normative clause 140, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-path-property",
+        "clause_index": 139,
+        "clause_sha256": "1ec5d09a78635e69837312b9ca2d0fd4fdc24078f677a8a2a63650d59bcdf956"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-path-property-clause-36c00cfea0bc",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-path-property"
+      ],
+      "behaviour": "Defining A Path: the offset-path property — normative clause 141, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-path-property",
+        "clause_index": 140,
+        "clause_sha256": "36c00cfea0bc1218378fe7c15e8d20b86e6b8b8ab92269be77b31ed2e66432a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-path-property-clause-88609667703a",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-path-property"
+      ],
+      "behaviour": "Defining A Path: the offset-path property — normative clause 143, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-path-property",
+        "clause_index": 142,
+        "clause_sha256": "88609667703a0e90fc54ed4a91dcf515b2085187b664653dcfefb95586c096f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-path-property-clause-c24b7a9ef239",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-path-property"
+      ],
+      "behaviour": "Defining A Path: the offset-path property — normative clause 145, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-path-property",
+        "clause_index": 144,
+        "clause_sha256": "c24b7a9ef23930c8fe8efe54d0bde6ac9c32a4f80477e0d9128f55fba6013f3f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-path-property-clause-48400b8bd74a",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-path-property"
+      ],
+      "behaviour": "Defining A Path: the offset-path property — normative clause 146, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-path-property",
+        "clause_index": 145,
+        "clause_sha256": "48400b8bd74ac9d12ea3aa5bb935b3a511620832fa18b172aeb1a531ed6485a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.ray-function",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "ray-function"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The ray() Function.",
+      "locator": {
+        "section_id": "ray-function",
+        "text_sha256": "fdbd856be0c5800a555e19748f69c3df64357857d723ad076f8727a44612d269"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.example-shape",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "example-shape"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Examples Of <basic-shape> Positioning.",
+      "locator": {
+        "section_id": "example-shape",
+        "text_sha256": "ff3db8c6314702e292bf85c8a184894ec5ac155f4331d70e7f11c8997ef8a0e5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.example-coord",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "example-coord"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Examples of <coord-box> Positioning.",
+      "locator": {
+        "section_id": "example-coord",
+        "text_sha256": "c6b10e7f631783a08d756292044f8ee2e02f1ddae55e42bafd32f5710cbf6276"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.offset-distance-property",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-distance-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Position On The Path: the offset-distance property.",
+      "locator": {
+        "section_id": "offset-distance-property",
+        "text_sha256": "42eb218aa54f26569efddee38b7aa6a3886f71312a8507397e4a189d9b77f9f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.offset-distance-property-clause-cca2516ebb1d",
+        "motion-1.offset-distance-property-clause-986b7b70ef39",
+        "motion-1.offset-distance-property-clause-674d5fa645b0",
+        "motion-1.offset-distance-property-clause-897628a10cb3",
+        "motion-1.offset-distance-property-clause-febaca200a93",
+        "motion-1.offset-distance-property-clause-39324c0eb5c7",
+        "motion-1.offset-distance-property-clause-0a6ba9f3aaa3",
+        "motion-1.offset-distance-property-clause-4384bcb7313d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.offset-distance-property-clause-cca2516ebb1d",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-distance-property"
+      ],
+      "behaviour": "Position On The Path: the offset-distance property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-distance-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-distance-property-clause-986b7b70ef39",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-distance-property"
+      ],
+      "behaviour": "Position On The Path: the offset-distance property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-distance-property",
+        "clause_index": 13,
+        "clause_sha256": "986b7b70ef3912bd09b5bbe9f656bc532851f3e25f00b8a0d8cc06e31eb75a65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-distance-property-clause-674d5fa645b0",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-distance-property"
+      ],
+      "behaviour": "Position On The Path: the offset-distance property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-distance-property",
+        "clause_index": 17,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-distance-property-clause-897628a10cb3",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-distance-property"
+      ],
+      "behaviour": "Position On The Path: the offset-distance property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-distance-property",
+        "clause_index": 21,
+        "clause_sha256": "897628a10cb33f33d5b6e72d140224fbbedc7a30ce80c5bafab65773316eed93"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-distance-property-clause-febaca200a93",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-distance-property"
+      ],
+      "behaviour": "Position On The Path: the offset-distance property — normative clause 36, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-distance-property",
+        "clause_index": 35,
+        "clause_sha256": "febaca200a932831092a1b86cf4f0f698dce6bf8c5f56b489089f7ec61523839"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-distance-property-clause-39324c0eb5c7",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-distance-property"
+      ],
+      "behaviour": "Position On The Path: the offset-distance property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-distance-property",
+        "clause_index": 36,
+        "clause_sha256": "39324c0eb5c7e7ecd526f39147af0f6224479800d75334defb20caad020c2f3d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-distance-property-clause-0a6ba9f3aaa3",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-distance-property"
+      ],
+      "behaviour": "Position On The Path: the offset-distance property — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-distance-property",
+        "clause_index": 40,
+        "clause_sha256": "0a6ba9f3aaa33b39ab8e5129167a09ddadbf5d596a89e68093db0232a0bff587"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-distance-property-clause-4384bcb7313d",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-distance-property"
+      ],
+      "behaviour": "Position On The Path: the offset-distance property — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-distance-property",
+        "clause_index": 41,
+        "clause_sha256": "4384bcb7313d5a81f42a04cc02ac9519c15e2c780e298a9a30ff0d2462f43f1f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.path-distance",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "path-distance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Calculating the computed distance along a path.",
+      "locator": {
+        "section_id": "path-distance",
+        "text_sha256": "4789edce9dd1f78e39de07f1f5981bd0d637fd2eda9ca47f82702094bd6029ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.offset-position-property",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-position-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Starting Point Of The Path: the offset-position property.",
+      "locator": {
+        "section_id": "offset-position-property",
+        "text_sha256": "1c7cd3acd1fa1a1e42c5aa10288b756a03abc32c706005dc7df6e0509ff67490"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.offset-position-property-clause-cca2516ebb1d",
+        "motion-1.offset-position-property-clause-ca448d8b09a0",
+        "motion-1.offset-position-property-clause-674d5fa645b0",
+        "motion-1.offset-position-property-clause-c6445f2148bd",
+        "motion-1.offset-position-property-clause-53240acbcb23",
+        "motion-1.offset-position-property-clause-8a103eb2b85f",
+        "motion-1.offset-position-property-clause-d852a42ad406",
+        "motion-1.offset-position-property-clause-ad1d89ba3032"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.offset-position-property-clause-cca2516ebb1d",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-position-property"
+      ],
+      "behaviour": "Starting Point Of The Path: the offset-position property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-position-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-position-property-clause-ca448d8b09a0",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-position-property"
+      ],
+      "behaviour": "Starting Point Of The Path: the offset-position property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-position-property",
+        "clause_index": 13,
+        "clause_sha256": "ca448d8b09a08853c4e4a5e0d2119210f7441a199cc623d4cbbe4299bc1b618a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-position-property-clause-674d5fa645b0",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-position-property"
+      ],
+      "behaviour": "Starting Point Of The Path: the offset-position property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-position-property",
+        "clause_index": 17,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-position-property-clause-c6445f2148bd",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-position-property"
+      ],
+      "behaviour": "Starting Point Of The Path: the offset-position property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-position-property",
+        "clause_index": 30,
+        "clause_sha256": "c6445f2148bdb7bbae6764579e881e1fbe29422c0d52362603180eb3ea44a3dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-position-property-clause-53240acbcb23",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-position-property"
+      ],
+      "behaviour": "Starting Point Of The Path: the offset-position property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-position-property",
+        "clause_index": 31,
+        "clause_sha256": "53240acbcb2304a40cfe7d2e504bd51d6e184f8001565be33e638e39aafeaf84"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-position-property-clause-8a103eb2b85f",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-position-property"
+      ],
+      "behaviour": "Starting Point Of The Path: the offset-position property — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-position-property",
+        "clause_index": 36,
+        "clause_sha256": "8a103eb2b85f40e7797fc975959bbb457f5f0061abce49cdb6a75d2f3bd834da"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-position-property-clause-d852a42ad406",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-position-property"
+      ],
+      "behaviour": "Starting Point Of The Path: the offset-position property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-position-property",
+        "clause_index": 37,
+        "clause_sha256": "d852a42ad406d95e8721692bd9e4c3d31fe79fdafebb540f4ac5a7ab9e59c41f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-position-property-clause-ad1d89ba3032",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-position-property"
+      ],
+      "behaviour": "Starting Point Of The Path: the offset-position property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-position-property",
+        "clause_index": 38,
+        "clause_sha256": "ad1d89ba3032449631435da5d17df85602a0449979a5f0502d709489a3a39cfd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-anchor-property",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-anchor-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Element’s Anchor Point: the offset-anchor property.",
+      "locator": {
+        "section_id": "offset-anchor-property",
+        "text_sha256": "9f6e9f5cabe0bf4522edfecf9fcf7b582cec82ae7064f38edcf32761699d5477"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.offset-anchor-property-clause-cca2516ebb1d",
+        "motion-1.offset-anchor-property-clause-d45a284cde2e",
+        "motion-1.offset-anchor-property-clause-674d5fa645b0",
+        "motion-1.offset-anchor-property-clause-a9ae1969c825",
+        "motion-1.offset-anchor-property-clause-e70170274b80",
+        "motion-1.offset-anchor-property-clause-b74e916bc00d",
+        "motion-1.offset-anchor-property-clause-8ea11c816780",
+        "motion-1.offset-anchor-property-clause-eeb5a6e85d8f",
+        "motion-1.offset-anchor-property-clause-7f645ce2f7a9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.offset-anchor-property-clause-cca2516ebb1d",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-anchor-property"
+      ],
+      "behaviour": "The Element’s Anchor Point: the offset-anchor property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-anchor-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-anchor-property-clause-d45a284cde2e",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-anchor-property"
+      ],
+      "behaviour": "The Element’s Anchor Point: the offset-anchor property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-anchor-property",
+        "clause_index": 13,
+        "clause_sha256": "d45a284cde2e882da7f6023cd829a4a0f50351586769d1d33132d8a7551965c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-anchor-property-clause-674d5fa645b0",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-anchor-property"
+      ],
+      "behaviour": "The Element’s Anchor Point: the offset-anchor property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-anchor-property",
+        "clause_index": 17,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-anchor-property-clause-a9ae1969c825",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-anchor-property"
+      ],
+      "behaviour": "The Element’s Anchor Point: the offset-anchor property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-anchor-property",
+        "clause_index": 23,
+        "clause_sha256": "a9ae1969c82570fc90ea44bc792a68aa00530db5ee5f71d56c2f45244bcf1bf3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-anchor-property-clause-e70170274b80",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-anchor-property"
+      ],
+      "behaviour": "The Element’s Anchor Point: the offset-anchor property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-anchor-property",
+        "clause_index": 24,
+        "clause_sha256": "e70170274b808303e0c102fc96103b71c5cf71eb85d521ab7df331b8cb4fd872"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-anchor-property-clause-b74e916bc00d",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-anchor-property"
+      ],
+      "behaviour": "The Element’s Anchor Point: the offset-anchor property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-anchor-property",
+        "clause_index": 32,
+        "clause_sha256": "b74e916bc00d0478f05afdd067cb01e09dedfc3b37b291a889a1289c842003e1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-anchor-property-clause-8ea11c816780",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-anchor-property"
+      ],
+      "behaviour": "The Element’s Anchor Point: the offset-anchor property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-anchor-property",
+        "clause_index": 33,
+        "clause_sha256": "8ea11c8167808c9c38152575f82472327bad0427e46d919d0d924635cdd7fac2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-anchor-property-clause-eeb5a6e85d8f",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-anchor-property"
+      ],
+      "behaviour": "The Element’s Anchor Point: the offset-anchor property — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-anchor-property",
+        "clause_index": 41,
+        "clause_sha256": "eeb5a6e85d8fc92d260a30dde579716b17f6388f2bec58703adf0956ae695c85"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-anchor-property-clause-7f645ce2f7a9",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-anchor-property"
+      ],
+      "behaviour": "The Element’s Anchor Point: the offset-anchor property — normative clause 43, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-anchor-property",
+        "clause_index": 42,
+        "clause_sha256": "7f645ce2f7a9371cc14988540213770cf8a6ef6b13a13032279dafa673b46972"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-rotate-property",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-rotate-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Rotating To Match The Path: the offset-rotate property.",
+      "locator": {
+        "section_id": "offset-rotate-property",
+        "text_sha256": "6f824e7fdf7629b2e506ba7a8434ab9fc20819b58fd51722a2fecb499b0d37b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.offset-rotate-property-clause-cca2516ebb1d",
+        "motion-1.offset-rotate-property-clause-9b3c498dc1d9",
+        "motion-1.offset-rotate-property-clause-674d5fa645b0",
+        "motion-1.offset-rotate-property-clause-567bab25ef0a",
+        "motion-1.offset-rotate-property-clause-1d1d2dd3bee2",
+        "motion-1.offset-rotate-property-clause-0d807e23647a",
+        "motion-1.offset-rotate-property-clause-e6e4071726b3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.offset-rotate-property-clause-cca2516ebb1d",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-rotate-property"
+      ],
+      "behaviour": "Rotating To Match The Path: the offset-rotate property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-rotate-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-rotate-property-clause-9b3c498dc1d9",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-rotate-property"
+      ],
+      "behaviour": "Rotating To Match The Path: the offset-rotate property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-rotate-property",
+        "clause_index": 13,
+        "clause_sha256": "9b3c498dc1d9265344f126914106c54376bdbc4978802c1e68179afa2dbe2c51"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-rotate-property-clause-674d5fa645b0",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-rotate-property"
+      ],
+      "behaviour": "Rotating To Match The Path: the offset-rotate property — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-rotate-property",
+        "clause_index": 17,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-rotate-property-clause-567bab25ef0a",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-rotate-property"
+      ],
+      "behaviour": "Rotating To Match The Path: the offset-rotate property — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-rotate-property",
+        "clause_index": 39,
+        "clause_sha256": "567bab25ef0af50ae93362f38d297f91c4e9acb5ba490acc40a5611c8db1af0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-rotate-property-clause-1d1d2dd3bee2",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-rotate-property"
+      ],
+      "behaviour": "Rotating To Match The Path: the offset-rotate property — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-rotate-property",
+        "clause_index": 40,
+        "clause_sha256": "1d1d2dd3bee25cb00257160ab3119f67dabf60af2ae97b91730de6593eb5df12"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-rotate-property-clause-0d807e23647a",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-rotate-property"
+      ],
+      "behaviour": "Rotating To Match The Path: the offset-rotate property — normative clause 48, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-rotate-property",
+        "clause_index": 47,
+        "clause_sha256": "0d807e23647a88db46aed324b689d7d3981c450d7d0d8b91fa9c40ce2fcefde1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-rotate-property-clause-e6e4071726b3",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-rotate-property"
+      ],
+      "behaviour": "Rotating To Match The Path: the offset-rotate property — normative clause 49, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-rotate-property",
+        "clause_index": 48,
+        "clause_sha256": "e6e4071726b3ea57e2e73133dac7aebe9c4110aa94f4a929d0c911a36fdbbc62"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-shorthand",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-shorthand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The offset Shorthand.",
+      "locator": {
+        "section_id": "offset-shorthand",
+        "text_sha256": "d2c58914a563212041311e0d49bc0b3494456baf286a294c26b5c81ee7be2bf6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.offset-shorthand-clause-cca2516ebb1d",
+        "motion-1.offset-shorthand-clause-562553809907",
+        "motion-1.offset-shorthand-clause-b241cfc25dfe"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.offset-shorthand-clause-cca2516ebb1d",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-shorthand"
+      ],
+      "behaviour": "The offset Shorthand — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-shorthand",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-shorthand-clause-562553809907",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-shorthand"
+      ],
+      "behaviour": "The offset Shorthand — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-shorthand",
+        "clause_index": 20,
+        "clause_sha256": "5625538099073bd8d5811d3202d5d65f176b5e3601b5caed7dc6ff9bad1da07d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.offset-shorthand-clause-b241cfc25dfe",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "offset-shorthand"
+      ],
+      "behaviour": "The offset Shorthand — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "offset-shorthand",
+        "clause_index": 26,
+        "clause_sha256": "b241cfc25dfec0bb31744af8306293cdbd4875bad0b93e772339f284e5099c61"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.transform",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "transform"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Calculating The Offset Transform.",
+      "locator": {
+        "section_id": "transform",
+        "text_sha256": "cb74cf648b372301ca02f9fcc11169c8f3f97bd4eb717a4724dd587985e33a34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.paths",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "paths"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Equivalent Paths For <basic-shape>.",
+      "locator": {
+        "section_id": "paths",
+        "text_sha256": "d1633c172f01fbd0c86567b7794fa88b8afc0cf84d56f545f196d8d9100ee58c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.paths-clause-a727952068bc",
+        "motion-1.paths-clause-4bfb8e5adb0b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.paths-clause-a727952068bc",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "paths"
+      ],
+      "behaviour": "Equivalent Paths For <basic-shape> — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "paths",
+        "clause_index": 20,
+        "clause_sha256": "a727952068bc1e8b54985963eadb72e0ff0bd1de7c4c9da50ed6caab1a661705"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.paths-clause-4bfb8e5adb0b",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "paths"
+      ],
+      "behaviour": "Equivalent Paths For <basic-shape> — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "paths",
+        "clause_index": 21,
+        "clause_sha256": "4bfb8e5adb0bfa2909333bb55e1b14deec9c9632d2e09fdd0b2a6c07985ae5be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.privacy",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "85b0bbcbc137ec4d540097af52b8b2bbdcc04575c1aed6ca81a878d6150d0b32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.security",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "7289157c42346d0cf51863e097d634af796b3f54eefe0fd72f7d5fb35b2fd504"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.w3c-conformance",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.w3c-conventions",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.w3c-conventions-clause-5c98c879f070",
+        "motion-1.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.w3c-conventions-clause-5c98c879f070",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.w3c-conventions-clause-33a5ed16a48d",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.w3c-conformance-classes",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.w3c-conformance-classes-clause-ff408372426c",
+        "motion-1.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.w3c-conformance-classes-clause-ff408372426c",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.w3c-conformance-classes-clause-d9976214330c",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.w3c-partial",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.w3c-partial-clause-ef40c4aab200",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.w3c-conform-future-proofing",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.w3c-testing",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.w3c-testing-clause-1e0fff369221",
+        "motion-1.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.w3c-testing-clause-1e0fff369221",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.w3c-testing-clause-ae1210cf9643",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.property-index",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "2676dc2444789a43b9c52056521265bca6977a28d981ce232e45d8306739a8a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "motion-1.property-index-clause-674d5fa645b0",
+        "motion-1.property-index-clause-d45a284cde2e",
+        "motion-1.property-index-clause-986b7b70ef39",
+        "motion-1.property-index-clause-ca448d8b09a0",
+        "motion-1.property-index-clause-9b3c498dc1d9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.property-index-clause-674d5fa645b0",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 25,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.property-index-clause-d45a284cde2e",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 27,
+        "clause_sha256": "d45a284cde2e882da7f6023cd829a4a0f50351586769d1d33132d8a7551965c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.property-index-clause-986b7b70ef39",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 37,
+        "clause_sha256": "986b7b70ef3912bd09b5bbe9f656bc532851f3e25f00b8a0d8cc06e31eb75a65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.property-index-clause-ca448d8b09a0",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 58, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 57,
+        "clause_sha256": "ca448d8b09a08853c4e4a5e0d2119210f7441a199cc623d4cbbe4299bc1b618a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.property-index-clause-9b3c498dc1d9",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 68, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 67,
+        "clause_sha256": "9b3c498dc1d9265344f126914106c54376bdbc4978802c1e68179afa2dbe2c51"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "motion-1.issues-index",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "2599dc184af1566baadadc9a2fd373884b61d1fd280b28e87df61d28fccda285"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.import-637bec456d3e",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.csswg.org/css-shapes-2/.",
+      "unresolved_reference": "https://drafts.csswg.org/css-shapes-2/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "motion-1.title",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Motion Path Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "431d144a4be9907885e4fde550f85b85a9badbf0d08de1ee8bdc1db6bb6735aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.abstract",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "fe86ec94ab90367a09d6def3af29e90b3b5ed09090f4919b8bcb1e39564fd654"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.sotd",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "4ac48878a67fbf52fa33dd4186673c86bbbe675f3476794b95a7de07795fea17"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.contents",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "1ad1ddef379a20015d09c68442990b335a23b9c2d8d7527d2a4cd58987aff42b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.intro",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "acb47ae01bdd90521b99bd5a539a4cf51f999c53db21bd25207222edd2de9da4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.placement",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Module interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "c29165a4816a53c04cda820390a3cdae7001de4203f914711e1023d461d82f32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.values",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.2. Values.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "c618d7cb269130ba4221f7726ba158f7d2ef459a5bab8caf43a7bf7a79fc32ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.changes",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "97d320f2eee844df69c85c9249cc9fea216900af7cc7b720ff4fb5839131637f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.changes-20181218",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "changes-20181218"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 18 December 2018 Working Draft.",
+      "locator": {
+        "section_id": "changes-20181218",
+        "text_sha256": "2febd2d1dda5ef70e3847848b37b29f571ed8621b7a995e1b2e878cf8b094b07"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.changes-20150409",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "changes-20150409"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the 9 April 2015 First Public Working Draft.",
+      "locator": {
+        "section_id": "changes-20150409",
+        "text_sha256": "e8c9ae82d85531f7b755aba60697cab1ba70c789fb0144e68b9bc5b0618ee8e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.acknowledgments",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "d5eb6d8732e5c1c72713822b479d08f55a8002b3ed6c05cf43ef1f30bd940f10"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.index",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.index-defined-here",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "1292d72bbb6623042fe1ac3b6f5cf97bf53fb24320be21cf5d8189dd1c3793b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.index-defined-elsewhere",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "5299c2e30d7802edbf2cd94f96be16ad51633715c7390cffd12e012cbd3fa548"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.references",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "motion-1.informative",
+      "family": "motion-1",
+      "source_id": "motion-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "6bd4525178d1c71c462f8b7da685c221900585083051d6882078da6425f82ff6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

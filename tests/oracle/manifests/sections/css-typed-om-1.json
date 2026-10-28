@@ -1,0 +1,823 @@
+{
+  "schema_version": 1,
+  "source_id": "css-typed-om-1",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Typed OM Level 1",
+      "level": 1,
+      "text_sha256": "0ac90a020e9f2dc995960287ea17421f6ca983f68d3d514a9f04c4ac803cb83c",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "09f70f599c9226c647f718bc8e39878f46a095fcedf7c33fa71f6698041f588d",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "bcf449e2fecb4cc9effb3facf0a0a077d270b48d52f25a7a67335d4859435c2b",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "a91163f682babb3755a1db26303debb99eb50e97c09901560890b6d050d2b28b",
+      "clause_count": 52,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "fe9ee5d18a6363f379d231b891e890a894fbc6a04a35b97c6e082ba129324a4f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.intro"
+        ]
+      }
+    },
+    {
+      "id": "stylevalue-objects",
+      "title": "2. CSSStyleValue objects",
+      "level": 2,
+      "text_sha256": "d417941a3da404ec2242feed3bfebe51b14fa945d1c7c3e19801b6aeeac74e7f",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.stylevalue-objects",
+          "css-typed-om-1.stylevalue-objects-clause-bcc48b2b6957",
+          "css-typed-om-1.stylevalue-objects-clause-c264210348c3",
+          "css-typed-om-1.stylevalue-objects-clause-47f40bbc376b",
+          "css-typed-om-1.stylevalue-objects-clause-b2ebd18ca26b",
+          "css-typed-om-1.stylevalue-objects-clause-ef2a5da122fd"
+        ]
+      }
+    },
+    {
+      "id": "direct-cssstylevalue",
+      "title": "2.1. Direct CSSStyleValue Objects",
+      "level": 3,
+      "text_sha256": "4ad198ef515ad9433b6702b82046eca37e58d78ae270f4aca04e2acec0e6a8e4",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.direct-cssstylevalue"
+        ]
+      }
+    },
+    {
+      "id": "the-stylepropertymap",
+      "title": "3. The StylePropertyMap",
+      "level": 2,
+      "text_sha256": "c4a6fea6a911b74ba0c6814262afa2b2e616fecd2f306548fa61d73bb8893f8d",
+      "clause_count": 136,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.the-stylepropertymap",
+          "css-typed-om-1.the-stylepropertymap-clause-40bb3ed06781"
+        ]
+      }
+    },
+    {
+      "id": "computed-stylepropertymapreadonly-objects",
+      "title": "3.1. Computed StylePropertyMapReadOnly objects",
+      "level": 3,
+      "text_sha256": "1669486baaaf8b126855f94b993bc66be6607d5029d73578b3b072518eb1bf9e",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.computed-stylepropertymapreadonly-objects",
+          "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-abe07d60e1ee",
+          "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-d37af0ebfb74",
+          "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-893fd6bfda46",
+          "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-75f6e05a4aea",
+          "css-typed-om-1.computed-stylepropertymapreadonly-objects-clause-def05260de74"
+        ]
+      }
+    },
+    {
+      "id": "declared-stylepropertymap-objects",
+      "title": "3.2. Declared & Inline StylePropertyMap objects",
+      "level": 3,
+      "text_sha256": "64d0e8375840b40cf6cea50800848c5c7fc5c82b32bc3dc7d10af236a93a6735",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.declared-stylepropertymap-objects"
+        ]
+      }
+    },
+    {
+      "id": "stylevalue-subclasses",
+      "title": "4. CSSStyleValue subclasses",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.stylevalue-subclasses"
+        ]
+      }
+    },
+    {
+      "id": "unparsedvalue-objects",
+      "title": "4.1. CSSUnparsedValue objects",
+      "level": 3,
+      "text_sha256": "dcbda1d699328ef7114ab9f84ee3323aee484d92074899985d13d61de18f54a9",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.unparsedvalue-objects",
+          "css-typed-om-1.unparsedvalue-objects-clause-2f4ae3c17ce3"
+        ]
+      }
+    },
+    {
+      "id": "keywordvalue-objects",
+      "title": "4.2. CSSKeywordValue objects",
+      "level": 3,
+      "text_sha256": "22c49d645300022c6763ca081f8272960005b1d5643d32278b505aae3bebdbbc",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.keywordvalue-objects",
+          "css-typed-om-1.keywordvalue-objects-clause-aee39411e978"
+        ]
+      }
+    },
+    {
+      "id": "numeric-objects",
+      "title": "4.3. Numeric Values:",
+      "level": 3,
+      "text_sha256": "f07bd6dcbaba794b99698f2406eee3d66701aee4c66827498a2693cacdc10558",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.numeric-objects",
+          "css-typed-om-1.numeric-objects-clause-54067112b81a",
+          "css-typed-om-1.numeric-objects-clause-bc3c66961075"
+        ]
+      }
+    },
+    {
+      "id": "numeric-value",
+      "title": "4.3.1. Common Numeric Operations, and the CSSNumericValue Superclass",
+      "level": 4,
+      "text_sha256": "c4d80bdf8d8d994da19876dd1eb09d887eb840779e826040ffb91fc4c1a36fb1",
+      "clause_count": 294,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.numeric-value",
+          "css-typed-om-1.numeric-value-clause-786533900a49",
+          "css-typed-om-1.numeric-value-clause-2af1c46fc263",
+          "css-typed-om-1.numeric-value-clause-3ecefd9437c6",
+          "css-typed-om-1.numeric-value-clause-da1192b8e59d",
+          "css-typed-om-1.numeric-value-clause-73d3705a0e12",
+          "css-typed-om-1.numeric-value-clause-905487097a64",
+          "css-typed-om-1.numeric-value-clause-c163a6e8716b",
+          "css-typed-om-1.numeric-value-clause-11794325c3b3",
+          "css-typed-om-1.numeric-value-clause-c39adbca3712",
+          "css-typed-om-1.numeric-value-clause-9a792f91d0bc",
+          "css-typed-om-1.numeric-value-clause-a717bc5f3189",
+          "css-typed-om-1.numeric-value-clause-84a4f964ae8f",
+          "css-typed-om-1.numeric-value-clause-603038972e83"
+        ]
+      }
+    },
+    {
+      "id": "numeric-typing",
+      "title": "4.3.2. Numeric Value Typing",
+      "level": 4,
+      "text_sha256": "94338f6e01d1098fd64e5da662342feb315a903a99de88da34001a97ccac0da8",
+      "clause_count": 101,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.numeric-typing",
+          "css-typed-om-1.numeric-typing-clause-a106f1711bc4",
+          "css-typed-om-1.numeric-typing-clause-64ad73ca1081",
+          "css-typed-om-1.numeric-typing-clause-481b9bc9c678",
+          "css-typed-om-1.numeric-typing-clause-f5cc6aae268b",
+          "css-typed-om-1.numeric-typing-clause-024255237bc3",
+          "css-typed-om-1.numeric-typing-clause-2ae65178033a"
+        ]
+      }
+    },
+    {
+      "id": "simple-numeric",
+      "title": "4.3.3. Value + Unit: CSSUnitValue objects",
+      "level": 4,
+      "text_sha256": "aba15851b827dc8bd4463e4a9b6eb40769d38858d651c914b43ffe9b009ca7bf",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.simple-numeric",
+          "css-typed-om-1.simple-numeric-clause-88a6f4218ec6",
+          "css-typed-om-1.simple-numeric-clause-f9a1453706c0"
+        ]
+      }
+    },
+    {
+      "id": "complex-numeric",
+      "title": "4.3.4. Complex Numeric Values: CSSMathValue objects",
+      "level": 4,
+      "text_sha256": "f3708ac531a8ebe660a005aabb6fd8a9e3876fd820fd247ef96f751227f107c9",
+      "clause_count": 66,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.complex-numeric",
+          "css-typed-om-1.complex-numeric-clause-13d28836297c"
+        ]
+      }
+    },
+    {
+      "id": "numeric-factory",
+      "title": "4.3.5. Numeric Factory Functions",
+      "level": 4,
+      "text_sha256": "a4d486ed351ee753b26277d8ed012263d9bce821eb642f387081fd5fcb586644",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.numeric-factory",
+          "css-typed-om-1.numeric-factory-clause-f998cd02637c",
+          "css-typed-om-1.numeric-factory-clause-efefeeee30c8",
+          "css-typed-om-1.numeric-factory-clause-6d27c962d5de"
+        ]
+      }
+    },
+    {
+      "id": "transformvalue-objects",
+      "title": "4.4. CSSTransformValue objects",
+      "level": 3,
+      "text_sha256": "be3c99a7f9e14976838678538ae6f8f6fac493851647433454ec70caabca6c19",
+      "clause_count": 111,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.transformvalue-objects"
+        ]
+      }
+    },
+    {
+      "id": "imagevalue-objects",
+      "title": "4.5. CSSImageValue objects",
+      "level": 3,
+      "text_sha256": "9b7504875317ef7b99a39b1c4603602fbfae52620caae8079b90f29d380300d0",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.imagevalue-objects",
+          "css-typed-om-1.imagevalue-objects-clause-6ec7bb7c22cf",
+          "css-typed-om-1.imagevalue-objects-clause-fb7dc1dc65ea"
+        ]
+      }
+    },
+    {
+      "id": "colorvalue-objects",
+      "title": "4.6. CSSColorValue objects",
+      "level": 3,
+      "text_sha256": "e9a5709bf7166f78079e9622c1af3b56891abd4f0a105098226469d4c79f3106",
+      "clause_count": 106,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.colorvalue-objects",
+          "css-typed-om-1.colorvalue-objects-clause-447603f5cec9"
+        ]
+      }
+    },
+    {
+      "id": "reify-stylevalue",
+      "title": "5. CSSStyleValue Reification",
+      "level": 2,
+      "text_sha256": "645ffabebe72f157d5ab440bb96e18a794be22cd35dec9e74ceb862219715cfe",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.reify-stylevalue"
+        ]
+      }
+    },
+    {
+      "id": "reify-property",
+      "title": "5.1. Property-specific Rules",
+      "level": 3,
+      "text_sha256": "5ad73c432da8688ff76c1baeaa59a1816898cd4b572fb27e3a355d91825dc671",
+      "clause_count": 821,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.reify-property",
+          "css-typed-om-1.reify-property-clause-d9dbc8145e69",
+          "css-typed-om-1.reify-property-clause-7f8c3cd8fc0d",
+          "css-typed-om-1.reify-property-clause-37731fe83a8f",
+          "css-typed-om-1.reify-property-clause-228302b65d84",
+          "css-typed-om-1.reify-property-clause-07904b9b085e",
+          "css-typed-om-1.reify-property-clause-835daaf9bbde",
+          "css-typed-om-1.reify-property-clause-2f52bef1b5d8",
+          "css-typed-om-1.reify-property-clause-3c6c66b0517a",
+          "css-typed-om-1.reify-property-clause-e7f06d743216",
+          "css-typed-om-1.reify-property-clause-8f46ce56512a",
+          "css-typed-om-1.reify-property-clause-17a5b21eb8c1",
+          "css-typed-om-1.reify-property-clause-1cf563c334d1",
+          "css-typed-om-1.reify-property-clause-da581eb67630",
+          "css-typed-om-1.reify-property-clause-08df966e577f",
+          "css-typed-om-1.reify-property-clause-5fbd65d45234",
+          "css-typed-om-1.reify-property-clause-74d624a5e33b",
+          "css-typed-om-1.reify-property-clause-9977ae191cd8",
+          "css-typed-om-1.reify-property-clause-1dcd942c3f4e",
+          "css-typed-om-1.reify-property-clause-110afaa58679",
+          "css-typed-om-1.reify-property-clause-1bdd3576a341",
+          "css-typed-om-1.reify-property-clause-5ec678fc5abd",
+          "css-typed-om-1.reify-property-clause-dccae8eeae96",
+          "css-typed-om-1.reify-property-clause-d193032320d5",
+          "css-typed-om-1.reify-property-clause-fba6144929f3",
+          "css-typed-om-1.reify-property-clause-e83727c0b686",
+          "css-typed-om-1.reify-property-clause-00d28d4379fd",
+          "css-typed-om-1.reify-property-clause-8247d84150a6",
+          "css-typed-om-1.reify-property-clause-fa94c3aa8d03",
+          "css-typed-om-1.reify-property-clause-26126e643cf2"
+        ]
+      }
+    },
+    {
+      "id": "reify-failure",
+      "title": "5.2. Unrepresentable Values",
+      "level": 3,
+      "text_sha256": "6dc255a9d5e2fd0d8b7c9c08750596aa4836af192a6df947aa23433d05b38788",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.reify-failure"
+        ]
+      }
+    },
+    {
+      "id": "reify-tokens",
+      "title": "5.3. Raw CSS tokens: properties with var() references",
+      "level": 3,
+      "text_sha256": "93b8dc9b5358a66260ef130d0e4ee27809a8d91234da606dbe4fc81f51b4a180",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.reify-tokens"
+        ]
+      }
+    },
+    {
+      "id": "reify-var",
+      "title": "5.4. var() References",
+      "level": 3,
+      "text_sha256": "2bfe69d875003bdaa6ebaf09b08894e57de33354629e356878da3d2132635ba5",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.reify-var"
+        ]
+      }
+    },
+    {
+      "id": "reify-ident",
+      "title": "5.5. Identifier Values",
+      "level": 3,
+      "text_sha256": "5daf56579420a2bd0bd3152ca11ab42eb5f96774308d3ca1baa8b2fc72d461ff",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.reify-ident"
+        ]
+      }
+    },
+    {
+      "id": "reify-numeric",
+      "title": "5.6. <number>, <percentage>, and <dimension> values",
+      "level": 3,
+      "text_sha256": "6ad2af9c0a876e4434f5ebd84a355013d4a951872ef434babaad8b1bb04a6f74",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.reify-numeric",
+          "css-typed-om-1.reify-numeric-clause-63e9b86adec5",
+          "css-typed-om-1.reify-numeric-clause-833e0cc24843",
+          "css-typed-om-1.reify-numeric-clause-306170f61df8",
+          "css-typed-om-1.reify-numeric-clause-d43b282da269"
+        ]
+      }
+    },
+    {
+      "id": "reify-color",
+      "title": "5.7. <color> Values",
+      "level": 3,
+      "text_sha256": "c559de2e2c95bee9ac992f5515c1979ad3f90c8192d8be08f28f83da21851b56",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.reify-color"
+        ]
+      }
+    },
+    {
+      "id": "reify-transformvalue",
+      "title": "5.8. <transform-list> and <transform-function> Values",
+      "level": 3,
+      "text_sha256": "1f781a0d5e7eda291540da90191ae11654ea9e8ccb54117e2be31ef5154cfabd",
+      "clause_count": 48,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.reify-transformvalue",
+          "css-typed-om-1.reify-transformvalue-clause-8a731df42b17"
+        ]
+      }
+    },
+    {
+      "id": "stylevalue-serialization",
+      "title": "6. CSSStyleValue Serialization",
+      "level": 2,
+      "text_sha256": "f27753d00187cdffc199a68f1355a1cd10d98c56f39396d40fed74d17f730bc5",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.stylevalue-serialization"
+        ]
+      }
+    },
+    {
+      "id": "unparsedvalue-serialization",
+      "title": "6.1. CSSUnparsedValue Serialization",
+      "level": 3,
+      "text_sha256": "90ca51b69feffc6d32cba8117b315e42e6d769000fabc1c2338288a3f2275892",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.unparsedvalue-serialization"
+        ]
+      }
+    },
+    {
+      "id": "keywordvalue-serialization",
+      "title": "6.2. CSSKeywordValue Serialization",
+      "level": 3,
+      "text_sha256": "947112c9ce4c40d74760d6ce55ef5dc56f513431102552c5d7c45afaf4c1576e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.keywordvalue-serialization"
+        ]
+      }
+    },
+    {
+      "id": "numericvalue-serialization",
+      "title": "6.3. CSSNumericValue Serialization",
+      "level": 3,
+      "text_sha256": "86da584e01c59d918d2e0e6a3de42ea6a168e0d4940e203b4608db32063ff667",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.numericvalue-serialization"
+        ]
+      }
+    },
+    {
+      "id": "unitvalue-serialization",
+      "title": "6.4. CSSUnitValue Serialization",
+      "level": 3,
+      "text_sha256": "279855ddbec72c62eed49a22f468ff6a02f41027c29c81434d8c5c6b946c6db1",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.unitvalue-serialization"
+        ]
+      }
+    },
+    {
+      "id": "calc-serialization",
+      "title": "6.5. CSSMathValue Serialization",
+      "level": 3,
+      "text_sha256": "4fa9ed22ef87949ee167198e9f9b830456f74ed5c993f17c5b61e392b71d91f5",
+      "clause_count": 66,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.calc-serialization"
+        ]
+      }
+    },
+    {
+      "id": "transformvalue-serialization",
+      "title": "6.6. CSSTransformValue and CSSTransformComponent Serialization",
+      "level": 3,
+      "text_sha256": "07e80863730e0559c6b51f139b46033c4024a61a32867a776575cb68f844460e",
+      "clause_count": 126,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.transformvalue-serialization"
+        ]
+      }
+    },
+    {
+      "id": "cssom-serialization",
+      "title": "6.7. Serialization from CSSOM Values",
+      "level": 3,
+      "text_sha256": "5e6adf91c8650feee2185c0dd13ebcca3bacc133408d3d458e526550cb783c3c",
+      "clause_count": 79,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.cssom-serialization"
+        ]
+      }
+    },
+    {
+      "id": "security-considerations",
+      "title": "7. Security Considerations",
+      "level": 2,
+      "text_sha256": "a730cf04f3085a21aee77d83511a4a769610473998a413943ae29344acc3ed84",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.security-considerations"
+        ]
+      }
+    },
+    {
+      "id": "privacy-considerations",
+      "title": "8. Privacy Considerations",
+      "level": 2,
+      "text_sha256": "6274a3d99950e02de466a8b5d9a51d9c22505c00c3497c7bc4b4159d8a76ee64",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.privacy-considerations"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "9. Changes",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20180410",
+      "title": "9.1. Changes since the 10 April 2018 Working Draft",
+      "level": 3,
+      "text_sha256": "4815b2e2656d9a4b0da5f3613f72d796a4c490a2c569149bafacedd3f82e1d08",
+      "clause_count": 86,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.changes-20180410"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e69d0d3aa6f79d65808fbba05e777a60f590dffcf69c352c70b8ea4666212acb",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.w3c-conventions",
+          "css-typed-om-1.w3c-conventions-clause-5c98c879f070",
+          "css-typed-om-1.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.w3c-conformance-classes",
+          "css-typed-om-1.w3c-conformance-classes-clause-ff408372426c",
+          "css-typed-om-1.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.w3c-partial",
+          "css-typed-om-1.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.w3c-testing",
+          "css-typed-om-1.w3c-testing-clause-1e0fff369221",
+          "css-typed-om-1.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "cd25308893b55338382efeb1eb2e66c01c05ea23a08bb3b7b34f6a9b3a6d57a1",
+      "clause_count": 455,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "cf04f866a1c74c7ae49a6a20557d397c1c75135cf1b73105cbb0df04f548fe6e",
+      "clause_count": 650,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "c6d5519de32c07ab5005c2db12105c988beac1562d17a8a0e483621f2e56c644",
+      "clause_count": 146,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.import-d3d424e180c0",
+          "css-typed-om-1.import-637bec456d3e",
+          "css-typed-om-1.import-709148d9fced",
+          "css-typed-om-1.import-d69a4c5fd069",
+          "css-typed-om-1.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "22d71e56ba481b85c9404be2144094d4df68074712817a2b4dfd4335e73779f1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "2c64733d1c0e68623a88c3ebca5c1388208fcbe6d5edaf4670c490654afffb8a",
+      "clause_count": 166,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-typed-om-1.issues-index",
+          "css-typed-om-1.issues-index-clause-ef2a5da122fd"
+        ]
+      }
+    }
+  ]
+}

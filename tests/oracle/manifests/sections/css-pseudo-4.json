@@ -1,0 +1,831 @@
+{
+  "schema_version": 1,
+  "source_id": "css-pseudo-4",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Pseudo-Elements Module Level 4",
+      "level": 1,
+      "text_sha256": "47b5378fb0a394095956047c6071db6e7d21cd9ab0e8ce453b7999ade4c2416c",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "d2f63e963b90e66c7d594c266e060375863938631bbfedf425fbfa2dfd617380",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "08340322b90f12e536b68dbf059506ed3e5c71fc377ab124dc140ed2c1ae1493",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.sotd"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "b7aad1dd29ecdfe985f392520691a9e77c2d0a00280417f752fc99a26f8be29e",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "e61ca684e99567c9230ddc2f7fbc6a342da53133cbf726c45d959bf51f25011b",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.intro"
+        ]
+      }
+    },
+    {
+      "id": "typographic-pseudos",
+      "title": "2. Typographic Pseudo-elements",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.typographic-pseudos"
+        ]
+      }
+    },
+    {
+      "id": "first-line-pseudo",
+      "title": "2.1. First-Line Text: the ::first-line pseudo-element",
+      "level": 3,
+      "text_sha256": "267ab6fec0c0cdd6c0ef1d6e15c2c95ab38f5e9f0bc7e1e063d96c769c639b0b",
+      "clause_count": 33,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.first-line-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "first-text-line",
+      "title": "2.1.1. Finding the First Formatted Line",
+      "level": 4,
+      "text_sha256": "fe808016182076cae8eee2aa77f946489623ff46e1b5a960609031e5ba29ff8f",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.first-text-line"
+        ]
+      }
+    },
+    {
+      "id": "first-line-styling",
+      "title": "2.1.2. Styling the ::first-line Pseudo-element",
+      "level": 4,
+      "text_sha256": "e382185b880206cd311d220bc524ab36bf52695bc3395ce51e849d28cc1292ab",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.first-line-styling"
+        ]
+      }
+    },
+    {
+      "id": "first-line-inheritance",
+      "title": "2.1.3. Inheritance and the ::first-line Pseudo-element",
+      "level": 4,
+      "text_sha256": "eb803ca31d5ff1843646349c967064d1c5fe9bf0362df0919eb7ebb70c4c212c",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.first-line-inheritance"
+        ]
+      }
+    },
+    {
+      "id": "first-letter-pseudo",
+      "title": "2.2. First-Letter Text: ::first-letter pseudo-element and its ::prefix and ::suffix children",
+      "level": 3,
+      "text_sha256": "5ac678b16a07b91a2a3929c11cd8e3ef3d0bd4757df23c7f1a12f14955951a07",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.first-letter-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "first-letter-pattern",
+      "title": "2.2.1. First Letters and Associated Punctuation",
+      "level": 4,
+      "text_sha256": "12be29d52a88bbb1f21243936c3beeb948542d720c39fe1ed0075ca03d1bc728",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.first-letter-pattern",
+          "css-pseudo-4.first-letter-pattern-clause-65715d4c9532",
+          "css-pseudo-4.first-letter-pattern-clause-aa2d2a1f5eda"
+        ]
+      }
+    },
+    {
+      "id": "first-letter-application",
+      "title": "2.2.2. Finding the First-Letter Text",
+      "level": 4,
+      "text_sha256": "b339030f406057f1886f0ef2821832da28bb45e3e99a2062a64a1e7ec9c0483c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.first-letter-application",
+          "css-pseudo-4.first-letter-application-clause-20a17539bf6b"
+        ]
+      }
+    },
+    {
+      "id": "first-letter-tree",
+      "title": "2.2.3. Inheritance and Box Tree Structure of the First-Letter Pseudo-elements",
+      "level": 4,
+      "text_sha256": "f5b333b7b1c2811d7ec002447cce480bff22a264d0348a73d0ad36b81e07f096",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.first-letter-tree",
+          "css-pseudo-4.first-letter-tree-clause-947984e88bf7"
+        ]
+      }
+    },
+    {
+      "id": "first-letter-styling",
+      "title": "2.2.4. Styling the First-Letter Pseudo-elements",
+      "level": 4,
+      "text_sha256": "c2b59e2ca7c0a485b56b31659d77128de9dcff932b1e1242a123a6015095b247",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.first-letter-styling"
+        ]
+      }
+    },
+    {
+      "id": "highlight-pseudos",
+      "title": "3. Highlight Pseudo-elements",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-pseudos"
+        ]
+      }
+    },
+    {
+      "id": "highlight-selectors",
+      "title": "3.1. Selecting Highlighted Content: the ::selection, ::search-text, ::target-text, ::spelling-error, ::grammar-error, and ::highlight() pseudo-elements",
+      "level": 3,
+      "text_sha256": "4d76e3ec0142fbd404398d6724b5788dc4d3d7d76864dfe639144234f93eaee8",
+      "clause_count": 114,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-selectors",
+          "css-pseudo-4.highlight-selectors-clause-2d3e93ecda45",
+          "css-pseudo-4.highlight-selectors-clause-2274f34dbc8f",
+          "css-pseudo-4.highlight-selectors-clause-8f0b4cd3f6b9",
+          "css-pseudo-4.highlight-selectors-clause-3dcc1fe3745b",
+          "css-pseudo-4.highlight-selectors-clause-2578e2d84557",
+          "css-pseudo-4.highlight-selectors-clause-b892889f6f3d",
+          "css-pseudo-4.highlight-selectors-clause-c90956cc1e63",
+          "css-pseudo-4.highlight-selectors-clause-97e23df21d81",
+          "css-pseudo-4.highlight-selectors-clause-99b2e8ac97a6"
+        ]
+      }
+    },
+    {
+      "id": "highlight-styling",
+      "title": "3.2. Styling Highlights",
+      "level": 3,
+      "text_sha256": "4ce0f7cc383999b4a9bd4e9790f3d24e49efdeac543494be24ce133fc5394554",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-styling",
+          "css-pseudo-4.highlight-styling-clause-c3c0b1b7ea4c",
+          "css-pseudo-4.highlight-styling-clause-e3d154b8aef9",
+          "css-pseudo-4.highlight-styling-clause-1405bb10cc0e",
+          "css-pseudo-4.highlight-styling-clause-5732cab33513",
+          "css-pseudo-4.highlight-styling-clause-6a55f84402f3",
+          "css-pseudo-4.highlight-styling-clause-e2fede737bb3",
+          "css-pseudo-4.highlight-styling-clause-deb7eac24ba3"
+        ]
+      }
+    },
+    {
+      "id": "highlight-ua-styles",
+      "title": "3.3. Default UA Styles",
+      "level": 3,
+      "text_sha256": "3e55919d65c2f7fc0c5c555535552a67451fb1f1746b96e98d5a6c969971f00a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-ua-styles",
+          "css-pseudo-4.highlight-ua-styles-clause-30586621c34d"
+        ]
+      }
+    },
+    {
+      "id": "paired-defaults",
+      "title": "3.3.1. Paired Defaults",
+      "level": 4,
+      "text_sha256": "77bafe37770ebc479890978e3f8036490d55eff8bbd4262b1e88d8dc37925398",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.paired-defaults",
+          "css-pseudo-4.paired-defaults-clause-a951e1824d20",
+          "css-pseudo-4.paired-defaults-clause-4f1363844c90"
+        ]
+      }
+    },
+    {
+      "id": "highlight-bounds",
+      "title": "3.4. Area of a Highlight",
+      "level": 3,
+      "text_sha256": "22a9c55bdf2093f86c4e4504ba471303b80537100b425d997523949767c009c2",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-bounds",
+          "css-pseudo-4.highlight-bounds-clause-f149feefebe8",
+          "css-pseudo-4.highlight-bounds-clause-476d13d87d10"
+        ]
+      }
+    },
+    {
+      "id": "highlight-cascade",
+      "title": "3.5. Cascading and Per-Element Highlight Styles",
+      "level": 3,
+      "text_sha256": "fa75beb81efde65a192e4edbfe4f3710d868c5ca8564d32542fd29f62bbd9dcc",
+      "clause_count": 25,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-cascade",
+          "css-pseudo-4.highlight-cascade-clause-85f18ad22f65",
+          "css-pseudo-4.highlight-cascade-clause-182723eb93d4",
+          "css-pseudo-4.highlight-cascade-clause-2241020ad2a2",
+          "css-pseudo-4.highlight-cascade-clause-a59fa5493d1d"
+        ]
+      }
+    },
+    {
+      "id": "highlight-painting",
+      "title": "3.6. Painting the Highlight",
+      "level": 3,
+      "text_sha256": "038466abc88904c3a686a07e360fe79af8fcb0fdaa481767b43845b7a9de1ff1",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-painting"
+        ]
+      }
+    },
+    {
+      "id": "highlight-backgrounds",
+      "title": "3.6.1. Backgrounds",
+      "level": 4,
+      "text_sha256": "986c4f3dcbd31b6b85f0f922fab08ed5581a9a3bf3c861287d1f75319df14387",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-backgrounds"
+        ]
+      }
+    },
+    {
+      "id": "highlight-shadows",
+      "title": "3.6.2. Shadows",
+      "level": 4,
+      "text_sha256": "7bb92c750d7cfc900276de0d299e5e49adff8818f0f44891fffac35f0d534736",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-shadows"
+        ]
+      }
+    },
+    {
+      "id": "highlight-text",
+      "title": "3.6.3. Text and Text Decorations",
+      "level": 4,
+      "text_sha256": "d0bc7013a02c563b8bb4ccf76509753e12b63c7b428005f667591ad8f112189b",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-text"
+        ]
+      }
+    },
+    {
+      "id": "highlight-replaced",
+      "title": "3.6.4. Replaced Elements",
+      "level": 4,
+      "text_sha256": "36e8e8686fc6e10afc68ec932ee05e9251fd76161a3136f6dcd67e1a2bfd75c0",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-replaced",
+          "css-pseudo-4.highlight-replaced-clause-595a1fb8cfd7"
+        ]
+      }
+    },
+    {
+      "id": "highlight-security",
+      "title": "3.7. Security Considerations for Highlighting",
+      "level": 3,
+      "text_sha256": "85458fc26d73bf1957056bd3bdb9af019bb65cc7533a512304694f27db47ea52",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.highlight-security",
+          "css-pseudo-4.highlight-security-clause-85458fc26d73"
+        ]
+      }
+    },
+    {
+      "id": "treelike",
+      "title": "4. Tree-Abiding Pseudo-elements",
+      "level": 2,
+      "text_sha256": "562f2bbd7bb32a21c53b5289b3126d3b5ae18c19ddb587b45f973974f8001ad4",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.treelike",
+          "css-pseudo-4.treelike-clause-4a6d067e78e3"
+        ]
+      }
+    },
+    {
+      "id": "generated-content",
+      "title": "4.1. Generated Content Pseudo-elements: ::before and ::after",
+      "level": 3,
+      "text_sha256": "3965844720ffd31c1b347c235aa563b1926a68ee33834d4f96eba77a8fd729c8",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.generated-content",
+          "css-pseudo-4.generated-content-clause-4167beb76a22",
+          "css-pseudo-4.generated-content-clause-7314a11d18a6",
+          "css-pseudo-4.generated-content-clause-5900ef287ecb"
+        ]
+      }
+    },
+    {
+      "id": "marker-pseudo",
+      "title": "4.2. List Markers: the ::marker pseudo-element",
+      "level": 3,
+      "text_sha256": "0189b09c3f25886bbc90911bbeff2f276590a44febe5ad0ce26ecb922d5411b0",
+      "clause_count": 76,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.marker-pseudo",
+          "css-pseudo-4.marker-pseudo-clause-0da285aa1866",
+          "css-pseudo-4.marker-pseudo-clause-084dd88c81c5",
+          "css-pseudo-4.marker-pseudo-clause-be8f3bd1a274",
+          "css-pseudo-4.marker-pseudo-clause-15a98957d3e1",
+          "css-pseudo-4.marker-pseudo-clause-46c2169d755a",
+          "css-pseudo-4.marker-pseudo-clause-7ebdcafd28cd",
+          "css-pseudo-4.marker-pseudo-clause-63e9f5636910",
+          "css-pseudo-4.marker-pseudo-clause-39b864de1f1f",
+          "css-pseudo-4.marker-pseudo-clause-f5a6986d98f0"
+        ]
+      }
+    },
+    {
+      "id": "placeholder-pseudo",
+      "title": "4.3. Placeholder Input: the ::placeholder pseudo-element",
+      "level": 3,
+      "text_sha256": "bc42a54c23ecbb61b00cb10709a6d697b102fddf40e914d78c3e02cf27deb577",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.placeholder-pseudo",
+          "css-pseudo-4.placeholder-pseudo-clause-05a7f0165384",
+          "css-pseudo-4.placeholder-pseudo-clause-8028a62412c0"
+        ]
+      }
+    },
+    {
+      "id": "element-like",
+      "title": "5. Element-backed Pseudo-Elements",
+      "level": 2,
+      "text_sha256": "e4feececdb9ffd7aa0e1c3527b98502c6cbb59e31970caeb25952f8049649ff4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.element-like",
+          "css-pseudo-4.element-like-clause-d4a60234388e",
+          "css-pseudo-4.element-like-clause-9bee6e47f464"
+        ]
+      }
+    },
+    {
+      "id": "file-selector-button-pseudo",
+      "title": "5.1. File Selector Button: the ::file-selector-button pseudo-element",
+      "level": 3,
+      "text_sha256": "82f18d9fcc9bdad95096b1f0b417cd7d951bf0f1104e5851f3840ee57be304b2",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.file-selector-button-pseudo",
+          "css-pseudo-4.file-selector-button-pseudo-clause-405d4b694661"
+        ]
+      }
+    },
+    {
+      "id": "details-content-pseudo",
+      "title": "5.2. Expandable contents of details element: the ::details-content pseudo-element",
+      "level": 3,
+      "text_sha256": "d7118c632c210c6b68b999dc39614eb582e9054784481f5af4741e773cdc04e0",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.details-content-pseudo"
+        ]
+      }
+    },
+    {
+      "id": "interactions",
+      "title": "6. Overlapping Pseudo-element Interactions",
+      "level": 2,
+      "text_sha256": "b669166187a5e681d581643c4f6f02a4f0d4a8cccd69bd94f02442a75b3f672a",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.interactions"
+        ]
+      }
+    },
+    {
+      "id": "cssom",
+      "title": "7. Additions to the CSS Object Model",
+      "level": 2,
+      "text_sha256": "bc4e06236fb84e3469cd8bdbec30a78ebd12d60140cb76f1e60f54e6e51ae8b9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.cssom"
+        ]
+      }
+    },
+    {
+      "id": "CSSPseudoElement-interface",
+      "title": "7.1. CSSPseudoElement Interface",
+      "level": 3,
+      "text_sha256": "951d5fb3135f6f77715d958bb50af5691e6dfaa5d1f59c3e80a7ae815665bc60",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.csspseudoelement-interface"
+        ]
+      }
+    },
+    {
+      "id": "window-interface",
+      "title": "7.2. pseudo() method of the Element interface",
+      "level": 3,
+      "text_sha256": "0d4a68c54959ef34b83d3c9c99578092f5a589a0530b719823e70995158e7bed",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.window-interface",
+          "css-pseudo-4.window-interface-clause-5b5e2fbda5a7"
+        ]
+      }
+    },
+    {
+      "id": "getComputedStyle",
+      "title": "7.3. getComputedStyle()",
+      "level": 3,
+      "text_sha256": "35e0253599cb47e0944f9b6cabb410130f6c682b85bbb02a53f162875507e5f8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.getcomputedstyle"
+        ]
+      }
+    },
+    {
+      "id": "css2-compat",
+      "title": "8. Compatibility Syntax",
+      "level": 2,
+      "text_sha256": "cd9af6fe1565508bf66c4537be272f419a02d7d435836c8ede8b3ed31e91e3fc",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.css2-compat",
+          "css-pseudo-4.css2-compat-clause-cd9af6fe1565"
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "title": "Security Considerations",
+      "level": 2,
+      "text_sha256": "b2cff26a5ebbc93b262f81b77b3b7872bd259177235a1868744cccdd6f4b1810",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.security"
+        ]
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Considerations",
+      "level": 2,
+      "text_sha256": "d2e8e6dc79d463ac6f2bb7f29c5a0564c6b3455ad06093e923ac47ca81da57e7",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.privacy"
+        ]
+      }
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "level": 2,
+      "text_sha256": "dee9d4350283036d4e373a43c780ab73b5cd24ccfdd4d3f0c019667b4210eb21",
+      "clause_count": 56,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.changes"
+        ]
+      }
+    },
+    {
+      "id": "acknowledgements",
+      "title": "Acknowledgements",
+      "level": 2,
+      "text_sha256": "5a90774faa94450ff5782d0f8bcc06c4dc557d1eda69f57fb2684e3f3dfe1d28",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.acknowledgements"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.w3c-conformance"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.w3c-conventions",
+          "css-pseudo-4.w3c-conventions-clause-5c98c879f070",
+          "css-pseudo-4.w3c-conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.w3c-conformance-classes",
+          "css-pseudo-4.w3c-conformance-classes-clause-ff408372426c",
+          "css-pseudo-4.w3c-conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "w3c-partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.w3c-partial",
+          "css-pseudo-4.w3c-partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "w3c-conform-future-proofing",
+      "title": "Implementations of Unstable and Proprietary Features",
+      "level": 4,
+      "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.w3c-conform-future-proofing"
+        ]
+      }
+    },
+    {
+      "id": "w3c-testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.w3c-testing",
+          "css-pseudo-4.w3c-testing-clause-1e0fff369221",
+          "css-pseudo-4.w3c-testing-clause-ae1210cf9643"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.index"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-here",
+      "title": "Terms defined by this specification",
+      "level": 3,
+      "text_sha256": "e643f819d02a89ac3fb18b39e667c0b3a0a024415a4784989681ddde8cd2fbf2",
+      "clause_count": 37,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.index-defined-here"
+        ]
+      }
+    },
+    {
+      "id": "index-defined-elsewhere",
+      "title": "Terms defined by reference",
+      "level": 3,
+      "text_sha256": "a11f2e389b9a945c3c3a4cb4290e30fa3c21a82b32a9e5ebe4ace046bfe48cdb",
+      "clause_count": 172,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.index-defined-elsewhere"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "8d08e3407b598cf1ff65309ef09615bb0fd842b7112906095200ac8f65553fb4",
+      "clause_count": 76,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.import-8cac7d115c27"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "a20325de831719e0e8989e76678197994dd67299f307fe3783c383fd25109ed4",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.informative"
+        ]
+      }
+    },
+    {
+      "id": "idl-index",
+      "title": "IDL Index",
+      "level": 2,
+      "text_sha256": "5dab687b04025797ab82d144dac5a3700189c3f8b99f56285cfa79369032433f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.idl-index"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "5f9a128bca962a431a2467425de4271e067d76b29e8ba5219553e68b40139561",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css-pseudo-4.issues-index"
+        ]
+      }
+    }
+  ]
+}

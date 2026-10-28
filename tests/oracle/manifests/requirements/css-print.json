@@ -1,0 +1,4207 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-print.cssprintprofile",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "cssprintprofile"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Print Profile.",
+      "locator": {
+        "section_id": "cssprintprofile",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.workingdraft",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "workingdraft"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Working Group Note 14 March 2013.",
+      "locator": {
+        "section_id": "workingdraft",
+        "text_sha256": "39fd614b9a4985df7db15f94d71a609318e0582de2e283c0a893d569091c5e8c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-overview",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-overview"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overview.",
+      "locator": {
+        "section_id": "section-overview",
+        "text_sha256": "a7097c9d4dbf2a7857783c5f99730fa5194e27e87382f17458fd50707f3fbd06"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-conformance",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "section-conformance",
+        "text_sha256": "163728f6f714c5fa43f2d5b851661d0b873ab13e9f135edcd855dc2c89c0d007"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.section-conformance-clause-a8faaba5825b",
+        "css-print.section-conformance-clause-7d5c8470f4eb",
+        "css-print.section-conformance-clause-9267e0724112",
+        "css-print.section-conformance-clause-154d07c529aa",
+        "css-print.section-conformance-clause-d0fbbc504757",
+        "css-print.section-conformance-clause-86681a83b6ae",
+        "css-print.section-conformance-clause-d5910a1c0b78",
+        "css-print.section-conformance-clause-9aabb20f7715"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-conformance-clause-a8faaba5825b",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-conformance",
+        "clause_index": 0,
+        "clause_sha256": "a8faaba5825b0b9d7d34b5fe39d13a5613fb6eae73b421dbc73532b98bfaedd7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-conformance-clause-7d5c8470f4eb",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-conformance",
+        "clause_index": 2,
+        "clause_sha256": "7d5c8470f4eba9a85c3810328250243405e59d3206e69b3b365ae08ea2a51f8b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-conformance-clause-9267e0724112",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-conformance",
+        "clause_index": 3,
+        "clause_sha256": "9267e07241126e5d2a36774daab1dbda493a3b3f2bbd88df4f34f46d5eb309f8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-conformance-clause-154d07c529aa",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-conformance",
+        "clause_index": 4,
+        "clause_sha256": "154d07c529aa2381b9cc3f46938134b1e8b27be831382324563695532bc7c9a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-conformance-clause-d0fbbc504757",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-conformance",
+        "clause_index": 5,
+        "clause_sha256": "d0fbbc504757756c4afce5e9981fe5bf038cc50bb62f8ac5fbc84d042ac66ecb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-conformance-clause-86681a83b6ae",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-conformance",
+        "clause_index": 8,
+        "clause_sha256": "86681a83b6aed50e366876c22dc3fd4d62008365b9d22acb3a75fdcbdd4c9592"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-conformance-clause-d5910a1c0b78",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-conformance",
+        "clause_index": 9,
+        "clause_sha256": "d5910a1c0b787855ccd666b11e5ac8bba0b9c3de635444a43dc207be51d63677"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-conformance-clause-9aabb20f7715",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-conformance",
+        "clause_index": 10,
+        "clause_sha256": "9aabb20f7715849ab6e6c8fd386fdaf5c3865e9fb0f1ea557522ceba7ee9acdc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s2-1",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s2.1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Enhanced Layout Extension Conformance.",
+      "locator": {
+        "section_id": "s2.1",
+        "text_sha256": "62c0a41ae6f98622757210455d9262c965914853b373ea9da89348d80385229b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.s2-1-clause-b988686521a9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.s2-1-clause-b988686521a9",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s2.1"
+      ],
+      "behaviour": "Enhanced Layout Extension Conformance — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "s2.1",
+        "clause_index": 0,
+        "clause_sha256": "b988686521a9e79caa05638e2ec3fb0e57b3572b258877e3570c7b073c24d0ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-selectors",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-selectors"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Selectors.",
+      "locator": {
+        "section_id": "section-selectors",
+        "text_sha256": "84530b8508f9ebfe76daefb6932bd8b9683452a542eb06379bfbfcedd2eeac6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.section-selectors-clause-50d03fcd032f",
+        "css-print.section-selectors-clause-2dff2968962d",
+        "css-print.section-selectors-clause-ca8c6327598a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-selectors-clause-50d03fcd032f",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-selectors"
+      ],
+      "behaviour": "Selectors — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-selectors",
+        "clause_index": 1,
+        "clause_sha256": "50d03fcd032feb88b413d5795307c93c5f6353b37613b4fe3154357b5b767d3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-selectors-clause-2dff2968962d",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-selectors"
+      ],
+      "behaviour": "Selectors — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-selectors",
+        "clause_index": 2,
+        "clause_sha256": "2dff2968962d7c3b7042d004325f41e2c5868468b474a10d571ef8dbb709ff91"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-selectors-clause-ca8c6327598a",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-selectors"
+      ],
+      "behaviour": "Selectors — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-selectors",
+        "clause_index": 11,
+        "clause_sha256": "ca8c6327598ac56aea4f617cbecad781400aa1cb46b5d6c8cde3f6651c1d7e15"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.at-rules",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "at-rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in At-rules.",
+      "locator": {
+        "section_id": "at-rules",
+        "text_sha256": "b112da26396184b24c3a7a012ca2baddc7daa573844c352421fbb323cfff4851"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.at-rules-clause-ca8c6327598a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.at-rules-clause-ca8c6327598a",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "at-rules"
+      ],
+      "behaviour": "At-rules — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-rules",
+        "clause_index": 8,
+        "clause_sha256": "ca8c6327598ac56aea4f617cbecad781400aa1cb46b5d6c8cde3f6651c1d7e15"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Properties.",
+      "locator": {
+        "section_id": "section-properties",
+        "text_sha256": "6f931a4e8aa0d4234f7fc7c2fe26c7a770aff0a07c70ed000b40a69afa0fa5c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.section-properties-clause-ed05aa3d61fc",
+        "css-print.section-properties-clause-5e3b13ab5ab8",
+        "css-print.section-properties-clause-0244122608d6",
+        "css-print.section-properties-clause-7128bd0a2f2f",
+        "css-print.section-properties-clause-b713bed18985",
+        "css-print.section-properties-clause-ca8c6327598a",
+        "css-print.section-properties-clause-7f6bc0356549",
+        "css-print.section-properties-clause-fd49d69af837",
+        "css-print.section-properties-clause-1d702e298c78",
+        "css-print.section-properties-clause-5a8d760f1d5a",
+        "css-print.section-properties-clause-00f373f414d4",
+        "css-print.section-properties-clause-2570ffb91bac",
+        "css-print.section-properties-clause-e25cbd74c9e9",
+        "css-print.section-properties-clause-cd45c0829af6",
+        "css-print.section-properties-clause-8e726d5f886d",
+        "css-print.section-properties-clause-9075ae10ac45",
+        "css-print.section-properties-clause-4f055adcb2a5",
+        "css-print.section-properties-clause-c749dff961ef",
+        "css-print.section-properties-clause-7f83e996800b",
+        "css-print.section-properties-clause-4d0ddff73888",
+        "css-print.section-properties-clause-cf6f7110d697",
+        "css-print.section-properties-clause-2a7d5c305568",
+        "css-print.section-properties-clause-905c37e8b2dc",
+        "css-print.section-properties-clause-6d9ab515958a",
+        "css-print.section-properties-clause-ce5fe8950526",
+        "css-print.section-properties-clause-0f99d729c71f",
+        "css-print.section-properties-clause-f3f34a06a085",
+        "css-print.section-properties-clause-23872c683c1b",
+        "css-print.section-properties-clause-3b00db0b6181",
+        "css-print.section-properties-clause-9c0aa9a59d37",
+        "css-print.section-properties-clause-aeeed49d63cc",
+        "css-print.section-properties-clause-7a9669fe144d",
+        "css-print.section-properties-clause-bf631f7936c7",
+        "css-print.section-properties-clause-4932a4cf5fea",
+        "css-print.section-properties-clause-1db80bbebd16",
+        "css-print.section-properties-clause-6a9ac367303b",
+        "css-print.section-properties-clause-ec1b8be619bb",
+        "css-print.section-properties-clause-100dc1623696",
+        "css-print.section-properties-clause-48665f42189a",
+        "css-print.section-properties-clause-a99fdaa19358",
+        "css-print.section-properties-clause-ea17e4d37ba2",
+        "css-print.section-properties-clause-f6249b8c8edf",
+        "css-print.section-properties-clause-8552fba22a91",
+        "css-print.section-properties-clause-9a0adeb44e00",
+        "css-print.section-properties-clause-c6ab495399ca",
+        "css-print.section-properties-clause-44e6d070fe95",
+        "css-print.section-properties-clause-50aa3cbfd6ec",
+        "css-print.section-properties-clause-e95634b63792",
+        "css-print.section-properties-clause-18e2b1e6dfea",
+        "css-print.section-properties-clause-7d800cb1c3eb",
+        "css-print.section-properties-clause-d30807ebe502",
+        "css-print.section-properties-clause-8561c4967f86",
+        "css-print.section-properties-clause-f75d455d7785",
+        "css-print.section-properties-clause-218b7cb9eb77",
+        "css-print.section-properties-clause-3fca0617d0d7",
+        "css-print.section-properties-clause-d1eab19bf286",
+        "css-print.section-properties-clause-ecaad4b2f157",
+        "css-print.section-properties-clause-723f10849f49",
+        "css-print.section-properties-clause-7b30b0ff7be6",
+        "css-print.section-properties-clause-804a2b0556f1",
+        "css-print.section-properties-clause-a848ae7ff741",
+        "css-print.section-properties-clause-8a6de76c36a0",
+        "css-print.section-properties-clause-8bfb30e1e6eb",
+        "css-print.section-properties-clause-795405b676c8",
+        "css-print.section-properties-clause-d39c2c6d626a",
+        "css-print.section-properties-clause-191b68211c23",
+        "css-print.section-properties-clause-df4b96f704a4",
+        "css-print.section-properties-clause-865415d4b5ca",
+        "css-print.section-properties-clause-c2e240a3a448",
+        "css-print.section-properties-clause-3727149fd846",
+        "css-print.section-properties-clause-a98320c2910c",
+        "css-print.section-properties-clause-035300f3afee",
+        "css-print.section-properties-clause-b2008bf3e979",
+        "css-print.section-properties-clause-9b3650da0f14",
+        "css-print.section-properties-clause-a2226555481b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-properties-clause-ed05aa3d61fc",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 0,
+        "clause_sha256": "ed05aa3d61fc9eabe2f35e6b1e6f2410254c35c26547578c787e93e3e875875b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-5e3b13ab5ab8",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 7,
+        "clause_sha256": "5e3b13ab5ab8272a78ec09fdd886b202ba30864376db19f83d225c095bf020ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-0244122608d6",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 9,
+        "clause_sha256": "0244122608d6482a429a1db12f0623895d776921c2526aa89bc7c4a66ba6c9d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-7128bd0a2f2f",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 10,
+        "clause_sha256": "7128bd0a2f2f0fc14624fd246a4b2a37407e66c6bb201d1871809f30f73b74ab"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-b713bed18985",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 11,
+        "clause_sha256": "b713bed1898553001e5eea969e9ddfb7fb407c9740602a9031a13e083c3b3e36"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-ca8c6327598a",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 14,
+        "clause_sha256": "ca8c6327598ac56aea4f617cbecad781400aa1cb46b5d6c8cde3f6651c1d7e15"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-7f6bc0356549",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 16,
+        "clause_sha256": "7f6bc03565495effec0b428dc3c90e2d5b8e1a2bca071e9c84b66acf1a9398fe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-fd49d69af837",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 21,
+        "clause_sha256": "fd49d69af837b910a63eeda36be7b988d9c37d8cbacf1c6f542aabd86b38a1e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-1d702e298c78",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 26,
+        "clause_sha256": "1d702e298c78816acbdbd86de60dd285291732d3c4889e61c8bdbe836a1e6e8e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-5a8d760f1d5a",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 31,
+        "clause_sha256": "5a8d760f1d5af04388d800e320963f147e06a4bf9f8049a27bad52d9703a7621"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-00f373f414d4",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 37, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 36,
+        "clause_sha256": "00f373f414d448b44ee46416ea79e47b94ba162317c299df120e1188bb8f2921"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-2570ffb91bac",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 42, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 41,
+        "clause_sha256": "2570ffb91bac82452672896b90fbab14d340faffd45dcb993e0eb2cfc24889fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-e25cbd74c9e9",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 46,
+        "clause_sha256": "e25cbd74c9e9031cf893b436763582dd2a52348d92577f1b32ef201612e64329"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-cd45c0829af6",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 52, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 51,
+        "clause_sha256": "cd45c0829af6256ada8c717fce4513b629a9dc41939646e0d6893e7ee344084c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-8e726d5f886d",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 57, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 56,
+        "clause_sha256": "8e726d5f886d8355cb26fc2c28158c1d9184824717e713c13cce3fa3184ad9aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-9075ae10ac45",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 67, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 66,
+        "clause_sha256": "9075ae10ac45242335082afb617e37b3e763b85b69dcdb680cb354ba3a722be5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-4f055adcb2a5",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 72, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 71,
+        "clause_sha256": "4f055adcb2a5ab9d71093eec289f76e678698fee3c3595a8ec9a49b91941270e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-c749dff961ef",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 77, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 76,
+        "clause_sha256": "c749dff961ef741c02a38450a9f8733a7b2a6b836b8a9b2909bcc643f18af851"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-7f83e996800b",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 82, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 81,
+        "clause_sha256": "7f83e996800bf2e5b4f2e0a61312c3c9eccf8099518dcc5f404b9c0b3db7d09b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-4d0ddff73888",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 87, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 86,
+        "clause_sha256": "4d0ddff7388831ff4f8a8e90b62020216f0f742c51d4ff9c95c06165bbc47f57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-cf6f7110d697",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 92, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 91,
+        "clause_sha256": "cf6f7110d697be1b5caf12338bbd0be080f98b09fcf07ec39c3a847c19fd52aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-2a7d5c305568",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 97, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 96,
+        "clause_sha256": "2a7d5c305568d1e8f51170c48c6cabce46ec7d30bc4d0187f6978e605ee9f194"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-905c37e8b2dc",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 102, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 101,
+        "clause_sha256": "905c37e8b2dcd04aef6d5432e187ee0464d00b33c76e0d810482403182f1f140"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-6d9ab515958a",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 107, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 106,
+        "clause_sha256": "6d9ab515958ab411b30836e0d02d297ac1a2ca8da1658f1d83e97e2d76bd5e3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-ce5fe8950526",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 110, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 109,
+        "clause_sha256": "ce5fe89505263ff7de3f2afd1ae95238368842b85e66b2e752f446d2e79cb80a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-0f99d729c71f",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 112, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 111,
+        "clause_sha256": "0f99d729c71f86d50b5c749f3b80b574c26bed3f0cebf1ad4747efcc1e0c4b0c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-f3f34a06a085",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 117, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 116,
+        "clause_sha256": "f3f34a06a085dfc089e86b2fed2dbff2fc55d91a129ce5588b49c8bad7adeb2c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-23872c683c1b",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 122, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 121,
+        "clause_sha256": "23872c683c1b134b3366908cc64660d89278acb6ae95c06310e2823f8b90b479"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-3b00db0b6181",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 126, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 125,
+        "clause_sha256": "3b00db0b618144cfbf582ef647192876b423edde93a84d4c7b4ade1dbf20961e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-9c0aa9a59d37",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 127, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 126,
+        "clause_sha256": "9c0aa9a59d37ed42f7eb4fa6c9d6aad1f821bc383da15756c0c3f9a5022f6aa6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-aeeed49d63cc",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 135, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 134,
+        "clause_sha256": "aeeed49d63ccb46bcfe1e9bdede8f1b5a8b610bc6f48ab61acdafab8e6995288"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-7a9669fe144d",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 136, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 135,
+        "clause_sha256": "7a9669fe144d069203f3e1e57d188e5dd941286552c126e31355d97fa0bf1f7e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-bf631f7936c7",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 137, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 136,
+        "clause_sha256": "bf631f7936c705e762e3896c8905f1b64f98d86d914ed8685c36d7dee220d601"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-4932a4cf5fea",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 140, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 139,
+        "clause_sha256": "4932a4cf5fea27ea3026f4677fc5d041f94b5dd2f7f0e5ecbd2b8799cb8a8943"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-1db80bbebd16",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 142, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 141,
+        "clause_sha256": "1db80bbebd16ff5c21b35197e22ce716bdca09633b20058756fb51e4892ed604"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-6a9ac367303b",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 145, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 144,
+        "clause_sha256": "6a9ac367303ba0ee0c22906a82ccbe56436b2fc4a8ee960266c8f2d31145d2be"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-ec1b8be619bb",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 147, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 146,
+        "clause_sha256": "ec1b8be619bb3b9786404743bf33a0789952176eb31f4c8a1cbcf75ef970c755"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-100dc1623696",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 150, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 149,
+        "clause_sha256": "100dc162369671c273e040c2fb3a716ff94f5a22dde7fdaacedfbd36fd0058ca"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-48665f42189a",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 152, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 151,
+        "clause_sha256": "48665f42189ac1c33c5ac922196270c2f244dd933e18c61d3ff39e10c11df95e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-a99fdaa19358",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 157, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 156,
+        "clause_sha256": "a99fdaa19358aa263b1bc672e401fb350c378ab04c6c3b18d2b9bdfe812a9df8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-ea17e4d37ba2",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 162, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 161,
+        "clause_sha256": "ea17e4d37ba29601301ba08f7e5a942aabac61842c64b9fac2146b5e4523f154"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-f6249b8c8edf",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 182, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 181,
+        "clause_sha256": "f6249b8c8edf943ec615340cc03d65c4a4c5db5968359175ef6afda3b83461ad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-8552fba22a91",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 187, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 186,
+        "clause_sha256": "8552fba22a9177a37edb494667eebe6080169e96cf6bcbd01ad84ee3f8fe4e3a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-9a0adeb44e00",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 192, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 191,
+        "clause_sha256": "9a0adeb44e00cc260e1b6036772afad296cb0f50c77a9610b57b3b30cde284ba"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-c6ab495399ca",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 202, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 201,
+        "clause_sha256": "c6ab495399cac42608232ff863415bf99145db6168f43c82773c0820318614bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-44e6d070fe95",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 205, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 204,
+        "clause_sha256": "44e6d070fe95336425c00700046f7e0e10bfead2bda3dac2fe656ee77137ebea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-50aa3cbfd6ec",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 207, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 206,
+        "clause_sha256": "50aa3cbfd6ec0675b8ee8c1df7f8ad6b77a825a6c4ad5a77646c9b511a99490b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-e95634b63792",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 212, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 211,
+        "clause_sha256": "e95634b637920931a02f6435fd4c233db355b85a876246c06c4defc63433b6a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-18e2b1e6dfea",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 217, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 216,
+        "clause_sha256": "18e2b1e6dfeaba496348ad07f832a6f905270a21c112f5eadf1d692dadb2d7a1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-7d800cb1c3eb",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 227, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 226,
+        "clause_sha256": "7d800cb1c3eb767ebbd69da81911a9bf44b8c18fcb15da9ba2bf2c8375d40087"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-d30807ebe502",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 232, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 231,
+        "clause_sha256": "d30807ebe5024dc4cb2368011a23156c27ffdf75a8894618b5cfc8a000dc9a79"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-8561c4967f86",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 237, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 236,
+        "clause_sha256": "8561c4967f86545ad0d1f4a45972d4498e4a6d5daa8e3319835aa706c0d999e0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-f75d455d7785",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 242, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 241,
+        "clause_sha256": "f75d455d7785fd76971e8b64616f8a5a8d33d31cc9b465220fd2eca4eb91c7bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-218b7cb9eb77",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 247, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 246,
+        "clause_sha256": "218b7cb9eb7782fb7671084c9335a40c3de86afc6021d2f9df97a10b544adaf5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-3fca0617d0d7",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 255, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 254,
+        "clause_sha256": "3fca0617d0d71f993c7b8533501deb74dccde15359bec13787b2a01f35dc71fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-d1eab19bf286",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 257, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 256,
+        "clause_sha256": "d1eab19bf286e2562f99542abe4eebe29ab9c79519adcfed2a88271463fe8469"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-ecaad4b2f157",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 267, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 266,
+        "clause_sha256": "ecaad4b2f1578a3eded15d768b17c05d3d30a563809258a17f7d2238ee834cf4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-723f10849f49",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 271, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 270,
+        "clause_sha256": "723f10849f496c592cd4dd23187456c9fd352b68d6a8695d88dc76009e4afa91"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-7b30b0ff7be6",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 272, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 271,
+        "clause_sha256": "7b30b0ff7be67779a7f188a8edad4f0893a1f4e0fcfc6320c5838c1877c24d61"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-804a2b0556f1",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 280, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 279,
+        "clause_sha256": "804a2b0556f198455851207a212ff09878f36ca1cd17bcee3b617e08fa16721b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-a848ae7ff741",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 281, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 280,
+        "clause_sha256": "a848ae7ff741fb4535616031be1c4d5bdeca1cf9a4c32fcc49c7e53589e97d0d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-8a6de76c36a0",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 287, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 286,
+        "clause_sha256": "8a6de76c36a06801b6851de79f59118a985a8abddb1c1ed6c7fb89281dad2310"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-8bfb30e1e6eb",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 290, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 289,
+        "clause_sha256": "8bfb30e1e6eb9f2a0ac389de7827ebe9caa955da8fa2d683cbfec79639296d43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-795405b676c8",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 291, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 290,
+        "clause_sha256": "795405b676c824bc4af9f934947a8556fdc4b83e087461b29c8c26d0e8dc79aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-d39c2c6d626a",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 292, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 291,
+        "clause_sha256": "d39c2c6d626abd37c593f3ef9de6fa1ae4308284a071ad194b38b4d2ff91dbf9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-191b68211c23",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 295, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 294,
+        "clause_sha256": "191b68211c237f50610954fd73bd3bc5f8f0edfd9acaf94528d2f0d2895727d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-df4b96f704a4",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 297, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 296,
+        "clause_sha256": "df4b96f704a46f78a9a79fbce257da082d3cf8b87b8bb9212aba6e51b58afe50"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-865415d4b5ca",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 302, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 301,
+        "clause_sha256": "865415d4b5ca56068ccda4a0cbc701ef0ed14ab2100e70df747b44944555d355"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-c2e240a3a448",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 307, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 306,
+        "clause_sha256": "c2e240a3a448b89edf97ab677d4cb65296c6884ae4d9744cf5e16d40d1a4dd60"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-3727149fd846",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 317, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 316,
+        "clause_sha256": "3727149fd846c3c06eedafa693bff2627779b251d3929ccf5b3ab92a71823fed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-a98320c2910c",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 322, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 321,
+        "clause_sha256": "a98320c2910cb105e03c95ad81e73c46c605876c2add8942232cf06891f6c798"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-035300f3afee",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 323, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 322,
+        "clause_sha256": "035300f3afee55ae79b77ca5bc61ff29fc3c7abb56f751bd524fa331b50d8ee0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-b2008bf3e979",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 327, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 326,
+        "clause_sha256": "b2008bf3e979d83d089f82813de9b80666b82c471756eab0067ab70d04b4a7a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-9b3650da0f14",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 340, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 339,
+        "clause_sha256": "9b3650da0f148c607c336c9ada6115311c95696766d9aab49f3c435142a3c6ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-properties-clause-a2226555481b",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-properties"
+      ],
+      "behaviour": "Properties — normative clause 342, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-properties",
+        "clause_index": 341,
+        "clause_sha256": "a2226555481bb3a0adc97743833fe155d832421973e3140427162ac0261b5fce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-images",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-images"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Image Rendering Properties.",
+      "locator": {
+        "section_id": "section-images",
+        "text_sha256": "ddc250a0bc9427ccfedd6fe2d8842a78191b78eb3431fdc2b12985fff524ec72"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.section-images-clause-92491572d5bd",
+        "css-print.section-images-clause-043ace715651",
+        "css-print.section-images-clause-5f73cb29a28e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-images-clause-92491572d5bd",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-images"
+      ],
+      "behaviour": "Image Rendering Properties — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-images",
+        "clause_index": 14,
+        "clause_sha256": "92491572d5bd94864322d5c97c8cf599216e662aa4f8a4af3a9ea3da6fb1b3d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-images-clause-043ace715651",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-images"
+      ],
+      "behaviour": "Image Rendering Properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-images",
+        "clause_index": 17,
+        "clause_sha256": "043ace7156515d7a015ef28393ae0f5f3d8319d3825971b9479f03a792f044bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-images-clause-5f73cb29a28e",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-images"
+      ],
+      "behaviour": "Image Rendering Properties — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-images",
+        "clause_index": 18,
+        "clause_sha256": "5f73cb29a28e8990797161168581a59aab52d993de4b8bb925e87b190cfc3e74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-syntax",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-syntax"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Syntax.",
+      "locator": {
+        "section_id": "section-syntax",
+        "text_sha256": "a7e9ef8404f1e7bd46cc80345cfc26d4257b359bb366cdf93c73404600070988"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.section-syntax-clause-87b8dce5d0c9",
+        "css-print.section-syntax-clause-f4928a299f94",
+        "css-print.section-syntax-clause-7d7b1f062138",
+        "css-print.section-syntax-clause-990dd79a3823",
+        "css-print.section-syntax-clause-f6fe69f7d66e",
+        "css-print.section-syntax-clause-895416881428",
+        "css-print.section-syntax-clause-01c0755402d4",
+        "css-print.section-syntax-clause-b3cc954b98bf"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-syntax-clause-87b8dce5d0c9",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-syntax"
+      ],
+      "behaviour": "CSS Syntax — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-syntax",
+        "clause_index": 1,
+        "clause_sha256": "87b8dce5d0c9939a0af1d79a4810aef475efd5b0f2e5aefa005297ba8252f332"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-syntax-clause-f4928a299f94",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-syntax"
+      ],
+      "behaviour": "CSS Syntax — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-syntax",
+        "clause_index": 2,
+        "clause_sha256": "f4928a299f94496f333b5158444a3412a99dd8d88ac78febc118e76e1214887c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-syntax-clause-7d7b1f062138",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-syntax"
+      ],
+      "behaviour": "CSS Syntax — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-syntax",
+        "clause_index": 11,
+        "clause_sha256": "7d7b1f062138d65aab76a40d65fb0736f2b4964393f4e4ffbcea84ca7d89156e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-syntax-clause-990dd79a3823",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-syntax"
+      ],
+      "behaviour": "CSS Syntax — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-syntax",
+        "clause_index": 12,
+        "clause_sha256": "990dd79a382313a4e689843410450a75f0386d6f444d53bfc649f3258a905e74"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-syntax-clause-f6fe69f7d66e",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-syntax"
+      ],
+      "behaviour": "CSS Syntax — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-syntax",
+        "clause_index": 13,
+        "clause_sha256": "f6fe69f7d66ef95c8d11d99b8f49985812c643474dd0e4d50fe05f81ef6bd768"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-syntax-clause-895416881428",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-syntax"
+      ],
+      "behaviour": "CSS Syntax — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-syntax",
+        "clause_index": 14,
+        "clause_sha256": "895416881428bb72fa63adcecea595016086cb550c770b360298af32d85ae07f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-syntax-clause-01c0755402d4",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-syntax"
+      ],
+      "behaviour": "CSS Syntax — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-syntax",
+        "clause_index": 19,
+        "clause_sha256": "01c0755402d46d4e0eb3d878ce077c89eb04d64d94bbdb58a445d126864bb719"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-syntax-clause-b3cc954b98bf",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-syntax"
+      ],
+      "behaviour": "CSS Syntax — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-syntax",
+        "clause_index": 20,
+        "clause_sha256": "b3cc954b98bf00266de3b8118e15ec22b9b05abf9e2b8c7933d0d75f79fb4b8d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-assigning",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-assigning"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Assigning Property Values, Cascading, and Inheritance.",
+      "locator": {
+        "section_id": "section-assigning",
+        "text_sha256": "f3faf4a11179bf8b8245ec54d4e2df06ed610bc495c055c9a341f191b8151330"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.section-assigning-clause-c3de633afb62",
+        "css-print.section-assigning-clause-97f33ec523a6",
+        "css-print.section-assigning-clause-3621cb19a317",
+        "css-print.section-assigning-clause-b7a3e6ebcd67",
+        "css-print.section-assigning-clause-d851a0d5f144"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-assigning-clause-c3de633afb62",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-assigning"
+      ],
+      "behaviour": "Assigning Property Values, Cascading, and Inheritance — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-assigning",
+        "clause_index": 1,
+        "clause_sha256": "c3de633afb62b7af98ed584182954d941f1657c4f97cf85e9de172c563613c46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-assigning-clause-97f33ec523a6",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-assigning"
+      ],
+      "behaviour": "Assigning Property Values, Cascading, and Inheritance — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-assigning",
+        "clause_index": 2,
+        "clause_sha256": "97f33ec523a62a592dbb15d0facaa59d2c1393d70dc498c40733fc5e4fe78ec1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-assigning-clause-3621cb19a317",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-assigning"
+      ],
+      "behaviour": "Assigning Property Values, Cascading, and Inheritance — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-assigning",
+        "clause_index": 3,
+        "clause_sha256": "3621cb19a317300bf28b83381942cb3b2d154c4c4fd00812bbcd20bb7d62c2f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-assigning-clause-b7a3e6ebcd67",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-assigning"
+      ],
+      "behaviour": "Assigning Property Values, Cascading, and Inheritance — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-assigning",
+        "clause_index": 4,
+        "clause_sha256": "b7a3e6ebcd67440276ea94d3d2f36d979741c8ef686e86d753009ff4bb418bb0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-assigning-clause-d851a0d5f144",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-assigning"
+      ],
+      "behaviour": "Assigning Property Values, Cascading, and Inheritance — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-assigning",
+        "clause_index": 5,
+        "clause_sha256": "d851a0d5f1442c35116c10d2a5875495eed6b23f56b9bb57d3d7fa9e4d548c52"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-mediatypes",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-mediatypes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Media Types.",
+      "locator": {
+        "section_id": "section-mediatypes",
+        "text_sha256": "8c2d013fbcf47308310f85e6a271b7e7f0f47369cc02091068d69a43aea6f33e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.section-mediatypes-clause-fb62b718008c",
+        "css-print.section-mediatypes-clause-313799ec8fb1",
+        "css-print.section-mediatypes-clause-fd2489a00c03",
+        "css-print.section-mediatypes-clause-3492ffceb66f",
+        "css-print.section-mediatypes-clause-ba62b504a2ac"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-mediatypes-clause-fb62b718008c",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-mediatypes"
+      ],
+      "behaviour": "Media Types — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-mediatypes",
+        "clause_index": 0,
+        "clause_sha256": "fb62b718008c5a33eb9881e509085080a7732b48e2cac0e5faec0caaa74b1308"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-mediatypes-clause-313799ec8fb1",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-mediatypes"
+      ],
+      "behaviour": "Media Types — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-mediatypes",
+        "clause_index": 1,
+        "clause_sha256": "313799ec8fb1c05ba148422db3cb6df5244dfe3fd58e7a15b3c7a59599e71421"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-mediatypes-clause-fd2489a00c03",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-mediatypes"
+      ],
+      "behaviour": "Media Types — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-mediatypes",
+        "clause_index": 2,
+        "clause_sha256": "fd2489a00c031582b6a8c9a8c9c336c636dc06b096757b2b6d378432974e3ce9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-mediatypes-clause-3492ffceb66f",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-mediatypes"
+      ],
+      "behaviour": "Media Types — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-mediatypes",
+        "clause_index": 3,
+        "clause_sha256": "3492ffceb66f0e401a59456b441e91549f10c0b1f28e0761f1b0d3d927b2c928"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-mediatypes-clause-ba62b504a2ac",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-mediatypes"
+      ],
+      "behaviour": "Media Types — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "section-mediatypes",
+        "clause_index": 4,
+        "clause_sha256": "ba62b504a2acabf92b95408e3b155c6b51ab90a7c7e0080e80b88612f1e5bb81"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-interactions",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-interactions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Print Profile Properties and User Agent interactions.",
+      "locator": {
+        "section_id": "section-interactions",
+        "text_sha256": "21ae4190916c7b9f6380d4c8b1d2b29edfa74e83679752cc455456deff2a774c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.s-8-1",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Nested Floats, Divs, and Absolutely Positioned Boxes.",
+      "locator": {
+        "section_id": "s.8.1",
+        "text_sha256": "806523b46243bba0aacf0816679fb32ac9bd5eccffb07f5af5ba3755f5588af7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.s-8-1-clause-806523b46243"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.s-8-1-clause-806523b46243",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.1"
+      ],
+      "behaviour": "Nested Floats, Divs, and Absolutely Positioned Boxes — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.1",
+        "clause_index": 0,
+        "clause_sha256": "806523b46243bba0aacf0816679fb32ac9bd5eccffb07f5af5ba3755f5588af7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-2",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page Breaks.",
+      "locator": {
+        "section_id": "s.8.2",
+        "text_sha256": "889e1242884f902c31799ea173fed2002130d2784ce56bf93638114fd2e511aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.s-8-2-clause-889e1242884f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.s-8-2-clause-889e1242884f",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.2"
+      ],
+      "behaviour": "Page Breaks — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.2",
+        "clause_index": 0,
+        "clause_sha256": "889e1242884f902c31799ea173fed2002130d2784ce56bf93638114fd2e511aa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-3",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Page Size.",
+      "locator": {
+        "section_id": "s.8.3",
+        "text_sha256": "e53bdd57a6075ede726dd5f5b50249fb89bbde69c4ff07ffc456299c5170801e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.s-8-3-clause-1f972d9e6bba"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.s-8-3-clause-1f972d9e6bba",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.3"
+      ],
+      "behaviour": "Page Size — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.3",
+        "clause_index": 0,
+        "clause_sha256": "1f972d9e6bbac89584b9c04cd201e1bd35945f75176a6323461cd44776d72e23"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-4",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default Style Sheets.",
+      "locator": {
+        "section_id": "s.8.4",
+        "text_sha256": "1b211f5d51865f408b7a4a3cb30d275f5aaeb3363184924210c99218ecab369a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.s-8-4-clause-054c9089d573"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.s-8-4-clause-054c9089d573",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.4"
+      ],
+      "behaviour": "Default Style Sheets — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.4",
+        "clause_index": 1,
+        "clause_sha256": "054c9089d573708dad194dc1d98556f4191d4d9ac0c47993b4a514e5a36bb9ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default Style Sheet Guidelines for printers.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "text_sha256": "4afe5a8ec0906d95116bb091dddd284789a7dd1c1047a9ff0f4c31f599e830e9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.s-8-5-1-clause-4223f8f3cb7f",
+        "css-print.s-8-5-1-clause-4cd2c8701870",
+        "css-print.s-8-5-1-clause-526bcd1f5c20",
+        "css-print.s-8-5-1-clause-c4868b44c827",
+        "css-print.s-8-5-1-clause-f18957f0cf2b",
+        "css-print.s-8-5-1-clause-76c40996f990",
+        "css-print.s-8-5-1-clause-3d01a795d80c",
+        "css-print.s-8-5-1-clause-fe701d347a37",
+        "css-print.s-8-5-1-clause-db27d3c0bf2a",
+        "css-print.s-8-5-1-clause-571b5ff33c48",
+        "css-print.s-8-5-1-clause-b756fcb05a24",
+        "css-print.s-8-5-1-clause-c8b130d82859",
+        "css-print.s-8-5-1-clause-b306af4486e9",
+        "css-print.s-8-5-1-clause-24c224fcb8b1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-4223f8f3cb7f",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 0,
+        "clause_sha256": "4223f8f3cb7fc21691aefbeccd602c1080c3a52a7bafb3d227209ebe31840de5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-4cd2c8701870",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 2,
+        "clause_sha256": "4cd2c8701870d35bf559124315eef707eca091a2965589dd561c9e84599dd3f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-526bcd1f5c20",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 3,
+        "clause_sha256": "526bcd1f5c20ad3166f6e0dea0fb8fae0283e6379eeb5d83b64680851ec447fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-c4868b44c827",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 4,
+        "clause_sha256": "c4868b44c8274c4c3efa830ac8a6b4e49ed3feed525da28eec589285c5bd21d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-f18957f0cf2b",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 5,
+        "clause_sha256": "f18957f0cf2ba34a223f9c74ee2994d1f032c11576cf1bc49e85f65c64dd15c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-76c40996f990",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 7,
+        "clause_sha256": "76c40996f990c1f80d8194c8ca866181099dea878493c69413cd065249fbc9e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-3d01a795d80c",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 9,
+        "clause_sha256": "3d01a795d80c9642882f1b0aa59630e388f13ee91411c8db9af07206aca634a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-fe701d347a37",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 11,
+        "clause_sha256": "fe701d347a37faf0e816e84599a058c2f9b216e086e2137374a36227a8564df5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-db27d3c0bf2a",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 13,
+        "clause_sha256": "db27d3c0bf2a6e161cc056ba73025bac757029c6b23c5e298c8db75b62ebd23a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-571b5ff33c48",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 15,
+        "clause_sha256": "571b5ff33c48ceab5d51bf0e6d8bda3ae4b376c7da1d53c985ef56f25c6977df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-b756fcb05a24",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 17,
+        "clause_sha256": "b756fcb05a24010b21b79e13cc500bc5fcb21526d41b1d119dfac090e98c9963"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-c8b130d82859",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 21,
+        "clause_sha256": "c8b130d82859c89112ae8a38972d6d86110c295ffae117958433050d18eeb2b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-b306af4486e9",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 23,
+        "clause_sha256": "b306af4486e9b7874f7b26a8511761a8fafdf6847a046272402db62a782d8bfd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-1-clause-24c224fcb8b1",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.1"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for printers — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.1",
+        "clause_index": 24,
+        "clause_sha256": "24c224fcb8b170dde08ae0314a2125df754fa5532f19b6c44e2bde9715eacb65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-2",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Default Style Sheet Guidelines for Enhanced Layout printers.",
+      "locator": {
+        "section_id": "s.8.5.2",
+        "text_sha256": "a63911d99d576fe14f16566992d4ca8bbc609d2eb4ff582d27fe620d9b657dee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-print.s-8-5-2-clause-f07edcaa60bc",
+        "css-print.s-8-5-2-clause-a3bfe81a3772",
+        "css-print.s-8-5-2-clause-c4868b44c827",
+        "css-print.s-8-5-2-clause-73f36387890f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.s-8-5-2-clause-f07edcaa60bc",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.2"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for Enhanced Layout printers — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.2",
+        "clause_index": 0,
+        "clause_sha256": "f07edcaa60bca662c0a1e309ec4be0da389d4f2c8662bd92f79e97b80387f30b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-2-clause-a3bfe81a3772",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.2"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for Enhanced Layout printers — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.2",
+        "clause_index": 1,
+        "clause_sha256": "a3bfe81a3772974a9771b8492ff7d9bea4b8e8189dec2f6b76d0b7aaa5ec03bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-2-clause-c4868b44c827",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.2"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for Enhanced Layout printers — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.2",
+        "clause_index": 2,
+        "clause_sha256": "c4868b44c8274c4c3efa830ac8a6b4e49ed3feed525da28eec589285c5bd21d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.s-8-5-2-clause-73f36387890f",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "s.8.5.2"
+      ],
+      "behaviour": "Default Style Sheet Guidelines for Enhanced Layout printers — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "s.8.5.2",
+        "clause_index": 3,
+        "clause_sha256": "73f36387890fe2998c774d44766624b448b2f1b35313222db46ded9735f426ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-print.section-references",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-references"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix A. References.",
+      "locator": {
+        "section_id": "section-references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.abstract",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "437796bf65ea025c4e5de29039e6d9ede520e50d86de84e4f2ae9f49ca9ddb63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.status",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this Document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "6dada3fe81b5caefa3a2b3420bd675175cd857d26fee686426ee8e794582fd94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.toc",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "toc"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "toc",
+        "text_sha256": "432cba4b68d347cefc1990587f1e974308d51afe9e395777bdc21ae2b6f97096"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-ack",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-ack"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 9. Acknowledgements.",
+      "locator": {
+        "section_id": "section-ack",
+        "text_sha256": "aa37fd3b016b28f5af6a67d331a760a3c27919aee1c30f369c9b0509f1c141f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-normref",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-normref"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in A.1 Normative References.",
+      "locator": {
+        "section_id": "section-normref",
+        "text_sha256": "9b7af4c3685b1950a051fa58e177afd8995f6b129c48511ecf43ce957c2fd2a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-print.section-informref",
+      "family": "css-print",
+      "source_id": "css-print",
+      "sections": [
+        "section-informref"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in A.2 Informative References.",
+      "locator": {
+        "section_id": "section-informref",
+        "text_sha256": "4426b936cccd418bcab8790821c2e14339825f649583f2929aec381e05776af3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

@@ -1,0 +1,2676 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-regions-1.subtitle",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "subtitle"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in W3C Working Draft, 9 October 2014.",
+      "locator": {
+        "section_id": "subtitle",
+        "text_sha256": "da941fef37b218c7df70b7a6694b62c109628247ee0eaf17086e7f6ca05f188e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.css-regions-concepts",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "css-regions-concepts"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSS Regions concepts.",
+      "locator": {
+        "section_id": "css-regions-concepts",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.regions",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Regions.",
+      "locator": {
+        "section_id": "regions",
+        "text_sha256": "23f125afb6384af8e11e299c9691b3888030e9f7f2b9d5fbf90ef5709091768c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.region-chain-section",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "region-chain-section"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Region chain.",
+      "locator": {
+        "section_id": "region-chain-section",
+        "text_sha256": "71449360391056a74bba2296e3889407011252d2ed73b7ce7ca841a9bdba3fa8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.named-flow-section",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "named-flow-section"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Named flows.",
+      "locator": {
+        "section_id": "named-flow-section",
+        "text_sha256": "1f90401c140faa5e7d3acac6cc28ea03a6928c866a3ec0a7564032df941f0b6e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.regions-flow-breaking-rules",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions-flow-breaking-rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Regions flow breaking rules.",
+      "locator": {
+        "section_id": "regions-flow-breaking-rules",
+        "text_sha256": "aa1d63be5db8666a1704a983a0d0f58fa2b172eb39fa1940fecc3d61bb82ab57"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.properties",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Properties.",
+      "locator": {
+        "section_id": "properties",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.the-flow-into-property",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-flow-into-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The flow-into property.",
+      "locator": {
+        "section_id": "the-flow-into-property",
+        "text_sha256": "f03104caccf59657b698ac27cfebd35b8b7cf6f2910e2f4e83c1d12eb32a934e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.the-flow-into-property-clause-cca2516ebb1d",
+        "css-regions-1.the-flow-into-property-clause-5e91a307fca0",
+        "css-regions-1.the-flow-into-property-clause-f7df513c144d",
+        "css-regions-1.the-flow-into-property-clause-d978a14bfee8",
+        "css-regions-1.the-flow-into-property-clause-b9c482a2dd0f",
+        "css-regions-1.the-flow-into-property-clause-fa5657a6192e",
+        "css-regions-1.the-flow-into-property-clause-0cf96a2eb950"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.the-flow-into-property-clause-cca2516ebb1d",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-flow-into-property"
+      ],
+      "behaviour": "The flow-into property — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-flow-into-property",
+        "clause_index": 14,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-flow-into-property-clause-5e91a307fca0",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-flow-into-property"
+      ],
+      "behaviour": "The flow-into property — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-flow-into-property",
+        "clause_index": 18,
+        "clause_sha256": "5e91a307fca08bb30354b4e0420ac16172299e932dca60eae113b73124c9279f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-flow-into-property-clause-f7df513c144d",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-flow-into-property"
+      ],
+      "behaviour": "The flow-into property — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-flow-into-property",
+        "clause_index": 24,
+        "clause_sha256": "f7df513c144da4bc0dc4353cc90bd9a173a50a281418e7d33bacf666f027763a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-flow-into-property-clause-d978a14bfee8",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-flow-into-property"
+      ],
+      "behaviour": "The flow-into property — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-flow-into-property",
+        "clause_index": 25,
+        "clause_sha256": "d978a14bfee8a1a885fccf59d2945713cf0687da325a6c5011938620047d6950"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-flow-into-property-clause-b9c482a2dd0f",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-flow-into-property"
+      ],
+      "behaviour": "The flow-into property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-flow-into-property",
+        "clause_index": 32,
+        "clause_sha256": "b9c482a2dd0ffbd4d6fedb6502195fb07cd1f730f973bdf88ce035959f20449d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-flow-into-property-clause-fa5657a6192e",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-flow-into-property"
+      ],
+      "behaviour": "The flow-into property — normative clause 38, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-flow-into-property",
+        "clause_index": 37,
+        "clause_sha256": "fa5657a6192e70eafb8d2505b2eb26239d847bea56d2dbb3cd0cd8bddc892393"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-flow-into-property-clause-0cf96a2eb950",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-flow-into-property"
+      ],
+      "behaviour": "The flow-into property — normative clause 39, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-flow-into-property",
+        "clause_index": 38,
+        "clause_sha256": "0cf96a2eb95034bad9bfbb48c01cf48a25dcebbfb49bf51ac591e471261e7f25"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.flow-from",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "flow-from"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The flow-from property.",
+      "locator": {
+        "section_id": "flow-from",
+        "text_sha256": "4a30d84ac0f59dfcc4b3a35fac078ed3d0b73aa0295ae6457a278c3af4058997"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.flow-from-clause-56bb7ef5f147",
+        "css-regions-1.flow-from-clause-cca2516ebb1d",
+        "css-regions-1.flow-from-clause-2ec2f2963922",
+        "css-regions-1.flow-from-clause-ce4dcd506b92"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.flow-from-clause-56bb7ef5f147",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "flow-from"
+      ],
+      "behaviour": "The flow-from property — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "flow-from",
+        "clause_index": 4,
+        "clause_sha256": "56bb7ef5f1475b89aa9fe6f4761ab223d67703403fb017e59117e8aecae2f2bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.flow-from-clause-cca2516ebb1d",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "flow-from"
+      ],
+      "behaviour": "The flow-from property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "flow-from",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.flow-from-clause-2ec2f2963922",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "flow-from"
+      ],
+      "behaviour": "The flow-from property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "flow-from",
+        "clause_index": 27,
+        "clause_sha256": "2ec2f2963922e694e70c73407e4f028eff5ba3bbb6ccfc027a06616e613f5714"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.flow-from-clause-ce4dcd506b92",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "flow-from"
+      ],
+      "behaviour": "The flow-from property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "flow-from",
+        "clause_index": 30,
+        "clause_sha256": "ce4dcd506b922498d4848e68f38fed15f16e54e004af70930043d3f8df7350cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.circular-dependencies",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "circular-dependencies"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cycle Detection.",
+      "locator": {
+        "section_id": "circular-dependencies",
+        "text_sha256": "4240170be20269f6c991100d4a7db8efd56ebae1a8d1a371b0b38942c4122263"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.fragmenting-regions",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "fragmenting-regions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Nested fragmentation contexts.",
+      "locator": {
+        "section_id": "fragmenting-regions",
+        "text_sha256": "3bde34ccacf47657b40b2301d81b8301f3664d28b2afb219c14f65c1e29ff7f7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.fragmenting-regions-clause-a3fd5395eec0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.fragmenting-regions-clause-a3fd5395eec0",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "fragmenting-regions"
+      ],
+      "behaviour": "Nested fragmentation contexts — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "fragmenting-regions",
+        "clause_index": 0,
+        "clause_sha256": "a3fd5395eec0eced58a20246edafc565e5c826a4c0360e21872e2fe56927d9a9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.region-flow-break",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "region-flow-break"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Region flow break properties: break-before, break-after, break-inside.",
+      "locator": {
+        "section_id": "region-flow-break",
+        "text_sha256": "ccca6996230c5946df2d3953360b7d9026928bd634ae4c50e8f2e8a4248ae6b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.region-flow-break-clause-818ef70d54b7",
+        "css-regions-1.region-flow-break-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.region-flow-break-clause-818ef70d54b7",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "region-flow-break"
+      ],
+      "behaviour": "Region flow break properties: break-before, break-after, break-inside — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "region-flow-break",
+        "clause_index": 1,
+        "clause_sha256": "818ef70d54b7fd3bde48a620a2898f3031e384b0e7e29f326ebb2119fc290151"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.region-flow-break-clause-cca2516ebb1d",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "region-flow-break"
+      ],
+      "behaviour": "Region flow break properties: break-before, break-after, break-inside — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "region-flow-break",
+        "clause_index": 16,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-region-fragment-property",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-region-fragment-property"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The region-fragment property.",
+      "locator": {
+        "section_id": "the-region-fragment-property",
+        "text_sha256": "c7a265e1feac5d13b8e3ea9133a3ae8b0aaaf0153ce80e78e8acda399536498f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.the-region-fragment-property-clause-cca2516ebb1d",
+        "css-regions-1.the-region-fragment-property-clause-77830640eaa5",
+        "css-regions-1.the-region-fragment-property-clause-9913113a4ff3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.the-region-fragment-property-clause-cca2516ebb1d",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-region-fragment-property"
+      ],
+      "behaviour": "The region-fragment property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-region-fragment-property",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-region-fragment-property-clause-77830640eaa5",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-region-fragment-property"
+      ],
+      "behaviour": "The region-fragment property — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-region-fragment-property",
+        "clause_index": 15,
+        "clause_sha256": "77830640eaa53996dc097aaa292e6ff4a120f3ad13a4cedf02be2778b4e67441"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-region-fragment-property-clause-9913113a4ff3",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-region-fragment-property"
+      ],
+      "behaviour": "The region-fragment property — normative clause 24, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-region-fragment-property",
+        "clause_index": 23,
+        "clause_sha256": "9913113a4ff3eed380b6e50bc321f784461aaba3b94b67b1122a76ac5cf60bdf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.cssom-view-and-css-regions",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "cssom_view_and_css_regions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in CSSOM.",
+      "locator": {
+        "section_id": "cssom_view_and_css_regions",
+        "text_sha256": "1a2090c7c28708658d492f9238058406b5af9fab7b1749412782cc68a7f5290b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.cssom-view-and-css-regions-clause-1a2090c7c287"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.cssom-view-and-css-regions-clause-1a2090c7c287",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "cssom_view_and_css_regions"
+      ],
+      "behaviour": "CSSOM — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "cssom_view_and_css_regions",
+        "clause_index": 0,
+        "clause_sha256": "1a2090c7c28708658d492f9238058406b5af9fab7b1749412782cc68a7f5290b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-namedflow-interface",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-namedflow-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The NamedFlow interface.",
+      "locator": {
+        "section_id": "the-namedflow-interface",
+        "text_sha256": "72821204ef252a14c442be0dd6a2a0c30347b7c2d4656d178af92434946a4357"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.the-namedflow-interface-clause-88972c09a8d0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.the-namedflow-interface-clause-88972c09a8d0",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-namedflow-interface"
+      ],
+      "behaviour": "The NamedFlow interface — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-namedflow-interface",
+        "clause_index": 4,
+        "clause_sha256": "88972c09a8d0c075b6513642d53fdba1ddcaccaafdb5d1c4418d54a92230d8ac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-region-interface",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-region-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Region interface.",
+      "locator": {
+        "section_id": "the-region-interface",
+        "text_sha256": "3c6be640ffee11c43404c0b073fd71d644d795ba8c87f36ed111b94e9b09e884"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.the-region-interface-clause-fad90b8f0fb1",
+        "css-regions-1.the-region-interface-clause-3062dd93210f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.the-region-interface-clause-fad90b8f0fb1",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-region-interface"
+      ],
+      "behaviour": "The Region interface — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-region-interface",
+        "clause_index": 0,
+        "clause_sha256": "fad90b8f0fb1b05f9b62b63bdc3ffd39a1b03633eb9a942ccfe0736d8f6fc5dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.the-region-interface-clause-3062dd93210f",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "the-region-interface"
+      ],
+      "behaviour": "The Region interface — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-region-interface",
+        "clause_index": 9,
+        "clause_sha256": "3062dd93210fd598fe8e5ae45b66f34631f3267b5e1ad9a061f1fc48e8799383"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.named-flow-events",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "named-flow-events"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Named flow events.",
+      "locator": {
+        "section_id": "named-flow-events",
+        "text_sha256": "af18fdf472c6f16544bc3ebe5194d0a2a6348ebef2daf06d0759f6c5d003b290"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.cssomview-and-regions",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "cssomview-and-regions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Clarifications on pre-existing APIs.",
+      "locator": {
+        "section_id": "cssomview-and-regions",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.cssomview-getclientrects-and-getboundingclientrect",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "cssomview-getclientrects-and-getboundingclientrect"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in getClientRects() and getBoundingClientRect().",
+      "locator": {
+        "section_id": "cssomview-getclientrects-and-getboundingclientrect",
+        "text_sha256": "20f334055c317309fe1f4862a7203c073f817b88ee895e61658035ff063f0e89"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.cssomview-getclientrects-and-getboundingclientrect-clause-2904e94494ef"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.cssomview-getclientrects-and-getboundingclientrect-clause-2904e94494ef",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "cssomview-getclientrects-and-getboundingclientrect"
+      ],
+      "behaviour": "getClientRects() and getBoundingClientRect() — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "cssomview-getclientrects-and-getboundingclientrect",
+        "clause_index": 1,
+        "clause_sha256": "2904e94494ef7c392b5a6245329e626aea5cbff3f49639469e9e34692e73c19e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.cssomview-offset-attributes",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "cssomview-offset-attributes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in offsetTop, offsetLeft, offsetWidth, offsetHeight and offsetParent.",
+      "locator": {
+        "section_id": "cssomview-offset-attributes",
+        "text_sha256": "1bf1c2ceba9ce466564e5cda5cc601725201181dd7da841d55f53efcd688f67d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.cssomview-offset-attributes-clause-1bf1c2ceba9c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.cssomview-offset-attributes-clause-1bf1c2ceba9c",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "cssomview-offset-attributes"
+      ],
+      "behaviour": "offsetTop, offsetLeft, offsetWidth, offsetHeight and offsetParent — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "cssomview-offset-attributes",
+        "clause_index": 0,
+        "clause_sha256": "1bf1c2ceba9ce466564e5cda5cc601725201181dd7da841d55f53efcd688f67d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.multi-column-regions",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "multi-column-regions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Multi-column regions.",
+      "locator": {
+        "section_id": "multi-column-regions",
+        "text_sha256": "043a7374440c68df798ab78c60021524555583d02ea671e638e88d29d3514e91"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.multi-column-regions-clause-498ef550e83e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.multi-column-regions-clause-498ef550e83e",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "multi-column-regions"
+      ],
+      "behaviour": "Multi-column regions — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "multi-column-regions",
+        "clause_index": 1,
+        "clause_sha256": "498ef550e83e615ea03e8e4a499aeece0d9326e76a2f21de76a44f6ad7935129"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.pseudo-elements",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "pseudo_elements"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Pseudo-elements.",
+      "locator": {
+        "section_id": "pseudo_elements",
+        "text_sha256": "ddf8a791b41a9a5123eb9ce1ef5189bced6cc0b5725ef7180a68b4cd306cf40f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.regions-visual-formatting-details",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions-visual-formatting-details"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Regions visual formatting details.",
+      "locator": {
+        "section_id": "regions-visual-formatting-details",
+        "text_sha256": "0fd3d6ac3790265666d2e373fb3881b114064a1bbb9bbc3f367d761774fa330f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.processing-model",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "processing-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Processing model.",
+      "locator": {
+        "section_id": "processing-model",
+        "text_sha256": "375af64bf344f4c6220b557f5569731061c733f5b4c98c18a6aee98587895d9d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.regions-flow-content-box",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions-flow-content-box"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The Region Flow Content Box (RFCB).",
+      "locator": {
+        "section_id": "regions-flow-content-box",
+        "text_sha256": "8e268c82815440f26749049525f4bb5ea5f61d619df01c5f441162a49c98a31f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.regions-flow-content-box-clause-c6cdc6fba141"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.regions-flow-content-box-clause-c6cdc6fba141",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions-flow-content-box"
+      ],
+      "behaviour": "The Region Flow Content Box (RFCB) — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "regions-flow-content-box",
+        "clause_index": 4,
+        "clause_sha256": "c6cdc6fba14159d599371e21ac00615727dfe70acf012593bcdfdeae7ff0bc01"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.rfcb-width-resolution",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "rfcb-width-resolution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in RFCB width resolution.",
+      "locator": {
+        "section_id": "rfcb-width-resolution",
+        "text_sha256": "535518d9548631615f3e1ceed9d06a177bfc68e58eaaa7fe9a50b44df5fd4458"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.regions-visual-formatting-steps",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions-visual-formatting-steps"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Regions visual formatting steps.",
+      "locator": {
+        "section_id": "regions-visual-formatting-steps",
+        "text_sha256": "1b8dd438cad58d5ff69e638f024e9dccfc6aa9659cf6f39985cb4ab90253b4c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.rfcb-flow-fragment-height-resolution",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "rfcb-flow-fragment-height-resolution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Step 1: RFCB flow fragment height resolution.",
+      "locator": {
+        "section_id": "rfcb-flow-fragment-height-resolution",
+        "text_sha256": "bc23e9c6e504eebe3fe0b1251ca7f48698fbc20470722ac97ff8f3502542fe7a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.rfcb-flow-fragment-height-resolution-phase-1",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "rfcb-flow-fragment-height-resolution-phase-1"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in RFCB flow fragment height resolution, Phase 1.",
+      "locator": {
+        "section_id": "rfcb-flow-fragment-height-resolution-phase-1",
+        "text_sha256": "bcfb15492d09666453786b3fd77d1be3fe44f745d20850e67f75789a66bef21c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.rfcb-flow-fragment-height-resolution-phase-2",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "rfcb-flow-fragment-height-resolution-phase-2"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in RFCB flow fragment height resolution, Phase 2.",
+      "locator": {
+        "section_id": "rfcb-flow-fragment-height-resolution-phase-2",
+        "text_sha256": "1cd64a570d7a3147bead55a3e6c24682012b65263511f2b0fb4f3c0b5be7bfa0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.rfcb-flow-fragment-height-resolution-phase-2-clause-13957619eef9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.rfcb-flow-fragment-height-resolution-phase-2-clause-13957619eef9",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "rfcb-flow-fragment-height-resolution-phase-2"
+      ],
+      "behaviour": "RFCB flow fragment height resolution, Phase 2 — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "rfcb-flow-fragment-height-resolution-phase-2",
+        "clause_index": 1,
+        "clause_sha256": "13957619eef9a5fcead63698715bc81b1d13fad1e8ab1034c851fb7f767a07df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.regions-boxes-layout",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions-boxes-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Step 2: region boxes layout.",
+      "locator": {
+        "section_id": "regions-boxes-layout",
+        "text_sha256": "6e5d117d5a3862d9ee3416896c713e528d6aa941237dc4747a66f01e44f112d4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.regions-boxes-layout-clause-60a976de0ecd",
+        "css-regions-1.regions-boxes-layout-clause-335463fc3621"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.regions-boxes-layout-clause-60a976de0ecd",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions-boxes-layout"
+      ],
+      "behaviour": "Step 2: region boxes layout — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "regions-boxes-layout",
+        "clause_index": 1,
+        "clause_sha256": "60a976de0ecde70705c24acaf99e9975aae08291a1c86586c6c10ac94f058f3f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.regions-boxes-layout-clause-335463fc3621",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions-boxes-layout"
+      ],
+      "behaviour": "Step 2: region boxes layout — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "regions-boxes-layout",
+        "clause_index": 2,
+        "clause_sha256": "335463fc36211ff5f227326222dea41b59ad3c53b9aeb5afbd61af7b89502b46"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.named-flows-layout",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "named-flows-layout"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Step 3: named flows layout.",
+      "locator": {
+        "section_id": "named-flows-layout",
+        "text_sha256": "17af0182c1c287d9dfd6cf42874345150639b8d3dd5ed31a8ddd24f8bf659d0a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.regions-visual-formatting-implementation-note",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions-visual-formatting-implementation-note"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Regions visual formatting: implementation note.",
+      "locator": {
+        "section_id": "regions-visual-formatting-implementation-note",
+        "text_sha256": "1233c8d5ff3152e718c9bf068c58d1be715fbe13515235c6fa53f2f45f354f2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.regions-visual-formatting-implementation-note-clause-1233c8d5ff31"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.regions-visual-formatting-implementation-note-clause-1233c8d5ff31",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions-visual-formatting-implementation-note"
+      ],
+      "behaviour": "Regions visual formatting: implementation note — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "regions-visual-formatting-implementation-note",
+        "clause_index": 0,
+        "clause_sha256": "1233c8d5ff3152e718c9bf068c58d1be715fbe13515235c6fa53f2f45f354f2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.relation-to-document-events",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "relation-to-document-events"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relation to document events.",
+      "locator": {
+        "section_id": "relation-to-document-events",
+        "text_sha256": "a5299670116674c2a1625c0445e3e75087ca02625351bf92c1ff12fd9332df89"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.relation-to-other-specifications",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "relation-to-other-specifications"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Relation to other specifications.",
+      "locator": {
+        "section_id": "relation-to-other-specifications",
+        "text_sha256": "8efc1958324415b76cc783944c353c6dab12601e4af9181d363f018b5f67a0d7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.relation-to-other-specifications-clause-6fa438fbfb32"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.relation-to-other-specifications-clause-6fa438fbfb32",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "relation-to-other-specifications"
+      ],
+      "behaviour": "Relation to other specifications — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "relation-to-other-specifications",
+        "clause_index": 3,
+        "clause_sha256": "6fa438fbfb322de6cf5b7362eac72ef117214fbb957f5b8435b0fa8bee78b77d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.usecases",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "usecases"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Use Cases.",
+      "locator": {
+        "section_id": "usecases",
+        "text_sha256": "b9d28e7d05da30a17cab245af37f2a866f719216acefb048b9cd8368224592b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.older-changes",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "older_changes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Older Changes.",
+      "locator": {
+        "section_id": "older_changes",
+        "text_sha256": "12bcca6b10d5bab45c6aa79bd4605336af3359b883eb60232cdea6fd7ffc5058"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.conformance",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.conventions",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "conventions",
+        "text_sha256": "e1ee93bc8e4af9acf7083acfc75714b46c1c4685bdf761ebdfd63a4b9d6e8cad"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.conventions-clause-6abbe28898f0",
+        "css-regions-1.conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.conventions-clause-6abbe28898f0",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "conventions",
+        "clause_index": 0,
+        "clause_sha256": "6abbe28898f04f06c3df34bdfedec00f0f19e823fcf139f5d2d79b1692543553"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.conventions-clause-33a5ed16a48d",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.conformance-classes",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.conformance-classes-clause-ff408372426c",
+        "css-regions-1.conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.conformance-classes-clause-ff408372426c",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.conformance-classes-clause-d9976214330c",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.partial",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.partial-clause-ef40c4aab200",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.experimental",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "experimental"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Experimental implementations.",
+      "locator": {
+        "section_id": "experimental",
+        "text_sha256": "d65302001727731f480732eea29f70c56e93286eee5ffd392400e6a470f873c7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.testing",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "testing",
+        "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.testing-clause-1e0fff369221",
+        "css-regions-1.testing-clause-c7ed0d126be3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.testing-clause-1e0fff369221",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.testing-clause-c7ed0d126be3",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "testing",
+        "clause_index": 2,
+        "clause_sha256": "c7ed0d126be3854ca3a86569b068a6069b272f15531252ad1bf9883a45eb699a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.property-index",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "69b99b1d2a2f649acbe1027d77228720e2e8d2675567d532c6d1d59f062c834e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-regions-1.property-index-clause-22edaa34f875",
+        "css-regions-1.property-index-clause-56bb7ef5f147"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.property-index-clause-22edaa34f875",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 7,
+        "clause_sha256": "22edaa34f8759ed3f8fac50d7189c775d864f00320b5d78025c41c6f5b4456d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.property-index-clause-56bb7ef5f147",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 16,
+        "clause_sha256": "56bb7ef5f1475b89aa9fe6f4761ab223d67703403fb017e59117e8aecae2f2bb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-regions-1.import-8195a7ebd6e3",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.w3.org/TR/DOM-Level-3-Events/.",
+      "unresolved_reference": "https://www.w3.org/TR/DOM-Level-3-Events/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-regions-1.title",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Regions Module Level 1.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.abstract",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "3d773691a64c34358d4109fffba1f3dc453fe5d0de6c0621eab09ddd81192b0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.status",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "status"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "status",
+        "text_sha256": "1d8a132fd55a27feff63ee599f7c0678f08523ca88f441b1e8aa496fe38e246a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.contents",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "b3b72e719d296b906f77b33513698a1bacd43324970a4d4630eafaee03feb3d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.introduction",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "55e22f11ffbad6362873815e7f117f564eba65fb8d57f72e1bc6f1dfc748b75f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.regions-visual-formatting-examples",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "regions-visual-formatting-examples"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.5. Regions visual formatting example.",
+      "locator": {
+        "section_id": "regions-visual-formatting-examples",
+        "text_sha256": "02edd04117c1c0c14fef8963bc4e41f28771aff0ad521362ecd4cc420adc9e1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.step1-phase1-example",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "step1-phase1-example"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.5.1. Step 1 - Phase 1: Laying out RFCBs with used height of zero.",
+      "locator": {
+        "section_id": "step1-phase1-example",
+        "text_sha256": "903ac419e4d59541889f839b200572e519dc5bb5587bb3646e2e83d05dfbb6a0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.step1-phase2-example",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "step1-phase2-example"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.5.2. Step 1 - Phase 2: Layout flow to compute the RFCBs' flow fragments heights.",
+      "locator": {
+        "section_id": "step1-phase2-example",
+        "text_sha256": "0dde579a7faee211989acfb16ed7b81d397f35fe5787207787729393da6d7ee4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.step2-example",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "step2-example"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.5.3. Step 2: Layout document and regions without named flows.",
+      "locator": {
+        "section_id": "step2-example",
+        "text_sha256": "1db40340d9691a1e5ee165b156db28590c041b73752060dce07dec665d8ff8f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.step3-example",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "step3-example"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 7.5.4. Step 3: named flows layout.",
+      "locator": {
+        "section_id": "step3-example",
+        "text_sha256": "4e3db6c574effdf4f594ef9ecf261727f8d3a48ce409905e8a01b5185a25f3b8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.changes",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11. Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.changes-from-feb-18-2014",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "changes_from_Feb_18_2014"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11.1. Changes from February 18th 2014 version.",
+      "locator": {
+        "section_id": "changes_from_Feb_18_2014",
+        "text_sha256": "3fd115960337768e6910f7c1765add2597a77e8ac287d59aaa42c08ea49705e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.changes-from-may-28-2013",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "changes_from_May_28_2013"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11.2. Changes from May 28th 2013 version.",
+      "locator": {
+        "section_id": "changes_from_May_28_2013",
+        "text_sha256": "d3d7ed9b5372835199f950978683bcd26f7a8627a533353342a12fa50dbf544a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.changes-from-aug-28-2012",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "changes_from_Aug_28_2012"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11.3. Changes from August 28th 2012 version.",
+      "locator": {
+        "section_id": "changes_from_Aug_28_2012",
+        "text_sha256": "0f7cdb0569282d0b402b45b19546eef954f7262443b082e5c851f6aa6ad22971"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.changes-from-may-03-2012",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "changes_from_May_03_2012"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 11.4. Changes from May 3rd 2012 version.",
+      "locator": {
+        "section_id": "changes_from_May_03_2012",
+        "text_sha256": "cd8099db93a5074681e14132302a1fdb1bad4c5f2bc73e33db33e949d7ba6443"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.acknowledgments",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "7b4606c56e02614dff442ef43a97c09924f2ef539ace79d23a72f6a22d4646c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.references",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.informative",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "2a969ab9fa53f5ab72c96b5c0dd17426a7b8f3bc9bee878f56402aa42cd0f2b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-regions-1.index",
+      "family": "css-regions-1",
+      "source_id": "css-regions-1",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "cc31fe36aa4d5a96a74829c633c9f91c38e85d2d3fa625402d2f026b5e5a59cb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

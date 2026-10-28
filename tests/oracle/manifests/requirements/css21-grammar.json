@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-grammar.q25-0",
+      "family": "css21-grammar",
+      "source_id": "css21-grammar",
+      "sections": [
+        "q25.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix G. Grammar of CSS 2.1.",
+      "locator": {
+        "section_id": "q25.0",
+        "text_sha256": "201c195003da19ac68b82f35ff26b7fb9a1ea04417adab65625acb03cda81597"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-grammar.q25-0-clause-99b6fe465ce3"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-grammar.q25-0-clause-99b6fe465ce3",
+      "family": "css21-grammar",
+      "source_id": "css21-grammar",
+      "sections": [
+        "q25.0"
+      ],
+      "behaviour": "Appendix G. Grammar of CSS 2.1 — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "q25.0",
+        "clause_index": 8,
+        "clause_sha256": "99b6fe465ce3697de23f5be4929a9389c62a74d6bcda092c8e9bbdd3e038b76d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-grammar.grammar",
+      "family": "css21-grammar",
+      "source_id": "css21-grammar",
+      "sections": [
+        "grammar"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grammar.",
+      "locator": {
+        "section_id": "grammar",
+        "text_sha256": "f92851ad42ebf5a4b93db60129c949bae9e0b85655bbaf03701412e2c8289dbc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-grammar.grammar-clause-844893d9ba7a",
+        "css21-grammar.grammar-clause-c6672e81b818"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-grammar.grammar-clause-844893d9ba7a",
+      "family": "css21-grammar",
+      "source_id": "css21-grammar",
+      "sections": [
+        "grammar"
+      ],
+      "behaviour": "Grammar — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "grammar",
+        "clause_index": 0,
+        "clause_sha256": "844893d9ba7a491085d26efd060ecfc7d2b87293dc755b861ff7127a25945482"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-grammar.grammar-clause-c6672e81b818",
+      "family": "css21-grammar",
+      "source_id": "css21-grammar",
+      "sections": [
+        "grammar"
+      ],
+      "behaviour": "Grammar — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "grammar",
+        "clause_index": 7,
+        "clause_sha256": "c6672e81b81828ac324ad2095da6bd624636a0c06e780bdd5269c293a3d74ea7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-grammar.scanner",
+      "family": "css21-grammar",
+      "source_id": "css21-grammar",
+      "sections": [
+        "scanner"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lexical scanner.",
+      "locator": {
+        "section_id": "scanner",
+        "text_sha256": "e224d64eb294ebc3967de88ef58eb04b4a5a22aa355e7e5a5a1ada3b94b2ebdd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-grammar.scanner-clause-cfdd738bc518"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-grammar.scanner-clause-cfdd738bc518",
+      "family": "css21-grammar",
+      "source_id": "css21-grammar",
+      "sections": [
+        "scanner"
+      ],
+      "behaviour": "Lexical scanner — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "scanner",
+        "clause_index": 1,
+        "clause_sha256": "cfdd738bc51864f76112bee5b762480b1dbb0642055dedd0a5815599b23a8eeb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-grammar.tokenizer-diffs",
+      "family": "css21-grammar",
+      "source_id": "css21-grammar",
+      "sections": [
+        "tokenizer-diffs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Comparison of tokenization in CSS 2.1 and CSS1.",
+      "locator": {
+        "section_id": "tokenizer-diffs",
+        "text_sha256": "fe7e001ecf148caa986ea9e927daff8e8866b8f08fdd64ea430c680cb4f350fa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css21-grammar.tokenizer-diffs-clause-b0602ad377bf"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-grammar.tokenizer-diffs-clause-b0602ad377bf",
+      "family": "css21-grammar",
+      "source_id": "css21-grammar",
+      "sections": [
+        "tokenizer-diffs"
+      ],
+      "behaviour": "Comparison of tokenization in CSS 2.1 and CSS1 — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "tokenizer-diffs",
+        "clause_index": 5,
+        "clause_sha256": "b0602ad377bf86aa66733727800a02fc2288cc19c9406dce45e1f4c04e252bb5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-grammar.q25-4",
+      "family": "css21-grammar",
+      "source_id": "css21-grammar",
+      "sections": [
+        "q25.4"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementation note.",
+      "locator": {
+        "section_id": "q25.4",
+        "text_sha256": "86ad252c660760edcdc662c81443bdc9322d67d1740590daaad4675718b2b4ee"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

@@ -1,0 +1,3199 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "infra.goals",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "goals"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Goals.",
+      "locator": {
+        "section_id": "goals",
+        "text_sha256": "8fdb6fbedf73abaa905f92ad04aeed829a5a0a5741147c77b67bb4814eeb565b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.usage",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "usage"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Usage.",
+      "locator": {
+        "section_id": "usage",
+        "text_sha256": "ce06c7d7821b6156266b5374e13545b86b506527e4c22454637081227e256423"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.conventions",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conventions.",
+      "locator": {
+        "section_id": "conventions",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.conformance",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "conformance",
+        "text_sha256": "f328a73fb82445dec190d36fe3fb8d448c957f4f11675d91877372324353bd4c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.conformance-clause-ae0bd5b3b0ed",
+        "infra.conformance-clause-27ee0fd3396a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.conformance-clause-ae0bd5b3b0ed",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Conformance — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 1,
+        "clause_sha256": "ae0bd5b3b0ed8c2dd95a1b5d989b38d1aa0c5b3ab3afbe31fc4f0ad611e0b2a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.conformance-clause-27ee0fd3396a",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "conformance"
+      ],
+      "behaviour": "Conformance — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "conformance",
+        "clause_index": 4,
+        "clause_sha256": "27ee0fd3396a165b667e21af356280e2142cfe319a7cca96eac03f317f90696d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.other-specs",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "other-specs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Compliance with other specifications.",
+      "locator": {
+        "section_id": "other-specs",
+        "text_sha256": "6754e580590a2579ea21c98205e7d332da10f4701c3babc5a7f0e3b7efe4ef16"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.other-specs-clause-54c681b78a85"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.other-specs-clause-54c681b78a85",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "other-specs"
+      ],
+      "behaviour": "Compliance with other specifications — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "other-specs",
+        "clause_index": 0,
+        "clause_sha256": "54c681b78a853cdcd7defb7cccd2069b3b5238d783f734b3a39cacff4cccdfb3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.terminology",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "terminology"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terminology",
+        "text_sha256": "d4f985c9c19c02e443d6b4fc074bdf34e798fca92dc6d9b04ab1d1af1bccde61"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.privacy",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy concerns.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "29ea6c8e7d7dbe249ab245670607021ab9acb1d55acdfa571e9b30165eeb4c15"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.privacy-clause-b58807efc1c1",
+        "infra.privacy-clause-4b94da2f41ac",
+        "infra.privacy-clause-1b833db00702"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.privacy-clause-b58807efc1c1",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Privacy concerns — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "privacy",
+        "clause_index": 2,
+        "clause_sha256": "b58807efc1c165514ac4ceee103b828a840b25e264eef63428b0f630e524be99"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.privacy-clause-4b94da2f41ac",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Privacy concerns — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "privacy",
+        "clause_index": 3,
+        "clause_sha256": "4b94da2f41ac7ef1ab419b33de951ca35e274ee95bdc71338c7a239fdd4870a4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.privacy-clause-1b833db00702",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Privacy concerns — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "privacy",
+        "clause_index": 4,
+        "clause_sha256": "1b833db00702a14c11285ca885a1a98c2f25d053885977012618bd6b3a601c87"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithms",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Algorithms.",
+      "locator": {
+        "section_id": "algorithms",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.algorithm-conformance",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "algorithm-conformance",
+        "text_sha256": "f6e6eef041be52026cf2db5ee6d5a22d5c930616b6be2298b279a163c837f956"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.algorithm-conformance-clause-a7bcae2252d8",
+        "infra.algorithm-conformance-clause-32fcb8e969de",
+        "infra.algorithm-conformance-clause-c1dde4321320",
+        "infra.algorithm-conformance-clause-2a7430d553b7",
+        "infra.algorithm-conformance-clause-a686df09d6fc",
+        "infra.algorithm-conformance-clause-f441b90391a3",
+        "infra.algorithm-conformance-clause-c1d88a4b688b",
+        "infra.algorithm-conformance-clause-84c5ba124921"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.algorithm-conformance-clause-a7bcae2252d8",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conformance",
+        "clause_index": 0,
+        "clause_sha256": "a7bcae2252d80f8282b841de5d9338577aba22f1dc8861b470ae94f0f2e5ab31"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-conformance-clause-32fcb8e969de",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conformance",
+        "clause_index": 2,
+        "clause_sha256": "32fcb8e969dee6fbe5f3071a1b3ec22e7c31bc51c3d7bec2909b3a30c4223d8a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-conformance-clause-c1dde4321320",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conformance",
+        "clause_index": 8,
+        "clause_sha256": "c1dde4321320865d0d2b2421fba31e80207a85472d1e7599d2e7977d1f461f6f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-conformance-clause-2a7430d553b7",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conformance",
+        "clause_index": 9,
+        "clause_sha256": "2a7430d553b7dc37a093c1d642a12b1f3feffd2efc06ece06ceab44bcdd298a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-conformance-clause-a686df09d6fc",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conformance",
+        "clause_index": 10,
+        "clause_sha256": "a686df09d6fccf71caa90aaf78e5b114863d26e8ddf2f96d0b9c80b063144b82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-conformance-clause-f441b90391a3",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conformance",
+        "clause_index": 11,
+        "clause_sha256": "f441b90391a396d7a64b88d074c543484f84c6b60563a4017015407e9351afe7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-conformance-clause-c1d88a4b688b",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conformance",
+        "clause_index": 12,
+        "clause_sha256": "c1d88a4b688b9c4aabad58fd39b47c337bcd03c2a463bf8b0c773a7283673032"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-conformance-clause-84c5ba124921",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conformance"
+      ],
+      "behaviour": "Conformance — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conformance",
+        "clause_index": 14,
+        "clause_sha256": "84c5ba12492121d25305f2d24003113328673beb7f2940aa924666c1062c8b06"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-limits",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-limits"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Avoid limits on algorithm inputs.",
+      "locator": {
+        "section_id": "algorithm-limits",
+        "text_sha256": "4750dc1a78d9811957bb990e3671d694def9976efd8395b8148c02faf56dac37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.algorithm-limits-clause-a06f2b22dbc1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.algorithm-limits-clause-a06f2b22dbc1",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-limits"
+      ],
+      "behaviour": "Avoid limits on algorithm inputs — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-limits",
+        "clause_index": 0,
+        "clause_sha256": "a06f2b22dbc1fe48ae7f9e11ce220fa86029fa031a77511310303c98de712e7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-declaration",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-declaration"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Declaration.",
+      "locator": {
+        "section_id": "algorithm-declaration",
+        "text_sha256": "371e0768a35c303b1c442eed1b666b89b00d8392758fd31fe4763e4932102e69"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.algorithm-declaration-clause-698f87d64129",
+        "infra.algorithm-declaration-clause-a61b3ac4dbc3",
+        "infra.algorithm-declaration-clause-0a8e0312f41c",
+        "infra.algorithm-declaration-clause-507b7c99c53d",
+        "infra.algorithm-declaration-clause-f52b4b7ae29e",
+        "infra.algorithm-declaration-clause-0061168c23dc",
+        "infra.algorithm-declaration-clause-1888336f6c4a",
+        "infra.algorithm-declaration-clause-64940ef45a90",
+        "infra.algorithm-declaration-clause-38b9458fab5d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.algorithm-declaration-clause-698f87d64129",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-declaration"
+      ],
+      "behaviour": "Declaration — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-declaration",
+        "clause_index": 0,
+        "clause_sha256": "698f87d64129dd575246db57abd9a2889d3f22499c514d8680efb114e310b733"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-declaration-clause-a61b3ac4dbc3",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-declaration"
+      ],
+      "behaviour": "Declaration — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-declaration",
+        "clause_index": 1,
+        "clause_sha256": "a61b3ac4dbc38a45f664ee0fe2fed2a6f1a199079891dedc2de283fd43d37d19"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-declaration-clause-0a8e0312f41c",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-declaration"
+      ],
+      "behaviour": "Declaration — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-declaration",
+        "clause_index": 3,
+        "clause_sha256": "0a8e0312f41cf11821b9bd7ec0d5564daff9b900efa81492d04a65bd27501033"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-declaration-clause-507b7c99c53d",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-declaration"
+      ],
+      "behaviour": "Declaration — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-declaration",
+        "clause_index": 4,
+        "clause_sha256": "507b7c99c53db1da839e277f800c362e4bbe3fbb14173a94b3028924ccffd42b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-declaration-clause-f52b4b7ae29e",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-declaration"
+      ],
+      "behaviour": "Declaration — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-declaration",
+        "clause_index": 5,
+        "clause_sha256": "f52b4b7ae29e802011e72d5b0d0cfba0c05b194d45f2c8d7820bc0dcfe41fb82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-declaration-clause-0061168c23dc",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-declaration"
+      ],
+      "behaviour": "Declaration — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-declaration",
+        "clause_index": 6,
+        "clause_sha256": "0061168c23dc71cd4b990179ca1e013c3c21a44b8aaaea234d9450da6d14ef0b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-declaration-clause-1888336f6c4a",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-declaration"
+      ],
+      "behaviour": "Declaration — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-declaration",
+        "clause_index": 7,
+        "clause_sha256": "1888336f6c4afdf6d58163f7fa76c74e279dd74531d6d372cfcbd24313df14d6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-declaration-clause-64940ef45a90",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-declaration"
+      ],
+      "behaviour": "Declaration — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-declaration",
+        "clause_index": 11,
+        "clause_sha256": "64940ef45a9056646a8086a58522b3cb8f5c4858a949013a5ae2861be2252c6b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-declaration-clause-38b9458fab5d",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-declaration"
+      ],
+      "behaviour": "Declaration — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-declaration",
+        "clause_index": 12,
+        "clause_sha256": "38b9458fab5d67a826d356fdefae11686cebff71ca528ec2bdec6add7862e53c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-params",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-params"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Parameters.",
+      "locator": {
+        "section_id": "algorithm-params",
+        "text_sha256": "f60f6fbfed56ea8d7e6d4b66a97d2c14471ccb429fe3a0cf27e065aa8c78c280"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.algorithm-params-clause-07e3642195aa",
+        "infra.algorithm-params-clause-5efb2f87a4ba",
+        "infra.algorithm-params-clause-e5361e64d738",
+        "infra.algorithm-params-clause-5dd1f1a613b0",
+        "infra.algorithm-params-clause-4aad2493b31d",
+        "infra.algorithm-params-clause-63ddc3f8620b"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.algorithm-params-clause-07e3642195aa",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-params"
+      ],
+      "behaviour": "Parameters — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-params",
+        "clause_index": 0,
+        "clause_sha256": "07e3642195aa2f80d80aa7a7e17fe98cf40fd351ec7d96867c15c2670852252b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-params-clause-5efb2f87a4ba",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-params"
+      ],
+      "behaviour": "Parameters — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-params",
+        "clause_index": 1,
+        "clause_sha256": "5efb2f87a4bafcda795e4950e49b7ac0428b53d3e5fd1ead08a061772f1a1317"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-params-clause-e5361e64d738",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-params"
+      ],
+      "behaviour": "Parameters — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-params",
+        "clause_index": 4,
+        "clause_sha256": "e5361e64d73872df25ec1cc6e6cce0deb6c97fb8faa7e85b35ac640953837bcd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-params-clause-5dd1f1a613b0",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-params"
+      ],
+      "behaviour": "Parameters — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-params",
+        "clause_index": 10,
+        "clause_sha256": "5dd1f1a613b00bcf8777f16563e8ee85b7859d02e5c8f3e8587509f4af93d69f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-params-clause-4aad2493b31d",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-params"
+      ],
+      "behaviour": "Parameters — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-params",
+        "clause_index": 14,
+        "clause_sha256": "4aad2493b31d73492cfca70ba8fc4da9373e443abfee47ec4e7b9d7ea86dbceb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-params-clause-63ddc3f8620b",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-params"
+      ],
+      "behaviour": "Parameters — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-params",
+        "clause_index": 25,
+        "clause_sha256": "63ddc3f8620b8bd2c2eca0adb3fa7f1ed3d7bd55305c39b29b5e2e0b612ae39b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.variables",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "variables"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Variables.",
+      "locator": {
+        "section_id": "variables",
+        "text_sha256": "4355a7b8f126d6a3f595f87283c7dd4a7e9b351cced96d15dd6b774b4810594b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.variables-clause-1debf5cb74a8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.variables-clause-1debf5cb74a8",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "variables"
+      ],
+      "behaviour": "Variables — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "variables",
+        "clause_index": 11,
+        "clause_sha256": "1debf5cb74a875dabcc88bd8d44f6d468115ed52158b9d670080e3d12e86ea1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-control-flow",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-control-flow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Control flow.",
+      "locator": {
+        "section_id": "algorithm-control-flow",
+        "text_sha256": "0622646afd40e4b367202847755fd050c4d24674fdd07f981a308b4e3c019173"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.algorithm-control-flow-clause-0622646afd40"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.algorithm-control-flow-clause-0622646afd40",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-control-flow"
+      ],
+      "behaviour": "Control flow — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-control-flow",
+        "clause_index": 0,
+        "clause_sha256": "0622646afd40e4b367202847755fd050c4d24674fdd07f981a308b4e3c019173"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-conditional-abort",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conditional-abort"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conditional abort.",
+      "locator": {
+        "section_id": "algorithm-conditional-abort",
+        "text_sha256": "45700d458d64476e7bfa10642f6ade55fb1502f1ed033bbfaea6467da20e453f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.algorithm-conditional-abort-clause-f9b9b99215d7",
+        "infra.algorithm-conditional-abort-clause-321efaaa15c9",
+        "infra.algorithm-conditional-abort-clause-c73c7b58a38f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.algorithm-conditional-abort-clause-f9b9b99215d7",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conditional-abort"
+      ],
+      "behaviour": "Conditional abort — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conditional-abort",
+        "clause_index": 1,
+        "clause_sha256": "f9b9b99215d73fb71afc107b915e5c7f016ca83805e1da19d13393cd5e374e13"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-conditional-abort-clause-321efaaa15c9",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conditional-abort"
+      ],
+      "behaviour": "Conditional abort — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conditional-abort",
+        "clause_index": 2,
+        "clause_sha256": "321efaaa15c9692caa4efc246c72eeed3b7397a96d66ef9cbd19f0009870776c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-conditional-abort-clause-c73c7b58a38f",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conditional-abort"
+      ],
+      "behaviour": "Conditional abort — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conditional-abort",
+        "clause_index": 3,
+        "clause_sha256": "c73c7b58a38f29cf85af28900f49b94cbe2b862ee1346f150d15bec05f4e0ba0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-conditional-statements",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conditional-statements"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conditional statements.",
+      "locator": {
+        "section_id": "algorithm-conditional-statements",
+        "text_sha256": "62d31b13f44a33567342d81d120193a36da2d75e7992325b56ccec9ec0d901d2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.algorithm-conditional-statements-clause-61a9efb2db2e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.algorithm-conditional-statements-clause-61a9efb2db2e",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-conditional-statements"
+      ],
+      "behaviour": "Conditional statements — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "algorithm-conditional-statements",
+        "clause_index": 0,
+        "clause_sha256": "61a9efb2db2eaacd6c3486f6b648620d9b680437721300a15a0580408cfc3358"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.algorithm-iteration",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "algorithm-iteration"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Iteration.",
+      "locator": {
+        "section_id": "algorithm-iteration",
+        "text_sha256": "38787ebfe6128741b1d90de73ca0ac5bb62447f8d391ba887d8a9355825f6c71"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.assertions",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "assertions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Assertions.",
+      "locator": {
+        "section_id": "assertions",
+        "text_sha256": "0dd007f29d98db92b8dcde0a200bff95128f5820086af6d940bdcad20eb2a913"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.assertions-clause-3adaa2776614"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.assertions-clause-3adaa2776614",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "assertions"
+      ],
+      "behaviour": "Assertions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "assertions",
+        "clause_index": 0,
+        "clause_sha256": "3adaa2776614610fd6df83f86dde2bbec75b3046d10652264573edcb80704e9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.identity-and-equality",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "identity-and-equality"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Identity and equality.",
+      "locator": {
+        "section_id": "identity-and-equality",
+        "text_sha256": "1de73891f8d6c7957b03934d7d60b342ab3cbc3fa1304a28e6f91ed787c3ae86"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.identity-and-equality-clause-6a3babba6819"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.identity-and-equality-clause-6a3babba6819",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "identity-and-equality"
+      ],
+      "behaviour": "Identity and equality — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "identity-and-equality",
+        "clause_index": 1,
+        "clause_sha256": "6a3babba6819dddeed20c8d659fe1f2cea0dbc06543059997b64ffa689ec72ef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.primitive-data-types",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "primitive-data-types"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Primitive data types.",
+      "locator": {
+        "section_id": "primitive-data-types",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.nulls",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "nulls"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Nulls.",
+      "locator": {
+        "section_id": "nulls",
+        "text_sha256": "565d4823cdee66f15adc977e86cf11a1ebae169faa1ddcb3bfa646cbfb0a1292"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.booleans",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "booleans"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Booleans.",
+      "locator": {
+        "section_id": "booleans",
+        "text_sha256": "20d515b0b67d92aff172eb9231b31466148d20bbd5f846759e05b3bd7410b60f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.numbers",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "numbers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Numbers.",
+      "locator": {
+        "section_id": "numbers",
+        "text_sha256": "aa48685e41ee027ed227903b8207e287cd910a20028fa5e21b3d70a5a28ef280"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.bytes",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "bytes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Bytes.",
+      "locator": {
+        "section_id": "bytes",
+        "text_sha256": "3aa27171c5bd378db401aade30f5e5fbf7d03f7d439336eb999fcc7d3d5d8113"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.byte-sequences",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "byte-sequences"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Byte sequences.",
+      "locator": {
+        "section_id": "byte-sequences",
+        "text_sha256": "65cfd648455b09afdb284fdf5c3abbf294cf396b59699c23fa5f422b539ccb7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.byte-sequences-clause-97d18d44386d",
+        "infra.byte-sequences-clause-b2d26b37bdde"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.byte-sequences-clause-97d18d44386d",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "byte-sequences"
+      ],
+      "behaviour": "Byte sequences — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "byte-sequences",
+        "clause_index": 9,
+        "clause_sha256": "97d18d44386d7f72274bc91ee9c7175d8377d0aedf9a5150f16c45b1686d6190"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.byte-sequences-clause-b2d26b37bdde",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "byte-sequences"
+      ],
+      "behaviour": "Byte sequences — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "byte-sequences",
+        "clause_index": 27,
+        "clause_sha256": "b2d26b37bddedec99cf0ba8dd84d6ce3ae1715b7e49f239c8983362805e3d43e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.code-points",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "code-points"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Code points.",
+      "locator": {
+        "section_id": "code-points",
+        "text_sha256": "3104ca2e9db37b72cf142ffa6c3a0d325217e21eac48e1992833bb7fc905edcb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.strings",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "strings"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Strings.",
+      "locator": {
+        "section_id": "strings",
+        "text_sha256": "e3ace675056c6245cb427e211020e4d3464940e6c4818ceb0ea3f56485c6555a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.strings-clause-89935ac97feb",
+        "infra.strings-clause-0e12c8b374d0",
+        "infra.strings-clause-950dcf34af3c",
+        "infra.strings-clause-e61d2b6a08f8",
+        "infra.strings-clause-a4aa921e426b",
+        "infra.strings-clause-20476debd2a8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.strings-clause-89935ac97feb",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "strings"
+      ],
+      "behaviour": "Strings — normative clause 21, located by its exact source hash.",
+      "locator": {
+        "section_id": "strings",
+        "clause_index": 20,
+        "clause_sha256": "89935ac97febf50244a2cdd9bd54871e27e0c7cc56eb489ccb6363d3931fd2cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.strings-clause-0e12c8b374d0",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "strings"
+      ],
+      "behaviour": "Strings — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "strings",
+        "clause_index": 39,
+        "clause_sha256": "0e12c8b374d087a22a3bc057737b168a8dd0a1f3e6c1d86f084c53c9a53db582"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.strings-clause-950dcf34af3c",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "strings"
+      ],
+      "behaviour": "Strings — normative clause 63, located by its exact source hash.",
+      "locator": {
+        "section_id": "strings",
+        "clause_index": 62,
+        "clause_sha256": "950dcf34af3cb3ef44339928ab992d869f4de300e466616ae48ca75056926496"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.strings-clause-e61d2b6a08f8",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "strings"
+      ],
+      "behaviour": "Strings — normative clause 122, located by its exact source hash.",
+      "locator": {
+        "section_id": "strings",
+        "clause_index": 121,
+        "clause_sha256": "e61d2b6a08f8e47074270334c2be974312a80d57e2748f5c406c0c600ed2ff6d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.strings-clause-a4aa921e426b",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "strings"
+      ],
+      "behaviour": "Strings — normative clause 133, located by its exact source hash.",
+      "locator": {
+        "section_id": "strings",
+        "clause_index": 132,
+        "clause_sha256": "a4aa921e426b9cf1d90df51726f7cd0b6a91075c9ec2d820e6fe949d0444ff2a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.strings-clause-20476debd2a8",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "strings"
+      ],
+      "behaviour": "Strings — normative clause 156, located by its exact source hash.",
+      "locator": {
+        "section_id": "strings",
+        "clause_index": 155,
+        "clause_sha256": "20476debd2a8b0791bac19b1d4b767ca73c5fba7631ace60d909b8912a9f0799"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.time",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "time"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Time.",
+      "locator": {
+        "section_id": "time",
+        "text_sha256": "9ae535b805740baa6a165617d38731aa8d492ea49816cb7ed79afb28a568e527"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.singleton",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "singleton"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Singletons.",
+      "locator": {
+        "section_id": "singleton",
+        "text_sha256": "e0b27d3fa3153ba9365cc6a3992ad2d765f5ed35257838d030261d928623b47b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.singleton-clause-bbe072461ef5",
+        "infra.singleton-clause-723e15bc8d7d",
+        "infra.singleton-clause-6567e0bc6bfa",
+        "infra.singleton-clause-c28174eef002",
+        "infra.singleton-clause-3b361eacb07b",
+        "infra.singleton-clause-03cf2f06e797",
+        "infra.singleton-clause-29155b7685c0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.singleton-clause-bbe072461ef5",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "singleton"
+      ],
+      "behaviour": "Singletons — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "singleton",
+        "clause_index": 0,
+        "clause_sha256": "bbe072461ef5881371f09d6b8f58111a77ef1b018b6116ae89cb665054875ed0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.singleton-clause-723e15bc8d7d",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "singleton"
+      ],
+      "behaviour": "Singletons — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "singleton",
+        "clause_index": 8,
+        "clause_sha256": "723e15bc8d7d1196c974711fa8dd3ae3f5db5a9f687cc5ce5663bae0ac68357b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.singleton-clause-6567e0bc6bfa",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "singleton"
+      ],
+      "behaviour": "Singletons — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "singleton",
+        "clause_index": 11,
+        "clause_sha256": "6567e0bc6bfa0e36a689bd7fe1cd9f81c345d2fddd95029d5fe60b9ed4582b88"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.singleton-clause-c28174eef002",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "singleton"
+      ],
+      "behaviour": "Singletons — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "singleton",
+        "clause_index": 12,
+        "clause_sha256": "c28174eef002b2bcc1b781ccd8e1bfbd14e0f1ea8cfe086e45b4667fd256a436"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.singleton-clause-3b361eacb07b",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "singleton"
+      ],
+      "behaviour": "Singletons — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "singleton",
+        "clause_index": 17,
+        "clause_sha256": "3b361eacb07ba5f89cd4c07d27ce66afee721f543b97a0a958fbeae625a74557"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.singleton-clause-03cf2f06e797",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "singleton"
+      ],
+      "behaviour": "Singletons — normative clause 25, located by its exact source hash.",
+      "locator": {
+        "section_id": "singleton",
+        "clause_index": 24,
+        "clause_sha256": "03cf2f06e79779fa87bb611acaf549af8d78cea8ca84f563f22bfcb8b5103a53"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.singleton-clause-29155b7685c0",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "singleton"
+      ],
+      "behaviour": "Singletons — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "singleton",
+        "clause_index": 29,
+        "clause_sha256": "29155b7685c07b4078605dbf767ae394b130fc9284c42f6b34d0462f4c6043bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.data-structures",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "data-structures"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Data structures.",
+      "locator": {
+        "section_id": "data-structures",
+        "text_sha256": "e89ba4f9000c20f08ff345c73a7a3f6295940def9a3686f571c8a13870669e63"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.lists",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "lists"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Lists.",
+      "locator": {
+        "section_id": "lists",
+        "text_sha256": "1dd797954a56df138dc84ecf35501a7bff57f8323bbfa89db1ef19023d76e414"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.lists-clause-1b1f2f9264d5",
+        "infra.lists-clause-016d16514007",
+        "infra.lists-clause-c22b84f66413",
+        "infra.lists-clause-426e57f6868d",
+        "infra.lists-clause-285a28475ae1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.lists-clause-1b1f2f9264d5",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "lists"
+      ],
+      "behaviour": "Lists — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "lists",
+        "clause_index": 3,
+        "clause_sha256": "1b1f2f9264d52dbb5fc56332111a74d3978cda38b3467a4817741c0db706a56e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.lists-clause-016d16514007",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "lists"
+      ],
+      "behaviour": "Lists — normative clause 15, located by its exact source hash.",
+      "locator": {
+        "section_id": "lists",
+        "clause_index": 14,
+        "clause_sha256": "016d1651400756358bd791ff03d4ba859020d116841844eb3ae7acd762b3e57e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.lists-clause-c22b84f66413",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "lists"
+      ],
+      "behaviour": "Lists — normative clause 50, located by its exact source hash.",
+      "locator": {
+        "section_id": "lists",
+        "clause_index": 49,
+        "clause_sha256": "c22b84f66413d2f41d6fff42c2a793fe73d356700dc2d7ed3b9bd4508c5397a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.lists-clause-426e57f6868d",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "lists"
+      ],
+      "behaviour": "Lists — normative clause 78, located by its exact source hash.",
+      "locator": {
+        "section_id": "lists",
+        "clause_index": 77,
+        "clause_sha256": "426e57f6868db48efc773c01820eebbff382a7185b2122c965a6a823f47f371c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.lists-clause-285a28475ae1",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "lists"
+      ],
+      "behaviour": "Lists — normative clause 79, located by its exact source hash.",
+      "locator": {
+        "section_id": "lists",
+        "clause_index": 78,
+        "clause_sha256": "285a28475ae1d216f41042cab4c6464d63e561dd0675add7456d6f7bfd471e84"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.stacks",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "stacks"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stacks.",
+      "locator": {
+        "section_id": "stacks",
+        "text_sha256": "8db408fd76436aa484e124ddbdac342549412a5b24920fb4e83d16c09022e511"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.stacks-clause-7226ee7c88f5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.stacks-clause-7226ee7c88f5",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "stacks"
+      ],
+      "behaviour": "Stacks — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "stacks",
+        "clause_index": 4,
+        "clause_sha256": "7226ee7c88f5e48671477be7d26aaafd9674514e8b2c7027bb1ead5884ed5aac"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.queues",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "queues"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Queues.",
+      "locator": {
+        "section_id": "queues",
+        "text_sha256": "70528bf2de1d2ae34de4aa67d71a405730de5b99f1e1b8b8c30987dc94510394"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.queues-clause-ceb187e1133a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.queues-clause-ceb187e1133a",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "queues"
+      ],
+      "behaviour": "Queues — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "queues",
+        "clause_index": 3,
+        "clause_sha256": "ceb187e1133a69d98bc47f8383d66854d4ff3425746303e9c87046967e827540"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.sets",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "sets"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sets.",
+      "locator": {
+        "section_id": "sets",
+        "text_sha256": "bc0508bc60792ba726759f0f581ae0310145452dc6cc7730651ecf0c9e39e6d3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.sets-clause-ad96bbbc1511"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.sets-clause-ad96bbbc1511",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "sets"
+      ],
+      "behaviour": "Sets — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "sets",
+        "clause_index": 0,
+        "clause_sha256": "ad96bbbc151125a2b6a4aef108f3cdfe2acea1e4c9567179060252c33c310a0f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.maps",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "maps"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Maps.",
+      "locator": {
+        "section_id": "maps",
+        "text_sha256": "96192354738298d25cc3b541868d47ba1d7a9dd9061170210e7a6ea32000b52e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.maps-clause-004277634bda",
+        "infra.maps-clause-19cdb53e967e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.maps-clause-004277634bda",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "maps"
+      ],
+      "behaviour": "Maps — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "maps",
+        "clause_index": 27,
+        "clause_sha256": "004277634bda661650574202d2f5e17cc40d1594cb8e727a0b8181e1721bfdf4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.maps-clause-19cdb53e967e",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "maps"
+      ],
+      "behaviour": "Maps — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "maps",
+        "clause_index": 28,
+        "clause_sha256": "19cdb53e967e2834dc224f9b32d493ebd9513b65df6a2a6e4805dc7c6ce09dea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.structs",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "structs"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Structs.",
+      "locator": {
+        "section_id": "structs",
+        "text_sha256": "bfeb46fa378cdd4aa4522cf486bfb1d5f43c266eacdaf27d06356c8a4b8d107b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.structs-clause-ae6cd3b640ae"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.structs-clause-ae6cd3b640ae",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "structs"
+      ],
+      "behaviour": "Structs — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "structs",
+        "clause_index": 2,
+        "clause_sha256": "ae6cd3b640ae7c651bf5708b720d22da9bcbffc337c00f50d3c960ec59cdba72"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.tuples",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "tuples"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Tuples.",
+      "locator": {
+        "section_id": "tuples",
+        "text_sha256": "5c1eb55c84187dddc48ddc1933c111ccf817f772be2b264748751b24e65ea16f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.tuples-clause-bffa5cc98046"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.tuples-clause-bffa5cc98046",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "tuples"
+      ],
+      "behaviour": "Tuples — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "tuples",
+        "clause_index": 2,
+        "clause_sha256": "bffa5cc98046a9d1f2bb0aca039c2dd1afc1e448ea81a93adaff2f9287e4c00b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.json",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "json"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in JSON.",
+      "locator": {
+        "section_id": "json",
+        "text_sha256": "972d466b47532c5e8788aadbe13aa9c7b68e91afb9a0a6d82d22dffc4a405afb"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.json-clause-140db13a1115"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.json-clause-140db13a1115",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "json"
+      ],
+      "behaviour": "JSON — normative clause 114, located by its exact source hash.",
+      "locator": {
+        "section_id": "json",
+        "clause_index": 113,
+        "clause_sha256": "140db13a1115cd03b14265e538828f4181980e098eaab30ee404dd1d52993672"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.forgiving-base64",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "forgiving-base64"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Forgiving base64.",
+      "locator": {
+        "section_id": "forgiving-base64",
+        "text_sha256": "5b525118f021d6521cfd8b91d51c0276c0c9426de9ba926ad3e8329eb0cda8b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "infra.forgiving-base64-clause-941d2b38ad56"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.forgiving-base64-clause-941d2b38ad56",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "forgiving-base64"
+      ],
+      "behaviour": "Forgiving base64 — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "forgiving-base64",
+        "clause_index": 0,
+        "clause_sha256": "941d2b38ad5622a02e2edab1da4a2726f0c62b4a02461febd1ba92270fb4a74f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "infra.namespaces",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "namespaces"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Namespaces.",
+      "locator": {
+        "section_id": "namespaces",
+        "text_sha256": "f434627712d53fef1b4121decbdc2cd65266657b5ded593543c927cf2a76654f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.import-81d6eacb7a2f",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://tc39.es/ecma262/multipage/.",
+      "unresolved_reference": "https://tc39.es/ecma262/multipage/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "infra.import-8fbd089b67ea",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://w3c.github.io/hr-time/.",
+      "unresolved_reference": "https://w3c.github.io/hr-time/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "infra.import-cedb4ecd1736",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.rfc-editor.org/info/rfc20/.",
+      "unresolved_reference": "https://www.rfc-editor.org/info/rfc20/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "infra.import-ba6472c48dd3",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://www.rfc-editor.org/info/rfc4648/.",
+      "unresolved_reference": "https://www.rfc-editor.org/info/rfc4648/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "infra.import-8cac7d115c27",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "infra.title",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Infra (Commit 459b7829230ad256a690dabd315db974469af8e7).",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "c01c162a5a75d38ec15fce9eea0e5c4fb12ebfc8aaaff4b7a66b0fe19abaa930"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.abstract",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "c6300163992c36e0fc9030b1fdd409207f1dddf08b1771883a50a5a21daf66b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.contents",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "ca67a8c3b94c73ad845c81bd42bf136803825e1cb7d63e59fe3666c80591d783"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.acknowledgments",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "0b61901fa307c716b11f71b6d2a6a50acb78f850a2777f864906523e16c19554"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.ipr",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "ipr"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Intellectual property rights.",
+      "locator": {
+        "section_id": "ipr",
+        "text_sha256": "ddb9fc8b57a7a5437bc151ada309ad8ec4d3c9f857803587fed050a2e7ee19b7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.index",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.index-defined-here",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "537163f9c18646919404c71cdfc504e1eab9762b039c6359a427e0d476bea9e6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.index-defined-elsewhere",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "f2e0137f4fea5f333476fd3e8eaf35bd0fc1fe6e738f50e7ff4005e38be3fb3b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.references",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "infra.informative",
+      "family": "infra",
+      "source_id": "infra",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "f26db5b51469c755081cfbce98b1929d8462a1eb4728241b4a3a10156a11bcd2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

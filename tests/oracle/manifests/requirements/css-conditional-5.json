@@ -1,0 +1,2899 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-conditional-5.introduction",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "introduction",
+        "text_sha256": "ae226699225a994ea248a6e2ab0989b9aae8b3a82ae7032e405ee216c6e01198"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.introduction-clause-5d96120a5568",
+        "css-conditional-5.introduction-clause-6ff6ece39a27"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.introduction-clause-5d96120a5568",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Introduction — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "introduction",
+        "clause_index": 2,
+        "clause_sha256": "5d96120a556855f3607951011eba79481a63eccd63f3fe2e5abbbe77509b5077"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.introduction-clause-6ff6ece39a27",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "introduction"
+      ],
+      "behaviour": "Introduction — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "introduction",
+        "clause_index": 4,
+        "clause_sha256": "6ff6ece39a2797d47313b66e05505be676168e24f376e892fa54183ab4015442"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.at-supports-ext",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "at-supports-ext"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extensions to the @supports rule.",
+      "locator": {
+        "section_id": "at-supports-ext",
+        "text_sha256": "334cb6b23864df6418ec94e419969a5c97d839f6eb405933b3af087a3f7bb934"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.foundation-extended-support"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.support-definition-ext",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "support-definition-ext"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extensions to the definition of support.",
+      "locator": {
+        "section_id": "support-definition-ext",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.support-definition-ext-fonts",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "support-definition-ext-fonts"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Font techs and formats.",
+      "locator": {
+        "section_id": "support-definition-ext-fonts",
+        "text_sha256": "c71df90a57cb3d1fa88cfa99e82e9dcc42cce329180ca0e1354a9b2072f09cb6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.foundation-extended-support"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.support-definition-at-rules",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "support-definition-at-rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in At-rules.",
+      "locator": {
+        "section_id": "support-definition-at-rules",
+        "text_sha256": "d43a4f8c9e26b0d6c7d5b7bd99f54e973fd3e1770ab39509e34b1d892a02e738"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.foundation-extended-support"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.support-definition-supports-condition-name",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "support-definition-supports-condition-name"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Named conditions.",
+      "locator": {
+        "section_id": "support-definition-supports-condition-name",
+        "text_sha256": "3b3e5c66a226d379e23909c2c6bb95218ab7dbb2a4b4c7aa6efc5cf230379f40"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.foundation-extended-support"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.when-rule",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "when-rule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Generalized Conditional Rules: the @when rule.",
+      "locator": {
+        "section_id": "when-rule",
+        "text_sha256": "933806900ba8b54607b4b46717ab52b0b2298d685a1b210d9523626953f0b2dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.foundation-when-else"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.else-rule",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "else-rule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Chained Conditionals: the @else rule.",
+      "locator": {
+        "section_id": "else-rule",
+        "text_sha256": "1eb6c66119c86c0e5fe407e91af8ce1da6a633971f1f61d8235a7a448ad58a32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.else-rule-clause-6239f7e2df86",
+        "css-conditional-5.else-rule-clause-3f967518e598",
+        "css-conditional-5.foundation-when-else"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.else-rule-clause-6239f7e2df86",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "else-rule"
+      ],
+      "behaviour": "Chained Conditionals: the @else rule — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "else-rule",
+        "clause_index": 6,
+        "clause_sha256": "6239f7e2df86db35a032bf396e3dd189d8d304afaba8cc74b485f9df62d00f9f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.else-rule-clause-3f967518e598",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "else-rule"
+      ],
+      "behaviour": "Chained Conditionals: the @else rule — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "else-rule",
+        "clause_index": 8,
+        "clause_sha256": "3f967518e598a25c8e99d20779e8284960a1cedd338c127ea8f2faba75c3342a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-queries",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-queries"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Container Queries.",
+      "locator": {
+        "section_id": "container-queries",
+        "text_sha256": "af452653afea1bc34caf2e8ba386af8ac36b2300b5314d6fa57a68641429044a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.container-queries-clause-ea046358660c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.container-queries-clause-ea046358660c",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-queries"
+      ],
+      "behaviour": "Container Queries — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-queries",
+        "clause_index": 0,
+        "clause_sha256": "ea046358660c5031e8ce70f638dec818336709a1f227b621966972fb6a39906d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-type",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-type"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Creating Query Containers: the container-type property.",
+      "locator": {
+        "section_id": "container-type",
+        "text_sha256": "0a8efd8b6c2eceb6fa834ce962e05f2bf88f95e886f55ac2f23f111d1a6c69bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.container-type-clause-cca2516ebb1d",
+        "css-conditional-5.container-type-clause-35c333aac452",
+        "css-conditional-5.container-type-clause-6febf8d01cff",
+        "css-conditional-5.container-type-clause-8ad55bc4df47"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.container-type-clause-cca2516ebb1d",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-type"
+      ],
+      "behaviour": "Creating Query Containers: the container-type property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-type",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-type-clause-35c333aac452",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-type"
+      ],
+      "behaviour": "Creating Query Containers: the container-type property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-type",
+        "clause_index": 27,
+        "clause_sha256": "35c333aac452ca4baf0a18d7b53528d2d8aa28e41befcadc9402f2af8613da3c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-type-clause-6febf8d01cff",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-type"
+      ],
+      "behaviour": "Creating Query Containers: the container-type property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-type",
+        "clause_index": 30,
+        "clause_sha256": "6febf8d01cffaef5761ea95aba6d0ccfee8b3ddebe502005ac7bb7859affd2ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-type-clause-8ad55bc4df47",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-type"
+      ],
+      "behaviour": "Creating Query Containers: the container-type property — normative clause 32, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-type",
+        "clause_index": 31,
+        "clause_sha256": "8ad55bc4df47e457e216ccee9b865658aac0dfc6b520dc32e98dfc7993f5f42c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-name",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-name"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Naming Query Containers: the container-name property.",
+      "locator": {
+        "section_id": "container-name",
+        "text_sha256": "e828ebe23d2260bbf542123f8b320678f3a00b7ca31371eeb923cbf5f36eaea8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.container-name-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.container-name-clause-cca2516ebb1d",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-name"
+      ],
+      "behaviour": "Naming Query Containers: the container-name property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-name",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-shorthand",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-shorthand"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Creating Named Containers: the container shorthand.",
+      "locator": {
+        "section_id": "container-shorthand",
+        "text_sha256": "43085fc07780dddab078bc485652dca3b2bf771c212d2c9a23648aa7f03beee9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.container-shorthand-clause-cca2516ebb1d",
+        "css-conditional-5.container-shorthand-clause-9b63b2ac06d1",
+        "css-conditional-5.container-shorthand-clause-4ae87d9bcb05",
+        "css-conditional-5.container-shorthand-clause-f5f1f6c13dec",
+        "css-conditional-5.container-shorthand-clause-b00e38a6a80c",
+        "css-conditional-5.container-shorthand-clause-74b597bdf272",
+        "css-conditional-5.container-shorthand-clause-37bc96388b3e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.container-shorthand-clause-cca2516ebb1d",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-shorthand"
+      ],
+      "behaviour": "Creating Named Containers: the container shorthand — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-shorthand",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-shorthand-clause-9b63b2ac06d1",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-shorthand"
+      ],
+      "behaviour": "Creating Named Containers: the container shorthand — normative clause 40, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-shorthand",
+        "clause_index": 39,
+        "clause_sha256": "9b63b2ac06d180d304b9d95c3a8b22e479951ba315f97ab833645d9e81349419"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-shorthand-clause-4ae87d9bcb05",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-shorthand"
+      ],
+      "behaviour": "Creating Named Containers: the container shorthand — normative clause 47, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-shorthand",
+        "clause_index": 46,
+        "clause_sha256": "4ae87d9bcb055cf57f7e295f894291e2ee41ab53212ebfc8e318de2523295dd1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-shorthand-clause-f5f1f6c13dec",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-shorthand"
+      ],
+      "behaviour": "Creating Named Containers: the container shorthand — normative clause 59, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-shorthand",
+        "clause_index": 58,
+        "clause_sha256": "f5f1f6c13dec796b48668f075a46b14c977c8165abbd5875436d8580d71b2f37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-shorthand-clause-b00e38a6a80c",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-shorthand"
+      ],
+      "behaviour": "Creating Named Containers: the container shorthand — normative clause 211, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-shorthand",
+        "clause_index": 210,
+        "clause_sha256": "b00e38a6a80c311aa1171fdf4d0079e6234815e424807b7cb1a137632e7031b1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-shorthand-clause-74b597bdf272",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-shorthand"
+      ],
+      "behaviour": "Creating Named Containers: the container shorthand — normative clause 261, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-shorthand",
+        "clause_index": 260,
+        "clause_sha256": "74b597bdf272dfc253578cd9297357aa0d6221e6531d78e7b6e2e7429928417e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-shorthand-clause-37bc96388b3e",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-shorthand"
+      ],
+      "behaviour": "Creating Named Containers: the container shorthand — normative clause 263, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-shorthand",
+        "clause_index": 262,
+        "clause_sha256": "37bc96388b3ee8536cd640c7f49a01023adf921a7adc8267f1fa8e8fb5580077"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-rule",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-rule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Container Queries: the @container rule.",
+      "locator": {
+        "section_id": "container-rule",
+        "text_sha256": "fb9328610d91da1cedb171f3c2e9faa8f0d05592ccb474047e80ba5de522aaf2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.animated-containers",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "animated-containers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Animated Containers.",
+      "locator": {
+        "section_id": "animated-containers",
+        "text_sha256": "1cb3eeb59136bd96b295a6c3efb27fa29ad28dbbd1b331bf90ff8130f841759b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.animated-containers-clause-69fd3e9ba662",
+        "css-conditional-5.animated-containers-clause-a740ad31d057",
+        "css-conditional-5.animated-containers-clause-57b56feccf62"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.animated-containers-clause-69fd3e9ba662",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "animated-containers"
+      ],
+      "behaviour": "Animated Containers — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "animated-containers",
+        "clause_index": 0,
+        "clause_sha256": "69fd3e9ba6625d734169f474eb8d1ad4d81188509d329e82f0f43cbfc5ec6fbd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.animated-containers-clause-a740ad31d057",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "animated-containers"
+      ],
+      "behaviour": "Animated Containers — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "animated-containers",
+        "clause_index": 1,
+        "clause_sha256": "a740ad31d0578e381b08b893424f30660cc076ef27ee58506bbee69ae0bf79d0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.animated-containers-clause-57b56feccf62",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "animated-containers"
+      ],
+      "behaviour": "Animated Containers — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "animated-containers",
+        "clause_index": 3,
+        "clause_sha256": "57b56feccf62d9a5c99e1444a8df0c05f1aaeaaf4501cb0936f6976f92ecbab5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-features",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-features"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Container Features.",
+      "locator": {
+        "section_id": "container-features",
+        "text_sha256": "736ee8ff7b6c94e4d9303f0f2881e276cd37dee2135de96cfbd6bfaeac9e1401"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.size-container",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "size-container"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Size Container Features.",
+      "locator": {
+        "section_id": "size-container",
+        "text_sha256": "56ff7df4d9bf85fef9044bbea5d65cdf626b804e9ba777d23a28efde202bcfc3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.size-container-clause-d431d6a49435",
+        "css-conditional-5.size-container-clause-5a2330bf9aab",
+        "css-conditional-5.size-container-clause-9f66896c32bb",
+        "css-conditional-5.size-container-clause-e0e23b69888e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.size-container-clause-d431d6a49435",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "size-container"
+      ],
+      "behaviour": "Size Container Features — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "size-container",
+        "clause_index": 4,
+        "clause_sha256": "d431d6a49435eddd358e6066964028b262251426307e41f6b67368f835005444"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.size-container-clause-5a2330bf9aab",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "size-container"
+      ],
+      "behaviour": "Size Container Features — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "size-container",
+        "clause_index": 7,
+        "clause_sha256": "5a2330bf9aab8da10921f6d23f91e9d818de5704dda2b5f12baf5826e326f31a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.size-container-clause-9f66896c32bb",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "size-container"
+      ],
+      "behaviour": "Size Container Features — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "size-container",
+        "clause_index": 9,
+        "clause_sha256": "9f66896c32bb13e51294fa48760c9b5b2ee5cb225ce132da6a01c1c6009ff42b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.size-container-clause-e0e23b69888e",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "size-container"
+      ],
+      "behaviour": "Size Container Features — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "size-container",
+        "clause_index": 15,
+        "clause_sha256": "e0e23b69888e7df28bcecf0c0600fce911af2818996898fd79f20a777f93d43a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.width",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "width"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Width: the width feature.",
+      "locator": {
+        "section_id": "width",
+        "text_sha256": "63390965ea2558edaa652583db6626716a46039bbfd59c15a42216ba69a0f9d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.height",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "height"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Height: the height feature.",
+      "locator": {
+        "section_id": "height",
+        "text_sha256": "dd480e09fb511ba30818bf771d99b2f342687f48433b9639bea3593498498ea1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.inline-size",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "inline-size"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inline-size: the inline-size feature.",
+      "locator": {
+        "section_id": "inline-size",
+        "text_sha256": "daf22890ab8218d05c4b58282cd1770ee0664fd2ccb01f601b40f5197473e1ec"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.block-size",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "block-size"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Block-size: the block-size feature.",
+      "locator": {
+        "section_id": "block-size",
+        "text_sha256": "f01f1143ad2a3a8ef08923546a53ea79e184ec7b1c64bd09a95435b4e60dbc94"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.aspect-ratio",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "aspect-ratio"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Aspect-ratio: the aspect-ratio feature.",
+      "locator": {
+        "section_id": "aspect-ratio",
+        "text_sha256": "9021e8ccec9d2e9345825d8a57e1e64f0e99f64d9fa3836aa6ad69f826cf5b9e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.orientation",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "orientation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Orientation: the orientation feature.",
+      "locator": {
+        "section_id": "orientation",
+        "text_sha256": "ad8e7dd854bc2c8615da223df68cb8ec5acb40db6234915c6772689b83600e8b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.style-container",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "style-container"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Style Container Features.",
+      "locator": {
+        "section_id": "style-container",
+        "text_sha256": "51a6af874317836cd8e5bfd89e58d99ea2291a2ec8fcb480f5f324c7c60adc44"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.style-container-clause-98b44313b55d",
+        "css-conditional-5.style-container-clause-059422e8855b",
+        "css-conditional-5.style-container-clause-b82487e4bd8b",
+        "css-conditional-5.style-container-clause-d9651b518765",
+        "css-conditional-5.style-container-clause-2c8f45262fcc",
+        "css-conditional-5.style-container-clause-2f33ded5a960",
+        "css-conditional-5.style-container-clause-3f42f5e289a6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.style-container-clause-98b44313b55d",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "style-container"
+      ],
+      "behaviour": "Style Container Features — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "style-container",
+        "clause_index": 0,
+        "clause_sha256": "98b44313b55d1a64da7b73b649f3a44f155ede874e607cd96e6ba0b138dfc14e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.style-container-clause-059422e8855b",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "style-container"
+      ],
+      "behaviour": "Style Container Features — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "style-container",
+        "clause_index": 3,
+        "clause_sha256": "059422e8855b8fbb1f8acab3c13815cf0c6b84204cb8097b63dfb84704403c2e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.style-container-clause-b82487e4bd8b",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "style-container"
+      ],
+      "behaviour": "Style Container Features — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "style-container",
+        "clause_index": 4,
+        "clause_sha256": "b82487e4bd8b247076720124cf94ee270b33a3c8c923691a726682e8b936bcd3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.style-container-clause-d9651b518765",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "style-container"
+      ],
+      "behaviour": "Style Container Features — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "style-container",
+        "clause_index": 11,
+        "clause_sha256": "d9651b5187653acaab741aa72c6c8df5fe7424d713322046f2c04e241f0058f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.style-container-clause-2c8f45262fcc",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "style-container"
+      ],
+      "behaviour": "Style Container Features — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "style-container",
+        "clause_index": 16,
+        "clause_sha256": "2c8f45262fcc4b410901959ae8b23d9d7ee4d91a81ef7ece8c049704da642adc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.style-container-clause-2f33ded5a960",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "style-container"
+      ],
+      "behaviour": "Style Container Features — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "style-container",
+        "clause_index": 17,
+        "clause_sha256": "2f33ded5a960a69491b55573b38d6b7b6e93307620072561e583cd385ad672bc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.style-container-clause-3f42f5e289a6",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "style-container"
+      ],
+      "behaviour": "Style Container Features — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "style-container",
+        "clause_index": 18,
+        "clause_sha256": "3f42f5e289a6fec3c2d10ac0b10d5a7f814db044d1840b7e6d708dcec6a5fa18"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.scroll-state-container",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "scroll-state-container"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scroll State Container Features.",
+      "locator": {
+        "section_id": "scroll-state-container",
+        "text_sha256": "07e550325267897e3315d7f35bf6c976246eada950894718d75d2d40e16d82a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.updating-scroll-state",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "updating-scroll-state"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Updating Scroll State.",
+      "locator": {
+        "section_id": "updating-scroll-state",
+        "text_sha256": "cfd29c921a897ed8ad73d6d3a851677fd99ffe244b302e5ea2d841ec52534a89"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.stuck",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "stuck"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sticky positioning: the stuck feature.",
+      "locator": {
+        "section_id": "stuck",
+        "text_sha256": "c74bce02e4f3d2d66005907dca4364cc7cb55a45f03417ca5f624d70a3365d1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.snapped",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "snapped"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scroll snapping: the snapped feature.",
+      "locator": {
+        "section_id": "snapped",
+        "text_sha256": "5482ecec0cfbe047399db4316691ad408a1b6bff5e81fdf5af2da52122e8085b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.scrollable",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "scrollable"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scrollable: the scrollable feature.",
+      "locator": {
+        "section_id": "scrollable",
+        "text_sha256": "19b77714f06d7627936e79e3056820ba08ff788976b6a2b583e24ccb966765f0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.scrolled",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "scrolled"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Scrolled: the scrolled feature.",
+      "locator": {
+        "section_id": "scrolled",
+        "text_sha256": "143108fed3b98c48d8cb751ab378420a902b6f01998aa34e9a6918d2c403a7af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.container-lengths",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-lengths"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Container Relative Lengths: the cqw, cqh, cqi, cqb, cqmin, cqmax units.",
+      "locator": {
+        "section_id": "container-lengths",
+        "text_sha256": "2960abff663c6678f7072833f7e09b73b1ac6f6aa52a9aafed0157635e7e800a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.container-lengths-clause-1a748627bfed",
+        "css-conditional-5.container-lengths-clause-812621d58d03"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.container-lengths-clause-1a748627bfed",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-lengths"
+      ],
+      "behaviour": "Container Relative Lengths: the cqw, cqh, cqi, cqb, cqmin, cqmax units — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-lengths",
+        "clause_index": 19,
+        "clause_sha256": "1a748627bfed0562b6010588bd82c2824ad8a007aa8a8677f8b0b1922c2d3705"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.container-lengths-clause-812621d58d03",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-lengths"
+      ],
+      "behaviour": "Container Relative Lengths: the cqw, cqh, cqi, cqb, cqmin, cqmax units — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "container-lengths",
+        "clause_index": 21,
+        "clause_sha256": "812621d58d0314490ee376d305f3defa47e645fd0c102caf46d7e30054fa7a0e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.supports-condition-rule",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "supports-condition-rule"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Defining Custom Support Queries: the @supports-condition rule.",
+      "locator": {
+        "section_id": "supports-condition-rule",
+        "text_sha256": "882f41958ca6ce4c83b1d4e306e520e516227554fb33fe35b9a747f5d15c94a8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.supports-condition-rule-clause-5c275c7d07cf",
+        "css-conditional-5.supports-condition-rule-clause-933f6755a5a2",
+        "css-conditional-5.foundation-extended-support"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.supports-condition-rule-clause-5c275c7d07cf",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "supports-condition-rule"
+      ],
+      "behaviour": "Defining Custom Support Queries: the @supports-condition rule — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "supports-condition-rule",
+        "clause_index": 7,
+        "clause_sha256": "5c275c7d07cf4578a8acccffce2a3c1e463aab69034cd675c9f4a13728ae3bbf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.supports-condition-rule-clause-933f6755a5a2",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "supports-condition-rule"
+      ],
+      "behaviour": "Defining Custom Support Queries: the @supports-condition rule — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "supports-condition-rule",
+        "clause_index": 12,
+        "clause_sha256": "933f6755a5a214ee37dfd293121cfe2ee07ca8f1d82a440bdb5de8d69459aa2b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.apis",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "apis"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in APIs.",
+      "locator": {
+        "section_id": "apis",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.the-csscontainerrule-interface",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "the-csscontainerrule-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSSContainerRule interface.",
+      "locator": {
+        "section_id": "the-csscontainerrule-interface",
+        "text_sha256": "a66e383a291c38b449224549c60a67ae6e99fbc99293f709b831b1914e7ab841"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.the-csscontainerrule-interface-clause-a6f04ef1c92b",
+        "css-conditional-5.the-csscontainerrule-interface-clause-dc708318052e",
+        "css-conditional-5.the-csscontainerrule-interface-clause-c43a7bc5e4a6",
+        "css-conditional-5.the-csscontainerrule-interface-clause-63ea39eb7aa4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.the-csscontainerrule-interface-clause-a6f04ef1c92b",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "the-csscontainerrule-interface"
+      ],
+      "behaviour": "The CSSContainerRule interface — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscontainerrule-interface",
+        "clause_index": 3,
+        "clause_sha256": "a6f04ef1c92b34cef4d44ec0a1a2e02394d404d0b04be38fcb25524555512b3e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.the-csscontainerrule-interface-clause-dc708318052e",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "the-csscontainerrule-interface"
+      ],
+      "behaviour": "The CSSContainerRule interface — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscontainerrule-interface",
+        "clause_index": 9,
+        "clause_sha256": "dc708318052e1ef024580ce1d6644cda0d69d1ed54410b2bc84bc5bf304876e8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.the-csscontainerrule-interface-clause-c43a7bc5e4a6",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "the-csscontainerrule-interface"
+      ],
+      "behaviour": "The CSSContainerRule interface — normative clause 16, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscontainerrule-interface",
+        "clause_index": 15,
+        "clause_sha256": "c43a7bc5e4a6449b3397b2bb1382b6b2f1ee078d092bb1b725dbf4223c57a8a6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.the-csscontainerrule-interface-clause-63ea39eb7aa4",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "the-csscontainerrule-interface"
+      ],
+      "behaviour": "The CSSContainerRule interface — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "the-csscontainerrule-interface",
+        "clause_index": 16,
+        "clause_sha256": "63ea39eb7aa4d9c7ee04a29ee72c023fff06b4d8320ac295763d1fbff0637e06"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.the-csssupportscondition-interface",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "the-csssupportscondition-interface"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The CSSSupportsConditionRule interface.",
+      "locator": {
+        "section_id": "the-csssupportscondition-interface",
+        "text_sha256": "dc29f3a4f367b16255d16c70d3a793d1934b26d501a21cf75e98c7b2660f8b37"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.security",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "a80ed4362d9ff2fc7b701cf8ede217dd8f7333f0fe9b313f52b151392caffca5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.privacy",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "a495963b19a7a82d600de6822e171c79a2327d28d2b652d20b52e4ef3af408ed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.w3c-conformance",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.w3c-conventions",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.w3c-conventions-clause-5c98c879f070",
+        "css-conditional-5.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.w3c-conventions-clause-5c98c879f070",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.w3c-conformance-classes",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.w3c-conformance-classes-clause-ff408372426c",
+        "css-conditional-5.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.w3c-partial",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.w3c-partial-clause-ef40c4aab200",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.w3c-conform-future-proofing",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.w3c-testing",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-conditional-5.w3c-testing-clause-1e0fff369221",
+        "css-conditional-5.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.w3c-testing-clause-1e0fff369221",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.w3c-testing-clause-ae1210cf9643",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-conditional-5.property-index",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "2600e1665a0607d4f2fe340b133a2674a1b7ce051afe3c86f1bc7de1335414a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.container-descriptor-table",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "container-descriptor-table"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in @container Descriptors.",
+      "locator": {
+        "section_id": "container-descriptor-table",
+        "text_sha256": "d4bdff9d7b70bf935d6396f0f10276c3818634cd6d84874efbd047ee4fad6e6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.idl-index",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "c7df2d7c722f8c0a723305dac8c63e954c5b8d3c392fb6900a46b7546df34e01"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.issues-index",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "71be601024b99db72930ace2741647f45d81db036c3bde047f45680920c4e82f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.import-9a42ce368333",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://drafts.csswg.org/css-extensions-1/.",
+      "unresolved_reference": "https://drafts.csswg.org/css-extensions-1/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-conditional-5.import-8cac7d115c27",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-conditional-5.title",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Conditional Rules Module Level 5.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "b18805e3769eab24990bded0a09b77d2a72d0f2f8f6442b77d89d80463603fef"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.abstract",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "270ec5e56e0612f2dc877242031b096703fbfa3ca85877b74c7983f42caf550f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.sotd",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "984cbfd79a315fd67d49ea86496d2e298f014fd50127fdb3f0528b97064ef85f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.contents",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "73d7c0a6c59d7ac929550de7a936a82ad3bf42ee64723935c3ccad5f4fcff7dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.changes",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.changes-20241105",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "changes-20241105"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the Working Draft of 5 November 2024.",
+      "locator": {
+        "section_id": "changes-20241105",
+        "text_sha256": "2d2ab3e96612f10d54bfcc902aebe2b0d6ba4ad96441ea628537992754093743"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.changes-20240723",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "changes-20240723"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the Working Draft of 23 July 2024.",
+      "locator": {
+        "section_id": "changes-20240723",
+        "text_sha256": "efe53461be992e83b4cd5c57d546b54c04bd75d8504be818c1a8bd21e484aee4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.changes-20211221",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "changes-20211221"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since the First Public Working Draft of 21 December 2021.",
+      "locator": {
+        "section_id": "changes-20211221",
+        "text_sha256": "c653e381e6fa216f46169421e810b322f073ff0d42e7228a808e787e983537a7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.changes-from-l4",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "changes-from-L4"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additions since Level 4.",
+      "locator": {
+        "section_id": "changes-from-L4",
+        "text_sha256": "81381299189fea58a39aa76ca35ca98830e2c98505b442c8195b36e5111a60ff"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.acknowledgments",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "fa8302aa98fb644e84c133fa7a25beadca8181e2e4dcc8df5b5a71a0f3e18a6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.index",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.index-defined-here",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "789f3ba34814b23985f81a588d59e68735e20d65806c61c7f2116b3ddc3f680f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.index-defined-elsewhere",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "5f5a3a9118a7a7217721332afe13574c0c0cd4e64a6557c5f7076d0117f4eb0b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.references",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.informative",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "ee3bf765506eabae9183d30c6aba9b0e84890175a593c10b5b47bbce7a732a47"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-conditional-5.foundation-extended-support",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "at-supports-ext",
+        "support-definition-ext-fonts",
+        "support-definition-at-rules",
+        "support-definition-supports-condition-name",
+        "supports-condition-rule"
+      ],
+      "behaviour": "Implement font-tech/font-format/at-rule and named support conditions.",
+      "locator": {
+        "section_id": "at-supports-ext",
+        "text_sha256": "334cb6b23864df6418ec94e419969a5c97d839f6eb405933b3af087a3f7bb934"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    },
+    {
+      "id": "css-conditional-5.foundation-when-else",
+      "family": "css-conditional-5",
+      "source_id": "css-conditional-5",
+      "sections": [
+        "when-rule",
+        "else-rule"
+      ],
+      "behaviour": "Evaluate static @when/@else chains using shared media/support conditions.",
+      "locator": {
+        "section_id": "when-rule",
+        "text_sha256": "933806900ba8b54607b4b46717ab52b0b2298d685a1b210d9523626953f0b2dd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    }
+  ]
+}

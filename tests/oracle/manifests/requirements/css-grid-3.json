@@ -1,0 +1,2976 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-grid-3.grid-lanes-model",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-model"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grid Lanes Layout Model.",
+      "locator": {
+        "section_id": "grid-lanes-model",
+        "text_sha256": "9639536c2d208b27410845ed7e5f2045b669ebddcff3c176cfdc9c0f52548f71"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.order-accessibility",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "order-accessibility"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Reordering and Accessibility.",
+      "locator": {
+        "section_id": "order-accessibility",
+        "text_sha256": "7b290b054bfcf71b82725711a19bf67de6ec3c6c31dd7f65728766ca06b02681"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.order-accessibility-clause-eda1280d72e7",
+        "css-grid-3.order-accessibility-clause-8e643408e2fa",
+        "css-grid-3.order-accessibility-clause-772e4d044c4a"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.order-accessibility-clause-eda1280d72e7",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "order-accessibility"
+      ],
+      "behaviour": "Reordering and Accessibility — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "order-accessibility",
+        "clause_index": 2,
+        "clause_sha256": "eda1280d72e7f86391a37f31b8997c7f2c8bda33f5de0f7dcffde27e97c092d1"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.order-accessibility-clause-8e643408e2fa",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "order-accessibility"
+      ],
+      "behaviour": "Reordering and Accessibility — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "order-accessibility",
+        "clause_index": 3,
+        "clause_sha256": "8e643408e2fa69395cfa1e30547d52bf2766f4e414ee1c830bb260093a3bfb0b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.order-accessibility-clause-772e4d044c4a",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "order-accessibility"
+      ],
+      "behaviour": "Reordering and Accessibility — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "order-accessibility",
+        "clause_index": 4,
+        "clause_sha256": "772e4d044c4ae2fbb5e6d6b33c407717c1f13063d0efef28f085be38e2178963"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-containers",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-containers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Establishing Grid Lanes Layout.",
+      "locator": {
+        "section_id": "grid-lanes-containers",
+        "text_sha256": "a6418a00721579a318ddf7601b59f71a82c49b9f70bb737b067b8dbb8bf207df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-orientation",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-orientation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Orienting Grid Lanes Layout.",
+      "locator": {
+        "section_id": "grid-lanes-orientation",
+        "text_sha256": "56396c7bf2ac3b9f7a73d91cc98dcc988cc4f80ab127bfe40606d086caaf4b60"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.grid-lanes-orientation-clause-fd3dbaf74e22"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-orientation-clause-fd3dbaf74e22",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-orientation"
+      ],
+      "behaviour": "Orienting Grid Lanes Layout — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "grid-lanes-orientation",
+        "clause_index": 1,
+        "clause_sha256": "fd3dbaf74e22dc4043235c7570f6d8dd0c80794cb1ceea73eac4592434558ca2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-track-templates",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-track-templates"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grid Lanes Track Specification.",
+      "locator": {
+        "section_id": "grid-lanes-track-templates",
+        "text_sha256": "bda1c70c2040c72bdffb314bd820f5642ad693965e1f02d9bd4f026e5063f2dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.grid-lanes-track-templates-clause-c614a174d232"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-track-templates-clause-c614a174d232",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-track-templates"
+      ],
+      "behaviour": "Grid Lanes Track Specification — normative clause 9, located by its exact source hash.",
+      "locator": {
+        "section_id": "grid-lanes-track-templates",
+        "clause_index": 8,
+        "clause_sha256": "c614a174d232e8fbf806bc2378970a551e260b7a72571c071daa73e16613271c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-track-properties",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-track-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Declaring Grid Lanes Track Templates: the grid-template-* properties.",
+      "locator": {
+        "section_id": "grid-lanes-track-properties",
+        "text_sha256": "7dae4f5fc32d0a1bd3cde019b6ec2eb18ce9f2f11493d86e6700511c8da7b6b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.grid-lanes-track-properties-clause-7dae4f5fc32d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-track-properties-clause-7dae4f5fc32d",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-track-properties"
+      ],
+      "behaviour": "Declaring Grid Lanes Track Templates: the grid-template-* properties — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "grid-lanes-track-properties",
+        "clause_index": 0,
+        "clause_sha256": "7dae4f5fc32d0a1bd3cde019b6ec2eb18ce9f2f11493d86e6700511c8da7b6b9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.intrinsic-auto-repeat",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "intrinsic-auto-repeat"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Intrinsic Tracks and repeat().",
+      "locator": {
+        "section_id": "intrinsic-auto-repeat",
+        "text_sha256": "c8c3bcb4ae26415bac7754f471f5afa7f19f5d2de7eef5a207f8b665f03c5ee4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.intrinsic-auto-repeat-clause-f336e0034c09",
+        "css-grid-3.intrinsic-auto-repeat-clause-7d6d5ea175cf",
+        "css-grid-3.intrinsic-auto-repeat-clause-682bc9e49c14",
+        "css-grid-3.intrinsic-auto-repeat-clause-bbbe3a6a9b0c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.intrinsic-auto-repeat-clause-f336e0034c09",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "intrinsic-auto-repeat"
+      ],
+      "behaviour": "Intrinsic Tracks and repeat() — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-auto-repeat",
+        "clause_index": 2,
+        "clause_sha256": "f336e0034c0911f79a6843f65d9ebebd9385ac68460c5e98a8952a3288a4c752"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.intrinsic-auto-repeat-clause-7d6d5ea175cf",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "intrinsic-auto-repeat"
+      ],
+      "behaviour": "Intrinsic Tracks and repeat() — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-auto-repeat",
+        "clause_index": 10,
+        "clause_sha256": "7d6d5ea175cfae735e77474bb642ba1bea2461709e646658671ff8ff93bdcc22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.intrinsic-auto-repeat-clause-682bc9e49c14",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "intrinsic-auto-repeat"
+      ],
+      "behaviour": "Intrinsic Tracks and repeat() — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-auto-repeat",
+        "clause_index": 11,
+        "clause_sha256": "682bc9e49c1489505728e939ad9f83819379b748dbcfb7dd1fde8c382f696d43"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.intrinsic-auto-repeat-clause-bbbe3a6a9b0c",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "intrinsic-auto-repeat"
+      ],
+      "behaviour": "Intrinsic Tracks and repeat() — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-auto-repeat",
+        "clause_index": 12,
+        "clause_sha256": "bbbe3a6a9b0c235a13a20349f222af92d0cde7b45fb576544de564fec84d7a89"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.subgrids",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "subgrids"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Subgrids.",
+      "locator": {
+        "section_id": "subgrids",
+        "text_sha256": "31ecc7d66b633982d622b5c5cac4f7808529c0d393dfbbb1d370a10c5f3760a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.subgrids-clause-a311004cb517"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.subgrids-clause-a311004cb517",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "subgrids"
+      ],
+      "behaviour": "Subgrids — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "subgrids",
+        "clause_index": 2,
+        "clause_sha256": "a311004cb51733f67d287675e4be93af6c2ca149d565dbee2f3211b2abed2a11"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.repeat-notation",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "repeat-notation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Track Repetition: the repeat() notation.",
+      "locator": {
+        "section_id": "repeat-notation",
+        "text_sha256": "b5628bd6166297842c4121f08d0f64f0b18eb894f646b1af1181e10d1bca6814"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.repeat-auto-fit",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "repeat-auto-fit"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in repeat(auto-fit).",
+      "locator": {
+        "section_id": "repeat-auto-fit",
+        "text_sha256": "e2d2c56360707b6b2628e75571d20aa19e7231abf6f12828e43656a2bf8f4808"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.track-sizing",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "track-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grid Axis Track Sizing.",
+      "locator": {
+        "section_id": "track-sizing",
+        "text_sha256": "45b2b937f40c0df6b072a2e305436c4532d002bd533636add9ddee6d8d725c1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.track-sizing-clause-356c0cedaf5f"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.track-sizing-clause-356c0cedaf5f",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "track-sizing"
+      ],
+      "behaviour": "Grid Axis Track Sizing — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "track-sizing",
+        "clause_index": 19,
+        "clause_sha256": "356c0cedaf5fc5f1c6aeaaff4e65408d1c9776fc02b070640985a2d73de75b75"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.track-sizing-subgrid",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "track-sizing-subgrid"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Subgrid Item Contributions.",
+      "locator": {
+        "section_id": "track-sizing-subgrid",
+        "text_sha256": "b94d6b14cea6e00b4c126850f47083e8ee9d59a28f0fe708417402bdab462952"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.track-sizing-performance",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "track-sizing-performance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Optimized Track Sizing.",
+      "locator": {
+        "section_id": "track-sizing-performance",
+        "text_sha256": "63eb28cd74f224b106cf0602d471b99363521d418ade9722551e005be824dc22"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.track-sizing-performance-clause-b2455b3451b0",
+        "css-grid-3.track-sizing-performance-clause-b9fe7679242d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.track-sizing-performance-clause-b2455b3451b0",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "track-sizing-performance"
+      ],
+      "behaviour": "Optimized Track Sizing — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "track-sizing-performance",
+        "clause_index": 11,
+        "clause_sha256": "b2455b3451b014ede9d6ae106011b5d9e5891f9eb274326997abab51c56dc445"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.track-sizing-performance-clause-b9fe7679242d",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "track-sizing-performance"
+      ],
+      "behaviour": "Optimized Track Sizing — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "track-sizing-performance",
+        "clause_index": 12,
+        "clause_sha256": "b9fe7679242d36917614f21a558b037ecc4f0ff3f8a5b9fdc6da46e03d70ca09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-track-placement",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-track-placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grid Lanes Item Placement.",
+      "locator": {
+        "section_id": "grid-lanes-track-placement",
+        "text_sha256": "0aa018497882e211af8304a9462ee945d72e18406575fd5784eaa08546ff7361"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.grid-lanes-track-placement-clause-c729e1dc0cba"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-track-placement-clause-c729e1dc0cba",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-track-placement"
+      ],
+      "behaviour": "Grid Lanes Item Placement — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "grid-lanes-track-placement",
+        "clause_index": 0,
+        "clause_sha256": "c729e1dc0cba9ed8bc3e210eb4ae5096dcdd86fc52c5330ebadfb8b05d4a841d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-placement",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying Grid Axis Item Placement: the grid-column-* and grid-row-* properties.",
+      "locator": {
+        "section_id": "grid-lanes-placement",
+        "text_sha256": "7e7f50c15a0890bc66fe223bf52363e9d593f7309acd77dd78d878fe98e291df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.placement-tolerance",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "placement-tolerance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Placement Precision: the flow-tolerance property.",
+      "locator": {
+        "section_id": "placement-tolerance",
+        "text_sha256": "f2e524c8c1a0c25f8ba9945f93778744f6f25225e910530a9c4e3e4cc47e5ac2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.placement-tolerance-clause-cca2516ebb1d",
+        "css-grid-3.placement-tolerance-clause-986b7b70ef39",
+        "css-grid-3.placement-tolerance-clause-47e5fc63e3b2",
+        "css-grid-3.placement-tolerance-clause-420bb2b83f8b",
+        "css-grid-3.placement-tolerance-clause-f1f1caee067d",
+        "css-grid-3.placement-tolerance-clause-cd63ea57c98c",
+        "css-grid-3.placement-tolerance-clause-12fbf1fee6cc"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.placement-tolerance-clause-cca2516ebb1d",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "placement-tolerance"
+      ],
+      "behaviour": "Placement Precision: the flow-tolerance property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "placement-tolerance",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.placement-tolerance-clause-986b7b70ef39",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "placement-tolerance"
+      ],
+      "behaviour": "Placement Precision: the flow-tolerance property — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "placement-tolerance",
+        "clause_index": 13,
+        "clause_sha256": "986b7b70ef3912bd09b5bbe9f656bc532851f3e25f00b8a0d8cc06e31eb75a65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.placement-tolerance-clause-47e5fc63e3b2",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "placement-tolerance"
+      ],
+      "behaviour": "Placement Precision: the flow-tolerance property — normative clause 22, located by its exact source hash.",
+      "locator": {
+        "section_id": "placement-tolerance",
+        "clause_index": 21,
+        "clause_sha256": "47e5fc63e3b29d834b1224bad865b1936b9b24c703c937526c1535133c0f6708"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.placement-tolerance-clause-420bb2b83f8b",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "placement-tolerance"
+      ],
+      "behaviour": "Placement Precision: the flow-tolerance property — normative clause 23, located by its exact source hash.",
+      "locator": {
+        "section_id": "placement-tolerance",
+        "clause_index": 22,
+        "clause_sha256": "420bb2b83f8b49a996089ab42d59c2f5c6992bebf303d29519b2ef95243a9337"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.placement-tolerance-clause-f1f1caee067d",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "placement-tolerance"
+      ],
+      "behaviour": "Placement Precision: the flow-tolerance property — normative clause 29, located by its exact source hash.",
+      "locator": {
+        "section_id": "placement-tolerance",
+        "clause_index": 28,
+        "clause_sha256": "f1f1caee067d826510f39ce2edba98eb817b33575e542d4dc900e814985f7949"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.placement-tolerance-clause-cd63ea57c98c",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "placement-tolerance"
+      ],
+      "behaviour": "Placement Precision: the flow-tolerance property — normative clause 33, located by its exact source hash.",
+      "locator": {
+        "section_id": "placement-tolerance",
+        "clause_index": 32,
+        "clause_sha256": "cd63ea57c98cd06b655fb7de15f62378766c659d55ac5c514c119b567d4c8912"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.placement-tolerance-clause-12fbf1fee6cc",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "placement-tolerance"
+      ],
+      "behaviour": "Placement Precision: the flow-tolerance property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "placement-tolerance",
+        "clause_index": 33,
+        "clause_sha256": "12fbf1fee6cc0ecba7ccf5dc2a57e58dbb5972fe0283d11e4838f6c779cecb5c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-dense-packing",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-dense-packing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Dense Placement: the dense keyword.",
+      "locator": {
+        "section_id": "grid-lanes-dense-packing",
+        "text_sha256": "8e4f4000c9f2e22651061f15f28306daf3b3f11e430f24a7025ab29ea1923553"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.grid-lanes-dense-packing-clause-dbf62a95e7e5"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-dense-packing-clause-dbf62a95e7e5",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-dense-packing"
+      ],
+      "behaviour": "Dense Placement: the dense keyword — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "grid-lanes-dense-packing",
+        "clause_index": 0,
+        "clause_sha256": "dbf62a95e7e5213fd7d7e26300d5bb8fa02ad150d3b31e257bba827be0b4d1e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-layout-algorithm",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-layout-algorithm"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grid Lanes Layout and Placement Algorithm.",
+      "locator": {
+        "section_id": "grid-lanes-layout-algorithm",
+        "text_sha256": "7fc44993fd99c3f264ddaecf2d7c1c6178f298e29c03f8dce04d0f790addc210"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.grid-lanes-layout-algorithm-clause-cb4ee69a371f",
+        "css-grid-3.grid-lanes-layout-algorithm-clause-2ee091742afa",
+        "css-grid-3.grid-lanes-layout-algorithm-clause-b70d3d0812ba",
+        "css-grid-3.grid-lanes-layout-algorithm-clause-54255ee9ac5e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-layout-algorithm-clause-cb4ee69a371f",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-layout-algorithm"
+      ],
+      "behaviour": "Grid Lanes Layout and Placement Algorithm — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "grid-lanes-layout-algorithm",
+        "clause_index": 2,
+        "clause_sha256": "cb4ee69a371f27e2074bcf5316f1395c3ac293dd844580cad67b8d1ef69d8e95"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-layout-algorithm-clause-2ee091742afa",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-layout-algorithm"
+      ],
+      "behaviour": "Grid Lanes Layout and Placement Algorithm — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "grid-lanes-layout-algorithm",
+        "clause_index": 3,
+        "clause_sha256": "2ee091742afa759c030cd59e1696908de53c55b20e67875fd2ad5d45bc9b7697"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-layout-algorithm-clause-b70d3d0812ba",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-layout-algorithm"
+      ],
+      "behaviour": "Grid Lanes Layout and Placement Algorithm — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "grid-lanes-layout-algorithm",
+        "clause_index": 4,
+        "clause_sha256": "b70d3d0812ba5b39365ed76abe88830beb2879d720349818bf7c837a5e1debf9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-layout-algorithm-clause-54255ee9ac5e",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-layout-algorithm"
+      ],
+      "behaviour": "Grid Lanes Layout and Placement Algorithm — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "grid-lanes-layout-algorithm",
+        "clause_index": 17,
+        "clause_sha256": "54255ee9ac5e8b8fc2c011f6a2d5101d550c183b77c59460a917be8099dbb252"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.containing-block",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "containing-block"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Containing Block.",
+      "locator": {
+        "section_id": "containing-block",
+        "text_sha256": "6cc20c1f188ebc6cb21e6e2a527725c8fa31957347532b52276c004c3c1c1500"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.rtl-example",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "rtl-example"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Placement and Writing Modes.",
+      "locator": {
+        "section_id": "rtl-example",
+        "text_sha256": "e0c3300ac723ad6ed81688267bec64a9208d952f9db97dda824210edb3b9a1b5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.intrinsic-sizes",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "intrinsic-sizes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sizing Grid Containers.",
+      "locator": {
+        "section_id": "intrinsic-sizes",
+        "text_sha256": "bee96cc8747fa5c328c8af135b6c04f067fb99cc9d53736fd287a88fc176e0fd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.alignment",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Alignment and Spacing.",
+      "locator": {
+        "section_id": "alignment",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.gutters",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "gutters"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Gutters: the row-gap, column-gap, and gap properties.",
+      "locator": {
+        "section_id": "gutters",
+        "text_sha256": "195b30437c716751e68d2726ece2864393678a432e5e344e2a1e9aed9c576315"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.grid-axis-alignment",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-axis-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Grid-axis Alignment: the align-content/justify-content, align-self/justify-self, and align-items/justify-items properties.",
+      "locator": {
+        "section_id": "grid-axis-alignment",
+        "text_sha256": "f62b34d1ab6e64d3e92440dc6a72b3e71a905c9ae3cdc7db48c94f9ba5d9bb48"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.stacking-content-alignment",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "stacking-content-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stacking-axis Content Distribution: the align-content/justify-content properties.",
+      "locator": {
+        "section_id": "stacking-content-alignment",
+        "text_sha256": "d68168688aa9ce2a41d7e09c018d84eef7d0c7d682bd089f79abd97286ad30a2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.stacking-self-alignment",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "stacking-self-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Stacking-axis Self Alignment: the align-self/justify-self and align-items/justify-items properties.",
+      "locator": {
+        "section_id": "stacking-self-alignment",
+        "text_sha256": "bcb986451cdd6de625b64d1816019b5781d81dfbec1066c9c824440e0c9434af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.stacking-self-alignment-clause-bee952fa9ad9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.stacking-self-alignment-clause-bee952fa9ad9",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "stacking-self-alignment"
+      ],
+      "behaviour": "Stacking-axis Self Alignment: the align-self/justify-self and align-items/justify-items properties — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "stacking-self-alignment",
+        "clause_index": 1,
+        "clause_sha256": "bee952fa9ad9b6059a48e4995e6d3d3500f70fe143524b1224950e8d451f9bd8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.grid-lanes-baseline-alignment",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-lanes-baseline-alignment"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Baseline Alignment.",
+      "locator": {
+        "section_id": "grid-lanes-baseline-alignment",
+        "text_sha256": "0639c8be49f5d9b39f6e841e95dffabc7ba0233464e1e6321552a035a6e78497"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.pagination",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "pagination"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fragmentation.",
+      "locator": {
+        "section_id": "pagination",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.stacking-axis-pagination",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "stacking-axis-pagination"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fragmentation in the stacking axis.",
+      "locator": {
+        "section_id": "stacking-axis-pagination",
+        "text_sha256": "dc067ce6d7cdfda1ecf30e136ece2d1c3c6191ee7180e89d98f46805d9b31781"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.grid-axis-pagination",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "grid-axis-pagination"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Fragmentation in the Grid Axis.",
+      "locator": {
+        "section_id": "grid-axis-pagination",
+        "text_sha256": "1d1a42d6283c1e546f9354f3c8aec61ae1ff768785532ac8cd1ddf690b5df9af"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.abspos",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "abspos"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Absolute Positioning.",
+      "locator": {
+        "section_id": "abspos",
+        "text_sha256": "1f1683df4bd197eb0150006a96c3f021e1206e613fcb8996474c643bcd2c21c8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.graceful-degradation",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "graceful-degradation"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Graceful Degradation.",
+      "locator": {
+        "section_id": "graceful-degradation",
+        "text_sha256": "1499f3ab17ec4a6edc8bd3c90897d65b29ba77f6d4daf729d78350f9e74b35f3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.graceful-degradation-clause-0590a94fd35a",
+        "css-grid-3.graceful-degradation-clause-bb22421b6f38"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.graceful-degradation-clause-0590a94fd35a",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "graceful-degradation"
+      ],
+      "behaviour": "Graceful Degradation — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "graceful-degradation",
+        "clause_index": 0,
+        "clause_sha256": "0590a94fd35a94c4c4f67fc89796f433b9da0a54b432c3d5d67776e9b09b4219"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.graceful-degradation-clause-bb22421b6f38",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "graceful-degradation"
+      ],
+      "behaviour": "Graceful Degradation — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "graceful-degradation",
+        "clause_index": 2,
+        "clause_sha256": "bb22421b6f388bf709180a426d546d7f009d3d49cd7a5d3011365b841a95c2b2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.flow-control",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "flow-control"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Appendix A: Generic Layout Item Flow Controls: the item-* properties.",
+      "locator": {
+        "section_id": "flow-control",
+        "text_sha256": "e78d67664d9a64e543bf1fdb0b825e0a6d71cc724f73c4723031109e8e4b329d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.flow-control-clause-f29266273e63"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.flow-control-clause-f29266273e63",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "flow-control"
+      ],
+      "behaviour": "Appendix A: Generic Layout Item Flow Controls: the item-* properties — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "flow-control",
+        "clause_index": 29,
+        "clause_sha256": "f29266273e63e3f0f9d8fdc2fa29bef1ab6445002648a61fac50069293a317fa"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.item-primary-axis",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-primary-axis"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Item Flow Axis: item-track/item-direction.",
+      "locator": {
+        "section_id": "item-primary-axis",
+        "text_sha256": "5653c56e228d6cd20a88b8b55e6bf6e3fc0a56493e0daadc7baecfb524f11b41"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.item-primary-axis-clause-cca2516ebb1d",
+        "css-grid-3.item-primary-axis-clause-e9f852f5cd21",
+        "css-grid-3.item-primary-axis-clause-749484f8cb10"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.item-primary-axis-clause-cca2516ebb1d",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-primary-axis"
+      ],
+      "behaviour": "Item Flow Axis: item-track/item-direction — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "item-primary-axis",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.item-primary-axis-clause-e9f852f5cd21",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-primary-axis"
+      ],
+      "behaviour": "Item Flow Axis: item-track/item-direction — normative clause 19, located by its exact source hash.",
+      "locator": {
+        "section_id": "item-primary-axis",
+        "clause_index": 18,
+        "clause_sha256": "e9f852f5cd21c1b5be1ed3251cd83d6e297fdf89d6597d36537b533cc5dccc26"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.item-primary-axis-clause-749484f8cb10",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-primary-axis"
+      ],
+      "behaviour": "Item Flow Axis: item-track/item-direction — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "item-primary-axis",
+        "clause_index": 40,
+        "clause_sha256": "749484f8cb10735d9e99df1b1d432ed6e1799ab67f997aefe2ed6067bff230e4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.item-secondary-axis",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-secondary-axis"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Item Cross Axis Placement Mode: item-cross/item-wrap.",
+      "locator": {
+        "section_id": "item-secondary-axis",
+        "text_sha256": "f5a0dacbd077474c87b1345cfe0e7826969ab66a1a6dd4a3bff8cba371c50732"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.item-secondary-axis-clause-cca2516ebb1d",
+        "css-grid-3.item-secondary-axis-clause-4fd47baecc26",
+        "css-grid-3.item-secondary-axis-clause-bba834d909e7"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.item-secondary-axis-clause-cca2516ebb1d",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-secondary-axis"
+      ],
+      "behaviour": "Item Cross Axis Placement Mode: item-cross/item-wrap — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "item-secondary-axis",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.item-secondary-axis-clause-4fd47baecc26",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-secondary-axis"
+      ],
+      "behaviour": "Item Cross Axis Placement Mode: item-cross/item-wrap — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "item-secondary-axis",
+        "clause_index": 25,
+        "clause_sha256": "4fd47baecc26c2c948d200ae8a7f879776d28a668294d6aca765212fd092be53"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.item-secondary-axis-clause-bba834d909e7",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-secondary-axis"
+      ],
+      "behaviour": "Item Cross Axis Placement Mode: item-cross/item-wrap — normative clause 41, located by its exact source hash.",
+      "locator": {
+        "section_id": "item-secondary-axis",
+        "clause_index": 40,
+        "clause_sha256": "bba834d909e7b7918b50b8d67aa26b24627d4105180481d72e8578fb71d54284"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.item-pack-options",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-pack-options"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Item Placement Packing Mode: the item-pack property.",
+      "locator": {
+        "section_id": "item-pack-options",
+        "text_sha256": "d313cade9afdcc0238e3d60c0889569131c5389f7d7c25b985eb37abce95be2d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.item-pack-options-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.item-pack-options-clause-cca2516ebb1d",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-pack-options"
+      ],
+      "behaviour": "Item Placement Packing Mode: the item-pack property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "item-pack-options",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.item-flow",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-flow"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Item Placement Shorthand: the item-flow shorthand.",
+      "locator": {
+        "section_id": "item-flow",
+        "text_sha256": "cd64fb9801f8d687107487010bd2d8512145b8adfa0b5a8c5c8bed5775f047c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.item-flow-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.item-flow-clause-cca2516ebb1d",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "item-flow"
+      ],
+      "behaviour": "Item Placement Shorthand: the item-flow shorthand — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "item-flow",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.security",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "security"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "security",
+        "text_sha256": "8e724268561544f5a034363ceae6eaf32c8c1fe6c224527a7cd97cf9a6da866d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.privacy",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "privacy"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "privacy",
+        "text_sha256": "429f4fc91cf7e1e1a20c02dffeafbe7336d7ecf841f5024205695df1d174c182"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.recent-changes",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "recent-changes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Recent Changes.",
+      "locator": {
+        "section_id": "recent-changes",
+        "text_sha256": "612e9cb5a0c9452f415db4ba125aa30591c39118740d26b1fe1eff8a6b98bfed"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.recent-changes-clause-5738f949edc0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.recent-changes-clause-5738f949edc0",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "recent-changes"
+      ],
+      "behaviour": "Recent Changes — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "recent-changes",
+        "clause_index": 4,
+        "clause_sha256": "5738f949edc0c2030d38d92d43b64ee207b1fef408b051a9abe323a75ff45173"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.w3c-conformance",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.w3c-conventions",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.w3c-conventions-clause-5c98c879f070",
+        "css-grid-3.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.w3c-conventions-clause-5c98c879f070",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.w3c-conformance-classes",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.w3c-conformance-classes-clause-ff408372426c",
+        "css-grid-3.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.w3c-partial",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.w3c-partial-clause-ef40c4aab200",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.w3c-conform-future-proofing",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.w3c-testing",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.w3c-testing-clause-1e0fff369221",
+        "css-grid-3.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.w3c-testing-clause-1e0fff369221",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.w3c-testing-clause-ae1210cf9643",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.property-index",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "5279790654cb4c04223f91c823066501c77d5bcea2102372e37ba1c06d24bf82"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-grid-3.property-index-clause-986b7b70ef39"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.property-index-clause-986b7b70ef39",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 17,
+        "clause_sha256": "986b7b70ef3912bd09b5bbe9f656bc532851f3e25f00b8a0d8cc06e31eb75a65"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-grid-3.issues-index",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "93529e199340546f37ecace6fd10e35754ec8b21052909bc3971a80775591911"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.title",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Grid Layout Module Level 3.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "477755f68bc90a0f5bd41e007538b7216919db5ab4a00dfcc706076e9076462e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.abstract",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "1ba951022978689e7b4a343b84e3ad41e622710b6cfab105571037769d33955e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.sotd",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "97b8c25bf5f199fde353b361fffe1404046b19e1d6da5df786438875971b187c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.contents",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "d8fb15613048c589ff5550161947245e7cb70b6ccf3305b28efc2a038c6d936b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.intro",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1. Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "b7be562fccf9b63299f60dd458c2717166dc63a43ef63abc070efb44e58177db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.background",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "background"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1. Background and Motivation.",
+      "locator": {
+        "section_id": "background",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.waterfall",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "waterfall"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1.1. Waterfall Layout with Auto-placed Items.",
+      "locator": {
+        "section_id": "waterfall",
+        "text_sha256": "15809794b0daba0eafe95582a7b8185a3caa1630942bdde06e13796801a103df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.collapse",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "collapse"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.1.2. One-dimensional Grid Layout.",
+      "locator": {
+        "section_id": "collapse",
+        "text_sha256": "18bfed5ee1286e8ddf904a9e853624295b665b0dbeec3299e316d2c27f3d3140"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.values",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 1.2. Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.acknowledgements",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "acknowledgements"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in 10. Acknowledgements.",
+      "locator": {
+        "section_id": "acknowledgements",
+        "text_sha256": "617f4771e957bd2034ca46b2c4722b3797b1ba8a5f653ed295e0736f20b8ff7f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.changes",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.changes-3",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "changes-3"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Additions Since Level 2.",
+      "locator": {
+        "section_id": "changes-3",
+        "text_sha256": "75153ba98461713e1bc999f736c93f9dece9101189563442e6715a051a2661cd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.index",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.index-defined-here",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "d765a5f8af7447f610232088be623a20e334c52988bc6bc2db1970a551ace462"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.index-defined-elsewhere",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "f73eec67b11926bf4b63eff7cc62d617614f3d1b8a9538366076f22e401920fc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.references",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.normative",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Normative References.",
+      "locator": {
+        "section_id": "normative",
+        "text_sha256": "6aa7b37db22cfa0fc25ce8b55697377e0f87b6daf0369ffdb0420ff966c84ec8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-grid-3.informative",
+      "family": "css-grid-3",
+      "source_id": "css-grid-3",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Informative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "74e59745b93fff661bc3f90592329b111052fd125b06b8684a0a11385d6fe2d9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    }
+  ]
+}

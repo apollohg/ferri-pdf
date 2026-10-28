@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-page",
+  "sections": [
+    {
+      "id": "the-page",
+      "title": "13 Paged media",
+      "level": 1,
+      "text_sha256": "b83572f5b8070dc1b045c330a2ac6abfce6aa41e4d290b1ab812e9e540a73b62",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.the-page"
+        ]
+      }
+    },
+    {
+      "id": "page-intro",
+      "title": "13.1 Introduction to paged media",
+      "level": 2,
+      "text_sha256": "b0df16bd2eff88338af0096c1d70a8d37637f213ca7223f7dbc6ce4f6bc6fbb1",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.page-intro"
+        ]
+      }
+    },
+    {
+      "id": "page-box",
+      "title": "13.2 Page boxes: the @page rule",
+      "level": 2,
+      "text_sha256": "c29549cc80865d437722476c3a943f9681d9ddbc097a616fe103c7587c1c89eb",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.page-box",
+          "css21-page.page-box-clause-0343b1edb2bb",
+          "css21-page.page-box-clause-29a2959e3f4e"
+        ]
+      }
+    },
+    {
+      "id": "page-margins",
+      "title": "13.2.1 Page margins",
+      "level": 3,
+      "text_sha256": "8462918ac825c42276ce2e9eb3625437e4781b9afa9fe814175630513d8b9cfa",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.page-margins"
+        ]
+      }
+    },
+    {
+      "id": "page-selectors",
+      "title": "13.2.2 Page selectors: selecting left, right, and first pages",
+      "level": 3,
+      "text_sha256": "a7a0abb0a56ade6cb91215abc2b1b517cefbe15ad9c994bdcd59ae077b02c7ba",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.page-selectors",
+          "css21-page.page-selectors-clause-c34197bfe31c",
+          "css21-page.page-selectors-clause-ed9167466d6d"
+        ]
+      }
+    },
+    {
+      "id": "outside-page-box",
+      "title": "13.2.3 Content outside the page box",
+      "level": 3,
+      "text_sha256": "af9e22e26d7478f23fea257cd7c0e0029aea20373d5fe824291f87fc79f68e61",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.outside-page-box",
+          "css21-page.outside-page-box-clause-0d248c08d39a",
+          "css21-page.outside-page-box-clause-647d70386c58",
+          "css21-page.outside-page-box-clause-b9116b4bfb5c"
+        ]
+      }
+    },
+    {
+      "id": "page-breaks",
+      "title": "13.3 Page breaks",
+      "level": 2,
+      "text_sha256": "612375808295e8cce8b756465ce37a2a0600b6d7699fbdaffe9d9db1482420d0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.page-breaks",
+          "css21-page.page-breaks-clause-612375808295"
+        ]
+      }
+    },
+    {
+      "id": "page-break-props",
+      "title": "13.3.1 Page break properties: 'page-break-before', 'page-break-after', 'page-break-inside'",
+      "level": 3,
+      "text_sha256": "a834a477950a3eeb2998353a12d65b2043129700993388da929f4fff72bb0938",
+      "clause_count": 63,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.page-break-props",
+          "css21-page.page-break-props-clause-d1eab19bf286",
+          "css21-page.page-break-props-clause-cca2516ebb1d",
+          "css21-page.page-break-props-clause-a3d274a8d224",
+          "css21-page.page-break-props-clause-ecaad4b2f157",
+          "css21-page.page-break-props-clause-c726a6fc633a",
+          "css21-page.page-break-props-clause-574f689b13ea",
+          "css21-page.page-break-props-clause-4de3ced532a6"
+        ]
+      }
+    },
+    {
+      "id": "break-inside",
+      "title": "13.3.2 Breaks inside elements: 'orphans', 'widows'",
+      "level": 3,
+      "text_sha256": "7e1ad5c0f1e9b0dbc7f5bf52254df82985eaae4fca46a2b5398b47355686f177",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.break-inside",
+          "css21-page.break-inside-clause-d30807ebe502",
+          "css21-page.break-inside-clause-cca2516ebb1d",
+          "css21-page.break-inside-clause-8a638828ece5",
+          "css21-page.break-inside-clause-9d7a9f3c6e7a",
+          "css21-page.break-inside-clause-6650e707295b",
+          "css21-page.break-inside-clause-76e9fc12b85d"
+        ]
+      }
+    },
+    {
+      "id": "allowed-page-breaks",
+      "title": "13.3.3 Allowed page breaks",
+      "level": 3,
+      "text_sha256": "72701a26a04d395315345e3f127ab181bf265b23414b542f0417ae98c9d12008",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.allowed-page-breaks",
+          "css21-page.allowed-page-breaks-clause-4bca97eac93e"
+        ]
+      }
+    },
+    {
+      "id": "forced",
+      "title": "13.3.4 Forced page breaks",
+      "level": 3,
+      "text_sha256": "d5208e75ab37ddf42be92e7b11ac49755f60f1bf473c63f811fb79671f7791f2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.forced",
+          "css21-page.forced-clause-d5208e75ab37"
+        ]
+      }
+    },
+    {
+      "id": "best-page-breaks",
+      "title": "13.3.5 \"Best\" page breaks",
+      "level": 3,
+      "text_sha256": "c248cf60fa66f6494347c46652ca816a3fa90be1977a2377b4d6da070ad5744a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.best-page-breaks",
+          "css21-page.best-page-breaks-clause-75d5e2adbf32",
+          "css21-page.best-page-breaks-clause-598111ecd344",
+          "css21-page.best-page-breaks-clause-5416e2c9ed20",
+          "css21-page.best-page-breaks-clause-b8e68ba82125",
+          "css21-page.best-page-breaks-clause-e7a0844954e5",
+          "css21-page.best-page-breaks-clause-b22b4983c48d"
+        ]
+      }
+    },
+    {
+      "id": "page-cascade",
+      "title": "13.4 Cascading in the page context",
+      "level": 2,
+      "text_sha256": "dbebd3e035670abb21f7c0af29d097ef6ac584e574eeb9944ec71859f25d5524",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-page.page-cascade"
+        ]
+      }
+    }
+  ]
+}

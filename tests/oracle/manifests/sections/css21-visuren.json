@@ -1,0 +1,497 @@
+{
+  "schema_version": 1,
+  "source_id": "css21-visuren",
+  "sections": [
+    {
+      "id": "q9.0",
+      "title": "9 Visual formatting model",
+      "level": 1,
+      "text_sha256": "ba2904e0b718aacb17b7f6b4082791d5de21dbecff782975317306c412377687",
+      "clause_count": 34,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.q9-0"
+        ]
+      }
+    },
+    {
+      "id": "visual-model-intro",
+      "title": "9.1 Introduction to the visual formatting model",
+      "level": 2,
+      "text_sha256": "d54c20dd093e909a5bee357272d0f98acc655080ef85b6d0d13b0758f0afa76c",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.visual-model-intro",
+          "css21-visuren.visual-model-intro-clause-b55180ecb4fc"
+        ]
+      }
+    },
+    {
+      "id": "viewport",
+      "title": "9.1.1 The viewport",
+      "level": 3,
+      "text_sha256": "62a6ff6459927a021b3ec0313f96284f371bc5eaa23baa1fc5e5a4e723317669",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.viewport",
+          "css21-visuren.viewport-clause-80c2492e59d0"
+        ]
+      }
+    },
+    {
+      "id": "containing-block",
+      "title": "9.1.2 Containing blocks",
+      "level": 3,
+      "text_sha256": "1b46c8510b45a198175497eb117b1e05934a7b24d5994221b2cd576f5f1500da",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.containing-block"
+        ]
+      }
+    },
+    {
+      "id": "box-gen",
+      "title": "9.2 Controlling box generation",
+      "level": 2,
+      "text_sha256": "d6cc8534301b085ff62028bd03ee38022677a4e3b2adfc0a85adc84475e269e5",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.box-gen"
+        ]
+      }
+    },
+    {
+      "id": "block-boxes",
+      "title": "9.2.1 Block-level elements and block boxes",
+      "level": 3,
+      "text_sha256": "32f98fc103b84fcbf4cde28f11ae25e882bb49cf360f71e8c65dc4b607fe917c",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.block-boxes"
+        ]
+      }
+    },
+    {
+      "id": "anonymous-block-level",
+      "title": "9.2.1.1 Anonymous block boxes",
+      "level": 4,
+      "text_sha256": "60608a1a137280802ba34ec1180d6d6bcb4b8e87daacd8658e202417dfb48df8",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.anonymous-block-level",
+          "css21-visuren.anonymous-block-level-clause-a858448a17e4",
+          "css21-visuren.anonymous-block-level-clause-159c4730a710"
+        ]
+      }
+    },
+    {
+      "id": "inline-boxes",
+      "title": "9.2.2 Inline-level elements and inline boxes",
+      "level": 3,
+      "text_sha256": "43be7ec0371cb2511424810df0e2ae272438c4442a6dab0f19832d0cd60c695d",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.inline-boxes"
+        ]
+      }
+    },
+    {
+      "id": "anonymous",
+      "title": "9.2.2.1 Anonymous inline boxes",
+      "level": 4,
+      "text_sha256": "dc0b664f760e06324055ee417bec52fabbc3d3ec4396bb564acab99af4cce97e",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.anonymous",
+          "css21-visuren.anonymous-clause-47c3a7d55f07",
+          "css21-visuren.anonymous-clause-05afaef900ad"
+        ]
+      }
+    },
+    {
+      "id": "run-in",
+      "title": "9.2.3 Run-in boxes",
+      "level": 3,
+      "text_sha256": "7996e5d5d685f6217fa443319d9dbfe531a388f35194b53809056a96baa42eb0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.run-in"
+        ]
+      }
+    },
+    {
+      "id": "display-prop",
+      "title": "9.2.4 The 'display' property",
+      "level": 3,
+      "text_sha256": "e8727725869f056218ee8288dece36b4a639d54a460b04e6c2adf546a267dcbd",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.display-prop",
+          "css21-visuren.display-prop-clause-1409250d256f",
+          "css21-visuren.display-prop-clause-cca2516ebb1d",
+          "css21-visuren.display-prop-clause-46dfaeacbc91",
+          "css21-visuren.display-prop-clause-9389a12d8192",
+          "css21-visuren.display-prop-clause-1b8df5365cd5",
+          "css21-visuren.display-prop-clause-6a2fd21d115f"
+        ]
+      }
+    },
+    {
+      "id": "positioning-scheme",
+      "title": "9.3 Positioning schemes",
+      "level": 2,
+      "text_sha256": "114d586c1eb6bce5ceaeae4928bd25af86de8d12d87002d067a574db2b8c0e76",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.positioning-scheme"
+        ]
+      }
+    },
+    {
+      "id": "choose-position",
+      "title": "9.3.1 Choosing a positioning scheme: 'position' property",
+      "level": 3,
+      "text_sha256": "514def7357ffeadb9800cf08f4bbdafada75dd8144615faa65098be5d76cd2cc",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.choose-position",
+          "css21-visuren.choose-position-clause-7b30b0ff7be6",
+          "css21-visuren.choose-position-clause-cca2516ebb1d",
+          "css21-visuren.choose-position-clause-131e232db794",
+          "css21-visuren.choose-position-clause-8cbc2bace12d",
+          "css21-visuren.choose-position-clause-f10540a13967",
+          "css21-visuren.choose-position-clause-ccbc33b3935b"
+        ]
+      }
+    },
+    {
+      "id": "position-props",
+      "title": "9.3.2 Box offsets: 'top', 'right', 'bottom', 'left'",
+      "level": 3,
+      "text_sha256": "8a9b58abbce31dfb1db8f8ab37b028644f8641e0290c4ad57e9588c36f0e900e",
+      "clause_count": 76,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.position-props",
+          "css21-visuren.position-props-clause-4d0ddff73888",
+          "css21-visuren.position-props-clause-cca2516ebb1d",
+          "css21-visuren.position-props-clause-3e0db16fb2e0",
+          "css21-visuren.position-props-clause-db369d81bd7d",
+          "css21-visuren.position-props-clause-8a0fb2b1b6b8",
+          "css21-visuren.position-props-clause-3eddfed1329c"
+        ]
+      }
+    },
+    {
+      "id": "normal-flow",
+      "title": "9.4 Normal flow",
+      "level": 2,
+      "text_sha256": "6b2cd11dca12e054d7d1d5affe0869ee7fbaca98ffb8155948f0f9e4d6e12bd1",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.normal-flow"
+        ]
+      }
+    },
+    {
+      "id": "block-formatting",
+      "title": "9.4.1 Block formatting contexts",
+      "level": 3,
+      "text_sha256": "7ccc4becb0494c1eb81b96ad6c071964c8598ceab0dbd5cb1aefd6f96d4087a9",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.block-formatting"
+        ]
+      }
+    },
+    {
+      "id": "inline-formatting",
+      "title": "9.4.2 Inline formatting contexts",
+      "level": 3,
+      "text_sha256": "8f247d8519fb15710909f1aba8c80f977a3a8b0906afd8897af8cc8c26a92397",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.inline-formatting",
+          "css21-visuren.inline-formatting-clause-f64725aa17a3"
+        ]
+      }
+    },
+    {
+      "id": "relative-positioning",
+      "title": "9.4.3 Relative positioning",
+      "level": 3,
+      "text_sha256": "6395f8acbdc35fe5ca35e68fa9ab7a5b621d674318c4800908c84634d859b02e",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.relative-positioning",
+          "css21-visuren.relative-positioning-clause-034bd39e770b",
+          "css21-visuren.relative-positioning-clause-366a8a340281",
+          "css21-visuren.relative-positioning-clause-5d4bc11304a1"
+        ]
+      }
+    },
+    {
+      "id": "floats",
+      "title": "9.5 Floats",
+      "level": 2,
+      "text_sha256": "d024744228859dbe3bb7973ac12f47c6ed4bc2055e17ea3d2b106cde3ab40d40",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.floats",
+          "css21-visuren.floats-clause-5f7aa90dc2cb"
+        ]
+      }
+    },
+    {
+      "id": "float-position",
+      "title": "9.5.1 Positioning the float: the 'float' property",
+      "level": 3,
+      "text_sha256": "213c94994c18a9170502dd6a9a2148475571ffcb2dd8aa4976989970da3eadde",
+      "clause_count": 40,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.float-position",
+          "css21-visuren.float-position-clause-7d800cb1c3eb",
+          "css21-visuren.float-position-clause-cca2516ebb1d",
+          "css21-visuren.float-position-clause-2ab941d39a5a",
+          "css21-visuren.float-position-clause-75959e982916",
+          "css21-visuren.float-position-clause-cdf400422168",
+          "css21-visuren.float-position-clause-3ac994797076",
+          "css21-visuren.float-position-clause-50bc28d5d763",
+          "css21-visuren.float-position-clause-c98bff0ed826"
+        ]
+      }
+    },
+    {
+      "id": "flow-control",
+      "title": "9.5.2 Controlling flow next to floats: the 'clear' property",
+      "level": 3,
+      "text_sha256": "917f65c29710b2dce10435133c7f50d2ef4f8f397339130e5b6327805039de8b",
+      "clause_count": 62,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.flow-control",
+          "css21-visuren.flow-control-clause-2a7d5c305568",
+          "css21-visuren.flow-control-clause-cca2516ebb1d",
+          "css21-visuren.flow-control-clause-bf1b740d97ee",
+          "css21-visuren.flow-control-clause-0ab0f06bf049",
+          "css21-visuren.flow-control-clause-970d8b372987",
+          "css21-visuren.flow-control-clause-03a191e3114e",
+          "css21-visuren.flow-control-clause-2c967ba883b4"
+        ]
+      }
+    },
+    {
+      "id": "absolute-positioning",
+      "title": "9.6 Absolute positioning",
+      "level": 2,
+      "text_sha256": "0b633c2703347ffa3b380ec2bd80bb929cb3fbc2c129cb9e9688a548cb4dd1ca",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.absolute-positioning"
+        ]
+      }
+    },
+    {
+      "id": "fixed-positioning",
+      "title": "9.6.1 Fixed positioning",
+      "level": 3,
+      "text_sha256": "a762daee2d648dbce2581b11d2c847049a808f2698ab357f2b550503ce9e1e50",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.fixed-positioning",
+          "css21-visuren.fixed-positioning-clause-951e521716d5"
+        ]
+      }
+    },
+    {
+      "id": "dis-pos-flo",
+      "title": "9.7 Relationships between 'display', 'position', and 'float'",
+      "level": 2,
+      "text_sha256": "17f241d194888bd7b90a7907ebc0d38c764243b74608c1cc9409d8c43790efdb",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.dis-pos-flo",
+          "css21-visuren.dis-pos-flo-clause-285b7dc483c2",
+          "css21-visuren.dis-pos-flo-clause-b3615596924e",
+          "css21-visuren.dis-pos-flo-clause-22edaa34f875"
+        ]
+      }
+    },
+    {
+      "id": "comparison",
+      "title": "9.8 Comparison of normal flow, floats, and absolute positioning",
+      "level": 2,
+      "text_sha256": "07a8330cca7e4e92ddc577e518442ba3196f6ec5cf355516589d05c34127639d",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.comparison"
+        ]
+      }
+    },
+    {
+      "id": "comp-normal-flow",
+      "title": "9.8.1 Normal flow",
+      "level": 3,
+      "text_sha256": "5f38049bc867c9a2c8e02a7893db1c9a78a519608f00061eb9e67b47f3c204e3",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.comp-normal-flow"
+        ]
+      }
+    },
+    {
+      "id": "comp-relpos",
+      "title": "9.8.2 Relative positioning",
+      "level": 3,
+      "text_sha256": "103b5eafc75a61ef7627c322cbf31811482afca6a90e6234170427a7eb189d34",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.comp-relpos"
+        ]
+      }
+    },
+    {
+      "id": "comp-float",
+      "title": "9.8.3 Floating a box",
+      "level": 3,
+      "text_sha256": "802bb30b8fd260953cffe3eb2fabfa009dff3c139bbcdefa4059c6cd111ba04b",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.comp-float"
+        ]
+      }
+    },
+    {
+      "id": "comp-abspos",
+      "title": "9.8.4 Absolute positioning",
+      "level": 3,
+      "text_sha256": "5f1f4ea650257353a1f5b023ce728c6fb3a005863c164636bcb43051753677cd",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.comp-abspos"
+        ]
+      }
+    },
+    {
+      "id": "layers",
+      "title": "9.9 Layered presentation",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.layers"
+        ]
+      }
+    },
+    {
+      "id": "z-index",
+      "title": "9.9.1 Specifying the stack level: the 'z-index' property",
+      "level": 3,
+      "text_sha256": "b78a88679ba0a6fad8a895f2db874878cf18f7e67b71ddce32460e155554b506",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.z-index",
+          "css21-visuren.z-index-clause-415ac7e5a05b",
+          "css21-visuren.z-index-clause-cca2516ebb1d",
+          "css21-visuren.z-index-clause-4032cee7cb91",
+          "css21-visuren.z-index-clause-240fc6f3cf9b",
+          "css21-visuren.z-index-clause-25775b803dcc",
+          "css21-visuren.z-index-clause-17b69e970821"
+        ]
+      }
+    },
+    {
+      "id": "direction",
+      "title": "9.10 Text direction: the 'direction' and 'unicode-bidi' properties",
+      "level": 2,
+      "text_sha256": "d3867b087eaaf8d85f8dc1fedcd1172301f5cd0b58f1a3d55f8386d6ae1d1515",
+      "clause_count": 71,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css21-visuren.direction",
+          "css21-visuren.direction-clause-174e2cdb6a87",
+          "css21-visuren.direction-clause-ba9c691bd4fb",
+          "css21-visuren.direction-clause-cbc60ebbae97",
+          "css21-visuren.direction-clause-3bf0ac1e55d3",
+          "css21-visuren.direction-clause-cca2516ebb1d",
+          "css21-visuren.direction-clause-062a1a7ba258",
+          "css21-visuren.direction-clause-34402e6639f0",
+          "css21-visuren.direction-clause-9cf7f9d4f4b0",
+          "css21-visuren.direction-clause-fdd506fdcae5",
+          "css21-visuren.direction-clause-32965420734e",
+          "css21-visuren.direction-clause-35c2ea2edc38",
+          "css21-visuren.direction-clause-328930c9ddef",
+          "css21-visuren.direction-clause-340e3eda1c2e",
+          "css21-visuren.direction-clause-980e3d225ba9",
+          "css21-visuren.direction-clause-b5b9de4c01ea",
+          "css21-visuren.direction-clause-cec51b5c311e",
+          "css21-visuren.direction-clause-9ec9129476da",
+          "css21-visuren.direction-clause-06013d0decde",
+          "css21-visuren.direction-clause-61c282566562",
+          "css21-visuren.direction-clause-802870c6d745",
+          "css21-visuren.direction-clause-08cd281d9209"
+        ]
+      }
+    }
+  ]
+}

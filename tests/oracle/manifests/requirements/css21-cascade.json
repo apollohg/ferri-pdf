@@ -1,0 +1,1301 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css21-cascade.q6-0",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "q6.0"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in 6 Assigning property values, Cascading, and Inheritance.",
+      "locator": {
+        "section_id": "q6.0",
+        "text_sha256": "20b84fdc4641f86dff2e15c3cf87eaff69450ea081a8276741f923c6014f6737"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "value-stages"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.q6-0-clause-eeeb79dd53a5",
+        "css21-cascade.q6-0-clause-1690ea7386d2",
+        "css21-cascade.q6-0-clause-5e0758efa953"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.q6-0-clause-eeeb79dd53a5",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "q6.0"
+      ],
+      "behaviour": "6 Assigning property values, Cascading, and Inheritance — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "q6.0",
+        "clause_index": 1,
+        "clause_sha256": "eeeb79dd53a51474d73706bec18f0b25980eccbf40e07453aa010fcd287cf4d9"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "value-stages"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.q6-0-clause-1690ea7386d2",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "q6.0"
+      ],
+      "behaviour": "6 Assigning property values, Cascading, and Inheritance — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "q6.0",
+        "clause_index": 3,
+        "clause_sha256": "1690ea7386d27d917feacb98166e3746b11fc134d01deb1e18b8a8ccd3037eb8"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "value-stages"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.q6-0-clause-5e0758efa953",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "q6.0"
+      ],
+      "behaviour": "6 Assigning property values, Cascading, and Inheritance — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "q6.0",
+        "clause_index": 7,
+        "clause_sha256": "5e0758efa953ea4c7bea7dbebe6c6bfed8caae3062d60a12259d17b98c592432"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "value-stages"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.value-stages",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "value-stages"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specified, computed, and actual values.",
+      "locator": {
+        "section_id": "value-stages",
+        "text_sha256": "df0e99d04b0af4a703b11ea1760efd4332e87093809a3a7a84f20ea04ef1aead"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "value-stages"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.value-stages-clause-65c1108ae7fb",
+        "css21-cascade.value-stages-clause-f2821b9ed305"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.value-stages-clause-65c1108ae7fb",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "value-stages"
+      ],
+      "behaviour": "Specified, computed, and actual values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "value-stages",
+        "clause_index": 0,
+        "clause_sha256": "65c1108ae7fb97dd16f3aebc4e64ab56919d9bc023bbe00034f28844abc12d14"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "value-stages"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.value-stages-clause-f2821b9ed305",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "value-stages"
+      ],
+      "behaviour": "Specified, computed, and actual values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "value-stages",
+        "clause_index": 1,
+        "clause_sha256": "f2821b9ed3059bd178fdf36959d59193c2e672f9b7e5291ce9b499f1a55988ec"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "value-stages"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.specified-value",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "specified-value"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specified values.",
+      "locator": {
+        "section_id": "specified-value",
+        "text_sha256": "d74254bd385a5109e1492d7f551e797fe5bc40623815d6d02e10fddfd8db7bbe"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "specified"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.specified-value-clause-52b6930f08b9",
+        "css21-cascade.specified-value-clause-6449b70c0e29",
+        "css21-cascade.specified-value-clause-53c2bf773031"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.specified-value-clause-52b6930f08b9",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "specified-value"
+      ],
+      "behaviour": "Specified values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "specified-value",
+        "clause_index": 0,
+        "clause_sha256": "52b6930f08b9bcd482c0a47b0e4553277b6c253cf6285667ebbe175876ffe174"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "specified"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.specified-value-clause-6449b70c0e29",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "specified-value"
+      ],
+      "behaviour": "Specified values — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "specified-value",
+        "clause_index": 2,
+        "clause_sha256": "6449b70c0e29a01cb39dedfa63c66cc5a381ad5efdbe444c3b5fa781115e2ca0"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "specified"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.specified-value-clause-53c2bf773031",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "specified-value"
+      ],
+      "behaviour": "Specified values — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "specified-value",
+        "clause_index": 3,
+        "clause_sha256": "53c2bf773031d16fcd640e04207a7d324fa2995a1b51d8abce02a7af4f1106d0"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "specified"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.computed-value",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "computed-value"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Computed values.",
+      "locator": {
+        "section_id": "computed-value",
+        "text_sha256": "5da15a348fbce017c7f22658a0520e080b3e349a23761b58efa657cd34b433d7"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "computed"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.computed-value-clause-2274a283b7b5",
+        "css21-cascade.computed-value-clause-1b29e66558d9",
+        "css21-cascade.computed-value-clause-748160646202",
+        "css21-cascade.computed-value-clause-f3b426394ed4"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.computed-value-clause-2274a283b7b5",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "computed-value"
+      ],
+      "behaviour": "Computed values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed-value",
+        "clause_index": 0,
+        "clause_sha256": "2274a283b7b532922c4eb64358933bf2d4fdf331f3c2e3330331d5b9bc8691d1"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "computed"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.computed-value-clause-1b29e66558d9",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "computed-value"
+      ],
+      "behaviour": "Computed values — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed-value",
+        "clause_index": 1,
+        "clause_sha256": "1b29e66558d9f2436138208bd477233a1d7593ac701240d4f76a7798034a82cf"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "computed"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.computed-value-clause-748160646202",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "computed-value"
+      ],
+      "behaviour": "Computed values — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed-value",
+        "clause_index": 2,
+        "clause_sha256": "74816064620244cd33a4e07fcbbbb47082f7c89987184b13f764413bb907e0bb"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "computed"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.computed-value-clause-f3b426394ed4",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "computed-value"
+      ],
+      "behaviour": "Computed values — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "computed-value",
+        "clause_index": 3,
+        "clause_sha256": "f3b426394ed49313eee2550192092c2c7b598d5171091833197a7a9f3d9e29a2"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "computed"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.used-value",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "used-value"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Used values.",
+      "locator": {
+        "section_id": "used-value",
+        "text_sha256": "22ef7b8d156d20916d8cc331d3cf8b90c87413997fdc320c781d9047f0551826"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "used"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.used-value-clause-22ef7b8d156d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.used-value-clause-22ef7b8d156d",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "used-value"
+      ],
+      "behaviour": "Used values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "used-value",
+        "clause_index": 0,
+        "clause_sha256": "22ef7b8d156d20916d8cc331d3cf8b90c87413997fdc320c781d9047f0551826"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "used"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.actual-value",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "actual-value"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Actual values.",
+      "locator": {
+        "section_id": "actual-value",
+        "text_sha256": "250633bc2addab2f5b74ca7256b688ee8259a97fb090c1962b02da6d6ce8b677"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "actual"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.actual-value-clause-250633bc2add"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.actual-value-clause-250633bc2add",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "actual-value"
+      ],
+      "behaviour": "Actual values — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "actual-value",
+        "clause_index": 0,
+        "clause_sha256": "250633bc2addab2f5b74ca7256b688ee8259a97fb090c1962b02da6d6ce8b677"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "actual"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.inheritance",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "inheritance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Inheritance.",
+      "locator": {
+        "section_id": "inheritance",
+        "text_sha256": "d4be56ddf92d451c9c5285b2a7748827c4599f066fc974a40332a264861be6e3"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "inheriting"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.inheritance-clause-9f6d91d9589f",
+        "css21-cascade.inheritance-clause-72a9db8128fc",
+        "css21-cascade.inheritance-clause-1381a1a77f3e"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.inheritance-clause-9f6d91d9589f",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "inheritance"
+      ],
+      "behaviour": "Inheritance — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "inheritance",
+        "clause_index": 3,
+        "clause_sha256": "9f6d91d9589ffc6bbf83a08176c686c7c5541d8588325233fed8dab111352b99"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "inheriting"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.inheritance-clause-72a9db8128fc",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "inheritance"
+      ],
+      "behaviour": "Inheritance — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "inheritance",
+        "clause_index": 4,
+        "clause_sha256": "72a9db8128fc2d881177ea072acaef8c40df4466411de35f90e79f6bf930699e"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "inheriting"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.inheritance-clause-1381a1a77f3e",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "inheritance"
+      ],
+      "behaviour": "Inheritance — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "inheritance",
+        "clause_index": 10,
+        "clause_sha256": "1381a1a77f3e6d5de4ac7ebacfd6693ed7b926d0e36a430003aeb68a15643015"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "inheriting"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.value-def-inherit",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "value-def-inherit"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The 'inherit' value.",
+      "locator": {
+        "section_id": "value-def-inherit",
+        "text_sha256": "de835744e4c48a1c3ba5df4dad1234f2f04c791fb0c8d8100978aa56163d172a"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "inherit"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.value-def-inherit-clause-7563048f8834",
+        "css21-cascade.value-def-inherit-clause-b2baa00818dd",
+        "css21-cascade.value-def-inherit-clause-342e571cf8d8"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.value-def-inherit-clause-7563048f8834",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "value-def-inherit"
+      ],
+      "behaviour": "The 'inherit' value — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "value-def-inherit",
+        "clause_index": 0,
+        "clause_sha256": "7563048f88340552a7bbba44b11a3f395ab9a6908c791a5be793c4489c122214"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "inherit"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.value-def-inherit-clause-b2baa00818dd",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "value-def-inherit"
+      ],
+      "behaviour": "The 'inherit' value — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "value-def-inherit",
+        "clause_index": 1,
+        "clause_sha256": "b2baa00818dddbec30a20e1861371706991bff87e1cc06f36f84f3f9f6f3df60"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "inherit"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.value-def-inherit-clause-342e571cf8d8",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "value-def-inherit"
+      ],
+      "behaviour": "The 'inherit' value — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "value-def-inherit",
+        "clause_index": 4,
+        "clause_sha256": "342e571cf8d85b84facfe9896a7c357e1bf31cabe590dcff9581486c05e42385"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "inherit"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.at-import",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "at-import"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The @import rule.",
+      "locator": {
+        "section_id": "at-import",
+        "text_sha256": "b38fd6afbab78b7682125bc23727e2a0c419d6482e51863b59fb097593617eb0"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "at-import"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.at-import-clause-894dbf3887c8",
+        "css21-cascade.at-import-clause-3294e68f5a3d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.at-import-clause-894dbf3887c8",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "at-import"
+      ],
+      "behaviour": "The @import rule — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-import",
+        "clause_index": 0,
+        "clause_sha256": "894dbf3887c8d54c01e74680c7d502a528d22fb192c109edfe0711033d886263"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "at-import"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.at-import-clause-3294e68f5a3d",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "at-import"
+      ],
+      "behaviour": "The @import rule — normative clause 12, located by its exact source hash.",
+      "locator": {
+        "section_id": "at-import",
+        "clause_index": 11,
+        "clause_sha256": "3294e68f5a3dd0a336bbe2a008f720ebf2b712ef81045f7141f6225f2910f11a"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "at-import"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.cascade",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "cascade"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in The cascade.",
+      "locator": {
+        "section_id": "cascade",
+        "text_sha256": "22f37e182e69aa979636797f521aadbb9f2de24392e37a2130261e808099a2bf"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "cascading"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.cascade-clause-b20719be4ba6"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.cascade-clause-b20719be4ba6",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "cascade"
+      ],
+      "behaviour": "The cascade — normative clause 4, located by its exact source hash.",
+      "locator": {
+        "section_id": "cascade",
+        "clause_index": 3,
+        "clause_sha256": "b20719be4ba69f79ca2396adc555c5d6994c620e7f0a0c1cb223a435a5caf4c8"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "cascading"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.cascading-order",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "cascading-order"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Cascading order.",
+      "locator": {
+        "section_id": "cascading-order",
+        "text_sha256": "85d408214adefa300f23b67a6482c1657a0b1eddcec9cfee70d99c26d9eb5cee"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "cascade-sort"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.cascading-order-clause-7dca09870a73",
+        "css21-cascade.cascading-order-clause-4ff1e89cafb0"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.cascading-order-clause-7dca09870a73",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "cascading-order"
+      ],
+      "behaviour": "Cascading order — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "cascading-order",
+        "clause_index": 0,
+        "clause_sha256": "7dca09870a7339ebc4d66cbe3b1e0073dbc87a809584d070dac2ff56484b1388"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "cascade-sort"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.cascading-order-clause-4ff1e89cafb0",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "cascading-order"
+      ],
+      "behaviour": "Cascading order — normative clause 11, located by its exact source hash.",
+      "locator": {
+        "section_id": "cascading-order",
+        "clause_index": 10,
+        "clause_sha256": "4ff1e89cafb0d21cbd9639b5cea353b7b3eb2fbc2a9f41a799ab25c4a5b98345"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "cascade-sort"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.important-rules",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "important-rules"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in !important rules.",
+      "locator": {
+        "section_id": "important-rules",
+        "text_sha256": "d10270ba4110f4221f8bc890dd66d1e6e39611a2159d16312f954c1b1e2be6ec"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "importance"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.specificity",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "specificity"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Calculating a selector's specificity.",
+      "locator": {
+        "section_id": "specificity",
+        "text_sha256": "e39e42bc0064aeced7c12cbc070d87048ebc104890cb352da1b44d81d70426ee"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "cascade-sort"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.preshint",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "preshint"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Precedence of non-CSS presentational hints.",
+      "locator": {
+        "section_id": "preshint",
+        "text_sha256": "df0940a5754880aa0f08e8bddaa59ecf0f483839a14aefd518c0eee8946c25a4"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "preshint"
+        }
+      },
+      "dependencies": [
+        "css21-cascade.preshint-clause-d81854a3f0bd",
+        "css21-cascade.preshint-clause-43de17f531e1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css21-cascade.preshint-clause-d81854a3f0bd",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "preshint"
+      ],
+      "behaviour": "Precedence of non-CSS presentational hints — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "preshint",
+        "clause_index": 1,
+        "clause_sha256": "d81854a3f0bdb4732eeaa16f774a6fb16bf5f4cd29a51678029be8edd4d06542"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "preshint"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css21-cascade.preshint-clause-43de17f531e1",
+      "family": "css21-cascade",
+      "source_id": "css21-cascade",
+      "sections": [
+        "preshint"
+      ],
+      "behaviour": "Precedence of non-CSS presentational hints — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "preshint",
+        "clause_index": 2,
+        "clause_sha256": "43de17f531e15ab9b282827ae3ef68b2b4cf493003c10ecea63852cbae87b9cf"
+      },
+      "applicability": {
+        "status": "excluded",
+        "reason": "Cascade Level 5 section 1.1 explicitly replaces CSS2 chapter 6; the approved profile selects the later level. Selector specificity is applied through the controlling cascade-sort definition and its Selectors reference.",
+        "basis": {
+          "classification": "superseded",
+          "source_id": "css-cascade-5",
+          "section_id": "preshint"
+        }
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    }
+  ]
+}

@@ -1,0 +1,451 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-23",
+  "sections": [
+    {
+      "id": "G30273",
+      "title": "Special Areas and Format Characters",
+      "level": 1,
+      "text_sha256": "748a1b21220dfe4b1161eae67ad4d329d3dfecfbf812314d0323bff3440ae6f2",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.g30273"
+        ]
+      }
+    },
+    {
+      "id": "heading-6d196edece6c",
+      "title": "23.1 Control Codes",
+      "level": 2,
+      "text_sha256": "d8b7ed59fe73e3e565faf3d7ff492ef4c5cbc3a02dedeb4b0192009eeb2dc3e3",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-6d196edece6c"
+        ]
+      }
+    },
+    {
+      "id": "heading-a076379ddae0",
+      "title": "23.1.1 Representing Control Sequences",
+      "level": 3,
+      "text_sha256": "f980ec8b5be9625b0cdee473377abb58f8ead330c1d600abccb5236f3b9005b9",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-a076379ddae0",
+          "unicode17-chapter-23.heading-a076379ddae0-clause-3ac12366fb4b",
+          "unicode17-chapter-23.heading-a076379ddae0-clause-a5c795feb3e2"
+        ]
+      }
+    },
+    {
+      "id": "heading-1fe202bcb050",
+      "title": "23.1.2 Specification of Control Code Semantics",
+      "level": 3,
+      "text_sha256": "90fc07c9e1c71703a2de75c8663769d2110df96f7a4b8974b403517023044434",
+      "clause_count": 38,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-1fe202bcb050",
+          "unicode17-chapter-23.heading-1fe202bcb050-clause-05f474485eb3",
+          "unicode17-chapter-23.heading-1fe202bcb050-clause-fd7dcf629b7a"
+        ]
+      }
+    },
+    {
+      "id": "heading-5830c22a5c78",
+      "title": "23.2 Layout Controls",
+      "level": 2,
+      "text_sha256": "9a5eb5cfc728a16584afa1331a229bc3634d9c27dc8a4d0b5bb1158910e3144f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-5830c22a5c78"
+        ]
+      }
+    },
+    {
+      "id": "heading-cf6edb8d02c7",
+      "title": "23.2.1 Line and Word Breaking",
+      "level": 3,
+      "text_sha256": "fc6bca03a07b9aaf684ff1ff89625cd9fa17978565f902975d414ce132641daa",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-cf6edb8d02c7",
+          "unicode17-chapter-23.heading-cf6edb8d02c7-clause-ee441e3fce94",
+          "unicode17-chapter-23.heading-cf6edb8d02c7-clause-164760997afa",
+          "unicode17-chapter-23.heading-cf6edb8d02c7-clause-8f44a5c9625b",
+          "unicode17-chapter-23.heading-cf6edb8d02c7-clause-1b90cf1705ad",
+          "unicode17-chapter-23.heading-cf6edb8d02c7-clause-36af90cb48ed",
+          "unicode17-chapter-23.heading-cf6edb8d02c7-clause-1e09c61a6874",
+          "unicode17-chapter-23.heading-cf6edb8d02c7-clause-d828f753d98f",
+          "unicode17-chapter-23.heading-cf6edb8d02c7-clause-5e6344b69c76",
+          "unicode17-chapter-23.heading-cf6edb8d02c7-clause-855764d78988",
+          "unicode17-chapter-23.heading-cf6edb8d02c7-clause-5ada6e545ed4"
+        ]
+      }
+    },
+    {
+      "id": "heading-03accb22fda3",
+      "title": "23.2.2 Cursive Connection and Ligatures",
+      "level": 3,
+      "text_sha256": "31ffa7bde5a6caede4481b5d30a00f9fb0850d55f9443ae80870756359d2e2bd",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-03accb22fda3",
+          "unicode17-chapter-23.heading-03accb22fda3-clause-77a1e1bdc6b8",
+          "unicode17-chapter-23.heading-03accb22fda3-clause-40cd77e9bef9",
+          "unicode17-chapter-23.heading-03accb22fda3-clause-d684abecb641",
+          "unicode17-chapter-23.heading-03accb22fda3-clause-4ec45887ddf5",
+          "unicode17-chapter-23.heading-03accb22fda3-clause-04aadb3d698c",
+          "unicode17-chapter-23.heading-03accb22fda3-clause-946ef2dd4ab8",
+          "unicode17-chapter-23.heading-03accb22fda3-clause-5a2aeb86ea85"
+        ]
+      }
+    },
+    {
+      "id": "heading-ecd925b0a3ba",
+      "title": "23.2.3 Prepended Concatenation Marks",
+      "level": 3,
+      "text_sha256": "7ffffd6fd63478a249b87361de159e01fc607e970dd45ec3d5a616a3d5577ad2",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-ecd925b0a3ba",
+          "unicode17-chapter-23.heading-ecd925b0a3ba-clause-65ddba6c68e1"
+        ]
+      }
+    },
+    {
+      "id": "heading-e3d5dfe45c46",
+      "title": "23.2.4 Combining Grapheme Joiner",
+      "level": 3,
+      "text_sha256": "6ee3aa2fc6f8104c5469d0ecdb8b96d2efa02dcd4d6ca96c9475d0cead1678f1",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-e3d5dfe45c46",
+          "unicode17-chapter-23.heading-e3d5dfe45c46-clause-1d309da6af38",
+          "unicode17-chapter-23.heading-e3d5dfe45c46-clause-212ae009748a",
+          "unicode17-chapter-23.heading-e3d5dfe45c46-clause-29dde4cccb71",
+          "unicode17-chapter-23.heading-e3d5dfe45c46-clause-a0a59c52586e"
+        ]
+      }
+    },
+    {
+      "id": "heading-42c69e7ccbc4",
+      "title": "23.2.5 Bidirectional Ordering Controls",
+      "level": 3,
+      "text_sha256": "59040cada36990addf9ac134c25c85a63235e43663407a9602217017846e2ec0",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-42c69e7ccbc4",
+          "unicode17-chapter-23.heading-42c69e7ccbc4-clause-5ff8097db2cb",
+          "unicode17-chapter-23.heading-42c69e7ccbc4-clause-d1df836370d8",
+          "unicode17-chapter-23.heading-42c69e7ccbc4-clause-06711a3c53dc"
+        ]
+      }
+    },
+    {
+      "id": "heading-0dd7d775f388",
+      "title": "23.2.6 Stateful Format Controls",
+      "level": 3,
+      "text_sha256": "1f01133b8551955392173b087f50aeef71df79d0103e64fa425417bb4913e3d4",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-0dd7d775f388",
+          "unicode17-chapter-23.heading-0dd7d775f388-clause-6b30767eca1b",
+          "unicode17-chapter-23.heading-0dd7d775f388-clause-6f33b24b3778",
+          "unicode17-chapter-23.heading-0dd7d775f388-clause-e44c2194baa9"
+        ]
+      }
+    },
+    {
+      "id": "heading-733f1ed27af9",
+      "title": "23.3 Deprecated Format Characters",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-733f1ed27af9"
+        ]
+      }
+    },
+    {
+      "id": "heading-cae728090f65",
+      "title": "23.3.1 Deprecated Format Characters: U+206A–U+206F",
+      "level": 3,
+      "text_sha256": "7c8cee8ad3b052829fe549f4b5cbffef07f58bfe2d93ee2c5b1a66a64aa2678d",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-cae728090f65",
+          "unicode17-chapter-23.heading-cae728090f65-clause-0023d233a120",
+          "unicode17-chapter-23.heading-cae728090f65-clause-831e385fb509",
+          "unicode17-chapter-23.heading-cae728090f65-clause-dea4ca900922",
+          "unicode17-chapter-23.heading-cae728090f65-clause-efffcec65882",
+          "unicode17-chapter-23.heading-cae728090f65-clause-d1e05935dd22",
+          "unicode17-chapter-23.heading-cae728090f65-clause-78171997ba7d"
+        ]
+      }
+    },
+    {
+      "id": "heading-676070beeb00",
+      "title": "23.4 Variation Selectors",
+      "level": 2,
+      "text_sha256": "41d0b410052a4b078a49a52b5792dd85341123202aafee4662084e96693b8ec4",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-676070beeb00",
+          "unicode17-chapter-23.heading-676070beeb00-clause-3e44dfcc2909",
+          "unicode17-chapter-23.heading-676070beeb00-clause-4b26a47c4e33",
+          "unicode17-chapter-23.heading-676070beeb00-clause-e235e9cbc0e0",
+          "unicode17-chapter-23.heading-676070beeb00-clause-40ec5c5e6afe",
+          "unicode17-chapter-23.heading-676070beeb00-clause-b2fe25e38fba",
+          "unicode17-chapter-23.heading-676070beeb00-clause-aa97873f3594",
+          "unicode17-chapter-23.heading-676070beeb00-clause-8bd387b0ff6d"
+        ]
+      }
+    },
+    {
+      "id": "heading-3b4df89b8a21",
+      "title": "23.5 Private-Use Characters",
+      "level": 2,
+      "text_sha256": "49d30d23cee970942eb43a1f27a9a013904b23c5912aa717e2f15ce3d08dc5d8",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-3b4df89b8a21",
+          "unicode17-chapter-23.heading-3b4df89b8a21-clause-cc12be016e8e",
+          "unicode17-chapter-23.heading-3b4df89b8a21-clause-acd7f4e46b41",
+          "unicode17-chapter-23.heading-3b4df89b8a21-clause-0c8e629d5a1b"
+        ]
+      }
+    },
+    {
+      "id": "heading-ca711f22e3f0",
+      "title": "23.5.1 Private Use Area: U+E000–U+F8FF",
+      "level": 3,
+      "text_sha256": "8237baa9164ded7b29b7bccf5926909929cf73672b38f73bf7a3fcf7f49f7e3d",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-ca711f22e3f0",
+          "unicode17-chapter-23.heading-ca711f22e3f0-clause-a988190c18b0"
+        ]
+      }
+    },
+    {
+      "id": "heading-4f20b0a2691c",
+      "title": "23.5.2 Supplementary Private Use Areas",
+      "level": 3,
+      "text_sha256": "8a290a0b03865677f52a33f2c466e20ded2a8339c1fc086080e874e8804103c6",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-4f20b0a2691c"
+        ]
+      }
+    },
+    {
+      "id": "heading-e75d81a57928",
+      "title": "23.6 Surrogates Area",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-e75d81a57928"
+        ]
+      }
+    },
+    {
+      "id": "heading-b7cf605e2672",
+      "title": "23.6.1 Surrogates Area: U+D800–U+DFFF",
+      "level": 3,
+      "text_sha256": "95fa476ac31445d471727fdd2dedd4afa4406039bff14a46ddad88a35aa79134",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-b7cf605e2672"
+        ]
+      }
+    },
+    {
+      "id": "heading-9655233378fa",
+      "title": "23.7 Noncharacters",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-9655233378fa"
+        ]
+      }
+    },
+    {
+      "id": "heading-e07983e7a117",
+      "title": "23.7.1 Noncharacters: U+FFFE, U+FFFF, and Others",
+      "level": 3,
+      "text_sha256": "c1563ab17a116efb5c72b1472bf354e37cd6153272f621a0e51df8391716fa26",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-e07983e7a117",
+          "unicode17-chapter-23.heading-e07983e7a117-clause-f9053c9601d3",
+          "unicode17-chapter-23.heading-e07983e7a117-clause-8ec2112a5f3b"
+        ]
+      }
+    },
+    {
+      "id": "heading-03a828cd312c",
+      "title": "23.8 Specials",
+      "level": 2,
+      "text_sha256": "e6ce880242fe10aca38ab6b1ff15a357a07d7cde58096df91ef1a47cba21c531",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-03a828cd312c"
+        ]
+      }
+    },
+    {
+      "id": "heading-28154c09a2fd",
+      "title": "23.8.1 Byte Order Mark (BOM): U+FEFF",
+      "level": 3,
+      "text_sha256": "d045766cf4fcbf59b5dcaa44c679e669983804dea4409ecb99ae2b6d2491fe1b",
+      "clause_count": 53,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-28154c09a2fd",
+          "unicode17-chapter-23.heading-28154c09a2fd-clause-4264af55ae1f",
+          "unicode17-chapter-23.heading-28154c09a2fd-clause-987d51840bfc",
+          "unicode17-chapter-23.heading-28154c09a2fd-clause-7b3a8932cac9",
+          "unicode17-chapter-23.heading-28154c09a2fd-clause-09b1675fde43",
+          "unicode17-chapter-23.heading-28154c09a2fd-clause-713713f2dc19",
+          "unicode17-chapter-23.heading-28154c09a2fd-clause-c61885bf59dc",
+          "unicode17-chapter-23.heading-28154c09a2fd-clause-eca1fe0c1354",
+          "unicode17-chapter-23.heading-28154c09a2fd-clause-4e7af29daaaf",
+          "unicode17-chapter-23.heading-28154c09a2fd-clause-6dd642c8fa75",
+          "unicode17-chapter-23.heading-28154c09a2fd-clause-0cb3a0c8ca4d",
+          "unicode17-chapter-23.heading-28154c09a2fd-clause-898e848d7448"
+        ]
+      }
+    },
+    {
+      "id": "heading-092b5ba2168a",
+      "title": "23.8.2 Specials: U+FFF0–U+FFFF",
+      "level": 3,
+      "text_sha256": "22c3b4dfb814e91b70ebf3113a03d8edaffb3cc605215485517e62557a602696",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-092b5ba2168a"
+        ]
+      }
+    },
+    {
+      "id": "heading-ad26d382891d",
+      "title": "23.8.3 Annotation Characters: U+FFF9–U+FFFB",
+      "level": 3,
+      "text_sha256": "9b0212db58a649f109833d5a31c1d3e2f8aecc3abe4a685ae4d6d517cd0540e4",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-ad26d382891d",
+          "unicode17-chapter-23.heading-ad26d382891d-clause-9a88df4bac4e",
+          "unicode17-chapter-23.heading-ad26d382891d-clause-e6ab20eb021e",
+          "unicode17-chapter-23.heading-ad26d382891d-clause-d38c3963de39",
+          "unicode17-chapter-23.heading-ad26d382891d-clause-db342d16b59b",
+          "unicode17-chapter-23.heading-ad26d382891d-clause-f7582390948e"
+        ]
+      }
+    },
+    {
+      "id": "heading-b173d05731a7",
+      "title": "23.8.4 Replacement Characters: U+FFFC–U+FFFD",
+      "level": 3,
+      "text_sha256": "8d41f4d1d2e971c52c6f4c6488d62d8864952cf9d9e373aeb50013e6172b973c",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-b173d05731a7"
+        ]
+      }
+    },
+    {
+      "id": "heading-8fed0d7f5ee3",
+      "title": "23.9 Tag Characters",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-8fed0d7f5ee3"
+        ]
+      }
+    },
+    {
+      "id": "heading-56aac53c1fa7",
+      "title": "23.9.1 Tag Characters: U+E0000–U+E007F",
+      "level": 3,
+      "text_sha256": "fa0f30f48213d01c55e9c7b0c5d22598dc030abcaf9e8e8bd5299f3e4c97d002",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-56aac53c1fa7",
+          "unicode17-chapter-23.heading-56aac53c1fa7-clause-3647a0f6720d"
+        ]
+      }
+    },
+    {
+      "id": "heading-438cb74ed63f",
+      "title": "23.9.2 Deprecated Use for Language Tagging",
+      "level": 3,
+      "text_sha256": "7901f800e059c511979cce6a5405bb4839cddde8db7a337d08bce0114e9a35af",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-23.heading-438cb74ed63f"
+        ]
+      }
+    }
+  ]
+}

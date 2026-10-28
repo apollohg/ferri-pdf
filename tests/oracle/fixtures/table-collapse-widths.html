@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>table-collapse-widths</title><style>@font-face { font-family: Spike; src: url('../assets/DejaVuSans.ttf'); }
+@page { size: 360pt 480pt; margin: 36pt; }
+html, body { margin: 0; padding: 0; }
+body { font-family: Spike; font-size: 12pt; line-height: 18pt; }
+p { margin: 0 0 12pt; widows: 2; orphans: 2; hyphens: none; }
+.new-page { break-before: page; }
+.keep { break-inside: avoid; }
+table{border-collapse:collapse;border:3pt solid blue;padding:10pt;border-spacing:7pt}td{border:1pt solid red;padding:4pt}.w{border:5pt solid green}.s{border-left:9pt solid rgba(0,128,0,.5)}</style></head><body><table><tr><td>A</td><td class="w">B</td></tr><tr><td class="s">C</td><td>D</td></tr></table><p>After</p></body></html>

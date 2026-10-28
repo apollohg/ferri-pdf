@@ -1,0 +1,2651 @@
+{
+  "schema_version": 1,
+  "source_id": "png-3",
+  "sections": [
+    {
+      "id": "title",
+      "title": "Portable Network Graphics (PNG) Specification (Third Edition)",
+      "level": 1,
+      "text_sha256": "b92b09b8c4dba8b34a3ba022c516a17e2f6f9e080362ff8eff96f4322086b5f0",
+      "clause_count": 65,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.title"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "b89b74d332ccbf9c04ad9663461fbb33086b5172ea569c09c01befa729fea27c",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.abstract"
+        ]
+      }
+    },
+    {
+      "id": "sotd",
+      "title": "Status of This Document",
+      "level": 2,
+      "text_sha256": "0238cacc77f1466335f2ed0f35d0bc241337db221e60427b1ae9286de99b7d07",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.sotd"
+        ]
+      }
+    },
+    {
+      "id": "table-of-contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "9015f892b4c1082e71b9ac2baf3a80365ecbf6b54b434d52c483ba86ff33499c",
+      "clause_count": 183,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.table-of-contents"
+        ]
+      }
+    },
+    {
+      "id": "Introduction",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "ee565903c34d43c0c524f81051795ab4abf7609fc67918a16d5fbe76e34b3bed",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.introduction",
+          "png-3.introduction-clause-c0bf7a545233",
+          "png-3.introduction-clause-489b57d6da11",
+          "png-3.introduction-clause-af3188caea48",
+          "png-3.introduction-clause-01acdf47536a",
+          "png-3.introduction-clause-cdf7ed35db67",
+          "png-3.introduction-clause-c2dd867ffc66",
+          "png-3.introduction-clause-f5b555c1b5d0",
+          "png-3.introduction-clause-6e9f1e19aa33",
+          "png-3.introduction-clause-d6eb63d2c01f",
+          "png-3.introduction-clause-8eb229e86e6d",
+          "png-3.introduction-clause-eeca72aed405",
+          "png-3.introduction-clause-bc903af253f1"
+        ]
+      }
+    },
+    {
+      "id": "1Scope",
+      "title": "2. Scope",
+      "level": 2,
+      "text_sha256": "db6a09a095486d3ffc6817c8a277b1378bc12fc1174e6a08015c2d053f2b0c5c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.1scope"
+        ]
+      }
+    },
+    {
+      "id": "3Defsandabbrevs",
+      "title": "3. Terms, definitions, and abbreviated terms",
+      "level": 2,
+      "text_sha256": "7a236b634b05f16014b8f32e9f23d2e8b1d1036edd4ce04ad4ef94719b7fcd77",
+      "clause_count": 107,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.3defsandabbrevs",
+          "png-3.3defsandabbrevs-clause-f5221e6f014f",
+          "png-3.3defsandabbrevs-clause-d2229a49609c",
+          "png-3.3defsandabbrevs-clause-9b5b9ce6f85d"
+        ]
+      }
+    },
+    {
+      "id": "4Concepts",
+      "title": "4. Concepts",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.4concepts"
+        ]
+      }
+    },
+    {
+      "id": "x4-1-static-and-animated-images",
+      "title": "4.1 Static and Animated images",
+      "level": 3,
+      "text_sha256": "b3b121a21b3830b8f2ba21373fad5a1bef52018d9d344ed481c9400087952063",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-1-static-and-animated-images"
+        ]
+      }
+    },
+    {
+      "id": "4Concepts.Sourceimage",
+      "title": "4.2 Images",
+      "level": 3,
+      "text_sha256": "e378a0ac6d9dc583732c4fa0a3134f05b967fa5eccdbe2f4f105f6442d6682eb",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.4concepts-sourceimage"
+        ]
+      }
+    },
+    {
+      "id": "x4-3-color-spaces",
+      "title": "4.3 Color spaces",
+      "level": 3,
+      "text_sha256": "5aa137e0cf9c138cd88c19ffe5b5ef97595a3fd6720e84e1eedf1fdfa01d6104",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-3-color-spaces",
+          "png-3.x4-3-color-spaces-clause-39fbaf538ea0"
+        ]
+      }
+    },
+    {
+      "id": "x4-4-reference-image-to-png-image-transformation",
+      "title": "4.4 Reference image to PNG image transformation",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-4-reference-image-to-png-image-transformation"
+        ]
+      }
+    },
+    {
+      "id": "introduction-1",
+      "title": "Introduction",
+      "level": 3,
+      "text_sha256": "716b2433b41f6ab01f0a68d67c027cf0a06bd3af7726c7c7f2acfb6108f61f55",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.introduction-1"
+        ]
+      }
+    },
+    {
+      "id": "x4-4-1-alpha-separation",
+      "title": "4.4.1 Alpha separation",
+      "level": 4,
+      "text_sha256": "cb024ec658d1406d48b7763995202514b89271f4033c68e9bc73df8adb1f96be",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-4-1-alpha-separation"
+        ]
+      }
+    },
+    {
+      "id": "x4-4-2-indexing",
+      "title": "4.4.2 Indexing",
+      "level": 4,
+      "text_sha256": "920c15e356eb7b6f94d3b414a9764e22b8fc82929c568a8d1460c16b2c51dba7",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-4-2-indexing",
+          "png-3.x4-4-2-indexing-clause-be45f062341e"
+        ]
+      }
+    },
+    {
+      "id": "x4-4-3-rgb-merging",
+      "title": "4.4.3 RGB merging",
+      "level": 4,
+      "text_sha256": "8620d4b3fbe59ecaf046b44a3c7280cafaebefc0b876af958ae29d63a9b87395",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-4-3-rgb-merging"
+        ]
+      }
+    },
+    {
+      "id": "x4-4-4-alpha-compaction",
+      "title": "4.4.4 Alpha compaction",
+      "level": 4,
+      "text_sha256": "0264d792fbcd7a65125387b9cc2a20c69fefeeb1498ff1ae01b34ac1b4305e1b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-4-4-alpha-compaction"
+        ]
+      }
+    },
+    {
+      "id": "x4-4-5-sample-depth-scaling",
+      "title": "4.4.5 Sample depth scaling",
+      "level": 4,
+      "text_sha256": "50ad75cec82d5aa8bddcd7147ea06b133955ed7935f272adfb293458a353fab3",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-4-5-sample-depth-scaling",
+          "png-3.x4-4-5-sample-depth-scaling-clause-5139f73e6f9b"
+        ]
+      }
+    },
+    {
+      "id": "x4-5-png-image",
+      "title": "4.5 PNG image",
+      "level": 3,
+      "text_sha256": "1af8ef967f30526805575a4aa13d666c371a72633060cf814e8c87cb8f898dd6",
+      "clause_count": 17,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-5-png-image"
+        ]
+      }
+    },
+    {
+      "id": "x4-6-encoding-the-png-image",
+      "title": "4.6 Encoding the PNG image",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-6-encoding-the-png-image"
+        ]
+      }
+    },
+    {
+      "id": "introduction-2",
+      "title": "Introduction",
+      "level": 3,
+      "text_sha256": "c876ba62a9913066f79c50d61fd373b9fe2c882963a6f3456ffea69864927edc",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.introduction-2"
+        ]
+      }
+    },
+    {
+      "id": "x4-6-1-pass-extraction",
+      "title": "4.6.1 Pass extraction",
+      "level": 4,
+      "text_sha256": "52dff496e5280f57bc2d2fc76ccb841fd585170c0d5d9cbe90eb1368f57ca04a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-6-1-pass-extraction"
+        ]
+      }
+    },
+    {
+      "id": "x4-6-2-scanline-serialization",
+      "title": "4.6.2 Scanline serialization",
+      "level": 4,
+      "text_sha256": "72766635c14e6ac9e91537d0a85cbdf4ad2dd0ec608ec66629d142ab9013b3f8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-6-2-scanline-serialization"
+        ]
+      }
+    },
+    {
+      "id": "x4-6-3-filtering",
+      "title": "4.6.3 Filtering",
+      "level": 4,
+      "text_sha256": "f76ef4966c33c4d192b7bbd709005a415571f383ee3bd2f79ff47129158c6703",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-6-3-filtering"
+        ]
+      }
+    },
+    {
+      "id": "x4-6-4-compression",
+      "title": "4.6.4 Compression",
+      "level": 4,
+      "text_sha256": "1c74acfc186d138e1a488bd705548d0c1874b52a4ad04c724c4fad408624af9f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-6-4-compression"
+        ]
+      }
+    },
+    {
+      "id": "x4-6-5-chunking",
+      "title": "4.6.5 Chunking",
+      "level": 4,
+      "text_sha256": "7f80ad2946c71152e10998d86d11b39bcee06506d5355d00bbe588f822691de0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-6-5-chunking"
+        ]
+      }
+    },
+    {
+      "id": "x4-7-additional-information",
+      "title": "4.7 Additional information",
+      "level": 3,
+      "text_sha256": "57af51ec26829e340072cb55b544ee08255f56934651ffe98b9b1711ce7282aa",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-7-additional-information"
+        ]
+      }
+    },
+    {
+      "id": "x4-8-png-datastream",
+      "title": "4.8 PNG datastream",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-8-png-datastream"
+        ]
+      }
+    },
+    {
+      "id": "x4-8-1-chunks",
+      "title": "4.8.1 Chunks",
+      "level": 4,
+      "text_sha256": "ab1ea5fe9469062e39022595f41f17e40b60907e232c96ba2c30f1d4cb0fbbb3",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-8-1-chunks"
+        ]
+      }
+    },
+    {
+      "id": "x4-8-2-chunk-types",
+      "title": "4.8.2 Chunk types",
+      "level": 4,
+      "text_sha256": "14fb87bbf9893b017b5c2363742c50a8ca2c44e6dcb5e403158420e89b0f20ed",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-8-2-chunk-types",
+          "png-3.x4-8-2-chunk-types-clause-f05865b533ba"
+        ]
+      }
+    },
+    {
+      "id": "x4-9-apng-frame-based-animation",
+      "title": "4.9 APNG: frame-based animation",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-9-apng-frame-based-animation"
+        ]
+      }
+    },
+    {
+      "id": "introduction-3",
+      "title": "Introduction",
+      "level": 3,
+      "text_sha256": "44689c56881b0b487aed369aa463de315ce39ffacf01a12f9adc1e5fe5691e52",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.introduction-3"
+        ]
+      }
+    },
+    {
+      "id": "x4-9-1-structure",
+      "title": "4.9.1 Structure",
+      "level": 4,
+      "text_sha256": "fa973b3163bf4ed274a3249a488a13391448c3655afba5a6eb75c4df9671809c",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-9-1-structure",
+          "png-3.x4-9-1-structure-clause-19ae51cfaaeb",
+          "png-3.x4-9-1-structure-clause-6a7fce2ea6be",
+          "png-3.x4-9-1-structure-clause-3c3df35f9deb"
+        ]
+      }
+    },
+    {
+      "id": "x4-9-2-sequence-numbers",
+      "title": "4.9.2 Sequence numbers",
+      "level": 4,
+      "text_sha256": "1683a5139c83c78f2650d37bab06d6bdc5559b73e1021cbb2d81f71fd587a144",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-9-2-sequence-numbers",
+          "png-3.x4-9-2-sequence-numbers-clause-e82b4f7f4fdc"
+        ]
+      }
+    },
+    {
+      "id": "x4-9-3-output-buffer",
+      "title": "4.9.3 Output buffer",
+      "level": 4,
+      "text_sha256": "74fd9c2adbd6507570bc1dfb1f74ccfcb0fa7c5304d70dbd12133efd33afc14c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-9-3-output-buffer"
+        ]
+      }
+    },
+    {
+      "id": "x4-9-4-canvas",
+      "title": "4.9.4 Canvas",
+      "level": 4,
+      "text_sha256": "8c954de69e2f8ad0f48332a674ae8025b044bf7c862cef40869b03965bcdcbca",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-9-4-canvas"
+        ]
+      }
+    },
+    {
+      "id": "x4-10-error-handling",
+      "title": "4.10 Error handling",
+      "level": 3,
+      "text_sha256": "242846f0cd47423eb2d828c14e7fa23ef6fdaf82872e2e1018b5294c46dcb918",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-10-error-handling",
+          "png-3.x4-10-error-handling-clause-92d3ae2d84ed",
+          "png-3.x4-10-error-handling-clause-0c57a600207b"
+        ]
+      }
+    },
+    {
+      "id": "x4-11-extensions",
+      "title": "4.11 Extensions",
+      "level": 3,
+      "text_sha256": "ea601729658aed186591096a21384bacc9d53cd0c3755bbfc1cb4b64aed05f47",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x4-11-extensions"
+        ]
+      }
+    },
+    {
+      "id": "x5-datastream-structure",
+      "title": "5. Datastream structure",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x5-datastream-structure"
+        ]
+      }
+    },
+    {
+      "id": "x5-1-png-datastream",
+      "title": "5.1 PNG datastream",
+      "level": 3,
+      "text_sha256": "7b4152df21a303bf8defb1c10e6a8ef782513c6a0bd0c56d3de399826c5588b5",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x5-1-png-datastream"
+        ]
+      }
+    },
+    {
+      "id": "3PNGsignature",
+      "title": "5.2 PNG signature",
+      "level": 3,
+      "text_sha256": "e39299b7e22487aa6e14052788c7612fb0c7ef575a56f2ab645b3c204bb0d86e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.3pngsignature"
+        ]
+      }
+    },
+    {
+      "id": "x5-3-chunk-layout",
+      "title": "5.3 Chunk layout",
+      "level": 3,
+      "text_sha256": "1683af4cba155024f2b164b55996a29972126cefb12debabe9eef9b5d207fa18",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x5-3-chunk-layout",
+          "png-3.x5-3-chunk-layout-clause-e378e2be1a1d",
+          "png-3.x5-3-chunk-layout-clause-e3dcf6c669c2",
+          "png-3.x5-3-chunk-layout-clause-79b99c53331a"
+        ]
+      }
+    },
+    {
+      "id": "x5-4-chunk-naming-conventions",
+      "title": "5.4 Chunk naming conventions",
+      "level": 3,
+      "text_sha256": "50f72b2ae38d55330197504fd41337ed65695aa3092dbc2ba2c6c92576f4c2b3",
+      "clause_count": 23,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x5-4-chunk-naming-conventions",
+          "png-3.x5-4-chunk-naming-conventions-clause-2102d185f937",
+          "png-3.x5-4-chunk-naming-conventions-clause-2ed3de430860"
+        ]
+      }
+    },
+    {
+      "id": "x5-5-crc-algorithm",
+      "title": "5.5 CRC algorithm",
+      "level": 3,
+      "text_sha256": "9032f23e508548cb5c377313daa8f8f5251b2cebd45f6bb2a1af6caf3f3feaad",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x5-5-crc-algorithm"
+        ]
+      }
+    },
+    {
+      "id": "x5-6-chunk-ordering",
+      "title": "5.6 Chunk ordering",
+      "level": 3,
+      "text_sha256": "e40ec915b97671c77c7719a0f9ca124b5b6531c58791819cd924530c2789bb14",
+      "clause_count": 96,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x5-6-chunk-ordering",
+          "png-3.x5-6-chunk-ordering-clause-211e4cb7ee09",
+          "png-3.x5-6-chunk-ordering-clause-d90ad4b653ab",
+          "png-3.x5-6-chunk-ordering-clause-cf94fb82a20a",
+          "png-3.x5-6-chunk-ordering-clause-7fb1a93a8710",
+          "png-3.x5-6-chunk-ordering-clause-73ba2cb4daf1",
+          "png-3.x5-6-chunk-ordering-clause-d540e522706e",
+          "png-3.x5-6-chunk-ordering-clause-10a8ec0c634e",
+          "png-3.x5-6-chunk-ordering-clause-9b88244f3633"
+        ]
+      }
+    },
+    {
+      "id": "x5-7-defining-chunks",
+      "title": "5.7 Defining chunks",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x5-7-defining-chunks"
+        ]
+      }
+    },
+    {
+      "id": "x5-7-1-general",
+      "title": "5.7.1 General",
+      "level": 4,
+      "text_sha256": "880bb93d34fff9572b3c355c9b5efb30da62413f4206581842ef9e7ccfff2035",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x5-7-1-general",
+          "png-3.x5-7-1-general-clause-880bb93d34ff"
+        ]
+      }
+    },
+    {
+      "id": "x5-7-2-defining-public-chunks",
+      "title": "5.7.2 Defining public chunks",
+      "level": 4,
+      "text_sha256": "c7b329c28367b1bc89e8e4f211f436a315270652922a4f182ab6ff795edd6556",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x5-7-2-defining-public-chunks",
+          "png-3.x5-7-2-defining-public-chunks-clause-7bbe8dbb529a"
+        ]
+      }
+    },
+    {
+      "id": "x5-7-3-defining-private-chunks",
+      "title": "5.7.3 Defining private chunks",
+      "level": 4,
+      "text_sha256": "635ccb42febc0973a19d14c0666eb2e7270c1fc031518624b246235e5c725188",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x5-7-3-defining-private-chunks",
+          "png-3.x5-7-3-defining-private-chunks-clause-3c60f4ab822d",
+          "png-3.x5-7-3-defining-private-chunks-clause-8c2e4e860cbd",
+          "png-3.x5-7-3-defining-private-chunks-clause-e08ff7645fde",
+          "png-3.x5-7-3-defining-private-chunks-clause-1a7bb7a65010"
+        ]
+      }
+    },
+    {
+      "id": "x5-8-private-field-values",
+      "title": "5.8 Private field values",
+      "level": 3,
+      "text_sha256": "5e5e5ec016654d5f04a5cd052d9797825b93e1e8508a0a742037a156db44826a",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x5-8-private-field-values",
+          "png-3.x5-8-private-field-values-clause-8e6c274db155"
+        ]
+      }
+    },
+    {
+      "id": "x6-reference-image-to-png-image-transformation",
+      "title": "6. Reference image to PNG image transformation",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x6-reference-image-to-png-image-transformation"
+        ]
+      }
+    },
+    {
+      "id": "x6-1-color-types-and-values",
+      "title": "6.1 Color types and values",
+      "level": 3,
+      "text_sha256": "09888f326f18f66f6f4c18ef0eb906e9b32a54cf435bbecb2f8bce5f734ae342",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x6-1-color-types-and-values"
+        ]
+      }
+    },
+    {
+      "id": "x6-2-alpha-representation",
+      "title": "6.2 Alpha representation",
+      "level": 3,
+      "text_sha256": "5e01a714d6d00c295553eeac052e327b4822657c3bbca4c44c451d92b5cf78b6",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x6-2-alpha-representation"
+        ]
+      }
+    },
+    {
+      "id": "x7-encoding-the-png-image-as-a-png-datastream",
+      "title": "7. Encoding the PNG image as a PNG datastream",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x7-encoding-the-png-image-as-a-png-datastream"
+        ]
+      }
+    },
+    {
+      "id": "x7-1-integers-and-byte-order",
+      "title": "7.1 Integers and byte order",
+      "level": 3,
+      "text_sha256": "8fedd815ae32e10f84cfdb2bbf69d6a920b5c129be199b6fe46d623368a54c09",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x7-1-integers-and-byte-order",
+          "png-3.x7-1-integers-and-byte-order-clause-4bba6dfddf75"
+        ]
+      }
+    },
+    {
+      "id": "x7-2-scanlines",
+      "title": "7.2 Scanlines",
+      "level": 3,
+      "text_sha256": "92f6aa0c24e58b86b17eee0c3d7c1c3001f209e3f067763aac6761ffab5f660c",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x7-2-scanlines"
+        ]
+      }
+    },
+    {
+      "id": "x7-3-filtering",
+      "title": "7.3 Filtering",
+      "level": 3,
+      "text_sha256": "de0b6596663e3d003d84c3d1b3200fd5f87fd5cf74294d86c1745a73c477f01f",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x7-3-filtering",
+          "png-3.x7-3-filtering-clause-78bdcdcdf080"
+        ]
+      }
+    },
+    {
+      "id": "x8-interlacing-and-pass-extraction",
+      "title": "8. Interlacing and pass extraction",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x8-interlacing-and-pass-extraction"
+        ]
+      }
+    },
+    {
+      "id": "introduction-4",
+      "title": "Introduction",
+      "level": 3,
+      "text_sha256": "89756ee0159692320ada74c4b2eca00ed47d4cefd68e4149ed1be445defd78ce",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.introduction-4"
+        ]
+      }
+    },
+    {
+      "id": "x8-1-interlace-methods",
+      "title": "8.1 Interlace methods",
+      "level": 3,
+      "text_sha256": "5cbb7ceb3dc9b2e2be5a8f692a764e094d0048ba00107f94356dbc38e9561a8a",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x8-1-interlace-methods"
+        ]
+      }
+    },
+    {
+      "id": "x9-filtering",
+      "title": "9. Filtering",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x9-filtering"
+        ]
+      }
+    },
+    {
+      "id": "x9-1-filter-methods-and-filter-types",
+      "title": "9.1 Filter methods and filter types",
+      "level": 3,
+      "text_sha256": "ffb6636e295268151fe7c52e421034bf917c50d402fe522c6a885f1662f3114e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x9-1-filter-methods-and-filter-types",
+          "png-3.x9-1-filter-methods-and-filter-types-clause-76e7a19db0f9"
+        ]
+      }
+    },
+    {
+      "id": "x9-2-filter-types-for-filter-method-0",
+      "title": "9.2 Filter types for filter method 0",
+      "level": 3,
+      "text_sha256": "d3792fa6c51d492473c1e20138676361ade41fa759ba3fa1ef7250b7538323f8",
+      "clause_count": 42,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x9-2-filter-types-for-filter-method-0",
+          "png-3.x9-2-filter-types-for-filter-method-0-clause-cc0d8020c599",
+          "png-3.x9-2-filter-types-for-filter-method-0-clause-a24b10d65d0b"
+        ]
+      }
+    },
+    {
+      "id": "x9-3-filter-type-3-average",
+      "title": "9.3 Filter type 3: Average",
+      "level": 3,
+      "text_sha256": "e6e7146ad4cf5951ea9b53b461d616dbc8d510a9da1eb5673e36d1d26a7a91a2",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x9-3-filter-type-3-average",
+          "png-3.x9-3-filter-type-3-average-clause-e6e7146ad4cf"
+        ]
+      }
+    },
+    {
+      "id": "x9-4-filter-type-4-paeth",
+      "title": "9.4 Filter type 4: Paeth",
+      "level": 3,
+      "text_sha256": "383b42882f8cd6d371eda0415f249212aecab7d01185d1d96fdd970d3b75d17e",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x9-4-filter-type-4-paeth",
+          "png-3.x9-4-filter-type-4-paeth-clause-a67d2bddc6b0",
+          "png-3.x9-4-filter-type-4-paeth-clause-e3b15d16cb82",
+          "png-3.x9-4-filter-type-4-paeth-clause-ce78f665bf40"
+        ]
+      }
+    },
+    {
+      "id": "x10-compression",
+      "title": "10. Compression",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x10-compression"
+        ]
+      }
+    },
+    {
+      "id": "x10-1-compression-method-0",
+      "title": "10.1 Compression method 0",
+      "level": 3,
+      "text_sha256": "90206be3fa70c9cc4de766063da9012e992802057b96448bb01ff871f3760016",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x10-1-compression-method-0",
+          "png-3.x10-1-compression-method-0-clause-8411621c04bb",
+          "png-3.x10-1-compression-method-0-clause-7d6d5d123154",
+          "png-3.x10-1-compression-method-0-clause-0af90b1e5df9",
+          "png-3.x10-1-compression-method-0-clause-b0f81fdd9182"
+        ]
+      }
+    },
+    {
+      "id": "x10-2-compression-of-the-sequence-of-filtered-scanlines",
+      "title": "10.2 Compression of the sequence of filtered scanlines",
+      "level": 3,
+      "text_sha256": "b02cdf1dfe083ec2d07e313fa8df439d41df290769ecbadd5cfd03a15f093a04",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x10-2-compression-of-the-sequence-of-filtered-scanlines",
+          "png-3.x10-2-compression-of-the-sequence-of-filtered-scanlines-clause-61d056f9d4c5"
+        ]
+      }
+    },
+    {
+      "id": "x10-3-other-uses-of-compression",
+      "title": "10.3 Other uses of compression",
+      "level": 3,
+      "text_sha256": "71376b18fbfeaa5a9d7e8e5027f221fb20f50a53ba0337c60454dde7e10241fb",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x10-3-other-uses-of-compression"
+        ]
+      }
+    },
+    {
+      "id": "x11-chunk-specifications",
+      "title": "11. Chunk specifications",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-chunk-specifications"
+        ]
+      }
+    },
+    {
+      "id": "x11-1-general",
+      "title": "11.1 General",
+      "level": 3,
+      "text_sha256": "249b5d3a9fe3da1c1f6fa80f1718aa04cee7d491bd7dafd0224e8da9980d569e",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-1-general"
+        ]
+      }
+    },
+    {
+      "id": "x11-2-critical-chunks",
+      "title": "11.2 Critical chunks",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-2-critical-chunks"
+        ]
+      }
+    },
+    {
+      "id": "introduction-5",
+      "title": "Introduction",
+      "level": 3,
+      "text_sha256": "7d0f7911342b8fcfa06b0b6500da3242f9c0dafb49c4d4a4ae10493ead27485a",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.introduction-5",
+          "png-3.introduction-5-clause-89607954239c",
+          "png-3.introduction-5-clause-e79ee8f81505"
+        ]
+      }
+    },
+    {
+      "id": "x11-2-1-ihdr-image-header",
+      "title": "11.2.1 IHDR Image header",
+      "level": 4,
+      "text_sha256": "3508b5956486299eb3b9c069757f397dbde844c5700635388610d2c6de35658e",
+      "clause_count": 49,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-2-1-ihdr-image-header",
+          "png-3.x11-2-1-ihdr-image-header-clause-13c450924d85",
+          "png-3.x11-2-1-ihdr-image-header-clause-02b63d924500",
+          "png-3.x11-2-1-ihdr-image-header-clause-f53b53351c4d",
+          "png-3.x11-2-1-ihdr-image-header-clause-028525bf8246"
+        ]
+      }
+    },
+    {
+      "id": "x11-2-2-plte-palette",
+      "title": "11.2.2 PLTE Palette",
+      "level": 4,
+      "text_sha256": "0250c99e34397012e71c122dd1daaf9493588f53aede2d7ea18d9699a40e2bc0",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-2-2-plte-palette",
+          "png-3.x11-2-2-plte-palette-clause-ea028c545cf3",
+          "png-3.x11-2-2-plte-palette-clause-1e2ee49eba21"
+        ]
+      }
+    },
+    {
+      "id": "x11-2-3-idat-image-data",
+      "title": "11.2.3 IDAT Image data",
+      "level": 4,
+      "text_sha256": "9565737a4964309fac8867080bbd969dba3fee2a8bf4254a5115b5d1244132e0",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-2-3-idat-image-data",
+          "png-3.x11-2-3-idat-image-data-clause-05097f2bcba6",
+          "png-3.x11-2-3-idat-image-data-clause-6926b4f60607",
+          "png-3.x11-2-3-idat-image-data-clause-c632ee52d969"
+        ]
+      }
+    },
+    {
+      "id": "x11-2-4-iend-image-trailer",
+      "title": "11.2.4 IEND Image trailer",
+      "level": 4,
+      "text_sha256": "c750329cd88a750bda1b08167cc352f352f80f23205ededa86216aba6a69cdba",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-2-4-iend-image-trailer"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-ancillary-chunks",
+      "title": "11.3 Ancillary chunks",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-ancillary-chunks"
+        ]
+      }
+    },
+    {
+      "id": "introduction-6",
+      "title": "Introduction",
+      "level": 3,
+      "text_sha256": "41af3384c3c7c70127a3fa55722fc44852debbd2bb052d44dcadb58ad81e5cbd",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.introduction-6",
+          "png-3.introduction-6-clause-41af3384c3c7"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-1-transparency-information",
+      "title": "11.3.1 Transparency information",
+      "level": 4,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-1-transparency-information"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-1-1-trns-transparency",
+      "title": "11.3.1.1 tRNS Transparency",
+      "level": 5,
+      "text_sha256": "5e0589a61d9f32183df2c97d4b88fe56b1e9e535858d0b6315ffa8f65aded374",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-1-1-trns-transparency",
+          "png-3.x11-3-1-1-trns-transparency-clause-45a391429d6a",
+          "png-3.x11-3-1-1-trns-transparency-clause-4f8fbe19934e",
+          "png-3.x11-3-1-1-trns-transparency-clause-fda752433893"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-2-color-space-information",
+      "title": "11.3.2 Color space information",
+      "level": 4,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-2-color-space-information"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-2-1-chrm-primary-chromaticities-and-white-point",
+      "title": "11.3.2.1 cHRM Primary chromaticities and white point",
+      "level": 5,
+      "text_sha256": "ea6acadc253315eade17f11d54d367c77033e2f448e8a68150cc3eb46d5f590a",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-2-1-chrm-primary-chromaticities-and-white-point",
+          "png-3.x11-3-2-1-chrm-primary-chromaticities-and-white-point-clause-451819337707"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-2-2-gama-image-gamma",
+      "title": "11.3.2.2 gAMA Image gamma",
+      "level": 5,
+      "text_sha256": "964e5be8f8965702b9963e3bf6dbbb47b4ad6d4858f01bf4a7940400da81158e",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-2-2-gama-image-gamma",
+          "png-3.x11-3-2-2-gama-image-gamma-clause-451819337707"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-2-3-iccp-embedded-icc-profile",
+      "title": "11.3.2.3 iCCP Embedded ICC profile",
+      "level": 5,
+      "text_sha256": "7c794dbc565ad04053ab4f6b80b4ae028c6e8b5ca921bd8c30b27c28c55f2eb8",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-2-3-iccp-embedded-icc-profile",
+          "png-3.x11-3-2-3-iccp-embedded-icc-profile-clause-3a76b9ca019a",
+          "png-3.x11-3-2-3-iccp-embedded-icc-profile-clause-e6f2859928d2",
+          "png-3.x11-3-2-3-iccp-embedded-icc-profile-clause-451819337707",
+          "png-3.x11-3-2-3-iccp-embedded-icc-profile-clause-08d2f98136eb"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-2-4-sbit-significant-bits",
+      "title": "11.3.2.4 sBIT Significant bits",
+      "level": 5,
+      "text_sha256": "07674a8ca1e45730cc865b805f8c96bb79379268ef9f8ceca4dd36cc9bdb8960",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-2-4-sbit-significant-bits",
+          "png-3.x11-3-2-4-sbit-significant-bits-clause-7365bbac622f",
+          "png-3.x11-3-2-4-sbit-significant-bits-clause-9762c77783d4"
+        ]
+      }
+    },
+    {
+      "id": "srgb-standard-colour-space",
+      "title": "11.3.2.5 sRGB Standard RGB color space",
+      "level": 5,
+      "text_sha256": "7df9ec8a68808630105e702cf9579eabcb00c1291dbc90064d8a08b8386ab587",
+      "clause_count": 47,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.srgb-standard-colour-space",
+          "png-3.srgb-standard-colour-space-clause-3a18cd5c4854",
+          "png-3.srgb-standard-colour-space-clause-6bf72f1fff6a",
+          "png-3.srgb-standard-colour-space-clause-451819337707"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-2-6-cicp-coding-independent-code-points-for-video-signal-type-identification",
+      "title": "11.3.2.6 cICP Coding-independent code points for video signal type identification",
+      "level": 5,
+      "text_sha256": "f938cc677fb718e21fcbd441500bf941a294f8c22d6e5c52e6a7ae824e7f09bd",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-2-6-cicp-coding-independent-code-points-for-video-signal-type-identification",
+          "png-3.x11-3-2-6-cicp-coding-independent-code-points-for-video-signal-type-identification-clause-3d677820e312",
+          "png-3.x11-3-2-6-cicp-coding-independent-code-points-for-video-signal-type-identification-clause-e06f8242e4bc",
+          "png-3.x11-3-2-6-cicp-coding-independent-code-points-for-video-signal-type-identification-clause-0ed24e8d421e"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-2-7-mdcv-mastering-display-color-volume",
+      "title": "11.3.2.7 mDCV Mastering Display Color Volume",
+      "level": 5,
+      "text_sha256": "c0528ea1430c877d8fd575c393555461571c9d2acc31a1dbbc93d0977b42d11e",
+      "clause_count": 98,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-2-7-mdcv-mastering-display-color-volume",
+          "png-3.x11-3-2-7-mdcv-mastering-display-color-volume-clause-bbeb626069e7",
+          "png-3.x11-3-2-7-mdcv-mastering-display-color-volume-clause-f02aad997026"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-2-8-clli-content-light-level-information",
+      "title": "11.3.2.8 cLLI Content Light Level Information",
+      "level": 5,
+      "text_sha256": "d322d8b1e992a741e1c4cf3e9f43db79dee45f87722987d635a6436f363dfc17",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-2-8-clli-content-light-level-information"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-3-textual-information",
+      "title": "11.3.3 Textual information",
+      "level": 4,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-3-textual-information"
+        ]
+      }
+    },
+    {
+      "id": "introduction-7",
+      "title": "Introduction",
+      "level": 3,
+      "text_sha256": "db4ea3f7573171e47e25f48520c106497a034fef2fac9dc190525c62ee3cab08",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.introduction-7"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-3-1-keywords-and-text-strings",
+      "title": "11.3.3.1 Keywords and text strings",
+      "level": 5,
+      "text_sha256": "aae99d651ed71152d2892938ce886f168966e26cafa761c89f322eb69b65a802",
+      "clause_count": 36,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-3-1-keywords-and-text-strings",
+          "png-3.x11-3-3-1-keywords-and-text-strings-clause-af530cc0142d",
+          "png-3.x11-3-3-1-keywords-and-text-strings-clause-51b671504a16",
+          "png-3.x11-3-3-1-keywords-and-text-strings-clause-cefe8d2dc4d1",
+          "png-3.x11-3-3-1-keywords-and-text-strings-clause-ba233844771b",
+          "png-3.x11-3-3-1-keywords-and-text-strings-clause-44b1f5dab872",
+          "png-3.x11-3-3-1-keywords-and-text-strings-clause-ab593dd02649",
+          "png-3.x11-3-3-1-keywords-and-text-strings-clause-b8a97b862ce3"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-3-2-text-textual-data",
+      "title": "11.3.3.2 tEXt Textual data",
+      "level": 5,
+      "text_sha256": "71ab98d9d4bf4f280fb1f314d5f33ab622153ff1b88c8fab6bd54d46c0fc7f9a",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-3-2-text-textual-data",
+          "png-3.x11-3-3-2-text-textual-data-clause-aef1c0855d69"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-3-3-ztxt-compressed-textual-data",
+      "title": "11.3.3.3 zTXt Compressed textual data",
+      "level": 5,
+      "text_sha256": "59d0826b194bc0eca99fb569e2632efff6f3e61cb70b967b4a79bd1db09a90bc",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-3-3-ztxt-compressed-textual-data"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-3-4-itxt-international-textual-data",
+      "title": "11.3.3.4 iTXt International textual data",
+      "level": 5,
+      "text_sha256": "9d813943bda5195ff686a2113a397490d50733725185d594334dfa2d6c6f68e0",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-3-4-itxt-international-textual-data",
+          "png-3.x11-3-3-4-itxt-international-textual-data-clause-ca927667d4cc",
+          "png-3.x11-3-3-4-itxt-international-textual-data-clause-59769eb295bc",
+          "png-3.x11-3-3-4-itxt-international-textual-data-clause-870e4c72def5",
+          "png-3.x11-3-3-4-itxt-international-textual-data-clause-22c9a0b94026",
+          "png-3.x11-3-3-4-itxt-international-textual-data-clause-77820edcbaed"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-4-miscellaneous-information",
+      "title": "11.3.4 Miscellaneous information",
+      "level": 4,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-4-miscellaneous-information"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-4-1-bkgd-background-color",
+      "title": "11.3.4.1 bKGD Background color",
+      "level": 5,
+      "text_sha256": "407a79bce082fba1e00d80e6da6bbe49b2160e2ba6e7c67d71d9efc85bdfc349",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-4-1-bkgd-background-color",
+          "png-3.x11-3-4-1-bkgd-background-color-clause-a5b63ad77154",
+          "png-3.x11-3-4-1-bkgd-background-color-clause-f3e1534f48e4"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-4-2-hist-image-histogram",
+      "title": "11.3.4.2 hIST Image histogram",
+      "level": 5,
+      "text_sha256": "4d1c209730dfbf0445ce1674d8a7a1ff5a0a7cd744b8e09e9f98dd5d4dce863c",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-4-2-hist-image-histogram",
+          "png-3.x11-3-4-2-hist-image-histogram-clause-63cdb50cfb48",
+          "png-3.x11-3-4-2-hist-image-histogram-clause-0d228636757b",
+          "png-3.x11-3-4-2-hist-image-histogram-clause-0dfd3b3644ec"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-4-3-phys-physical-pixel-dimensions",
+      "title": "11.3.4.3 pHYs Physical pixel dimensions",
+      "level": 5,
+      "text_sha256": "b25148f2ee43367154a54fadda00ad64c5b0c53588ff29d19c3417b07567d2bd",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-4-3-phys-physical-pixel-dimensions"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-4-4-splt-suggested-palette",
+      "title": "11.3.4.4 sPLT Suggested palette",
+      "level": 5,
+      "text_sha256": "1d0618c1acaf55e6c88b6f8f5e6061878890dbe237745f2fcff74f03f41db7f0",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-4-4-splt-suggested-palette",
+          "png-3.x11-3-4-4-splt-suggested-palette-clause-5345a7d6a1bc",
+          "png-3.x11-3-4-4-splt-suggested-palette-clause-20535999f515",
+          "png-3.x11-3-4-4-splt-suggested-palette-clause-99dcc4432f1e",
+          "png-3.x11-3-4-4-splt-suggested-palette-clause-30ee95103435",
+          "png-3.x11-3-4-4-splt-suggested-palette-clause-8286272e22e4"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-4-5-exif-exchangeable-image-file-exif-profile",
+      "title": "11.3.4.5 eXIf Exchangeable Image File (Exif) Profile",
+      "level": 5,
+      "text_sha256": "9a2233329f3560a53f85949aac296df467dcd525fdbdb489cfa6fdf0548edf5a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-4-5-exif-exchangeable-image-file-exif-profile",
+          "png-3.x11-3-4-5-exif-exchangeable-image-file-exif-profile-clause-336c21d921e7"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-4-5-1-exif-general-recommendations",
+      "title": "11.3.4.5.1 eXIf General Recommendations",
+      "level": 6,
+      "text_sha256": "a048e1584569e0558ba6622e3213aaeb4e84432e26d7ff807fe0a9d5fd90d741",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-4-5-1-exif-general-recommendations",
+          "png-3.x11-3-4-5-1-exif-general-recommendations-clause-a048e1584569"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-4-5-2-exif-recommendations-for-decoders",
+      "title": "11.3.4.5.2 eXIf Recommendations for Decoders",
+      "level": 6,
+      "text_sha256": "573fb26dfcd3c147118330dc3168dcec1bce2ca1f24a58acc3b0f1f31b513709",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-4-5-2-exif-recommendations-for-decoders",
+          "png-3.x11-3-4-5-2-exif-recommendations-for-decoders-clause-a6bb3b1cfa4e"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-4-5-3-exif-recommendations-for-encoders",
+      "title": "11.3.4.5.3 eXIf Recommendations for Encoders",
+      "level": 6,
+      "text_sha256": "4a260762c9488562929aece5f151b42856e56e6610e0c7ca0efac505479a4dc0",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-4-5-3-exif-recommendations-for-encoders",
+          "png-3.x11-3-4-5-3-exif-recommendations-for-encoders-clause-06ff8d5e5b33"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-5-time-stamp-information",
+      "title": "11.3.5 Time stamp information",
+      "level": 4,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-5-time-stamp-information"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-5-1-time-image-last-modification-time",
+      "title": "11.3.5.1 tIME Image last-modification time",
+      "level": 5,
+      "text_sha256": "5db146efe56499eb3ae9d7a385d89556f3adba093df9f6a6d2a2fd79795dc0c4",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-5-1-time-image-last-modification-time",
+          "png-3.x11-3-5-1-time-image-last-modification-time-clause-be87ce6ee706"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-6-animation-information",
+      "title": "11.3.6 Animation information",
+      "level": 4,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-6-animation-information"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-6-1-actl-animation-control-chunk",
+      "title": "11.3.6.1 acTL Animation Control Chunk",
+      "level": 5,
+      "text_sha256": "c668707a60feb7bed0540dc3b08232371c8960ffa678ff4d989a285a859ac5a6",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-6-1-actl-animation-control-chunk",
+          "png-3.x11-3-6-1-actl-animation-control-chunk-clause-9bbfb5584398",
+          "png-3.x11-3-6-1-actl-animation-control-chunk-clause-63f84af88acc",
+          "png-3.x11-3-6-1-actl-animation-control-chunk-clause-e64faeb2eb49"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-6-2-fctl-frame-control-chunk",
+      "title": "11.3.6.2 fcTL Frame Control Chunk",
+      "level": 5,
+      "text_sha256": "7430df8be3156786d89d1f5fab969e734f321d3b4ddfc4d8541d506fd40d4f96",
+      "clause_count": 57,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-6-2-fctl-frame-control-chunk",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-bfc85ecaee9f",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-00a78cce39cd",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-59db041ade1e",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-24cae507c174",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-833ccd3972a9",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-826d485b1d32",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-21399655816c",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-0278ad7d613a",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-dc3e502cb239",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-b62081104ad1",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-271d9db9c4ea",
+          "png-3.x11-3-6-2-fctl-frame-control-chunk-clause-68717e3d19b3"
+        ]
+      }
+    },
+    {
+      "id": "x11-3-6-3-fdat-frame-data-chunk",
+      "title": "11.3.6.3 fdAT Frame Data Chunk",
+      "level": 5,
+      "text_sha256": "c6e9bdcfcc1dfda60992c73c04f698957954e870a44c18385bf400b8ff8fd8f2",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x11-3-6-3-fdat-frame-data-chunk",
+          "png-3.x11-3-6-3-fdat-frame-data-chunk-clause-fc962a703d3c",
+          "png-3.x11-3-6-3-fdat-frame-data-chunk-clause-a076e2672902"
+        ]
+      }
+    },
+    {
+      "id": "x12-png-encoders",
+      "title": "12. PNG Encoders",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-png-encoders"
+        ]
+      }
+    },
+    {
+      "id": "introduction-8",
+      "title": "Introduction",
+      "level": 3,
+      "text_sha256": "e346324d8a74a4b7f72b4546a12dcf703b2fc01cf02feaf3ef8aebddc3504ec8",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.introduction-8",
+          "png-3.introduction-8-clause-e346324d8a74"
+        ]
+      }
+    },
+    {
+      "id": "x12-1-encoder-gamma-handling",
+      "title": "12.1 Encoder gamma handling",
+      "level": 3,
+      "text_sha256": "68c84ab11848fc394db848804efb785d98b046c32dfaf2d779a0720a2d3a008d",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-1-encoder-gamma-handling",
+          "png-3.x12-1-encoder-gamma-handling-clause-534cabc47a13",
+          "png-3.x12-1-encoder-gamma-handling-clause-c388a93bd2a9",
+          "png-3.x12-1-encoder-gamma-handling-clause-dd8cb9c56574",
+          "png-3.x12-1-encoder-gamma-handling-clause-dc8373cda114",
+          "png-3.x12-1-encoder-gamma-handling-clause-f4abc30947b2",
+          "png-3.x12-1-encoder-gamma-handling-clause-b8f79c118f15",
+          "png-3.x12-1-encoder-gamma-handling-clause-d07c6329f5ad"
+        ]
+      }
+    },
+    {
+      "id": "x12-2-encoder-color-handling",
+      "title": "12.2 Encoder color handling",
+      "level": 3,
+      "text_sha256": "c44178e137a8bb90bba1c523cd3d1845d986b99b1fcbd78cb79d37d29c81821d",
+      "clause_count": 44,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-2-encoder-color-handling",
+          "png-3.x12-2-encoder-color-handling-clause-5cadfe0daef6",
+          "png-3.x12-2-encoder-color-handling-clause-624470dba837",
+          "png-3.x12-2-encoder-color-handling-clause-1318ad1ccd60",
+          "png-3.x12-2-encoder-color-handling-clause-86cae560a4ca",
+          "png-3.x12-2-encoder-color-handling-clause-610a0b931161"
+        ]
+      }
+    },
+    {
+      "id": "x12-3-alpha-channel-creation",
+      "title": "12.3 Alpha channel creation",
+      "level": 3,
+      "text_sha256": "60d61e0674d88515cbc5210228d7f1918cb3b035aba25c9434d45a39e01f52a9",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-3-alpha-channel-creation",
+          "png-3.x12-3-alpha-channel-creation-clause-4993bd7431ae",
+          "png-3.x12-3-alpha-channel-creation-clause-e9d65541f630",
+          "png-3.x12-3-alpha-channel-creation-clause-756303bded15",
+          "png-3.x12-3-alpha-channel-creation-clause-b57b8595ae2e"
+        ]
+      }
+    },
+    {
+      "id": "x12-4-sample-depth-scaling",
+      "title": "12.4 Sample depth scaling",
+      "level": 3,
+      "text_sha256": "4e0e8ab0ce293a65fe8d1309a6362204655a723bb1232a232983736c29eed1ae",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-4-sample-depth-scaling",
+          "png-3.x12-4-sample-depth-scaling-clause-ab407c5fbfa9",
+          "png-3.x12-4-sample-depth-scaling-clause-c0efb57f59b3",
+          "png-3.x12-4-sample-depth-scaling-clause-64bdb60e7c6d",
+          "png-3.x12-4-sample-depth-scaling-clause-48a1859b0824",
+          "png-3.x12-4-sample-depth-scaling-clause-c1e560df06ed"
+        ]
+      }
+    },
+    {
+      "id": "x12-5-suggested-palettes",
+      "title": "12.5 Suggested palettes",
+      "level": 3,
+      "text_sha256": "c7a0c41f799c29ec2507732737a09e117296ba56321b183abcbe9cc2b3e135de",
+      "clause_count": 12,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-5-suggested-palettes",
+          "png-3.x12-5-suggested-palettes-clause-800115324d2c",
+          "png-3.x12-5-suggested-palettes-clause-19bc767da353",
+          "png-3.x12-5-suggested-palettes-clause-87ffd49266be",
+          "png-3.x12-5-suggested-palettes-clause-8e7926ffc9a6"
+        ]
+      }
+    },
+    {
+      "id": "x12-6-interlacing",
+      "title": "12.6 Interlacing",
+      "level": 3,
+      "text_sha256": "370b7a4724e2e6cccbdab6cf8b854b58f9c2a9db6883d834db686d1e88ce5451",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-6-interlacing"
+        ]
+      }
+    },
+    {
+      "id": "x12-7-filter-selection",
+      "title": "12.7 Filter selection",
+      "level": 3,
+      "text_sha256": "b572f984ece5119a39ffe6b885f069a194a2e77a20df88fda32ecc2124dd6d3a",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-7-filter-selection",
+          "png-3.x12-7-filter-selection-clause-4b6f0eb8eab1"
+        ]
+      }
+    },
+    {
+      "id": "x12-8-compression",
+      "title": "12.8 Compression",
+      "level": 3,
+      "text_sha256": "68bb74618449e7454f79c24287fb5aaa9c9ff49ebdd53259b9ccbc0bb05614a4",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-8-compression"
+        ]
+      }
+    },
+    {
+      "id": "x12-9-text-chunk-processing",
+      "title": "12.9 Text chunk processing",
+      "level": 3,
+      "text_sha256": "50af433be9585ad58b8bec7a5f2713a9841e0ffb5508a913861d733b4bf12f1e",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-9-text-chunk-processing",
+          "png-3.x12-9-text-chunk-processing-clause-00a5545d4705",
+          "png-3.x12-9-text-chunk-processing-clause-16113696ddfe",
+          "png-3.x12-9-text-chunk-processing-clause-5aca4fd6ffc5",
+          "png-3.x12-9-text-chunk-processing-clause-e08b09845d73"
+        ]
+      }
+    },
+    {
+      "id": "x12-10-chunking",
+      "title": "12.10 Chunking",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-10-chunking"
+        ]
+      }
+    },
+    {
+      "id": "x12-10-1-use-of-private-chunks",
+      "title": "12.10.1 Use of private chunks",
+      "level": 4,
+      "text_sha256": "125c7d1565ac32eb3f268772eb0383044fad8c7d2d2da4b26e16b2acf417ab08",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-10-1-use-of-private-chunks"
+        ]
+      }
+    },
+    {
+      "id": "x12-10-2-use-of-non-reserved-field-values",
+      "title": "12.10.2 Use of non-reserved field values",
+      "level": 4,
+      "text_sha256": "bd630c1b5d80ef64d13c55adbd0327b4f9067fb12f87355898690589763cff4c",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-10-2-use-of-non-reserved-field-values"
+        ]
+      }
+    },
+    {
+      "id": "x12-10-3-ancillary-chunks",
+      "title": "12.10.3 Ancillary chunks",
+      "level": 4,
+      "text_sha256": "6011a1555a02486e57511e66129101661493e5f5e0d1b8d945d69e5c9f9dc561",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x12-10-3-ancillary-chunks"
+        ]
+      }
+    },
+    {
+      "id": "x13-png-decoders-and-viewers",
+      "title": "13. PNG decoders and viewers",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-png-decoders-and-viewers"
+        ]
+      }
+    },
+    {
+      "id": "introduction-9",
+      "title": "Introduction",
+      "level": 2,
+      "text_sha256": "af7a6ed9c85f8d01a22397da13aa46eee391d4958e729f2a9a11159d51327571",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.introduction-9",
+          "png-3.introduction-9-clause-5f59a5974677"
+        ]
+      }
+    },
+    {
+      "id": "13Decoders.Errors",
+      "title": "13.1 Error handling",
+      "level": 3,
+      "text_sha256": "9bee1843d89708ebb831b32217ccde62fe2f18442c0f5b3270978b7effef8bbf",
+      "clause_count": 22,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.13decoders-errors",
+          "png-3.13decoders-errors-clause-bd014b771391",
+          "png-3.13decoders-errors-clause-1c69c55ac905",
+          "png-3.13decoders-errors-clause-c3ae85268f8f",
+          "png-3.13decoders-errors-clause-4338380373b3",
+          "png-3.13decoders-errors-clause-abbe94e9db45",
+          "png-3.13decoders-errors-clause-1cb76e4d3a32",
+          "png-3.13decoders-errors-clause-91ca03290b62",
+          "png-3.13decoders-errors-clause-508847de4bc2",
+          "png-3.13decoders-errors-clause-c36fd51a40de",
+          "png-3.13decoders-errors-clause-f81ed2eb68af",
+          "png-3.13decoders-errors-clause-b6379b053d51",
+          "png-3.13decoders-errors-clause-03b8f96b2c30",
+          "png-3.13decoders-errors-clause-76a0276d71ee",
+          "png-3.13decoders-errors-clause-266aeaa80087"
+        ]
+      }
+    },
+    {
+      "id": "x13-2-error-checking",
+      "title": "13.2 Error checking",
+      "level": 3,
+      "text_sha256": "2b26bf0e98d1a9643b0e5bd2e4f16c5eba138fc68f564240085ff54725c272d3",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-2-error-checking",
+          "png-3.x13-2-error-checking-clause-c30ddfc01ca5",
+          "png-3.x13-2-error-checking-clause-003d95be7150",
+          "png-3.x13-2-error-checking-clause-6299a59783d3"
+        ]
+      }
+    },
+    {
+      "id": "x13-3-security-considerations",
+      "title": "13.3 Security considerations",
+      "level": 3,
+      "text_sha256": "887fd04f6762dd91a3177136b0d8841a1b9ad0c337055f693b69da825bf424f1",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-3-security-considerations",
+          "png-3.x13-3-security-considerations-clause-2d1bde0f5cfe",
+          "png-3.x13-3-security-considerations-clause-e5a825c9890c"
+        ]
+      }
+    },
+    {
+      "id": "x13-4-privacy-considerations",
+      "title": "13.4 Privacy considerations",
+      "level": 3,
+      "text_sha256": "12f4fb65d66fb93b20b9e53a15814ca99f4ff6c13850916b035558000442a6c0",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-4-privacy-considerations"
+        ]
+      }
+    },
+    {
+      "id": "x13-5-chunking",
+      "title": "13.5 Chunking",
+      "level": 3,
+      "text_sha256": "f2e3b7b9625fd2aa2772c5728a1989c7c047379e8c7d069d1a08509f3e225ee5",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-5-chunking",
+          "png-3.x13-5-chunking-clause-0316ef88352c",
+          "png-3.x13-5-chunking-clause-0dc82cf3b2c3",
+          "png-3.x13-5-chunking-clause-7d9c08347de8"
+        ]
+      }
+    },
+    {
+      "id": "x13-6-pixel-dimensions",
+      "title": "13.6 Pixel dimensions",
+      "level": 3,
+      "text_sha256": "5af181191ce366ff79a290eb4e84bb6dafc459933d95c7b448d25434d89ae2c3",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-6-pixel-dimensions",
+          "png-3.x13-6-pixel-dimensions-clause-4dd0798aeed5",
+          "png-3.x13-6-pixel-dimensions-clause-f7e6764c8064",
+          "png-3.x13-6-pixel-dimensions-clause-ab7134305d82"
+        ]
+      }
+    },
+    {
+      "id": "x13-7-text-chunk-processing",
+      "title": "13.7 Text chunk processing",
+      "level": 3,
+      "text_sha256": "a74c96ec84b8bd451f6187d1f38468026eface702cd92de8b19c6f6a65229048",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-7-text-chunk-processing",
+          "png-3.x13-7-text-chunk-processing-clause-c682f38851d4",
+          "png-3.x13-7-text-chunk-processing-clause-fab686a8fba6",
+          "png-3.x13-7-text-chunk-processing-clause-f00f2ed6a112",
+          "png-3.x13-7-text-chunk-processing-clause-15dbe3a20114",
+          "png-3.x13-7-text-chunk-processing-clause-e5f1dd8c8f72"
+        ]
+      }
+    },
+    {
+      "id": "x13-8-decompression",
+      "title": "13.8 Decompression",
+      "level": 3,
+      "text_sha256": "4eb66e1dc04db5d90b70858a6788ac5624a4057469b25aebe25411debefefc96",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-8-decompression",
+          "png-3.x13-8-decompression-clause-bd094387bfd0"
+        ]
+      }
+    },
+    {
+      "id": "x13-9-filtering",
+      "title": "13.9 Filtering",
+      "level": 3,
+      "text_sha256": "a2e88ef2e8299055914c22a946fbb27a81dbe6d7339ea6ea0289588909505532",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-9-filtering"
+        ]
+      }
+    },
+    {
+      "id": "x13-10-interlacing-and-progressive-display",
+      "title": "13.10 Interlacing and progressive display",
+      "level": 3,
+      "text_sha256": "9ef9cadaa043946ac6cab67c9c586afb0a1c4447a2b98dd7a22afba59e449c7e",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-10-interlacing-and-progressive-display",
+          "png-3.x13-10-interlacing-and-progressive-display-clause-d44bce027d60"
+        ]
+      }
+    },
+    {
+      "id": "x13-11-truecolor-image-handling",
+      "title": "13.11 Truecolor image handling",
+      "level": 3,
+      "text_sha256": "b177d547b0e8bfb8543d53e165881b8a834146fb28a62e3c6cc0ae6e151058ee",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-11-truecolor-image-handling",
+          "png-3.x13-11-truecolor-image-handling-clause-22c4b120caf5",
+          "png-3.x13-11-truecolor-image-handling-clause-86a7ad64ed44"
+        ]
+      }
+    },
+    {
+      "id": "x13-12-sample-depth-rescaling",
+      "title": "13.12 Sample depth rescaling",
+      "level": 3,
+      "text_sha256": "4de8ab336e0ab9c91ca21dcb966efd74c1e623a2402d7608673f18bc14ada8fd",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-12-sample-depth-rescaling",
+          "png-3.x13-12-sample-depth-rescaling-clause-80e5a066bad1",
+          "png-3.x13-12-sample-depth-rescaling-clause-672e3bf21bc8",
+          "png-3.x13-12-sample-depth-rescaling-clause-336134ce8af1"
+        ]
+      }
+    },
+    {
+      "id": "x13-13-decoder-gamma-handling",
+      "title": "13.13 Decoder gamma handling",
+      "level": 3,
+      "text_sha256": "b1329b71d3bad6f5fe9f8ea19dfa71166e33da6d89f5dfef4efbc0fcbf041140",
+      "clause_count": 19,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-13-decoder-gamma-handling",
+          "png-3.x13-13-decoder-gamma-handling-clause-0ebb33ff0ece",
+          "png-3.x13-13-decoder-gamma-handling-clause-a3d5401f4db3",
+          "png-3.x13-13-decoder-gamma-handling-clause-e3a92629445e",
+          "png-3.x13-13-decoder-gamma-handling-clause-df88087fd505",
+          "png-3.x13-13-decoder-gamma-handling-clause-df081f09ff40",
+          "png-3.x13-13-decoder-gamma-handling-clause-23aac7848cbf",
+          "png-3.x13-13-decoder-gamma-handling-clause-c6083ad44bdb"
+        ]
+      }
+    },
+    {
+      "id": "x13-14-decoder-color-handling",
+      "title": "13.14 Decoder color handling",
+      "level": 3,
+      "text_sha256": "fbdd714b64a9f2dab7b62b9dc931318ad2a7878d83ae2d9c6d83e54e3744a067",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-14-decoder-color-handling",
+          "png-3.x13-14-decoder-color-handling-clause-4ee9f41c083f",
+          "png-3.x13-14-decoder-color-handling-clause-1d8ae409585f"
+        ]
+      }
+    },
+    {
+      "id": "x13-15-background-color",
+      "title": "13.15 Background color",
+      "level": 3,
+      "text_sha256": "2c38720acf2786e667d8b0304f61340c38a803d0edc4850731117d4df53d2b40",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-15-background-color",
+          "png-3.x13-15-background-color-clause-02f067c8d810",
+          "png-3.x13-15-background-color-clause-d117635e6a87"
+        ]
+      }
+    },
+    {
+      "id": "x13-16-alpha-channel-processing",
+      "title": "13.16 Alpha channel processing",
+      "level": 3,
+      "text_sha256": "54b6419e1d6d4632b32aa563a0f5f6e07301248968f7e97fb1a989d8340d101f",
+      "clause_count": 21,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-16-alpha-channel-processing",
+          "png-3.x13-16-alpha-channel-processing-clause-91f4701a50d0",
+          "png-3.x13-16-alpha-channel-processing-clause-2b227a6093ec",
+          "png-3.x13-16-alpha-channel-processing-clause-edf78f0b4701",
+          "png-3.x13-16-alpha-channel-processing-clause-9c7b6c49b994",
+          "png-3.x13-16-alpha-channel-processing-clause-2991c3cb4400"
+        ]
+      }
+    },
+    {
+      "id": "x13-17-histogram-and-suggested-palette-usage",
+      "title": "13.17 Histogram and suggested palette usage",
+      "level": 3,
+      "text_sha256": "1de30b9744a4c8200fdc00b911ca6e6e7bf5b942fc1113e91a971ba33d5ce627",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x13-17-histogram-and-suggested-palette-usage",
+          "png-3.x13-17-histogram-and-suggested-palette-usage-clause-f3919c421dde",
+          "png-3.x13-17-histogram-and-suggested-palette-usage-clause-8155f8a6a5b3",
+          "png-3.x13-17-histogram-and-suggested-palette-usage-clause-33a297266c8e"
+        ]
+      }
+    },
+    {
+      "id": "x14-editors",
+      "title": "14. Editors",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x14-editors"
+        ]
+      }
+    },
+    {
+      "id": "x14-1-additional-chunk-types",
+      "title": "14.1 Additional chunk types",
+      "level": 3,
+      "text_sha256": "b90441ddb1bfbe00b0e82422ad191e33b65dc21d930a8d371cd692b4186935be",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x14-1-additional-chunk-types",
+          "png-3.x14-1-additional-chunk-types-clause-b90441ddb1bf"
+        ]
+      }
+    },
+    {
+      "id": "x14-2-behavior-of-png-editors",
+      "title": "14.2 Behavior of PNG editors",
+      "level": 3,
+      "text_sha256": "10e72ec75b009942d62e091488fa63fb2a0748a8b6aff19a3cc5976d10d90af0",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x14-2-behavior-of-png-editors",
+          "png-3.x14-2-behavior-of-png-editors-clause-6cf8830637e2",
+          "png-3.x14-2-behavior-of-png-editors-clause-1c7474f091e8",
+          "png-3.x14-2-behavior-of-png-editors-clause-122c05e4533c",
+          "png-3.x14-2-behavior-of-png-editors-clause-66887f447e96",
+          "png-3.x14-2-behavior-of-png-editors-clause-cd1b4fb7e516",
+          "png-3.x14-2-behavior-of-png-editors-clause-98150fad9b62"
+        ]
+      }
+    },
+    {
+      "id": "x14-3-ordering-of-chunks",
+      "title": "14.3 Ordering of chunks",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x14-3-ordering-of-chunks"
+        ]
+      }
+    },
+    {
+      "id": "x14-3-1-ordering-of-critical-chunks",
+      "title": "14.3.1 Ordering of critical chunks",
+      "level": 4,
+      "text_sha256": "64a2d0b4a0a13cdbe9d4f8dab8d6bc952f892715c2d842dcac300b67359e2c9a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x14-3-1-ordering-of-critical-chunks",
+          "png-3.x14-3-1-ordering-of-critical-chunks-clause-64a2d0b4a0a1"
+        ]
+      }
+    },
+    {
+      "id": "x14-3-2-ordering-of-ancillary-chunks",
+      "title": "14.3.2 Ordering of ancillary chunks",
+      "level": 4,
+      "text_sha256": "a6fc7eaa192351d337b3e2a3cd6a1f667aae7c2c377212693200f498e212bd3a",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x14-3-2-ordering-of-ancillary-chunks",
+          "png-3.x14-3-2-ordering-of-ancillary-chunks-clause-7a9acd39d692"
+        ]
+      }
+    },
+    {
+      "id": "x15-conformance",
+      "title": "15. Conformance",
+      "level": 2,
+      "text_sha256": "f32cab3fbbf94524ed64b3cf5b9de565debc19e636afe6bc28a23f8c87ca0f0e",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x15-conformance",
+          "png-3.x15-conformance-clause-7a1b14e8935e"
+        ]
+      }
+    },
+    {
+      "id": "x15-1-conformance",
+      "title": "15.1 Conformance",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x15-1-conformance"
+        ]
+      }
+    },
+    {
+      "id": "x15-2-introduction",
+      "title": "15.2 Introduction",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x15-2-introduction"
+        ]
+      }
+    },
+    {
+      "id": "x15-2-1-objectives",
+      "title": "15.2.1 Objectives",
+      "level": 4,
+      "text_sha256": "041b6bcf7031a8d86b1d115db96550b42311bb41b343963fc037d2412cbe2fcf",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x15-2-1-objectives"
+        ]
+      }
+    },
+    {
+      "id": "x15-2-2-scope",
+      "title": "15.2.2 Scope",
+      "level": 4,
+      "text_sha256": "9460149825774dc38790bd2eb0a37e3f7447e95cd594a834f555d75507e6e402",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x15-2-2-scope"
+        ]
+      }
+    },
+    {
+      "id": "x15-3-conformance-conditions",
+      "title": "15.3 Conformance conditions",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x15-3-conformance-conditions"
+        ]
+      }
+    },
+    {
+      "id": "x15-3-1-conformance-of-png-datastreams",
+      "title": "15.3.1 Conformance of PNG datastreams",
+      "level": 4,
+      "text_sha256": "2e634a6be415127bea42f1a70f51441489124280ee92fe1c22f747a71194ade5",
+      "clause_count": 11,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x15-3-1-conformance-of-png-datastreams",
+          "png-3.x15-3-1-conformance-of-png-datastreams-clause-66d27da90d3e"
+        ]
+      }
+    },
+    {
+      "id": "x15-3-2-conformance-of-png-encoders",
+      "title": "15.3.2 Conformance of PNG encoders",
+      "level": 4,
+      "text_sha256": "182c29e391a09a9d63a6ccb10c2d665ff2e66c8e7c24ada477e7d20975d7e843",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x15-3-2-conformance-of-png-encoders"
+        ]
+      }
+    },
+    {
+      "id": "x15-3-3-conformance-of-png-decoders",
+      "title": "15.3.3 Conformance of PNG decoders",
+      "level": 4,
+      "text_sha256": "4f8e6ea2cd3af16dd71483a4027a8883437e9f2eabbe4944fe7ca72ec21a3fd7",
+      "clause_count": 13,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x15-3-3-conformance-of-png-decoders",
+          "png-3.x15-3-3-conformance-of-png-decoders-clause-662c2b046957"
+        ]
+      }
+    },
+    {
+      "id": "x15-3-4-conformance-of-png-editors",
+      "title": "15.3.4 Conformance of PNG editors",
+      "level": 4,
+      "text_sha256": "cc8b384d5e7085af0bb3222377aabbfb4b9d39e07e28ca06c404d91df6171a32",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.x15-3-4-conformance-of-png-editors",
+          "png-3.x15-3-4-conformance-of-png-editors-clause-823c3ac09f1e"
+        ]
+      }
+    },
+    {
+      "id": "IANA-registrations",
+      "title": "A. Internet Media Types",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.iana-registrations"
+        ]
+      }
+    },
+    {
+      "id": "A-Media-type",
+      "title": "A.1 image/png",
+      "level": 3,
+      "text_sha256": "32e2332ec60e97180904c8e001bf26de72ea03720adfae81527acbcbb96cf6fb",
+      "clause_count": 55,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.a-media-type",
+          "png-3.a-media-type-clause-8076ca292115"
+        ]
+      }
+    },
+    {
+      "id": "a-2-image-apng",
+      "title": "A.2 image/apng",
+      "level": 3,
+      "text_sha256": "2e685b1776a8c16ddb9200b9d7a5b58ecad01621f50445109a97d7aec7dba8ef",
+      "clause_count": 51,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.a-2-image-apng",
+          "png-3.a-2-image-apng-clause-8076ca292115"
+        ]
+      }
+    },
+    {
+      "id": "newchunks",
+      "title": "B. Guidelines for private chunk types",
+      "level": 2,
+      "text_sha256": "f74a995f75bdc9b4f0902c38c897757b0ca989517df92b968f2823a7a2da6a5b",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.newchunks"
+        ]
+      }
+    },
+    {
+      "id": "gammachromaticity",
+      "title": "C. Gamma and chromaticity",
+      "level": 2,
+      "text_sha256": "1c5c180bc042aab54726b909f26f2d1aeb38ccee0a3c19c18e80efa81ee3792b",
+      "clause_count": 26,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.gammachromaticity"
+        ]
+      }
+    },
+    {
+      "id": "samplecrc",
+      "title": "D. Sample CRC implementation",
+      "level": 2,
+      "text_sha256": "763f5b2b42c74d8a38c1f2efaeae4faf0fc72ce27dcb08c26be12d2452439e3e",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.samplecrc",
+          "png-3.samplecrc-clause-af32ab38c933",
+          "png-3.samplecrc-clause-6f45c1d2c993"
+        ]
+      }
+    },
+    {
+      "id": "onlineresources",
+      "title": "E. Online resources",
+      "level": 2,
+      "text_sha256": "97d320f2eee844df69c85c9249cc9fea216900af7cc7b720ff4fb5839131637f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.onlineresources"
+        ]
+      }
+    },
+    {
+      "id": "introduction-10",
+      "title": "Introduction",
+      "level": 3,
+      "text_sha256": "8af605200f90bcdd4d179d4d2e4e253252c49cdaec6ab90f2f585c951c869453",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.introduction-10"
+        ]
+      }
+    },
+    {
+      "id": "e-1-icc-profile-specifications",
+      "title": "E.1 ICC profile specifications",
+      "level": 3,
+      "text_sha256": "72c474c931042864fc44ab4215a0489115ec772d05e72833e6ae8a7af5bc4c00",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.e-1-icc-profile-specifications"
+        ]
+      }
+    },
+    {
+      "id": "e-2-png-web-site",
+      "title": "E.2 PNG web site",
+      "level": 3,
+      "text_sha256": "9997bf070b7fca415484f87eed8c27762077ec590a7693388eb45a81ebf016a0",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.e-2-png-web-site"
+        ]
+      }
+    },
+    {
+      "id": "e-3-sample-implementation-and-test-images",
+      "title": "E.3 Sample implementation and test images",
+      "level": 3,
+      "text_sha256": "17294446b015f8f5c8b9b553e6d4139876789535e68ac4ff5a7be3ac05c1baa6",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.e-3-sample-implementation-and-test-images"
+        ]
+      }
+    },
+    {
+      "id": "f-changes",
+      "title": "F. Changes",
+      "level": 2,
+      "text_sha256": "97d320f2eee844df69c85c9249cc9fea216900af7cc7b720ff4fb5839131637f",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.f-changes"
+        ]
+      }
+    },
+    {
+      "id": "changes-20250515",
+      "title": "F.1 Changes since the Proposed Recommendation of 15 May 2025",
+      "level": 3,
+      "text_sha256": "140bedbf9c3f6d56a9846d2ba7088798683f4da0c248231336e6a05679e4fdfe",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.changes-20250515"
+        ]
+      }
+    },
+    {
+      "id": "changes-20250313",
+      "title": "F.2 Changes since the Candidate Recommendation Snapshot of 13 March 2025",
+      "level": 3,
+      "text_sha256": "140bedbf9c3f6d56a9846d2ba7088798683f4da0c248231336e6a05679e4fdfe",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.changes-20250313"
+        ]
+      }
+    },
+    {
+      "id": "changes-20250121/",
+      "title": "F.3 Changes since the Candidate Recommendation Draft of 21 January 2025 (Third Edition)",
+      "level": 3,
+      "text_sha256": "97cac50c36ac036ac2761e26ca20a2ed8a5e6e553108c8a1e64b07de8e661ab3",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.changes-20250121"
+        ]
+      }
+    },
+    {
+      "id": "changes-20240718",
+      "title": "F.4 Changes since the Candidate Recommendation Draft of 18 July 2024 (Third Edition)",
+      "level": 3,
+      "text_sha256": "bd20538c4ec6eb71ef20bbbd75f20535e9f2ee9fcc92ef94b78150814b04700a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.changes-20240718"
+        ]
+      }
+    },
+    {
+      "id": "changes-20230921",
+      "title": "F.5 Changes since the Candidate Recommendation Snapshot of 21 September 2023 (Third Edition)",
+      "level": 3,
+      "text_sha256": "e8b22ea9304b3be5a2f78578bb387ddeaed49543ed2cced493c509b8b1bc086b",
+      "clause_count": 41,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.changes-20230921"
+        ]
+      }
+    },
+    {
+      "id": "changes-20230720",
+      "title": "F.6 Changes since the Working Draft of 20 July 2023 (Third Edition)",
+      "level": 3,
+      "text_sha256": "90882a94370142ae988ba6819af386da2baee38230cb7a64050684c713cc514a",
+      "clause_count": 15,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.changes-20230720"
+        ]
+      }
+    },
+    {
+      "id": "changes-20221025",
+      "title": "F.7 Changes since the First Public Working Draft of 25 October 2022 (Third Edition)",
+      "level": 3,
+      "text_sha256": "054f0bd0db50eff953721d65f41a896df249fd599179682cda94d67223a6d0a8",
+      "clause_count": 29,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.changes-20221025"
+        ]
+      }
+    },
+    {
+      "id": "changes-20031110",
+      "title": "F.8 Changes since the W3C Recommendation of 10 November 2003 (PNG Second Edition)",
+      "level": 3,
+      "text_sha256": "2f60bb6083f5ce35c8c17a49ba745bc014beb15319fd19fd9892f4c2e968563c",
+      "clause_count": 30,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.changes-20031110"
+        ]
+      }
+    },
+    {
+      "id": "f-8-changes-between-first-and-second-editions",
+      "title": "F.9 Changes between First and Second Editions",
+      "level": 3,
+      "text_sha256": "9f4ef5a0086d24153082774311be8518c54ded41776421aa29e29931e055c862",
+      "clause_count": 346,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.f-8-changes-between-first-and-second-editions"
+        ]
+      }
+    },
+    {
+      "id": "g-references",
+      "title": "G. References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.g-references"
+        ]
+      }
+    },
+    {
+      "id": "g-1-normative-references",
+      "title": "G.1 Normative references",
+      "level": 3,
+      "text_sha256": "cfb90587ea6dec012db453fb7cba222f32d066a700911f336913d159326d8d3c",
+      "clause_count": 66,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.g-1-normative-references"
+        ]
+      }
+    },
+    {
+      "id": "g-2-informative-references",
+      "title": "G.2 Informative references",
+      "level": 3,
+      "text_sha256": "9cd24cbd6a4371d0858d65a2282f8939429b51665e12787774648cb17aebdf88",
+      "clause_count": 35,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "png-3.g-2-informative-references"
+        ]
+      }
+    }
+  ]
+}

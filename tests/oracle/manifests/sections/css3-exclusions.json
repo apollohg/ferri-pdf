@@ -1,0 +1,625 @@
+{
+  "schema_version": 1,
+  "source_id": "css3-exclusions",
+  "sections": [
+    {
+      "id": "title",
+      "title": "CSS Exclusions Module Level 1",
+      "level": 1,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.title"
+        ]
+      }
+    },
+    {
+      "id": "subtitle",
+      "title": "W3C Working Draft, 15 January 2015",
+      "level": 2,
+      "text_sha256": "06f5de38e016f367a0bdea54baa673099f744475605dd1a5574aec3fc88ee32f",
+      "clause_count": 20,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.subtitle"
+        ]
+      }
+    },
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 2,
+      "text_sha256": "4e62387d17551673e3987c53bbca385215779404458552252d7d5b6dcf88ca79",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.abstract"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "title": "Status of this document",
+      "level": 2,
+      "text_sha256": "d6bde3e425dc7296065c58553f4a041dc7cbd874cc6ed4d2c6777845f4b94bf0",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.status"
+        ]
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Table of Contents",
+      "level": 2,
+      "text_sha256": "86b610e4650e120c721b7f5ad91a7b0734eb75df81eb8723dabd2a61e8d893db",
+      "clause_count": 39,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.contents"
+        ]
+      }
+    },
+    {
+      "id": "intro",
+      "title": "1. Introduction",
+      "level": 2,
+      "text_sha256": "306f72ab6acff769e6524d920868b35e8be2c3cc329eba3a0c0d3c45ddae20b1",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.intro"
+        ]
+      }
+    },
+    {
+      "id": "terms",
+      "title": "2. Terminology",
+      "level": 2,
+      "text_sha256": "66e11f00d730c133107290b874d0cf02f4706b274b5fe5a5863715746022e7ca",
+      "clause_count": 16,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.terms",
+          "css3-exclusions.terms-clause-df261741b8d5",
+          "css3-exclusions.terms-clause-1c6921b1cf3d",
+          "css3-exclusions.terms-clause-34c2ee34bf63"
+        ]
+      }
+    },
+    {
+      "id": "exclusions",
+      "title": "3. Exclusions",
+      "level": 2,
+      "text_sha256": "af8e5cc2f97851ac187959d8112ee037f4137b1aa8c77425446dab571c3674d9",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.exclusions"
+        ]
+      }
+    },
+    {
+      "id": "declaring-exclusions",
+      "title": "3.1. Declaring exclusions",
+      "level": 3,
+      "text_sha256": "7c4fb134d9f752d16a706417cda59081abd5a1ff0c04a68e80fae23229c4be6b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.declaring-exclusions",
+          "css3-exclusions.declaring-exclusions-clause-7c4fb134d9f7"
+        ]
+      }
+    },
+    {
+      "id": "wrap-flow-property",
+      "title": "3.1.1. The wrap-flow property",
+      "level": 4,
+      "text_sha256": "3759e9a7a8045cabd6fb9268506af9144ab5ac91c0de55da91791f3182c1273b",
+      "clause_count": 50,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.wrap-flow-property",
+          "css3-exclusions.wrap-flow-property-clause-cca2516ebb1d",
+          "css3-exclusions.wrap-flow-property-clause-a9c5809f223c",
+          "css3-exclusions.wrap-flow-property-clause-12afebdb882a",
+          "css3-exclusions.wrap-flow-property-clause-b0f82468ef25",
+          "css3-exclusions.wrap-flow-property-clause-967fa03f23fc",
+          "css3-exclusions.wrap-flow-property-clause-38d119446006",
+          "css3-exclusions.wrap-flow-property-clause-87257d9b123f",
+          "css3-exclusions.wrap-flow-property-clause-b506bb31af81",
+          "css3-exclusions.wrap-flow-property-clause-d379c627fd7d",
+          "css3-exclusions.wrap-flow-property-clause-671e6210659d",
+          "css3-exclusions.wrap-flow-property-clause-64b60970bed2"
+        ]
+      }
+    },
+    {
+      "id": "scope-and-effect-of-exclusions",
+      "title": "3.2. Scope and effect of exclusions",
+      "level": 3,
+      "text_sha256": "53ccd8e8a0ace8a0931a0ecaa4d3d6ecd73b32353290b872196a0b6c6c9b7726",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.scope-and-effect-of-exclusions"
+        ]
+      }
+    },
+    {
+      "id": "propagation-of-exclusions",
+      "title": "3.3. Propagation of Exclusions",
+      "level": 3,
+      "text_sha256": "cd0d54c7a62a2ed6646e35a064623f2f0e1101d848a68face9bd15c3f758e797",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.propagation-of-exclusions"
+        ]
+      }
+    },
+    {
+      "id": "wrap-through-property",
+      "title": "3.3.1. The wrap-through Property",
+      "level": 4,
+      "text_sha256": "1b254ce3b211b0b5fb4ec4d5882dfc273de7520afbb77074c1f96504270cb628",
+      "clause_count": 24,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.wrap-through-property",
+          "css3-exclusions.wrap-through-property-clause-cca2516ebb1d",
+          "css3-exclusions.wrap-through-property-clause-7f2a2060ba0e",
+          "css3-exclusions.wrap-through-property-clause-a20c1a173caa"
+        ]
+      }
+    },
+    {
+      "id": "exclusions-order",
+      "title": "3.4. Exclusions order",
+      "level": 3,
+      "text_sha256": "67f00eae0c2753f0c04c63ddef0bf2740bfdb0062d14ba8200b3d18a0c84bb54",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.exclusions-order",
+          "css3-exclusions.exclusions-order-clause-c9714e69af3d"
+        ]
+      }
+    },
+    {
+      "id": "exclusions-processing-model",
+      "title": "3.5. Processing model",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.exclusions-processing-model"
+        ]
+      }
+    },
+    {
+      "id": "exclusions-processing-model-description",
+      "title": "3.5.1. Description",
+      "level": 4,
+      "text_sha256": "8313adfedbce32a4c7efb0d87af38541bc93c306b1e5e64e7358e6db275c6868",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.exclusions-processing-model-description",
+          "css3-exclusions.exclusions-processing-model-description-clause-39ff20c3a129",
+          "css3-exclusions.exclusions-processing-model-description-clause-c9efe78a26ec",
+          "css3-exclusions.exclusions-processing-model-description-clause-744f81f3808d"
+        ]
+      }
+    },
+    {
+      "id": "step-1",
+      "title": "3.5.2. Step 1: resolve exclusion boxes belonging to each wrapping context",
+      "level": 4,
+      "text_sha256": "c92dda2fbfe63658faaf686dec1d99032b1142d5c958d2895f9e704a60776bd0",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.step-1",
+          "css3-exclusions.step-1-clause-c92dda2fbfe6"
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "title": "3.5.3. Step 2: resolve wrapping contexts and lay out containing blocks",
+      "level": 4,
+      "text_sha256": "95cc9ba28115f24f92b1660dc36cea76b30a4b6d9a4d974d446ac55b92debcdf",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.step-2"
+        ]
+      }
+    },
+    {
+      "id": "step-2-A",
+      "title": "3.5.4. Step 2-A: resolve the position and size of exclusion boxes",
+      "level": 4,
+      "text_sha256": "02adf175d85d898012f54ba3cbce6abb2f27b9af8ec227d9fc8f2528291d5ead",
+      "clause_count": 5,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.step-2-a",
+          "css3-exclusions.step-2-a-clause-5cba93e64c6d",
+          "css3-exclusions.step-2-a-clause-cb01a6492410",
+          "css3-exclusions.step-2-a-clause-53427b25b48d",
+          "css3-exclusions.step-2-a-clause-6e9caca97285",
+          "css3-exclusions.step-2-a-clause-7cfc211ca902"
+        ]
+      }
+    },
+    {
+      "id": "step-2-B",
+      "title": "3.5.5. Step 2-B: lay out containing block applying wrapping",
+      "level": 4,
+      "text_sha256": "2a10c21c42f2e277f7391a50ee06d75504d8b890966fadd866d052a8ab362f59",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.step-2-b"
+        ]
+      }
+    },
+    {
+      "id": "processing-model-example",
+      "title": "3.5.6. Processing Model Example",
+      "level": 4,
+      "text_sha256": "085cd2d96692cbbdc7c94650c05d77c23e9cfd8d8f5da59ecc62d5e72f54a018",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.processing-model-example"
+        ]
+      }
+    },
+    {
+      "id": "example-step-1",
+      "title": "3.5.6.1. Step 1: resolve exclusion boxes belonging to each wrapping context",
+      "level": 5,
+      "text_sha256": "dc385d5f8ba0dee7cfc974bda280d3889ae2736613282ca11a914ae38df5a316",
+      "clause_count": 6,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.example-step-1"
+        ]
+      }
+    },
+    {
+      "id": "example-step-2",
+      "title": "3.5.6.2. Step 2: resolve wrapping contexts and lay out containing blocks",
+      "level": 5,
+      "text_sha256": "6595ab6a85ce67112989feb7fc7a0a5b945b2330b28066f44c5bef3352f70466",
+      "clause_count": 14,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.example-step-2",
+          "css3-exclusions.example-step-2-clause-863dbf9589e8",
+          "css3-exclusions.example-step-2-clause-c5f61ea1516a",
+          "css3-exclusions.example-step-2-clause-d16568c2a99d",
+          "css3-exclusions.example-step-2-clause-48e115924f74",
+          "css3-exclusions.example-step-2-clause-f77927e345a5",
+          "css3-exclusions.example-step-2-clause-a0d1c76ed681"
+        ]
+      }
+    },
+    {
+      "id": "example-resolving-rwc-1",
+      "title": "3.5.6.2.1. Resolving RWC-1",
+      "level": 6,
+      "text_sha256": "dee6a3c904de895775a67341f893f0d030a4912113749f99a0a3055a7beeb255",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.example-resolving-rwc-1",
+          "css3-exclusions.example-resolving-rwc-1-clause-dee6a3c904de"
+        ]
+      }
+    },
+    {
+      "id": "example-resolving-rwc-2",
+      "title": "3.5.6.2.2. Resolving RWC-2",
+      "level": 6,
+      "text_sha256": "c6cca178e1eb2655cd56e869257949e44fe6a9e00870a7358b4edee51a721de7",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.example-resolving-rwc-2",
+          "css3-exclusions.example-resolving-rwc-2-clause-7066e04c876d"
+        ]
+      }
+    },
+    {
+      "id": "floats-and-exclusions",
+      "title": "3.6. Floats and exclusions",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.floats-and-exclusions"
+        ]
+      }
+    },
+    {
+      "id": "floats-and-exclusions-similarities",
+      "title": "3.6.1. Similarities",
+      "level": 4,
+      "text_sha256": "8de0b76239982dd98a9e2ab93d0c40e9543a9a92556e54eaa55639e684e65cad",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.floats-and-exclusions-similarities"
+        ]
+      }
+    },
+    {
+      "id": "floats-and-exclusions-differences",
+      "title": "3.6.2. Differences",
+      "level": 4,
+      "text_sha256": "32486e641167fe1bce721fcc8d820d3ab935467b5f95777225b638eabed60718",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.floats-and-exclusions-differences"
+        ]
+      }
+    },
+    {
+      "id": "floats-interop",
+      "title": "3.6.3. Interoperability",
+      "level": 4,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.floats-interop"
+        ]
+      }
+    },
+    {
+      "id": "effect-of-floats-on-exclusions",
+      "title": "3.6.3.1. Effect of floats on exclusions",
+      "level": 5,
+      "text_sha256": "07dbcd5c3a4f6e050d11d8b7e32a0c4cd9aabcaf92f6dac1515471013bdd45ac",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.effect-of-floats-on-exclusions",
+          "css3-exclusions.effect-of-floats-on-exclusions-clause-07dbcd5c3a4f"
+        ]
+      }
+    },
+    {
+      "id": "effect-of-exclusions-on-floats",
+      "title": "3.6.3.2. Effect of exclusions on floats",
+      "level": 5,
+      "text_sha256": "3126630d8c6fad4fe6879bd7274f355012d86c7b407e5f85c356ef3e586958ba",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.effect-of-exclusions-on-floats"
+        ]
+      }
+    },
+    {
+      "id": "acks",
+      "title": "Acknowledgments",
+      "level": 2,
+      "text_sha256": "932de69038948b70db0b1775251b6528d0d397254f70bee27cd8262046cec12a",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.acks"
+        ]
+      }
+    },
+    {
+      "id": "conformance",
+      "title": "Conformance",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.conformance"
+        ]
+      }
+    },
+    {
+      "id": "conventions",
+      "title": "Document conventions",
+      "level": 3,
+      "text_sha256": "e1ee93bc8e4af9acf7083acfc75714b46c1c4685bdf761ebdfd63a4b9d6e8cad",
+      "clause_count": 7,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.conventions",
+          "css3-exclusions.conventions-clause-6abbe28898f0",
+          "css3-exclusions.conventions-clause-33a5ed16a48d"
+        ]
+      }
+    },
+    {
+      "id": "conformance-classes",
+      "title": "Conformance classes",
+      "level": 3,
+      "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.conformance-classes",
+          "css3-exclusions.conformance-classes-clause-ff408372426c",
+          "css3-exclusions.conformance-classes-clause-d9976214330c"
+        ]
+      }
+    },
+    {
+      "id": "partial",
+      "title": "Partial implementations",
+      "level": 3,
+      "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.partial",
+          "css3-exclusions.partial-clause-ef40c4aab200"
+        ]
+      }
+    },
+    {
+      "id": "experimental",
+      "title": "Experimental implementations",
+      "level": 3,
+      "text_sha256": "d65302001727731f480732eea29f70c56e93286eee5ffd392400e6a470f873c7",
+      "clause_count": 2,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.experimental"
+        ]
+      }
+    },
+    {
+      "id": "testing",
+      "title": "Non-experimental implementations",
+      "level": 3,
+      "text_sha256": "19a70dd9bc1bce7a03832f6a98199404fa3fcc8232fe4f302460623c7d250a11",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.testing",
+          "css3-exclusions.testing-clause-1e0fff369221",
+          "css3-exclusions.testing-clause-c7ed0d126be3"
+        ]
+      }
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.references"
+        ]
+      }
+    },
+    {
+      "id": "normative",
+      "title": "Normative References",
+      "level": 3,
+      "text_sha256": "936c977b44e6f34ef1485588a5497302ca30170e76eac4380745eb5ba6ad5e23",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.normative"
+        ]
+      }
+    },
+    {
+      "id": "informative",
+      "title": "Informative References",
+      "level": 3,
+      "text_sha256": "d264903bee61e3d4d4ae4c352d83ba029bcb00cc8ba65770747cff91d4675210",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.informative"
+        ]
+      }
+    },
+    {
+      "id": "index",
+      "title": "Index",
+      "level": 2,
+      "text_sha256": "0518a83557442a677c9eb5dcf7e25340a594c36acd68c5b01f29fd21c20d8f91",
+      "clause_count": 18,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.index"
+        ]
+      }
+    },
+    {
+      "id": "property-index",
+      "title": "Property Index",
+      "level": 2,
+      "text_sha256": "dff176f79e68b66304f7ea41659762ef3490157eb012db2f065179f55ef654ab",
+      "clause_count": 27,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.property-index",
+          "css3-exclusions.property-index-clause-22edaa34f875",
+          "css3-exclusions.property-index-clause-a9c5809f223c"
+        ]
+      }
+    },
+    {
+      "id": "issues-index",
+      "title": "Issues Index",
+      "level": 2,
+      "text_sha256": "de44c976a5808f8c5a1c06f0f9a0072643e4f2d49a04c176b214ccdbc23c2430",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "css3-exclusions.issues-index",
+          "css3-exclusions.issues-index-clause-c9714e69af3d"
+        ]
+      }
+    }
+  ]
+}

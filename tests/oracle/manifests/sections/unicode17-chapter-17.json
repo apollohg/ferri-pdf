@@ -1,0 +1,323 @@
+{
+  "schema_version": 1,
+  "source_id": "unicode17-chapter-17",
+  "sections": [
+    {
+      "id": "G26316",
+      "title": "Southeast Asia-II",
+      "level": 1,
+      "text_sha256": "a30ac8868ae1a36d10fddfaaf100405c43d4bfe8131b5e23c6788ce66f210372",
+      "clause_count": 4,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.g26316"
+        ]
+      }
+    },
+    {
+      "id": "heading-259c2c7e48b7",
+      "title": "17.1 Philippine Scripts: Tagalog, Hanunóo, Buhid, and Tagbanwa",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-259c2c7e48b7"
+        ]
+      }
+    },
+    {
+      "id": "heading-39c822d88b05",
+      "title": "17.1.1 Tagalog: U+1700–U+171F",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-39c822d88b05"
+        ]
+      }
+    },
+    {
+      "id": "heading-83704f13610e",
+      "title": "Hanunóo: U+1720–U+173F",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-83704f13610e"
+        ]
+      }
+    },
+    {
+      "id": "heading-edae054bd4d3",
+      "title": "Buhid: U+1740–U+175F",
+      "level": 3,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-edae054bd4d3"
+        ]
+      }
+    },
+    {
+      "id": "heading-5d76c61bcf66",
+      "title": "Tagbanwa: U+1760–U+177F",
+      "level": 3,
+      "text_sha256": "d979ae319e928fb0e71ca9b0f609466cfecccb9defdea709e053c99019f3f50a",
+      "clause_count": 3,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-5d76c61bcf66"
+        ]
+      }
+    },
+    {
+      "id": "heading-a68ffe4f5c32",
+      "title": "17.1.2 Principles of the Philippine Scripts",
+      "level": 3,
+      "text_sha256": "6dd26630eb36dd109bb39c13655cc4674c5c34d9f926170d9443e36bf5f02bf7",
+      "clause_count": 109,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-a68ffe4f5c32"
+        ]
+      }
+    },
+    {
+      "id": "heading-e1d79ad5d6fd",
+      "title": "17.2 Buginese",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-e1d79ad5d6fd"
+        ]
+      }
+    },
+    {
+      "id": "heading-8b451c8d684b",
+      "title": "17.2.1 Buginese: U+1A00–U+1A1F",
+      "level": 3,
+      "text_sha256": "b0c6f011aa1577338888b9e8280db0ce978a356b0daae0407a76a9844f0233f6",
+      "clause_count": 8,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-8b451c8d684b"
+        ]
+      }
+    },
+    {
+      "id": "heading-0949e0ff0ef7",
+      "title": "17.3 Balinese",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-0949e0ff0ef7"
+        ]
+      }
+    },
+    {
+      "id": "heading-88562d5aed73",
+      "title": "17.3.1 Balinese: U+1B00–U+1B7F",
+      "level": 3,
+      "text_sha256": "5b79325b0b45ce6626e42e4262fb70f4939bcec0569003ce5b616fa2f529b0d0",
+      "clause_count": 145,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-88562d5aed73",
+          "unicode17-chapter-17.heading-88562d5aed73-clause-5165f3624a2f"
+        ]
+      }
+    },
+    {
+      "id": "heading-2c7683203dc8",
+      "title": "17.4 Javanese",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-2c7683203dc8"
+        ]
+      }
+    },
+    {
+      "id": "heading-bc8810a28430",
+      "title": "17.4.1 Javanese: U+A980–U+A9DF",
+      "level": 3,
+      "text_sha256": "171586bf772b2946100e710209c0b49f744c7d1d8e029940737b58819f26a50f",
+      "clause_count": 43,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-bc8810a28430"
+        ]
+      }
+    },
+    {
+      "id": "heading-566a394de53a",
+      "title": "17.5 Rejang",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-566a394de53a"
+        ]
+      }
+    },
+    {
+      "id": "heading-054b747e3d56",
+      "title": "17.5.1 Rejang: U+A930–U+A95F",
+      "level": 3,
+      "text_sha256": "711d1f938bdd3cfbd2c428af8e75d88638960e4a156d6fc00ccbd365b7cbfdb2",
+      "clause_count": 9,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-054b747e3d56"
+        ]
+      }
+    },
+    {
+      "id": "heading-fe0a05210218",
+      "title": "17.6 Batak",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-fe0a05210218"
+        ]
+      }
+    },
+    {
+      "id": "heading-c1b44a69951f",
+      "title": "17.6.1 Batak: U+1BC0–U+1BFF",
+      "level": 3,
+      "text_sha256": "8e57758eb47ae42aa753d59a77b181a38f152b732913233007dd83dd60dcec20",
+      "clause_count": 10,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-c1b44a69951f",
+          "unicode17-chapter-17.heading-c1b44a69951f-clause-a7ae4cb87a77"
+        ]
+      }
+    },
+    {
+      "id": "heading-dbe2b3338d3c",
+      "title": "17.7 Sundanese",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-dbe2b3338d3c"
+        ]
+      }
+    },
+    {
+      "id": "heading-71b250b9e471",
+      "title": "17.7.1 Sundanese: U+1B80–U+1BBF",
+      "level": 3,
+      "text_sha256": "706ad6144fe0a92b69e827492c8c800be9f06008f2f17ed768c6c44c3e1ecf6f",
+      "clause_count": 32,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-71b250b9e471",
+          "unicode17-chapter-17.heading-71b250b9e471-clause-81055d493408"
+        ]
+      }
+    },
+    {
+      "id": "heading-59e1c13f5e10",
+      "title": "17.7.2 Sundanese Supplement: U+1CC0–U+1CCF",
+      "level": 3,
+      "text_sha256": "8d1951e15535859a7421aaaf578db48db0154f2973559c250a5f96881784083b",
+      "clause_count": 1,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-59e1c13f5e10"
+        ]
+      }
+    },
+    {
+      "id": "heading-d81fb5157665",
+      "title": "17.8 Makasar",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-d81fb5157665"
+        ]
+      }
+    },
+    {
+      "id": "heading-09d15f4b74c5",
+      "title": "17.8.1 Makasar: U+11EE0–U+11EFF",
+      "level": 3,
+      "text_sha256": "c1122bbfd5da4d80fcbce7513e52d0655735080ac7852d0a022cc762915e2073",
+      "clause_count": 31,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-09d15f4b74c5",
+          "unicode17-chapter-17.heading-09d15f4b74c5-clause-02223c445611"
+        ]
+      }
+    },
+    {
+      "id": "heading-8e42b65294de",
+      "title": "17.9 Kawi",
+      "level": 2,
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clause_count": 0,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-8e42b65294de"
+        ]
+      }
+    },
+    {
+      "id": "heading-e4b6dbd2a0e7",
+      "title": "17.9.1 Kawi: U+11F00–U+11F5F",
+      "level": 3,
+      "text_sha256": "3f4901edeec62a89e1d531b52a879b6b0c6de3112fe15f4e516bd5c96f3b6267",
+      "clause_count": 161,
+      "disposition": {
+        "kind": "requirements",
+        "requirement_ids": [
+          "unicode17-chapter-17.heading-e4b6dbd2a0e7",
+          "unicode17-chapter-17.heading-e4b6dbd2a0e7-clause-2351136d0903"
+        ]
+      }
+    }
+  ]
+}

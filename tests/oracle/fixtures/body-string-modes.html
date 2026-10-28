@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>body-string-modes</title><style>@font-face { font-family: Probe; src: url('../assets/DejaVuSans.ttf'); }
+@page { size: 500pt 300pt; margin: 36pt; }
+html, body { margin: 0; padding: 0; }
+body { font: 10pt/15pt Probe; }
+p, h2 { margin: 0; font: inherit; }
+h2 { string-set: heading content(); break-after: auto; }
+.next { break-before: page; }
+.reference::after { content: 'F[' string(heading, first) ']S[' string(heading, start) ']L[' string(heading, last) ']X[' string(heading, first-except) ']'; }</style></head><body><p>Intro</p><p class="reference"></p><h2>Alpha</h2><h2>Beta</h2>
+<p class="reference next"></p>
+<h2 class="next">Gamma</h2><p class="reference"></p></body></html>

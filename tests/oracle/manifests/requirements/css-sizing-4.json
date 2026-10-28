@@ -1,0 +1,2543 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "css-sizing-4.intro",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intro"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Introduction.",
+      "locator": {
+        "section_id": "intro",
+        "text_sha256": "72717f714550b54ac5bcf82963de8ddf28fd9216a38c9d1b5828c2f05d7436dc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.placement",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "placement"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Module interactions.",
+      "locator": {
+        "section_id": "placement",
+        "text_sha256": "ffae1a8f2ee5e5e8f0d436bb81ff7242e38e5f23233c08062fc0c3a4eeaf6b7d"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.values",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Value Definitions.",
+      "locator": {
+        "section_id": "values",
+        "text_sha256": "32d8be961152789059702efabbb92f7ec770caad4093691a9410fb568a29498a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.terms",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "terms"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Terminology.",
+      "locator": {
+        "section_id": "terms",
+        "text_sha256": "af7e8a2b3c6bffd86d392f44eb931ac3df753e2cba3a5d4819b9bcc481b8806b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.specifying-sizes",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "specifying-sizes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Specifying Box Sizes.",
+      "locator": {
+        "section_id": "specifying-sizes",
+        "text_sha256": "ca40d47d8c20ebbafe41f5a1df6988b8b9f6b8bb1d60c04e1ed8a3084c560b95"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.sizing-properties",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "sizing-properties"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Sizing Properties.",
+      "locator": {
+        "section_id": "sizing-properties",
+        "text_sha256": "26f11c92e8725cec90f3684d7cdd6596f15c000c487b480870f35c17e2ebbc38"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.sizing-properties-clause-cca2516ebb1d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.sizing-properties-clause-cca2516ebb1d",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "sizing-properties"
+      ],
+      "behaviour": "Sizing Properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-properties",
+        "clause_index": 13,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.sizing-values",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "sizing-values"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in New Sizing Values: the contain, fit-content(), and calc-size() values.",
+      "locator": {
+        "section_id": "sizing-values",
+        "text_sha256": "28a99d7f892a08c10d489801224c49e8293c214df2264ef6aec2dc74269be0f6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.sizing-values-clause-158f21953b3a",
+        "css-sizing-4.sizing-values-clause-182ff25c17eb",
+        "css-sizing-4.sizing-values-clause-da326d3f86f8",
+        "css-sizing-4.foundation-aspect-ratio-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.sizing-values-clause-158f21953b3a",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "sizing-values"
+      ],
+      "behaviour": "New Sizing Values: the contain, fit-content(), and calc-size() values — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-values",
+        "clause_index": 7,
+        "clause_sha256": "158f21953b3a552ea8d94a753a3116f5adf602b7b0c33b858f21c1033740db39"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.sizing-values-clause-182ff25c17eb",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "sizing-values"
+      ],
+      "behaviour": "New Sizing Values: the contain, fit-content(), and calc-size() values — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-values",
+        "clause_index": 26,
+        "clause_sha256": "182ff25c17eb2eedf56e933edcfb94bbe5811bbd699338a63b251e0dab027fcf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.sizing-values-clause-da326d3f86f8",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "sizing-values"
+      ],
+      "behaviour": "New Sizing Values: the contain, fit-content(), and calc-size() values — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "sizing-values",
+        "clause_index": 34,
+        "clause_sha256": "da326d3f86f8c0647e15c58a73629f5636aa41a8f79bd87414a73a7b6ab58a14"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.ratios",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "ratios"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Aspect Ratios.",
+      "locator": {
+        "section_id": "ratios",
+        "text_sha256": "1a2a1011dfdf428e4f94d5505bfd130010e4ca5cfeafd83e0a3536da11dc0c77"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.ratios-clause-10b90716b5a9"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.ratios-clause-10b90716b5a9",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "ratios"
+      ],
+      "behaviour": "Aspect Ratios — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "ratios",
+        "clause_index": 2,
+        "clause_sha256": "10b90716b5a95479502b08cac1c6e6771ec97827477fcd7a29b59b5e25d6b116"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.aspect-ratio",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "aspect-ratio"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Preferred Aspect Ratios: the aspect-ratio property.",
+      "locator": {
+        "section_id": "aspect-ratio",
+        "text_sha256": "7a43d0b56c489107b0773db48e7813e881af2f51859a10bc4a9d9921d5cb3090"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.aspect-ratio-clause-cca2516ebb1d",
+        "css-sizing-4.aspect-ratio-clause-796eca35f945",
+        "css-sizing-4.aspect-ratio-clause-169b3fab3198",
+        "css-sizing-4.aspect-ratio-clause-5e44a6ccbcd7",
+        "css-sizing-4.foundation-aspect-ratio-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.aspect-ratio-clause-cca2516ebb1d",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "aspect-ratio"
+      ],
+      "behaviour": "Preferred Aspect Ratios: the aspect-ratio property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "aspect-ratio",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.aspect-ratio-clause-796eca35f945",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "aspect-ratio"
+      ],
+      "behaviour": "Preferred Aspect Ratios: the aspect-ratio property — normative clause 200, located by its exact source hash.",
+      "locator": {
+        "section_id": "aspect-ratio",
+        "clause_index": 199,
+        "clause_sha256": "796eca35f94506d7e745e7aa90d208d8c18cd63a82ebbd77cae7f0c8387889df"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.aspect-ratio-clause-169b3fab3198",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "aspect-ratio"
+      ],
+      "behaviour": "Preferred Aspect Ratios: the aspect-ratio property — normative clause 201, located by its exact source hash.",
+      "locator": {
+        "section_id": "aspect-ratio",
+        "clause_index": 200,
+        "clause_sha256": "169b3fab3198cad23a2b4d73642917a815f3655849efd999285180c90686f45f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.aspect-ratio-clause-5e44a6ccbcd7",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "aspect-ratio"
+      ],
+      "behaviour": "Preferred Aspect Ratios: the aspect-ratio property — normative clause 282, located by its exact source hash.",
+      "locator": {
+        "section_id": "aspect-ratio",
+        "clause_index": 281,
+        "clause_sha256": "5e44a6ccbcd733c3aee1be8d6b7de490ea8a30e2639d4fec502d59de0045d079"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.aspect-ratio-automatic",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "aspect-ratio-automatic"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Effects of Preferred Aspect Ratio on Automatic Sizes.",
+      "locator": {
+        "section_id": "aspect-ratio-automatic",
+        "text_sha256": "64538b9130c686672fedec637f108fc74cbed5f8e906f666b14f68d8f14040c5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.foundation-aspect-ratio-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.aspect-ratio-margin-collapse",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "aspect-ratio-margin-collapse"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Margin-collapsing.",
+      "locator": {
+        "section_id": "aspect-ratio-margin-collapse",
+        "text_sha256": "ab061a4a82e81046525d9ba7c716b93b76df4cbdf4f485207b0b7f4aa37bdbaf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.aspect-ratio-margin-collapse-clause-ab061a4a82e8",
+        "css-sizing-4.foundation-aspect-ratio-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.aspect-ratio-margin-collapse-clause-ab061a4a82e8",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "aspect-ratio-margin-collapse"
+      ],
+      "behaviour": "Margin-collapsing — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "aspect-ratio-margin-collapse",
+        "clause_index": 0,
+        "clause_sha256": "ab061a4a82e81046525d9ba7c716b93b76df4cbdf4f485207b0b7f4aa37bdbaf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.aspect-ratio-minimum",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "aspect-ratio-minimum"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Automatic Content-based Minimum Sizes.",
+      "locator": {
+        "section_id": "aspect-ratio-minimum",
+        "text_sha256": "da13eccf42532b744ec2f85c38c5c3e849b9ec7fc66d8c2b90569ca56bba47c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.foundation-aspect-ratio-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.aspect-ratio-size-transfers",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "aspect-ratio-size-transfers"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Min/Max Size Transfers.",
+      "locator": {
+        "section_id": "aspect-ratio-size-transfers",
+        "text_sha256": "b83590c243bab8415d06f58391ae569f37e95d6ae19fd492fca83408d4ed1597"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.foundation-aspect-ratio-sizing"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.intrinsic",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Intrinsic Size Determination.",
+      "locator": {
+        "section_id": "intrinsic",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-sizes",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-sizes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Intrinsic Sizes.",
+      "locator": {
+        "section_id": "intrinsic-sizes",
+        "text_sha256": "15da31bb1143da6ef677975bf818b18d746ef5573a3128e44e8f0fe6d8ef60c9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-size-override",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-size-override"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Overriding Contained Intrinsic Sizes: the contain-intrinsic-* properties.",
+      "locator": {
+        "section_id": "intrinsic-size-override",
+        "text_sha256": "3ba1e3ef5436485d4c0b741bc3f45dceb6a3ac81401697ce6e053b060de8c0f4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.intrinsic-size-override-clause-cca2516ebb1d",
+        "css-sizing-4.intrinsic-size-override-clause-56fda4ba22f1",
+        "css-sizing-4.intrinsic-size-override-clause-4b59fe755d34",
+        "css-sizing-4.intrinsic-size-override-clause-be0ca01a7120",
+        "css-sizing-4.intrinsic-size-override-clause-4e2bcff726cf",
+        "css-sizing-4.intrinsic-size-override-clause-8da10b5f09e6",
+        "css-sizing-4.intrinsic-size-override-clause-765e4a3f0e1c",
+        "css-sizing-4.intrinsic-size-override-clause-c965d973bea2"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-size-override-clause-cca2516ebb1d",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-size-override"
+      ],
+      "behaviour": "Overriding Contained Intrinsic Sizes: the contain-intrinsic-* properties — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-size-override",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-size-override-clause-56fda4ba22f1",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-size-override"
+      ],
+      "behaviour": "Overriding Contained Intrinsic Sizes: the contain-intrinsic-* properties — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-size-override",
+        "clause_index": 13,
+        "clause_sha256": "56fda4ba22f1a7de38007b424102a709a60877e57d6a25478e46e0971e633df0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-size-override-clause-4b59fe755d34",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-size-override"
+      ],
+      "behaviour": "Overriding Contained Intrinsic Sizes: the contain-intrinsic-* properties — normative clause 18, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-size-override",
+        "clause_index": 17,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-size-override-clause-be0ca01a7120",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-size-override"
+      ],
+      "behaviour": "Overriding Contained Intrinsic Sizes: the contain-intrinsic-* properties — normative clause 61, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-size-override",
+        "clause_index": 60,
+        "clause_sha256": "be0ca01a712075a57ee599c0185e1d830001c2e789a41c492ca0a5c1ddc9dcfe"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-size-override-clause-4e2bcff726cf",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-size-override"
+      ],
+      "behaviour": "Overriding Contained Intrinsic Sizes: the contain-intrinsic-* properties — normative clause 62, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-size-override",
+        "clause_index": 61,
+        "clause_sha256": "4e2bcff726cff338f674a050a8a992211caec1a271efcab8dcba3a3e097e1d5f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-size-override-clause-8da10b5f09e6",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-size-override"
+      ],
+      "behaviour": "Overriding Contained Intrinsic Sizes: the contain-intrinsic-* properties — normative clause 76, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-size-override",
+        "clause_index": 75,
+        "clause_sha256": "8da10b5f09e61e1544bdc40b914fe99a320b0162a497cb70a150ba00ecc115bd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-size-override-clause-765e4a3f0e1c",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-size-override"
+      ],
+      "behaviour": "Overriding Contained Intrinsic Sizes: the contain-intrinsic-* properties — normative clause 77, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-size-override",
+        "clause_index": 76,
+        "clause_sha256": "765e4a3f0e1c671228c05f65e9df6b0f08842456bcfaa48e19a2ae57da10b80e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-size-override-clause-c965d973bea2",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-size-override"
+      ],
+      "behaviour": "Overriding Contained Intrinsic Sizes: the contain-intrinsic-* properties — normative clause 99, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-size-override",
+        "clause_index": 98,
+        "clause_sha256": "c965d973bea2f69fdef5a51644f35a91b0faa9f46e5bb24130fe46b0157c937b"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.last-remembered",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "last-remembered"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Last Remembered Size.",
+      "locator": {
+        "section_id": "last-remembered",
+        "text_sha256": "be401ec8b83f48420f3bc62e7a5ac3858b5c1943963f191dffe616c838945edd"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.cis-scrollbars",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "cis-scrollbars"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Interaction With overflow: auto.",
+      "locator": {
+        "section_id": "cis-scrollbars",
+        "text_sha256": "2f95ebf60b5cd5e24d77752cc190000d7b4ef7f5ea06e8ca2dd897c4c9280549"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.cis-scrollbars-clause-df452843131f",
+        "css-sizing-4.cis-scrollbars-clause-a13f57e02952"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.cis-scrollbars-clause-df452843131f",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "cis-scrollbars"
+      ],
+      "behaviour": "Interaction With overflow: auto — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "cis-scrollbars",
+        "clause_index": 0,
+        "clause_sha256": "df452843131f1a778d7a917332795f6f969d13a9ba2d4bbc95646ba405804bd4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.cis-scrollbars-clause-a13f57e02952",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "cis-scrollbars"
+      ],
+      "behaviour": "Interaction With overflow: auto — normative clause 2, located by its exact source hash.",
+      "locator": {
+        "section_id": "cis-scrollbars",
+        "clause_index": 1,
+        "clause_sha256": "a13f57e02952c98347c146c851ca71c989650ffa9d0847d67de33d5ba6903053"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.responsive-iframes",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "responsive-iframes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Responsively-sized iframes: the frame-sizing property.",
+      "locator": {
+        "section_id": "responsive-iframes",
+        "text_sha256": "595d393ddb791c1c101bdd7a5504fd364c7334e58f400c97713f80e93a884e75"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.responsive-iframes-clause-cca2516ebb1d",
+        "css-sizing-4.responsive-iframes-clause-49de456bf32a",
+        "css-sizing-4.responsive-iframes-clause-67505e57ed74",
+        "css-sizing-4.responsive-iframes-clause-8d4fa51fa1c1",
+        "css-sizing-4.responsive-iframes-clause-7db7e27c7cfe"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.responsive-iframes-clause-cca2516ebb1d",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "responsive-iframes"
+      ],
+      "behaviour": "Responsively-sized iframes: the frame-sizing property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "responsive-iframes",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.responsive-iframes-clause-49de456bf32a",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "responsive-iframes"
+      ],
+      "behaviour": "Responsively-sized iframes: the frame-sizing property — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "responsive-iframes",
+        "clause_index": 19,
+        "clause_sha256": "49de456bf32ac5ab16f1669a085be99e043e5b435a81ab3bc8236f884f2ea4bf"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.responsive-iframes-clause-67505e57ed74",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "responsive-iframes"
+      ],
+      "behaviour": "Responsively-sized iframes: the frame-sizing property — normative clause 27, located by its exact source hash.",
+      "locator": {
+        "section_id": "responsive-iframes",
+        "clause_index": 26,
+        "clause_sha256": "67505e57ed742badd319e86247b379111d32dae89672058f69b4d34fa55b93ea"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.responsive-iframes-clause-8d4fa51fa1c1",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "responsive-iframes"
+      ],
+      "behaviour": "Responsively-sized iframes: the frame-sizing property — normative clause 34, located by its exact source hash.",
+      "locator": {
+        "section_id": "responsive-iframes",
+        "clause_index": 33,
+        "clause_sha256": "8d4fa51fa1c16af0655160cf509821174c4948abaa7a91c181f56eebc66e46a3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.responsive-iframes-clause-7db7e27c7cfe",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "responsive-iframes"
+      ],
+      "behaviour": "Responsively-sized iframes: the frame-sizing property — normative clause 35, located by its exact source hash.",
+      "locator": {
+        "section_id": "responsive-iframes",
+        "clause_index": 34,
+        "clause_sha256": "7db7e27c7cfe62acaf99dc608d3d9d0f98d8b28016e3eeb7c0350bf7a29e901c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.iframe-frame-sizing",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "iframe-frame-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in HTML iframe Details.",
+      "locator": {
+        "section_id": "iframe-frame-sizing",
+        "text_sha256": "6c2f7a4dcede629c5c786f86bd40b4e16161129b108c0ee9dea4d2e30cc7bc6a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.iframe-frame-sizing-clause-476a3e470f11"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.iframe-frame-sizing-clause-476a3e470f11",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "iframe-frame-sizing"
+      ],
+      "behaviour": "HTML iframe Details — normative clause 14, located by its exact source hash.",
+      "locator": {
+        "section_id": "iframe-frame-sizing",
+        "clause_index": 13,
+        "clause_sha256": "476a3e470f11b8d28f7c50af930a96a02343a10c403bb6563b165c9cb6cdc988"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.window-requestresize",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "window-requestresize"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extensions to the Window Interface.",
+      "locator": {
+        "section_id": "window-requestresize",
+        "text_sha256": "176a6154e12e88dbc080239193ae0db66877feee03d28d40d271ac08797d1c1a"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-contribution",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-contribution"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Intrinsic Size Contributions.",
+      "locator": {
+        "section_id": "intrinsic-contribution",
+        "text_sha256": "d18dbbac3d9cef87db8ff01ab1f91b7aaaa74a4631dcb40974a04417c32dafe7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-contribution-override",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-contribution-override"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Zeroing Min-Content Size Contributions: the min-intrinsic-sizing property.",
+      "locator": {
+        "section_id": "intrinsic-contribution-override",
+        "text_sha256": "8dcf52614b89e49f2c72224e1bf250df2674a1176f853dce433d6e74e7be2ce3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.intrinsic-contribution-override-clause-cca2516ebb1d",
+        "css-sizing-4.intrinsic-contribution-override-clause-5afb0eaa3e29",
+        "css-sizing-4.intrinsic-contribution-override-clause-d438691b943d",
+        "css-sizing-4.intrinsic-contribution-override-clause-956f78865043"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-contribution-override-clause-cca2516ebb1d",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-contribution-override"
+      ],
+      "behaviour": "Zeroing Min-Content Size Contributions: the min-intrinsic-sizing property — normative clause 13, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-contribution-override",
+        "clause_index": 12,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-contribution-override-clause-5afb0eaa3e29",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-contribution-override"
+      ],
+      "behaviour": "Zeroing Min-Content Size Contributions: the min-intrinsic-sizing property — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-contribution-override",
+        "clause_index": 27,
+        "clause_sha256": "5afb0eaa3e29bf71a07a81a34339b299e21857a59305d664dca89fc0e341d4c6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-contribution-override-clause-d438691b943d",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-contribution-override"
+      ],
+      "behaviour": "Zeroing Min-Content Size Contributions: the min-intrinsic-sizing property — normative clause 30, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-contribution-override",
+        "clause_index": 29,
+        "clause_sha256": "d438691b943d71097f70dd00748a01908e4fb7f60f2db6c24e59f44e1fcb819c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.intrinsic-contribution-override-clause-956f78865043",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "intrinsic-contribution-override"
+      ],
+      "behaviour": "Zeroing Min-Content Size Contributions: the min-intrinsic-sizing property — normative clause 31, located by its exact source hash.",
+      "locator": {
+        "section_id": "intrinsic-contribution-override",
+        "clause_index": 30,
+        "clause_sha256": "956f7886504306bb2e7b60c561f031c15b026a194da603d07d99ef39042cbbc3"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.column-sizing",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "column-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in New Column Sizing Values: the stretch, min-content, max-content, fit-content, and fit-content() values.",
+      "locator": {
+        "section_id": "column-sizing",
+        "text_sha256": "573a285cf03419a24b6e8b1121dbce6f7e92cb66c8f3d8ca902e534a16142b84"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.column-sizing-clause-cca2516ebb1d",
+        "css-sizing-4.column-sizing-clause-b01ac2e0bfb3",
+        "css-sizing-4.column-sizing-clause-289f6ed23314"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.column-sizing-clause-cca2516ebb1d",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "column-sizing"
+      ],
+      "behaviour": "New Column Sizing Values: the stretch, min-content, max-content, fit-content, and fit-content() values — normative clause 5, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-sizing",
+        "clause_index": 4,
+        "clause_sha256": "cca2516ebb1d28caa1f67426648f5f86378ef6dccf3da0d1b2dd0943dc7b50a5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.column-sizing-clause-b01ac2e0bfb3",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "column-sizing"
+      ],
+      "behaviour": "New Column Sizing Values: the stretch, min-content, max-content, fit-content, and fit-content() values — normative clause 6, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-sizing",
+        "clause_index": 5,
+        "clause_sha256": "b01ac2e0bfb348ba5205874ca9fc3524aef8a556c10675c7bf31dacc5ce8afce"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.column-sizing-clause-289f6ed23314",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "column-sizing"
+      ],
+      "behaviour": "New Column Sizing Values: the stretch, min-content, max-content, fit-content, and fit-content() values — normative clause 20, located by its exact source hash.",
+      "locator": {
+        "section_id": "column-sizing",
+        "clause_index": 19,
+        "clause_sha256": "289f6ed2331495d3dc3bb6e8771f0a0906d8f56be80679909d94ff8dfc036f14"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.extrinsic",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "extrinsic"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Extrinsic Size Determination.",
+      "locator": {
+        "section_id": "extrinsic",
+        "text_sha256": "b51d774609e52a67a3f2462c3a6662ea1e8e6409d4a2f0736160d9b514f0bd6e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.contain-fit-sizing",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "contain-fit-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Contain-fit Sizing: stretching while maintaining an aspect ratio.",
+      "locator": {
+        "section_id": "contain-fit-sizing",
+        "text_sha256": "698bf2677f73583e3c03555dd730543ffc9aa06c5679ac52bb70156ccb48d41c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.percentage-sizing",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "percentage-sizing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Percentage Sizing.",
+      "locator": {
+        "section_id": "percentage-sizing",
+        "text_sha256": "b4935894c8ce16bde67bbffc672428b1533c4f1e1e8b1ce21a2933183db6bfa5"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.additions-l3",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "additions-L3"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Additions Since Level 3.",
+      "locator": {
+        "section_id": "additions-L3",
+        "text_sha256": "13ad8eaf0c1e22144300bf3c7450ade7ac078e3655801c2bd6dc272398e208e7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.priv-sec",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "priv-sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Privacy Considerations.",
+      "locator": {
+        "section_id": "priv-sec",
+        "text_sha256": "85b0bbcbc137ec4d540097af52b8b2bbdcc04575c1aed6ca81a878d6150d0b32"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.sec",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "sec"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Security Considerations.",
+      "locator": {
+        "section_id": "sec",
+        "text_sha256": "7289157c42346d0cf51863e097d634af796b3f54eefe0fd72f7d5fb35b2fd504"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.w3c-conformance",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-conformance"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance.",
+      "locator": {
+        "section_id": "w3c-conformance",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.w3c-conventions",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Document conventions.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "text_sha256": "d308e040a19c52abca565de035b7814d793bf446cd346a98b7d88ea580197fe4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.w3c-conventions-clause-5c98c879f070",
+        "css-sizing-4.w3c-conventions-clause-33a5ed16a48d"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.w3c-conventions-clause-5c98c879f070",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 0,
+        "clause_sha256": "5c98c879f07078ed39b46b875f43b1a721629aace5e2d8a13bad57256301ab34"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.w3c-conventions-clause-33a5ed16a48d",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-conventions"
+      ],
+      "behaviour": "Document conventions — normative clause 7, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conventions",
+        "clause_index": 6,
+        "clause_sha256": "33a5ed16a48d5073e89f4c4aa2ba1ebba48ffb0aa3fc4d7dde47f318efe149c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.w3c-conformance-classes",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Conformance classes.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "text_sha256": "acd4538b80ae4a61b65608eb0631d86ace5ba8dab6a9305d888cc5010bcf5a66"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.w3c-conformance-classes-clause-ff408372426c",
+        "css-sizing-4.w3c-conformance-classes-clause-d9976214330c"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.w3c-conformance-classes-clause-ff408372426c",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 8, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 7,
+        "clause_sha256": "ff408372426c01fe42e09cbf14939374e44ae17063c6970c1daa5d230ec0c392"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.w3c-conformance-classes-clause-d9976214330c",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-conformance-classes"
+      ],
+      "behaviour": "Conformance classes — normative clause 10, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-conformance-classes",
+        "clause_index": 9,
+        "clause_sha256": "d9976214330c8758230498a0b9684a5f9fc19862db283d727ec263e9f12c6d1c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.w3c-partial",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Partial implementations.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "text_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.w3c-partial-clause-ef40c4aab200"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.w3c-partial-clause-ef40c4aab200",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-partial"
+      ],
+      "behaviour": "Partial implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-partial",
+        "clause_index": 0,
+        "clause_sha256": "ef40c4aab2005a5ee8c2cf5e58baf40967af66db968208170b66337c8c03e1f9"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.w3c-conform-future-proofing",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-conform-future-proofing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Implementations of Unstable and Proprietary Features.",
+      "locator": {
+        "section_id": "w3c-conform-future-proofing",
+        "text_sha256": "bf646aa4d0277b9a4f2041df53cfe1b2c3e15be2d0ef01e320163830b11fc7c2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.w3c-testing",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Non-experimental implementations.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "text_sha256": "4c01454403bc04e198f3b3ff36f5a2ed37002f3dbce4070b6c22baa68ec5deb7"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.w3c-testing-clause-1e0fff369221",
+        "css-sizing-4.w3c-testing-clause-ae1210cf9643"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.w3c-testing-clause-1e0fff369221",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 1, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 0,
+        "clause_sha256": "1e0fff369221cccc7609a989bfc2b120c24fee8b5ac0caa50689cf775c24c7d8"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.w3c-testing-clause-ae1210cf9643",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "w3c-testing"
+      ],
+      "behaviour": "Non-experimental implementations — normative clause 3, located by its exact source hash.",
+      "locator": {
+        "section_id": "w3c-testing",
+        "clause_index": 2,
+        "clause_sha256": "ae1210cf9643986069cf1fcce28d1f40ee494bd1e0331bb711490d40c63eb0c4"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.property-index",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Property Index.",
+      "locator": {
+        "section_id": "property-index",
+        "text_sha256": "1bbfac89515e6b724ee10d7ff6b47a3f563551522866e638ea9c8a15a3e2581f"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [
+        "css-sizing-4.property-index-clause-674d5fa645b0",
+        "css-sizing-4.property-index-clause-4b59fe755d34",
+        "css-sizing-4.property-index-clause-56fda4ba22f1"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.property-index-clause-674d5fa645b0",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 17, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 16,
+        "clause_sha256": "674d5fa645b007a98c22ef3e2f8a6663918d59afd11e974cdb1db31ad01706cc"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.property-index-clause-4b59fe755d34",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 26, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 25,
+        "clause_sha256": "4b59fe755d3484fbcacd2d8bcfea40ff407e23dccad79fc1eb8fc3027008c7c0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.property-index-clause-56fda4ba22f1",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "property-index"
+      ],
+      "behaviour": "Property Index — normative clause 28, located by its exact source hash.",
+      "locator": {
+        "section_id": "property-index",
+        "clause_index": 27,
+        "clause_sha256": "56fda4ba22f1a7de38007b424102a709a60877e57d6a25478e46e0971e633df0"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Renderer-facing applicability must be checked against the referenced clause; no implementation or verification is inferred."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-source-clause"
+    },
+    {
+      "id": "css-sizing-4.idl-index",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "idl-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in IDL Index.",
+      "locator": {
+        "section_id": "idl-index",
+        "text_sha256": "ea3f5eff27a257d583869c3295484172d8e484d9b2f2ac88a07802be9737dded"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.issues-index",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "issues-index"
+      ],
+      "behaviour": "Apply the print-applicable definitions, algorithms, defaults, constraints and error recovery in Issues Index.",
+      "locator": {
+        "section_id": "issues-index",
+        "text_sha256": "7886c8f067d6e2aafe6f665d173098aedfca0818ff95e97d2995abbe4f8bf008"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "This pinned section contains potential static-rendering obligations; unresolved scope remains mandatory and unverified rather than silently excluded."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.import-8cac7d115c27",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "normative"
+      ],
+      "behaviour": "Resolve and pin the print-applicable imported definition referenced by https://webidl.spec.whatwg.org/.",
+      "unresolved_reference": "https://webidl.spec.whatwg.org/",
+      "applicability": {
+        "status": "applicable",
+        "reason": "Import scope has not yet been established; a missing source cannot count as an exclusion or a conformance pass."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "source-closure",
+      "review_state": "unresolved-import"
+    },
+    {
+      "id": "css-sizing-4.title",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "title"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in CSS Box Sizing Module Level 4.",
+      "locator": {
+        "section_id": "title",
+        "text_sha256": "99e3fabdb223016c7cbd84884bdf1cdd018c9ac9b3d60dd216a077c91a4132b6"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.abstract",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "abstract"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Abstract.",
+      "locator": {
+        "section_id": "abstract",
+        "text_sha256": "99687e8cd4f271a06a257777d6c0dc5f02731031fdce98aaa2188f243f3b1647"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.sotd",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "sotd"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Status of this document.",
+      "locator": {
+        "section_id": "sotd",
+        "text_sha256": "9dcb9314305efd53ef484813650200db9066b4dca3422862738fa15eaafd52db"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.contents",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "contents"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Table of Contents.",
+      "locator": {
+        "section_id": "contents",
+        "text_sha256": "29a30f769502a73f692a630354072bc5211c1f15cc4d51ab1329ac47381ac447"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.changes",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "changes"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes.",
+      "locator": {
+        "section_id": "changes",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.changes-2021-05",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "changes-2021-05"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since 5 May 2021 Working Draft.",
+      "locator": {
+        "section_id": "changes-2021-05",
+        "text_sha256": "97fba1cf886e71b75144280de72ec50380177f8dbb47c29b7b46449d1954a03e"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.changes-2020-10",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "changes-2020-10"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Changes since 20 October 2020 Working Draft.",
+      "locator": {
+        "section_id": "changes-2020-10",
+        "text_sha256": "735cb210036b9e791248fd665278c2dc30665a69b58f640ed39ee6a5796c5d95"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.acknowledgments",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "acknowledgments"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Acknowledgments.",
+      "locator": {
+        "section_id": "acknowledgments",
+        "text_sha256": "eb43315e456e5311e59a983ab25713a40e3ac4912c62898282925ca5fcbc4e7c"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.index",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "index"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Index.",
+      "locator": {
+        "section_id": "index",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.index-defined-here",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "index-defined-here"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by this specification.",
+      "locator": {
+        "section_id": "index-defined-here",
+        "text_sha256": "6e53792d8124cf42e80043153c50d7c587003645ef10591e477dab28d7bc7332"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.index-defined-elsewhere",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "index-defined-elsewhere"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Terms defined by reference.",
+      "locator": {
+        "section_id": "index-defined-elsewhere",
+        "text_sha256": "24d04474560cbeeeff3636cdbe92fe502d551eee887099611c6abd35e964bea2"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.references",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "references"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in References.",
+      "locator": {
+        "section_id": "references",
+        "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.informative",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "informative"
+      ],
+      "behaviour": "Review and apply all static-print definitions and constraints in Non-Normative References.",
+      "locator": {
+        "section_id": "informative",
+        "text_sha256": "703cf172b30cff661afabb38dc55028cfd730b53b20d65c4895d4a7787386d09"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Prior informative classification lacked a reviewed section-specific proof. Heading spelling never establishes non-normative scope; retain this section as mandatory unknown pending review."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "inventory-review",
+      "review_state": "unreviewed-section-contract"
+    },
+    {
+      "id": "css-sizing-4.foundation-aspect-ratio-sizing",
+      "family": "css-sizing-4",
+      "source_id": "css-sizing-4",
+      "sections": [
+        "aspect-ratio",
+        "aspect-ratio-automatic",
+        "aspect-ratio-margin-collapse",
+        "aspect-ratio-minimum",
+        "aspect-ratio-size-transfers",
+        "sizing-values"
+      ],
+      "behaviour": "Resolve preferred/intrinsic ratios, transferred constraints and selected stretch/contain-fit values.",
+      "locator": {
+        "section_id": "aspect-ratio",
+        "text_sha256": "7a43d0b56c489107b0773db48e7813e881af2f51859a10bc4a9d9921d5cb3090"
+      },
+      "applicability": {
+        "status": "applicable",
+        "reason": "Included static behavior frozen by the approved HTML/CSS foundations design."
+      },
+      "dependencies": [],
+      "implementation": {
+        "status": "unknown",
+        "evidence": []
+      },
+      "case_ids": [],
+      "priority": "foundations",
+      "review_state": "unreviewed-behavior-contract"
+    }
+  ]
+}
